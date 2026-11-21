@@ -1,0 +1,270 @@
+{
+  "name": "scene-helm-ghcr",
+  "command": "test/scene-version --version 0.1.40 -- test/scene --install helm --from ghcr",
+  "result": "fail",
+  "exit": 1,
+  "seconds": 935,
+  "passed": 53,
+  "failed": 11,
+  "failure": "✗ reference-pipeline looks after pipeline, and reef pipeline does not exist.",
+  "commit": "1e34130b",
+  "started": "2026-11-21T00:10:26Z",
+  "parts": [
+    {
+      "name": "setup",
+      "ms": 1383,
+      "waitMs": 0,
+      "steps": [
+        {
+          "name": "uv sync the CLI",
+          "kind": "command",
+          "ms": 352,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "local Nereids image",
+      "ms": 35503,
+      "waitMs": 0,
+      "steps": [
+        {
+          "name": "make nereids",
+          "kind": "command",
+          "ms": 35435,
+          "result": "pass"
+        },
+        {
+          "name": "build and push the reference images (in the background)",
+          "kind": "command",
+          "ms": 6138,
+          "result": "pass"
+        },
+        {
+          "name": "ensure_scene_caches (test/scene-cache)",
+          "kind": "command",
+          "ms": 62,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "helm: cluster by hand, nereus-reefs and nereus",
+      "ms": 650749,
+      "waitMs": 12079,
+      "steps": [
+        {
+          "name": "scene_helm_install (test/scene-helm)",
+          "kind": "command",
+          "ms": 609047,
+          "result": "pass"
+        },
+        {
+          "name": "scene_login (test/scene-login)",
+          "kind": "command",
+          "ms": 41698,
+          "result": "pass"
+        },
+        {
+          "name": "every Nereid Ready",
+          "kind": "wait",
+          "ms": 12079,
+          "result": "pass"
+        },
+        {
+          "name": "nereus reef list",
+          "kind": "command",
+          "ms": 2433,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid list",
+          "kind": "command",
+          "ms": 1459,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "tenancy reef",
+      "ms": 7767,
+      "waitMs": 0,
+      "steps": [
+        {
+          "name": "nereus reef apply tenancy --from-file /tmp/scene-version.XLqG8V/nereus-v0.1.40/reefs/tenancy/",
+          "kind": "command",
+          "ms": 2331,
+          "result": "pass"
+        },
+        {
+          "name": "nereus reef apply tenancy --from-file /tmp/scene-version.XLqG8V/nereus-v0.1.40/reefs/tenancy/",
+          "kind": "command",
+          "ms": 2147,
+          "result": "pass"
+        },
+        {
+          "name": "nereus reef delete tenancy",
+          "kind": "command",
+          "ms": 1712,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "reference images (wait for the build)",
+      "ms": 1,
+      "waitMs": 0,
+      "steps": [
+        {
+          "name": "wait for the reference image builds",
+          "kind": "wait",
+          "ms": 0,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "reference Nereids, reefs and hostile images",
+      "ms": 87071,
+      "waitMs": 283,
+      "steps": [
+        {
+          "name": "nereus nereid apply --image localhost:5111/reference-pipeline-controller:second",
+          "kind": "command",
+          "ms": 15631,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid apply --image localhost:5111/reference-pipeline-controller@sha256:13840a2fb44d717aa71669e528adfaf956710c30",
+          "kind": "command",
+          "ms": 15035,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid apply --image localhost:5111/reference-docs-controller:docs",
+          "kind": "command",
+          "ms": 4134,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid apply --image localhost:5111/reference-pipeline-controller:0.1.0",
+          "kind": "command",
+          "ms": 3783,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid apply --image localhost:5111/reference-pipeline-controller:0.1.0",
+          "kind": "command",
+          "ms": 3142,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "chaos",
+      "ms": 7919,
+      "waitMs": 5953,
+      "steps": [
+        {
+          "name": "nereid list shows reference-pipeline Unavailable",
+          "kind": "wait",
+          "ms": 1710,
+          "result": "pass"
+        },
+        {
+          "name": "kubectl delete reference-pipeline's pod and wait",
+          "kind": "wait",
+          "ms": 1337,
+          "result": "pass"
+        },
+        {
+          "name": "reference-pipeline serves again (chaos-killed)",
+          "kind": "wait",
+          "ms": 1133,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid list",
+          "kind": "command",
+          "ms": 1084,
+          "result": "pass"
+        },
+        {
+          "name": "reference-pipeline serves again (chaos-scaled)",
+          "kind": "wait",
+          "ms": 969,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "delete and swap",
+      "ms": 131537,
+      "waitMs": 0,
+      "steps": [
+        {
+          "name": "nereus nereid delete reference-pipeline-twin",
+          "kind": "command",
+          "ms": 23529,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid delete reference-pipeline",
+          "kind": "command",
+          "ms": 22498,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid delete reference-docs",
+          "kind": "command",
+          "ms": 22065,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid delete reference-pipeline",
+          "kind": "command",
+          "ms": 20190,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid delete reference-pipeline",
+          "kind": "command",
+          "ms": 18467,
+          "result": "fail"
+        }
+      ]
+    },
+    {
+      "name": "keycloak and the OIDC flow",
+      "ms": 7217,
+      "waitMs": 0,
+      "steps": [
+        {
+          "name": "nereus nereid apply keycloak --reef authentication",
+          "kind": "command",
+          "ms": 5820,
+          "result": "pass"
+        },
+        {
+          "name": "nereus reef apply authentication",
+          "kind": "command",
+          "ms": 1390,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "cleanup",
+      "ms": 5626,
+      "waitMs": 0,
+      "steps": [
+        {
+          "name": "k3d cluster delete",
+          "kind": "command",
+          "ms": 5087,
+          "result": "pass"
+        }
+      ]
+    }
+  ]
+}

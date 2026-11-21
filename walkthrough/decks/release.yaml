@@ -1,0 +1,204 @@
+deck:
+  name: walkthrough-release
+  title: "Release a chart"
+  subtitle: "A Helm chart from its repository to a running release, first with the reference Nereid, then with Flux"
+  accent: "a running release"
+  pt:
+    title: "Fazer o release de um chart"
+    subtitle: "Um Helm chart do seu repositório até uma release rodando, primeiro com a Nereid de referência, depois com o Flux"
+    accent: "uma release rodando"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: before
+    title: "Before you start"
+    pt: {title: "Antes de começar"}
+  - name: steps
+    title: "Steps"
+    question: "What do you do, and in which order?"
+    pt: {title: "Passos", question: "O que você faz, e em que ordem?"}
+  - name: flux
+    title: "With Flux"
+    question: "What changes when a real tool installs the chart?"
+    pt: {title: "Com o Flux", question: "O que muda quando uma ferramenta real instala o chart?"}
+  - name: hood
+    title: "Under the hood"
+    pt: {title: "Por baixo dos panos"}
+  - name: more
+    title: "Next"
+    pt: {title: "Depois"}
+
+slides:
+  - name: cover
+    act: opening
+    cover: true
+    message: "Release a chart"
+    notes: |-
+      **You end with Keycloak running in the `identity` namespace**, installed by Flux from the codecentric `keycloakx` chart, after the same commands ran against the reference Nereid with no tool at all. For whoever runs Nereus and wants a chart running without tying Nereus to Flux, Argo CD or plain Helm.
+
+      **Status: built**, #445 (the release reef). Every step links to its command in the CLI reference; `make scene-release` runs them all on a throwaway cluster.
+    pt:
+      message: "Fazer o release de um chart"
+      notes: |-
+        **Você termina com o Keycloak rodando no namespace `identity`**, instalado pelo Flux a partir do chart `keycloakx` da codecentric, depois de os mesmos comandos rodarem contra a Nereid de referência, sem ferramenta nenhuma. Para quem roda o Nereus e quer um chart rodando sem amarrar o Nereus ao Flux, ao Argo CD ou ao Helm puro.
+
+        **Status: pronto**, #445 (o reef release). Cada passo aponta para o seu comando na referência do CLI; o `make scene-release` roda todos eles num cluster descartável.
+
+  - name: prerequisites
+    act: before
+    message: "Two things exist before the first command"
+    accent: "before the first command"
+    screen:
+      - "**A cluster:** prepared by `nereus init`, the profile core is enough"
+      - "**The reference Nereid's image:** `make reference` builds it and pushes it to the local registry"
+    notes: |-
+      **The scene does both** (`make scene-release`), on a cluster of its own and without touching your config; `test/scene-release --no-flux` stops before Flux.
+    pt:
+      message: "Duas coisas existem antes do primeiro comando"
+      accent: "antes do primeiro comando"
+      screen:
+        - "**Um cluster:** preparado pelo `nereus init`, o profile core basta"
+        - "**A imagem da Nereid de referência:** o `make reference` a constrói e a publica no registry local"
+      notes: |-
+        **O scene faz as duas coisas** (`make scene-release`), num cluster só dele e sem tocar na sua configuração; `test/scene-release --no-flux` para antes do Flux.
+
+  - name: setup
+    act: steps
+    topic: "the pieces"
+    message: "First the reef, then the Nereid that answers it with no tool"
+    accent: "with no tool"
+    screen:
+      - "**1 · Apply the {reef:release} reef:** its four kinds come first, with no tool behind them · [`nereus reef apply release`](../../specs/cli/reefs/release.html#apply-reef) · built"
+      - "**2 · Apply {nereid:reference-release} and its Mandate {mandate:reference}:** the reef's reference answers every kind, so the commands work end to end without Flux · [`nereus nereid apply reference-release`](../../specs/cli/reefs/release.html#apply-reference) · built"
+    notes: |-
+      **Each link opens the command's slide in the CLI reference**, with its options and what it prints. The reference Nereid lets you learn the reef before any real tool is in the cluster.
+    pt:
+      topic: "as peças"
+      message: "Primeiro o reef, depois a Nereid que o responde sem ferramenta"
+      accent: "sem ferramenta"
+      screen:
+        - "**1 · Aplicar o reef {reef:release}:** os seus quatro kinds vêm primeiro, sem ferramenta por trás · [`nereus reef apply release`](../../specs/cli/reefs/release.html#apply-reef) · pronto"
+        - "**2 · Aplicar {nereid:reference-release} e o seu Mandate {mandate:reference}:** a referência do reef responde a todo kind, então os comandos funcionam de ponta a ponta sem o Flux · [`nereus nereid apply reference-release`](../../specs/cli/reefs/release.html#apply-reference) · pronto"
+      notes: |-
+        **Cada link abre o slide do comando na referência do CLI**, com as suas opções e o que ele imprime. A Nereid de referência deixa você aprender o reef antes de haver qualquer ferramenta real no cluster.
+
+  - name: what-and-where
+    act: steps
+    topic: "the chart"
+    message: "Where the chart comes from, what it is, and where it goes"
+    accent: "where it goes"
+    screen:
+      - "**3 · Create the repository:** where the chart comes from · [`nereus release repository create`](../../specs/cli/reefs/release.html#repository-create) · built"
+      - "**4 · Create the source:** the chart, at a version · [`nereus release source create`](../../specs/cli/reefs/release.html#source-create) · built"
+      - "**5 · Create the target:** the namespace it goes to · [`nereus release target create`](../../specs/cli/reefs/release.html#target-create) · built"
+    notes: |-
+      **The three come before the release** because a release names them; deleting one while a release uses it is refused.
+    pt:
+      topic: "o chart"
+      message: "De onde o chart vem, o que ele é, e para onde vai"
+      accent: "para onde vai"
+      screen:
+        - "**3 · Criar o repository:** de onde o chart vem · [`nereus release repository create`](../../specs/cli/reefs/release.html#repository-create) · pronto"
+        - "**4 · Criar o source:** o chart, numa versão · [`nereus release source create`](../../specs/cli/reefs/release.html#source-create) · pronto"
+        - "**5 · Criar o target:** o namespace para onde ele vai · [`nereus release target create`](../../specs/cli/reefs/release.html#target-create) · pronto"
+      notes: |-
+        **Os três vêm antes da release** porque uma release os nomeia; apagar um deles enquanto uma release o usa é recusado.
+
+  - name: release
+    act: steps
+    topic: "the release"
+    message: "The release runs the source in the target, and you watch it get ready"
+    accent: "get ready"
+    screen:
+      - "**6 · Create the release and watch it:** `Pending`, then `Ready` at the source's version · [`nereus release create`](../../specs/cli/reefs/release.html#release-create) · built"
+      - "**Check it worked:** the release is `Ready`, with the Nereid that took it · [`nereus release list`](../../specs/cli/reefs/release.html#release-list) · built"
+    notes: |-
+      **The release goes through the reef's default Mandate**, here `reference`; the output names the Nereid behind it.
+    pt:
+      topic: "a release"
+      message: "A release roda o source no target, e você a vê ficar pronta"
+      accent: "ficar pronta"
+      screen:
+        - "**6 · Criar a release e acompanhá-la:** `Pending`, depois `Ready` na versão do source · [`nereus release create`](../../specs/cli/reefs/release.html#release-create) · pronto"
+        - "**Conferir:** a release está `Ready`, com a Nereid que a assumiu · [`nereus release list`](../../specs/cli/reefs/release.html#release-list) · pronto"
+      notes: |-
+        **A release passa pelo Mandate padrão do reef**, aqui o `reference`; a saída nomeia a Nereid por trás dela.
+
+  - name: swap
+    act: flux
+    topic: "the tool"
+    message: "Flux takes the reference Nereid's place, and the commands stay the same"
+    accent: "the commands stay the same"
+    screen:
+      - "**7 · Apply {nereid:flux} and its Mandate:** it installs Flux and becomes the reef's default · [`nereus nereid apply flux`](../../specs/cli/reefs/release.html#apply-flux) · built"
+      - "**8 · Create a release with its values, through Flux:** Flux installs the chart, `Progressing` then `Ready` · [`nereus release create --values-file`](../../specs/cli/reefs/release.html#release-create-values) · built"
+    notes: |-
+      **One Nereid per reef until #72:** delete the reference one before applying flux (`nereus nereid delete reference-release`); its Mandate and the reef's objects stay, so the repository, the source and the target of steps 3 to 5 serve Flux as they are.
+
+      **Switching to Argo CD later is another Nereid and another Mandate**, with the same commands.
+    pt:
+      topic: "a ferramenta"
+      message: "O Flux toma o lugar da Nereid de referência, e os comandos continuam os mesmos"
+      accent: "os comandos continuam os mesmos"
+      screen:
+        - "**7 · Aplicar {nereid:flux} e o seu Mandate:** ela instala o Flux e vira a padrão do reef · [`nereus nereid apply flux`](../../specs/cli/reefs/release.html#apply-flux) · pronto"
+        - "**8 · Criar uma release com os seus values, pelo Flux:** o Flux instala o chart, `Progressing` e depois `Ready` · [`nereus release create --values-file`](../../specs/cli/reefs/release.html#release-create-values) · pronto"
+      notes: |-
+        **Uma Nereid por reef até o #72:** apague a de referência antes de aplicar a flux (`nereus nereid delete reference-release`); o seu Mandate e os objetos do reef ficam, então o repository, o source e o target dos passos 3 a 5 servem ao Flux como estão.
+
+        **Trocar para o Argo CD depois é outra Nereid e outro Mandate**, com os mesmos comandos.
+
+  - name: helmrelease
+    act: hood
+    topic: "Flux's objects"
+    message: "The {nereid:flux} Nereid writes a HelmRelease that the Release owns"
+    accent: "owns"
+    terminal:
+      steps:
+        - comment: "The HelmRelease the flux Nereid wrote (abridged)"
+          run: "kubectl get helmrelease keycloak"
+          options: ["--namespace nereus-system", "--output yaml"]
+          output: |-
+            kind: HelmRelease
+            metadata:
+              ownerReferences:
+                - kind: Release
+                  name: keycloak
+            spec:
+              chart:
+                spec: {chart: keycloakx, version: "7.0.1"}
+              targetNamespace: identity
+              values:
+                replicas: 1
+    notes: |-
+      **Two objects for the same thing, on purpose:** the one people own and the one the Nereid makes, so Flux can be swapped without changing the first. The flux Nereid writes a Flux `HelmRepository` for each `Repository` and a `HelmRelease` for each `Release` of its Mandate, in `nereus-system`, each owned by the Nereus object it comes from.
+
+      **The status flows back:** the Nereid copies the HelmRelease's conditions into the Release's status, with `phase` (`Pending`, `Progressing`, `Ready`, `Failed`) and `version` (ADR 0005, Nereids publish endpoints and commands in status). This is `kubectl`, not a command of Nereus: it shows what the Nereid wrote.
+    pt:
+      topic: "os objetos do Flux"
+      message: "A Nereid {nereid:flux} escreve um HelmRelease que pertence à Release"
+      accent: "pertence"
+      notes: |-
+        **Dois objetos para a mesma coisa, de propósito:** o que as pessoas possuem e o que a Nereid faz, para que o Flux possa ser trocado sem mudar o primeiro. A Nereid flux escreve um `HelmRepository` do Flux para cada `Repository` e um `HelmRelease` para cada `Release` do seu Mandate, em `nereus-system`, cada um pertencendo ao objeto do Nereus de onde vem.
+
+        **O status volta:** a Nereid copia as conditions do HelmRelease para o status da Release, com `phase` (`Pending`, `Progressing`, `Ready`, `Failed`) e `version` (ADR 0005, as Nereids publicam endpoints e comandos no status). Isto é `kubectl`, não um comando do Nereus: mostra o que a Nereid escreveu.
+
+  - name: next
+    act: more
+    message: "Deleting the release uninstalls the chart, and the other goals build on it"
+    accent: "uninstalls the chart"
+    screen:
+      - "**Clean up:** deleting the release deletes the HelmRelease, and Flux uninstalls the chart · [`nereus release delete`](../../specs/cli/reefs/release.html#release-delete) · built"
+      - "**[All the goals](index.html):** the other walkthroughs"
+    notes: |-
+      **Learn more:** #445 (the release reef, with the flux Nereid), #486 (the fake Nereid became the reference Nereid of every reef), #449 (who upgrades Flux), ADR 0010 (reefs at runtime).
+    pt:
+      message: "Apagar a release desinstala o chart, e os outros objetivos partem daqui"
+      accent: "desinstala o chart"
+      screen:
+        - "**Limpar:** apagar a release apaga o HelmRelease, e o Flux desinstala o chart · [`nereus release delete`](../../specs/cli/reefs/release.html#release-delete) · pronto"
+        - "**[Todos os objetivos](index.html):** os outros walkthroughs"
+      notes: |-
+        **Para saber mais:** #445 (o reef release, com a Nereid flux), #486 (a Nereid fake virou a Nereid de referência de todos os reefs), #449 (quem atualiza o Flux), ADR 0010 (reefs em runtime).

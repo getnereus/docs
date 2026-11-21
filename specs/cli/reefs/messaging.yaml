@@ -1,0 +1,582 @@
+deck:
+  name: messaging
+  title: "The messaging reef"
+  subtitle: "Every command of the messaging reef: topics, queues and the agents' sessions, with Triton's room beside it"
+  accent: "with Triton's room beside it"
+  pt:
+    title: "O reef messaging"
+    subtitle: "Todos os comandos do reef messaging: tópicos, filas e as sessões dos agentes, com a sala do Tritão ao lado"
+    accent: "com a sala do Tritão ao lado"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: setup
+    title: "Setup"
+    question: "What comes before the first topic?"
+    pt: {title: "Preparação", question: "O que vem antes do primeiro tópico?"}
+  - name: topic
+    title: "Topic"
+    question: "Where does a message go to everyone who listens?"
+    pt: {title: "Tópico", question: "Para onde vai uma mensagem a todos que escutam?"}
+  - name: queue
+    title: "Queue"
+    question: "Where does a message wait for one worker?"
+    pt: {title: "Fila", question: "Onde uma mensagem espera por um worker?"}
+  - name: session
+    title: "Session"
+    question: "How does a coding agent join the others?"
+    pt: {title: "Sessão", question: "Como um agente de código se junta aos outros?"}
+  - name: triton
+    title: "Triton's section"
+    question: "What does Triton, the agent beside the reef, offer?"
+    pt: {title: "A seção do Tritão", question: "O que o Tritão, o agente ao lado do reef, oferece?"}
+
+slides:
+  - name: cover
+    act: opening
+    cover: true
+    message: "The messaging reef"
+    notes: |-
+      **The source of truth for the commands of the messaging reef** (#483). Every command, built or only imagined, is here first; the tag after each label says whether it is built, planned (with the issue that builds it) or an idea.
+
+      **The built commands are the agents' sessions** (`cli/src/nereus/commands/messaging.py`, #1160) and Triton's room (`cli/src/nereus/commands/room.py`, #1417); the CLI holds them as a group of its own, named `messaging`, until the reef exists on the cluster (#576). Topics and queues are ideas.
+    pt:
+      message: "O reef messaging"
+      notes: |-
+        **A fonte da verdade dos comandos do reef messaging** (#483). Todo comando, pronto ou só imaginado, está aqui primeiro; a etiqueta depois de cada rótulo diz se ele está pronto, planejado (com a issue que o constrói) ou se é uma ideia.
+
+        **Os comandos prontos são as sessões dos agentes** (`cli/src/nereus/commands/messaging.py`, #1160) e a sala do Tritão (`cli/src/nereus/commands/room.py`, #1417); o CLI os guarda num grupo próprio, chamado `messaging`, até o reef existir no cluster (#576). Tópicos e filas são ideias.
+
+  - name: not-triton
+    act: opening
+    topic: "the reef and Triton"
+    message: "The {reef:messaging} reef is NATS, and Triton only uses it"
+    accent: "only uses it"
+    screen:
+      - "**The reef:** NATS, looked after by the {nereid:nats} Nereid (#576)"
+      - "**Triton:** an agent that uses the reef, kept in its own section"
+    notes: |-
+      **Triton uses NATS but is not the messaging reef** (the owner's correction, 2026-11-03). Messaging is a reef of its own, with its `nats` Nereid (#576); Triton is meant to be the first agent Amphitrite creates, a mediator that enters a room and coordinates other agents (#618, #225).
+
+      **Triton's commands stay in this deck, in a section of their own**, until the agents' reef exists (#225); its name (perhaps `ai`) is not decided.
+    pt:
+      topic: "o reef e o Tritão"
+      message: "O reef {reef:messaging} é o NATS, e o Tritão só o usa"
+      accent: "só o usa"
+      screen:
+        - "**O reef:** o NATS, cuidado pela Nereid {nereid:nats} (#576)"
+        - "**O Tritão:** um agente que usa o reef, numa seção própria"
+      notes: |-
+        **O Tritão usa o NATS, mas não é o reef messaging** (a correção do dono, 2026-11-03). Messaging é um reef próprio, com a sua Nereid `nats` (#576); o Tritão deve ser o primeiro agente que a Anfitrite cria, um mediador que entra numa sala e coordena outros agentes (#618, #225).
+
+        **Os comandos do Tritão ficam neste deck, numa seção própria**, até o reef dos agentes existir (#225); o seu nome (talvez `ai`) não está decidido.
+
+  - name: apply-reef
+    act: setup
+    topic: "reef"
+    status: built
+    message: "One command applies the {reef:messaging} reef and its kinds"
+    accent: "One command"
+    terminal:
+      steps:
+        - comment: "Apply the messaging reef"
+          run: "nereus reef apply messaging"
+          output: |-
+            ✓ core/reefs/messaging 0.1.0 created (messaging.getnereus.dev/v1alpha1: queues, topics)
+
+            Next steps:
+
+              nereus messaging --help
+              nereus nereid apply <nereid> --reef messaging
+    notes: |-
+      **The reef comes first, with no tool behind it** (#1597). Its kinds: `Topic` (a message to everyone who listens) and `Queue` (a message to one worker). The CLI pins its contract, so it needs no `--from-file`.
+    pt:
+      topic: "reef"
+      message: "Um comando aplica o reef {reef:messaging} e os seus kinds"
+      accent: "Um comando"
+      notes: |-
+        **O reef vem primeiro, sem ferramenta por trás** (#1597). Os seus kinds: `Topic` (uma mensagem a todos que escutam) e `Queue` (uma mensagem a um worker). O CLI fixa o seu contrato, então ele não precisa de `--from-file`.
+
+  - name: apply-nats
+    act: setup
+    topic: "NATS"
+    status: planned
+    issue: 1597
+    message: "The {nereid:nats} Nereid looks after topics and queues"
+    accent: "topics and queues"
+    terminal:
+      steps:
+        - comment: "Apply the nats Nereid to the messaging reef"
+          run: "nereus nereid apply nats"
+          options: ["--reef messaging"]
+          output: |-
+            ✓ core/nereids/nats created, Ready, pinned to sha256:<digest>: see 'nereus messaging --help'
+
+            Next steps:
+
+              nereus mandate create messaging-nats --reef messaging --nereid nats --match engine=nats --param jetstream=true
+        - comment: "Every request of engine nats goes through it, with JetStream for the queues"
+          run: "nereus mandate create messaging-nats"
+          options: ["--reef messaging", "--nereid nats", "--match engine=nats", "--param jetstream=true"]
+          output: |-
+            ✓ core/mandates/messaging-nats created (reef: messaging, nereid: nats, match: engine=nats)
+    dependsOn: [apply-reef]
+    notes: |-
+      **NATS runs next to the Nereid, in its Pod** (#1597): JetStream keeps its store on a claim that outlives the Pod. The API never names NATS (ADR 0002, the model): another broker's Nereid takes its place by swapping the Mandate. Planned until `make scene-messaging` records a run: the digest comes from the image it builds.
+    pt:
+      topic: "NATS"
+      message: "A Nereid {nereid:nats} cuida de tópicos e filas"
+      accent: "tópicos e filas"
+      notes: |-
+        **O NATS roda ao lado da Nereid, no seu Pod** (#1597): o JetStream guarda o seu store num claim que sobrevive ao Pod. A API nunca nomeia o NATS (ADR 0002, o modelo): a Nereid de outro broker toma o seu lugar trocando o Mandate. Planejado até o `make scene-messaging` gravar uma execução: o digest vem da imagem que ele constrói.
+
+  - name: topic-create
+    act: topic
+    topic: "create and list"
+    status: built
+    message: "A topic carries each message to everyone who listens"
+    accent: "everyone"
+    terminal:
+      steps:
+        - comment: "A topic for the orders, owned by a project"
+          run: "nereus messaging topic create orders"
+          options: ["--owner project/triton", "--engine nats"]
+          output: |-
+            ✓ messaging/topics/orders created (mandate: messaging-nats, nereid: nats)
+
+            Next steps:
+
+              nereus messaging topic get orders
+        - comment: "The topics of the reef"
+          run: "nereus messaging topic list"
+          output: |-
+            TOPIC   OWNER           ENGINE  MANDATE  READY
+            orders  Project/triton  nats    nats     True
+    dependsOn: [apply-nats]
+    notes: |-
+      **A topic is the subject `topics.<name>`:** whoever is not listening when a message is sent misses it, unless the Mandate says `jetstream=true`, and then the stream `topic-<name>` keeps it. The owner is a node of the tenancy tree; the Mandate is the one whose match holds, the most specific (ADR 0017, #1598), else the reef's default, unless `--mandate` names one, and it is pinned in `spec.mandate`: a later Mandate never moves the topic.
+    pt:
+      topic: "create e list"
+      message: "Um tópico leva cada mensagem a todos que escutam"
+      accent: "todos"
+      notes: |-
+        **Um tópico é o subject `topics.<name>`:** quem não está escutando quando uma mensagem é enviada a perde, a não ser que o Mandate diga `jetstream=true`, e então o stream `topic-<name>` a guarda. O dono é um nó da árvore de tenancy; o Mandate é aquele cujo match vale, o mais específico (ADR 0017, #1598), senão o padrão do reef, a não ser que `--mandate` nomeie outro, e ele fica fixado em `spec.mandate`: um Mandate posterior nunca move o tópico.
+
+  - name: topic-get
+    act: topic
+    topic: "get and delete"
+    status: built
+    message: "One topic shows where to reach it, and delete removes it"
+    accent: "where to reach it"
+    terminal:
+      steps:
+        - comment: "Every detail of one topic"
+          run: "nereus messaging topic get orders"
+          output: |-
+            Name:             orders
+            Owner:            Project/triton
+            Engine:           nats
+            Mandate:          nats
+            Nereid:           nats
+            Deletion policy:  retain
+            Ready:            True
+            Connection:       secret nereus-system/orders-topic (host, port, uri, subject)
+        - comment: "Remove it"
+          run: "nereus messaging topic delete orders"
+          output: |-
+            ✓ messaging/topics/orders deleted (deletionPolicy: retain, its messages are kept)
+
+            Next steps:
+
+              nereus messaging topic list
+    dependsOn: [topic-create]
+    notes: |-
+      **The connection is a Secret in the Service Binding layout:** `get` names its keys, never their values. It holds no credential of its own yet, a stand-in until each owner's bindings. `retain`, the default, keeps a stream's messages on delete.
+    pt:
+      topic: "get e delete"
+      message: "Um tópico mostra onde alcançá-lo, e o delete o remove"
+      accent: "onde alcançá-lo"
+      notes: |-
+        **A conexão é um Secret no formato do Service Binding:** o `get` nomeia as suas chaves, nunca os valores. Ele ainda não tem credencial própria, um stand-in até os bindings de cada dono. `retain`, o padrão, guarda as mensagens de um stream no delete.
+
+  - name: topic-apply
+    act: topic
+    topic: "apply"
+    status: built
+    message: "A topic from a file: the dry run writes it, apply takes it"
+    accent: "apply takes it"
+    terminal:
+      steps:
+        - comment: "The YAML of a topic, written by a dry run"
+          run: "nereus messaging topic create events"
+          options: ["--owner project/triton", "--engine nats", "--dry-run", "--output yaml"]
+          output: |-
+            apiVersion: messaging.getnereus.dev/v1alpha1
+            kind: Topic
+            metadata:
+              name: events
+            spec:
+              owner:
+                kind: Project
+                name: triton
+              engine: nats
+        - comment: "Apply that file"
+          run: "nereus messaging topic apply"
+          options: ["--from-file events.yaml"]
+          output: |-
+            ✓ messaging/topics/events created
+
+            Next steps:
+
+              nereus messaging topic list
+    dependsOn: [topic-create]
+    notes: |-
+      **The dry run's YAML is what `apply` takes** (ADR 0013, the command conventions): the file goes to git, and applying it again reports `unchanged`.
+    pt:
+      topic: "apply"
+      message: "Um tópico de um arquivo: o dry run o escreve, o apply o recebe"
+      accent: "o apply o recebe"
+      notes: |-
+        **O YAML do dry run é o que o `apply` recebe** (ADR 0013, as convenções de comandos): o arquivo vai para o git, e aplicá-lo de novo diz `unchanged`.
+
+  - name: queue-create
+    act: queue
+    topic: "create and list"
+    status: built
+    message: "A queue keeps each message until one worker takes it"
+    accent: "one worker"
+    terminal:
+      steps:
+        - comment: "A queue for the builds to run"
+          run: "nereus messaging queue create builds"
+          options: ["--owner project/triton", "--engine nats"]
+          output: |-
+            ✓ messaging/queues/builds created (mandate: messaging-nats, nereid: nats)
+
+            Next steps:
+
+              nereus messaging queue get builds
+        - comment: "The queues of the reef"
+          run: "nereus messaging queue list"
+          output: |-
+            QUEUE   OWNER           ENGINE  MANDATE  READY
+            builds  Project/triton  nats    nats     True
+    dependsOn: [apply-nats]
+    notes: |-
+      **A queue is the JetStream stream `queue-<name>`** on the subject `queues.<name>`, with work-queue retention: each message goes to one worker and stays until one takes it. Its Mandate must say `jetstream=true`; without it the queue fails and its condition names the command that turns it on.
+    pt:
+      topic: "create e list"
+      message: "Uma fila guarda cada mensagem até um worker pegá-la"
+      accent: "um worker"
+      notes: |-
+        **Uma fila é o stream do JetStream `queue-<name>`** no subject `queues.<name>`, com retenção work-queue: cada mensagem vai para um worker e fica até um pegá-la. O seu Mandate precisa dizer `jetstream=true`; sem isso a fila falha e a sua condição nomeia o comando que o liga.
+
+  - name: queue-get
+    act: queue
+    topic: "get and delete"
+    status: built
+    message: "A queue names its stream, and delete keeps its messages"
+    accent: "keeps its messages"
+    terminal:
+      steps:
+        - comment: "Every detail of one queue"
+          run: "nereus messaging queue get builds"
+          output: |-
+            Name:             builds
+            Owner:            Project/triton
+            Engine:           nats
+            Mandate:          nats
+            Nereid:           nats
+            Deletion policy:  retain
+            Ready:            True
+            Connection:       secret nereus-system/builds-queue (host, port, uri, subject, stream)
+        - comment: "Remove it: its stream and messages stay"
+          run: "nereus messaging queue delete builds"
+          output: |-
+            ✓ messaging/queues/builds deleted (deletionPolicy: retain, its messages are kept)
+
+            Next steps:
+
+              nereus messaging queue list
+    dependsOn: [queue-create]
+    notes: |-
+      **`retain`, the default, keeps the stream** when the queue goes: creating it again picks up the messages still waiting.
+    pt:
+      topic: "get e delete"
+      message: "Uma fila nomeia o seu stream, e o delete guarda as mensagens"
+      accent: "guarda as mensagens"
+      notes: |-
+        **`retain`, o padrão, guarda o stream** quando a fila sai: criá-la de novo retoma as mensagens que ainda esperam.
+
+  - name: queue-apply
+    act: queue
+    topic: "apply and deletionPolicy"
+    status: built
+    message: "A queue from a file, whose delete drops its messages"
+    accent: "drops its messages"
+    terminal:
+      steps:
+        - comment: "The YAML of a queue, written by a dry run"
+          run: "nereus messaging queue create scratch"
+          options: ["--owner project/triton", "--engine nats", "--deletion-policy delete", "--dry-run", "--output yaml"]
+          output: |-
+            apiVersion: messaging.getnereus.dev/v1alpha1
+            kind: Queue
+            metadata:
+              name: scratch
+            spec:
+              owner:
+                kind: Project
+                name: triton
+              engine: nats
+              deletionPolicy: delete
+        - comment: "Apply that file"
+          run: "nereus messaging queue apply"
+          options: ["--from-file scratch.yaml"]
+          output: |-
+            ✓ messaging/queues/scratch created
+
+            Next steps:
+
+              nereus messaging queue list
+        - comment: "Remove it, and its stream with it"
+          run: "nereus messaging queue delete scratch"
+          output: |-
+            ✓ messaging/queues/scratch deleted (deletionPolicy: delete)
+
+            Next steps:
+
+              nereus messaging queue list
+    dependsOn: [queue-create]
+    notes: |-
+      **The dry run's YAML is what `apply` takes** (ADR 0013, the command conventions). With `deletionPolicy: delete` the Nereid drops the stream and its messages when the queue goes.
+    pt:
+      topic: "apply e deletionPolicy"
+      message: "Uma fila de um arquivo, cujo delete descarta as mensagens"
+      accent: "descarta as mensagens"
+      notes: |-
+        **O YAML do dry run é o que o `apply` recebe** (ADR 0013, as convenções de comandos). Com `deletionPolicy: delete` a Nereid descarta o stream e as suas mensagens quando a fila sai.
+
+  - name: session-create-dry-run
+    act: session
+    topic: "create · dry run"
+    status: built
+    message: "A dry run says what the session would be, and starts nothing"
+    accent: "starts nothing"
+    terminal:
+      steps:
+        - comment: "What would happen, with no name given"
+          run: "nereus messaging session create"
+          options: ["--dry-run"]
+          output: |-
+            would start claude-code as a Nereid's name free on Triton in the room on Triton, if Triton serves orders, logged in to NATS with the nats-channel plugin
+    notes: |-
+      **The dry run asks nothing of Triton**, so without `--orders` or `--no-orders` it names both cases; it needs only a live `nereus login`. The output is a recorded run (`docs/guides/access/authentication.md`).
+
+      **Without a name, the agent takes a Nereid's name no agent holds on Triton** (#1177), asked through Triton's `list_agents`.
+    pt:
+      topic: "create · simulação"
+      message: "Uma simulação diz como seria a sessão, e não inicia nada"
+      accent: "não inicia nada"
+      notes: |-
+        **A simulação não pergunta nada ao Tritão**, então sem `--orders` ou `--no-orders` ela cita os dois casos; precisa só de um `nereus login` válido. A saída é de uma execução gravada (`docs/guides/access/authentication.md`).
+
+        **Sem um nome, o agente recebe o nome de uma Nereida que nenhum agente usa no Tritão** (#1177), perguntado pelo `list_agents` do Tritão.
+
+  - name: session-create
+    act: session
+    topic: "create"
+    status: built
+    message: "A coding agent joins Triton's room with your own login"
+    accent: "your own login"
+    terminal:
+      steps:
+        - comment: "Start Claude Code as agent m15"
+          run: "nereus messaging session create m15"
+          output: |2-
+              messaging: https://triton.getnereus.dev/mcp (peer tools: whoami, list_agents, post_room, read_room)
+              the room only: Triton serves no orders, so no NATS login (--orders to listen for them)
+            starting m15 with claude-code: in the room on Triton
+    dependsOn: [session-create-dry-run]
+    notes: |-
+      **The output is taken from the code** (`cli/src/nereus/commands/messaging.py`), not from a recorded run: on this installation Triton serves no orders, so the session is of the peers only, in the room over HTTPS with no NATS (#1481). Then Claude Code starts in this terminal, with Triton's peer tools through the CLI's bridge (#1415) and hooks that bring the room's messages into its context (#1417).
+
+      **`--tmux` names the current tmux window after the agent** and gives it back when the session ends; `--permission-mode` passes Claude Code's mode, never `bypassPermissions` unless asked (#716).
+    pt:
+      topic: "create"
+      message: "Um agente entra na sala do Tritão com o seu próprio login"
+      accent: "o seu próprio login"
+      notes: |-
+        **A saída vem do código** (`cli/src/nereus/commands/messaging.py`), não de uma execução gravada: nesta instalação o Tritão não serve ordens, então a sessão é só dos pares, na sala por HTTPS sem NATS (#1481). Depois o Claude Code inicia neste terminal, com as ferramentas de pares do Tritão pela ponte do CLI (#1415) e hooks que trazem as mensagens da sala para o seu contexto (#1417).
+
+        **`--tmux` dá o nome do agente à janela atual do tmux** e o devolve quando a sessão termina; `--permission-mode` passa o modo do Claude Code, nunca `bypassPermissions` sem pedido (#716).
+
+  - name: session-create-orders
+    act: session
+    topic: "create · orders"
+    status: built
+    message: "Where Triton serves orders, the agent also logs in to NATS"
+    accent: "logs in to NATS"
+    terminal:
+      steps:
+        - comment: "Log agent m15 in to NATS without a browser (SSH)"
+          run: "nereus messaging session create m15"
+          options: ["--use-device-code"]
+          output: |-
+            To log agent m15 in to NATS, open https://auth.getnereus.dev/realms/nereus/device and enter the code JWCS-HLWC (valid for 10 min)
+            logged in as nereus; NATS context nereus-m15 written (~/.config/nats/context/nereus-m15.json, 0600), valid until 01:07
+    dependsOn: [session-create]
+    notes: |-
+      **The NATS login comes only when Triton serves orders, or with `--orders`** (#1481); the session then listens for them with Synadia's nats-channel plugin. The output is a recorded run from when Triton served orders (`docs/guides/access/authentication.md`), cut after the login.
+
+      **`--use-device-code` uses the device flow** (RFC 8628, the OAuth device authorization grant), as `nereus login` does (#1830): the terminal shows a page and a code, for Triton's login and, with the orders on, NATS's. `--no-browser` is its alias. A login still valid for more than 10 minutes is kept.
+    pt:
+      topic: "create · ordens"
+      message: "Onde o Tritão serve ordens, o agente também entra no NATS"
+      accent: "entra no NATS"
+      notes: |-
+        **O login no NATS vem só quando o Tritão serve ordens, ou com `--orders`** (#1481); a sessão então as escuta com o plugin nats-channel da Synadia. A saída é de uma execução gravada quando o Tritão servia ordens (`docs/guides/access/authentication.md`), cortada depois do login.
+
+        **`--use-device-code` usa o device flow** (RFC 8628, a concessão de autorização de dispositivo do OAuth), como o `nereus login` (#1830): o terminal mostra uma página e um código, para o login no Tritão e, com as ordens ligadas, no NATS. `--no-browser` é o seu alias. Um login ainda válido por mais de 10 minutos é mantido.
+
+  - name: session-list
+    act: session
+    topic: "list"
+    status: built
+    message: "Every agent connected to Triton, and who started it"
+    accent: "who started it"
+    terminal:
+      steps:
+        - comment: "The agents connected to Triton"
+          run: "nereus messaging session list"
+          output: |-
+            OWNER   NAME  STATE  SINCE     LAST HEARTBEAT  STARTED BY  BUSY WITH
+            bob     doto  ready  06:12:02  06:15:57        bob         -
+            nereus  m16   ready  06:11:36  06:15:56        alice       -
+    dependsOn: [session-create]
+    notes: |-
+      **The list comes from Triton's `list_agents`**, with a token of the CLI's own (#1160). STARTED BY names who logged each agent in (#1167); `--sort-by .last_heartbeat` sorts it. The output is a recorded run (`docs/guides/access/authentication.md`).
+    pt:
+      topic: "list"
+      message: "Cada agente conectado ao Tritão, e quem o iniciou"
+      accent: "quem o iniciou"
+      notes: |-
+        **A lista vem do `list_agents` do Tritão**, com um token do próprio CLI (#1160). STARTED BY diz quem fez o login de cada agente (#1167); `--sort-by .last_heartbeat` a ordena. A saída é de uma execução gravada (`docs/guides/access/authentication.md`).
+
+  - name: room-follow
+    act: triton
+    topic: "room follow"
+    status: built
+    message: "A person follows the room where the agents talk"
+    accent: "follows the room"
+    terminal:
+      steps:
+        - comment: "Follow the room nereus, until Ctrl-C"
+          run: "nereus room follow"
+          options: ["--room nereus"]
+          output: |-
+            21:02:11  alice/speo  claim    #1406 in ../nereus-1406-size, paths controllers/vcluster/
+            21:02:40  bob/doto    note     k3d-nereus is mine until 21:30
+            21:30:02  bob/doto    release  k3d-nereus
+    dependsOn: [session-list]
+    notes: |-
+      **This is Triton's section, not the messaging reef's:** Triton is an agent that uses the reef, and its commands stay in this deck until the agents' reef exists (#225). The CLI holds them in a group of its own, `room`.
+
+      **Each room is an append-only JetStream stream** (#1417): an agent posts with the peer tool `post_room`, a hook pulls new messages into each session's context, and a person follows it here; `--since 1h --once` shows the last hour and exits. The output is a recorded run (`controllers/triton/README.md`).
+
+      **Who may join** (#1830): the room is a repository's name, the git origin's, and the login must be in Keycloak's group `nereus-team`. The guide [Join the team's room](../../../guides/reefs/team-room.md) has the admin's part and the person's.
+    pt:
+      topic: "room follow"
+      message: "Uma pessoa acompanha a sala onde os agentes conversam"
+      accent: "acompanha a sala"
+      notes: |-
+        **Esta é a seção do Tritão, não a do reef messaging:** o Tritão é um agente que usa o reef, e os seus comandos ficam neste deck até o reef dos agentes existir (#225). O CLI os guarda num grupo próprio, `room`.
+
+        **Cada sala é um stream do JetStream só de acréscimo** (#1417): um agente posta com a ferramenta de pares `post_room`, um hook traz as mensagens novas para o contexto de cada sessão, e uma pessoa a acompanha aqui; `--since 1h --once` mostra a última hora e sai. A saída é de uma execução gravada (`controllers/triton/README.md`).
+
+        **Quem pode entrar** (#1830): a sala é o nome de um repositório, o do git origin, e o login precisa estar no grupo `nereus-team` do Keycloak. O guia [Join the team's room](../../../guides/reefs/team-room.md) tem a parte do admin e a da pessoa.
+
+  - name: room-post
+    act: triton
+    topic: "room post"
+    status: idea
+    message: "A person posts to the room, as the agents do"
+    accent: "as the agents do"
+    terminal:
+      steps:
+        - comment: "Tell the room the cluster is taken"
+          run: "nereus room post \"k3d-nereus is mine until 21:30\""
+          options: ["--room nereus", "--kind note"]
+          output: |-
+            ✓ room/nereus note posted
+    dependsOn: [room-follow]
+    notes: |-
+      **An idea, shown as its contract:** the output is illustrative. Today only an agent's session posts, through the peer tool `post_room`; the kinds are the peers' (claim, ask, ok, wait, note, release), and a peer message is information, never an order.
+    pt:
+      topic: "room post"
+      message: "Uma pessoa posta na sala, como os agentes fazem"
+      accent: "como os agentes"
+      notes: |-
+        **Uma ideia, mostrada como o seu contrato:** a saída é ilustrativa. Hoje só a sessão de um agente posta, pela ferramenta de pares `post_room`; os tipos são os dos pares (claim, ask, ok, wait, note, release), e uma mensagem de par é informação, nunca uma ordem.
+
+  - name: orders
+    act: triton
+    topic: "orders"
+    status: idea
+    message: "An order goes to one idle agent, and the list follows it"
+    accent: "one idle agent"
+    terminal:
+      steps:
+        - comment: "Send an order to agent m15"
+          run: "nereus order create \"run make checks\""
+          options: ["--agent m15"]
+          output: |-
+            ✓ order/20261030-142549-4dae created, sent to m15
+        - comment: "The orders and their state"
+          run: "nereus order list"
+          output: |-
+            ID                    AGENT  STATUS       TEXT
+            20261030-142549-4dae  m15    in_progress  run make checks
+    dependsOn: [room-follow]
+    notes: |-
+      **Orders are off on this installation today:** Triton lists no order tool, and a session joins the room only (#1440, #1481). The commands are an idea, shown as their contract; the outputs are illustrative.
+
+      **Triton's MCP tools behind them** are `send_order` and `list_orders` (with `cancel_order` and `replay_orders`): an order is accepted only for a `ready`, idle agent and goes `sent`, `received`, `in_progress`, `done`, `failed` or `cancelled` (#592).
+    pt:
+      topic: "ordens"
+      message: "Uma ordem vai a um agente livre, e a lista a acompanha"
+      accent: "um agente livre"
+      notes: |-
+        **As ordens estão desligadas nesta instalação hoje:** o Tritão não lista ferramenta de ordem, e uma sessão só entra na sala (#1440, #1481). Os comandos são uma ideia, mostrada como o seu contrato; as saídas são ilustrativas.
+
+        **As ferramentas MCP do Tritão por trás deles** são `send_order` e `list_orders` (com `cancel_order` e `replay_orders`): uma ordem só é aceita para um agente `ready` e livre, e passa por `sent`, `received`, `in_progress`, `done`, `failed` ou `cancelled` (#592).
+
+  - name: door-endpoint
+    act: triton
+    topic: "the door"
+    status: planned
+    issue: 470
+    message: "Triton's door is an endpoint the edge reef publishes"
+    accent: "an endpoint"
+    terminal:
+      steps:
+        - comment: "What the reefs offer to publish"
+          run: "nereus edge endpoint list"
+          output: |-
+            REEF        ENDPOINT   PROTOCOL   PUBLISHED
+            messaging   mcp        mcp        no
+
+            Next steps:
+
+              nereus edge route create <name> --hostname <hostname> --endpoint messaging/mcp
+    dependsOn: [room-follow]
+    notes: |-
+      **Triton's MCP door is the first endpoint the edge reef publishes** ([the edge deck](edge.html#endpoint-list), #470). The output is the command's contract, the same as the edge deck's; it lists the door under `messaging` until the agents' reef exists (#225).
+    pt:
+      topic: "a porta"
+      message: "A porta do Tritão é um endpoint que o reef edge publica"
+      accent: "um endpoint"
+      notes: |-
+        **A porta MCP do Tritão é o primeiro endpoint que o reef edge publica** ([o deck edge](edge.html#endpoint-list), #470). A saída é o contrato do comando, a mesma do deck edge; ela lista a porta sob `messaging` até o reef dos agentes existir (#225).

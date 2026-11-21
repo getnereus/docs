@@ -1,0 +1,12 @@
+{
+  "name": "scene-chart",
+  "command": "test/scene-chart",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 577,
+  "passed": 21,
+  "failed": 0,
+  "failure": null,
+  "commit": "cb9a5b6c",
+  "started": "2026-11-20T15:42:59Z"
+}

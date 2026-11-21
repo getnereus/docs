@@ -1,0 +1,161 @@
+deck:
+  name: walkthrough-edge
+  title: "Publish at a hostname"
+  subtitle: "A reef's endpoint at a fixed address on your own domain, while Nereus runs behind a tunnel"
+  accent: "a fixed address"
+  pt:
+    title: "Publicar num hostname"
+    subtitle: "O endpoint de um reef num endereço fixo no seu próprio domínio, enquanto o Nereus roda atrás de um túnel"
+    accent: "um endereço fixo"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: before
+    title: "Before you start"
+    pt: {title: "Antes de começar"}
+  - name: steps
+    title: "Steps"
+    question: "What do you do, and in which order?"
+    pt: {title: "Passos", question: "O que você faz, e em que ordem?"}
+  - name: check
+    title: "Check it worked"
+    pt: {title: "Conferir"}
+  - name: more
+    title: "Next"
+    pt: {title: "Depois"}
+
+slides:
+  - name: cover
+    act: opening
+    cover: true
+    message: "Publish at a hostname"
+    notes: |-
+      **You end with Triton answering at `https://triton.getnereus.dev`**, while Nereus runs on your machine behind a tunnel. For whoever runs Nereus and wants an agent or a person outside the machine to reach it.
+
+      **Status: planned**, #470 (the edge reef publishes a reef's endpoint at a hostname) and #475 (a godaddy Nereid that changes a domain at its registrar). Every step links to its command in the CLI reference.
+    pt:
+      message: "Publicar num hostname"
+      notes: |-
+        **Você termina com a porta do Tritão respondendo em `https://triton.getnereus.dev`**, enquanto o Nereus roda na sua máquina atrás de um túnel. Para quem roda o Nereus e quer que um agente ou uma pessoa fora da máquina o alcance.
+
+        **Status: planejado**, #470 (o reef edge publica o endpoint de um reef num hostname) e #475 (uma Nereid godaddy que muda um domínio na registradora). Cada passo aponta para o seu comando na referência do CLI.
+
+  - name: prerequisites
+    act: before
+    message: "Two things exist before the first command"
+    accent: "before the first command"
+    screen:
+      - "**A cluster:** prepared by `nereus init`, the profile core is enough"
+      - "**A domain and a Cloudflare account:** the domain at a registrar, the account on the free plan"
+    notes: |-
+      **The domain stays registered where it is**; only its nameservers move to the zone Cloudflare runs.
+    pt:
+      message: "Duas coisas existem antes do primeiro comando"
+      accent: "antes do primeiro comando"
+      screen:
+        - "**Um cluster:** preparado pelo `nereus init`, o profile core basta"
+        - "**Um domínio e uma conta no Cloudflare:** o domínio numa registradora, a conta no plano gratuito"
+      notes: |-
+        **O domínio continua registrado onde está**; só os seus nameservers vão para a zona que o Cloudflare cuida.
+
+  - name: setup
+    act: steps
+    topic: "the pieces"
+    message: "First the reef, then the Nereids that look after it"
+    accent: "First the reef"
+    screen:
+      - "**1 · Apply the {reef:edge} reef:** its kinds come first, with no tool behind them · [`nereus reef apply edge`](../../specs/cli/reefs/edge.html#apply-reef) · planned #470"
+      - "**2 · Apply {nereid:cloudflare} and its Mandate:** it runs the zone and the tunnel · [`nereus nereid apply cloudflare`](../../specs/cli/reefs/edge.html#apply-cloudflare) · planned #470"
+      - "**3 · Apply {nereid:godaddy} and its Mandate:** it talks to the registrar · [`nereus nereid apply godaddy`](../../specs/cli/reefs/edge.html#apply-godaddy) · planned #475"
+    notes: |-
+      **Each link opens the command's slide in the CLI reference**, with its options and what it prints. Another Nereid can take the place of cloudflare or godaddy by swapping the Mandate.
+    pt:
+      topic: "as peças"
+      message: "Primeiro o reef, depois as Nereids que cuidam dele"
+      accent: "Primeiro o reef"
+      screen:
+        - "**1 · Aplicar o reef {reef:edge}:** os seus kinds vêm primeiro, sem ferramenta por trás · [`nereus reef apply edge`](../../specs/cli/reefs/edge.html#apply-reef) · planejado #470"
+        - "**2 · Aplicar {nereid:cloudflare} e o seu Mandate:** cuida da zona e do túnel · [`nereus nereid apply cloudflare`](../../specs/cli/reefs/edge.html#apply-cloudflare) · planejado #470"
+        - "**3 · Aplicar {nereid:godaddy} e o seu Mandate:** fala com a registradora · [`nereus nereid apply godaddy`](../../specs/cli/reefs/edge.html#apply-godaddy) · planejado #475"
+      notes: |-
+        **Cada link abre o slide do comando na referência do CLI**, com as suas opções e o que ele imprime. Outra Nereid pode tomar o lugar de cloudflare ou godaddy trocando o Mandate.
+
+  - name: delegate
+    act: steps
+    topic: "the domain"
+    message: "The zone gets nameservers, and the domain is sent to them"
+    accent: "sent to them"
+    screen:
+      - "**4 · Create the zone:** it gives the domain the nameservers that will answer for it · [`nereus edge zone create`](../../specs/cli/reefs/edge.html#zone-create) · planned #470"
+      - "**5 · See the domains at the registrar:** pick the one to bring in · [`nereus edge domain list`](../../specs/cli/reefs/edge.html#domain-list-registrar) · planned #475"
+      - "**6 · Delegate the domain to the zone:** the registrar sends it to the zone's nameservers · [`nereus edge domain apply`](../../specs/cli/reefs/edge.html#domain-apply) · planned #475"
+    notes: |-
+      **The zone comes before the domain**: its nameservers are what the domain is delegated to.
+    pt:
+      topic: "o domínio"
+      message: "A zona ganha nameservers, e o domínio é mandado para eles"
+      accent: "mandado para eles"
+      screen:
+        - "**4 · Criar a zona:** ela dá ao domínio os nameservers que vão responder por ele · [`nereus edge zone create`](../../specs/cli/reefs/edge.html#zone-create) · planejado #470"
+        - "**5 · Ver os domínios na registradora:** escolher o que trazer · [`nereus edge domain list`](../../specs/cli/reefs/edge.html#domain-list-registrar) · planejado #475"
+        - "**6 · Delegar o domínio para a zona:** a registradora o manda para os nameservers da zona · [`nereus edge domain apply`](../../specs/cli/reefs/edge.html#domain-apply) · planejado #475"
+      notes: |-
+        **A zona vem antes do domínio**: os seus nameservers são para onde o domínio é delegado.
+
+  - name: publish
+    act: steps
+    topic: "the route"
+    message: "A reef's endpoint gets a name, never where it runs"
+    accent: "never where it runs"
+    screen:
+      - "**7 · See what the reefs can publish:** an endpoint by its reef and name, none published by default · [`nereus edge endpoint list`](../../specs/cli/reefs/edge.html#endpoint-list) · #1951"
+      - "**8 · Grant it, then publish it at a hostname:** `--publish mcp` on Triton's Nereid, then the route opens the tunnel to it · [`nereus edge route create`](../../specs/cli/reefs/edge.html#route-create) · #1951"
+    notes: |-
+      **The route names `messaging/mcp`**, an endpoint the messaging reef publishes, never a cluster, a namespace, a Service or a port (owner, 2026-10-29).
+    pt:
+      topic: "a rota"
+      message: "O endpoint de um reef ganha um nome, nunca onde roda"
+      accent: "nunca onde roda"
+      screen:
+        - "**7 · Ver o que os reefs podem publicar:** um endpoint pelo seu reef e nome, nenhum publicado por padrão · [`nereus edge endpoint list`](../../specs/cli/reefs/edge.html#endpoint-list) · #1951"
+        - "**8 · Autorizar e publicar num hostname:** `--publish mcp` na Nereid do Triton, depois a rota abre o túnel até ele · [`nereus edge route create`](../../specs/cli/reefs/edge.html#route-create) · #1951"
+      notes: |-
+        **A rota nomeia `messaging/mcp`**, um endpoint que o reef messaging publica, nunca um cluster, um namespace, um Service ou uma porta (o dono, 2026-10-29).
+
+  - name: check
+    act: check
+    message: "The domain shows its new nameservers, and the address answers"
+    accent: "the address answers"
+    screen:
+      - "**The domain:** `Delegated: True` and the zone's nameservers · [`nereus edge domain get`](../../specs/cli/reefs/edge.html#domain-get) · planned #475"
+      - "**The address:** `https://triton.getnereus.dev` answers"
+    notes: |-
+      **Delegation takes minutes to hours**, the time the registrar takes to publish the new nameservers; `--watch` waits for it.
+    pt:
+      message: "O domínio mostra os seus novos nameservers, e o endereço responde"
+      accent: "o endereço responde"
+      screen:
+        - "**O domínio:** `Delegated: True` e os nameservers da zona · [`nereus edge domain get`](../../specs/cli/reefs/edge.html#domain-get) · planejado #475"
+        - "**O endereço:** `https://triton.getnereus.dev` responde"
+      notes: |-
+        **A delegação leva de minutos a horas**, o tempo que a registradora leva para publicar os novos nameservers; `--watch` espera por ela.
+
+  - name: next
+    act: more
+    message: "From here, the agents reach Triton from outside the machine"
+    accent: "from outside the machine"
+    screen:
+      - "**Next:** bring the agents to Triton (the Triton roadmap)"
+      - "**[All the goals](index.html):** the other walkthroughs"
+    notes: |-
+      **Learn more:** #470 (the edge reef publishes a reef's endpoint at a hostname), #475 (a godaddy Nereid that changes a domain at its registrar), ADR 0005 (Nereids publish endpoints and commands in status).
+    pt:
+      message: "Daqui em diante, os agentes alcançam o Tritão de fora da máquina"
+      accent: "de fora da máquina"
+      screen:
+        - "**Depois:** trazer os agentes para o servidor MCP do Tritão (o roadmap do Tritão)"
+        - "**[Todos os objetivos](index.html):** os outros walkthroughs"
+      notes: |-
+        **Para saber mais:** #470 (o reef edge publica o endpoint de um reef num hostname), #475 (uma Nereid godaddy que muda um domínio na registradora), ADR 0005 (as Nereids publicam endpoints e comandos no status).

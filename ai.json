@@ -1,0 +1,804 @@
+{
+  "pages": {
+    "": {
+      "goal": "Know what Nereus is and where to start",
+      "md": "index.md",
+      "title": "Home"
+    },
+    "adr/0001-record-architecture-decisions/": {
+      "goal": "Status: Accepted (2026-10-17, rewritten 2026-10-25)",
+      "md": "adr/0001-record-architecture-decisions.md",
+      "title": "Record architecture decisions"
+    },
+    "adr/0002-conceptual-model/": {
+      "goal": "Status: Proposed (2026-10-17, rewritten 2026-10-25)",
+      "md": "adr/0002-conceptual-model.md",
+      "title": "Conceptual model"
+    },
+    "adr/0003-init-and-nereids-at-runtime/": {
+      "goal": "Status: Proposed (2026-10-17, rewritten 2026-10-25)",
+      "md": "adr/0003-init-and-nereids-at-runtime.md",
+      "title": "Reefs and Nereids added at runtime"
+    },
+    "adr/0004-reefs-extend-the-cli/": {
+      "goal": "Status: Proposed (2026-10-17, rewritten 2026-10-25)",
+      "md": "adr/0004-reefs-extend-the-cli.md",
+      "title": "Reefs extend the CLI"
+    },
+    "adr/0005-one-writer-per-field/": {
+      "goal": "Status: Proposed (2026-10-17)",
+      "md": "adr/0005-one-writer-per-field.md",
+      "title": "One writer per field"
+    },
+    "adr/0006-authentication-reef/": {
+      "goal": "Status: Proposed (2026-10-17, rewritten 2026-10-25, 2026-11-09 and 2026-11-12, amended 2026-11-15)",
+      "md": "adr/0006-authentication-reef.md",
+      "title": "Authentication reef"
+    },
+    "adr/0007-public-by-design/": {
+      "goal": "Status: Accepted (2026-10-17)",
+      "md": "adr/0007-public-by-design.md",
+      "title": "Public by design"
+    },
+    "adr/0008-cli-in-python/": {
+      "goal": "Status: Accepted (2026-10-17)",
+      "md": "adr/0008-cli-in-python.md",
+      "title": "CLI in Python"
+    },
+    "adr/0009-api-group/": {
+      "goal": "Status: Proposed (2026-10-17, rewritten 2026-10-25; the 2026-10-17 version was Accepted)",
+      "md": "adr/0009-api-group.md",
+      "title": "API group per reef"
+    },
+    "adr/0010-reefs-at-runtime/": {
+      "goal": "Status: Proposed (2026-10-17, rewritten 2026-10-25)",
+      "md": "adr/0010-reefs-at-runtime.md",
+      "title": "Reefs at runtime"
+    },
+    "adr/0011-reefs-nereids-and-mandates/": {
+      "goal": "Status: Proposed (2026-10-17, rewritten 2026-10-25)",
+      "md": "adr/0011-reefs-nereids-and-mandates.md",
+      "title": "Reefs, Nereids and Mandates"
+    },
+    "adr/0012-error-messages/": {
+      "goal": "Status: Proposed (2026-10-19)",
+      "md": "adr/0012-error-messages.md",
+      "title": "Error messages"
+    },
+    "adr/0013-command-conventions/": {
+      "goal": "Status: Proposed (2026-10-18, rewritten 2026-10-25, amended 2026-10-29, 2026-11-03 and 2026-11-15)",
+      "md": "adr/0013-command-conventions.md",
+      "title": "Command conventions"
+    },
+    "adr/0014-profiles/": {
+      "goal": "Status: Proposed (2026-10-26)",
+      "md": "adr/0014-profiles.md",
+      "title": "Profiles"
+    },
+    "adr/0015-tenancy/": {
+      "goal": "Status: Proposed (2026-10-30, rewritten 2026-11-12, amended 2026-11-15)",
+      "md": "adr/0015-tenancy.md",
+      "title": "Tenancy"
+    },
+    "adr/0016-catalog-reef/": {
+      "goal": "Status: Proposed (2026-10-30, rewritten 2026-11-03)",
+      "md": "adr/0016-catalog-reef.md",
+      "title": "The catalog reef"
+    },
+    "adr/0017-resource-reefs/": {
+      "goal": "Status: Accepted (2026-11-14, by the owner; proposed 2026-10-30, rewritten 2026-11-12)",
+      "md": "adr/0017-resource-reefs.md",
+      "title": "Resource reefs"
+    },
+    "adr/0018-nereus-api/": {
+      "goal": "Status: Proposed (2026-10-30)",
+      "md": "adr/0018-nereus-api.md",
+      "title": "The Nereus API"
+    },
+    "adr/0019-messaging-reef/": {
+      "goal": "Status: Proposed (2026-10-26)",
+      "md": "adr/0019-messaging-reef.md",
+      "title": "Messaging reef"
+    },
+    "adr/0020-delivery-reef/": {
+      "goal": "Status: Proposed (2026-11-03)",
+      "md": "adr/0020-delivery-reef.md",
+      "title": "Delivery reef"
+    },
+    "adr/0021-registry-reef/": {
+      "goal": "Status: Proposed (2026-11-05)",
+      "md": "adr/0021-registry-reef.md",
+      "title": "Registry reef"
+    },
+    "adr/0022-reef-screens-in-the-portal/": {
+      "goal": "Status: Accepted (2026-11-08)",
+      "md": "adr/0022-reef-screens-in-the-portal.md",
+      "title": "Reef screens in the portal"
+    },
+    "adr/0023-external-registry-push-credential/": {
+      "goal": "Status: Proposed",
+      "md": "adr/0023-external-registry-push-credential.md",
+      "title": "External registry push credential"
+    },
+    "adr/0024-scm-reef/": {
+      "goal": "Status: Proposed",
+      "md": "adr/0024-scm-reef.md",
+      "title": "SCM reef"
+    },
+    "adr/0025-metrics-intake/": {
+      "goal": "Status: Accepted (2026-11-14, by the owner; proposed the same day)",
+      "md": "adr/0025-metrics-intake.md",
+      "title": "Metrics intake"
+    },
+    "adr/0026-environment-reef/": {
+      "goal": "Status: Proposed (2026-11-14)",
+      "md": "adr/0026-environment-reef.md",
+      "title": "Environment reef"
+    },
+    "adr/0027-teams-roles-and-users/": {
+      "goal": "Status: Accepted (2026-11-16)",
+      "md": "adr/0027-teams-roles-and-users.md",
+      "title": "Teams, roles and Users"
+    },
+    "adr/0028-presentations-reef/": {
+      "goal": "Status: Accepted (2026-11-16)",
+      "md": "adr/0028-presentations-reef.md",
+      "title": "Presentations reef"
+    },
+    "adr/0029-mcp-tools/": {
+      "goal": "Status: Proposed",
+      "md": "adr/0029-mcp-tools.md",
+      "title": "MCP tools"
+    },
+    "adr/0030-triton-messaging-nereid/": {
+      "goal": "Status: Proposed",
+      "md": "adr/0030-triton-messaging-nereid.md",
+      "title": "Triton, the messaging Nereid"
+    },
+    "agent/": {
+      "goal": "One page per topic, read on demand.",
+      "md": "agent/index.md",
+      "title": "Agent guides"
+    },
+    "agent/adr/": {
+      "goal": "ADR 0001 (record architecture decisions) is the rule; this page is the checklist.",
+      "md": "agent/adr.md",
+      "title": "ADRs"
+    },
+    "agent/ai-and-teams/": {
+      "goal": "How an agent helps the owner and the team: the AI accelerates, people set the direction and decide.",
+      "md": "agent/ai-and-teams.md",
+      "title": "AI and teams"
+    },
+    "agent/api-groups/": {
+      "goal": "Status: proposed, to be written as an ADR and reviewed with the owner.",
+      "md": "agent/api-groups.md",
+      "title": "API groups"
+    },
+    "agent/beach/": {
+      "goal": "Glaucus (Glauco in Portuguese) is the messenger between the owner's voice session and the local agent (Claude Code): in",
+      "md": "agent/beach.md",
+      "title": "Beach"
+    },
+    "agent/cli/": {
+      "goal": "The target CLI, from the owner's voice session of 2026-10-25 (raw data in Drive #pontos/raw/2026-10-25, files 38 to 47;",
+      "md": "agent/cli.md",
+      "title": "The CLI design"
+    },
+    "agent/decks/": {
+      "goal": "The rules for an agent that makes a deck or an HTML page for Nereus.",
+      "md": "agent/decks.md",
+      "title": "Decks"
+    },
+    "agent/docs/": {
+      "goal": "The style guide of the docs site (make docs), from the docs restructure (#1985): one information architecture, one forma",
+      "md": "agent/docs.md",
+      "title": "The docs"
+    },
+    "agent/how-we-work/": {
+      "goal": "",
+      "md": "agent/how-we-work.md",
+      "title": "How we work"
+    },
+    "agent/issues/": {
+      "goal": "",
+      "md": "agent/issues.md",
+      "title": "Issues"
+    },
+    "agent/journeys/": {
+      "goal": "The owner's working agreement of 2026-11-14: to cut the owner's load of deciding across several anchored sessions, each",
+      "md": "agent/journeys.md",
+      "title": "Journeys"
+    },
+    "agent/layout/": {
+      "goal": "",
+      "md": "agent/layout.md",
+      "title": "Layout"
+    },
+    "agent/owner/": {
+      "goal": "",
+      "md": "agent/owner.md",
+      "title": "How the owner works"
+    },
+    "agent/peers/": {
+      "goal": "Several Claude Code sessions often work on this repository on the same machine, one per tmux window, each on its own iss",
+      "md": "agent/peers.md",
+      "title": "Peers"
+    },
+    "agent/publish/": {
+      "goal": "make promote (#850, #1271) copies the seed images and the charts to ghcr.io/getnereus/nereus by digest.",
+      "md": "agent/publish.md",
+      "title": "Publishing on ghcr.io"
+    },
+    "agent/queue/": {
+      "goal": "",
+      "md": "agent/queue.md",
+      "title": "The queue"
+    },
+    "agent/raw-data/": {
+      "goal": "The raw material of the project (voice sessions, transcripts, mental dumps, the agents' session logs, work orders) lives",
+      "md": "agent/raw-data.md",
+      "title": "Raw data"
+    },
+    "agent/rules/": {
+      "goal": "",
+      "md": "agent/rules.md",
+      "title": "Rules"
+    },
+    "agent/session-prompt/": {
+      "goal": "A session prompt is the instructions a session leaves so the next one, after /clear, resumes the same way of working (#1",
+      "md": "agent/session-prompt.md",
+      "title": "The session prompt"
+    },
+    "agent/status-bar/": {
+      "goal": "The bar under Claude Code's prompt shows, in one line, where the session is working, how full its context is and how muc",
+      "md": "agent/status-bar.md",
+      "title": "The status bar"
+    },
+    "agent/tokens/": {
+      "goal": "The owner's pillar (2026-11-02, #809): the same quality for fewer tokens.",
+      "md": "agent/tokens.md",
+      "title": "Saving tokens"
+    },
+    "agent/worktrees/": {
+      "goal": "Every change on getnereus/nereus is made in its own git worktree (the owner, 2026-10-26, #447).",
+      "md": "agent/worktrees.md",
+      "title": "Worktrees"
+    },
+    "concepts/model/": {
+      "goal": "Understand reefs, Nereids and Mandates, the three words of the Nereus model",
+      "md": "concepts/model.md",
+      "title": "Reef, Nereid and Mandate"
+    },
+    "concepts/nereus-api/": {
+      "goal": "Understand the Nereus API and how the CLI and the portal use it",
+      "md": "concepts/nereus-api.md",
+      "title": "The Nereus API"
+    },
+    "concepts/runtime-and-profiles/": {
+      "goal": "Understand how reefs and Nereids are installed at runtime and what a profile is",
+      "md": "concepts/runtime-and-profiles.md",
+      "title": "Runtime install and profiles"
+    },
+    "concepts/tenancy-and-access/": {
+      "goal": "Understand whose each thing is and who may do what",
+      "md": "concepts/tenancy-and-access.md",
+      "title": "Tenancy and access"
+    },
+    "concepts/undercloud-overcloud/": {
+      "goal": "Understand the undercloud and the overcloud",
+      "md": "concepts/undercloud-overcloud.md",
+      "title": "Undercloud and overcloud"
+    },
+    "concepts/what-is-nereus/": {
+      "goal": "Understand what Nereus is and what it is not",
+      "md": "concepts/what-is-nereus.md",
+      "title": "What Nereus is"
+    },
+    "guides/access/authentication/": {
+      "goal": "Turn on sign-in, log in as the initial admin, and give the realm a public host",
+      "md": "guides/access/authentication.md",
+      "title": "Turn on authentication"
+    },
+    "guides/access/authorization/": {
+      "goal": "Give a team a role on a Project, so its members may act there and others may not",
+      "md": "guides/access/authorization.md",
+      "title": "Say who may do what"
+    },
+    "guides/access/github-app/": {
+      "goal": "Connect a GitHub App to the installation and lend one repository to a consumer for an hour",
+      "md": "guides/access/github-app.md",
+      "title": "Prove a GitHub App is installed"
+    },
+    "guides/access/grant-access/": {
+      "goal": "Grant a Nereid the cloud roles it asks for, with your own login",
+      "md": "guides/access/grant-access.md",
+      "title": "Grant access"
+    },
+    "guides/access/tenancy/": {
+      "goal": "Build the tree of Organizations and Projects that every Workload, Environment and database names as its owner",
+      "md": "guides/access/tenancy.md",
+      "title": "Know whose each thing is"
+    },
+    "guides/build/cli-checkout/": {
+      "goal": "Put an editable nereus on the PATH from a checkout, with Tab completion",
+      "md": "guides/build/cli-checkout.md",
+      "title": "Run the CLI from a checkout"
+    },
+    "guides/build/conformance/": {
+      "goal": "Prove that a Nereid serves every verb of every kind of its reef and honours its contract",
+      "md": "guides/build/conformance.md",
+      "title": "Pass the conformance tests"
+    },
+    "guides/build/image/": {
+      "goal": "Build a Nereid's image with the labels that name its reef, push it and apply it",
+      "md": "guides/build/image.md",
+      "title": "Build a Nereid's image"
+    },
+    "guides/build/new-nereid/": {
+      "goal": "Start a new Nereid from the template, with its tests passing, ready for the Tool's work",
+      "md": "guides/build/new-nereid.md",
+      "title": "Start a new Nereid"
+    },
+    "guides/build/requires/": {
+      "goal": "Make a Nereid require another reef, so it is applied only once that reef has a Nereid",
+      "md": "guides/build/requires.md",
+      "title": "Require a reef"
+    },
+    "guides/operate/cli-update/": {
+      "goal": "Keep a nereus installed from a release up to date, or choose how it upgrades",
+      "md": "guides/operate/cli-update.md",
+      "title": "Keep the CLI up to date"
+    },
+    "guides/operate/cloud/": {
+      "goal": "Let the Nereid azure reach the cloud with your own login, after you read and approve its plan",
+      "md": "guides/operate/cloud.md",
+      "title": "Connect to the cloud"
+    },
+    "guides/operate/cluster/": {
+      "goal": "Prepare a cluster that offers what Nereus needs, on k3d or AKS",
+      "md": "guides/operate/cluster.md",
+      "title": "Prepare a cluster for Nereus"
+    },
+    "guides/operate/deploy-live/": {
+      "goal": "Upgrade the live cluster in place to the commit of main, then run its smoke test",
+      "md": "guides/operate/deploy-live.md",
+      "title": "Deploy main to the live cluster"
+    },
+    "guides/operate/edge/": {
+      "goal": "Publish a reef's endpoint at a hostname of your own domain, through a Cloudflare tunnel",
+      "md": "guides/operate/edge.md",
+      "title": "Publish at a hostname"
+    },
+    "guides/operate/helm/": {
+      "goal": "Install Nereus and a profile with two Helm charts, without nereus init",
+      "md": "guides/operate/helm.md",
+      "title": "Install with Helm"
+    },
+    "guides/operate/kept-cluster-update/": {
+      "goal": "Move one Nereid or the Nereus API of the kept cluster to a new build, without a rebuild",
+      "md": "guides/operate/kept-cluster-update.md",
+      "title": "Update the kept cluster without a rebuild"
+    },
+    "guides/operate/kept-cluster/": {
+      "goal": "Rebuild the kept cluster that runs Triton from nothing, with its public hostnames",
+      "md": "guides/operate/kept-cluster.md",
+      "title": "Rebuild the kept cluster"
+    },
+    "guides/operate/slo/": {
+      "goal": "See and change the time objective nereus init is measured against",
+      "md": "guides/operate/slo.md",
+      "title": "Meet the time SLO"
+    },
+    "guides/operate/undercloud/": {
+      "goal": "Create the undercloud, the local cluster whose public issuer a cloud trusts",
+      "md": "guides/operate/undercloud.md",
+      "title": "Prepare the undercloud"
+    },
+    "guides/reefs/catalog/": {
+      "goal": "Register what a repository says it runs and publishes, and check that it holds together",
+      "md": "guides/reefs/catalog.md",
+      "title": "Say what Nereus has"
+    },
+    "guides/reefs/golden-path/": {
+      "goal": "Run your own image in an Environment of its own, from docker build to a Pod that answers",
+      "md": "guides/reefs/golden-path.md",
+      "title": "Follow the golden path"
+    },
+    "guides/reefs/mcp/": {
+      "goal": "Reach the tools of the installed reefs from Claude Code or claude.ai through the Nereus API's /mcp",
+      "md": "guides/reefs/mcp.md",
+      "title": "Use the MCP server"
+    },
+    "guides/reefs/messaging/": {
+      "goal": "Give a project a topic and a queue on NATS, each with a Secret that says where to reach it",
+      "md": "guides/reefs/messaging.md",
+      "title": "Send messages"
+    },
+    "guides/reefs/metrics/": {
+      "goal": "See how each Nereid is doing, in the metrics the platform keeps",
+      "md": "guides/reefs/metrics.md",
+      "title": "Collect metrics"
+    },
+    "guides/reefs/registry/": {
+      "goal": "Run an image registry of your own in the cluster, publish an image to it and run that image",
+      "md": "guides/reefs/registry.md",
+      "title": "Run a registry"
+    },
+    "guides/reefs/release/": {
+      "goal": "Release a Helm chart into a namespace, with its values and its secrets",
+      "md": "guides/reefs/release.md",
+      "title": "Release a chart"
+    },
+    "guides/reefs/scm-connection/": {
+      "goal": "Connect an organisation of a source host to Nereus through a GitHub App, holding no key",
+      "md": "guides/reefs/scm-connection.md",
+      "title": "Connect an organisation"
+    },
+    "guides/reefs/scm-mirror/": {
+      "goal": "Copy a public Git repository into the cluster, kept in a Forgejo the platform runs",
+      "md": "guides/reefs/scm-mirror.md",
+      "title": "Mirror a repository"
+    },
+    "guides/reefs/secret-binding/": {
+      "goal": "Give a namespace a Kubernetes Secret made from a secret of the installation",
+      "md": "guides/reefs/secret-binding.md",
+      "title": "Use a secret in a namespace"
+    },
+    "guides/reefs/secrets/": {
+      "goal": "Keep a secret in the installation, encrypted on your machine before it leaves it",
+      "md": "guides/reefs/secrets.md",
+      "title": "Keep a secret"
+    },
+    "guides/reefs/team-room/": {
+      "goal": "Put your coding agent in the team's room on Triton, where the team's agents claim, ask and release",
+      "md": "guides/reefs/team-room.md",
+      "title": "Join the team's room"
+    },
+    "guides/troubleshoot/issuer-not-public/": {
+      "goal": "Fix a nereid apply azure that stops because the cluster's issuer is not public",
+      "md": "guides/troubleshoot/issuer-not-public.md",
+      "title": "The issuer is not public"
+    },
+    "guides/troubleshoot/name-taken/": {
+      "goal": "Fix an init that stops because the issuer storage account name is taken in Azure",
+      "md": "guides/troubleshoot/name-taken.md",
+      "title": "A name is taken"
+    },
+    "guides/troubleshoot/nereid-stops/": {
+      "goal": "Get a reef's commands working again when its Nereid has no pod serving",
+      "md": "guides/troubleshoot/nereid-stops.md",
+      "title": "When the Nereid stops"
+    },
+    "guides/troubleshoot/request-refused/": {
+      "goal": "Go on when a cloud request of an approved plan is refused for a missing right",
+      "md": "guides/troubleshoot/request-refused.md",
+      "title": "A cloud request is refused"
+    },
+    "guides/troubleshoot/see-what-happened/": {
+      "goal": "Find why a reef, a Nereid or one of its objects is not Ready, from the CLI down to the pod's log",
+      "md": "guides/troubleshoot/see-what-happened.md",
+      "title": "See what happened"
+    },
+    "project/decisions/": {
+      "goal": "Find the architecture decision that settles a question, with its status",
+      "md": "project/decisions.md",
+      "title": "Decisions"
+    },
+    "project/decks/": {
+      "goal": "Find the presentation deck for a topic and what it is for",
+      "md": "project/decks.md",
+      "title": "Decks"
+    },
+    "project/inception/": {
+      "goal": "How Nereus started: the vision, the goals and the MVP sequence of the Lean Inception",
+      "md": "project/inception.md",
+      "title": "Inception"
+    },
+    "project/research/": {
+      "goal": "Find the research note behind a choice of tool or design",
+      "md": "project/research.md",
+      "title": "Research"
+    },
+    "project/roadmap/": {
+      "goal": "Where Nereus is going: what is next, the idea radar and the ideas being refined",
+      "md": "project/roadmap.md",
+      "title": "Roadmap"
+    },
+    "project/specs/": {
+      "goal": "Find the spec that settles a slice or a design, with its status",
+      "md": "project/specs.md",
+      "title": "Specs"
+    },
+    "project/stand-ins/": {
+      "goal": "The workarounds the project uses until the platform offers the feature that replaces each one",
+      "md": "project/stand-ins.md",
+      "title": "Stand-ins"
+    },
+    "reference/checks/": {
+      "goal": "Every check make checks runs, and where its last result is kept",
+      "md": "reference/checks.md",
+      "title": "The checks"
+    },
+    "reference/glossary/": {
+      "goal": "Every word and acronym of Nereus, one line each",
+      "md": "reference/glossary.md",
+      "title": "Glossary"
+    },
+    "reference/init/": {
+      "goal": "What nereus init does, step by step, and what it leaves behind",
+      "md": "reference/init.md",
+      "title": "What init does"
+    },
+    "reference/installation/": {
+      "goal": "The installation's name, id and alias, and the rules that keep them",
+      "md": "reference/installation.md",
+      "title": "The installation"
+    },
+    "reference/metrics-reef/": {
+      "goal": "What the metrics reef's Nereid victoriametrics installs, what it scrapes and who reaches it",
+      "md": "reference/metrics-reef.md",
+      "title": "Inside the metrics reef"
+    },
+    "reference/profiles/": {
+      "goal": "The built-in profiles, what each installs, and how to apply one on a running installation",
+      "md": "reference/profiles.md",
+      "title": "The profiles"
+    },
+    "reference/reefs-and-nereids/": {
+      "goal": "How the CLI applies, lists and deletes a reef and a Nereid, and the objects behind them",
+      "md": "reference/reefs-and-nereids.md",
+      "title": "Reefs and Nereids"
+    },
+    "reference/reefs/authentication/": {
+      "goal": "Every command of the authentication reef",
+      "md": "reference/reefs/authentication.md",
+      "title": "authentication"
+    },
+    "reference/reefs/authorization/": {
+      "goal": "Every command of the authorization reef",
+      "md": "reference/reefs/authorization.md",
+      "title": "authorization"
+    },
+    "reference/reefs/build/": {
+      "goal": "Every command of the build reef",
+      "md": "reference/reefs/build.md",
+      "title": "build"
+    },
+    "reference/reefs/catalog/": {
+      "goal": "Every command of the catalog reef",
+      "md": "reference/reefs/catalog.md",
+      "title": "catalog"
+    },
+    "reference/reefs/database/": {
+      "goal": "Every command of the database reef",
+      "md": "reference/reefs/database.md",
+      "title": "database"
+    },
+    "reference/reefs/delivery/": {
+      "goal": "Every command of the delivery reef",
+      "md": "reference/reefs/delivery.md",
+      "title": "delivery"
+    },
+    "reference/reefs/edge/": {
+      "goal": "Every command of the edge reef",
+      "md": "reference/reefs/edge.md",
+      "title": "edge"
+    },
+    "reference/reefs/environment/": {
+      "goal": "Every command of the environment reef",
+      "md": "reference/reefs/environment.md",
+      "title": "environment"
+    },
+    "reference/reefs/ideas/": {
+      "goal": "Every command of the ideas reef",
+      "md": "reference/reefs/ideas.md",
+      "title": "ideas"
+    },
+    "reference/reefs/messaging/": {
+      "goal": "Every command of the messaging reef",
+      "md": "reference/reefs/messaging.md",
+      "title": "messaging"
+    },
+    "reference/reefs/portal/": {
+      "goal": "Every command of the portal reef",
+      "md": "reference/reefs/portal.md",
+      "title": "portal"
+    },
+    "reference/reefs/presentations/": {
+      "goal": "Every command of the presentations reef",
+      "md": "reference/reefs/presentations.md",
+      "title": "presentations"
+    },
+    "reference/reefs/registry/": {
+      "goal": "Every command of the registry reef",
+      "md": "reference/reefs/registry.md",
+      "title": "registry"
+    },
+    "reference/reefs/release/": {
+      "goal": "Every command of the release reef",
+      "md": "reference/reefs/release.md",
+      "title": "release"
+    },
+    "reference/reefs/scm/": {
+      "goal": "Every command of the scm reef",
+      "md": "reference/reefs/scm.md",
+      "title": "scm"
+    },
+    "reference/reefs/secrets/": {
+      "goal": "Every command of the secrets reef",
+      "md": "reference/reefs/secrets.md",
+      "title": "secrets"
+    },
+    "reference/reefs/teams/": {
+      "goal": "Every command of the teams reef",
+      "md": "reference/reefs/teams.md",
+      "title": "teams"
+    },
+    "reference/reefs/tenancy/": {
+      "goal": "Every command of the tenancy reef",
+      "md": "reference/reefs/tenancy.md",
+      "title": "tenancy"
+    },
+    "reference/reefs/usage/": {
+      "goal": "Every command of the usage reef",
+      "md": "reference/reefs/usage.md",
+      "title": "usage"
+    },
+    "reference/settings/": {
+      "goal": "Every key of the settings file ~/.config/nereus/init.yaml",
+      "md": "reference/settings.md",
+      "title": "The settings file"
+    },
+    "reference/what-is-built/": {
+      "goal": "What works today, what is planned and what is an idea",
+      "md": "reference/what-is-built.md",
+      "title": "What is built"
+    },
+    "references/": {
+      "goal": "Every technique, book, quote and reference the project mentions, and who brought it",
+      "md": "references.md",
+      "title": "References"
+    },
+    "research/board-tools/": {
+      "goal": "A snapshot of 2026-11-05: versions, activity and features change, so check them again before deciding.",
+      "md": "research/board-tools.md",
+      "title": "Board tools"
+    },
+    "research/kagent/": {
+      "goal": "Amphitrite is the Nereid that will give the platform its AI agents: a reef whose kind is Agent (plural agents), used by",
+      "md": "research/kagent.md",
+      "title": "kagent for Amphitrite"
+    },
+    "research/kamaji/": {
+      "goal": "Keep vCluster as the Nereid of today's Environments; register Kamaji as the candidate Nereid for an Environment, or a cl",
+      "md": "research/kamaji.md",
+      "title": "Kamaji or vCluster"
+    },
+    "research/nereid-sdk-metrics/": {
+      "goal": "Asked by the owner (2026-11-17), from a voice session.",
+      "md": "research/nereid-sdk-metrics.md",
+      "title": "Nereid SDK metrics"
+    },
+    "research/platform-orchestrators/": {
+      "goal": "Historical page (2026-10-19): it uses the model's words of that time (Interface, Implementation, platform); today's are",
+      "md": "research/platform-orchestrators.md",
+      "title": "Platform orchestrators"
+    },
+    "research/production-checklist/": {
+      "goal": "The list follows the production-grade infrastructure checklist in Yevgeniy Brikman's book Terraform: Up & Running: Writi",
+      "md": "research/production-checklist.md",
+      "title": "Production-grade checklist"
+    },
+    "specs/0001-first-slice/": {
+      "goal": "Status: Done (2026-10-17)",
+      "md": "specs/0001-first-slice.md",
+      "title": "First slice"
+    },
+    "specs/0002-reef-at-runtime/": {
+      "goal": "Status: Done (2026-10-17)",
+      "md": "specs/0002-reef-at-runtime.md",
+      "title": "Reef at runtime"
+    },
+    "specs/0003-nereid-conformance/": {
+      "goal": "Status: Proposed (2026-10-17)",
+      "md": "specs/0003-nereid-conformance.md",
+      "title": "Nereid conformance"
+    },
+    "specs/0004-init-time-slo/": {
+      "goal": "Status: Proposed (2026-10-18)",
+      "md": "specs/0004-init-time-slo.md",
+      "title": "Init time SLO"
+    },
+    "specs/0005-cloud-reef/": {
+      "goal": "Status: Accepted (2026-10-19)",
+      "md": "specs/0005-cloud-reef.md",
+      "title": "Cloud reef"
+    },
+    "specs/0006-installation-identity/": {
+      "goal": "Status: Proposed (2026-10-18)",
+      "md": "specs/0006-installation-identity.md",
+      "title": "Installation identity"
+    },
+    "specs/0007-invitation/": {
+      "goal": "Status: Proposed (2026-10-26)",
+      "md": "specs/0007-invitation.md",
+      "title": "Invitation"
+    },
+    "specs/0008-portal-first-slice/": {
+      "goal": "Status: Proposed (2026-10-31)",
+      "md": "specs/0008-portal-first-slice.md",
+      "title": "Portal first slice"
+    },
+    "specs/0009-build-security/": {
+      "goal": "Status: Accepted (the owner's word, 2026-11-05, #1006), with the decisions below taken by the owner; the code of #848 (t",
+      "md": "specs/0009-build-security.md",
+      "title": "Build security"
+    },
+    "specs/0010-build-trigger/": {
+      "goal": "Status: Proposed (2026-11-11)",
+      "md": "specs/0010-build-trigger.md",
+      "title": "Build trigger"
+    },
+    "specs/0011-authorization-first-slice/": {
+      "goal": "Status: Proposed (2026-11-15)",
+      "md": "specs/0011-authorization-first-slice.md",
+      "title": "Authorization first slice"
+    },
+    "specs/0012-presentations-first-slice/": {
+      "goal": "The walking skeleton of the presentations reef (ADR 0028, journey #1688): a phone drives a Session's step, another phone",
+      "md": "specs/0012-presentations-first-slice.md",
+      "title": "Presentations first slice"
+    },
+    "start/clean-up/": {
+      "goal": "Delete the Nereid and the cluster",
+      "md": "start/clean-up.md",
+      "title": "Clean up"
+    },
+    "start/first-reef/": {
+      "goal": "Apply a reef, the Nereid that serves it and the Mandate that binds them",
+      "md": "start/first-reef.md",
+      "title": "Apply a reef and its Nereid"
+    },
+    "start/init/": {
+      "goal": "Prepare a local cluster with nereus init",
+      "md": "start/init.md",
+      "title": "Prepare the cluster"
+    },
+    "start/install/": {
+      "goal": "Install the nereus CLI on Linux and check that it answers",
+      "md": "start/install.md",
+      "title": "Install the CLI"
+    },
+    "start/look-around/": {
+      "goal": "See the installation, its reefs and its Nereids",
+      "md": "start/look-around.md",
+      "title": "Look around"
+    },
+    "start/run/": {
+      "goal": "Run the commands a reef's Nereid adds to the CLI",
+      "md": "start/run.md",
+      "title": "Run its commands"
+    },
+    "start/settings/": {
+      "goal": "Write the settings file and see what init would do, with nothing created",
+      "md": "start/settings.md",
+      "title": "Write the settings"
+    },
+    "thinking-in-platforms/": {
+      "goal": "What Nereus takes from Kaspar von Grünberg and Luca Galante's book: a platform is the operating model of knowledge work,",
+      "md": "thinking-in-platforms.md",
+      "title": "Thinking in platforms"
+    },
+    "vision/": {
+      "goal": "The Nereus API in front of five planes, with the IDE, the CLI, a portal and agents as its clients",
+      "md": "vision.md",
+      "title": "Vision"
+    }
+  },
+  "prompts": {
+    "example": "In the Nereus docs page \"{title}\", section \"{section}\", this command:\n\n{command}\n\nExpected output:\n\n{output}\n\nExplain what it does and what to check before I run it.",
+    "page": "Read {url}, a page of the Nereus docs ({title}). Goal: {goal}. Guide me through it step by step, using only the commands on the page. Ask before any command that changes or deletes something."
+  },
+  "site_url": "https://docs.getnereus.dev/"
+}

@@ -1,0 +1,334 @@
+deck:
+  name: registry
+  title: "The registry reef"
+  subtitle: "Every command that runs an image registry in the cluster and publishes to it"
+  accent: "publishes to it"
+  pt:
+    title: "O reef registry"
+    subtitle: "Todos os comandos que rodam um registry de imagens no cluster e publicam nele"
+    accent: "publicam nele"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: registry
+    title: "Registry"
+    pt: {title: "Registry"}
+  - name: publish
+    title: "Publish"
+    pt: {title: "Publicar"}
+  - name: references
+    title: "References"
+    pt: {title: "Referências"}
+
+slides:
+  - name: cover
+    act: opening
+    cover: true
+    message: "The registry reef"
+    notes: |-
+      **The source of truth for the commands of the registry reef** (#847, ADR "The registry reef"). #1011 built the verbs of `Registry`; the slides still planned point to the issues that build them. The group is `registry.getnereus.dev/v1alpha1`, cluster-scoped. The Nereid registry (#22, #691) is another thing, under `nereus nereid`.
+    pt:
+      message: "O reef registry"
+      notes: |-
+        **A fonte da verdade dos comandos do reef registry** (#847, ADR "The registry reef"). A #1011 construiu os verbos do `Registry`; os slides ainda planejados apontam para as issues que os constroem. O grupo é `registry.getnereus.dev/v1alpha1`, com escopo de cluster. O registro de Nereids (#22, #691) é outra coisa, em `nereus nereid`.
+
+  - name: kinds
+    act: opening
+    topic: "the kinds"
+    message: "A Registry runs where images live, a Repository holds who may push"
+    accent: "who may push"
+    screen:
+      - "**`Registry`, the default kind:** `spec` has `owner`, `mandate` and `purge` (#1235); `status` has `nereid`, `pullAddress`, `internalAddress` and `namespace`"
+      - "**`Repository`:** `spec` has `registry` and `owner`; `status` has `image` and `pushIdentity`, a ServiceAccount whose tokens expire (#1010)"
+      - "**One writer per field:** the person writes `spec`, the Nereid writes `status`"
+    notes: |-
+      **The status of both kinds also has the common fields** (`observedGeneration`, `conditions`, `steps`). **`internalAddress` exists because a Pod cannot reach `localhost:<port>`:** builds and the delivery Nereid use it. `Repository` is #1013; a `Repository` name is unique per cluster in this slice.
+    pt:
+      topic: "os kinds"
+      message: "Um Registry roda onde as imagens ficam, um Repository diz quem pode publicar"
+      accent: "quem pode publicar"
+      screen:
+        - "**`Registry`, o kind padrão:** o `spec` tem `owner`, `mandate` e `purge` (#1235); o `status` tem `nereid`, `pullAddress`, `internalAddress` e `namespace`"
+        - "**`Repository`:** o `spec` tem `registry` e `owner`; o `status` tem `image` e `pushIdentity`, uma ServiceAccount cujos tokens expiram (#1010)"
+        - "**Um escritor por campo:** a pessoa escreve o `spec`, o Nereid escreve o `status`"
+      notes: |-
+        **O status dos dois kinds também tem os campos comuns** (`observedGeneration`, `conditions`, `steps`). **`internalAddress` existe porque um Pod não alcança `localhost:<port>`:** os builds e o Nereid de delivery usam esse endereço. O `Repository` é a #1013; nesta fatia, o nome de um `Repository` é único por cluster.
+
+  - name: registry-create
+    act: registry
+    topic: "registry create"
+    status: built
+    issue: 1011
+    message: "create asks for a registry, and names who makes it"
+    accent: "who makes it"
+    terminal:
+      steps:
+        - comment: "A registry, through the reef's default Mandate"
+          run: "nereus registry create main"
+          output: |-
+            secrets/vaults/registries created
+            registry/registries/main created (mandate: zot, nereid: zot)
+
+            Next steps:
+
+              nereus registry get main
+        - comment: "What it would write, as apply takes it, changing nothing"
+          run: "nereus registry create main"
+          options: ["--owner project/shop", "--dry-run", "--output yaml"]
+          output: |-
+            apiVersion: registry.getnereus.dev/v1alpha1
+            kind: Registry
+            metadata:
+              name: main
+            spec:
+              owner:
+                kind: Project
+                name: shop
+    notes: |-
+      **`--owner` and `--mandate` are optional.** With no `--mandate`, the reef's default one; an owner, when named, must exist in the tenancy tree. Who may create is not enforced yet: a Stand-in until the authorization reef (#897) and ADR 0018 (the Nereus API as the one door). The zot Nereid and its `zot` Mandate are #1012. **The vault `registries` is created when missing (#1015):** the zot Nereid seals each Registry's read credential there.
+    pt:
+      topic: "registry create"
+      message: "O create pede um registry e diz quem o faz"
+      accent: "quem o faz"
+      notes: |-
+        **`--owner` e `--mandate` são opcionais.** Sem `--mandate`, vale o Mandate padrão do reef; um owner, quando informado, precisa existir na árvore da tenancy. Quem pode criar ainda não é verificado: um Stand-in até o reef de autorização (#897) e o ADR 0018 (a API do Nereus como única porta). O Nereid zot e o seu Mandate `zot` são a #1012. **O vault `registries` é criado quando falta (#1015):** o Nereid zot sela ali a credencial de leitura de cada Registry.
+
+  - name: registry-create-exists
+    act: registry
+    topic: "create refuses"
+    status: built
+    issue: 1011
+    message: "create fails when it exists, and lists what to run"
+    accent: "lists what to run"
+    terminal:
+      steps:
+        - comment: "The same name twice"
+          run: "nereus registry create main"
+          output: |-
+            ✗ registry/registries/main already exists. To change it, run:
+              # write it as a file, then apply the file
+              nereus registry create main --dry-run --output yaml > main.yaml
+              nereus registry apply --from-file main.yaml
+    dependsOn: [registry-create]
+    notes: |-
+      **ADR 0013 (command conventions):** `create` builds from flags and fails when the object exists; `apply` takes files.
+    pt:
+      topic: "create recusa"
+      message: "O create falha quando já existe e lista o que rodar"
+      accent: "lista o que rodar"
+      notes: |-
+        **ADR 0013 (convenções de comandos):** `create` constrói a partir de flags e falha quando o objeto existe; `apply` aceita arquivos.
+
+  - name: registry-get
+    act: registry
+    topic: "registry get"
+    status: built
+    issue: 1011
+    message: "get gives the address an image reference uses"
+    accent: "an image reference"
+    terminal:
+      steps:
+        - comment: "Who runs it, the address to pull from, and whether it is ready"
+          run: "nereus registry get main"
+          output: |-
+            NAME  NEREID  PURGE  PULL-ADDRESS     READY
+            main  zot     168h   localhost:31874  True
+
+            credential: secret registries/main-pull (vault registries)
+
+            localhost:31874 is a NodePort, for an image reference on this cluster's nodes. Reading it takes the credential above.
+
+            Next steps:
+
+              nereus registry repository publish hello --registry main --image hello:v1
+    dependsOn: [registry-create]
+    notes: |-
+      **Reading images takes the Registry's read credential (#1015):** zot answers no anonymous read; the Nereid seals the credential into the vault `registries` as `registries/<name>-pull`, and a Delivery asks for it from its Environment. **The port is allocated by Kubernetes,** and the Nereid copies it into `status.pullAddress`. A Registry reads Ready once the zot Nereid exists (#1012), and the `publish` of its next step is #1013. `--watch` follows it until its Nereid is done.
+    pt:
+      topic: "registry get"
+      message: "O get dá o endereço que uma referência de imagem usa"
+      accent: "uma referência de imagem"
+      notes: |-
+        **Ler imagens exige a credencial de leitura do Registry (#1015):** o zot não atende leitura anônima; o Nereid sela a credencial no vault `registries` como `registries/<name>-pull`, e uma Delivery a pede a partir do seu Environment. **A porta é alocada pelo Kubernetes,** e o Nereid a copia para `status.pullAddress`. Um Registry fica Ready quando o Nereid zot existir (#1012), e o `publish` do próximo passo é a #1013. O `--watch` acompanha até o Nereid terminar.
+
+  - name: registry-list
+    act: registry
+    topic: "registry list"
+    status: built
+    issue: 1011
+    message: "list shows every registry, one line each"
+    accent: "one line each"
+    terminal:
+      steps:
+        - comment: "Every registry, in alphabetical order"
+          run: "nereus registry list"
+          output: |-
+            NAME  NEREID  PURGE  PULL-ADDRESS     READY
+            main  zot     168h   localhost:31874  True
+
+            Next steps:
+
+              nereus registry get main
+    dependsOn: [registry-create]
+    notes: |-
+      **The columns are `get`'s.** `--output yaml` prints what `apply` takes, and `--sort-by` takes kubectl's path (ADR 0013).
+    pt:
+      topic: "registry list"
+      message: "O list mostra todos os registries, uma linha cada"
+      accent: "uma linha cada"
+      notes: |-
+        **As colunas são as do `get`.** `--output yaml` imprime o que o `apply` aceita, e `--sort-by` usa o caminho do kubectl (ADR 0013).
+
+  - name: registry-apply
+    act: registry
+    topic: "registry apply"
+    status: built
+    issue: 1011
+    message: "apply takes files, and waits for the Nereid"
+    accent: "takes files"
+    terminal:
+      steps:
+        - comment: "Create or update from a file or a folder, and return at once"
+          run: "nereus registry apply"
+          options: ["--from-file main.yaml", "--wait false"]
+          output: |-
+            registry/registries/main created
+
+            Next steps:
+
+              nereus registry list
+    dependsOn: [registry-create]
+    notes: |-
+      **The same file again prints `unchanged`.** With no `--wait=false`, it waits until the Nereid answers each Registry Ready and fails with the Nereid's reason. `--dry-run` says what would change.
+    pt:
+      topic: "registry apply"
+      message: "O apply aceita arquivos e espera o Nereid"
+      accent: "aceita arquivos"
+      notes: |-
+        **O mesmo arquivo de novo imprime `unchanged`.** Sem `--wait=false`, ele espera o Nereid responder Ready para cada Registry e falha com o motivo dado pelo Nereid. `--dry-run` diz o que mudaria.
+
+  - name: registry-delete
+    act: registry
+    topic: "registry delete"
+    status: built
+    issue: 1011
+    message: "delete removes the registry and what its Nereid made"
+    accent: "what its Nereid made"
+    terminal:
+      steps:
+        - comment: "Delete it, and wait until it is gone"
+          run: "nereus registry delete main"
+          output: |-
+            registry/registries/main deleted
+
+            Next steps:
+
+              nereus registry list
+    dependsOn: [registry-create]
+    notes: |-
+      **A delete will be refused while Repositories exist,** with the command that frees it; that refusal comes with the `Repository` kind in #1013. `--dry-run` changes nothing, and `--wait=false` returns while it is Terminating.
+    pt:
+      topic: "registry delete"
+      message: "O delete remove o registry e o que o Nereid dele fez"
+      accent: "o que o Nereid dele fez"
+      notes: |-
+        **O delete será recusado enquanto existirem Repositories,** com o comando que libera; essa recusa vem com o kind `Repository` na #1013. `--dry-run` não muda nada, e `--wait=false` retorna enquanto ele está em Terminating.
+
+  - name: registry-purge
+    act: registry
+    topic: "registry purge"
+    status: built
+    issue: 1235
+    message: "A registry purges, when set, the images no Delivery runs"
+    accent: "no Delivery runs"
+    terminal:
+      steps:
+        - comment: "A registry that deletes the images no Delivery runs, a week after they were built"
+          run: "nereus registry create main"
+          options: ["--purge-unused 168h"]
+          output: |-
+            registry/registries/main created (mandate: zot, nereid: zot; purge: images no Delivery runs, after 168h)
+
+            Next steps:
+
+              nereus registry get main
+        - comment: "What its Nereid would delete, what it keeps and why, changing nothing"
+          run: "nereus registry purge main"
+          options: ["--dry-run"]
+          output: |-
+            Would delete 1 image no Delivery runs and older than 168h:
+              hello@sha256:6f1a2c9d0b3e...   created 2026-10-01T10:00:00Z
+            Kept 2 images: hello@sha256:9c4e7b1a5d2f... (Delivery hello-dev; the newest of its Repository), hello@sha256:2b8d4f6e1c3a... (Delivery hello-dev, previous)
+            Checked by its Nereid at 2026-11-08T10:00:00Z.
+            Nothing changed (--dry-run).
+
+            Next steps:
+
+              nereus registry purge main
+    dependsOn: [registry-create]
+    notes: |-
+      **Off unless `spec.purge.unusedAfter` is set.** Kept: what each live Delivery runs and ran just before (a rollback still finds it), the newest image of each Repository (the last Build), and any image of unknown age; the rest goes once older than `unusedAfter`, by digest, so its tags go with it, and zot's gc frees the blobs later. The kubernetes Nereid writes the digests in use on each Repository's `status.inUse`; a Repository without it is left alone, and the mirrored images are never touched. Its Nereid checks once a minute; `purge` without `--dry-run` asks for a check now.
+    pt:
+      topic: "registry purge"
+      message: "Um registry apaga, quando configurado, as imagens que nenhuma Delivery roda"
+      accent: "nenhuma Delivery roda"
+      notes: |-
+        **Desligado até `spec.purge.unusedAfter` ser definido.** Ficam: o que cada Delivery viva roda e rodou logo antes (um rollback ainda encontra a imagem), a imagem mais nova de cada Repository (o último Build) e qualquer imagem de idade desconhecida; o resto sai quando passa de `unusedAfter`, por digest, então as tags vão junto, e o gc do zot libera os blobs depois. O Nereid kubernetes escreve os digests em uso no `status.inUse` de cada Repository; um Repository sem esse campo fica intocado, e as imagens espelhadas nunca são tocadas. O Nereid verifica uma vez por minuto; `purge` sem `--dry-run` pede uma verificação agora.
+
+  - name: repository-publish
+    act: publish
+    topic: "repository publish"
+    status: built
+    issue: 1013
+    message: "publish pushes an image with the platform's credential"
+    accent: "the platform's credential"
+    terminal:
+      steps:
+        - comment: "The first tag of a repository"
+          run: "nereus registry repository publish hello"
+          options: ["--registry main", "--image hello:v1"]
+          output: |-
+            registry/registries/main/repositories/hello created
+            registry/registries/main/repositories/hello/tags/v1 published (sha256:ab12…)
+
+            Next steps:
+
+              kubectl run hello --image localhost:31874/hello:v1
+        - comment: "A tag is never overwritten"
+          run: "nereus registry repository publish hello"
+          options: ["--registry main", "--image hello:v1"]
+          output: |-
+            ✗ registry/registries/main/repositories/hello/tags/v1 already exists, and a push token cannot overwrite a tag. To publish, run:
+              # the same image under a new tag
+              nereus registry repository publish hello --registry main --image hello:v2
+    dependsOn: [registry-get]
+    notes: |-
+      **The person uses only their own login.** The CLI, on the kubeconfig as ADR 0018 (the Nereus API as the one door) allows until a group moves: applies the `Repository`, waits for Ready, asks a token of the Repository's push identity, of ten minutes (#1010), opens a `port-forward`, pushes with crane, the token as a Bearer, from a temporary folder removed on exit, and reads the digest back with the Registry's read credential. The next steps become `workload deploy` once the last sub-issue of #847 lands.
+    pt:
+      topic: "repository publish"
+      message: "O publish envia uma imagem com a credencial da plataforma"
+      accent: "a credencial da plataforma"
+      notes: |-
+        **A pessoa usa só o próprio login.** O CLI, no kubeconfig, como o ADR 0018 (a API do Nereus como única porta) permite até um grupo migrar: aplica o `Repository`, espera o Ready, pede um token da identidade de push do Repository, de dez minutos (#1010), abre um `port-forward`, publica com o crane, o token como Bearer, de uma pasta temporária removida na saída, e lê o digest de volta com a credencial de leitura do Registry. Os próximos passos viram `workload deploy` quando a última sub-issue do #847 entrar.
+
+  - name: credits
+    act: references
+    topic: "references"
+    message: "Where the ideas came from"
+    accent: "the ideas"
+    screen:
+      - "**[zot](https://zotregistry.dev/):** the first Nereid's registry"
+      - "**[Kubernetes, NodePort](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport):** the port Kubernetes allocates"
+    notes: |-
+      **The full credits are in the ADR of this reef.**
+    pt:
+      topic: "referências"
+      message: "De onde vieram as ideias"
+      accent: "as ideias"
+      screen:
+        - "**[zot](https://zotregistry.dev/):** o registry do primeiro Nereid"
+        - "**[Kubernetes, NodePort](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport):** a porta que o Kubernetes aloca"
+      notes: |-
+        **Os créditos completos estão no ADR deste reef.**

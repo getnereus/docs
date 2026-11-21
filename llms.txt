@@ -1,0 +1,181 @@
+# Nereus
+
+> A composable API platform: reefs add the APIs, Nereids look after them, installed at runtime
+
+## Home
+
+- [Home](https://docs.getnereus.dev/index.md): Know what Nereus is and where to start
+
+## Start
+
+- [Install the CLI](https://docs.getnereus.dev/start/install.md): Install the nereus CLI on Linux and check that it answers
+- [Write the settings](https://docs.getnereus.dev/start/settings.md): Write the settings file and see what init would do, with nothing created
+- [Prepare the cluster](https://docs.getnereus.dev/start/init.md): Prepare a local cluster with nereus init
+- [Look around](https://docs.getnereus.dev/start/look-around.md): See the installation, its reefs and its Nereids
+- [Apply a reef and its Nereid](https://docs.getnereus.dev/start/first-reef.md): Apply a reef, the Nereid that serves it and the Mandate that binds them
+- [Run its commands](https://docs.getnereus.dev/start/run.md): Run the commands a reef's Nereid adds to the CLI
+- [Clean up](https://docs.getnereus.dev/start/clean-up.md): Delete the Nereid and the cluster
+
+## Concepts
+
+- [What Nereus is](https://docs.getnereus.dev/concepts/what-is-nereus.md): Understand what Nereus is and what it is not
+- [Reef, Nereid and Mandate](https://docs.getnereus.dev/concepts/model.md): Understand reefs, Nereids and Mandates, the three words of the Nereus model
+- [Runtime install and profiles](https://docs.getnereus.dev/concepts/runtime-and-profiles.md): Understand how reefs and Nereids are installed at runtime and what a profile is
+- [Undercloud and overcloud](https://docs.getnereus.dev/concepts/undercloud-overcloud.md): Understand the undercloud and the overcloud
+- [Tenancy and access](https://docs.getnereus.dev/concepts/tenancy-and-access.md): Understand whose each thing is and who may do what
+- [The Nereus API](https://docs.getnereus.dev/concepts/nereus-api.md): Understand the Nereus API and how the CLI and the portal use it
+
+## Guides
+
+- [Keep the CLI up to date](https://docs.getnereus.dev/guides/operate/cli-update.md): Keep a nereus installed from a release up to date, or choose how it upgrades
+- [Prepare a cluster for Nereus](https://docs.getnereus.dev/guides/operate/cluster.md): Prepare a cluster that offers what Nereus needs, on k3d or AKS
+- [Install with Helm](https://docs.getnereus.dev/guides/operate/helm.md): Install Nereus and a profile with two Helm charts, without nereus init
+- [Deploy main to the live cluster](https://docs.getnereus.dev/guides/operate/deploy-live.md): Upgrade the live cluster in place to the commit of main, then run its smoke test
+- [Rebuild the kept cluster](https://docs.getnereus.dev/guides/operate/kept-cluster.md): Rebuild the kept cluster that runs Triton from nothing, with its public hostnames
+- [Update the kept cluster without a rebuild](https://docs.getnereus.dev/guides/operate/kept-cluster-update.md): Move one Nereid or the Nereus API of the kept cluster to a new build, without a rebuild
+- [Meet the time SLO](https://docs.getnereus.dev/guides/operate/slo.md): See and change the time objective nereus init is measured against
+- [Prepare the undercloud](https://docs.getnereus.dev/guides/operate/undercloud.md): Create the undercloud, the local cluster whose public issuer a cloud trusts
+- [Connect to the cloud](https://docs.getnereus.dev/guides/operate/cloud.md): Let the Nereid azure reach the cloud with your own login, after you read and approve its plan
+- [Publish at a hostname](https://docs.getnereus.dev/guides/operate/edge.md): Publish a reef's endpoint at a hostname of your own domain, through a Cloudflare tunnel
+- [Turn on authentication](https://docs.getnereus.dev/guides/access/authentication.md): Turn on sign-in, log in as the initial admin, and give the realm a public host
+- [Grant access](https://docs.getnereus.dev/guides/access/grant-access.md): Grant a Nereid the cloud roles it asks for, with your own login
+- [Say who may do what](https://docs.getnereus.dev/guides/access/authorization.md): Give a team a role on a Project, so its members may act there and others may not
+- [Know whose each thing is](https://docs.getnereus.dev/guides/access/tenancy.md): Build the tree of Organizations and Projects that every Workload, Environment and database names as its owner
+- [Prove a GitHub App is installed](https://docs.getnereus.dev/guides/access/github-app.md): Connect a GitHub App to the installation and lend one repository to a consumer for an hour
+- [Keep a secret](https://docs.getnereus.dev/guides/reefs/secrets.md): Keep a secret in the installation, encrypted on your machine before it leaves it
+- [Use a secret in a namespace](https://docs.getnereus.dev/guides/reefs/secret-binding.md): Give a namespace a Kubernetes Secret made from a secret of the installation
+- [Release a chart](https://docs.getnereus.dev/guides/reefs/release.md): Release a Helm chart into a namespace, with its values and its secrets
+- [Run a registry](https://docs.getnereus.dev/guides/reefs/registry.md): Run an image registry of your own in the cluster, publish an image to it and run that image
+- [Say what Nereus has](https://docs.getnereus.dev/guides/reefs/catalog.md): Register what a repository says it runs and publishes, and check that it holds together
+- [Follow the golden path](https://docs.getnereus.dev/guides/reefs/golden-path.md): Run your own image in an Environment of its own, from docker build to a Pod that answers
+- [Collect metrics](https://docs.getnereus.dev/guides/reefs/metrics.md): See how each Nereid is doing, in the metrics the platform keeps
+- [Connect an organisation](https://docs.getnereus.dev/guides/reefs/scm-connection.md): Connect an organisation of a source host to Nereus through a GitHub App, holding no key
+- [Mirror a repository](https://docs.getnereus.dev/guides/reefs/scm-mirror.md): Copy a public Git repository into the cluster, kept in a Forgejo the platform runs
+- [Send messages](https://docs.getnereus.dev/guides/reefs/messaging.md): Give a project a topic and a queue on NATS, each with a Secret that says where to reach it
+- [Join the team's room](https://docs.getnereus.dev/guides/reefs/team-room.md): Put your coding agent in the team's room on Triton, where the team's agents claim, ask and release
+- [Use the MCP server](https://docs.getnereus.dev/guides/reefs/mcp.md): Reach the tools of the installed reefs from Claude Code or claude.ai through the Nereus API's /mcp
+- [Run the CLI from a checkout](https://docs.getnereus.dev/guides/build/cli-checkout.md): Put an editable nereus on the PATH from a checkout, with Tab completion
+- [Start a new Nereid](https://docs.getnereus.dev/guides/build/new-nereid.md): Start a new Nereid from the template, with its tests passing, ready for the Tool's work
+- [Build a Nereid's image](https://docs.getnereus.dev/guides/build/image.md): Build a Nereid's image with the labels that name its reef, push it and apply it
+- [Require a reef](https://docs.getnereus.dev/guides/build/requires.md): Make a Nereid require another reef, so it is applied only once that reef has a Nereid
+- [Pass the conformance tests](https://docs.getnereus.dev/guides/build/conformance.md): Prove that a Nereid serves every verb of every kind of its reef and honours its contract
+- [A name is taken](https://docs.getnereus.dev/guides/troubleshoot/name-taken.md): Fix an init that stops because the issuer storage account name is taken in Azure
+- [When the Nereid stops](https://docs.getnereus.dev/guides/troubleshoot/nereid-stops.md): Get a reef's commands working again when its Nereid has no pod serving
+- [See what happened](https://docs.getnereus.dev/guides/troubleshoot/see-what-happened.md): Find why a reef, a Nereid or one of its objects is not Ready, from the CLI down to the pod's log
+- [The issuer is not public](https://docs.getnereus.dev/guides/troubleshoot/issuer-not-public.md): Fix a nereid apply azure that stops because the cluster's issuer is not public
+- [A cloud request is refused](https://docs.getnereus.dev/guides/troubleshoot/request-refused.md): Go on when a cloud request of an approved plan is refused for a missing right
+
+## Reference
+
+- [CLI](https://docs.getnereus.dev/specs/cli/index.html)
+- [authentication](https://docs.getnereus.dev/reference/reefs/authentication.md): Every command of the authentication reef
+- [authorization](https://docs.getnereus.dev/reference/reefs/authorization.md): Every command of the authorization reef
+- [build](https://docs.getnereus.dev/reference/reefs/build.md): Every command of the build reef
+- [catalog](https://docs.getnereus.dev/reference/reefs/catalog.md): Every command of the catalog reef
+- [database](https://docs.getnereus.dev/reference/reefs/database.md): Every command of the database reef
+- [delivery](https://docs.getnereus.dev/reference/reefs/delivery.md): Every command of the delivery reef
+- [edge](https://docs.getnereus.dev/reference/reefs/edge.md): Every command of the edge reef
+- [environment](https://docs.getnereus.dev/reference/reefs/environment.md): Every command of the environment reef
+- [ideas](https://docs.getnereus.dev/reference/reefs/ideas.md): Every command of the ideas reef
+- [messaging](https://docs.getnereus.dev/reference/reefs/messaging.md): Every command of the messaging reef
+- [portal](https://docs.getnereus.dev/reference/reefs/portal.md): Every command of the portal reef
+- [presentations](https://docs.getnereus.dev/reference/reefs/presentations.md): Every command of the presentations reef
+- [registry](https://docs.getnereus.dev/reference/reefs/registry.md): Every command of the registry reef
+- [release](https://docs.getnereus.dev/reference/reefs/release.md): Every command of the release reef
+- [scm](https://docs.getnereus.dev/reference/reefs/scm.md): Every command of the scm reef
+- [secrets](https://docs.getnereus.dev/reference/reefs/secrets.md): Every command of the secrets reef
+- [teams](https://docs.getnereus.dev/reference/reefs/teams.md): Every command of the teams reef
+- [tenancy](https://docs.getnereus.dev/reference/reefs/tenancy.md): Every command of the tenancy reef
+- [usage](https://docs.getnereus.dev/reference/reefs/usage.md): Every command of the usage reef
+- [The settings file](https://docs.getnereus.dev/reference/settings.md): Every key of the settings file ~/.config/nereus/init.yaml
+- [The installation](https://docs.getnereus.dev/reference/installation.md): The installation's name, id and alias, and the rules that keep them
+- [What init does](https://docs.getnereus.dev/reference/init.md): What nereus init does, step by step, and what it leaves behind
+- [The profiles](https://docs.getnereus.dev/reference/profiles.md): The built-in profiles, what each installs, and how to apply one on a running installation
+- [Reefs and Nereids](https://docs.getnereus.dev/reference/reefs-and-nereids.md): How the CLI applies, lists and deletes a reef and a Nereid, and the objects behind them
+- [Inside the metrics reef](https://docs.getnereus.dev/reference/metrics-reef.md): What the metrics reef's Nereid victoriametrics installs, what it scrapes and who reaches it
+- [What is built](https://docs.getnereus.dev/reference/what-is-built.md): What works today, what is planned and what is an idea
+- [Glossary](https://docs.getnereus.dev/reference/glossary.md): Every word and acronym of Nereus, one line each
+- [The checks](https://docs.getnereus.dev/reference/checks.md): Every check make checks runs, and where its last result is kept
+
+## Optional
+
+- [Vision](https://docs.getnereus.dev/vision.md): The Nereus API in front of five planes, with the IDE, the CLI, a portal and agents as its clients
+- [Thinking in platforms](https://docs.getnereus.dev/thinking-in-platforms.md): What Nereus takes from Kaspar von Grünberg and Luca Galante's book: a platform is the operating model of knowledge work,
+- [Roadmap](https://docs.getnereus.dev/project/roadmap.md): Where Nereus is going: what is next, the idea radar and the ideas being refined
+- [Inception](https://docs.getnereus.dev/project/inception.md): How Nereus started: the vision, the goals and the MVP sequence of the Lean Inception
+- [Stand-ins](https://docs.getnereus.dev/project/stand-ins.md): The workarounds the project uses until the platform offers the feature that replaces each one
+- [Decisions](https://docs.getnereus.dev/project/decisions.md): Find the architecture decision that settles a question, with its status
+- [Record architecture decisions](https://docs.getnereus.dev/adr/0001-record-architecture-decisions.md): Status: Accepted (2026-10-17, rewritten 2026-10-25)
+- [Conceptual model](https://docs.getnereus.dev/adr/0002-conceptual-model.md): Status: Proposed (2026-10-17, rewritten 2026-10-25)
+- [Reefs and Nereids added at runtime](https://docs.getnereus.dev/adr/0003-init-and-nereids-at-runtime.md): Status: Proposed (2026-10-17, rewritten 2026-10-25)
+- [Reefs extend the CLI](https://docs.getnereus.dev/adr/0004-reefs-extend-the-cli.md): Status: Proposed (2026-10-17, rewritten 2026-10-25)
+- [One writer per field](https://docs.getnereus.dev/adr/0005-one-writer-per-field.md): Status: Proposed (2026-10-17)
+- [Authentication reef](https://docs.getnereus.dev/adr/0006-authentication-reef.md): Status: Proposed (2026-10-17, rewritten 2026-10-25, 2026-11-09 and 2026-11-12, amended 2026-11-15)
+- [Public by design](https://docs.getnereus.dev/adr/0007-public-by-design.md): Status: Accepted (2026-10-17)
+- [CLI in Python](https://docs.getnereus.dev/adr/0008-cli-in-python.md): Status: Accepted (2026-10-17)
+- [API group per reef](https://docs.getnereus.dev/adr/0009-api-group.md): Status: Proposed (2026-10-17, rewritten 2026-10-25; the 2026-10-17 version was Accepted)
+- [Reefs at runtime](https://docs.getnereus.dev/adr/0010-reefs-at-runtime.md): Status: Proposed (2026-10-17, rewritten 2026-10-25)
+- [Reefs, Nereids and Mandates](https://docs.getnereus.dev/adr/0011-reefs-nereids-and-mandates.md): Status: Proposed (2026-10-17, rewritten 2026-10-25)
+- [Error messages](https://docs.getnereus.dev/adr/0012-error-messages.md): Status: Proposed (2026-10-19)
+- [Command conventions](https://docs.getnereus.dev/adr/0013-command-conventions.md): Status: Proposed (2026-10-18, rewritten 2026-10-25, amended 2026-10-29, 2026-11-03 and 2026-11-15)
+- [Profiles](https://docs.getnereus.dev/adr/0014-profiles.md): Status: Proposed (2026-10-26)
+- [Tenancy](https://docs.getnereus.dev/adr/0015-tenancy.md): Status: Proposed (2026-10-30, rewritten 2026-11-12, amended 2026-11-15)
+- [The catalog reef](https://docs.getnereus.dev/adr/0016-catalog-reef.md): Status: Proposed (2026-10-30, rewritten 2026-11-03)
+- [Resource reefs](https://docs.getnereus.dev/adr/0017-resource-reefs.md): Status: Accepted (2026-11-14, by the owner; proposed 2026-10-30, rewritten 2026-11-12)
+- [The Nereus API](https://docs.getnereus.dev/adr/0018-nereus-api.md): Status: Proposed (2026-10-30)
+- [Messaging reef](https://docs.getnereus.dev/adr/0019-messaging-reef.md): Status: Proposed (2026-10-26)
+- [Delivery reef](https://docs.getnereus.dev/adr/0020-delivery-reef.md): Status: Proposed (2026-11-03)
+- [Registry reef](https://docs.getnereus.dev/adr/0021-registry-reef.md): Status: Proposed (2026-11-05)
+- [Reef screens in the portal](https://docs.getnereus.dev/adr/0022-reef-screens-in-the-portal.md): Status: Accepted (2026-11-08)
+- [External registry push credential](https://docs.getnereus.dev/adr/0023-external-registry-push-credential.md): Status: Proposed
+- [SCM reef](https://docs.getnereus.dev/adr/0024-scm-reef.md): Status: Proposed
+- [Metrics intake](https://docs.getnereus.dev/adr/0025-metrics-intake.md): Status: Accepted (2026-11-14, by the owner; proposed the same day)
+- [Environment reef](https://docs.getnereus.dev/adr/0026-environment-reef.md): Status: Proposed (2026-11-14)
+- [Teams, roles and Users](https://docs.getnereus.dev/adr/0027-teams-roles-and-users.md): Status: Accepted (2026-11-16)
+- [Presentations reef](https://docs.getnereus.dev/adr/0028-presentations-reef.md): Status: Accepted (2026-11-16)
+- [MCP tools](https://docs.getnereus.dev/adr/0029-mcp-tools.md): Status: Proposed
+- [Triton, the messaging Nereid](https://docs.getnereus.dev/adr/0030-triton-messaging-nereid.md): Status: Proposed
+- [Specs](https://docs.getnereus.dev/project/specs.md): Find the spec that settles a slice or a design, with its status
+- [First slice](https://docs.getnereus.dev/specs/0001-first-slice.md): Status: Done (2026-10-17)
+- [Reef at runtime](https://docs.getnereus.dev/specs/0002-reef-at-runtime.md): Status: Done (2026-10-17)
+- [Nereid conformance](https://docs.getnereus.dev/specs/0003-nereid-conformance.md): Status: Proposed (2026-10-17)
+- [Init time SLO](https://docs.getnereus.dev/specs/0004-init-time-slo.md): Status: Proposed (2026-10-18)
+- [Cloud reef](https://docs.getnereus.dev/specs/0005-cloud-reef.md): Status: Accepted (2026-10-19)
+- [Installation identity](https://docs.getnereus.dev/specs/0006-installation-identity.md): Status: Proposed (2026-10-18)
+- [Invitation](https://docs.getnereus.dev/specs/0007-invitation.md): Status: Proposed (2026-10-26)
+- [Portal first slice](https://docs.getnereus.dev/specs/0008-portal-first-slice.md): Status: Proposed (2026-10-31)
+- [Build security](https://docs.getnereus.dev/specs/0009-build-security.md): Status: Accepted (the owner's word, 2026-11-05, #1006), with the decisions below taken by the owner; the code of #848 (t
+- [Build trigger](https://docs.getnereus.dev/specs/0010-build-trigger.md): Status: Proposed (2026-11-11)
+- [Authorization first slice](https://docs.getnereus.dev/specs/0011-authorization-first-slice.md): Status: Proposed (2026-11-15)
+- [Presentations first slice](https://docs.getnereus.dev/specs/0012-presentations-first-slice.md): The walking skeleton of the presentations reef (ADR 0028, journey #1688): a phone drives a Session's step, another phone
+- [Research](https://docs.getnereus.dev/project/research.md): Find the research note behind a choice of tool or design
+- [Platform orchestrators](https://docs.getnereus.dev/research/platform-orchestrators.md): Historical page (2026-10-19): it uses the model's words of that time (Interface, Implementation, platform); today's are
+- [kagent for Amphitrite](https://docs.getnereus.dev/research/kagent.md): Amphitrite is the Nereid that will give the platform its AI agents: a reef whose kind is Agent (plural agents), used by
+- [Kamaji or vCluster](https://docs.getnereus.dev/research/kamaji.md): Keep vCluster as the Nereid of today's Environments; register Kamaji as the candidate Nereid for an Environment, or a cl
+- [Production-grade checklist](https://docs.getnereus.dev/research/production-checklist.md): The list follows the production-grade infrastructure checklist in Yevgeniy Brikman's book Terraform: Up & Running: Writi
+- [Board tools](https://docs.getnereus.dev/research/board-tools.md): A snapshot of 2026-11-05: versions, activity and features change, so check them again before deciding.
+- [Nereid SDK metrics](https://docs.getnereus.dev/research/nereid-sdk-metrics.md): Asked by the owner (2026-11-17), from a voice session.
+- [Decks](https://docs.getnereus.dev/project/decks.md): Find the presentation deck for a topic and what it is for
+- [References](https://docs.getnereus.dev/references.md): Every technique, book, quote and reference the project mentions, and who brought it
+- [Agent guides](https://docs.getnereus.dev/agent/index.md): One page per topic, read on demand.
+- [The CLI design](https://docs.getnereus.dev/agent/cli.md): The target CLI, from the owner's voice session of 2026-10-25 (raw data in Drive #pontos/raw/2026-10-25, files 38 to 47;
+- [The docs](https://docs.getnereus.dev/agent/docs.md): The style guide of the docs site (make docs), from the docs restructure (#1985): one information architecture, one forma
+- [Saving tokens](https://docs.getnereus.dev/agent/tokens.md): The owner's pillar (2026-11-02, #809): the same quality for fewer tokens.
+- [How the owner works](https://docs.getnereus.dev/agent/owner.md)
+- [Rules](https://docs.getnereus.dev/agent/rules.md)
+- [The queue](https://docs.getnereus.dev/agent/queue.md)
+- [Layout](https://docs.getnereus.dev/agent/layout.md)
+- [Worktrees](https://docs.getnereus.dev/agent/worktrees.md): Every change on getnereus/nereus is made in its own git worktree (the owner, 2026-10-26, #447).
+- [How we work](https://docs.getnereus.dev/agent/how-we-work.md)
+- [Issues](https://docs.getnereus.dev/agent/issues.md)
+- [Raw data](https://docs.getnereus.dev/agent/raw-data.md): The raw material of the project (voice sessions, transcripts, mental dumps, the agents' session logs, work orders) lives
+- [ADRs](https://docs.getnereus.dev/agent/adr.md): ADR 0001 (record architecture decisions) is the rule; this page is the checklist.
+- [API groups](https://docs.getnereus.dev/agent/api-groups.md): Status: proposed, to be written as an ADR and reviewed with the owner.
+- [Decks](https://docs.getnereus.dev/agent/decks.md): The rules for an agent that makes a deck or an HTML page for Nereus.
+- [Beach](https://docs.getnereus.dev/agent/beach.md): Glaucus (Glauco in Portuguese) is the messenger between the owner's voice session and the local agent (Claude Code): in
+- [Peers](https://docs.getnereus.dev/agent/peers.md): Several Claude Code sessions often work on this repository on the same machine, one per tmux window, each on its own iss
+- [AI and teams](https://docs.getnereus.dev/agent/ai-and-teams.md): How an agent helps the owner and the team: the AI accelerates, people set the direction and decide.
+- [The session prompt](https://docs.getnereus.dev/agent/session-prompt.md): A session prompt is the instructions a session leaves so the next one, after /clear, resumes the same way of working (#1
+- [The status bar](https://docs.getnereus.dev/agent/status-bar.md): The bar under Claude Code's prompt shows, in one line, where the session is working, how full its context is and how muc
+- [Publishing on ghcr.io](https://docs.getnereus.dev/agent/publish.md): make promote (#850, #1271) copies the seed images and the charts to ghcr.io/getnereus/nereus by digest.
+- [Journeys](https://docs.getnereus.dev/agent/journeys.md): The owner's working agreement of 2026-11-14: to cut the owner's load of deciding across several anchored sessions, each

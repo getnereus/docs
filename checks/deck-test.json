@@ -1,0 +1,12 @@
+{
+  "name": "deck-test",
+  "command": "make --no-print-directory deck-test",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 186,
+  "passed": 396,
+  "failed": 0,
+  "failure": null,
+  "commit": "4100f9fd+",
+  "started": "2026-11-21T09:32:05Z"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "scene-core",
+  "command": "test/scene-core",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 870,
+  "passed": 208,
+  "failed": 21,
+  "failure": null,
+  "commit": "7d0bc58c",
+  "started": "2026-11-20T19:36:39Z"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "scene-azure",
+  "command": "test/scene-azure",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 244,
+  "passed": 28,
+  "failure": null,
+  "commit": "4538325",
+  "started": "2026-11-11T17:52:32Z"
+}

@@ -1,0 +1,8208 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A composable API platform: reefs add the APIs, Nereids look after them, installed at runtime">
+      
+      
+      
+        <link rel="canonical" href="https://docs.getnereus.dev/specs/0009-build-security/">
+      
+      
+        <link rel="prev" href="../0008-portal-first-slice/">
+      
+      
+        <link rel="next" href="../0010-build-trigger/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/logo/favicon-honeycomb.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
+    
+    
+      
+        <title>Build security - Nereus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link rel="alternate" type="text/markdown" href="https://docs.getnereus.dev/specs/0009-build-security.md"></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#0009-the-build-reefs-security-design-what-a-hostile-dockerfile-can-reach" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Nereus" class="md-header__button md-logo" aria-label="Nereus" data-md-component="logo">
+      
+  <img src="../../assets/logo/honeycomb-mark.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nereus
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Build security
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="System theme"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="System theme" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Dark theme"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Dark theme" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Light theme"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Light theme" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/getnereus/nereus" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    getnereus/nereus
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../start/install/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Start
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../concepts/what-is-nereus/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/operate/cli-update/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../cli/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../vision/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Project
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Nereus" class="md-nav__button md-logo" aria-label="Nereus" data-md-component="logo">
+      
+  <img src="../../assets/logo/honeycomb-mark.svg" alt="logo">
+
+    </a>
+    Nereus
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/getnereus/nereus" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    getnereus/nereus
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Start
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Start
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start/install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install the CLI
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start/settings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Write the settings
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start/init/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prepare the cluster
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start/look-around/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Look around
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start/first-reef/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Apply a reef and its Nereid
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start/run/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Run its commands
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../start/clean-up/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Clean up
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/what-is-nereus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What Nereus is
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reef, Nereid and Mandate
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/runtime-and-profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runtime install and profiles
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/undercloud-overcloud/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Undercloud and overcloud
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--planned"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/tenancy-and-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tenancy and access
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/nereus-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Nereus API
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install and operate
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Install and operate
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/operate/cli-update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Keep the CLI up to date
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/operate/cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prepare a cluster for Nereus
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/operate/helm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install with Helm
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/operate/deploy-live/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deploy main to the live cluster
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/operate/kept-cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rebuild the kept cluster
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/operate/kept-cluster-update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Update the kept cluster without a rebuild
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/operate/slo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meet the time SLO
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/operate/undercloud/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prepare the undercloud
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/operate/cloud/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connect to the cloud
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/operate/edge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publish at a hostname
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Access
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Access
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/access/authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Turn on authentication
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/access/grant-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Grant access
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/access/authorization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Say who may do what
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/access/tenancy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Know whose each thing is
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/access/github-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prove a GitHub App is installed
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reefs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reefs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/reefs/secrets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Keep a secret
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/reefs/secret-binding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use a secret in a namespace
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/reefs/release/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release a chart
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/reefs/registry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Run a registry
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/reefs/catalog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Say what Nereus has
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/reefs/golden-path/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Follow the golden path
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/reefs/metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collect metrics
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/reefs/scm-connection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connect an organisation
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/reefs/scm-mirror/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mirror a repository
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/reefs/messaging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Send messages
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/reefs/team-room/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Join the team's room
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/reefs/mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use the MCP server
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build a Nereid
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Build a Nereid
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/build/cli-checkout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Run the CLI from a checkout
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/build/new-nereid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Start a new Nereid
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/build/image/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build a Nereid's image
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/build/requires/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Require a reef
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/build/conformance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pass the conformance tests
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshoot
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Troubleshoot
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/troubleshoot/name-taken/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A name is taken
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/troubleshoot/nereid-stops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    When the Nereid stops
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/troubleshoot/see-what-happened/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    See what happened
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/troubleshoot/issuer-not-public/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The issuer is not public
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/troubleshoot/request-refused/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A cloud request is refused
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../cli/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reefs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reefs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    authentication
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/authorization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    authorization
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/build/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    build
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/catalog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    catalog
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/database/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    database
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/delivery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    delivery
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/edge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    edge
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    environment
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/ideas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ideas
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/messaging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    messaging
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/portal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    portal
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/presentations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    presentations
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/registry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    registry
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/release/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    release
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/scm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    scm
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/secrets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    secrets
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/teams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    teams
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/tenancy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    tenancy
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    usage
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/settings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The settings file
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The installation
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/init/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What init does
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The profiles
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs-and-nereids/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reefs and Nereids
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/metrics-reef/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inside the metrics reef
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/what-is-built/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What is built
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/checks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The checks
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Project
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../thinking-in-platforms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thinking in platforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/inception/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inception
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/stand-ins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Stand-ins
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_6" id="__nav_6_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Decisions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/decisions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisions
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0001-record-architecture-decisions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Record architecture decisions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0002-conceptual-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conceptual model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0003-init-and-nereids-at-runtime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reefs and Nereids added at runtime
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0004-reefs-extend-the-cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reefs extend the CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0005-one-writer-per-field/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    One writer per field
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0006-authentication-reef/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication reef
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0007-public-by-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public by design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0008-cli-in-python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI in Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0009-api-group/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API group per reef
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0010-reefs-at-runtime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reefs at runtime
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0011-reefs-nereids-and-mandates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reefs, Nereids and Mandates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0012-error-messages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error messages
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0013-command-conventions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Command conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0014-profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0015-tenancy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tenancy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0016-catalog-reef/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The catalog reef
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0017-resource-reefs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource reefs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0018-nereus-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Nereus API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0019-messaging-reef/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Messaging reef
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0020-delivery-reef/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Delivery reef
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0021-registry-reef/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Registry reef
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0022-reef-screens-in-the-portal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reef screens in the portal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0023-external-registry-push-credential/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    External registry push credential
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0024-scm-reef/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SCM reef
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0025-metrics-intake/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metrics intake
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0026-environment-reef/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Environment reef
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0027-teams-roles-and-users/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teams, roles and Users
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0028-presentations-reef/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Presentations reef
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0029-mcp-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0030-triton-messaging-nereid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triton, the messaging Nereid
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_7" id="__nav_6_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Specs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/specs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specs
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0001-first-slice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First slice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0002-reef-at-runtime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reef at runtime
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0003-nereid-conformance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nereid conformance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0004-init-time-slo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Init time SLO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0005-cloud-reef/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud reef
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0006-installation-identity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation identity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0007-invitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Invitation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0008-portal-first-slice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Portal first slice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build security
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build security
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-answer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The answer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decided-owner-2026-11-05" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decided (owner, 2026-11-05)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-runs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What runs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The credentials
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-networkpolicy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The NetworkPolicy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-exception-itself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The exception itself
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The exception itself">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-the-exception-leaves-open" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the exception leaves open
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-build-pool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The build pool
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-owasp-categories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The OWASP categories
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-was-evaluated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What was evaluated
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What was evaluated">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#without-a-vm-of-our-own-1117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Without a VM of our own (#1117)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-triggers-a-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What triggers a build
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-scene-of-848-must-prove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the scene of #848 must prove
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stand-ins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stand-ins
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn-more" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learn more
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0010-build-trigger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build trigger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0011-authorization-first-slice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authorization first slice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0012-presentations-first-slice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Presentations first slice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_8" id="__nav_6_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Research
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/research/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/platform-orchestrators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform orchestrators
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/kagent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    kagent for Amphitrite
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/kamaji/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kamaji or vCluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/production-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Production-grade checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/board-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Board tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/nereid-sdk-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nereid SDK metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/decks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decks
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../agent/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Working with agents
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_11" id="__nav_6_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Working with agents
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The CLI design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The docs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/tokens/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Saving tokens
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/owner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How the owner works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/queue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The queue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/layout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Layout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/worktrees/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worktrees
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/how-we-work/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How we work
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/issues/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Issues
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/raw-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raw data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/adr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADRs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/api-groups/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API groups
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/decks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/beach/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beach
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/peers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Peers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/ai-and-teams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI and teams
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/session-prompt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The session prompt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/status-bar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The status bar
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/publish/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publishing on ghcr.io
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../agent/journeys/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Journeys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-answer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The answer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decided-owner-2026-11-05" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decided (owner, 2026-11-05)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-runs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What runs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The credentials
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-networkpolicy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The NetworkPolicy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-exception-itself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The exception itself
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The exception itself">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-the-exception-leaves-open" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the exception leaves open
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-build-pool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The build pool
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-owasp-categories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The OWASP categories
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-was-evaluated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What was evaluated
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What was evaluated">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#without-a-vm-of-our-own-1117" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Without a VM of our own (#1117)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-triggers-a-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What triggers a build
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-scene-of-848-must-prove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the scene of #848 must prove
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stand-ins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stand-ins
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn-more" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learn more
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="0009-the-build-reefs-security-design-what-a-hostile-dockerfile-can-reach">0009. The build reef's security design: what a hostile Dockerfile can reach<a class="headerlink" href="#0009-the-build-reefs-security-design-what-a-hostile-dockerfile-can-reach" title="Permanent link">&para;</a></h1>
+<p><strong>Status:</strong> Accepted (the owner's word, 2026-11-05, #1006), with the decisions below taken by the owner; the code of #848 (the build reef) may start once #847 (the registry reef) is done.</p>
+<p>A link is the source of a claim. A sentence marked <em>(judgement)</em> is this design's own reading. Nothing here ran: no cluster was used, and every claim about a running cluster goes to <a href="#what-the-scene-of-848-must-prove">what the scene must prove</a>.</p>
+<h2 id="the-answer">The answer<a class="headerlink" href="#the-answer" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>A hostile Dockerfile gets no credential unless it escapes the container.</strong> A fetch Job clones the source into a claim of that Build and runs no user code (#1141); then one Job, three containers in order: <code>build</code> runs the Dockerfile on that claim, read-only, and holds nothing secret, <code>token</code> and <code>push</code> hold a push token of ten minutes and run only after <code>build</code> is dead (#1010).</li>
+<li><strong>It keeps what it needs to build:</strong> its own source, DNS, and the package hosts of an egress proxy's list (#1142): a <code>RUN</code> reaches the internet only through Smokescreen, which allows the main package hosts and those the build reef's default Mandate adds, and nothing else. It can send its source to a listed host, as an upload to a package index.</li>
+<li><strong>NetworkPolicy stops another namespace, Triton's Pods and other nodes, and on k3s the Pod's own node too.</strong> Kubernetes allows a CNI to let that traffic through; k3s's policy controller does not, so the builds' egress policies stop the kube-apiserver, the kubelet and every NodePort, Triton's NATS included, at every address of the node (#1009). On a CNI that lets it through, the buildkit Nereid's probe reaches the kubelet and the Nereid runs no build (#1128).</li>
+<li><strong>The weak point is the kernel.</strong> With seccomp off, the whole kernel is exposed to hostile code, and nothing here closes an escape. On k3d the kernel is the machine's: an escape reaches Triton, every Secret on the node and the owner's machine.</li>
+<li><strong>So:</strong> the first slice builds only the scene's own Dockerfiles on a throwaway cluster. That proves the containment; it does not make the kernel safe, since a throwaway k3d cluster shares the same machine. Any other Dockerfile, builds on the kept cluster and #914 (a webhook starts a build) should wait for a kernel of their own, a VM.</li>
+<li><strong>BuildKit Jobs, not Shipwright, Tekton or Cloud Native Buildpacks:</strong> a Job and its init containers already give the lifecycle, and each of the others adds controllers without removing the exception. Shipwright's split between building and pushing is copied.</li>
+</ul>
+<h2 id="decided-owner-2026-11-05">Decided (owner, 2026-11-05)<a class="headerlink" href="#decided-owner-2026-11-05" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Decision</th>
+<th>Decided</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Where builds run</td>
+<td>Throwaway clusters and the scene's own Dockerfiles for #848; anything else, the kept cluster and #914 only on a VM with its own small cluster</td>
+<td><a href="#what-the-exception-leaves-open">The kernel</a> is the one risk this design cannot contain</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>kernel.apparmor_restrict_unprivileged_userns</code> on the machine</td>
+<td>Do not change it on the owner's machine; try an AppArmor profile, then a VM</td>
+<td><a href="#the-exception-itself">BuildKit's fix</a> weakens the whole machine</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Egress during a build</td>
+<td>Public internet on 80 and 443 for the first slice; closed behind a mirror later (since #1142, an egress proxy with a host list)</td>
+<td>Closed breaks every <code>RUN apt-get</code>, and no credential is there to steal</td>
+</tr>
+<tr>
+<td>4</td>
+<td>The git credential</td>
+<td>A GitHub App's installation token, per build, for one repository with <code>contents: read</code>, minted by the github Nereid as the authentication reef's <code>Token</code> (ADR 0006, #1274) and asked by the buildkit Nereid, which never holds the App's key (#1070)</td>
+<td>It expires in an hour and needs no port 22; a deploy key never expires; the App's key stays with the one Nereid that is the platform's identity towards GitHub</td>
+</tr>
+<tr>
+<td>5</td>
+<td>The push credential in #847 (the registry reef)</td>
+<td>One per repository, <code>read</code> and <code>create</code> only</td>
+<td>One shared credential would let any build overwrite any image</td>
+</tr>
+<tr>
+<td>6</td>
+<td>One Job, or a second Job to publish</td>
+<td>One Job, as #848 decided</td>
+<td>A second one closes only a bug in the push tool, and costs a volume between Pods</td>
+</tr>
+</tbody>
+</table>
+<p>The two points of #1004's own "To decide" are followed here: the design is the next free spec, and every Dockerfile is hostile, whoever wrote it.</p>
+<h2 id="what-runs">What runs<a class="headerlink" href="#what-runs" title="Permanent link">&para;</a></h2>
+<div class="language-console highlight"><pre><span></span><code><span class="gp">$ </span>nereus<span class="w"> </span>build<span class="w"> </span>create<span class="w"> </span>hello-a1b2c3d<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--workload<span class="w"> </span>hello<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--commit<span class="w"> </span>a1b2c3d
+<span class="go">build/builds/hello-a1b2c3d created</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Order</th>
+<th>Container</th>
+<th>Runs</th>
+<th>Holds</th>
+<th>Sees</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 (fetch Job, #1141)</td>
+<td><code>fetch</code></td>
+<td><code>git</code>, on the Workload's repository at the commit, in a Pod of its own</td>
+<td>nothing secret (a public repository)</td>
+<td>writes the claim <code>source-&lt;build&gt;</code></td>
+</tr>
+<tr>
+<td>1 (init)</td>
+<td><code>build</code></td>
+<td>BuildKit, and every <code>RUN</code> of the Dockerfile</td>
+<td>nothing secret</td>
+<td>the claim <code>source-&lt;build&gt;</code> read-only; writes an OCI layout to <code>image</code></td>
+</tr>
+<tr>
+<td>2 (init)</td>
+<td><code>token</code></td>
+<td>one <code>printf</code> in busybox, pinned by digest</td>
+<td>the projected push token</td>
+<td>writes <code>config.json</code> to an in-memory <code>docker</code> volume</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>push</code></td>
+<td>a small push tool with no shell</td>
+<td>the push token, in <code>config.json</code></td>
+<td><code>image</code> and <code>docker</code> read-only</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://kubernetes.io/docs/concepts/workloads/pods/init-containers/">Each init container must complete before the next starts</a>, and they can hold Secrets other containers cannot. A build's processes die with its container, because containers of a Pod do not share a PID namespace unless asked to <em>(judgement)</em>. Shipwright <a href="https://github.com/shipwright-io/build/blob/main/pkg/reconciler/buildrun/resources/image_processing.go">mounts the push Secret only on its <code>image-processing</code> step</a>; Cloud Native Buildpacks <a href="https://buildpacks.io/docs/for-platform-operators/concepts/lifecycle/">keeps its registry phases in separate containers "to avoid exposing sensitive data to buildpacks"</a>. This takes the same shape.</p>
+<h2 id="the-credentials">The credentials<a class="headerlink" href="#the-credentials" title="Permanent link">&para;</a></h2>
+<p>The credential cannot sit beside BuildKit. The Kubernetes example runs <code>--oci-worker-no-process-sandbox</code>, which <a href="https://github.com/moby/buildkit/blob/master/docs/rootless.md">lets a <code>RUN</code> <code>kill</code>, and depending on seccomp <code>ptrace</code>, any process in the daemon's container</a>. Seccomp is off here, and <a href="https://github.com/moby/buildkit/blob/master/docs/rootless.md#change-uidgid">a <code>RUN</code> as root is the daemon's own UID 1000</a>, so a <code>RUN</code> can read anything the daemon holds <em>(judgement)</em>. That rules out BuildKit's own git and push paths, and <a href="https://github.com/shipwright-io/build/blob/main/docs/buildstrategies.md">Shipwright's strategy-managed push</a>.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Git credential</th>
+<th>Push credential</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Who holds the long-lived part</td>
+<td>the github Nereid: the GitHub App's key is a param of its authentication Mandate, a secret of the secrets reef (<a href="../../adr/0006-authentication-reef/">ADR 0006</a>; <a href="../../adr/0002-conceptual-model/">ADR 0002</a>: credentials live with the Nereid); the buildkit Nereid holds no key</td>
+<td>the registry reef's Nereid; the person uses only their own login, as #847 decided</td>
+</tr>
+<tr>
+<td>What a build receives</td>
+<td>a token for one repository, <code>contents: read</code> (<a href="https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-an-installation-access-token-for-a-github-app">GitHub: limits on repositories and permissions</a>): the buildkit Nereid asks a <code>Token</code> named after the Build, owned by it, in <code>builds</code>, only when an authentication Mandate's <code>allow</code> covers <code>builds</code> and the Workload's repository; otherwise the fetch is anonymous</td>
+<td>a token of the Repository's ServiceAccount <code>builds/push-&lt;repository&gt;</code>, for one Registry's audience <code>nereus-registry-&lt;registry&gt;</code>; zot maps it to a user bound to the ServiceAccount's uid, <code>read</code> and <code>create</code> on one repository path (<a href="https://zotregistry.dev/v2.1.23/articles/authn-authz/">zot: OIDC bearer and per-user policies</a>)</td>
+</tr>
+<tr>
+<td>Lifetime</td>
+<td><a href="https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-an-installation-access-token-for-a-github-app">one hour</a>, minted per build</td>
+<td>ten minutes, the least kubelet asks for a <a href="https://kubernetes.io/docs/concepts/storage/projected-volumes/#serviceaccounttoken">projected token</a>; kubelet renews it at 80% of that, so a push may start with about two minutes left</td>
+</tr>
+<tr>
+<td>Where it sits</td>
+<td>the Secret <code>token-&lt;build&gt;</code> the github Nereid writes in <code>builds</code>, which the buildkit Nereid never reads; mounted read-only only in the fetch Pod (#1141), the admission policy of <code>builds</code> admits no other Secret; git reads the file through a fixed credential helper, only after GitHub answers 401, so the token reaches no argv, environment or <code>.git</code>; the <code>Token</code> is deleted once the fetch ends, and its Secret with it</td>
+<td>a projected volume mounted only in <code>token</code>, which writes it to memory for <code>push</code>; no Secret holds it</td>
+</tr>
+<tr>
+<td>If stolen</td>
+<td>reads the repository the build already has</td>
+<td>adds new tags to that one repository; cannot move a tag or touch another repository</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The registry CA, copied, not a credential (#1064):</strong> the Registry answers only over TLS, so <code>push</code> checks its certificate. The buildkit Nereid reads the CA's certificate the Registry publishes in its ConfigMap <code>zot-ca</code> (get on that name only, cluster-wide), copies it to the ConfigMap <code>registry-ca-&lt;registry&gt;</code> in <code>builds</code>, one per Registry (#1152), and mounts it read-only in <code>push</code> alone at <code>/etc/nereus/registry</code>; <code>SSL_CERT_FILE</code> points crane there, which in Go replaces the system roots, so <code>push</code> trusts that CA and nothing else, and never takes <code>--insecure</code>. It holds a certificate, no key: a hostile build that reads it learns nothing secret. The admission policy admits a ConfigMap named <code>registry-ca-</code> and a DNS label as a volume, besides <code>emptyDir</code> and <code>secret</code>. The Nereid's HEAD for the digest trusts the same CA alone.</p>
+<p>The repository comes from the Workload and the destination from the registry reef, never from free text on a Build, so a credential goes only where it belongs <em>(judgement, the same rule as ADR 0020's on server-side request forgery)</em>. The tag is the Build's name, unique, which is why <code>update</code> is not needed. The Nereid reads the digest from the registry, not from anything the Pod wrote.</p>
+<p><strong>What a hostile Dockerfile can read during a build:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Thing</th>
+<th>Reads it?</th>
+<th>What stops it</th>
+<th>Left open</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The source at that commit</td>
+<td>Yes</td>
+<td>Nothing; it needs it</td>
+<td>It can send it out</td>
+</tr>
+<tr>
+<td>Git token</td>
+<td>No</td>
+<td>Only the fetch Pod, another Pod, holds it; the claim it writes holds no <code>.git</code></td>
+<td>A copy in <code>tmpfs</code> on the node until the fetch Pod goes</td>
+</tr>
+<tr>
+<td>Push credential</td>
+<td>No</td>
+<td>Not mounted in <code>build</code>, and <code>push</code> has not started</td>
+<td>The same copy on the node</td>
+</tr>
+<tr>
+<td>ServiceAccount token</td>
+<td>No</td>
+<td><code>automountServiceAccountToken: false</code></td>
+<td>None</td>
+</tr>
+<tr>
+<td>Service addresses in the environment</td>
+<td>No</td>
+<td><code>enableServiceLinks: false</code></td>
+<td>DNS still answers</td>
+</tr>
+<tr>
+<td>Other builds</td>
+<td>No</td>
+<td>One Pod per build, no shared cache</td>
+<td>Slower builds</td>
+</tr>
+<tr>
+<td>BuildKit's process and state</td>
+<td>Yes</td>
+<td>Nothing</td>
+<td>It can alter its own image, which it controls anyway</td>
+</tr>
+<tr>
+<td>The next container</td>
+<td>Indirectly</td>
+<td><code>image</code> is read-only in <code>push</code>, which refuses anything but regular files and checks digests</td>
+<td>A bug in the push tool would run with the credential and the internet</td>
+</tr>
+<tr>
+<td>Build secrets and SSH agent</td>
+<td>Nothing to read</td>
+<td>The first slice offers none to <code>RUN --mount</code></td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>tmpfs</code> copy is Kubernetes' behaviour: <a href="https://kubernetes.io/docs/concepts/configuration/secret/#information-security-for-secrets">a Secret reaches a node only if a Pod there needs it, and the kubelet keeps it in <code>tmpfs</code> until the Pod is deleted</a>. Mounting it in one container <a href="https://kubernetes.io/docs/concepts/security/secrets-good-practices/">hides it from the others</a>, not from the node. So an escape reads both credentials of its own build.</p>
+<p><strong>The push credential expires (#1010).</strong> zot v2.1.23 takes Kubernetes ServiceAccount tokens through <code>http.auth.bearer.oidc</code>, from one issuer: the cluster's own. The Nereid creates the ServiceAccount, records the uid of its own create in its push policy in <code>zot-config</code> (copied to <code>status.pushIdentity.uid</code>, never trusted from there, #1125), trusts no other of that name, and deletes with that uid as a precondition. The CLI and the buildkit Nereid compute whose token they use and where they push, from the Repository's name and <code>spec.registry</code>, and refuse a status that says otherwise.</p>
+<p><strong>Decision, option A over B (owner, 2026-11-06):</strong> zot reads the issuer's discovery and its keys with no credential, and v2.1.23 has no setting for a static key set. A: a new cluster's API server takes an <code>AuthenticationConfiguration</code> that lets anonymous requests through only on <code>/.well-known/openid-configuration</code> and <code>/openid/v1/jwks</code>, and <code>system:unauthenticated</code> is bound to <code>system:service-account-issuer-discovery</code>. B: <code>--anonymous-auth=true</code> opens <code>/version</code>, <code>/healthz</code> and whatever else anonymous may read. A opens two public documents and nothing else. <code>nereus doctor</code> checks it; a cluster made before this needs a recreate. Revisit when zot takes a static key set.</p>
+<p><code>Stand-in:</code> who may publish and who may start a build is not enforced. #847's <code>owner</code> rule has nothing behind it, since <a href="../../adr/0018-nereus-api/">ADR 0018</a>'s API has only <code>/healthz</code> and <code>/v1/me</code>, and <code>nereus build create</code> reaches the cluster with the kubeconfig, so anyone holding it can make the Nereid publish to any Workload's repository. Retired by #897 (the authorization reef) and the move of this group behind the API.</p>
+<p><strong>A Build's owner, checked by the Nereid (#1090):</strong> a ValidatingAdmissionPolicy cannot read the Workload, so the buildkit Nereid does: a Build whose <code>spec.owner</code> is neither the Workload's owner nor above it in the tenancy tree (<a href="../../adr/0015-tenancy/">ADR 0015</a>), or whose tree does not lead there, ends <code>Failed</code>, reason <code>OwnerNotWorkloads</code>, with no Job. A Build with no owner skips that check, which would hold only while RBAC lets the operators alone create Builds: a ValidatingAdmissionPolicy refuses it unless the requester is in the operators group <code>nereus:operators</code> or <code>system:masters</code>, on create and on an update that drops the owner or changes the spec of a Build with none, while an update that leaves the spec, as the Nereid's finalizer, passes (#1118); the Nereid's early return stays for the operators' Builds. Pinning <code>spec.commit</code> to commits reachable from the Workload's ref needs a clone, so it stays a later step. The deadline of a Build's Job is <code>BUILD_DEADLINE_SECONDS</code> in the Nereid's environment, 900 by default.</p>
+<p><code>Stand-in:</code> a GitHub App's key means one git host. Other hosts wait for #234 (the platform's identity towards external systems) and #279 (the repository reef).</p>
+<p><code>Stand-in:</code> a token only for the owners the operator trusts (from the review of #1070, owner, 2026-11-10). An authentication Mandate's <code>allow</code> names a namespace, and <code>builds</code> is shared by every tenant, while a team writes its own Workload's <code>spec.source.repository</code>; the owner check of #1090 ties a Build to its Workload, not the Workload to a repository. So a team could name another team's private repository and have a token minted for it. Until #1331 (a tenant's Build gets a clone token only for a repository its own Organization is allowed), the buildkit Nereid asks a <code>Token</code> only when the Workload's owner, and the Build's when it names one, are in <code>BUILD_TOKEN_OWNERS</code>, the tenancy nodes the operator trusts (<code>project/nereids</code>; empty by default, so no Build gets a token). Otherwise a Build of a repository a Mandate covers stays Pending, <code>TenantTokenNotSupported</code>, naming the owner not trusted, with no fetch; one no Mandate covers is fetched anonymously as before. The repository the Token is asked for and the one the fetch clones are read once, from the same Workload, in the same pass.</p>
+<h2 id="the-networkpolicy">The NetworkPolicy<a class="headerlink" href="#the-networkpolicy" title="Permanent link">&para;</a></h2>
+<p><strong>Does the cluster enforce it?</strong> The documentation says yes; #848's scene must prove it. <a href="https://docs.k3s.io/networking/networking-services">K3s includes an embedded controller, built on kube-router's library, off only with <code>--disable-network-policy</code></a>, and its <a href="https://docs.k3s.io/security/hardening-guide">hardening guide says it enforces policies "if any are created"</a>. <code>ensure_k3d_cluster</code> in <code>cli/src/nereus/cluster.py</code> passes only <code>--disable=traefik</code>. <code>test/scene-metrics</code> already proves an ingress denial on k3s, not egress and not the node. <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/">Without such a controller a policy has no effect</a>, silently, so the Nereid must refuse to be Ready until a probe Pod is really stopped <em>(judgement)</em>. <strong>Built in #1090:</strong> after the policies, the Nereid runs a short-lived probe Job in <code>builds</code>, in the shape the admission policy admits (the git image, UID 1000, no token). It must reach CoreDNS on 53, which <code>allow-dns</code> allows (the positive control: a probe stopped everywhere would pass for a policy enforced), and be stopped, refused or dropped, on the Nereid's own Service in <code>nereus-system</code>, by the name and port the API gives it, which nothing allows. A name that does not resolve proves nothing, and a dead target would refuse too: the Nereid checks that the same Service answers it from outside <code>builds</code>, before the probe and when reading its verdict, and otherwise stays <code>Ready=False</code>, reason <code>ProbeTargetDown</code>, with no verdict. <strong>Only the egress policy of <code>builds</code> may stop it (#1113):</strong> an ingress policy on the target would stop the probe by itself, so Ready would go <code>True</code> even if the egress rules of <code>builds</code> were ignored. At the same two moments the Nereid lists the NetworkPolicies of <code>nereus-system</code> (its Role there gains <code>list</code> on them, nothing else) and gives no verdict, reason <code>ProbeTargetGuarded</code>, while one of them <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/">guards ingress (its <code>policyTypes</code> name <code>Ingress</code>, or are left out)</a> and may select the Service's Pods. A policy misses them only by a label of the Service's selector (<code>matchLabels</code> with another value, <code>In</code> without it, <code>NotIn</code> with it, <code>DoesNotExist</code> on it), since the Pods may carry labels the Nereid does not know; a Service without a selector is guarded by any ingress policy there. The VMSingle's policy (#744) names another <code>app.kubernetes.io/name</code>, so it does not count. Until both hold, the Nereid stays <code>Ready=False</code>, reason <code>NetworkPolicyNotEnforced</code>, and every Build stays <code>Pending</code> with no Job. The probe runs again every <code>PROBE_SECONDS</code> (600 by default) and its Job is deleted once read; after no verdict (<code>ProbeTargetDown</code>, <code>ProbeTargetGuarded</code>) it tries again within seconds, 5 then doubled up to 60, since the target not answering yet is the Nereid's own Pod at start-up. Its name cannot be a Build's (it starts with a digit), and a Job of that name without the probe's label, or with an owner, proves nothing. <strong>The node too (#1128):</strong> last, the probe tries its own node on 10250, the kubelet's port, which every node has, at the address the <a href="https://kubernetes.io/docs/concepts/workloads/pods/downward-api/">downward API's <code>status.hostIP</code></a> gives it, so it needs no token; 6443 and the NodePorts fall under the same rule, and <code>make scene-build</code> keeps proving them. A node that answers keeps the Nereid <code>Ready=False</code>, reason <code>NodeReachableFromBuilds</code>, and every Build <code>Pending</code> with that reason and no Job, whichever CNI the cluster runs. The positive control is the Service's: the Nereid reads the <code>status.hostIP</code> of the probe Job's own Pod, by the Job's uid in its label and owner reference, since an earlier probe's Pod may still be terminating on another node (its Role in <code>builds</code> gains <code>list</code> on Pods, nothing else) and checks the node answers it on 10250 from outside <code>builds</code>; a node that does not, or a Pod with no address, gives no verdict (<code>ProbeTargetDown</code>). A host firewall for a CNI that fails this check gets its own issue when Nereus first runs on one, together with the build pool of #1121.</p>
+<p><strong>Enforcement can be missing on a k3d cluster (#1113).</strong> During #1090 one throwaway cluster, made by hand with <code>k3d cluster create &lt;name&gt; --no-lb --k3s-arg --disable=traefik@server:0 --wait</code> (k3d v5.9.0, its default k3s v1.35.5+k3s1, kube-router's netpol v2.6.3-k3s1), let a Pod of <code>builds</code> reach <code>1.1.1.1:8080</code> and CoreDNS's 9153 under <code>deny-all</code>, although its policy controller had started and written its <code>KUBE-NWPLCY</code> chains; <code>make scene-build</code>'s clusters, made by <code>ensure_k3d_cluster</code>, stopped the same Pod. The flags are not the cause: the same command, run again on the same machine (<code>br_netfilter</code> loaded, <code>bridge-nf-call-iptables</code> 1, iptables in nf_tables mode), enforced egress at once, also with the old order (the namespace and Pods right after <code>--wait</code>, the policies later). One start-up fact did show: <code>k3d cluster create --wait</code> returned about ten seconds before k3s's log said <code>Starting network policy controller</code>, so a cluster ready for k3d is not yet enforcing any policy; <a href="https://docs.k3s.io/networking/networking-services">the controller is on unless <code>--disable-network-policy</code> is given</a>, and no scene passes it. The first cluster's cause stays unknown, so no scene states one; the probe gate is what catches it: on such a cluster the buildkit Nereid stays <code>NetworkPolicyNotEnforced</code> and runs no Build <em>(judgement)</em>.</p>
+<p><strong>The policy:</strong> deny all ingress and egress for every Pod of the build namespace, then allow only:</p>
+<table>
+<thead>
+<tr>
+<th>Egress to</th>
+<th>Port</th>
+<th>For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CoreDNS in <code>kube-system</code></td>
+<td>53, UDP and TCP</td>
+<td>Resolving names</td>
+</tr>
+<tr>
+<td>Smokescreen in <code>builds-egress</code>, by namespace and Pod label (#1142)</td>
+<td>4750 TCP</td>
+<td>Packages, through the proxy's host list</td>
+</tr>
+<tr>
+<td>The registry's Pods, by namespace and Pod label</td>
+<td>The registry's</td>
+<td><code>push</code></td>
+</tr>
+<tr>
+<td><code>0.0.0.0/0</code> except <code>10.0.0.0/8</code>, <code>172.16.0.0/12</code>, <code>192.168.0.0/16</code>, <code>169.254.0.0/16</code>, <code>100.64.0.0/10</code>, <code>127.0.0.0/8</code>, for the fetch Pod alone (label <code>getnereus.dev/step: fetch</code>, #1141)</td>
+<td>443 TCP</td>
+<td><code>git</code></td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/">A policy applies to the whole Pod, init containers included</a>, so <code>build</code> and <code>push</code> share these rules (the fetch Pod is a Pod of its own, #1141); a <code>RUN</code> leaves through the Pod's network, so it does too <em>(judgement, the scene proves it)</em>. <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/">It cannot target a name</a>, so <code>github.com</code> alone cannot be allowed. The policy is created with the namespace, before any Job, because <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/">a Pod created before its policy is handled may start unprotected</a>. That holds for every new Pod too: k3s's policy controller applies the policies to a Pod some seconds after it starts, and the fetch Pod reached the API server's ClusterIP in that window (seen on k3s v1.35, #1141). So no git or BuildKit runs before its Pod is stopped on the API server, whose address kubelet gives every Pod: the fetch script waits for it, and the build Pod's first init container, <code>contained</code>, does (<code>CONTAINED</code> in <code>controllers/buildkit/buildkit.py</code>); a Pod still not stopped after 60 seconds fails, naming the address.</p>
+<table>
+<thead>
+<tr>
+<th>Threat</th>
+<th>What stops it</th>
+<th>Left open</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Another namespace, Triton's Pods</td>
+<td>The <code>except</code> covers k3s's <a href="https://docs.k3s.io/cli/server">Pod range <code>10.42.0.0/16</code> and Service range <code>10.43.0.0/16</code></a></td>
+<td>Their NodePorts, below</td>
+</tr>
+<tr>
+<td>Another build</td>
+<td>No rule allows it, in the same namespace too</td>
+<td>None</td>
+</tr>
+<tr>
+<td>The kube-apiserver</td>
+<td>No rule, no token</td>
+<td>Stopped on k3s, at its Service and on the node, below</td>
+</tr>
+<tr>
+<td>k3d's local registry and caches on Docker's network, the owner's machine</td>
+<td>The private ranges in <code>except</code></td>
+<td>None on k3s, below</td>
+</tr>
+<tr>
+<td>Cloud metadata</td>
+<td><code>169.254.0.0/16</code> in <code>except</code>, <a href="https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/">as Kubernetes advises</a>: it can hold node credentials</td>
+<td>On k3d nothing answers there, so only a first cloud run proves it</td>
+</tr>
+<tr>
+<td>Sending the source out</td>
+<td>The egress proxy: only its listed hosts, by name, never an address (#1142)</td>
+<td>To a listed host, as an upload to a package index</td>
+</tr>
+<tr>
+<td>Mining, scanning, attacks on others</td>
+<td>The proxy's host list, the deadline, the limits</td>
+<td>Open within the listed hosts</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The node, on k3s, is not a hole.</strong> <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/">Kubernetes lets a CNI allow the traffic between a Pod and its own node whatever the policies say</a>, which would leave a build every port on its node: the <a href="https://docs.k3s.io/installation/requirements">kube-apiserver and K3s supervisor on 6443, the kubelet on 10250</a>, and any NodePort, Triton's NATS on 30422 (<code>controllers/triton/deploy/nats.yaml</code>) among them. k3s's policy controller does not allow it: the node's addresses are private, so the <code>except</code> of the internet rule leaves them out, and no other rule names them. <code>make scene-build</code> proves it from a <code>RUN</code> (#1091, #1009): 6443, 10250 and a NodePort refused at the node's address in the Pod network (the <code>RUN</code>'s gateway) and at every address of the /24 of k3d's network on Docker that holds the node, with the node answering there from outside <code>builds</code>; the owner's machine (<code>host.k3d.internal</code>) is refused too. This holds for k3s's network as it ships, not for every CNI <em>(judgement: Calico and Cilium each have their own rule for traffic to the host, not checked here)</em>. On a CNI that lets it through, the closing options are a host firewall rule on the build node, or a separate cluster, since a NodePort answers on every node of its cluster <em>(judgement)</em>; the buildkit Nereid refuses builds there instead of trusting the CNI (#1128, below).</p>
+<p><strong>DNS:</strong> the policy does not filter what CoreDNS answers. <a href="https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/">A Pod resolves Services in any namespace by name, and SRV records give their named ports</a>, so a build can test which names exist, and it can leak data in queries. It learns names, and reaches nothing more. <a href="https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/"><code>dnsPolicy: None</code> with <code>dnsConfig</code></a> and a public resolver would remove the names; <code>push</code> would then need the registry's address another way, so it waits <em>(judgement)</em>.</p>
+<p><strong>Limits:</strong> <a href="https://kubernetes.io/docs/concepts/workloads/controllers/job/"><code>activeDeadlineSeconds</code> ends a Job</a>, <code>backoffLimit: 0</code> never reruns hostile code, and CPU, memory, a <code>sizeLimit</code> on the volumes and a ResourceQuota on the namespace bound the rest. <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/">NetworkPolicy cannot log what it blocks</a>.</p>
+<p><strong>The egress proxy (#1142):</strong> a <code>RUN</code> reaches the internet only through <a href="https://github.com/stripe/smokescreen">Smokescreen</a> (Stripe, MIT, built to restrict the egress of untrusted code), one Deployment in the namespace <code>builds-egress</code> that the CLI installs with <code>builds</code>, reached on 4750 and the only Pod there with 80 and 443 to public addresses. BuildKit gives every <code>RUN</code> <code>HTTP_PROXY</code> and <code>HTTPS_PROXY</code> as its predefined proxy build args, kept out of the image's history; a tool that ignores them is stopped by the policy. busybox <code>wget</code> sends an <code>https</code> URL to <code>http_proxy</code> as a plain request, which Smokescreen does not serve (seen in #1142's scene): a <code>RUN</code> fetches over <code>https</code> with curl or its package manager, which ask for a <code>CONNECT</code> tunnel. Smokescreen allows a <code>CONNECT</code> only to a host of its ACL, refuses private addresses by itself, and logs every decision. The ACL is the main package hosts, each named with its ecosystem in <code>EGRESS_DEFAULTS</code> (<code>controllers/buildkit/buildkit.py</code>), and the hosts of the build reef's default Mandate's parameter <code>egressHosts</code>, an admin's act, since whoever writes the Dockerfile may be hostile; <code>github.com</code> stays off, since it accepts pushes. The buildkit Nereid writes it into a ConfigMap and rolls the Deployment by an annotation holding its hash, since Smokescreen does not reload it. One proxy cannot tell builds apart, so <code>egressHosts</code> comes from the default Mandate only, and a Build through another Mandate that sets it is refused (<code>EgressHostsNotDefault</code>). A build whose <code>RUN</code> was refused fails with reason <code>EgressRefused</code>: the Nereid reads the host from the proxy's log, matched by the build Pod's address, and the message gives the <code>nereus mandate apply</code> that allows it. buildkitd itself gets no proxy, so a <code>FROM</code> that misses the mirror reaches nothing.</p>
+<p><code>Stand-in:</code> there is no record of what a build reached beyond the proxy's own log; the record is part of #256 (the platform's audit log). <strong>Built in #1140:</strong> every <code>FROM</code> goes through the Registry's zot, which mirrors docker.io, ghcr.io and quay.io on demand. Left open, with DNS: an image's name reaches the remote when zot fetches it, so a <code>RUN</code>, which reaches zot as <code>push</code> does, can make zot ask Docker Hub for a name it chose, a few bytes the remote sees.</p>
+<p><code>Stand-in:</code> NATS has no TLS; Triton's manifest already says it has its own issue. The node's ports, closed on k3s by #1009, are checked by the Nereid's probe on the kubelet's 10250 since #1128; the scene keeps proving 6443 and the NodePorts.</p>
+<h2 id="the-exception-itself">The exception itself<a class="headerlink" href="#the-exception-itself" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/moby/buildkit/blob/master/examples/kubernetes/README.md">BuildKit recommends rootless "to minimize the chance of container breakout attacks"</a>. What it needs, from <a href="https://github.com/moby/buildkit/blob/master/docs/rootless.md">its rootless page</a> and <a href="https://github.com/moby/buildkit/blob/master/examples/kubernetes/job.rootless.yaml">its Kubernetes Job</a>:</p>
+<table>
+<thead>
+<tr>
+<th>Relaxation</th>
+<th>Why, in BuildKit's words</th>
+<th><a href="https://kubernetes.io/docs/concepts/security/pod-security-standards/">Pod Security Standards</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>seccompProfile: Unconfined</code></td>
+<td>"several syscalls such as <code>unshare</code> (used by runc) and <code>mount</code> (used by snapshotters, etc)"</td>
+<td><code>baseline</code> forbids it</td>
+</tr>
+<tr>
+<td><code>appArmorProfile: Unconfined</code></td>
+<td>"mounting filesystems, etc"; "not needed when the host operating system does not use AppArmor"</td>
+<td><code>baseline</code> forbids it</td>
+</tr>
+<tr>
+<td><code>--oci-worker-no-process-sandbox</code> (a BuildKit flag, not a Pod field)</td>
+<td>Docker's <code>systempaths=unconfined</code> has no Kubernetes equal; "discouraged", and it allows the <code>kill</code> and <code>ptrace</code> above</td>
+<td>Allowed</td>
+</tr>
+<tr>
+<td><code>allowPrivilegeEscalation</code> left on</td>
+<td><a href="https://shipwright.io/docs/build/buildstrategies/">Shipwright: so setuid binaries can run</a></td>
+<td><code>baseline</code> allows it, <code>restricted</code> forbids it</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Not asked for, and refused:</strong> <code>privileged</code>, added capabilities, <code>hostPath</code>, host namespaces, a device; the Pod runs as UID 1000. <a href="https://github.com/moby/buildkit/blob/master/frontend/dockerfile/docs/reference.md"><code>RUN --network=host</code> and <code>RUN --security=insecure</code> need entitlements</a>, which the daemon never receives. A Dockerfile can still name its own frontend with <code># syntax=</code>; it runs under these same limits <em>(judgement)</em>.</p>
+<p><strong>Why one namespace, and its weak point.</strong> <a href="https://kubernetes.io/docs/concepts/security/pod-security-admission/">Pod Security Admission works per namespace, by level</a>, and its exemptions skip every check. Since <code>baseline</code> forbids both profiles, this namespace must be <code>privileged</code>, the level that allows everything, including a Pod the exception never asked for. Any other namespace would inherit that, so it stays in one, holding only short-lived Jobs and no long-lived Secret, while the Environments keep <code>baseline</code> (#633, pod security of the vcluster Nereid's environments).</p>
+<p><strong>The label alone is not enough.</strong> A ValidatingAdmissionPolicy, as #633 already uses for Environments, pins the Pods of this namespace to the shape above and to the build's three images by digest (git, BuildKit and the push tool), because <a href="https://kubernetes.io/docs/concepts/configuration/secret/">whoever can create a Pod can read the namespace's Secrets</a>. The Nereid creates Jobs, not Pods, so only its ServiceAccount may create a Job there and only the Job controller a Pod; the shape holds on both, on every update, and no Pod takes an ephemeral container. Built in #1089, by the CLI before the namespace (<code>builds_policy</code> in <code>cli/src/nereus/local_nereids.py</code>). What is left: a cluster admin, or a stolen Nereid token within that shape <em>(judgement)</em>.</p>
+<p><strong>A narrower route to <code>baseline</code>, untested.</strong> <code>baseline</code> <a href="https://kubernetes.io/docs/concepts/security/pod-security-standards/">allows <code>Localhost</code> profiles</a>, and <a href="https://kubernetes.io/docs/concepts/workloads/pods/user-namespaces/">relaxes <code>procMount</code> for a Pod with <code>hostUsers: false</code></a>, which <a href="https://github.com/moby/buildkit/blob/master/docs/rootless.md">BuildKit names as the near equal of <code>systempaths=unconfined</code></a>. Together they could bring back the process sandbox and drop <code>privileged</code> from the namespace <em>(judgement: no source shows BuildKit running this way)</em>. The cost is profile files on every node.</p>
+<p><strong>The machine may refuse it.</strong> BuildKit's troubleshooting for <code>fork/exec /proc/self/exe: permission denied</code> blames <code>kernel.apparmor_restrict_unprivileged_userns=1</code>, and its <a href="https://github.com/moby/buildkit/blob/master/docs/rootless.md">fix is to set it to <code>0</code> on the host</a>. The owner's machine reads <code>1</code> (<code>sysctl</code>, 2026-11-05). k3d shares that kernel, so #848's scene may hit this, and the fix relaxes the whole machine, not one namespace <em>(judgement)</em>. Decision 2 keeps it at <code>1</code>. <strong>It did not:</strong> <code>make scene-build</code> (#1067, 2026-11-06) built and pushed with rootless BuildKit on k3d with the sysctl at <code>1</code>, with seccomp and AppArmor <code>Unconfined</code> on the <code>build</code> container.</p>
+<p><strong>In sandbox mode the exception is gone</strong> (#1120, after the spike of #1117, "Without a VM of our own" below). The operator sets the buildkit Nereid's <code>BUILD_RUNTIME_CLASS</code> (<code>nereus nereid apply buildkit --set BUILD_RUNTIME_CLASS=gvisor</code>): every Pod of <code>builds</code> gets that <code>runtimeClassName</code>, the <code>build</code> container keeps <code>seccompProfile: RuntimeDefault</code> and no AppArmor field, the namespace goes to <code>baseline</code>, and the admission policy pins that RuntimeClass, with no <code>Unconfined</code> profile, on every Pod. It still needs <code>allowPrivilegeEscalation</code> for <code>newuidmap</code>, so <code>restricted</code> stays out. The Nereid is Ready only once a probe Pod under the RuntimeClass reports a kernel that is not its node's (<code>RuntimeClassMissing</code>, <code>SandboxNotEffective</code>): a RuntimeClass only names a handler, which must be installed on the nodes.</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th><code>BUILD_RUNTIME_CLASS</code></th>
+<th><code>builds</code></th>
+<th>Builds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Portable</td>
+<td>empty</td>
+<td><code>privileged</code>, the exception above</td>
+<td>Trusted code only: a Build with <code>spec.owner</code> ends <code>Failed</code>, <code>SandboxRequired</code>; the operators' (no owner, #1118) run</td>
+</tr>
+<tr>
+<td>Sandbox</td>
+<td><code>gvisor</code> (k3d, GKE Sandbox, EKS with runsc on the nodes), Kata on AKS</td>
+<td><code>baseline</code>, no exception</td>
+<td>Any Dockerfile</td>
+</tr>
+</tbody>
+</table>
+<p>The rest of this section, and "What the exception leaves open", describe portable mode.</p>
+<h3 id="what-the-exception-leaves-open">What the exception leaves open<a class="headerlink" href="#what-the-exception-leaves-open" title="Permanent link">&para;</a></h3>
+<p><strong>NetworkPolicy does nothing about a kernel escape.</strong> It filters packets; an escape is a system call. With seccomp off, a <code>RUN</code> can call what the default profile refuses, and rootless only means it starts unprivileged. A kernel bug reached from there gives:</p>
+<ul>
+<li><strong>The node's Secrets and containerd:</strong> Triton's, and any other Pod's on that node, plus the images those Pods run <em>(judgement, from <a href="https://kubernetes.io/docs/concepts/configuration/secret/#information-security-for-secrets">what a node holds</a>)</em>.</li>
+<li><strong>The control plane:</strong> <code>ensure_k3d_cluster</code> passes no <code>--agents</code>, and <a href="https://github.com/k3d-io/k3d/blob/main/cmd/cluster/clusterCreate.go">k3d defaults to one server and no agents</a>, so every Pod shares a node with the kube-apiserver.</li>
+<li><strong>The owner's machine:</strong> <a href="https://k3d.io/stable/usage/commands/k3d_cluster_create/">k3d's nodes are containers</a> that <a href="https://github.com/k3d-io/k3d/blob/main/pkg/runtimes/docker/translate.go">run privileged</a>, on the machine's own kernel.</li>
+</ul>
+<p>For comparison, today's <code>docker build</code> in <code>make scene</code> runs on the same kernel, but keeps Docker's default seccomp and AppArmor <em>(judgement)</em>. The exception is a real step down from it, in exchange for builds with no Docker socket.</p>
+<table>
+<thead>
+<tr>
+<th>What would reduce it</th>
+<th>Closes</th>
+<th>Leaves</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://kubernetes.io/docs/concepts/workloads/pods/user-namespaces/"><code>hostUsers: false</code></a></td>
+<td>An escape lands as an unprivileged user; several high and critical CVEs did not apply</td>
+<td>A kernel bug that gives root</td>
+<td>Low; needs Kubernetes 1.36 for stable, containerd 2.0, Linux 6.3 and idmap mounts, unproven inside k3d</td>
+</tr>
+<tr>
+<td><code>Localhost</code> seccomp and AppArmor profiles</td>
+<td>Much of the kernel surface</td>
+<td>Whatever BuildKit needs: <code>unshare</code>, <code>mount</code></td>
+<td>Writing and keeping the profiles, files on nodes</td>
+</tr>
+<tr>
+<td>Dedicated node (<a href="https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/">taint and selector</a>) on a real machine or VM</td>
+<td>Other Pods' Secrets, Triton, the control plane, the owner's machine: <a href="https://kubernetes.io/docs/concepts/configuration/secret/#information-security-for-secrets">Secrets reach only nodes that need them</a></td>
+<td>That node's kubelet identity; the cluster's NodePorts; the builds' own credentials</td>
+<td>A VM or a machine, always on or started per need. <strong>On k3d a dedicated node closes nothing:</strong> the same kernel <em>(judgement)</em></td>
+</tr>
+<tr>
+<td><a href="https://gvisor.dev/docs/">gVisor</a></td>
+<td><a href="https://gvisor.dev/docs/">The host kernel, behind a per-sandbox kernel</a></td>
+<td>gVisor's own bugs</td>
+<td><a href="https://gvisor.dev/docs/">Syscall overhead and missing syscalls</a>; its <a href="https://gvisor.dev/docs/tutorials/docker-in-gvisor/">tutorial shows <code>docker build</code></a>, not rootless BuildKit; <a href="https://docs.k3s.io/advanced">K3s does not list it</a>, so containerd is set by hand</td>
+</tr>
+<tr>
+<td><a href="https://katacontainers.io/">Kata Containers</a></td>
+<td>The host kernel: "a dedicated kernel"</td>
+<td>The hypervisor</td>
+<td>Virtualization inside k3d's containers; <a href="https://docs.k3s.io/advanced">K3s does not list it</a> either. High on k3d <em>(judgement)</em></td>
+</tr>
+<tr>
+<td>Throwaway <a href="https://www.vcluster.com/docs/vcluster/introduction/what-are-virtual-clusters">vcluster</a></td>
+<td>API-level reach</td>
+<td><strong>The kernel:</strong> with shared nodes its Pods <a href="https://www.vcluster.com/docs/vcluster/introduction/what-are-virtual-clusters">run on the host's node pool</a> <em>(judgement: the page does not mention the kernel)</em></td>
+<td>Low, the vcluster Nereid exists; it does not answer this threat</td>
+</tr>
+<tr>
+<td>A VM with its own small cluster</td>
+<td>All of the dedicated node's row, plus the NodePorts and the kube-apiserver of the kept cluster</td>
+<td>The builds' own credentials; the VM's kernel</td>
+<td>RAM and a VM to run, and the registry must be reachable from it, beyond what #844 (a node pulls from a registry inside the cluster) proves</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recommendation:</strong> <code>hostUsers: false</code> if the scene proves it, on every cluster. On the kept cluster, no build until a VM with its own small cluster runs them, which also keeps decision 2 away from the owner's machine. A VM's boundary is the one here that is both well understood and simple <em>(judgement)</em>. <a href="https://owasp.github.io/www-project-top-10-ci-cd-security-risks/CICD-SEC-04-Poisoned-Pipeline-Execution">OWASP asks for the same: "pipelines running unreviewed code are executed on isolated nodes"</a>. Accepting the risk for the owner's own repositories alone would be a choice about the person, which this design was asked not to rely on; a poisoned dependency runs in the owner's own <code>RUN</code> too.</p>
+<p><code>Stand-in:</code> in portable mode the builds share the node's kernel, which on k3d is the machine's, so only trusted code runs there (<code>SandboxRequired</code>). Sandbox mode (#1120) retires it: a hostile <code>RUN</code> sees gVisor's kernel. It replaced the VM of #1007.</p>
+<h2 id="the-build-pool">The build pool<a class="headerlink" href="#the-build-pool" title="Permanent link">&para;</a></h2>
+<p><strong>Builds run on nodes of their own</strong> (#1121), so an escape, even from the sandbox, lands where no Workload, Nereid or Secret of theirs is. The operator labels and taints those nodes with one key, <code>build.getnereus.dev/pool</code>, and sets its value on the Nereid:</p>
+<div class="language-console highlight"><pre><span></span><code><span class="gp">$ </span>nereus<span class="w"> </span>nereid<span class="w"> </span>apply<span class="w"> </span>buildkit<span class="w"> </span>--set<span class="w"> </span><span class="nv">BUILD_NODE_POOL</span><span class="o">=</span>builds
+<span class="go">namespaces/builds applied (Pod Security baseline, every Pod in the RuntimeClass gvisor, every Pod on the nodes labelled build.getnereus.dev/pool=builds, ...)</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Cluster</th>
+<th>The pool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EKS</td>
+<td>A node group with the label and the taint <code>build.getnereus.dev/pool=builds:NoSchedule</code></td>
+</tr>
+<tr>
+<td>AKS, GKE</td>
+<td>A node pool with both; on GKE, GKE Sandbox is turned on per pool, on AKS Pod Sandboxing too</td>
+</tr>
+<tr>
+<td>k3d</td>
+<td>An agent node: <code>NEREUS_K3D_BUILD_POOL=builds</code> before <code>nereus init --create-cluster</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Every Pod of <code>builds</code></strong> (fetch, build, both probes) gets the pool's <code>nodeSelector</code> and toleration, in portable mode too, and the admission policy of <code>builds</code> refuses one without both. Empty, Pods land on any node, so a one-node cluster still builds.</li>
+<li><strong>No other Pod tolerates the taint.</strong> A second policy, on every namespace but <code>builds</code> and those <code>BUILD_POOL_NAMESPACES</code> lists (<code>kube-system</code> by default, where creating a Pod is already an administrator's act), refuses a toleration of the pool's key or of every taint, and a Pod that names its node, which skips the scheduler and so the taint (kubelet checks only <code>NoExecute</code> ones).</li>
+<li><strong>The cloud metadata endpoint</strong> <code>169.254.169.254</code> is stopped by the egress policy of <code>builds</code>, which excludes <code>169.254.0.0/16</code>. The scene proves it with a listener on the build node, reached from a Pod outside <code>builds</code>.</li>
+<li><strong>The node's cloud identity has no permissions</strong> (an install concern): a node group's or pool's role grants nothing but pulling images. Its ports stay #1009.</li>
+</ul>
+<p>Several builds share a node: the sandbox isolates the kernel. One build per node (anti-affinity) is a later setting for clusters without a sandbox.</p>
+<h2 id="the-owasp-categories">The OWASP categories<a class="headerlink" href="#the-owasp-categories" title="Permanent link">&para;</a></h2>
+<p>The lists are OWASP's own, read for names only: the <a href="https://kubernetes-top10.owasp.org/">Kubernetes Top Ten, 2025 edition</a>, and the <a href="https://owasp.org/www-project-top-10-ci-cd-security-risks/">Top 10 CI/CD Security Risks</a>, since #914 makes this reef the CI of Nereus. The mapping is this design's judgement.</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Here</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>K01 Insecure Workload Configurations</td>
+<td>Partly</td>
+<td>The exception breaks it on purpose, in one namespace, pinned by admission</td>
+</tr>
+<tr>
+<td>K02 Overly Permissive Authorization Configurations</td>
+<td>Partly</td>
+<td>No token in a build, the Nereid's rights limited; people are the Stand-in</td>
+</tr>
+<tr>
+<td>K03 Secrets Management Failures</td>
+<td>Covered</td>
+<td>The credentials above; the node's copy stays</td>
+</tr>
+<tr>
+<td>K04 Lack Of Cluster Level Policy Enforcement</td>
+<td>Partly</td>
+<td>One policy for one namespace; #898 (the policy reef) is the general answer</td>
+</tr>
+<tr>
+<td>K05 Missing Network Segmentation Controls</td>
+<td>Covered</td>
+<td>The node too, on k3s; another CNI fails the Nereid's probe (#1128)</td>
+</tr>
+<tr>
+<td>K06 Overly Exposed Kubernetes Components</td>
+<td>Covered</td>
+<td>Stopped from builds on k3s, at the node's every address; another CNI fails the Nereid's probe (#1128)</td>
+</tr>
+<tr>
+<td>K07 Misconfigured And Vulnerable Cluster Components</td>
+<td>Left out</td>
+<td>The kernel and containerd are the host's; this is the residual risk</td>
+</tr>
+<tr>
+<td>K08 Cluster To Cloud Lateral Movement</td>
+<td>Covered, unproven</td>
+<td>Metadata in <code>except</code>; k3d cannot prove it</td>
+</tr>
+<tr>
+<td>K09 Broken Authentication Mechanisms</td>
+<td>Left out</td>
+<td>ADR 0018 and #897</td>
+</tr>
+<tr>
+<td>K10 Inadequate Logging And Monitoring</td>
+<td>Left out</td>
+<td>#256; the Job's logs go with its TTL</td>
+</tr>
+<tr>
+<td>CICD-SEC-1 Insufficient Flow Control Mechanisms</td>
+<td>Partly</td>
+<td>A build deploys nothing by itself; #914 and #162 (deploy main on every push) must keep that</td>
+</tr>
+<tr>
+<td>CICD-SEC-2 Inadequate Identity and Access Management</td>
+<td>Left out</td>
+<td>The Stand-in on who may publish</td>
+</tr>
+<tr>
+<td>CICD-SEC-3 Dependency Chain Abuse</td>
+<td>Left out</td>
+<td>A <code>RUN</code> installs what it wants; the design assumes it may be hostile</td>
+</tr>
+<tr>
+<td>CICD-SEC-4 Poisoned Pipeline Execution</td>
+<td>Covered by containment</td>
+<td>The premise here: contained, not prevented</td>
+</tr>
+<tr>
+<td>CICD-SEC-5 Insufficient PBAC</td>
+<td>Covered</td>
+<td>Per-build credentials, network and namespace</td>
+</tr>
+<tr>
+<td>CICD-SEC-6 Insufficient Credential Hygiene</td>
+<td>Covered</td>
+<td>The push token lasts ten minutes (#1010)</td>
+</tr>
+<tr>
+<td>CICD-SEC-7 Insecure System Configuration</td>
+<td>Partly</td>
+<td>The exception is exactly this; contained</td>
+</tr>
+<tr>
+<td>CICD-SEC-8 Ungoverned Usage of 3rd Party Services</td>
+<td>Left out</td>
+<td>The git host's webhook comes with #914</td>
+</tr>
+<tr>
+<td>CICD-SEC-9 Improper Artifact Integrity Validation</td>
+<td>Left out</td>
+<td>A digest says which image, not that it is good; #670 (signed images)</td>
+</tr>
+<tr>
+<td>CICD-SEC-10 Insufficient Logging and Visibility</td>
+<td>Left out</td>
+<td>#256</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-was-evaluated">What was evaluated<a class="headerlink" href="#what-was-evaluated" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Saves of the Job's lifecycle</th>
+<th>Adds to the attack surface</th>
+<th>Removes the exception?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BuildKit Jobs</strong></td>
+<td>Nothing; <a href="https://kubernetes.io/docs/concepts/workloads/controllers/job/">the Job has deadline, retries and TTL</a>, init containers the order</td>
+<td>No new controller</td>
+<td>No</td>
+</tr>
+<tr>
+<td><a href="https://shipwright.io/docs/build/buildstrategies/">Shipwright</a></td>
+<td>The steps, the managed push, the digest in results</td>
+<td><a href="https://github.com/shipwright-io/build/blob/main/README.md">Tekton is required</a>, plus its own controller and webhook</td>
+<td>No: <a href="https://shipwright.io/docs/build/buildstrategies/">"requires both AppArmor and SecComp to be disabled"</a></td>
+</tr>
+<tr>
+<td><a href="https://tekton.dev/docs/pipelines/install/">Tekton</a></td>
+<td>Steps and retries</td>
+<td>A controller and a webhook; its quick install is "not meant for the production use"</td>
+<td>No: the same BuildKit underneath <em>(judgement)</em>. Its default makes <a href="https://tekton.dev/docs/pipelines/auth/">credentials "available to all <code>Steps</code>"</a>, which must be turned off</td>
+</tr>
+<tr>
+<td><a href="https://buildpacks.io/docs/for-platform-operators/concepts/lifecycle/">Cloud Native Buildpacks</a></td>
+<td>Its lifecycle, inside one Pod or more</td>
+<td>Builders to trust</td>
+<td>Probably, with <a href="https://buildpacks.io/docs/for-platform-operators/concepts/lifecycle/">non-root phases</a> and no <code>RUN</code>, unproven; <strong>it does not build a Dockerfile</strong>, which is what #848 asks</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recommendation: BuildKit Jobs.</strong> None of them saves what a Job plus init containers cannot do in a few lines, and Shipwright would bring two controllers for that. The model leaves Triton open: Shipwright, Tekton or Buildpacks can each be another Nereid of the same reef, and Buildpacks is the one worth trying for a repository with no Dockerfile. <a href="https://github.com/GoogleContainerTools/kaniko">kaniko, which #578 (how the platform builds and publishes a Package) named, is archived</a> and out.</p>
+<h3 id="without-a-vm-of-our-own-1117">Without a VM of our own (#1117)<a class="headerlink" href="#without-a-vm-of-our-own-1117" title="Permanent link">&para;</a></h3>
+<p><strong>Answer:</strong> under a <code>gvisor</code> RuntimeClass, rootless BuildKit builds and pushes on k3d in a <code>baseline</code> namespace, with no seccomp or AppArmor exception, and a hostile <code>RUN</code> sees gVisor's kernel, not the machine's. It replaces the VM of #1007 for the kernel threat; the network threat stays (#1009).</p>
+<p>The research (2026-11-06, docs and issue threads):</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Hostile <code>RUN</code> vs the host kernel</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/dagger/dagger/blob/main/helm/dagger/templates/engine-daemonset.yaml">Dagger</a></td>
+<td>Its engine DaemonSet is <code>privileged</code> with <code>capabilities.add: [ALL]</code>; "Dagger doesn't support rootless" (<a href="https://github.com/dagger/dagger/issues/9071">#9071</a>)</td>
+<td>Worse than today</td>
+</tr>
+<tr>
+<td><a href="https://github.com/chainguard-forks/kaniko">Kaniko</a> (Google archived it 2025-06-03; Chainguard fork, security fixes only)</td>
+<td>No seccomp or AppArmor exception, but the host kernel; its README: "does not make it safe to run untrusted builds"</td>
+<td>Smaller surface</td>
+</tr>
+<tr>
+<td><a href="https://kubernetes.web.cern.ch/blog/2025/06/19/rootless-container-builds-on-kubernetes/">Buildah <code>--isolation chroot</code></a> with <code>hostUsers: false</code></td>
+<td>Host kernel, about Docker's default surface; <code>newuidmap</code> issues (<a href="https://github.com/containers/buildah/issues/4049">#4049</a>)</td>
+<td>Smaller surface</td>
+</tr>
+<tr>
+<td><a href="https://gvisor.dev/docs/user_guide/containerd/quick_start/">gVisor</a> RuntimeClass</td>
+<td>Syscalls go to gVisor's Sentry, not the host; Kaniko under runsc in production (<a href="https://github.com/google/gvisor/issues/13293">#13293</a>); daemonless BuildKit works but for one emptyDir rename bug (<a href="https://github.com/google/gvisor/issues/14033">#14033</a>); no KVM needed (systrap)</td>
+<td>Removes the exposure, no VM</td>
+</tr>
+<tr>
+<td><a href="https://github.com/kata-containers/kata-containers/blob/main/docs/install/README.md">Kata Containers</a></td>
+<td>A guest kernel per Pod; needs <code>/dev/kvm</code> inside k3d's privileged node containers</td>
+<td>Removes it, a VM per Pod, fragile on k3d</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nestybox/sysbox">Sysbox</a></td>
+<td>Host kernel; k3s not supported (<a href="https://github.com/nestybox/sysbox/issues/841">#841</a>)</td>
+<td>Sideways</td>
+</tr>
+<tr>
+<td>ko, Jib, Buildpacks</td>
+<td>Do not build Dockerfiles</td>
+<td>Not applicable</td>
+</tr>
+<tr>
+<td><a href="https://github.com/firecracker-microvm/firecracker-containerd">firecracker-containerd</a></td>
+<td>Kubernetes and CRI are "longer-term roadmap"</td>
+<td>Not usable</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The spike</strong> (2026-11-06, k3d v5.9.0, k3s v1.35.5, runsc <code>release-20261102.0</code>, one throwaway cluster, deleted at the end). gVisor ships one tarball now; <code>runsc</code> needs its <code>gvisor-bin/</code> sidecars beside it:</p>
+<div class="language-bash highlight"><pre><span></span><code><span class="nv">url</span><span class="o">=</span>https://storage.googleapis.com/gvisor/releases/release/20261102/x86_64
+curl<span class="w"> </span>-fsSLO<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">url</span><span class="si">}</span><span class="s2">/gvisor.tar.bz2"</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>curl<span class="w"> </span>-fsSLO<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">url</span><span class="si">}</span><span class="s2">/gvisor.tar.bz2.sha512"</span>
+sha512sum<span class="w"> </span>-c<span class="w"> </span>gvisor.tar.bz2.sha512<span class="w">     </span><span class="c1"># gvisor.tar.bz2: OK</span>
+tar<span class="w"> </span>-xjf<span class="w"> </span>gvisor.tar.bz2<span class="w"> </span>-C<span class="w"> </span>x<span class="w">           </span><span class="c1"># runsc, containerd-shim-runsc-v1, gvisor-bin/</span>
+</code></pre></div>
+<p>k3s's containerd learns the runtime from a template mounted at <code>/var/lib/rancher/k3s/agent/etc/containerd/config-v3.toml.tmpl</code> (<a href="https://docs.k3s.io/advanced">K3s advanced</a>); the binaries are mounted in <code>/bin</code>. No <code>sudo</code> on the host:</p>
+<div class="language-toml highlight"><pre><span></span><code><span class="err">{{</span><span class="w"> </span><span class="n">template</span><span class="w"> </span><span class="s2">"base"</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="err">}}</span>
+
+<span class="k">[plugins.</span><span class="s1">'io.containerd.cri.v1.runtime'</span><span class="k">.containerd.runtimes.runsc]</span>
+<span class="w">  </span><span class="n">runtime_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"io.containerd.runsc.v1"</span>
+</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code>k3d<span class="w"> </span>cluster<span class="w"> </span>create<span class="w"> </span>nereus-scn-1117-d2c84f<span class="w"> </span>--image<span class="w"> </span>rancher/k3s:v1.35.5-k3s1<span class="w"> </span>--no-lb<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">x</span><span class="si">}</span><span class="s2">/runsc:/bin/runsc@server:0"</span><span class="w"> </span>-v<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">x</span><span class="si">}</span><span class="s2">/containerd-shim-runsc-v1:/bin/containerd-shim-runsc-v1@server:0"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">x</span><span class="si">}</span><span class="s2">/gvisor-bin:/bin/gvisor-bin@server:0"</span><span class="w"> </span>-v<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">tmpl</span><span class="si">}</span><span class="s2">:/var/lib/rancher/k3s/agent/etc/containerd/config-v3.toml.tmpl@server:0"</span>
+kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="w"> </span><span class="s1">'{"apiVersion": "node.k8s.io/v1", "kind": "RuntimeClass", "metadata": {"name": "gvisor"}, "handler": "runsc"}'</span>
+kubectl<span class="w"> </span>logs<span class="w"> </span>probe<span class="w">     </span><span class="c1"># a busybox Pod with runtimeClassName: gvisor</span>
+<span class="c1"># Linux probe 4.19.0-gvisor #1 SMP Sun Jan 10 15:06:54 PST 2016 x86_64 GNU/Linux</span>
+<span class="c1"># [   0.000000] Starting gVisor...</span>
+</code></pre></div>
+<p>The builds ran as Jobs shaped like <code>job()</code> in <code>controllers/buildkit/buildkit.py</code> (clone, build, push with crane), the <code>hello</code> fixture at the scene's pinned commit, into a <code>registry:2</code> Pod, in a namespace labelled <code>pod-security.kubernetes.io/enforce=baseline</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Build under <code>gvisor</code></th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kaniko, the Chainguard fork (<code>ghcr.io/kaniko-build/dist/chainguard-forks-kaniko/executor:v1.25.19</code>, by digest; <code>cgr.dev/chainguard/kaniko</code> refuses anonymous pulls)</td>
+<td>Built and pushed: <code>hello@sha256:7cf011e1…</code>; runs as root inside the sandbox</td>
+</tr>
+<tr>
+<td>BuildKit as <code>job()</code>, both <code>Unconfined</code> profiles removed, <code>seccompProfile: RuntimeDefault</code></td>
+<td>Built and pushed: <code>hello@sha256:52f6d6e9…</code></td>
+</tr>
+<tr>
+<td>The same, without <code>--oci-worker-no-process-sandbox</code></td>
+<td>Built and pushed: <code>hello@sha256:d4b7e522…</code>; the process sandbox comes back</td>
+</tr>
+<tr>
+<td>The same, with <code>allowPrivilegeEscalation: false</code> (<code>restricted</code>)</td>
+<td>Fails: <code>newuidmap ... fork/exec /usr/bin/newuidmap: operation not permitted</code></td>
+</tr>
+<tr>
+<td>Control: BuildKit under runc with <code>RuntimeDefault</code></td>
+<td>Fails: <code>[rootlesskit:parent] error: failed to start the child: fork/exec /proc/self/exe: operation not permitted</code></td>
+</tr>
+</tbody>
+</table>
+<p>Two findings on k3d. <code>appArmorProfile: RuntimeDefault</code> is refused by the kubelet (<code>Cannot enforce AppArmor: AppArmor is not enabled on the host</code>), so the field stays unset, which <code>baseline</code> allows. runsc ignores the Pod's seccomp profile unless it runs with <code>--oci-seccomp</code>; the host is guarded by the Sentry's own filter, not by that field. The rename bug of gVisor #14033 did not show.</p>
+<p>The hostile Dockerfile is <a href="../0009-spike/Dockerfile"><code>0009-spike/Dockerfile</code></a>. What its <code>RUN</code> saw:</p>
+<table>
+<thead>
+<tr>
+<th>Probe</th>
+<th>runc, BuildKit as today</th>
+<th>gVisor, BuildKit</th>
+<th>gVisor, Kaniko</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>uname -a</code>, <code>/proc/version</code></td>
+<td><code>7.0.0-42-generic ... Ubuntu</code>: the machine's kernel</td>
+<td><code>4.19.0-gvisor</code></td>
+<td><code>4.19.0-gvisor</code></td>
+</tr>
+<tr>
+<td><code>dmesg</code></td>
+<td><code>klogctl: Operation not permitted</code></td>
+<td><code>klogctl: Operation not permitted</code></td>
+<td><code>Starting gVisor...</code></td>
+</tr>
+<tr>
+<td><code>ls /proc</code></td>
+<td>The host's: <code>acpi</code>, <code>asound</code>, <code>bootconfig</code>, <code>buddyinfo</code>, <code>diskstats</code>, <code>driver</code>...</td>
+<td>gVisor's short list: <code>cpuinfo</code>, <code>meminfo</code>, <code>sentry-meminfo</code>, <code>sys</code>...</td>
+<td>The same</td>
+</tr>
+<tr>
+<td><code>unshare --user --mount</code>, <code>mount -t tmpfs</code></td>
+<td><code>Operation not permitted</code>; <code>permission denied</code></td>
+<td>The same</td>
+<td><code>unshare</code> passes, <code>mount</code> fails</td>
+</tr>
+<tr>
+<td>The node on 6443 and 10250, <code>10.43.0.1:443</code></td>
+<td>Open</td>
+<td>Open</td>
+<td>Open</td>
+</tr>
+</tbody>
+</table>
+<p>The node's ports answer in all three: gVisor changes the kernel, not the network. The spike's namespace had no NetworkPolicy, so this does not contradict the scene, where the policies of <code>builds</code> stop them (#1009).</p>
+<p><strong>Time</strong>, the build container's seconds (one-second resolution), sequential, images already on the node:</p>
+<table>
+<thead>
+<tr>
+<th>Build</th>
+<th>hello, runs 1, 2, 3</th>
+<th>Job, runs 1, 2, 3</th>
+<th>20,000 file writes in one <code>RUN</code>, once</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BuildKit under runc (today)</td>
+<td>3, 3, 3</td>
+<td>8, 9, 8</td>
+<td><code>RUN</code> step 0.6 s</td>
+</tr>
+<tr>
+<td>BuildKit under gVisor</td>
+<td>3, 3, 3</td>
+<td>10, 9, 7</td>
+<td><code>RUN</code> step 4.1 s</td>
+</tr>
+<tr>
+<td>Kaniko under gVisor</td>
+<td>3, 2, 2</td>
+<td>7, 7, 6</td>
+<td>about 1 s</td>
+</tr>
+</tbody>
+</table>
+<p><code>hello</code> has no <code>RUN</code>, so it costs nothing; a syscall-heavy <code>RUN</code> is about seven times slower in BuildKit under gVisor (one run, the project's own observation).</p>
+<p><strong>Recommendation: replace the VM of #1007 with the <code>gvisor</code> RuntimeClass, and keep BuildKit.</strong> It removes the machine's kernel from a hostile <code>RUN</code> and the seccomp and AppArmor exception with it, with no VM to keep, so the builds namespace goes back to <code>baseline</code>. What stays: gVisor's own bugs, <code>runsc</code> set up by hand on every node, and a slower <code>RUN</code>. Kaniko adds nothing: archived, its Chainguard image is paid, and it runs as root <em>(judgement)</em>.</p>
+<h2 id="what-triggers-a-build">What triggers a build<a class="headerlink" href="#what-triggers-a-build" title="Permanent link">&para;</a></h2>
+<p><strong>First slice, as #848 decided:</strong> by hand, from a git ref only. Nothing here depends on that for containment.</p>
+<p><strong>#914 (a webhook starts a build) changes:</strong></p>
+<ul>
+<li>Hostile code runs unattended, on any push, so the kernel risk stops being theoretical: the VM of decision 1 comes first.</li>
+<li>A public address reaches the reef. #914's signature check and its rule of building only refs a Workload names must stay; <a href="https://owasp.github.io/www-project-top-10-ci-cd-security-risks/CICD-SEC-04-Poisoned-Pipeline-Execution">a fork's pull request never builds</a>.</li>
+<li>The quota has to bound builds per repository, since a push can start many.</li>
+</ul>
+<p><strong>A local folder changes:</strong></p>
+<ul>
+<li>The source arrives through an upload, not a clone: no git credential, a new path through the API (ADR 0018), and a tar a person controls, so size and paths are checked.</li>
+<li>There is no commit, so the image says less about where it came from.</li>
+<li>The <code>build</code> and <code>push</code> containers stay as they are.</li>
+</ul>
+<h2 id="what-the-scene-of-848-must-prove">What the scene of #848 must prove<a class="headerlink" href="#what-the-scene-of-848-must-prove" title="Permanent link">&para;</a></h2>
+<p>Each from a hostile <code>RUN</code>, on a throwaway cluster, with an allowed probe beside the refused one, as <code>test/scene-metrics</code> does. k3s refuses a denied connection rather than dropping it, so the check accepts both.</p>
+<table>
+<thead>
+<tr>
+<th>Probe</th>
+<th>Expected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A Pod and a Service in another namespace</td>
+<td>Stopped</td>
+</tr>
+<tr>
+<td><code>10.43.0.1</code>, and the node on 6443 and 10250</td>
+<td>Stopped (#1009); anonymous gets no data. <strong>Observed</strong> (#1091, k3d): all three refused from a <code>RUN</code>, at the node's address in the Pod network (<code>10.42.0.1</code>, the <code>RUN</code>'s gateway)</td>
+</tr>
+<tr>
+<td>A NodePort on the node</td>
+<td>Stopped (#1009). <strong>Observed</strong> (#1091, k3d): refused at the same address, so k3s's policy controller filters the node's ports from <code>builds</code>, unlike the <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/">general rule</a> above</td>
+</tr>
+<tr>
+<td>The node and the owner's machine on k3d's network on Docker</td>
+<td>Stopped (#1009): 6443, 10250 and the NodePort at every address of the /24 of k3d's registry, which a <code>RUN</code> learns by name and which holds the node; the owner's machine (<code>host.k3d.internal</code>) on 5111, where k3d's registry is published. The scene checks from outside <code>builds</code> that the node is in that range and answers on the three ports, and that the machine answers on 5111</td>
+</tr>
+<tr>
+<td>k3d's registry on Docker's network</td>
+<td>Stopped; so the scene's pull-through caches are not reachable from a build either</td>
+</tr>
+<tr>
+<td>A public address on 443; on another port</td>
+<td>Reached; stopped</td>
+</tr>
+<tr>
+<td><code>/proc</code> of every process, the environment, the mounts</td>
+<td>No git or push canary found</td>
+</tr>
+<tr>
+<td>A Pod with <code>privileged: true</code> or <code>hostPath</code>, or another image, in the namespace</td>
+<td>Refused by admission</td>
+</tr>
+<tr>
+<td><code>RUN --network=host</code>, <code>RUN --security=insecure</code></td>
+<td>Fail</td>
+</tr>
+<tr>
+<td>The push credential on another repository, and on an existing tag</td>
+<td>Refused</td>
+</tr>
+<tr>
+<td>A build past its deadline</td>
+<td>Killed; no retry</td>
+</tr>
+<tr>
+<td>The cloud metadata address <code>169.254.169.254</code> on 80</td>
+<td>Stopped (#1121), at a listener the scene puts on the build node, which a Pod outside <code>builds</code> reaches</td>
+</tr>
+<tr>
+<td>The kernel a <code>RUN</code> runs on, in sandbox mode</td>
+<td>gVisor's, not the node's (#1120), printed by the probes fixture's <code>PROBE kernel</code></td>
+</tr>
+<tr>
+<td>A Pod outside <code>builds</code> that tolerates the build pool's taint, or names a node</td>
+<td>Refused by admission (#1121); a build's Pod runs on the build node</td>
+</tr>
+<tr>
+<td>A <code>hostUsers: false</code> variant, and <code>apparmor_restrict_unprivileged_userns</code> at <code>1</code></td>
+<td>Record whether BuildKit starts. The spike of 2026-11-05 (k3s v1.35.5): it does not (<code>newuidmap ... Operation not permitted</code>), so #1067 runs with <code>hostUsers: true</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="stand-ins">Stand-ins<a class="headerlink" href="#stand-ins" title="Permanent link">&para;</a></h2>
+<p>Collected from above, for <code>docs/features.md</code> when the code arrives. This document creates none in code.</p>
+<table>
+<thead>
+<tr>
+<th>Stand-in</th>
+<th>Retired by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Who may publish or build is not enforced</td>
+<td>#897, ADR 0018</td>
+</tr>
+<tr>
+<td>The push user has no per-build expiry</td>
+<td>#1010</td>
+</tr>
+<tr>
+<td>One git host</td>
+<td>#234, #279</td>
+</tr>
+<tr>
+<td>A token only for the owners in <code>BUILD_TOKEN_OWNERS</code>: the allowlist names <code>builds</code>, shared by every tenant</td>
+<td>#1331</td>
+</tr>
+<tr>
+<td>No record of what a build reached</td>
+<td>#256</td>
+</tr>
+<tr>
+<td>A kernel shared with everything else</td>
+<td>Portable mode only: sandbox mode (#1120) runs every build in the <code>gvisor</code> RuntimeClass the spike of #1117 recommends</td>
+</tr>
+</tbody>
+</table>
+<h2 id="learn-more">Learn more<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://github.com/moby/buildkit/blob/master/docs/rootless.md">BuildKit, rootless mode</a> and its <a href="https://github.com/moby/buildkit/tree/master/examples/kubernetes">Kubernetes examples</a>.</li>
+<li>Kubernetes: <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/">Network Policies</a>, <a href="https://kubernetes.io/docs/concepts/security/pod-security-standards/">Pod Security Standards</a>, <a href="https://kubernetes.io/docs/concepts/security/pod-security-admission/">Pod Security Admission</a>, <a href="https://kubernetes.io/docs/concepts/workloads/pods/user-namespaces/">User Namespaces</a>, <a href="https://kubernetes.io/docs/concepts/configuration/secret/">Secrets</a>.</li>
+<li>OWASP: <a href="https://kubernetes-top10.owasp.org/">Kubernetes Top Ten</a>, <a href="https://owasp.org/www-project-top-10-ci-cd-security-risks/">Top 10 CI/CD Security Risks</a>, <a href="https://cheatsheetseries.owasp.org/cheatsheets/CI_CD_Security_Cheat_Sheet.html">CI/CD Security Cheat Sheet</a>.</li>
+<li>gVisor: <a href="https://gvisor.dev/docs/">its docs</a>, <a href="https://gvisor.dev/docs/user_guide/install/">installation</a>, <a href="https://gvisor.dev/docs/user_guide/containerd/quick_start/">containerd quick start</a>.</li>
+<li>K3s: <a href="https://docs.k3s.io/networking/networking-services">the network policy controller</a>. <a href="https://zotregistry.dev/v2.1.23/articles/authn-authz/">zot, authentication and authorization</a>.</li>
+</ul>
+<p><em>Origin: the owner's condition of 2026-11-02 in the review of #835 (the delivery model of the internal-developer-platform profile), split as #1004 from #848 on 2026-11-05.</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../0008-portal-first-slice/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Portal first slice">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Portal first slice
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../0010-build-trigger/" class="md-footer__link md-footer__link--next" aria-label="Next: Build trigger">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Build trigger
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "navigation.footer", "navigation.indexes", "navigation.tabs", "navigation.instant", "navigation.top", "navigation.tracking", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../../javascripts/terminal.js"></script>
+      
+        <script src="../../javascripts/reader.js"></script>
+      
+        <script src="../../javascripts/font.js"></script>
+      
+        <script src="../../javascripts/ai.js"></script>
+      
+        <script src="../../javascripts/diagram-zoom.js"></script>
+      
+    
+  </body>
+</html>

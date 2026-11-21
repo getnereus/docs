@@ -1,0 +1,12 @@
+{
+  "name": "scene-presentations",
+  "command": "test/scene-presentations",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 723,
+  "passed": 70,
+  "failed": 0,
+  "failure": null,
+  "commit": "c58a5cc3",
+  "started": "2026-11-18T23:07:39Z"
+}

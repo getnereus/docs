@@ -1,0 +1,32 @@
+# Thinking in platforms
+
+What Nereus takes from Kaspar von Grünberg and Luca Galante's book: a platform is the operating model of knowledge work, not a tool for developers only. Nereus already holds that thesis, an Internal Developer Platform being one profile of it ([Vision](vision.md)); the book gives it words, a history and a model. The owner read it and chose these lessons (2026-11-13).
+
+- Source: Kaspar von Grünberg and Luca Galante, *Thinking in Platforms: Platform engineering as the operating model for work in the AI era* (Weave Intelligence, 2026), [Kindle edition](https://read.amazon.com/kp/kshare?asin=B0HF615873). The quotes come from the owner's reading highlights; the pages are the Kindle edition's. The same authors wrote the *State of AI in Platform Engineering* report, summarised in [its reference page](presentations/idp/references/state-of-ai-in-platform-engineering.md).
+
+## The lessons
+
+- **The production system is itself a product.** "A production system is the overall way an organization turns effort into results" (p. 17). Ford went from letting it "happen" to treating it as a product "worked on, improved, tested, and refined continuously" (p. 15). Platform engineering is "the discipline of deliberately designing, building, and improving platforms for knowledge work, and treating those platforms as products" (p. 23). Here: the project's own way of working (the pillars, the hooks, the skills, the board) is designed and improved like the platform it builds ([Continuous learning and improvement](vision.md#continuous-learning-and-improvement)).
+- **A platform is not only for developers.** The book's examples go beyond software: an "internal marketing platform", a "patient tracking platform" (p. 20). Here: an IDP is one profile of Nereus; a reef can serve any recurring knowledge work.
+- **Replace negotiation with paths.** Without a platform, "work crosses the boundary through ad hoc negotiation rather than through a well-designed interface" (p. 60): urgent requests, "who owns this?", the wrong person. "Designed interfaces make boundaries reliably accessible" (p. 62), and "good paths don't eliminate communication altogether, they remove the need for constant clarifying, coordinating, and renegotiating around recurring work" (p. 62). Here: the Nereus API is that interface ([The Nereus API is the one door](vision.md#the-nereus-api-is-the-one-door-and-it-cannot-lie)); a deployment that needed a specialist becomes "a self-service path any developer could trigger" (p. 9).
+- **Autonomy grows, it does not shrink.** Platforms, "when designed well, increase autonomy rather than reducing it" (p. 22), and the book lists "creativity requires unlimited freedom" among the misconceptions (p. 54). Here: a team still chooses its tools, as a Nereid behind a reef's contract, and switches them without changing a command (ADR 0011, reefs, Nereids and Mandates).
+- **Standardization is a floor.** "Standardization is a compounding floor, not a ceiling on what is possible" (p. 59). Against "our situation is too complex to standardize" (p. 62): once primitives "are stable, reusable, and connected through clear rules, variation no longer has to be rebuilt from scratch each time" (p. 63). Here: reefs are the primitives and composition is the rule ([Simple on the surface, consistent underneath](vision.md#simple-on-the-surface-consistent-underneath), [Progressively extensible](vision.md#progressively-extensible)).
+- **A platform evolves or it is a process.** "A platform that doesn't evolve is not a platform, it's an imposed process" (p. 59); a better approach that emerges is absorbed and raises the floor for everyone. A platform is "operated and observed, then refined based on user feedback" (p. 26), with "close interaction with users to set abstractions correctly" (p. 57). Here: [Metrics and real users decide](vision.md#metrics-and-real-users-decide), and an experience that works becomes a possible feature.
+- **Exceptions harden.** Without that care, "workarounds multiply, exceptions harden, and over time the platform turns back into the accidental system it replaced" (p. 28). Here: every fix gets an issue, and a stand-in names the feature that ends it ([Rules](agent/rules.md)).
+- **Start thin.** "Most platform efforts fail not by starting too small, but by starting too broad" (p. 30); the book names the Thinnest Viable Platform (p. 29). Here: good enough first, the walking skeleton ([How we work](agent/how-we-work.md)).
+- **Learn, then adjust.** "The objective isn't to perfect the plan, but to tighten the learning loop" (p. 31). "Plans still exist, but as dynamic hypotheses", and "learning without adjustment is pointless" (p. 31). Here: what an attempt teaches is kept, and it changes how the work happens.
+- **AI amplifies what is there.** "If the way an organization produces products is unstructured or suboptimal now, it'll only get worse with AI" (p. 10). Here: agents run on top of clear interfaces, documented workflows and deterministic checks ([AI and teams](agent/ai-and-teams.md), [Deterministic first](vision.md#deterministic-first-ai-only-where-it-is-good)).
+
+## Where this project stands
+
+The book places production systems on two axes: whether the design is explicit or implicit, and whether ownership is concentrated or fragmented (p. 36-37). Implicit design with fragmented ownership is the **artisanal** system: informal coordination, negotiation, high variance. Implicit design with concentrated ownership is the **hero-based** one: expertise in few heads, high ownership, fragile scale.
+
+Explicit design with fragmented ownership is the **bureaucratic** one: prescribed process, weak accountability, "compliance becomes the safest strategy because accountability for outcomes is diffuse" (p. 49). Explicit design with concentrated end-to-end ownership is the **platform**.
+
+Nereus starts close to hero-based: one owner holds most of the context, and every agent works through the owner.
+
+Each written rule, hook, skill and issue an agent can carry out alone moves the design from implicit to explicit, toward the platform quadrant; the risk to watch on that path is the bureaucratic one, rules kept because they exist and not because they still serve, so each rule names its reason and is reviewed when it stops paying (#871, the review of the pillars).
+
+## Learn more
+
+- Kaspar von Grünberg and Luca Galante, *Thinking in Platforms* (2026): why platforms, the model to reason about them, and how to start, harden and scale a platform initiative.

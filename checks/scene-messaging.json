@@ -1,0 +1,12 @@
+{
+  "name": "scene-messaging",
+  "command": "test/scene-messaging",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 109,
+  "passed": 43,
+  "failed": 2,
+  "failure": null,
+  "commit": "c8564c0b",
+  "started": "2026-11-18T06:32:50Z"
+}

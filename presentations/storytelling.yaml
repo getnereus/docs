@@ -1,0 +1,1106 @@
+$schema: ../../cli/src/nereus/schemas/presentations/outline/1.json
+outlineVersion: 1
+deck:
+  name: storytelling
+  title: "Faster than ever. Toward what?"
+  subtitle: "Software delivery from 1968 to the AI era"
+  pt: {title: "A velocidade nunca foi tão grande. Para quê?", subtitle: "Entrega de software de 1968 à era da IA"}
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt:
+      title: "Abertura"
+  - name: pattern
+    title: "The pattern"
+    question: "Why do software projects fail the same way?"
+    opening: false
+    pt:
+      title: "O padrão"
+      question: "Por que os projetos de software falham sempre do mesmo jeito?"
+  - name: agile
+    title: "Agile"
+    question: "Did Agile fix it?"
+    opening: false
+    pt:
+      title: "Agile"
+      question: "O Agile resolveu?"
+  - name: ai
+    title: "The AI era"
+    question: "Now that we can deliver anything faster, what are we delivering?"
+    opening: false
+    pt:
+      title: "A era da IA"
+      question: "Agora que podemos entregar qualquer coisa mais rápido, o que estamos entregando?"
+  - name: turn
+    title: "The turn"
+    question: "What would break the pattern?"
+    opening: false
+    pt:
+      title: "A virada"
+      question: "O que quebraria o padrão?"
+  - name: closing
+    title: "Closing"
+    pt:
+      title: "Encerramento"
+
+references:
+  - name: randell-2018
+    title: "Fifty Years of Software Engineering, or The View from Garmisch"
+    author: "Brian Randell"
+    year: 2018
+    url: "https://arxiv.org/pdf/1805.02742"
+    about: "A participant of the 1968 NATO conference looks back fifty years: why the field was named, and what it promised."
+    forUs: "The name **software engineering** was chosen as a provocation, a requirement rather than a reality; the \"underestimates and overexpectations\" Licklider described still happen."
+    pt:
+      about: "Um participante da conferência da OTAN de 1968 olha para trás, cinquenta anos depois: por que o campo recebeu esse nome e o que ele prometia."
+      forUs: "O nome **engenharia de software** foi escolhido como provocação, uma exigência e não uma realidade; as \"subestimativas e expectativas exageradas\" descritas por Licklider ainda acontecem."
+  - name: conway-1968
+    title: "How Do Committees Invent? (Conway's law)"
+    author: "Melvin Conway"
+    year: 1968
+    url: "https://en.wikipedia.org/wiki/Conway%27s_law"
+    about: "Organizations produce designs that copy their own communication structures."
+    forUs: "The bridge whose halves do not meet: misalignment is structural, not a lack of effort."
+    pt:
+      about: "As organizações produzem projetos que copiam as suas próprias estruturas de comunicação."
+      forUs: "A ponte cujas metades não se encontram: o desalinhamento é estrutural, não falta de esforço."
+  - name: brooks-1975
+    title: "The Mythical Man-Month"
+    author: "Fred Brooks"
+    year: 1975
+    url: "https://en.wikipedia.org/wiki/The_Mythical_Man-Month"
+    about: "Essays from building IBM's OS/360, republished in 1995 with \"No Silver Bullet\"."
+    forUs: "\"Adding manpower to a late software project makes it later\": the first answer to a late project was already known to fail."
+    pt:
+      about: "Ensaios sobre a construção do OS/360 da IBM, republicados em 1995 com \"No Silver Bullet\"."
+      forUs: "\"Acrescentar pessoas a um projeto de software atrasado o atrasa ainda mais\": a primeira resposta a um projeto atrasado já era sabidamente um fracasso."
+  - name: royce-1970
+    title: "Waterfall, Royce, and the misunderstanding"
+    author: "David A. Wheeler"
+    url: "https://dwheeler.com/essays/waterfall.html"
+    about: "Reads Winston Royce's 1970 paper, the one credited with the waterfall."
+    forUs: "Royce called the simple sequential approach \"risky and invites failure\" and recommended iterating; the industry adopted the diagram anyway."
+    pt:
+      about: "Lê o artigo de Winston Royce de 1970, o que é creditado como a origem do waterfall."
+      forUs: "Royce chamou a abordagem sequencial simples de \"arriscada, que convida ao fracasso\" e recomendou iterar; a indústria adotou o diagrama mesmo assim."
+  - name: virtual-case-file
+    title: "Who Killed the Virtual Case File?"
+    author: "IEEE Spectrum"
+    year: 2005
+    url: "https://spectrum.ieee.org/who-killed-the-virtual-case-file"
+    about: "How the FBI's case management system was scrapped after years of work."
+    forUs: "An **800-page** requirements document, about 400 change requests and **US$170 million**: heavy up-front process delayed the discovery of the failure."
+    pt:
+      about: "Como o sistema de gestão de casos do FBI foi descartado depois de anos de trabalho."
+      forUs: "Um documento de requisitos de **800 páginas**, cerca de 400 solicitações de mudança e **US$ 170 milhões**: o processo pesado no início atrasou a descoberta do fracasso."
+  - name: ariane-501
+    title: "Ariane 5 Flight 501 Failure: Report by the Inquiry Board"
+    year: 1996
+    url: "https://www.csm.ornl.gov/~sheldon/cs422/ariane5fr.html"
+    about: "The official inquiry into the loss of the first Ariane 5, about 30 seconds after lift-off."
+    forUs: "Code reused from Ariane 4 overflowed in a function that served no purpose after lift-off, kept running \"for commonality\"."
+    pt:
+      about: "A investigação oficial da perda do primeiro Ariane 5, cerca de 30 segundos após o lançamento."
+      forUs: "Código reaproveitado do Ariane 4 estourou em uma função que não tinha utilidade depois do lançamento, mantida em execução \"por uniformidade\"."
+  - name: knight-capital
+    title: "SEC Charges Knight Capital With Violations of Market Access Rule"
+    author: "U.S. Securities and Exchange Commission"
+    year: 2013
+    url: "https://www.sec.gov/news/press-release/2013-222"
+    about: "The regulator's account of Knight Capital's trading incident of August 2012."
+    forUs: "More than 4 million orders in 45 minutes and a loss of more than **US$460 million**, from a deployment that left old code active."
+    pt:
+      about: "O relato do regulador sobre o incidente de negociação da Knight Capital em agosto de 2012."
+      forUs: "Mais de 4 milhões de ordens em 45 minutos e um prejuízo de mais de **US$ 460 milhões**, por um deploy que deixou código antigo ativo."
+  - name: crowdstrike-2024
+    title: "Microsoft says 8.5M Windows devices were affected by CrowdStrike outage"
+    author: "TechCrunch"
+    year: 2024
+    url: "https://techcrunch.com/2024/07/20/microsoft-says-8.5m-windows-devices-were-affected-by-crowdstrike-outage/"
+    about: "Microsoft's estimate of the reach of one faulty security update."
+    forUs: "One update, **8.5 million** devices: delivery speed without a safe rollout."
+    pt:
+      about: "A estimativa da Microsoft sobre o alcance de uma única atualização de segurança defeituosa."
+      forUs: "Uma atualização, **8,5 milhões** de dispositivos: velocidade de entrega sem um rollout seguro."
+  - name: mckinsey-oxford-2012
+    title: "Delivering large-scale IT projects on time, on budget, and on value"
+    author: "McKinsey and the University of Oxford"
+    year: 2012
+    url: "https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/delivering-large-scale-it-projects-on-time-on-budget-and-on-value"
+    about: "A study of more than 5,400 IT projects and their outcomes."
+    forUs: "Large projects ran **45%** over budget, **7%** over time, and delivered **56% less value** than predicted: the size of the problem."
+    pt:
+      about: "Um estudo de mais de 5.400 projetos de TI e dos seus resultados."
+      forUs: "Os grandes projetos estouraram o orçamento em **45%**, o prazo em **7%** e entregaram **56% menos valor** do que o previsto: o tamanho do problema."
+  - name: chaos-report
+    title: "CHAOS Report on IT Project Outcomes"
+    author: "OpenCommons, on the Standish Group's figures"
+    url: "https://opencommons.org/CHAOS_Report_on_IT_Project_Outcomes"
+    about: "A summary of the Standish Group's CHAOS figures, from 1994 to 2020."
+    forUs: "1994: **16.2%** of projects successful, where successful means on time and on budget: the forecast, not the value."
+    pt:
+      about: "Um resumo dos números do CHAOS do Standish Group, de 1994 a 2020."
+      forUs: "1994: **16,2%** dos projetos bem-sucedidos, onde bem-sucedido significa no prazo e no orçamento: a previsão, não o valor."
+  - name: eveleens-verhoef-2010
+    title: "The Rise and Fall of the Chaos Report Figures"
+    author: "J. Laurenz Eveleens and Chris Verhoef, IEEE Software"
+    year: 2010
+    url: "https://research.vu.nl/en/publications/the-rise-and-fall-of-the-chaos-report-figures/"
+    about: "A critique of how the CHAOS report defines success and failure."
+    forUs: "The definitions judge only the accuracy of the forecast, and distort the figures: **measuring success by the forecast is part of the problem**."
+    pt:
+      about: "Uma crítica de como o relatório CHAOS define sucesso e fracasso."
+      forUs: "As definições julgam apenas a precisão da previsão e distorcem os números: **medir o sucesso pela previsão é parte do problema**."
+  - name: agile-manifesto
+    title: "Manifesto for Agile Software Development"
+    year: 2001
+    url: "https://agilemanifesto.org/"
+    about: "Four values and twelve principles, signed in 2001."
+    forUs: "\"Working software over comprehensive documentation\", and \"working software is the primary measure of progress\"."
+    pt:
+      about: "Quatro valores e doze princípios, assinados em 2001."
+      forUs: "\"Software funcionando mais que documentação abrangente\", e \"software funcionando é a medida primária de progresso\"."
+  - name: fowler-c3
+    title: "C3"
+    author: "Martin Fowler"
+    url: "https://martinfowler.com/bliki/C3.html"
+    about: "One of the people on Chrysler's payroll project, where Extreme Programming was born, on what happened to it."
+    forUs: "\"C3's cancellation, however, also proves that XP is no guarantee of success.\" No method guarantees success; it can give honest feedback early."
+    pt:
+      about: "Uma das pessoas do projeto de folha de pagamento da Chrysler, onde nasceu o Extreme Programming, sobre o que aconteceu com ele."
+      forUs: "\"O cancelamento do C3, porém, também prova que o XP não é garantia de sucesso.\" Nenhum método garante o sucesso; ele pode dar feedback honesto cedo."
+  - name: c3-wikipedia
+    title: "Chrysler Comprehensive Compensation System"
+    author: "Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Chrysler_Comprehensive_Compensation_System"
+    about: "The timeline of the project: started in 1993, live in 1997, ended in February 2000."
+    forUs: "Stuck without a single paycheck until 1996, it paid about **10,000** people in 1997; the customer representative left from burnout."
+    pt:
+      about: "A linha do tempo do projeto: iniciado em 1993, no ar em 1997, encerrado em fevereiro de 2000."
+      forUs: "Sem emitir um único contracheque até 1996, passou a pagar cerca de **10.000** pessoas em 1997; o representante do cliente saiu por esgotamento."
+  - name: dave-thomas-2014
+    title: "Pragmatic Dave Thomas: Agile is Dead (Long Live Agility)"
+    author: "InfoQ"
+    year: 2014
+    url: "https://www.infoq.com/news/2014/10/pragmatic-dave-agility"
+    about: "A signatory of the Agile Manifesto on what became of the word."
+    forUs: "\"Agile\" was devalued, consultants \"started to circle\", and agility cannot be imposed from the top."
+    pt:
+      about: "Um dos signatários do Manifesto Agile sobre o que foi feito da palavra."
+      forUs: "\"Agile\" foi desvalorizado, os consultores \"começaram a rondar\", e a agilidade não pode ser imposta de cima para baixo."
+  - name: dora-2025
+    title: "State of AI-assisted Software Development 2025"
+    author: "DORA, Google Cloud"
+    year: 2025
+    url: "https://services.google.com/fh/files/misc/2025_state_of_ai_assisted_software_development.pdf"
+    about: "A global survey of nearly 5,000 technology professionals, with interviews, on AI in software delivery."
+    forUs: "\"AI adoption now improves software delivery throughput (...) However, it still increases delivery instability\" (p. 4)."
+    pt:
+      about: "Uma pesquisa global com quase 5.000 profissionais de tecnologia, com entrevistas, sobre IA na entrega de software."
+      forUs: "\"A adoção de IA agora melhora a vazão da entrega de software (...) No entanto, ela ainda aumenta a instabilidade da entrega\" (p. 4)."
+  - name: metr-2025
+    title: "Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity"
+    author: "METR"
+    year: 2025
+    url: "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/"
+    about: "A randomized study: 16 experienced developers, 246 real issues in their own repositories. METR marks it as outdated."
+    forUs: "**19% slower** with AI, while they expected 24% faster and still believed 20% faster: measure, do not believe."
+    pt:
+      about: "Um estudo randomizado: 16 desenvolvedores experientes, 246 issues reais nos seus próprios repositórios. A METR o marca como desatualizado."
+      forUs: "**19% mais lentos** com IA, enquanto esperavam ser 24% mais rápidos e ainda acreditavam ser 20% mais rápidos: meça, não acredite."
+  - name: stackoverflow-2025
+    title: "Stack Overflow Developer Survey 2025: AI"
+    author: "Stack Overflow"
+    year: 2025
+    url: "https://survey.stackoverflow.co/2025/ai"
+    about: "The AI section of the yearly developer survey."
+    forUs: "**84%** use or plan to use AI tools, **46%** distrust their accuracy, and the top frustration is answers \"almost right, but not quite\"."
+    pt:
+      about: "A seção de IA da pesquisa anual com desenvolvedores."
+      forUs: "**84%** usam ou pretendem usar ferramentas de IA, **46%** desconfiam da precisão, e a maior frustração são respostas \"quase certas, mas não totalmente\"."
+  - name: dora-change-approval
+    title: "Streamlining change approval"
+    author: "DORA"
+    url: "https://dora.dev/capabilities/streamlining-change-approval/"
+    about: "DORA's research on how changes get approved, and what works better."
+    forUs: "Heavyweight approval hurts delivery performance, and no evidence was found that it lowers the change failure rate; peer review in the team's platform still satisfies segregation of duties."
+    pt:
+      about: "A pesquisa da DORA sobre como as mudanças são aprovadas e o que funciona melhor."
+      forUs: "A aprovação pesada prejudica o desempenho da entrega, e não se encontrou evidência de que reduza a taxa de falha de mudanças; a revisão por pares na plataforma do time ainda cumpre a segregação de funções."
+  - name: gov-uk-pay
+    title: "GOV.UK Pay at 10: how it started and how it's going"
+    author: "Government Digital Service"
+    year: 2026
+    url: "https://gds.blog.gov.uk/2026/09/02/gov-uk-pay-at-10-how-it-started-and-how-its-going/"
+    about: "Ten years of the UK government's shared payment platform."
+    forUs: "Nearly **£10 billion** processed for almost 1,800 services: a small thing that works, reused by hundreds."
+    pt:
+      about: "Dez anos da plataforma de pagamentos compartilhada do governo do Reino Unido."
+      forUs: "Quase **£10 bilhões** processados para cerca de 1.800 serviços: uma coisa pequena que funciona, reutilizada por centenas."
+  - name: gov-uk-verify
+    title: "GDS closes GOV.UK Verify service"
+    author: "UKAuthority"
+    url: "https://www.ukauthority.com/articles/gds-closes-govuk-verify-service/"
+    about: "The end of GDS's first identity service, replaced by One Login."
+    forUs: "Take-up was \"disappointing\" and it closed in April 2023: discarding in the open."
+    pt:
+      about: "O fim do primeiro serviço de identidade do GDS, substituído pelo One Login."
+      forUs: "A adesão foi \"decepcionante\" e o serviço foi encerrado em abril de 2023: descartar às claras."
+  - name: gov-uk-paas
+    title: "GDS to decommission Platform as a Service"
+    author: "UKAuthority"
+    url: "https://ukauthority.com/articles/gds-to-decommission-platform-as-a-service/"
+    about: "Why GDS decided in 2022 to close its platform as a service."
+    forUs: "Departments had built their own Kubernetes platforms: **a platform survives by being adopted, not by being mandated**."
+    pt:
+      about: "Por que o GDS decidiu, em 2022, encerrar a sua plataforma como serviço."
+      forUs: "Os departamentos haviam construído as suas próprias plataformas Kubernetes: **uma plataforma sobrevive sendo adotada, não sendo imposta**."
+  - name: gov-br-accounts
+    title: "gov.br reaches 175 million accounts"
+    author: "Mobile Time, from the Ministry of Management (MGI)"
+    year: 2026
+    url: "https://www.mobiletime.com.br/noticias/24/03/2026/govbr-175-milhoes/"
+    about: "The scale of Brazil's federal digital government platform in March 2026."
+    forUs: "**175 million** accounts and more than 4,600 federal services."
+    pt:
+      about: "A escala da plataforma de governo digital federal do Brasil em março de 2026."
+      forUs: "**175 milhões** de contas e mais de 4.600 serviços federais."
+  - name: gov-br-contracting
+    title: "Model for contracting software development"
+    author: "Secretaria de Governo Digital"
+    year: 2022
+    url: "https://www.gov.br/governodigital/pt-br/contratacoes-de-tic/apresentacao-do-modelo-de-desenvolvimento-de-software.pdf"
+    about: "How the federal government contracts software development since 2022."
+    forUs: "Agile methods as a guideline, with **payment per sprint** tied to delivered increments: agile even in public contracting."
+    pt:
+      about: "Como o governo federal contrata desenvolvimento de software desde 2022."
+      forUs: "Métodos ágeis como diretriz, com **pagamento por sprint** vinculado aos incrementos entregues: agile até na contratação pública."
+
+slides:
+  # ── Opening ─────────────────────────────────────────
+  - name: title
+    act: opening
+    cover: true
+    message: "Fifty years of software projects failing the same way"
+    subtitle: "The AI era may repeat the pattern"
+    notes: |-
+      What we want to say: **the problems are older than the tools**, and every generation answered them with heavier process.
+
+      **A first-person thread:** the presenter lived through these eras in the industry; tell them aloud, as they happened. Personal details stay out of the repository.
+
+      **Route:** the pattern, what Agile changed and what it did not, the AI era, and the turn.
+    pt:
+      message: "Cinquenta anos de software falhando do mesmo jeito"
+      subtitle: "A era da IA pode repetir o padrão"
+      notes: |-
+        O que queremos dizer: **os problemas são mais antigos que as ferramentas**, e cada geração respondeu a eles com mais processo.
+
+        **Um fio em primeira pessoa:** quem apresenta viveu essas eras na indústria; conte-as em voz alta, como aconteceram. Detalhes pessoais ficam fora do repositório.
+
+        **Roteiro:** o padrão, o que o Agile mudou e o que não mudou, a era da IA e a virada.
+
+  # ── The pattern ─────────────────────────────────────
+  - name: field-named
+    act: pattern
+    topic: "Before it had a name"
+    message: "In 1968 the field was named software engineering"
+    refs: [randell-2018]
+    subtitle: "A requirement, not a reality"
+    screen: ["**Named:** _as_ a provocation", "**The concern:** a software crisis"]
+    source: "Randell, Fifty Years of Software Engineering (2018)"
+    notes: |-
+      What we want to say: **the name was a wish**. NATO's conference in Garmisch chose "software engineering" because the field was not one yet.
+
+      Participants recognized a shared concern that some of them called the "software crisis".
+
+      Caveat: Randell also notes that many projects of the time were successful; the crisis was a concern, not a census.
+
+      Source: references/software-crisis.md
+    pt:
+      message: "Em 1968 o campo foi batizado de engenharia de software"
+      subtitle: "Uma exigência, não uma realidade"
+      topic: "Antes de ter nome"
+      screen: ["**Batizado:** _como_ provocação", "**A preocupação:** uma crise do software"]
+      notes: |-
+        O que queremos dizer: **o nome era um desejo**. A conferência da OTAN em Garmisch escolheu "engenharia de software" porque o campo ainda não era uma.
+
+        Os participantes reconheceram uma preocupação comum que alguns chamaram de "crise do software".
+
+        Ressalva: Randell também observa que muitos projetos da época tiveram sucesso; a crise era uma preocupação, não um censo.
+
+        Fonte: references/software-crisis.md
+
+  - name: underestimates
+    act: pattern
+    topic: "Before it had a name"
+    message: "Large projects were already misjudged"
+    refs: [randell-2018]
+    subtitle: "And they still are"
+    screen: ["\"Underestimates and overexpectations\""]
+    source: "Licklider, quoted in Randell (2018)"
+    dependsOn: [field-named]
+    notes: |-
+      What we want to say: **the diagnosis of 1968 still reads as current**. Randell, fifty years later, says it still happens.
+
+      Ask the room: who has seen a project start with an underestimate and an overexpectation this year?
+
+      Source: references/software-crisis.md
+    pt:
+      message: "Os grandes projetos já eram mal avaliados"
+      subtitle: "E ainda são"
+      topic: "Antes de ter nome"
+      screen: ["\"Subestimativas e expectativas exageradas\""]
+      notes: |-
+        O que queremos dizer: **o diagnóstico de 1968 ainda parece atual**. Randell, cinquenta anos depois, diz que continua acontecendo.
+
+        Pergunte à plateia: quem viu este ano um projeto começar com uma subestimativa e uma expectativa exagerada?
+
+        Fonte: references/software-crisis.md
+
+  - name: brooks
+    act: pattern
+    topic: "Before it had a name"
+    message: "Adding people does not save a late project"
+    refs: [brooks-1975]
+    subtitle: "Brooks's law, 1975, from IBM's OS/360"
+    screen: ["Adding people to a late project _makes_ it later"]
+    source: "Brooks, The Mythical Man-Month (1975)"
+    dependsOn: [underestimates]
+    notes: |-
+      What we want to say: **the first answer to a late project, more people, was already known to fail**.
+
+      The original sentence: "Adding manpower to a late software project makes it later." Republished in 1995 together with "No Silver Bullet".
+
+      Source: references/software-crisis.md
+    pt:
+      message: "Mais gente não salva um projeto atrasado"
+      subtitle: "A lei de Brooks, 1975, a partir do OS/360 da IBM"
+      topic: "Antes de ter nome"
+      screen: ["Acrescentar pessoas a um projeto atrasado o _atrasa_ mais"]
+      notes: |-
+        O que queremos dizer: **a primeira resposta a um projeto atrasado, mais gente, já era sabidamente um fracasso**.
+
+        A frase original: "Adding manpower to a late software project makes it later." Republicada em 1995 junto com "No Silver Bullet".
+
+        Fonte: references/software-crisis.md
+
+  - name: royce
+    act: pattern
+    topic: "The answer was process"
+    message: "The paper credited with the waterfall recommended iterating"
+    refs: [royce-1970]
+    subtitle: "The industry adopted the diagram anyway"
+    screen: ["**The diagram:** one phase after another", "**The text:** \"risky and _invites_ failure\""]
+    source: "Royce (1970), as read by Wheeler"
+    dependsOn: [brooks]
+    notes: |-
+      What we want to say: **the waterfall was the example of what not to do**. Royce drew the sequential flow and, in the same paper, recommended iterating.
+
+      The irony opens the beat: the answer to uncertainty became the very process its author warned against.
+
+      Source: references/software-crisis.md
+    pt:
+      message: "O artigo tido como origem do waterfall recomendou iterar"
+      subtitle: "A indústria adotou o diagrama mesmo assim"
+      topic: "A resposta foi processo"
+      screen: ["**O diagrama:** uma fase após a outra", "**O texto:** \"arriscado e _convida_ ao fracasso\""]
+      notes: |-
+        O que queremos dizer: **o waterfall era o exemplo do que não fazer**. Royce desenhou o fluxo sequencial e, no mesmo artigo, recomendou iterar.
+
+        A ironia abre o momento: a resposta à incerteza virou justamente o processo contra o qual o autor alertou.
+
+        Fonte: references/software-crisis.md
+
+  - name: heavy-process
+    act: pattern
+    topic: "The answer was process"
+    message: "Each generation answered uncertainty with heavier process"
+    subtitle: "To compensate for what it could not predict"
+    screen: ["**Projects:** PMBOK", "**Development:** RUP and Rational Rose", "**Maturity:** CMMI and MPS.BR"]
+    dependsOn: [royce]
+    notes: |-
+      What we want to say: **process was the answer to fear of the unknown**. Plan more, document more, certify more.
+
+      MPS.BR is the Brazilian software process maturity model, close to CMMI; the audience may have lived through an assessment.
+
+      Tell aloud what each of these looked like from the inside.
+    pt:
+      message: "Cada geração respondeu à incerteza com mais processo"
+      subtitle: "Para compensar o que não conseguia prever"
+      topic: "A resposta foi processo"
+      screen: ["**Projetos:** PMBOK", "**Desenvolvimento:** RUP e Rational Rose", "**Maturidade:** CMMI e MPS.BR"]
+      notes: |-
+        O que queremos dizer: **o processo era a resposta ao medo do desconhecido**. Planejar mais, documentar mais, certificar mais.
+
+        MPS.BR é o modelo brasileiro de maturidade de processos de software, próximo do CMMI; a plateia pode ter passado por uma avaliação.
+
+        Conte em voz alta como cada um desses parecia por dentro.
+
+  - name: virtual-case-file
+    act: pattern
+    topic: "The answer was process"
+    message: "The FBI's Virtual Case File was scrapped"
+    subtitle: "A case from 2005"
+    refs: [virtual-case-file]
+    screen: ["**Requirements:** 800 pages", "**Spent:** US$170 million", "**Result:** _scrapped_"]
+    source: "IEEE Spectrum, Who Killed the Virtual Case File?"
+    dependsOn: [heavy-process]
+    notes: |-
+      What we want to say: **heavy up-front process did not prevent the failure; it delayed its discovery**.
+
+      US$105 million of the total was unusable code; about 400 change requests arrived in 2003; the cutover was planned as a flash, with no fallback.
+
+      Source: references/failures.md
+    pt:
+      message: "O Virtual Case File do FBI foi descartado"
+      subtitle: "Um caso de 2005"
+      topic: "A resposta foi processo"
+      screen: ["**Requisitos:** 800 páginas", "**Gasto:** US$ 170 milhões", "**Resultado:** _descartado_"]
+      notes: |-
+        O que queremos dizer: **o processo pesado no início não evitou o fracasso; atrasou a sua descoberta**.
+
+        US$ 105 milhões do total foram em código inutilizável; cerca de 400 solicitações de mudança chegaram em 2003; a virada foi planejada como um corte único, sem plano de volta.
+
+        Fonte: references/failures.md
+
+  - name: ariane
+    act: pattern
+    topic: "Failures that made history"
+    message: "In 1996 Ariane 5 was lost to reused code"
+    refs: [ariane-501]
+    screen: ["**Reused:** from Ariane 4", "**Purpose after lift-off:** none", "**Kept running:** _for_ commonality"]
+    source: "Ariane 501 Inquiry Board report"
+    dependsOn: [virtual-case-file]
+    notes: |-
+      What we want to say: **nobody asked whether the code was still needed**. A 64-bit to 16-bit conversion overflowed about 30 seconds after the lift-off of flight 501.
+
+      A few failures, for rhythm, not a catalogue: Therac-25 (1985-1987) is in the references, to tell with care, because people died.
+
+      Source: references/failures.md
+    pt:
+      message: "Em 1996 o Ariane 5 se perdeu por código reaproveitado"
+      topic: "Falhas que entraram para a história"
+      screen: ["**Reaproveitado:** do Ariane 4", "**Utilidade após o lançamento:** nenhuma", "**Mantido em execução:** _por_ uniformidade"]
+      notes: |-
+        O que queremos dizer: **ninguém perguntou se o código ainda era necessário**. Uma conversão de 64 bits para 16 bits estourou cerca de 30 segundos após o lançamento do voo 501.
+
+        Algumas falhas, para dar ritmo, não um catálogo: o Therac-25 (1985-1987) está nas referências, para contar com cuidado, porque pessoas morreram.
+
+        Fonte: references/failures.md
+
+  - name: knight-capital
+    act: pattern
+    topic: "Failures that made history"
+    message: "In 2012 Knight Capital left old code active"
+    refs: [knight-capital]
+    screen: ["**Orders:** more than 4 million", "**Time:** 45 minutes", "**Loss:** over US$460 million"]
+    source: "SEC press release 2013-222"
+    dependsOn: [ariane]
+    notes: |-
+      What we want to say: **old code nobody removed, and a deployment nobody could stop**.
+
+      Caveat: the loss is often quoted as US$440 million; the SEC says more than US$460 million.
+
+      Source: references/failures.md
+    pt:
+      message: "Em 2012 a Knight Capital deixou código antigo ativo"
+      topic: "Falhas que entraram para a história"
+      screen: ["**Ordens:** mais de 4 milhões", "**Tempo:** 45 minutos", "**Prejuízo:** mais de US$ 460 milhões"]
+      notes: |-
+        O que queremos dizer: **código antigo que ninguém removeu, e um deploy que ninguém conseguiu parar**.
+
+        Ressalva: o prejuízo costuma ser citado como US$ 440 milhões; a SEC diz mais de US$ 460 milhões.
+
+        Fonte: references/failures.md
+
+  - name: crowdstrike
+    act: pattern
+    topic: "Failures that made history"
+    message: "Speed without a safe rollout"
+    refs: [crowdstrike-2024]
+    subtitle: "CrowdStrike, 2024"
+    screen: ["**Devices affected:** 8.5 million", "**Cause:** one faulty update"]
+    source: "Microsoft's estimate, via TechCrunch (2024)"
+    dependsOn: [knight-capital]
+    notes: |-
+      What we want to say: **the failures did not stop with modern tools**; they moved to how fast a change reaches everyone. One faulty update affected 8.5 million Windows devices.
+
+      Other cases in the references, for a longer version: the NHS National Programme for IT and HealthCare.gov.
+
+      Source: references/failures.md
+    pt:
+      message: "Velocidade sem um rollout seguro"
+      subtitle: "CrowdStrike, 2024"
+      topic: "Falhas que entraram para a história"
+      screen: ["**Dispositivos afetados:** 8,5 milhões", "**Causa:** uma atualização defeituosa"]
+      notes: |-
+        O que queremos dizer: **as falhas não pararam com as ferramentas modernas**; elas passaram para a rapidez com que uma mudança chega a todos. Uma atualização defeituosa afetou 8,5 milhões de dispositivos Windows.
+
+        Outros casos nas referências, para uma versão mais longa: o National Programme for IT do NHS e o HealthCare.gov.
+
+        Fonte: references/failures.md
+
+  - name: measured
+    act: pattern
+    topic: "The same mistakes, measured"
+    message: "Large IT projects cost more and delivered less"
+    refs: [mckinsey-oxford-2012]
+    subtitle: "Across more than 5,400 IT projects"
+    screen: ["**Over budget:** 45%", "**Over time:** 7%", "**Value delivered:** 56% _less_ than predicted"]
+    source: "McKinsey and Oxford (2012), 5,400+ IT projects"
+    dependsOn: [crowdstrike]
+    notes: |-
+      What we want to say: **the cost is not the worst part; the missing value is**.
+
+      17% went so badly they could threaten the existence of the company.
+
+      Source: references/measuring-failure.md
+    pt:
+      message: "Os grandes projetos de TI custaram mais e entregaram menos"
+      subtitle: "Em mais de 5.400 projetos de TI"
+      topic: "Os mesmos erros, medidos"
+      screen: ["**Acima do orçamento:** 45%", "**Acima do prazo:** 7%", "**Valor entregue:** 56% _a menos_ do que o previsto"]
+      notes: |-
+        O que queremos dizer: **o custo não é a pior parte; o valor que falta é**.
+
+        17% deram tão errado que puderam ameaçar a existência da empresa.
+
+        Fonte: references/measuring-failure.md
+
+  - name: forecast
+    act: pattern
+    topic: "The same mistakes, measured"
+    message: "The most quoted measure of failure judges the forecast"
+    refs: [chaos-report, eveleens-verhoef-2010]
+    subtitle: "Measuring success by the forecast is part of the problem"
+    screen: ["**CHAOS 1994:** 16.2% successful", "**Successful:** _hit_ the forecast", "**Not measured:** the value delivered"]
+    source: "Standish CHAOS (1994); Eveleens and Verhoef, IEEE Software (2010)"
+    dependsOn: [measured]
+    notes: |-
+      What we want to say: **a project that delivered great value but missed its first estimate counts as a failure**. The measure rewards the plan, not the working software.
+
+      The CHAOS figure is contested: Eveleens and Verhoef showed the definitions judge only the accuracy of the forecast, and distort the figures. Show it only with the critique, as here.
+
+      This is the bridge to the next act: "working software is the primary measure of progress".
+
+      Source: references/measuring-failure.md
+    pt:
+      message: "A medida de fracasso mais citada julga a previsão"
+      subtitle: "Medir o sucesso pela previsão é parte do problema"
+      topic: "Os mesmos erros, medidos"
+      screen: ["**CHAOS 1994:** 16,2% bem-sucedidos", "**Bem-sucedido:** _cumpriu_ a previsão", "**Não medido:** o valor entregue"]
+      notes: |-
+        O que queremos dizer: **um projeto que entregou muito valor mas errou a primeira estimativa conta como fracasso**. A medida premia o plano, não o software funcionando.
+
+        O número do CHAOS é contestado: Eveleens e Verhoef mostraram que as definições julgam apenas a precisão da previsão e distorcem os números. Mostre-o somente com a crítica, como aqui.
+
+        Esta é a ponte para o próximo ato: "software funcionando é a medida primária de progresso".
+
+        Fonte: references/measuring-failure.md
+
+  # ── Agile ───────────────────────────────────────────
+  - name: manifesto
+    act: agile
+    topic: "The manifesto"
+    message: "In 2001 the Agile Manifesto redefined progress"
+    refs: [agile-manifesto]
+    screen: ["**Value:** working software _over_ documentation", "**Measure of progress:** working software"]
+    source: "agilemanifesto.org (2001)"
+    dependsOn: [forecast]
+    notes: |-
+      What we want to say: **the answer to the forecast was to measure what runs**. In full: "working software over comprehensive documentation", and "working software is the primary measure of progress".
+
+      Extreme Programming came with it: short cycles, tests first, the customer in the team. Later, #NoEstimates questioned the forecast itself.
+
+      Source: references/agile.md
+    pt:
+      message: "Em 2001 o Manifesto Agile redefiniu o progresso"
+      topic: "O manifesto"
+      screen: ["**Valor:** software funcionando _mais que_ documentação", "**Medida de progresso:** software funcionando"]
+      notes: |-
+        O que queremos dizer: **a resposta à previsão foi medir o que roda**. Por extenso: "software funcionando mais que documentação abrangente", e "software funcionando é a medida primária de progresso".
+
+        O Extreme Programming veio junto: ciclos curtos, testes primeiro, o cliente no time. Mais tarde, o #NoEstimates questionou a própria previsão.
+
+        Fonte: references/agile.md
+
+  - name: c3
+    act: agile
+    topic: "XP's own project"
+    message: "XP's founding project was cancelled"
+    refs: [fowler-c3, c3-wikipedia]
+    subtitle: "It failed early, and its own people say so"
+    screen: ["**1996:** not one paycheck _printed_", "**1997:** about 10,000 people paid", "**2000:** _cancelled_"]
+    source: "Martin Fowler, C3; Chrysler Comprehensive Compensation System"
+    dependsOn: [manifesto]
+    notes: |-
+      What we want to say: **say it first, before anyone asks**. XP's founding project was cancelled.
+
+      **Then turn it:** a project stuck for three years without a paycheck was paying 10,000 people within a year of changing how it worked; when the business decided it was not worth going on, it stopped. A failure that shows early is cheaper than one that shows after 800 pages of requirements.
+
+      Fowler, who worked on it: "C3's cancellation, however, also proves that XP is no guarantee of success." No method guarantees success; what it can give is honest feedback early.
+
+      The customer representative left from burnout months after launch: a practice depends on a sustainable pace, the manifesto's eighth principle.
+
+      Source: references/agile.md
+    pt:
+      message: "O projeto fundador do XP foi cancelado"
+      subtitle: "Falhou cedo, e o seu próprio pessoal diz isso"
+      topic: "O projeto do próprio XP"
+      screen: ["**1996:** nenhum contracheque _emitido_", "**1997:** cerca de 10.000 pessoas pagas", "**2000:** _cancelado_"]
+      notes: |-
+        O que queremos dizer: **diga primeiro, antes que perguntem**. O projeto fundador do XP foi cancelado.
+
+        **Depois vire o jogo:** um projeto parado por três anos sem um contracheque estava pagando 10.000 pessoas em menos de um ano depois de mudar a forma de trabalhar; quando o negócio decidiu que não valia a pena continuar, parou. Um fracasso que aparece cedo é mais barato que um que aparece depois de 800 páginas de requisitos.
+
+        Fowler, que trabalhou nele: "C3's cancellation, however, also proves that XP is no guarantee of success." Nenhum método garante o sucesso; o que ele pode dar é feedback honesto cedo.
+
+        O representante do cliente saiu por esgotamento meses após o lançamento: uma prática depende de um ritmo sustentável, o oitavo princípio do manifesto.
+
+        Fonte: references/agile.md
+
+  - name: ceremony
+    act: agile
+    topic: "XP's own project"
+    message: "Agile became a ceremony in many places"
+    refs: [dave-thomas-2014]
+    subtitle: "One of its signatories, Dave Thomas, said so in 2014"
+    screen: ["\"Agile\" _devalued_", "Agility cannot be _imposed_ from the top"]
+    source: "Dave Thomas, via InfoQ (2014)"
+    dependsOn: [c3]
+    notes: |-
+      What we want to say: **the values survived; the word became a product to sell and certify**.
+
+      Consultants "started to circle", in his words. What stays useful is the values and the practices, not a framework.
+
+      Source: references/agile.md
+    pt:
+      message: "O Agile virou cerimônia em muitos lugares"
+      subtitle: "Um dos seus signatários, Dave Thomas, disse isso em 2014"
+      topic: "O projeto do próprio XP"
+      screen: ["\"Agile\" _desvalorizado_", "A agilidade não pode ser _imposta_ de cima para baixo"]
+      notes: |-
+        O que queremos dizer: **os valores sobreviveram; a palavra virou um produto para vender e certificar**.
+
+        Os consultores "started to circle", nas palavras dele. O que continua útil são os valores e as práticas, não um framework.
+
+        Fonte: references/agile.md
+
+  - name: meetings-and-autonomy
+    act: agile
+    topic: "The same mistakes, again"
+    message: "The same mistakes came back inside Agile"
+    screen: ["**Meetings:** too many", "**Autonomy:** _taken_ away"]
+    dependsOn: [ceremony]
+    notes: |-
+      What we want to say: **the rituals stayed, the autonomy went**.
+
+      Tell it from experience. Figures on meetings and burnout in circulation mostly come from vendors' surveys; none goes on screen until its method is checked, and the survey of #192 will bring first-hand data.
+    pt:
+      message: "Os mesmos erros voltaram dentro do Agile"
+      topic: "Os mesmos erros, de novo"
+      screen: ["**Reuniões:** demais", "**Autonomia:** _retirada_"]
+      notes: |-
+        O que queremos dizer: **os rituais ficaram, a autonomia foi embora**.
+
+        Conte a partir da experiência. Os números sobre reuniões e esgotamento em circulação vêm, em sua maioria, de pesquisas de fornecedores; nenhum vai para a tela até que o seu método seja verificado, e a pesquisa da #192 trará dados de primeira mão.
+
+  - name: bridge
+    act: agile
+    topic: "The same mistakes, again"
+    message: "Misalignment is a bridge"
+    refs: [conway-1968]
+    screen: ["**Each side:** _builds_ its half", "**In the middle:** they do not meet"]
+    dependsOn: [meetings-and-autonomy]
+    notes: |-
+      What we want to say: **misalignment is structural, not a lack of effort**. Conway said it in 1968: organizations produce designs that copy their communication structures.
+
+      A diagram of the bridge comes with the visual identity (#44).
+
+      Source: references/software-crisis.md
+    pt:
+      message: "O desalinhamento é uma ponte"
+      topic: "Os mesmos erros, de novo"
+      screen: ["**Cada lado:** _constrói_ a sua metade", "**No meio:** elas não se encontram"]
+      notes: |-
+        O que queremos dizer: **o desalinhamento é estrutural, não falta de esforço**. Conway disse isso em 1968: as organizações produzem projetos que copiam as suas estruturas de comunicação.
+
+        Um diagrama da ponte virá com a identidade visual (#44).
+
+        Fonte: references/software-crisis.md
+
+  - name: spiral-of-fear
+    act: agile
+    topic: "The same mistakes, again"
+    message: "The fear of failing turns into a spiral"
+    screen: ["Fear of failing _creates_ process", "Process _creates_ delay", "Delay _creates_ more fear", "Until burnout"]
+    dependsOn: [bridge]
+    notes: |-
+      What we want to say: **process added to protect oneself feeds the fear it was meant to calm**.
+
+      Each turn of the spiral looks reasonable from the inside; that is why it keeps turning. A diagram comes with the visual identity (#44).
+    pt:
+      message: "O medo de falhar vira uma espiral"
+      topic: "Os mesmos erros, de novo"
+      screen: ["O medo de falhar _cria_ processo", "O processo _cria_ atraso", "O atraso _cria_ mais medo", "Até o esgotamento"]
+      notes: |-
+        O que queremos dizer: **o processo acrescentado para se proteger alimenta o medo que ele devia acalmar**.
+
+        Cada volta da espiral parece razoável por dentro; é por isso que ela continua girando. Um diagrama virá com a identidade visual (#44).
+
+  - name: humour
+    act: agile
+    animations: none
+    message: "The industry jokes because the jokes tell the truth"
+    screen: ["Hate Driven Development"]
+    dependsOn: [spiral-of-fear]
+    notes: |-
+      What we want to say: **the audience laughs because it recognizes itself**.
+
+      Candidates from the presenter's own collection, shown from the presenter's machine, never committed here (third-party images, each with its author's rights):
+      - a cake at the office: "10 years repeating the same mistake" (the thread of the talk; also fits the opening);
+      - "Production ready": a bridge of improvised fixes over the original design (the bridge, next to `bridge`);
+      - Rousseau: man is born good, and bad meetings at work corrupt him (next to `meetings-and-autonomy`);
+      - Savage Chickens: "any ideas to improve morale?", "any realistic ideas?" (autonomy);
+      - "Stay positive!", a boy in the jaws of a shark (the spiral of fear);
+      - "Culpa do vibecoding", and the xkcd compiling strip redrawn as "Claude Code is slow" (the AI act).
+
+      Credit each one's author on screen when known (Savage Chickens: Doug Savage; xkcd: Randall Munroe).
+    pt:
+      message: "A indústria faz piada porque as piadas dizem a verdade"
+      screen: ["Hate Driven Development"]
+      notes: |-
+        O que queremos dizer: **a plateia ri porque se reconhece**.
+
+        Candidatos da coleção de quem apresenta, mostrados da máquina de quem apresenta, nunca commitados aqui (imagens de terceiros, cada uma com os direitos do seu autor):
+        - um bolo no escritório: "10 years repeating the same mistake" (o fio da palestra; também cabe na abertura);
+        - "Production ready": uma ponte de remendos improvisados sobre o projeto original (a ponte, junto de `bridge`);
+        - Rousseau: o homem nasce bom, e as más reuniões de trabalho o corrompem (junto de `meetings-and-autonomy`);
+        - Savage Chickens: "any ideas to improve morale?", "any realistic ideas?" (autonomia);
+        - "Stay positive!", um menino na boca de um tubarão (a espiral do medo);
+        - "Culpa do vibecoding", e a tirinha de compilação do xkcd redesenhada como "Claude Code is slow" (o ato da IA).
+
+        Dê o crédito de cada autor na tela quando for conhecido (Savage Chickens: Doug Savage; xkcd: Randall Munroe).
+
+  # ── The AI era ──────────────────────────────────────
+  - name: jargon
+    act: ai
+    topic: "The jargon"
+    message: "The AI era arrived with its own jargon"
+    subtitle: "The way every era did"
+    screen: ["\"Let's make everything agentic\"", "\"Let's be disruptive\""]
+    dependsOn: [humour]
+    notes: |-
+      What we want to say: **a new word is not a new way of working**. The jargon of each era promised to fix the same problems.
+    pt:
+      message: "A era da IA chegou com o seu próprio jargão"
+      subtitle: "Como toda era"
+      topic: "O jargão"
+      screen: ["\"Vamos tornar tudo agentic\"", "\"Vamos ser disruptivos\""]
+      notes: |-
+        O que queremos dizer: **uma palavra nova não é uma nova forma de trabalhar**. O jargão de cada era prometeu resolver os mesmos problemas.
+
+  - name: dora-ai
+    act: ai
+    topic: "What is measured"
+    message: "With more AI, teams deliver faster and less stably"
+    refs: [dora-2025]
+    subtitle: "The systems around them have not caught up"
+    screen: ["**Throughput:** _up_", "**Instability:** _up_ too"]
+    source: "DORA, State of AI-assisted Software Development 2025, p. 4"
+    dependsOn: [jargon]
+    notes: |-
+      What we want to say: **speed arrived before safety**. "AI adoption now improves software delivery throughput (...) However, it still increases delivery instability."
+
+      Caveat: the 2025 report gives directions and standardized effect sizes, not percentages; the 2024 report, with percentages, found both throughput and stability falling.
+
+      Source: references/ai-delivery.md
+    pt:
+      message: "Com mais IA, a entrega fica mais rápida e menos estável"
+      subtitle: "Os sistemas ao redor dos times não acompanharam"
+      topic: "O que é medido"
+      screen: ["**Vazão:** _em alta_", "**Instabilidade:** _em alta_ também"]
+      notes: |-
+        O que queremos dizer: **a velocidade chegou antes da segurança**. "AI adoption now improves software delivery throughput (...) However, it still increases delivery instability."
+
+        Ressalva: o relatório de 2025 dá direções e tamanhos de efeito padronizados, não percentuais; o de 2024, com percentuais, encontrou vazão e estabilidade em queda.
+
+        Fonte: references/ai-delivery.md
+
+  - name: belief
+    act: ai
+    topic: "What is measured"
+    message: "Slower with AI, and they believed they were faster"
+    refs: [metr-2025]
+    subtitle: "16 experienced developers, 246 real issues"
+    screen: ["**Expected:** 24% faster", "**Believed afterwards:** 20% faster", "**Measured:** 19% _slower_"]
+    source: "METR, July 2025"
+    dependsOn: [dora-ai]
+    notes: |-
+      What we want to say: **the point is not that AI is slow; it is that people believed it was fast**. Measure, do not believe.
+
+      Caveat: a small sample with early-2025 tools; METR marks the study as outdated and points to follow-up data from February 2026. Read the follow-up before the next presentation.
+
+      Source: references/ai-delivery.md
+    pt:
+      message: "Mais lentos com IA, e acreditaram ter sido mais rápidos"
+      subtitle: "16 desenvolvedores experientes, 246 issues reais"
+      topic: "O que é medido"
+      screen: ["**Esperado:** 24% mais rápidos", "**Acreditado depois:** 20% mais rápidos", "**Medido:** 19% _mais lentos_"]
+      notes: |-
+        O que queremos dizer: **o ponto não é que a IA seja lenta; é que as pessoas acreditaram que era rápida**. Meça, não acredite.
+
+        Ressalva: uma amostra pequena com ferramentas do início de 2025; a METR marca o estudo como desatualizado e aponta para dados de acompanhamento de fevereiro de 2026. Leia o acompanhamento antes da próxima apresentação.
+
+        Fonte: references/ai-delivery.md
+
+  - name: almost-right
+    act: ai
+    topic: "What is measured"
+    message: "Developers use AI, and more distrust it than trust it"
+    refs: [stackoverflow-2025]
+    screen: ["**Use or plan to:** 84%", "**Distrust accuracy:** 46%", "**Top frustration:** \"almost right, but not quite\""]
+    source: "Stack Overflow Developer Survey 2025"
+    dependsOn: [belief]
+    notes: |-
+      What we want to say: **"almost right" is the most expensive kind of wrong**: it passes a quick look and fails later.
+
+      33% trust the accuracy; the frustration was cited by 66%.
+
+      Source: references/ai-delivery.md
+    pt:
+      message: "Desenvolvedores usam IA, e mais desconfiam do que confiam"
+      topic: "O que é medido"
+      screen: ["**Usam ou pretendem usar:** 84%", "**Desconfiam da precisão:** 46%", "**Maior frustração:** \"quase certa, mas não totalmente\""]
+      notes: |-
+        O que queremos dizer: **"quase certo" é o tipo de erro mais caro**: passa por uma olhada rápida e falha depois.
+
+        33% confiam na precisão; a frustração foi citada por 66%.
+
+        Fonte: references/ai-delivery.md
+
+  - name: what-are-we-delivering
+    act: ai
+    animations: none
+    message: "What are we delivering?"
+    screen: ["Now that we can deliver anything faster, what are we delivering?"]
+    dependsOn: [almost-right]
+    notes: |-
+      What we want to say: **the question of the talk**. Pause, and let it stay on the screen.
+
+      Faster delivery of the same misalignment is the same pattern, sooner.
+    pt:
+      message: "O que estamos entregando?"
+      screen: ["Agora que podemos entregar qualquer coisa mais rápido, o que estamos entregando?"]
+      notes: |-
+        O que queremos dizer: **a pergunta da palestra**. Pause e deixe-a na tela.
+
+        Entregar mais rápido o mesmo desalinhamento é o mesmo padrão, só que mais cedo.
+
+  # ── The turn ────────────────────────────────────────
+  - name: change-approval
+    act: turn
+    topic: "Controls in the flow"
+    message: "Heavy change approval slows delivery"
+    refs: [dora-change-approval]
+    screen: ["**Delivery performance:** _hurt_", "**Change failure rate:** no evidence it drops"]
+    source: "DORA, Streamlining change approval"
+    dependsOn: [what-are-we-delivering]
+    notes: |-
+      What we want to say: **"isn't it one more heavy process?" applies to every company's software development life cycle (SDLC)**, not to one tool.
+
+      DORA recommends peer review recorded in the team's platform, which still satisfies segregation of duties, and a change advisory board (CAB) for coordination rather than code review.
+
+      Source: references/change-approval.md
+    pt:
+      message: "A aprovação pesada de mudanças atrasa a entrega"
+      topic: "Controles no fluxo"
+      screen: ["**Desempenho da entrega:** _prejudicado_", "**Taxa de falha de mudanças:** sem evidência de queda"]
+      notes: |-
+        O que queremos dizer: **"isso não é mais um processo pesado?" vale para o ciclo de vida de desenvolvimento de software (SDLC) de toda empresa**, não para uma ferramenta.
+
+        A DORA recomenda revisão por pares registrada na plataforma do time, o que ainda cumpre a segregação de funções, e um comitê consultivo de mudanças (CAB) para coordenação, não para revisão de código.
+
+        Fonte: references/change-approval.md
+
+  - name: controls-in-the-flow
+    act: turn
+    topic: "Controls in the flow"
+    message: "Required controls stay inside the automated flow"
+    refs: [dora-change-approval]
+    subtitle: "Not in a queue beside it"
+    screen: ["**Firewall rule:** _declared_ next to the app", "**Security review:** on every PR", "**Database:** _requested_ as an Instance", "**Production access:** short-lived, by role"]
+    dependsOn: [change-approval]
+    notes: |-
+      What we want to say: **this is not an argument against security; the opposite**. Security belongs in the SDLC from the first step, and every control the company needs runs inside the flow.
+
+      Before: a ticket, days in a queue, a change by hand. The references list more examples: certificates and DNS, audit evidence, dependency licenses.
+
+      Source: references/change-approval.md
+    pt:
+      message: "Os controles exigidos ficam dentro do fluxo automatizado"
+      subtitle: "Não numa fila ao lado dele"
+      topic: "Controles no fluxo"
+      screen: ["**Regra de firewall:** _declarada_ junto do app", "**Revisão de segurança:** em todo PR", "**Banco de dados:** _solicitado_ como uma Instance", "**Acesso à produção:** de curta duração, por papel"]
+      notes: |-
+        O que queremos dizer: **isto não é um argumento contra a segurança; é o oposto**. A segurança pertence ao SDLC desde o primeiro passo, e todo controle de que a empresa precisa roda dentro do fluxo.
+
+        Antes: um ticket, dias numa fila, uma mudança manual. As referências listam mais exemplos: certificados e DNS, evidência de auditoria, licenças de dependências.
+
+        Fonte: references/change-approval.md
+
+  - name: gds
+    act: turn
+    topic: "Governments that delivered"
+    message: "The UK delivered at scale and stopped what did not work"
+    refs: [gov-uk-pay, gov-uk-verify, gov-uk-paas]
+    subtitle: "The Government Digital Service (GDS)"
+    screen: ["**First principle:** start with user needs", "**GOV.UK Pay:** nearly £10 billion processed", "**Verify:** _closed_, 2023", "**PaaS:** _decommissioned_"]
+    source: "GDS blog (2026); UKAuthority"
+    dependsOn: [controls-in-the-flow]
+    notes: |-
+      What we want to say: **delivery as the strategy, and discarding in the open**. "The strategy is delivery" was its motto.
+
+      GOV.UK PaaS speaks to this very project: a government platform replaced by departments' own Kubernetes platforms. A platform survives by being adopted, not by being mandated.
+
+      Caveat: One Login, its identity service, is still rated amber; the story is not finished.
+
+      Source: references/gds.md
+    pt:
+      message: "O Reino Unido entregou em escala e parou o que falhava"
+      subtitle: "O Government Digital Service (GDS)"
+      topic: "Governos que entregaram"
+      screen: ["**Primeiro princípio:** começar pelas necessidades dos usuários", "**GOV.UK Pay:** quase £10 bilhões processados", "**Verify:** _encerrado_, 2023", "**PaaS:** _desativado_"]
+      notes: |-
+        O que queremos dizer: **a entrega como estratégia, e descartar às claras**. "The strategy is delivery" era o seu lema.
+
+        O GOV.UK PaaS fala justamente deste projeto: uma plataforma de governo substituída pelas plataformas Kubernetes dos próprios departamentos. Uma plataforma sobrevive sendo adotada, não sendo imposta.
+
+        Ressalva: o One Login, o seu serviço de identidade, ainda está classificado como amarelo; a história não terminou.
+
+        Fonte: references/gds.md
+
+  - name: gov-br
+    act: turn
+    topic: "Governments that delivered"
+    message: "gov.br pays its suppliers per sprint"
+    refs: [gov-br-accounts, gov-br-contracting]
+    screen: ["**Accounts:** 175 million", "**Services:** _measured_ in a public panel", "**Contracts:** payment per sprint"]
+    source: "MGI via Mobile Time (2026); Secretaria de Governo Digital (2022)"
+    dependsOn: [gds]
+    notes: |-
+      What we want to say: **agile reached public contracting**, where people expect the heaviest process.
+
+      Since 2018 the services panel publishes, per service, the time to serve, users' satisfaction and the share of digital steps.
+
+      Caveat: a 2026 TCU audit found weak passwords, phishing of codes and biometrics that blocks legitimate users. Controls are needed, inside the flow and fair to every user.
+
+      Source: references/gov-br.md
+    pt:
+      message: "O gov.br paga seus fornecedores por sprint"
+      topic: "Governos que entregaram"
+      screen: ["**Contas:** 175 milhões", "**Serviços:** _medidos_ em um painel público", "**Contratos:** pagamento por sprint"]
+      notes: |-
+        O que queremos dizer: **o agile chegou à contratação pública**, onde se espera o processo mais pesado.
+
+        Desde 2018 o painel de serviços publica, por serviço, o tempo de atendimento, a satisfação dos usuários e a proporção de etapas digitais.
+
+        Ressalva: uma auditoria do TCU de 2026 encontrou senhas fracas, phishing de códigos e biometria que bloqueia usuários legítimos. Controles são necessários, dentro do fluxo e justos com todos os usuários.
+
+        Fonte: references/gov-br.md
+
+  - name: this-project
+    act: turn
+    topic: "This project"
+    message: "This project is built the same way"
+    screen: ["**Slices:** each one _runs_ end to end", "**Agents:** on ready issues", "**Progress:** what runs, and what it cost"]
+    dependsOn: [gov-br]
+    notes: |-
+      What we want to say: **the platform as the answer, without becoming one more heavy process**.
+
+      It accepts any Tool behind its Interfaces, so it adapts to each company's SDLC; capabilities are added when needed, never all at once.
+
+      If it does not help, it is discarded early, by the same rule as C3, Verify and PaaS.
+
+      O método por trás deste slide tem uma palestra própria: o [deck how-we-work](how-we-work.html#title).
+
+      The method behind this slide has its own talk: the [how-we-work deck](how-we-work.html#title).
+
+      Source: docs/vision.md.
+    pt:
+      message: "Este projeto é construído do mesmo jeito"
+      topic: "Este projeto"
+      screen: ["**Fatias:** cada uma _roda_ de ponta a ponta", "**Agentes:** em issues prontas", "**Progresso:** o que roda, e o que custou"]
+      notes: |-
+        O que queremos dizer: **a plataforma como resposta, sem virar mais um processo pesado**.
+
+        Ela aceita qualquer Tool por trás das suas Interfaces, então se adapta ao SDLC de cada empresa; as capabilities são adicionadas quando necessário, nunca todas de uma vez.
+
+        Se não ajudar, é descartada cedo, pela mesma regra do C3, do Verify e do PaaS.
+
+        Fonte: docs/vision.md.
+
+  - name: this-platform
+    act: turn
+    topic: "This project"
+    message: "Capabilities come in when needed, one API in front"
+    subtitle: "A dashed line is not in the platform yet"
+    diagram: "../assets/docs/idp-profile.svg"
+    show: [legend]
+    reveal: [api, plane.1, plane.2, plane.3, plane.4, plane.5, built.tenancy, built.catalog, built.scm, built.release, built.registry, built.delivery, built.environment, built.database, built.metrics, built.secrets, built.authentication, built.build, todo.edge, todo.authorization, todo.policy, client.1, client.2, client.3]
+    accumulate: true
+    dependsOn: [this-project]
+    notes: |-
+      What we want to say: **the platform grows one capability at a time**, each one a reef behind the same API, and what is not there yet is drawn dashed.
+
+      The diagram is the one of the Nereus deck, carried from outside this deck's folder: the package takes it along.
+
+      Source: docs/assets/docs/idp-profile.svg.
+    pt:
+      message: "Capabilities entram quando precisam, uma API na frente"
+      topic: "Este projeto"
+      subtitle: "Uma linha tracejada ainda não está na plataforma"
+      notes: |-
+        O que queremos dizer: **a plataforma cresce uma capability de cada vez**, cada uma um reef atrás da mesma API, e o que ainda não existe aparece tracejado.
+
+        O diagrama é o do deck do Nereus, trazido de fora da pasta deste deck: o pacote o leva junto.
+
+        Fonte: docs/assets/docs/idp-profile.svg.
+
+  # ── Closing ─────────────────────────────────────────
+  - name: closing
+    act: closing
+    animations: none
+    message: "The talk ends on itself"
+    subtitle: "The audience recognizes the pattern it just saw"
+    screen: ["Let's book a meeting to align on it."]
+    dependsOn: [this-project]
+    notes: |-
+      What we want to say: **a call to action that turns on itself**. "So, on Monday, let's change this. I'll book a meeting to align on it. Maybe a committee. With OKRs." Pause. "Or we could ship something by Friday."
+
+      A first draft; the others on #190: the ticket that waits in the queue, the same talk in fifty years, and "on Monday, what are you going to deliver?". The joke is on a situation everyone shares, the speaker included.
+
+      Feedback: a QR code for a short survey comes on this slide with #197.
+    pt:
+      message: "A palestra termina em si mesma"
+      subtitle: "A plateia reconhece o padrão que acabou de ver"
+      screen: ["Vamos marcar uma reunião para alinhar isso."]
+      notes: |-
+        O que queremos dizer: **uma chamada para ação que se volta contra si mesma**. "Então, na segunda-feira, vamos mudar isso. Eu marco uma reunião para alinharmos. Talvez um comitê. Com OKRs." Pausa. "Ou podíamos entregar alguma coisa até sexta."
+
+        Um primeiro rascunho; os outros na #190: o ticket que espera na fila, a mesma palestra daqui a cinquenta anos, e "na segunda-feira, o que você vai entregar?". A piada é sobre uma situação que todos compartilham, quem apresenta inclusive.
+
+        Feedback: um QR code para uma pesquisa curta entra neste slide com a #197.
+
+  - name: thanks
+    act: closing
+    animations: none
+    message: "Thank you"
+    dependsOn: [closing]
+    notes: |-
+      **Thank the audience and open for questions.**
+    pt:
+      message: "Obrigado"
+      notes: |-
+        **Agradeça à plateia e abra para perguntas.**

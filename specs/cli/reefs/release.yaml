@@ -1,0 +1,1185 @@
+deck:
+  name: release
+  title: "The release reef"
+  subtitle: "Every command of the release reef: where a chart comes from, what it is, where it goes and the release itself"
+  accent: "where it goes"
+  pt:
+    title: "O reef release"
+    subtitle: "Todos os comandos do reef release: de onde um chart vem, o que ele é, para onde vai e o próprio release"
+    accent: "para onde vai"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: setup
+    title: "Setup"
+    question: "What comes before the first chart?"
+    pt: {title: "Preparação", question: "O que vem antes do primeiro chart?"}
+  - name: repository
+    title: "Repository"
+    question: "Where does the chart come from?"
+    pt: {title: "Repository", question: "De onde vem o chart?"}
+  - name: source
+    title: "Source"
+    question: "Which chart, at which version?"
+    pt: {title: "Source", question: "Qual chart, em qual versão?"}
+  - name: target
+    title: "Target"
+    question: "Where does it go?"
+    pt: {title: "Target", question: "Para onde ele vai?"}
+  - name: release
+    title: "Release"
+    question: "How does a chart start running?"
+    pt: {title: "Release", question: "Como um chart começa a rodar?"}
+  - name: ingress
+    title: "Ingress"
+    question: "How does traffic reach the cluster?"
+    pt: {title: "Ingress", question: "Como o tráfego chega ao cluster?"}
+
+slides:
+  - name: cover
+    act: opening
+    cover: true
+    message: "The release reef"
+    notes: |-
+      **The source of truth for the commands of the release reef** (#477). Every command here is built: the CLI builds them itself (`cli/src/nereus/commands/release.py`, #445 (the release reef)), and the outputs are what they print, recorded on a throwaway cluster by `make scene-release`, `make scene-ingress` (#745, Istio through the release reef) and the commands of #479.
+
+      **The reef takes a chart from where it comes from to where it runs**, without tying Nereus to Flux, Argo CD or plain Helm: the Mandate picks the Nereid (ADR 0010, reefs at runtime).
+    pt:
+      message: "O reef release"
+      notes: |-
+        **A fonte da verdade dos comandos do reef release** (#477). Todo comando aqui está pronto: o próprio CLI os constrói (`cli/src/nereus/commands/release.py`, #445 (o reef release)), e as saídas são o que eles imprimem, gravadas num cluster descartável pelo `make scene-release`, pelo `make scene-ingress` (#745, o Istio pelo reef release) e pelos comandos do #479.
+
+        **O reef leva um chart de onde ele vem até onde ele roda**, sem amarrar o Nereus ao Flux, ao Argo CD ou ao Helm puro: o Mandate escolhe a Nereid (ADR 0010, reefs em runtime).
+
+  - name: kinds
+    act: opening
+    topic: "kinds"
+    message: "Four kinds, each one answering one question"
+    accent: "one question"
+    screen:
+      - "**Repository:** where the chart comes from, a Helm repository, an OCI registry or Git · `nereus release repository`"
+      - "**Source:** what is released, a chart of a repository at a version · `nereus release source`"
+      - "**Target:** where it goes, a namespace of an environment or of the cluster Nereus runs in · `nereus release target`"
+      - "**Release:** a source running in a target, with its values · `nereus release`"
+    notes: |-
+      **The four kinds live in `release.getnereus.dev/v1alpha1`**, in the namespace Nereus runs in. Every kind takes `create`, `apply`, `list`, `get` and `delete` (ADR 0013, command conventions), and every change takes `--dry-run`.
+
+      **A kind named after its reef takes the reef's own verbs:** `nereus release create` is `nereus release release create`, and the slides of the Release use the short form.
+    pt:
+      topic: "kinds"
+      message: "Quatro kinds, cada um respondendo uma pergunta"
+      accent: "uma pergunta"
+      screen:
+        - "**Repository:** de onde o chart vem, um repositório Helm, um registry OCI ou o Git · `nereus release repository`"
+        - "**Source:** o que é instalado, um chart de um repositório numa versão · `nereus release source`"
+        - "**Target:** para onde ele vai, um namespace de um ambiente ou do cluster onde o Nereus roda · `nereus release target`"
+        - "**Release:** um source rodando num target, com os seus values · `nereus release`"
+      notes: |-
+        **Os quatro kinds vivem em `release.getnereus.dev/v1alpha1`**, no namespace onde o Nereus roda. Todo kind aceita `create`, `apply`, `list`, `get` e `delete` (ADR 0013, convenções de comando), e toda mudança aceita `--dry-run`.
+
+        **Um kind com o nome do seu reef usa os verbos do próprio reef:** `nereus release create` é `nereus release release create`, e os slides da Release usam a forma curta.
+
+  - name: apply-reef
+    act: setup
+    topic: "reef"
+    status: built
+    message: "One command applies the {reef:release} reef, with its four kinds"
+    accent: "One command"
+    terminal:
+      steps:
+        - comment: "Apply the release reef"
+          run: "nereus reef apply release"
+          output: |-
+            ✓ core/reefs/release 0.1.0 created (release.getnereus.dev/v1alpha1: releases, repositories, sources, targets)
+
+            Next steps:
+
+              nereus release --help
+              nereus nereid apply <nereid> --reef release
+    notes: |-
+      **The reef comes first, with no tool behind it.** Its commands appear in the CLI as soon as it exists; until a Nereid looks after it, nothing writes the status of its objects.
+    pt:
+      topic: "reef"
+      message: "Um comando aplica o reef {reef:release}, com os seus quatro kinds"
+      accent: "Um comando"
+      notes: |-
+        **O reef vem primeiro, sem ferramenta por trás.** Os seus comandos aparecem no CLI assim que ele existe; até uma Nereid cuidar dele, nada escreve o status dos seus objetos.
+
+  - name: apply-reference
+    act: setup
+    topic: "reference Nereid"
+    status: built
+    message: "The {nereid:reference-release} Nereid answers every kind with no tool, through the {mandate:reference} Mandate"
+    accent: "no tool"
+    terminal:
+      steps:
+        - comment: "Apply the reference Nereid to the release reef"
+          run: "nereus nereid apply reference-release"
+          options: ["--reef release", "--image localhost:5111/reference-release-controller:0.1.0"]
+          output: |-
+            ✓ core/nereids/reference-release created, Ready, pinned to sha256:b3c32d74194e: see 'nereus release --help'
+
+            Next steps:
+
+              nereus nereid list
+        - comment: "Make it the reef's default"
+          run: "nereus mandate create reference"
+          options: ["--reef release", "--nereid reference-release", "--default"]
+          output: |-
+            ✓ core/mandates/reference created (reef: release, nereid: reference-release, default)
+              clusterrole/controller-reference-release configured (nereid reference-release writes the status of mandate reference)
+
+            Next steps:
+
+              nereus release repository create <name> --url <url>
+    dependsOn: [apply-reef]
+    notes: |-
+      **The reference Nereid is the reef's reference** (`controllers/reference/reefs/release.py`): it answers a Repository, a Source, a Target and a Release as a real Nereid would, so every command works end to end without Flux. #486 (the fake Nereid became the reference Nereid of every reef) named it so.
+
+      **Its image is built and pushed by the scene** (`make reference` builds it alone, to the local registry `nereus init` creates); the digest after `pinned to` changes with each build.
+    pt:
+      topic: "Nereid de referência"
+      message: "A Nereid {nereid:reference-release} responde a todo kind sem ferramenta, pelo Mandate {mandate:reference}"
+      accent: "sem ferramenta"
+      notes: |-
+        **A Nereid de referência é a referência do reef** (`controllers/reference/reefs/release.py`): ela responde a um Repository, um Source, um Target e uma Release como uma Nereid real, então todo comando funciona de ponta a ponta sem o Flux. O #486 (a Nereid fake virou a Nereid de referência de todos os reefs) lhe deu esse nome.
+
+        **A sua imagem é construída e publicada pelo scene** (`make reference` a constrói sozinha, no registry local que o `nereus init` cria); o digest depois de `pinned to` muda a cada build.
+
+  - name: apply-flux
+    act: setup
+    topic: "Flux"
+    status: built
+    message: "The {nereid:flux} Nereid installs Flux and becomes the default through its Mandate"
+    accent: "installs Flux"
+    terminal:
+      steps:
+        - comment: "Apply the flux Nereid to the release reef"
+          run: "nereus nereid apply flux"
+          options: ["--reef release"]
+          output: |-
+            ✓ core/nereids/flux created, Ready, pinned to sha256:e8731e3fb833: see 'nereus release --help'
+              flux/v2.9.6 created (source-controller, helm-controller in namespace flux-system)
+
+            Next steps:
+
+              nereus mandate create flux --reef release --nereid flux --default
+        - comment: "Make it the reef's default"
+          run: "nereus mandate create flux"
+          options: ["--reef release", "--nereid flux", "--default"]
+          output: |-
+            ✓ core/mandates/flux created (reef: release, nereid: flux, default)
+              core/mandates/reference configured (reef: release, nereid: reference-release, no longer the default)
+              clusterrole/controller-flux configured (nereid flux writes the status of mandate flux)
+
+            Next steps:
+
+              nereus release repository create <name> --url <url>
+    dependsOn: [apply-reef]
+    notes: |-
+      **The flux Nereid runs no tool next to it:** it installs Flux in the cluster first, as the openbao Nereid runs OpenBao. Only the two controllers the reef uses, `source-controller` and `helm-controller`, from Flux's `install.yaml` of the version the CLI pins, refused unless its digest is the pinned one. Applying it again changes nothing; who upgrades Flux is #449.
+
+      **One Nereid per reef until #72:** delete the reference one first (`nereus nereid delete reference-release`); its Mandate and the reef's objects stay. Switching to Argo CD later is another Nereid and another Mandate, with the same commands.
+    pt:
+      topic: "Flux"
+      message: "A Nereid {nereid:flux} instala o Flux e vira a padrão pelo seu Mandate"
+      accent: "instala o Flux"
+      notes: |-
+        **A Nereid flux não roda ferramenta ao lado:** ela instala o Flux no cluster primeiro, como a Nereid openbao roda o OpenBao. Só os dois controllers que o reef usa, `source-controller` e `helm-controller`, do `install.yaml` do Flux na versão que o CLI fixa, recusado se o digest não for o fixado. Aplicá-la de novo não muda nada; quem atualiza o Flux é o #449.
+
+        **Uma Nereid por reef até o #72:** apague a de referência antes (`nereus nereid delete reference-release`); o seu Mandate e os objetos do reef ficam. Trocar para o Argo CD depois é outra Nereid e outro Mandate, com os mesmos comandos.
+
+  - name: repository-create
+    act: repository
+    topic: "create"
+    status: built
+    message: "A repository says where the charts come from"
+    accent: "where the charts come from"
+    terminal:
+      steps:
+        - comment: "A Helm repository over http"
+          run: "nereus release repository create codecentric"
+          options: ["--url https://codecentric.github.io/helm-charts", "--type http"]
+          output: |-
+            ✓ release/repositories/codecentric created
+            NAME         TYPE  URL                                        READY
+            codecentric  http  https://codecentric.github.io/helm-charts  True
+
+            Next steps:
+
+              nereus release source create <name> --repository codecentric --chart <chart> --version <version>
+    dependsOn: [apply-reference]
+    notes: |-
+      **`--type` is `http` (a Helm repository), `oci` (an OCI registry) or `git`.** A private registry takes `--type oci` and `--secret <secret>`, a secret of the secrets reef.
+
+      **`READY` comes from the Nereid of the reef's default Mandate**, which writes the status of every Repository, Source and Target (ADR 0005, Nereids publish endpoints and commands in status).
+    pt:
+      topic: "create"
+      message: "Um repository diz de onde os charts vêm"
+      accent: "de onde os charts vêm"
+      notes: |-
+        **`--type` é `http` (um repositório Helm), `oci` (um registry OCI) ou `git`.** Um registry privado leva `--type oci` e `--secret <secret>`, um secret do reef secrets.
+
+        **O `READY` vem da Nereid do Mandate padrão do reef**, que escreve o status de todo Repository, Source e Target (ADR 0005, as Nereids publicam endpoints e comandos no status).
+
+  - name: repository-apply
+    act: repository
+    topic: "apply"
+    status: built
+    message: "Apply takes a file, and applying what already holds changes nothing"
+    accent: "changes nothing"
+    terminal:
+      steps:
+        - comment: "Write the repository as a file"
+          run: "nereus release repository create codecentric"
+          options: ["--url https://codecentric.github.io/helm-charts", "--type http", "--dry-run", "--output yaml > codecentric.yaml"]
+          output: ""
+        - comment: "Apply the file"
+          run: "nereus release repository apply"
+          options: ["--from-file codecentric.yaml"]
+          output: |-
+            release/repositories/codecentric unchanged
+
+            Next steps:
+
+              nereus release repository list
+    dependsOn: [repository-create]
+    notes: |-
+      **`create` builds from flags, `apply` takes files** (ADR 0013): `create --dry-run --output yaml` writes the object as `apply --from-file` takes it, whether it exists or not. `apply` reports `created` when the repository is new, `configured` when the file changes it, `unchanged` when it already holds. A folder of files works too.
+    pt:
+      topic: "apply"
+      message: "O apply recebe um arquivo, e aplicar o que já vale não muda nada"
+      accent: "não muda nada"
+      notes: |-
+        **O `create` monta a partir de flags, o `apply` recebe arquivos** (ADR 0013): `create --dry-run --output yaml` escreve o objeto como o `apply --from-file` o recebe, exista ele ou não. O `apply` reporta `created` quando o repository é novo, `configured` quando o arquivo o muda, `unchanged` quando ele já vale. Uma pasta de arquivos também serve.
+
+  - name: repository-list
+    act: repository
+    topic: "list"
+    status: built
+    message: "The list shows every repository and whether it is ready"
+    accent: "whether it is ready"
+    terminal:
+      steps:
+        - comment: "Every repository"
+          run: "nereus release repository list"
+          output: |-
+            NAME         TYPE  URL                                        READY
+            codecentric  http  https://codecentric.github.io/helm-charts  True
+    dependsOn: [repository-create]
+    notes: |-
+      **`--output yaml` prints the objects themselves.** With no repository, the list says so and points to `nereus release repository create --help`.
+    pt:
+      topic: "list"
+      message: "A lista mostra todo repository e se ele está pronto"
+      accent: "se ele está pronto"
+      notes: |-
+        **`--output yaml` imprime os próprios objetos.** Sem nenhum repository, a lista diz isso e aponta para `nereus release repository create --help`.
+
+  - name: repository-get
+    act: repository
+    topic: "get"
+    status: built
+    message: "One repository, by its name"
+    accent: "by its name"
+    terminal:
+      steps:
+        - comment: "One repository"
+          run: "nereus release repository get codecentric"
+          output: |-
+            NAME         TYPE  URL                                        READY
+            codecentric  http  https://codecentric.github.io/helm-charts  True
+    dependsOn: [repository-create]
+    notes: |-
+      **`get` takes `--watch`**, which prints a line each time the repository changes, and `--output yaml`.
+    pt:
+      topic: "get"
+      message: "Um repository, pelo seu nome"
+      accent: "pelo seu nome"
+      notes: |-
+        **O `get` aceita `--watch`**, que imprime uma linha cada vez que o repository muda, e `--output yaml`.
+
+  - name: repository-delete
+    act: repository
+    topic: "delete"
+    status: built
+    message: "A repository goes once no source names it"
+    accent: "no source names it"
+    terminal:
+      steps:
+        - comment: "Delete the repository"
+          run: "nereus release repository delete codecentric"
+          output: |-
+            ✓ release/repositories/codecentric deleted
+
+            Next steps:
+
+              nereus release repository list
+    notes: |-
+      **`delete` is refused while another object names the one deleted**, here a Source of the repository; the refusal names it and the command that deletes it first. `--dry-run` says what would be deleted.
+    pt:
+      topic: "delete"
+      message: "Um repository sai quando nenhum source o nomeia"
+      accent: "nenhum source o nomeia"
+      notes: |-
+        **O `delete` é recusado enquanto outro objeto nomeia o que é apagado**, aqui um Source do repository; a recusa o nomeia, com o comando que o apaga antes. `--dry-run` diz o que seria apagado.
+
+  - name: source-create
+    act: source
+    topic: "create"
+    status: built
+    message: "A source is one chart of a repository, at one version"
+    accent: "at one version"
+    terminal:
+      steps:
+        - comment: "The keycloakx chart at 7.0.1"
+          run: "nereus release source create keycloak"
+          options: ["--repository codecentric", "--chart keycloakx", "--version 7.0.1"]
+          output: |-
+            ✓ release/sources/keycloak created
+            NAME      REPOSITORY   CHART      VERSION  DIGEST  READY
+            keycloak  codecentric  keycloakx  7.0.1    -       True
+
+            Next steps:
+
+              nereus release target create <name> --namespace <namespace>
+        - comment: "Create it again"
+          run: "nereus release source create keycloak"
+          options: ["--repository codecentric", "--chart keycloakx", "--version 7.0.1"]
+          output: |-
+            ✗ release/sources/keycloak already exists. To change it, write it as a file, then apply the file:
+              nereus release source create keycloak --repository codecentric --chart keycloakx --version 7.0.1 --dry-run --output yaml > keycloak.yaml
+              nereus release source apply --from-file keycloak.yaml
+    dependsOn: [repository-create]
+    notes: |-
+      **`create` fails when the source exists**, and prints how to change it: write it as a file, then apply the file (ADR 0013).
+    pt:
+      topic: "create"
+      message: "Um source é um chart de um repository, numa versão"
+      accent: "numa versão"
+      notes: |-
+        **O `create` falha quando o source existe**, e imprime como mudá-lo: escrever como arquivo, depois aplicar o arquivo (ADR 0013).
+
+  - name: source-apply
+    act: source
+    topic: "apply"
+    status: built
+    message: "A new version is one file away"
+    accent: "one file away"
+    terminal:
+      steps:
+        - comment: "Write the source at 7.0.2 as a file"
+          run: "nereus release source create keycloak"
+          options: ["--repository codecentric", "--chart keycloakx", "--version 7.0.2", "--dry-run", "--output yaml > keycloak.yaml"]
+          output: ""
+        - comment: "Apply the file"
+          run: "nereus release source apply"
+          options: ["--from-file keycloak.yaml"]
+          output: |-
+            ✓ release/sources/keycloak configured
+
+            Next steps:
+
+              nereus release source list
+    dependsOn: [source-create]
+    notes: |-
+      **Every Release of the source follows it:** the Nereid of each Release's Mandate moves it to the new version. The slides of the Release show 7.0.2 for that reason. The file is the object: keep it in git, and the next change is an edit of the file and the same `apply`.
+    pt:
+      topic: "apply"
+      message: "Uma versão nova fica a um arquivo de distância"
+      accent: "a um arquivo de distância"
+      notes: |-
+        **Toda Release do source o acompanha:** a Nereid do Mandate de cada Release a leva para a versão nova. Os slides da Release mostram 7.0.2 por isso. O arquivo é o objeto: guarde-o no git, e a próxima mudança é editar o arquivo e o mesmo `apply`.
+
+  - name: source-list
+    act: source
+    topic: "list"
+    status: built
+    message: "The list shows every source with its chart and version"
+    accent: "its chart and version"
+    terminal:
+      steps:
+        - comment: "Every source"
+          run: "nereus release source list"
+          output: |-
+            NAME      REPOSITORY   CHART      VERSION  DIGEST  READY
+            keycloak  codecentric  keycloakx  7.0.2    -       True
+    dependsOn: [source-apply]
+    notes: |-
+      **`--output yaml` prints the objects themselves.**
+    pt:
+      topic: "list"
+      message: "A lista mostra todo source com o seu chart e a sua versão"
+      accent: "o seu chart e a sua versão"
+      notes: |-
+        **`--output yaml` imprime os próprios objetos.**
+
+  - name: source-get
+    act: source
+    topic: "get"
+    status: built
+    message: "One source, by its name"
+    accent: "by its name"
+    terminal:
+      steps:
+        - comment: "One source"
+          run: "nereus release source get keycloak"
+          output: |-
+            NAME      REPOSITORY   CHART      VERSION  DIGEST  READY
+            keycloak  codecentric  keycloakx  7.0.2    -       True
+    dependsOn: [source-apply]
+    notes: |-
+      **`get` takes `--watch` and `--output yaml`.**
+    pt:
+      topic: "get"
+      message: "Um source, pelo seu nome"
+      accent: "pelo seu nome"
+      notes: |-
+        **O `get` aceita `--watch` e `--output yaml`.**
+
+  - name: source-publish
+    act: source
+    topic: "publish"
+    status: built
+    message: "Publishing goes through the platform, with its credential, never yours"
+    accent: "never yours"
+    terminal:
+      steps:
+        - comment: "An OCI repository whose push credential is a secret of the platform"
+          run: "nereus release repository create ghcr"
+          options: ["--type oci", "--url oci://ghcr.io/getnereus/charts", "--secret ghcr-push"]
+          output: |-
+            ✓ release/repositories/ghcr created
+            NAME  TYPE  URL                              READY
+            ghcr  oci   oci://ghcr.io/getnereus/charts   True
+
+            Next steps:
+
+              nereus release source create <name> --repository ghcr --chart <chart> --version <version>
+        - comment: "Package the chart, upload it to the cluster's registry, let the Nereid copy it"
+          run: "nereus release source publish nereus"
+          options: ["--path charts/nereus", "--repository ghcr"]
+          output: |-
+            chart nereus 0.4.0 packaged
+            registry/registries/main/repositories/chart-nereus created
+            uploaded to registry/registries/main/repositories/chart-nereus: sha256:ab12…
+            ✓ release/sources/nereus created
+            copied to oci://ghcr.io/getnereus/charts/nereus@sha256:ab12…, ready
+            NAME    REPOSITORY  CHART   VERSION  DIGEST                READY
+            nereus  ghcr        nereus  0.4.0    sha256:ab12cd34ef56…  True
+
+            Next steps:
+
+              nereus release create <name> --source nereus --target <target>
+    dependsOn: [repository-create]
+    notes: |-
+      **No token of the external registry ever sits on the person's machine** (#1229, the ADR "An external registry's push credential is the Repository's secret"): the CLI packages the chart and uploads it to a registry of the cluster with a ten-minute push token, as `nereus registry repository publish` does an image; the flux Nereid copies it by digest with the Repository's `--secret`, delivered by a SecretBinding for the copy alone, and checks the digest the target answers. The registry reef is required. A GitHub App token replaces the personal one later (#1250).
+    pt:
+      topic: "publish"
+      message: "Publicar passa pela plataforma, com a credencial dela, nunca a sua"
+      accent: "nunca a sua"
+      notes: |-
+        **Nenhum token do registry externo fica na máquina da pessoa** (#1229, the ADR "An external registry's push credential is the Repository's secret"): o CLI empacota o chart e o envia a um registry do cluster com um push token de dez minutos, como `nereus registry repository publish` faz com uma imagem; a Nereid flux o copia por digest com o `--secret` do Repository, entregue por um SecretBinding só para a cópia, e confere o digest que o destino responde. O registry reef é obrigatório. Um token de GitHub App substitui o pessoal depois (#1250).
+
+  - name: source-delete
+    act: source
+    topic: "delete"
+    status: built
+    message: "A source in use is refused, with what to delete first"
+    accent: "what to delete first"
+    terminal:
+      steps:
+        - comment: "A release still uses it"
+          run: "nereus release source delete keycloak"
+          output: |-
+            ✗ source keycloak is used by release keycloak-reference.
+              Delete it first: nereus release delete keycloak-reference
+        - comment: "Once the release is gone"
+          run: "nereus release source delete keycloak"
+          output: |-
+            ✓ release/sources/keycloak deleted
+
+            Next steps:
+
+              nereus release source list
+    notes: |-
+      **Nothing is left pointing at what is gone:** the refusal names the release and the command that deletes it ([`nereus release delete`](#release-delete)).
+    pt:
+      topic: "delete"
+      message: "Um source em uso é recusado, com o que apagar antes"
+      accent: "o que apagar antes"
+      notes: |-
+        **Nada fica apontando para o que saiu:** a recusa nomeia a release e o comando que a apaga ([`nereus release delete`](#release-delete)).
+
+  - name: target-create
+    act: target
+    topic: "create"
+    status: built
+    message: "A target is a namespace, of an environment or of the cluster Nereus runs in"
+    accent: "a namespace"
+    terminal:
+      steps:
+        - comment: "The identity namespace of the dev environment"
+          run: "nereus release target create dev-identity"
+          options: ["--environment dev", "--namespace identity"]
+          output: |-
+            ✓ release/targets/dev-identity created
+            NAME          ENVIRONMENT  NAMESPACE  READY
+            dev-identity  dev          identity   True
+
+            Next steps:
+
+              nereus release create <name> --source <source> --target dev-identity
+    dependsOn: [apply-reference]
+    notes: |-
+      **`--environment` is optional:** with none, the target is the cluster Nereus runs in. With one, the flux Nereid installs into that environment's cluster, and a target whose environment is missing or not Ready is not Ready and never falls back to the cluster Nereus runs in.
+    pt:
+      topic: "create"
+      message: "Um target é um namespace, de um ambiente ou do cluster onde o Nereus roda"
+      accent: "um namespace"
+      notes: |-
+        **`--environment` é opcional:** sem ele, o target é o cluster onde o Nereus roda. Com ele, a Nereid flux instala no cluster desse environment, e um target cujo environment não existe ou não está Ready não fica Ready e nunca cai no cluster onde o Nereus roda.
+
+  - name: target-apply
+    act: target
+    topic: "apply"
+    status: built
+    message: "Applying the same target again changes nothing"
+    accent: "changes nothing"
+    terminal:
+      steps:
+        - comment: "Write the target as a file, then apply it"
+          run: "nereus release target create dev-identity"
+          options: ["--environment dev", "--namespace identity", "--dry-run", "--output yaml > dev-identity.yaml"]
+          output: ""
+        - comment: "Apply the file"
+          run: "nereus release target apply"
+          options: ["--from-file dev-identity.yaml"]
+          output: |-
+            release/targets/dev-identity unchanged
+
+            Next steps:
+
+              nereus release target list
+    dependsOn: [target-create]
+    notes: |-
+      **A changed file reports `configured`**, as [`nereus release source apply`](#source-apply) shows.
+    pt:
+      topic: "apply"
+      message: "Aplicar o mesmo target de novo não muda nada"
+      accent: "não muda nada"
+      notes: |-
+        **Um arquivo mudado reporta `configured`**, como mostra o [`nereus release source apply`](#source-apply).
+
+  - name: target-list
+    act: target
+    topic: "list"
+    status: built
+    message: "The list shows every target with its environment and namespace"
+    accent: "its environment and namespace"
+    terminal:
+      steps:
+        - comment: "Every target"
+          run: "nereus release target list"
+          output: |-
+            NAME          ENVIRONMENT  NAMESPACE  READY
+            dev-identity  dev          identity   True
+    dependsOn: [target-create]
+    notes: |-
+      **`--output yaml` prints the objects themselves.**
+    pt:
+      topic: "list"
+      message: "A lista mostra todo target com o seu ambiente e o seu namespace"
+      accent: "o seu ambiente e o seu namespace"
+      notes: |-
+        **`--output yaml` imprime os próprios objetos.**
+
+  - name: target-get
+    act: target
+    topic: "get"
+    status: built
+    message: "One target, by its name"
+    accent: "by its name"
+    terminal:
+      steps:
+        - comment: "One target"
+          run: "nereus release target get dev-identity"
+          output: |-
+            NAME          ENVIRONMENT  NAMESPACE  READY
+            dev-identity  dev          identity   True
+    dependsOn: [target-create]
+    notes: |-
+      **`get` takes `--watch` and `--output yaml`.**
+    pt:
+      topic: "get"
+      message: "Um target, pelo seu nome"
+      accent: "pelo seu nome"
+      notes: |-
+        **O `get` aceita `--watch` e `--output yaml`.**
+
+  - name: target-delete
+    act: target
+    topic: "delete"
+    status: built
+    message: "A target goes once no release names it"
+    accent: "no release names it"
+    terminal:
+      steps:
+        - comment: "Delete the target"
+          run: "nereus release target delete dev-identity"
+          output: |-
+            ✓ release/targets/dev-identity deleted
+
+            Next steps:
+
+              nereus release target list
+    notes: |-
+      **Like a source, a target in use is refused**, with the release to delete first.
+    pt:
+      topic: "delete"
+      message: "Um target sai quando nenhuma release o nomeia"
+      accent: "nenhuma release o nomeia"
+      notes: |-
+        **Como um source, um target em uso é recusado**, com a release a apagar antes.
+
+  - name: release-create
+    act: release
+    topic: "create"
+    status: built
+    message: "A release runs a source in a target, through the reef's default Mandate"
+    accent: "runs a source in a target"
+    terminal:
+      steps:
+        - comment: "Run keycloak in dev-identity"
+          run: "nereus release create keycloak-reference"
+          options: ["--source keycloak", "--target dev-identity"]
+          output: |-
+            ✓ release/releases/keycloak-reference created (nereid: reference-release)
+
+            Next steps:
+
+              nereus release get keycloak-reference --watch
+        - comment: "Wait until it is ready"
+          run: "nereus release get keycloak-reference"
+          options: ["--watch"]
+          output: |-
+            NAME                SOURCE    TARGET        VERSION  NEREID             STATUS
+            keycloak-reference  keycloak  dev-identity  -        -                  Pending
+            keycloak-reference  keycloak  dev-identity  7.0.2    reference-release  Ready
+    dependsOn: [source-apply, target-create]
+    notes: |-
+      **The release goes through the reef's default Mandate, or the one `--mandate` names**, and the output names the Nereid that took it. `Pending` until the Nereid writes its status; with the reference Nereid, `Ready` at the source's version at once.
+    pt:
+      topic: "create"
+      message: "Uma release roda um source num target, pelo Mandate padrão do reef"
+      accent: "roda um source num target"
+      notes: |-
+        **A release passa pelo Mandate padrão do reef, ou pelo que o `--mandate` nomeia**, e a saída nomeia a Nereid que a assumiu. `Pending` até a Nereid escrever o seu status; com a Nereid de referência, `Ready` na versão do source na hora.
+
+  - name: release-create-values
+    act: release
+    topic: "create with values"
+    status: built
+    message: "Values and a Mandate of your choice, with Flux installing the chart"
+    accent: "Flux installing the chart"
+    terminal:
+      steps:
+        - comment: "Keycloak with its values, through the flux Mandate"
+          run: "nereus release create keycloak"
+          options: ["--source keycloak", "--target dev-identity", "--values-file keycloak-values.yaml", "--mandate flux"]
+          output: |-
+            ✓ release/releases/keycloak created (nereid: flux)
+
+            Next steps:
+
+              nereus release get keycloak --watch
+        - comment: "Flux installs it"
+          run: "nereus release get keycloak"
+          options: ["--watch"]
+          output: |-
+            NAME      SOURCE    TARGET        VERSION  NEREID             STATUS
+            keycloak  keycloak  dev-identity  7.0.1    flux    Pending
+            keycloak  keycloak  dev-identity  7.0.1    flux    Progressing
+            keycloak  keycloak  dev-identity  7.0.1    flux    Ready
+    dependsOn: [apply-flux, release-create]
+    notes: |-
+      **`--values-file` holds the chart's values**; the scene's are `replicas: 1`, `fullnameOverride: keycloak`, Keycloak's dev mode and a local cache stack (`test/scene-release`). Recorded by `make scene-release`, where the source stays at 7.0.1.
+
+      **`Failed` comes only once Flux stops retrying:** the Nereid copies the HelmRelease's conditions into the Release's status, with `phase` and `version`.
+    pt:
+      topic: "create com values"
+      message: "Values e um Mandate à sua escolha, com o Flux instalando o chart"
+      accent: "o Flux instalando o chart"
+      notes: |-
+        **O `--values-file` guarda os values do chart**; os do scene são `replicas: 1`, `fullnameOverride: keycloak`, o modo dev do Keycloak e uma pilha de cache local (`test/scene-release`). Gravado pelo `make scene-release`, onde o source fica em 7.0.1.
+
+        **`Failed` só vem quando o Flux para de tentar:** a Nereid copia as conditions do HelmRelease para o status da Release, com `phase` e `version`.
+
+  - name: release-create-secrets
+    act: release
+    topic: "create with secrets"
+    status: built
+    message: "A release asks for its secrets by name, and its values never pass through Nereus"
+    accent: "never pass through Nereus"
+    terminal:
+      steps:
+        - comment: "Keycloak with a Secret in its namespace and one key in its values"
+          run: "nereus release create keycloak"
+          options: ["--source keycloak", "--target dev-identity", "--values-file keycloak-values.yaml", "--mandate flux", "--secret google-oauth", "--secret-value nereus.googleClientId=google-oauth/GOOGLE_CLIENT_ID"]
+          output: |-
+            ✓ release/releases/keycloak created (nereid: flux)
+              binding secrets/vaults/default/secrets/google-oauth/secretbindings/identity/keycloak
+              binding secrets/vaults/default/secrets/google-oauth/secretbindings/nereus-system/keycloak-values-google-oauth
+
+            Next steps:
+
+              nereus release get keycloak --watch
+        - comment: "The bindings first, then the HelmRelease"
+          run: "nereus release get keycloak"
+          options: ["--watch"]
+          output: |-
+            NAME      SOURCE    TARGET        VERSION  NEREID             STATUS
+            keycloak  keycloak  dev-identity  7.0.1    flux    Pending
+            2026-10-30T07:53:21Z  ✓ binding      2 Secrets ready: identity/keycloak, nereus-system/keycloak-values-google-oauth.
+            2026-10-30T07:53:21Z  ✓ helmrelease  Wrote the Flux HelmRelease keycloak.
+            keycloak  keycloak  dev-identity  7.0.1    flux    Progressing
+            keycloak  keycloak  dev-identity  7.0.1    flux    Ready
+    dependsOn: [release-create-values]
+    notes: |-
+      **`--secret <vault>/<secret>` asks for a Kubernetes Secret in the Target's namespace**, every key, for a chart that reads a Secret by name; **`--secret-value <path>=<vault>/<secret>/<key>` puts one key into one field of the values**, through a binding in `nereus-system` that the HelmRelease's `valuesFrom` reads (#533). A bare secret name means the vault `default`.
+
+      **Into an Environment** (#877), `--secret-value` binds in the Environment's namespace on the host, `env-<nereid>-<environment>`, which the vault must allow by name; `--secret` is refused there until #1065.
+
+      **The CLI refuses before it writes anything** when the secret does not exist, the key is not in it, or the vault does not allow the namespace; the Nereid writes the HelmRelease only once each binding is `Ready`, and `BindingFailed` says when one cannot be. Recorded by `make scene-release`.
+    pt:
+      topic: "create com secrets"
+      message: "Uma release pede os seus secrets pelo nome, e os valores nunca passam pelo Nereus"
+      accent: "nunca passam pelo Nereus"
+      notes: |-
+        **`--secret <vault>/<secret>` pede um Secret do Kubernetes no namespace do Target**, com todas as chaves, para um chart que lê um Secret pelo nome; **`--secret-value <path>=<vault>/<secret>/<key>` coloca uma chave num campo dos values**, por um binding em `nereus-system` que o `valuesFrom` do HelmRelease lê (#533). Um nome de secret sozinho quer dizer o vault `default`.
+
+        **Num Environment** (#877), o `--secret-value` faz o binding no namespace do Environment no host, `env-<nereid>-<environment>`, que o vault precisa permitir pelo nome; o `--secret` é recusado ali até o #1065.
+
+        **A CLI recusa antes de escrever qualquer coisa** quando o secret não existe, a chave não está nele ou o vault não permite o namespace; a Nereid escreve o HelmRelease só quando cada binding está `Ready`, e `BindingFailed` diz quando um não pode ficar.
+
+  - name: release-apply
+    act: release
+    topic: "apply"
+    status: built
+    message: "One folder holds the whole release, and the second apply changes nothing"
+    accent: "changes nothing"
+    terminal:
+      steps:
+        - comment: "Write the release as a file"
+          run: "nereus release create keycloak-reference"
+          options: ["--source keycloak", "--target dev-identity", "--dry-run", "--output yaml > release/keycloak-reference.yaml"]
+          output: ""
+        - comment: "Apply the folder: every kind of the reef, in order"
+          run: "nereus release apply"
+          options: ["--from-file release/"]
+          output: |-
+            ✓ release/releases/keycloak-reference created
+            NAME                SOURCE    TARGET        VERSION  NEREID             STATUS
+            keycloak-reference  keycloak  dev-identity  -        reference-release  Pending
+            keycloak-reference  keycloak  dev-identity  7.0.1    reference-release  Ready
+
+            Next steps:
+
+              nereus release list
+        - comment: "Apply it again"
+          run: "nereus release apply"
+          options: ["--from-file release/"]
+          output: |-
+            release/releases/keycloak-reference unchanged
+            NAME                SOURCE    TARGET        VERSION  NEREID             STATUS
+            keycloak-reference  keycloak  dev-identity  7.0.1    reference-release  Ready
+
+            Next steps:
+
+              nereus release list
+    dependsOn: [source-apply, target-create]
+    notes: |-
+      **`apply` is what a script or a pipeline runs:** the same folder every time, `created` the first time, `unchanged` after. `nereus release apply` takes every kind of the reef and writes Repositories, then Sources, Targets and Releases; `nereus release source apply` takes Sources only. A reference that does not exist yet is the Nereid's to report, in the status. It waits until the Nereid answered the new generation Ready and fails when it Failed or after `--timeout`; `--wait=false` returns once written.
+    pt:
+      topic: "apply"
+      message: "Uma pasta guarda a release inteira, e o segundo apply não muda nada"
+      accent: "não muda nada"
+      notes: |-
+        **O `apply` é o que um script ou um pipeline roda:** a mesma pasta toda vez, `created` na primeira, `unchanged` depois. O `nereus release apply` recebe todo kind do reef e escreve Repositories, depois Sources, Targets e Releases; o `nereus release source apply` recebe só Sources. Uma referência que ainda não existe fica para a Nereid reportar, no status. Ele espera a Nereid responder Ready à nova geração e falha quando ela responde Failed ou depois do `--timeout`; `--wait=false` volta assim que escreve.
+
+  - name: release-list
+    act: release
+    topic: "list"
+    status: built
+    message: "The list shows every release, its version and the Nereid behind it"
+    accent: "the Nereid behind it"
+    terminal:
+      steps:
+        - comment: "Every release"
+          run: "nereus release list"
+          output: |-
+            NAME                SOURCE    TARGET        VERSION  NEREID             STATUS
+            keycloak-reference  keycloak  dev-identity  7.0.2    reference-release  Ready
+    dependsOn: [release-create]
+    notes: |-
+      **`STATUS` is `Pending`, `Progressing`, `Ready` or `Failed`**, written by the Nereid of the release's Mandate.
+    pt:
+      topic: "list"
+      message: "A lista mostra toda release, a sua versão e a Nereid por trás"
+      accent: "a Nereid por trás"
+      notes: |-
+        **`STATUS` é `Pending`, `Progressing`, `Ready` ou `Failed`**, escrito pela Nereid do Mandate da release.
+
+  - name: release-get
+    act: release
+    topic: "get"
+    status: built
+    message: "One release, by its name"
+    accent: "by its name"
+    terminal:
+      steps:
+        - comment: "One release"
+          run: "nereus release get keycloak-reference"
+          output: |-
+            NAME                SOURCE    TARGET        VERSION  NEREID             STATUS
+            keycloak-reference  keycloak  dev-identity  7.0.2    reference-release  Ready
+    dependsOn: [release-create]
+    notes: |-
+      **`--watch` prints a line each time the release changes**, until it is `Ready` or `Failed` ([`nereus release create`](#release-create) shows it).
+    pt:
+      topic: "get"
+      message: "Uma release, pelo seu nome"
+      accent: "pelo seu nome"
+      notes: |-
+        **O `--watch` imprime uma linha cada vez que a release muda**, até ficar `Ready` ou `Failed` (o [`nereus release create`](#release-create) mostra isso).
+
+  - name: release-delete
+    act: release
+    topic: "delete"
+    status: built
+    message: "Deleting a release uninstalls its chart"
+    accent: "uninstalls its chart"
+    terminal:
+      steps:
+        - comment: "See what would go"
+          run: "nereus release delete keycloak-reference"
+          options: ["--dry-run"]
+          output: |-
+            release/releases/keycloak-reference would be deleted.
+            Nothing changed (--dry-run).
+        - comment: "Delete it"
+          run: "nereus release delete keycloak-reference"
+          output: |-
+            ✓ release/releases/keycloak-reference deleted
+
+            Next steps:
+
+              nereus release list
+    dependsOn: [release-create]
+    notes: |-
+      **With Flux, deleting the Release deletes the HelmRelease the Nereid wrote, and Flux uninstalls the chart.** Then its source and its target can go.
+
+      **`delete` waits until the Nereid removed what it made**, as `kubectl delete` does: the Release keeps its cleanup finalizer meanwhile, and `list` and `get` show it `Terminating`. A Nereid that writes steps in its status gets a line per step as it changes (time, `✓` done, `…` in progress, `·` pending, `✗` failed, name, message); a failed cleanup ends with exit 1. `--wait=false` returns at once, `--timeout` bounds the wait.
+    pt:
+      topic: "delete"
+      message: "Apagar uma release desinstala o seu chart"
+      accent: "desinstala o seu chart"
+      notes: |-
+        **Com o Flux, apagar a Release apaga o HelmRelease que a Nereid escreveu, e o Flux desinstala o chart.** Depois o seu source e o seu target podem sair.
+
+        **O `delete` espera até a Nereid remover o que fez**, como o `kubectl delete`: a Release mantém o seu finalizer de cleanup enquanto isso, e `list` e `get` a mostram `Terminating`. Uma Nereid que escreve steps no seu status ganha uma linha por step quando ele muda (hora, `✓` feito, `…` em andamento, `·` pendente, `✗` falhou, nome, mensagem); um cleanup que falha termina com exit 1. `--wait=false` retorna na hora, `--timeout` limita a espera.
+
+  - name: ingress-crds
+    act: ingress
+    topic: "Gateway API"
+    message: "The Gateway API CRDs come first, applied by hand for now"
+    accent: "by hand for now"
+    terminal:
+      steps:
+        - comment: "The Gateway API CRDs v1.7.0, standard channel"
+          run: "kubectl apply"
+          options: ["--server-side", "--filename https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.7.0/standard-install.yaml"]
+          output: |-
+            customresourcedefinition.apiextensions.k8s.io/backendtlspolicies.gateway.networking.k8s.io serverside-applied
+            customresourcedefinition.apiextensions.k8s.io/gatewayclasses.gateway.networking.k8s.io serverside-applied
+            customresourcedefinition.apiextensions.k8s.io/gateways.gateway.networking.k8s.io serverside-applied
+            customresourcedefinition.apiextensions.k8s.io/grpcroutes.gateway.networking.k8s.io serverside-applied
+            customresourcedefinition.apiextensions.k8s.io/httproutes.gateway.networking.k8s.io serverside-applied
+            customresourcedefinition.apiextensions.k8s.io/listenersets.gateway.networking.k8s.io serverside-applied
+            customresourcedefinition.apiextensions.k8s.io/referencegrants.gateway.networking.k8s.io serverside-applied
+            customresourcedefinition.apiextensions.k8s.io/tcproutes.gateway.networking.k8s.io serverside-applied
+            customresourcedefinition.apiextensions.k8s.io/tlsroutes.gateway.networking.k8s.io serverside-applied
+            customresourcedefinition.apiextensions.k8s.io/udproutes.gateway.networking.k8s.io serverside-applied
+            validatingadmissionpolicy.admissionregistration.k8s.io/safe-upgrades.gateway.networking.k8s.io serverside-applied
+            validatingadmissionpolicybinding.admissionregistration.k8s.io/safe-upgrades.gateway.networking.k8s.io serverside-applied
+    dependsOn: [apply-flux]
+    notes: |-
+      **The cluster's ingress is Istio's gateway, installed through the release reef** (#727 (the cluster's ingress), #745 (Istio through the release reef)). Before istiod starts, the Gateway API CRDs (Custom Resource Definitions) must exist, so istiod serves its Gateway classes.
+
+      **A stand-in:** `kubectl apply --server-side` of the release's `standard-install.yaml`, until the release reef installs manifests from git (#751). Recorded by `make scene-ingress`, on a throwaway cluster.
+    pt:
+      topic: "Gateway API"
+      message: "Os CRDs da Gateway API vêm primeiro, aplicados à mão por enquanto"
+      accent: "à mão por enquanto"
+      notes: |-
+        **O ingress do cluster é o gateway do Istio, instalado pelo reef release** (#727 (o ingress do cluster), #745 (o Istio pelo reef release)). Antes do istiod subir, os CRDs (Custom Resource Definitions) da Gateway API precisam existir, para o istiod servir as suas Gateway classes.
+
+        **Um stand-in:** `kubectl apply --server-side` do `standard-install.yaml` da release, até o reef release instalar manifests do git (#751). Gravado pelo `make scene-ingress`, num cluster descartável.
+
+  - name: ingress-repository
+    act: ingress
+    topic: "Istio's charts"
+    status: built
+    message: "Istio's charts come from its own Helm repository"
+    accent: "its own Helm repository"
+    terminal:
+      steps:
+        - comment: "Istio's Helm repository"
+          run: "nereus release repository create istio"
+          options: ["--url https://blob.istio.io/istio-release/charts", "--type http"]
+          output: |-
+            ✓ release/repositories/istio created
+            NAME   TYPE  URL                                                  READY
+            istio  http  https://blob.istio.io/istio-release/charts  False
+
+            Next steps:
+
+              nereus release source create <name> --repository istio --chart <chart> --version <version>
+        - comment: "Ready once Flux read its index"
+          run: "nereus release repository get istio"
+          output: |-
+            NAME   TYPE  URL                                                  READY
+            istio  http  https://blob.istio.io/istio-release/charts  True
+    dependsOn: [ingress-crds]
+    notes: |-
+      **`READY` is `False` until Flux fetched the repository's index**: the flux Nereid copies the HelmRepository's condition into the Repository's status a few seconds later.
+    pt:
+      topic: "charts do Istio"
+      message: "Os charts do Istio vêm do seu próprio repositório Helm"
+      accent: "seu próprio repositório Helm"
+      notes: |-
+        **O `READY` fica `False` até o Flux buscar o índice do repositório**: a Nereid flux copia a condition do HelmRepository para o status do Repository alguns segundos depois.
+
+  - name: ingress-sources
+    act: ingress
+    topic: "sources · 1/2"
+    status: built
+    message: "Three charts at one pinned version: base and istiod first"
+    accent: "one pinned version"
+    terminal:
+      steps:
+        - comment: "The CRDs of Istio"
+          run: "nereus release source create istio-base"
+          options: ["--repository istio", "--chart base", "--version 1.30.4"]
+          output: |-
+            ✓ release/sources/istio-base created
+            NAME        REPOSITORY  CHART  VERSION  DIGEST  READY
+            istio-base  istio       base   1.30.4   -       True
+
+            Next steps:
+
+              nereus release target create <name> --namespace <namespace>
+        - comment: "The control plane"
+          run: "nereus release source create istiod"
+          options: ["--repository istio", "--chart istiod", "--version 1.30.4"]
+          output: |-
+            ✓ release/sources/istiod created
+            NAME    REPOSITORY  CHART   VERSION  DIGEST  READY
+            istiod  istio       istiod  1.30.4   -       True
+
+            Next steps:
+
+              nereus release target create <name> --namespace <namespace>
+    dependsOn: [ingress-repository]
+    notes: |-
+      **Istio 1.30.4, the latest stable on 2026-10-31, pinned** (#727): the three charts move together, one version for all.
+    pt:
+      topic: "sources · 1/2"
+      message: "Três charts numa versão fixada: base e istiod primeiro"
+      accent: "numa versão fixada"
+      notes: |-
+        **Istio 1.30.4, o último estável em 2026-10-31, fixado** (#727): os três charts andam juntos, uma versão para todos.
+
+  - name: ingress-sources-gateway
+    act: ingress
+    topic: "sources · 2/2"
+    status: built
+    message: "Three charts at one pinned version: then the gateway, into istio-system"
+    accent: "one pinned version"
+    terminal:
+      steps:
+        - comment: "The ingress gateway"
+          run: "nereus release source create istio-gateway"
+          options: ["--repository istio", "--chart gateway", "--version 1.30.4"]
+          output: |-
+            ✓ release/sources/istio-gateway created
+            NAME           REPOSITORY  CHART    VERSION  DIGEST  READY
+            istio-gateway  istio       gateway  1.30.4   -       True
+
+            Next steps:
+
+              nereus release target create <name> --namespace <namespace>
+        - comment: "Where the three go"
+          run: "nereus release target create istio-system"
+          options: ["--namespace istio-system"]
+          output: |-
+            ✓ release/targets/istio-system created
+            NAME          ENVIRONMENT  NAMESPACE     READY
+            istio-system  -            istio-system  True
+
+            Next steps:
+
+              nereus release create <name> --source <source> --target istio-system
+    dependsOn: [ingress-sources]
+    notes: |-
+      **The target names no environment**: the charts go to the cluster Nereus runs in, into `istio-system`, which the flux Nereid's HelmRelease creates (`install.createNamespace`).
+    pt:
+      topic: "sources · 2/2"
+      message: "Três charts numa versão fixada: depois o gateway, para o istio-system"
+      accent: "numa versão fixada"
+      notes: |-
+        **O target não nomeia ambiente**: os charts vão para o cluster onde o Nereus roda, no `istio-system`, que o HelmRelease da Nereid flux cria (`install.createNamespace`).
+
+  - name: ingress-istio-base
+    act: ingress
+    topic: "istio-base"
+    status: built
+    message: "Each chart starts once the previous one is Ready: base first"
+    accent: "once the previous one is Ready"
+    terminal:
+      steps:
+        - comment: "Istio's CRDs, through the flux Mandate"
+          run: "nereus release create istio-base"
+          options: ["--source istio-base", "--target istio-system", "--mandate flux"]
+          output: |-
+            ✓ release/releases/istio-base created (nereid: flux)
+
+            Next steps:
+
+              nereus release get istio-base --watch
+        - comment: "Wait until it is Ready"
+          run: "nereus release get istio-base"
+          options: ["--watch"]
+          output: |-
+            NAME        SOURCE      TARGET        VERSION  NEREID             STATUS
+            istio-base  istio-base  istio-system  -        -                  Pending
+            istio-base  istio-base  istio-system  1.30.4   flux    Pending
+            istio-base  istio-base  istio-system  1.30.4   flux    Progressing
+            istio-base  istio-base  istio-system  1.30.4   flux    Ready
+    dependsOn: [ingress-sources-gateway, release-create-values]
+    notes: |-
+      **The release reef has no `dependsOn` yet** (`--depends-on` is #749): the order is the person's, each `nereus release create` after `nereus release get <previous> --watch` shows `Ready`, never a sleep (#727).
+    pt:
+      topic: "istio-base"
+      message: "Cada chart começa quando o anterior está Ready: o base primeiro"
+      accent: "quando o anterior está Ready"
+      notes: |-
+        **O reef release ainda não tem `dependsOn`** (o `--depends-on` é o #749): a ordem é de quem digita, cada `nereus release create` depois que o `nereus release get <anterior> --watch` mostra `Ready`, nunca um sleep (#727).
+
+  - name: ingress-istiod
+    act: ingress
+    topic: "istiod"
+    status: built
+    message: "Then istiod, the control plane"
+    accent: "the control plane"
+    terminal:
+      steps:
+        - comment: "The control plane, once istio-base is Ready"
+          run: "nereus release create istiod"
+          options: ["--source istiod", "--target istio-system", "--mandate flux"]
+          output: |-
+            ✓ release/releases/istiod created (nereid: flux)
+
+            Next steps:
+
+              nereus release get istiod --watch
+        - comment: "Wait until it is Ready"
+          run: "nereus release get istiod"
+          options: ["--watch"]
+          output: |-
+            NAME    SOURCE  TARGET        VERSION  NEREID             STATUS
+            istiod  istiod  istio-system  -        -                  Pending
+            istiod  istiod  istio-system  1.30.4   flux    Pending
+            istiod  istiod  istio-system  1.30.4   flux    Progressing
+            istiod  istiod  istio-system  1.30.4   flux    Ready
+    dependsOn: [ingress-istio-base]
+    notes: |-
+      **istiod finds the Gateway API CRDs when it starts** and makes the Gateway class `istio`, which the Gateway of the last slide uses.
+    pt:
+      topic: "istiod"
+      message: "Depois o istiod, o control plane"
+      accent: "o control plane"
+      notes: |-
+        **O istiod encontra os CRDs da Gateway API quando sobe** e cria a Gateway class `istio`, que o Gateway do último slide usa.
+
+  - name: ingress-istio-gateway
+    act: ingress
+    topic: "istio-gateway"
+    status: built
+    message: "Last, the ingress gateway, with no values of its own"
+    accent: "no values of its own"
+    terminal:
+      steps:
+        - comment: "The ingress gateway, once istiod is Ready"
+          run: "nereus release create istio-gateway"
+          options: ["--source istio-gateway", "--target istio-system", "--mandate flux"]
+          output: |-
+            ✓ release/releases/istio-gateway created (nereid: flux)
+
+            Next steps:
+
+              nereus release get istio-gateway --watch
+        - comment: "Wait until it is Ready"
+          run: "nereus release get istio-gateway"
+          options: ["--watch"]
+          output: |-
+            NAME           SOURCE         TARGET        VERSION  NEREID             STATUS
+            istio-gateway  istio-gateway  istio-system  -        -                  Pending
+            istio-gateway  istio-gateway  istio-system  1.30.4   flux    Pending
+            istio-gateway  istio-gateway  istio-system  1.30.4   flux    Progressing
+            istio-gateway  istio-gateway  istio-system  1.30.4   flux    Ready
+    dependsOn: [ingress-istiod]
+    notes: |-
+      **The chart's defaults fit:** its Service `istio-gateway` (the release's name) is a `LoadBalancer` on port 80, which k3s's ServiceLB serves on the node and the k3d load balancer reaches from the host port of `nereus init --ingress-port` (#743).
+    pt:
+      topic: "istio-gateway"
+      message: "Por último, o ingress gateway, sem values próprios"
+      accent: "sem values próprios"
+      notes: |-
+        **Os padrões do chart servem:** o seu Service `istio-gateway` (o nome da release) é um `LoadBalancer` na porta 80, que o ServiceLB do k3s serve no nó e o load balancer do k3d alcança pela porta do host do `nereus init --ingress-port` (#743).
+
+  - name: ingress-curl
+    act: ingress
+    topic: "curl"
+    message: "A Gateway opens Envoy's listener, and with no route it answers 404"
+    accent: "answers 404"
+    terminal:
+      steps:
+        - comment: "The Gateway ingress: class istio, the gateway's Service, HTTP on port 80"
+          run: "kubectl apply"
+          options: ["--filename gateway.yaml"]
+          output: |-
+            gateway.gateway.networking.k8s.io/ingress created
+        - comment: "The host port, the gateway's Service, Envoy"
+          run: "curl"
+          options: ["--include http://localhost:8080/"]
+          output: |-
+            HTTP/1.1 404 Not Found
+            date: Sat, 31 Oct 2026 20:51:28 GMT
+            server: istio-envoy
+            content-length: 0
+    dependsOn: [ingress-istio-gateway]
+    notes: |-
+      **Envoy opens no listener until a Gateway asks for one:** without it, curl gets an empty reply. `gateway.yaml` is a Gateway API Gateway `ingress` in `istio-system`, of the class `istio`, bound to the chart's Service through `addresses` (`istio-gateway.istio-system.svc.cluster.local`, Istio's manual deployment), with one HTTP listener on port 80; applied by hand, the same stand-in as the CRDs (#751).
+
+      **The 404 proves the path:** the k3d port, the gateway's Service and Envoy answering with no route; the routes are #728. The scene's port is a free one, shown here as the kept cluster's 8080.
+    pt:
+      topic: "curl"
+      message: "Um Gateway abre o listener do Envoy, e sem rota ele responde 404"
+      accent: "responde 404"
+      notes: |-
+        **O Envoy não abre listener até um Gateway pedir um:** sem ele, o curl recebe uma resposta vazia. O `gateway.yaml` é um Gateway `ingress` da Gateway API no `istio-system`, da class `istio`, ligado ao Service do chart pelo `addresses` (`istio-gateway.istio-system.svc.cluster.local`, o deployment manual do Istio), com um listener HTTP na porta 80; aplicado à mão, o mesmo stand-in dos CRDs (#751).
+
+        **O 404 prova o caminho:** a porta do k3d, o Service do gateway e o Envoy respondendo sem rota; as rotas são o #728. A porta do scene é uma livre, mostrada aqui como a 8080 do cluster mantido.

@@ -1,0 +1,535 @@
+deck:
+  name: delivery
+  title: "The delivery reef"
+  subtitle: "Every command that takes a Workload to an Environment, and says what runs"
+  accent: "says what runs"
+  pt:
+    title: "O reef delivery"
+    subtitle: "Todos os comandos que levam um Workload a um Environment e dizem o que está rodando"
+    accent: "dizem o que está rodando"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: setup
+    title: "Setup"
+    question: "Where does the delivery reef come from?"
+    pt: {title: "Preparação", question: "De onde vem o reef delivery?"}
+  - name: deploy
+    title: "Deploy"
+    question: "How does a developer run an image in an Environment?"
+    pt: {title: "Deploy", question: "Como um desenvolvedor roda uma imagem em um Environment?"}
+  - name: read
+    title: "Read"
+    question: "What exists, what runs, and what does it print?"
+    pt: {title: "Leitura", question: "O que existe, o que roda e o que isso imprime?"}
+  - name: manage
+    title: "Manage"
+    question: "How is a Delivery kept in a file, or removed?"
+    pt: {title: "Gestão", question: "Como manter uma Delivery em um arquivo, ou removê-la?"}
+  - name: template
+    title: "Template"
+    question: "Where do a new Workload's files come from?"
+    pt: {title: "Template", question: "De onde vêm os arquivos de um Workload novo?"}
+  - name: references
+    title: "References"
+    pt: {title: "Referências"}
+
+slides:
+  - name: cover
+    act: opening
+    cover: true
+    message: "The delivery reef"
+    notes: |-
+      **The source of truth for the commands of the delivery reef** (#477, ADR 0020). #845 built the first slice: the slides still planned point to the issues that build them.
+
+      **The catalog's two shortcuts live here for now:** `nereus workload` and `nereus template` go into the `catalog` reef, whose own deck is #570 (the catalog reef in the CLI reference), which links to these slides.
+    pt:
+      message: "O reef delivery"
+      notes: |-
+        **A fonte da verdade dos comandos do reef delivery** (#477, ADR 0020). A #845 construiu a primeira fatia: os slides ainda planejados apontam para as issues que os constroem.
+
+        **Os dois atalhos do catálogo ficam aqui por enquanto:** `nereus workload` e `nereus template` entram no reef `catalog`, cujo deck é o #570 (o reef catalog na referência do CLI), que linka estes slides.
+
+  - name: chain
+    act: opening
+    topic: "who delivers"
+    message: "The Nereid turns a Delivery into a Release, and Flux installs it"
+    accent: "turns a Delivery into a Release"
+    screen:
+      - "**{nereid:kubernetes}:** resolves the digest, writes the `Source`, the `Target` and the `Release`, and the Delivery's `status`"
+      - "**{nereid:flux}:** installs the `Release` in the Environment, as it does today"
+    notes: |-
+      **One writer per field** (ADR 0005): the client writes the Delivery's `spec`, the Nereid `kubernetes` writes its `status`, and the `flux` Nereid keeps writing the `Release`'s `status`. The last step depends on #828 (a Release reaches its Target's Environment).
+
+      **One Nereid per platform it delivers to:** a destination that is not Kubernetes is another Nereid, behind another Mandate, with the same `nereus workload deploy` and no `Release`.
+    pt:
+      topic: "quem entrega"
+      message: "O Nereid transforma uma Delivery em um Release, e o Flux instala"
+      accent: "transforma uma Delivery em um Release"
+      screen:
+        - "**{nereid:kubernetes}:** resolve o digest, escreve o `Source`, o `Target` e o `Release`, e o `status` da Delivery"
+        - "**{nereid:flux}:** instala o `Release` no Environment, como já faz hoje"
+      notes: |-
+        **Um escritor por campo** (ADR 0005): o cliente escreve o `spec` da Delivery, o Nereid `kubernetes` escreve o `status` dela, e o Nereid `flux` continua escrevendo o `status` do `Release`. O último passo depende do #828 (um Release chega ao Environment do seu Target).
+
+        **Um Nereid por plataforma para a qual ele entrega:** um destino que não é Kubernetes é outro Nereid, atrás de outro Mandate, com o mesmo `nereus workload deploy` e sem `Release`.
+
+  - name: reef-apply
+    act: setup
+    topic: "reef apply"
+    status: built
+    issue: 845
+    message: "The reef, then the Nereid that delivers to Kubernetes"
+    accent: "delivers to Kubernetes"
+    terminal:
+      steps:
+        - comment: "The delivery reef's contract"
+          run: "nereus reef apply delivery"
+          options: ["--from-file ./reefs/delivery/"]
+          output: |-
+            ✓ core/reefs/delivery created (delivery.getnereus.dev/v1alpha1)
+        - comment: "The Nereid, with the reef's default Mandate"
+          run: "nereus nereid apply kubernetes"
+          options: ["--reef delivery"]
+          output: |-
+            ✓ core/nereids/kubernetes created
+              validatingadmissionpolicies/controller-kubernetes-read-tokens applied (its only tokens: a Registry's read identity, for that Registry, ten minutes at most)
+            ✓ core/mandates/kubernetes created (reef: delivery, nereid: kubernetes, default)
+
+            Next steps:
+
+              nereus workload deploy --help
+    notes: |-
+      **The internal-developer-platform profile installs both** once #845 adds them (ADR 0014). Installing by name keeps today's form until #487 (the verb that installs a reef or a Nereid by name) closes.
+    pt:
+      topic: "reef apply"
+      message: "O reef, depois o Nereid que entrega para Kubernetes"
+      accent: "entrega para Kubernetes"
+      notes: |-
+        **O profile internal-developer-platform instala os dois** quando o #845 os adicionar (ADR 0014). Instalar por nome mantém a forma de hoje até o #487 (o verbo que instala um reef ou um Nereid por nome) fechar.
+
+  - name: workload-deploy
+    act: deploy
+    topic: "workload deploy"
+    status: built
+    issue: 845
+    message: "One command takes a Workload to an Environment"
+    accent: "One command"
+    terminal:
+      steps:
+        - comment: "A Workload of the catalog, in the dev Environment"
+          run: "nereus workload deploy hello@dev"
+          options: ["--image registry.example.com/hello:a1b2c3d"]
+          output: |-
+            ✓ delivery/deliveries/hello-dev created
+
+            Next steps:
+
+              nereus delivery get hello-dev
+    dependsOn: [reef-apply]
+    notes: |-
+      **`hello@dev` is sugar for `hello --environment dev`** (ADR 0013). The name of the Delivery is generated once, `<workload>-<environment>`, and never changes; a name that belongs to another pair takes a short suffix from the hash of the pair (`hello-dev-x-3f9a`).
+
+      **The Nereid resolves the tag, never the client,** so the CLI and the portal behave the same (ADR 0020). The port comes from the image's `ExposedPorts`, overridden in the Workload.
+    pt:
+      topic: "workload deploy"
+      message: "Um comando leva um Workload a um Environment"
+      accent: "Um comando"
+      notes: |-
+        **`hello@dev` é açúcar para `hello --environment dev`** (ADR 0013). O nome da Delivery é gerado uma vez, `<workload>-<environment>`, e nunca muda; um nome que pertence a outro par ganha um sufixo curto do hash do par (`hello-dev-x-3f9a`).
+
+        **O Nereid resolve a tag, nunca o cliente,** para o CLI e o portal se comportarem igual (ADR 0020). A porta vem do `ExposedPorts` da imagem, sobrescrita no Workload.
+
+  - name: deploy-refuses
+    act: deploy
+    topic: "workload deploy · a bare name"
+    status: built
+    issue: 845
+    message: "deploy never guesses the target"
+    accent: "never guesses"
+    terminal:
+      steps:
+        - comment: "A bare name could change target in silence when a second Environment appears"
+          run: "nereus workload deploy hello"
+          options: ["--image registry.example.com/hello:a1b2c3d"]
+          output: |-
+            ✗ deploy needs the target. To deploy hello, run:
+              # to the dev Environment
+              nereus workload deploy hello@dev --image registry.example.com/hello:a1b2c3d
+    dependsOn: [workload-deploy]
+    notes: |-
+      **`deploy` takes the unique name, `hello@dev` or `hello --environment dev`,** and refuses a bare `hello` even with one Environment (ADR 0020). A refusal lists what to run (ADR 0013, ADR 0012).
+    pt:
+      topic: "workload deploy · um nome solto"
+      message: "O deploy nunca adivinha o destino"
+      accent: "nunca adivinha"
+      notes: |-
+        **O `deploy` aceita o nome único, `hello@dev` ou `hello --environment dev`,** e recusa um `hello` solto mesmo com um só Environment (ADR 0020). Uma recusa lista o que rodar (ADR 0013, ADR 0012).
+
+  - name: deploy-build
+    act: deploy
+    topic: "workload deploy · a Build"
+    status: built
+    issue: 1068
+    message: "deploy runs what a Build pushed, by its digest"
+    accent: "by its digest"
+    terminal:
+      steps:
+        - comment: "The image of a Build that succeeded, never a tag that may move"
+          run: "nereus workload deploy hello@dev"
+          options: ["--build hello-a1b2c3d"]
+          output: |-
+            ✓ delivery/deliveries/hello-dev created
+
+            Next steps:
+
+              nereus delivery get hello-dev
+        - comment: "A Build still running is refused, with what to run"
+          run: "nereus workload deploy hello@dev"
+          options: ["--build hello-b4c5d6e"]
+          output: |-
+            ✗ build/builds/hello-b4c5d6e is Running, not Succeeded. To follow it, run:
+              nereus build get hello-b4c5d6e
+    dependsOn: [workload-deploy]
+    notes: |-
+      **`--build` takes the place of `--image`:** the CLI reads the Build's digest and its Repository's pull address, and writes `<pull address>/hello@sha256:...` into the Delivery. A digest is never looked up again, so the Delivery runs exactly what was built. A Build of another Workload, or one that has not succeeded, is refused.
+    pt:
+      topic: "workload deploy · um Build"
+      message: "O deploy roda o que um Build publicou, pelo digest"
+      accent: "pelo digest"
+      notes: |-
+        **`--build` substitui o `--image`:** o CLI lê o digest do Build e o endereço de pull do seu Repository, e escreve `<endereço de pull>/hello@sha256:...` na Delivery. Um digest nunca é consultado de novo, então a Delivery roda exatamente o que foi construído. Um Build de outro Workload, ou que não terminou com sucesso, é recusado.
+
+  - name: deploy-update
+    act: deploy
+    topic: "workload deploy · again"
+    status: built
+    issue: 845
+    message: "Every deploy is a new request, even with the same tag"
+    accent: "a new request"
+    terminal:
+      steps:
+        - comment: "The same tag, pushed again: the unique name works too"
+          run: "nereus workload deploy hello-dev"
+          options: ["--image registry.example.com/hello:a1b2c3d"]
+          output: |-
+            ✓ delivery/deliveries/hello-dev configured
+
+            Next steps:
+
+              nereus delivery get hello-dev
+    dependsOn: [workload-deploy]
+    notes: |-
+      **Each `deploy` writes `spec.requestedAt`,** so the same tag changes `spec` and reaches a re-pushed image, as Flux's `reconcile.fluxcd.io/requestedAt` does.
+
+      **The Nereid resolves once per request:** a tag that moves with no new `deploy` never changes what runs in silence (ADR 0020).
+    pt:
+      topic: "workload deploy · de novo"
+      message: "Cada deploy é um pedido novo, mesmo com a mesma tag"
+      accent: "um pedido novo"
+      notes: |-
+        **Cada `deploy` escreve `spec.requestedAt`,** então a mesma tag muda o `spec` e alcança uma imagem que recebeu novo push, como faz o `reconcile.fluxcd.io/requestedAt` do Flux.
+
+        **O Nereid resolve uma vez por pedido:** uma tag que muda de lugar sem novo `deploy` nunca muda o que está rodando em silêncio (ADR 0020).
+
+  - name: deploy-dry-run
+    act: deploy
+    topic: "workload deploy --dry-run"
+    status: built
+    issue: 845
+    message: "--dry-run shows the Delivery, with the tag as typed"
+    accent: "with the tag as typed"
+    terminal:
+      steps:
+        - comment: "Changes nothing; the digest comes from the Nereid, after the deploy"
+          run: "nereus workload deploy hello@dev"
+          options: ["--image registry.example.com/hello:a1b2c3d", "--dry-run"]
+          output: |-
+            delivery/deliveries/hello-dev would be created
+              workload: hello
+              environment: dev
+              image: registry.example.com/hello:a1b2c3d
+    dependsOn: [workload-deploy]
+    notes: |-
+      **The price of resolving in the Nereid** (ADR 0020): the client cannot show the digest before the deploy. With `--output yaml` it prints the object, ready for `apply --from-file` (ADR 0013).
+    pt:
+      topic: "workload deploy --dry-run"
+      message: "O --dry-run mostra a Delivery, com a tag como foi digitada"
+      accent: "com a tag como foi digitada"
+      notes: |-
+        **O preço de resolver no Nereid** (ADR 0020): o cliente não consegue mostrar o digest antes do deploy. Com `--output yaml` ele imprime o objeto, pronto para `apply --from-file` (ADR 0013).
+
+  - name: deploy-wait
+    act: deploy
+    topic: "workload deploy --wait"
+    status: built
+    issue: 846
+    message: "--wait brings the Nereid's reason to the terminal"
+    accent: "to the terminal"
+    terminal:
+      steps:
+        - comment: "A tag that does not exist fails after the Delivery is written"
+          run: "nereus workload deploy hello@dev"
+          options: ["--image registry.example.com/hello:does-not-exist", "--wait"]
+          output: |-
+            ✓ delivery/deliveries/hello-dev configured
+            ✗ delivery/deliveries/hello-dev not ready: The registry does not have the tag does-not-exist of the repository registry.example.com/hello. To fix it, run:
+              # deploy a tag that exists
+              nereus workload deploy hello@dev --image registry.example.com/hello:<tag>
+        - comment: "A tag that exists waits for it to run"
+          run: "nereus workload deploy hello@dev"
+          options: ["--image registry.example.com/hello:a1b2c3d", "--wait"]
+          output: |-
+            ✓ delivery/deliveries/hello-dev configured
+            ✓ delivery/deliveries/hello-dev ready (sha256:9f2c1e)
+
+            Next steps:
+
+              nereus workload logs hello-dev
+    dependsOn: [workload-deploy]
+    notes: |-
+      **Without `--wait`, the reason stays in the Delivery's `status`,** and `nereus delivery get` shows it. The pattern is #846 (`workload logs` and the CLI's follow and wait).
+    pt:
+      topic: "workload deploy --wait"
+      message: "O --wait traz o motivo do Nereid para o terminal"
+      accent: "para o terminal"
+      notes: |-
+        **Sem `--wait`, o motivo fica no `status` da Delivery,** e o `nereus delivery get` o mostra. O padrão é o #846 (`workload logs` e o follow e wait do CLI).
+
+  - name: workload-list
+    act: read
+    topic: "workload list"
+    status: built
+    issue: 845
+    message: "workload list says what the catalog has"
+    accent: "what the catalog has"
+    terminal:
+      steps:
+        - comment: "One row per Workload; DELIVERIES counts them, 0 means not deployed"
+          run: "nereus workload list"
+          output: |-
+            WORKLOAD  OWNER          TYPE     AUDIENCE  DELIVERIES  STATUS
+            billing   Project/shop   service  programs  0           Ready
+            hello     Project/hello  service  people    2           Ready
+
+            Next steps:
+
+              nereus delivery list
+    notes: |-
+      **A shortcut of `nereus catalog workload list`** (ADR 0016, ADR 0013). The catalog reads the Deliveries to count them and never writes them.
+    pt:
+      topic: "workload list"
+      message: "O workload list diz o que o catálogo tem"
+      accent: "o que o catálogo tem"
+      notes: |-
+        **Um atalho de `nereus catalog workload list`** (ADR 0016, ADR 0013). O catálogo lê as Deliveries para contá-las e nunca as escreve.
+
+  - name: delivery-list
+    act: read
+    topic: "delivery list"
+    status: built
+    issue: 845
+    message: "delivery list says what was deployed"
+    accent: "what was deployed"
+    terminal:
+      steps:
+        - comment: "One row per Workload and Environment pair"
+          run: "nereus delivery list"
+          output: |-
+            NAME         WORKLOAD  ENVIRONMENT  DIGEST         READY
+            hello-dev    hello     dev          sha256:9f2c1e  True
+            hello-stage  hello     stage        sha256:77ab40  True
+        - comment: "The deployments of one Workload"
+          run: "nereus delivery list"
+          options: ["--workload hello"]
+          output: |-
+            NAME         WORKLOAD  ENVIRONMENT  DIGEST         READY
+            hello-dev    hello     dev          sha256:9f2c1e  True
+            hello-stage  hello     stage        sha256:77ab40  True
+    dependsOn: [workload-deploy]
+    notes: |-
+      **`nereus delivery list` is the one path** (owner, 2026-11-03): `Delivery` is the reef's default kind, so it is `nereus delivery delivery list`, and `nereus workload` adds no second path to the same table.
+    pt:
+      topic: "delivery list"
+      message: "O delivery list diz o que foi implantado"
+      accent: "o que foi implantado"
+      notes: |-
+        **O `nereus delivery list` é o único caminho** (owner, 2026-11-03): `Delivery` é o kind padrão do reef, então ele é `nereus delivery delivery list`, e o `nereus workload` não abre uma segunda porta para a mesma tabela.
+
+  - name: delivery-get
+    act: read
+    topic: "delivery get"
+    status: built
+    issue: 845
+    message: "delivery get says what runs and where"
+    accent: "what runs and where"
+    terminal:
+      steps:
+        - comment: "The digest running, the namespace, and the previous digest"
+          run: "nereus delivery get hello-dev"
+          output: |-
+            NAME       WORKLOAD  ENVIRONMENT  DIGEST         NAMESPACE  READY
+            hello-dev  hello     dev          sha256:9f2c1e  hello-dev  True
+
+            Previous digest: sha256:77ab40
+
+            Next steps:
+
+              nereus workload logs hello-dev
+    dependsOn: [workload-deploy]
+    notes: |-
+      **It answers gap 8 of PR #836 (make scene-golden-path), nothing says what runs.** The previous digest is the only history for now; rollback and update channels are open questions in ADR 0020.
+    pt:
+      topic: "delivery get"
+      message: "O delivery get diz o que roda e onde"
+      accent: "o que roda e onde"
+      notes: |-
+        **Ele responde ao gap 8 do PR #836 (make scene-golden-path), nada diz o que está rodando.** O digest anterior é o único histórico por enquanto; rollback e canais de atualização são perguntas abertas no ADR 0020.
+
+  - name: workload-logs
+    act: read
+    topic: "workload logs"
+    status: built
+    issue: 846
+    message: "workload logs reads a Delivery by its name or its pair"
+    accent: "by its name or its pair"
+    terminal:
+      steps:
+        - comment: "Follow what the app prints"
+          run: "nereus workload logs hello-dev"
+          options: ["--follow"]
+          output: |-
+            [::ffff:127.0.0.1]:53792: response:200
+        - comment: "A Workload in several Environments lists them and picks none"
+          run: "nereus workload logs hello"
+          output: |-
+            ✗ hello runs in 2 Environments. To read one, run:
+              # in dev
+              nereus workload logs hello@dev
+              # in stage
+              nereus workload logs hello@stage
+    dependsOn: [workload-deploy]
+    notes: |-
+      **The argument rule** (ADR 0020): `@` looks up the pair; without it, the Delivery's name, then a Workload with a single Environment. When both match different targets, the error lists the candidates.
+
+      **It reads inside the Environment, with the Environment's own kubeconfig over a port-forward: a declared Stand-in,** until the group moves behind the Nereus API (ADR 0018).
+    pt:
+      topic: "workload logs"
+      message: "O workload logs lê uma Delivery pelo nome ou pelo par"
+      accent: "pelo nome ou pelo par"
+      notes: |-
+        **A regra do argumento** (ADR 0020): `@` procura o par; sem ele, o nome da Delivery, depois um Workload com um só Environment. Quando os dois apontam para destinos diferentes, o erro lista os candidatos.
+
+        **Ele lê dentro do Environment, com o kubeconfig do próprio Environment por um port-forward: um Stand-in declarado,** até o grupo passar para trás da Nereus API (ADR 0018).
+
+  - name: delivery-apply
+    act: manage
+    topic: "delivery apply"
+    status: built
+    issue: 845
+    message: "A Delivery in a file resolves once"
+    accent: "resolves once"
+    terminal:
+      steps:
+        - comment: "Write it as a file, then apply the file"
+          run: "nereus workload deploy hello@dev"
+          options: ["--image registry.example.com/hello:a1b2c3d", "--dry-run", "--output yaml"]
+          output: |-
+            apiVersion: delivery.getnereus.dev/v1alpha1
+            kind: Delivery
+            metadata:
+              name: hello-dev
+        - comment: "The same file again changes nothing"
+          run: "nereus delivery apply"
+          options: ["--from-file delivery/"]
+          output: |-
+            delivery/deliveries/hello-dev unchanged
+    dependsOn: [workload-deploy]
+    notes: |-
+      **Applying the same file prints `unchanged`:** moving to a re-pushed tag takes `nereus workload deploy` or a new `spec.requestedAt` (ADR 0020). `nereus delivery create` builds from flags and fails when the Delivery exists (ADR 0013). It waits for each Delivery to be Ready and brings the Nereid's reason to the terminal; `--wait=false` leaves right after writing.
+    pt:
+      topic: "delivery apply"
+      message: "Uma Delivery em um arquivo resolve uma vez"
+      accent: "resolve uma vez"
+      notes: |-
+        **Aplicar o mesmo arquivo imprime `unchanged`:** ir para uma tag com novo push exige `nereus workload deploy` ou um novo `spec.requestedAt` (ADR 0020). O `nereus delivery create` constrói a partir de flags e falha quando a Delivery existe (ADR 0013). Ele espera cada Delivery ficar Ready e traz o motivo do Nereid para o terminal; `--wait=false` sai logo depois de escrever.
+
+  - name: delivery-delete
+    act: manage
+    topic: "delivery delete"
+    status: built
+    issue: 845
+    message: "Deleting a Delivery takes the app out of the Environment"
+    accent: "takes the app out"
+    terminal:
+      steps:
+        - comment: "The Workload stays in the catalog"
+          run: "nereus delivery delete hello-dev"
+          output: |-
+            ✓ delivery/deliveries/hello-dev deleted
+
+            Next steps:
+
+              nereus workload list
+    dependsOn: [workload-deploy]
+    notes: |-
+      **The Nereid removes the `Release` and the `Target` it wrote; the shared `Repository` and `Source` stay,** since other Deliveries use them. The Workload's catalog entry is another reef's and stays too.
+    pt:
+      topic: "delivery delete"
+      message: "Apagar uma Delivery tira o app do Environment"
+      accent: "tira o app"
+      notes: |-
+        **O Nereid remove o `Release` e o `Target` que escreveu; o `Repository` e o `Source` compartilhados ficam,** porque outras Deliveries os usam. A entrada do Workload no catálogo é de outro reef e fica também.
+
+  - name: template-render
+    act: template
+    topic: "template render"
+    status: planned
+    issue: 851
+    message: "A template writes files, and the catalog registers them"
+    accent: "writes files"
+    terminal:
+      steps:
+        - comment: "The files of a new Workload, with Copier"
+          run: "nereus template render python-service"
+          options: ["--path ./hello", "--param name=hello"]
+          output: |-
+            ✓ catalog/templates/python-service rendered at ./hello
+
+            Next steps:
+
+              nereus catalog apply --from-file ./hello/catalog/
+    notes: |-
+      **A shortcut of `nereus catalog template render`** (ADR 0016): `Template` is a kind of the catalog. Creating the repository stays with #279 (the repository reef). The verb is `render` because `create` makes the `Template` object and `apply` takes only files (ADR 0013).
+    pt:
+      topic: "template render"
+      message: "Um template escreve arquivos, e o catálogo os registra"
+      accent: "escreve arquivos"
+      notes: |-
+        **Um atalho de `nereus catalog template render`** (ADR 0016): `Template` é um kind do catálogo. Criar o repositório fica com o #279 (o reef repository). O verbo é `render` porque `create` faz o objeto `Template` e `apply` aceita só arquivos (ADR 0013).
+
+  - name: credits
+    act: references
+    topic: "references"
+    message: "Where the ideas came from"
+    accent: "the ideas"
+    screen:
+      - "**[Flux](https://fluxcd.io/flux/components/helm/helmreleases/):** `requestedAt`, and a `HelmRelease` on a remote cluster"
+      - "**[Kubernetes, Images](https://kubernetes.io/docs/concepts/containers/images/):** why a digest, and not a tag"
+      - "**[bjw-s app-template](https://bjw-s-labs.github.io/helm-charts/docs/app-template/):** the curated chart"
+      - "**[Copier](https://copier.readthedocs.io/en/stable/):** the engine of `template render`"
+    notes: |-
+      **The full credits are in ADR 0020 and ADR 0016.** Kargo's Stage and Freight are the reference for update channels, if they come.
+    pt:
+      topic: "referências"
+      message: "De onde vieram as ideias"
+      accent: "as ideias"
+      screen:
+        - "**[Flux](https://fluxcd.io/flux/components/helm/helmreleases/):** `requestedAt`, e um `HelmRelease` em um cluster remoto"
+        - "**[Kubernetes, Images](https://kubernetes.io/docs/concepts/containers/images/):** por que digest, e não tag"
+        - "**[bjw-s app-template](https://bjw-s-labs.github.io/helm-charts/docs/app-template/):** o chart curado"
+        - "**[Copier](https://copier.readthedocs.io/en/stable/):** o motor do `template render`"
+      notes: |-
+        **Os créditos completos estão no ADR 0020 e no ADR 0016.** O Stage e o Freight do Kargo são a referência para canais de atualização, se vierem.

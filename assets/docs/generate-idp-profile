@@ -1,0 +1,117 @@
+#!/usr/bin/env python3
+"""Draws idp-profile.svg: the internal-developer-platform profile as it runs today, on the five planes of the platform
+tooling landscape, the Nereus API above them and the clients below. A solid card runs today; a dashed one is not in the
+profile yet, and links to its issue on the board when it has one. A reef that gets built takes the Mandate
+`cli/src/nereus/local_nereids.py` gives it."""
+import argparse
+from html import escape
+from pathlib import Path
+
+REEF, NEREID, MANDATE = "#1D9E75", "#7F77DD", "#D85A30"
+PANEL, LINE, CARD, TEXT, MUTED = "#111827", "#1f2937", "#0b1220", "#ffffff", "#9fb3c8"
+
+# Each card: (reef, Nereid, Mandate). A card with no Mandate is not in the profile yet, unless the API keeps its objects.
+PLANES = (
+  ("Developer Control", (("tenancy", "", ""), ("catalog", "catalog", "catalog"), ("scm", "forgejo", "forgejo"))),
+  ("Integration & Delivery", (("release", "flux", "flux"), ("build", "buildkit", "buildkit"), ("registry", "zot", "zot"), ("delivery", "kubernetes", "kubernetes"))),
+  ("Resource", (("environment", "vcluster", "vcluster"), ("database", "cloudnative-pg", "cloudnative-pg"), ("edge", "cloudflare", ""))),
+  ("Observability", (("metrics", "victoriametrics", "victoriametrics"),)),
+  ("Security", (("secrets", "openbao", "default"), ("authentication", "keycloak", "keycloak"), ("authorization", "openfga", ""), ("policy", "kyverno", ""))),
+)
+CLIENTS = ("CLI", "Portal", "Agents (MCP)")
+# The reefs the API keeps with no Nereid, built all the same.
+NO_NEREID = {"tenancy": "kept by the API"}
+# The issue of a card not in the profile yet: its number, its short title and its item on the board (fullDatabaseId).
+ISSUES = {
+  "authorization": (897, "Refine the authorization reef: an openfga Nereid", "292390111"),
+  "edge": (577, "The edge reef: the cloudflare Nereid", "288110548"),
+  "policy": (898, "Refine the policy reef: a kyverno Nereid", "292390155"),
+}
+BOARD = "https://github.com/orgs/getnereus/projects/1"
+
+LEFT, WIDTH, GAP = 100, 264, 20
+CARD_HEIGHT, CARD_GAP = 118, 12
+TOP = 170
+
+
+def text(x, y, content, fill=TEXT, size=22, weight=400, anchor="start"):
+  return f'<text x="{x}" y="{y}" font-size="{size}" font-weight="{weight}" fill="{fill}" text-anchor="{anchor}" dominant-baseline="middle">{escape(content)}</text>'
+
+
+def box(x, y, width, height, stroke=LINE, fill=PANEL, dashed=False, stroke_width=2):
+  dash = ' stroke-dasharray="9 7"' if dashed else ""
+  return f'<rect x="{x}" y="{y}" width="{width}" height="{height}" rx="14" fill="{fill}" stroke="{stroke}" stroke-width="{stroke_width}"{dash}/>'
+
+
+def issue_link(x, y, reef):
+  """The issue, discreet, in the corner of a dashed card; hovering it says what the issue is."""
+  number, title, item = ISSUES[reef]
+  href = escape(f"{BOARD}?pane=issue&itemId={item}&issue=getnereus%7Cnereus%7C{number}")
+  label = text(x + WIDTH - 40, y + 30, f"#{number}", MUTED, 18, 400, "end")
+  return f'<a href="{href}" target="_blank" rel="noopener"><title>{escape(title)}</title>{label}</a>'
+
+
+def card(x, y, reef, nereid, mandate):
+  built = bool(mandate) or reef in NO_NEREID
+  body = box(x, y, WIDTH - 24, CARD_HEIGHT, MUTED, CARD, dashed=not built)
+  body += text(x + 18, y + 30, reef, REEF, 24, 700)
+  if reef in NO_NEREID:
+    body += text(x + 18, y + 66, NO_NEREID[reef], MUTED, 20)
+  elif nereid:
+    body += text(x + 18, y + 62, nereid, NEREID, 22)
+  if mandate:
+    body += text(x + 18, y + 92, mandate, MANDATE, 22)
+  if reef in ISSUES:
+    body += issue_link(x, y, reef)
+  kind = "built" if built else "todo"
+  return f'<g data-part="{kind}.{reef}">{body}</g>'
+
+
+def draw():
+  width = 5 * WIDTH + 4 * GAP
+  out = []
+
+  # The legend reads like a card, above everything, at the right.
+  legend = text(LEFT + width, TOP + 14, "Mandate", MANDATE, 21, 400, "end")
+  legend += text(LEFT + width - 104, TOP + 14, "Nereid", NEREID, 21, 400, "end")
+  legend += text(LEFT + width - 192, TOP + 14, "Reef", REEF, 21, 700, "end")
+  out.append(f'<g data-part="legend">{legend}</g>')
+
+  api_top = TOP + 40
+  api = box(LEFT, api_top, width, 60, "#4a9ef4", PANEL, stroke_width=3)
+  api += text(LEFT + width / 2, api_top + 30, "NEREUS API", TEXT, 24, 700, "middle")
+  out.append(f'<g data-part="api">{api}</g>')
+
+  plane_top = api_top + 74
+  height = 56 + 4 * CARD_HEIGHT + 3 * CARD_GAP + 12
+  cards = []
+  for index, (title, reefs) in enumerate(PLANES):
+    x = LEFT + index * (WIDTH + GAP)
+    panel = box(x, plane_top, WIDTH, height) + text(x + 12, plane_top + 30, title, TEXT, 20, 700)
+    out.append(f'<g data-part="plane.{index + 1}">{panel}</g>')
+    for row, (reef, nereid, mandate) in enumerate(reefs):
+      cards.append(card(x + 12, plane_top + 56 + row * (CARD_HEIGHT + CARD_GAP), reef, nereid, mandate))
+  out.extend(cards)
+
+  bottom = plane_top + height + 14
+  # The label comes with the first client, and each client is a part of its own.
+  label = text(LEFT, bottom + 28, "CLIENTS", MUTED, 18, 700)
+  x = LEFT + 112
+  for index, name in enumerate(CLIENTS):
+    client = box(x, bottom, 176, 56, MUTED, CARD) + text(x + 88, bottom + 28, name, TEXT, 21, 600, "middle")
+    out.append(f'<g data-part="client.{index + 1}">{label if index == 0 else ""}{client}</g>')
+    x += 190
+
+  total = bottom + 56 - TOP
+  return f'<svg viewBox="{LEFT} {TOP} {width} {total}" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, sans-serif">{"".join(out)}</svg>\n'
+
+
+def main():
+  parser = argparse.ArgumentParser(description="Draw the internal-developer-platform profile as an SVG.")
+  parser.add_argument("--output", type=Path, default=Path(__file__).with_name("idp-profile.svg"), help="the file to write")
+  args = parser.parse_args()
+  args.output.write_text(draw())
+
+
+if __name__ == "__main__":
+  main()

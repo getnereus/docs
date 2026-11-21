@@ -1,0 +1,11 @@
+{
+  "name": "scene-environment",
+  "command": "test/scene-environment",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 906,
+  "passed": 41,
+  "failure": null,
+  "commit": "457e60f",
+  "started": "2026-11-13T04:13:47Z"
+}

@@ -1,0 +1,586 @@
+deck:
+  name: how-we-work
+  title: "How we work"
+  subtitle: "Building software with AI agents, told from a real repository"
+  pt:
+    title: "Como trabalhamos"
+    subtitle: "Construindo software com agentes de IA, a partir de um repositório real"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: method
+    title: "Method"
+    pt: {title: "Método"}
+  - name: flow
+    title: "Flow"
+    pt: {title: "Fluxo"}
+  - name: division
+    title: "The division of work"
+    pt: {title: "A divisão do trabalho"}
+  - name: talking
+    title: "Agents talking"
+    pt: {title: "Agentes conversando"}
+  - name: costs
+    title: "Costs"
+    pt: {title: "Custos"}
+  - name: memory
+    title: "Memory"
+    pt: {title: "Memória"}
+  - name: improvement
+    title: "Improvement"
+    pt: {title: "Melhoria"}
+  - name: closing
+    title: "Closing"
+    pt: {title: "Fechamento"}
+
+references:
+  - name: ecclesiastes
+    title: "Ecclesiastes 1"
+    url: "https://en.wikipedia.org/wiki/Ecclesiastes_1"
+    about: "The chapter of the Hebrew Bible where the phrase comes from."
+    forUs: "\"There is nothing new under the sun\" (verse 9) is the first half of this talk."
+    pt:
+      title: "Eclesiastes 1"
+      about: "O capítulo da Bíblia hebraica de onde vem a frase."
+      forUs: "\"Nada de novo debaixo do sol\" (versículo 9) é a primeira metade desta palestra."
+  - name: agile-principles
+    title: "Principles behind the Agile Manifesto"
+    author: "Agile Manifesto signatories"
+    year: "2001"
+    url: "https://agilemanifesto.org/principles.html"
+    about: "The twelve principles behind the Manifesto for Agile Software Development."
+    forUs: "\"Working software is the primary measure of progress\", and \"at regular intervals, the team reflects on how to become more effective\"."
+    pt:
+      title: "Princípios por trás do Manifesto Ágil"
+      author: "Signatários do Manifesto Ágil"
+      about: "Os doze princípios por trás do Manifesto para o Desenvolvimento Ágil de Software."
+      forUs: "\"Working software is the primary measure of progress\", e \"at regular intervals, the team reflects on how to become more effective\"."
+  - name: xp
+    title: "Extreme Programming"
+    author: "Kent Beck"
+    year: "1999"
+    url: "https://en.wikipedia.org/wiki/Extreme_programming"
+    about: "The method Kent Beck developed and described in Extreme Programming Explained, published in October 1999."
+    forUs: "Small steps that each end in working software; here, with an agent on one side of the pair."
+    pt:
+      about: "O método que Kent Beck desenvolveu e descreveu em Extreme Programming Explained, publicado em outubro de 1999."
+      forUs: "Passos pequenos que terminam em software funcionando; aqui, com um agente de um dos lados do par."
+  - name: kanban-guide
+    title: "The Kanban Guide"
+    author: "John Coleman, Daniel Vacanti and others"
+    year: "2025"
+    url: "https://kanbanguides.org/english/"
+    about: "A short definition of Kanban: the flow, its practices and its four mandatory metrics."
+    forUs: "\"Kanban system members must explicitly control the number of work items in a workflow from started to finished.\""
+    pt:
+      title: "O Guia do Kanban"
+      author: "John Coleman, Daniel Vacanti e outros"
+      about: "Uma definição curta de Kanban: o fluxo, suas práticas e suas quatro métricas obrigatórias."
+      forUs: "\"Kanban system members must explicitly control the number of work items in a workflow from started to finished.\""
+  - name: nygard-adr
+    title: "Documenting Architecture Decisions"
+    author: "Michael Nygard"
+    year: "2011"
+    url: "https://www.cognitect.com/blog/2011/11/15/documenting-architecture-decisions"
+    about: "The post that proposes short, numbered decision records kept in the repository: title, context, decision, status and consequences."
+    forUs: "\"A new person coming on to a project may be perplexed, baffled, delighted, or infuriated by some past decision.\""
+    pt:
+      title: "Documentando decisões de arquitetura"
+      about: "O texto que propõe registros de decisão curtos e numerados, guardados no repositório: título, contexto, decisão, status e consequências."
+      forUs: "\"A new person coming on to a project may be perplexed, baffled, delighted, or infuriated by some past decision.\""
+  - name: caroli-teams
+    title: "Times importam mais do que nunca"
+    author: "Paulo Caroli"
+    url: "https://caroli.org/livro/times-importam-mais-do-que-nunca/"
+    about: "A book on human direction and AI acceleration in product work."
+    forUs: "The AI accelerates, people set the direction and decide."
+    pt:
+      about: "Um livro sobre direção humana e aceleração com IA no trabalho de produto."
+      forUs: "A IA acelera, as pessoas dão a direção e decidem."
+
+slides:
+  - name: title
+    act: opening
+    cover: true
+    message: "How we work"
+    notes: |-
+      **This talk is about the method, and this repository is the real example.** You already use AI, so I will not argue for adopting it.
+
+      **Route:** what already existed, what the agent changes, and one practice to try next week.
+    pt:
+      message: "Como trabalhamos"
+      notes: |-
+        **Esta palestra é sobre o método, e este repositório é o exemplo real.** Vocês já usam IA, então não vou defender a adoção.
+
+        **Roteiro:** o que já existia, o que o agente muda e uma prática para testar na semana que vem.
+
+  - name: nothing-new
+    act: opening
+    message: "Nothing new under the sun"
+    accent: "under the sun"
+    animations: none
+    source: "Ecclesiastes 1:9"
+    refs: [ecclesiastes]
+    notes: |-
+      **Say the phrase and stop.** Leave only this half on the screen, and let it sit for a moment.
+    pt:
+      message: "Nada de novo debaixo do sol"
+      accent: "debaixo do sol"
+      source: "Eclesiastes 1:9"
+      notes: |-
+        **Diga a frase e pare.** Deixe só esta metade na tela, e deixe-a ficar por um momento.
+
+  - name: same-problems
+    act: opening
+    message: "The same problems for fifty years"
+    screen:
+      - "**1968:** the field is named software engineering, as a provocation"
+      - "**1975:** adding people to a late project makes it later"
+      - "**Today:** with more AI, teams deliver faster and less stably"
+    source: "The storytelling deck"
+    notes: |-
+      **This is another talk, in one minute.** The [storytelling deck](storytelling.html#title) tells the pattern, with a source for each of these facts.
+
+      **The point here:** the problems are old, and so are most of the answers.
+    pt:
+      message: "Os mesmos problemas há cinquenta anos"
+      screen:
+        - "**1968:** o campo recebe o nome de engenharia de software, como provocação"
+        - "**1975:** adicionar pessoas a um projeto atrasado o atrasa ainda mais"
+        - "**Hoje:** com mais IA, os times entregam mais rápido e com menos estabilidade"
+      source: "O deck storytelling"
+      notes: |-
+        **Esta é outra palestra, em um minuto.** O [deck storytelling](storytelling.html#title) conta o padrão, com uma fonte para cada um destes fatos.
+
+        **O ponto aqui:** os problemas são antigos, e a maioria das respostas também.
+
+  - name: except
+    act: opening
+    message: "Except the AI agents"
+    accent: "AI agents"
+    subtitle: "You already use them, so what changes?"
+    notes: |-
+      **Now the other half of the phrase.** Each part from here on goes from what already existed to what the agent changes.
+    pt:
+      message: "A não ser os agentes de IA"
+      accent: "agentes de IA"
+      subtitle: "Vocês já os usam, então o que muda?"
+      notes: |-
+        **Agora a outra metade da frase.** Cada parte daqui em diante vai do que já existia para o que o agente muda.
+
+  - name: small-steps
+    act: method
+    message: "Small steps, and now an agent takes them"
+    accent: "an agent"
+    screen:
+      - "**Agile Manifesto, 2001:** working software is the primary measure of progress"
+      - "**Extreme Programming, 1999:** small steps that each end in working software"
+      - "**New:** an agent on one side of the pair"
+    source: "Agile Manifesto principles; Extreme Programming Explained"
+    refs: [agile-principles, xp]
+    notes: |-
+      **Nothing here was invented for AI.** These are the first two pillars of the project, and they are older than most of our tools.
+
+      **What changes is who takes the step.** Agents implement in parallel, a coordinating agent reviews and merges, and the owner decides what the issue does not hold, one question at a time.
+
+      **Source in the repository:** docs/vision.md.
+    pt:
+      message: "Passos pequenos, e agora um agente os dá"
+      accent: "um agente"
+      screen:
+        - "**Manifesto Ágil, 2001:** software funcionando é a principal medida de progresso"
+        - "**Extreme Programming, 1999:** passos pequenos que terminam em software funcionando"
+        - "**Novo:** um agente de um dos lados do par"
+      source: "Princípios do Manifesto Ágil; Extreme Programming Explained"
+      notes: |-
+        **Nada aqui foi inventado para a IA.** Estes são os dois primeiros pilares do projeto, e são mais antigos que a maioria das nossas ferramentas.
+
+        **O que muda é quem dá o passo.** Os agentes implementam em paralelo, um agente coordenador revisa e faz o merge, e o dono decide o que a issue não consegue responder, uma pergunta por vez.
+
+        **Fonte no repositório:** docs/vision.md.
+
+  - name: issue
+    act: method
+    message: "The issue now carries all the context"
+    accent: "all the context"
+    subtitle: "An agent takes it from the board and delivers it alone"
+    screen:
+      - "**Context:** and the decisions taken, by whom and when"
+      - "**Dependencies:** and what each one delivers"
+      - "**Facts:** checked in the code"
+      - "**Done when:** a check the agent can run itself"
+    notes: |-
+      **The issue is old; its reader is new.** A person can walk over and ask, but an agent starts from what is written.
+
+      **This is a Definition of Ready.** Questions to the owner are for what the issue cannot hold.
+
+      **Source in the repository:** docs/vision.md, "Issues an agent can carry out alone".
+    pt:
+      message: "A issue agora carrega todo o contexto"
+      accent: "todo o contexto"
+      subtitle: "Um agente a pega do board e entrega sozinho"
+      screen:
+        - "**Contexto:** e as decisões tomadas, por quem e quando"
+        - "**Dependências:** e o que cada uma entrega"
+        - "**Fatos:** conferidos no código"
+        - "**Pronto quando:** uma verificação que o próprio agente roda"
+      notes: |-
+        **A issue é antiga; o leitor é novo.** Uma pessoa pode ir até o colega e perguntar, mas um agente parte do que está escrito.
+
+        **Isto é uma Definition of Ready.** Perguntas ao dono são para o que a issue não consegue responder.
+
+        **Fonte no repositório:** docs/vision.md, "Issues an agent can carry out alone".
+
+  - name: wip
+    act: flow
+    message: "An old limit, tuned for agents"
+    accent: "tuned for agents"
+    subtitle: "Work in progress (WIP), per person, on every board"
+    screen:
+      - "**1:** the queue refuses a second item"
+      - "**3:** until the work began to run through subagents"
+      - "**10:** a session now holds several issues at once"
+    source: "The Kanban Guide"
+    refs: [kanban-guide]
+    notes: |-
+      **Kanban asks to control the work in progress.** The guide says it plainly: control the number of items from started to finished. The number is the team's own.
+
+      **We changed it twice.** A session hands its issues to subagents, so the limit that fits a person alone did not fit the work anymore. It still exists, and it still refuses.
+
+      **Source in the repository:** docs/vision.md, #615 (the limit of ten).
+    pt:
+      message: "Um limite antigo, ajustado para agentes"
+      accent: "ajustado para agentes"
+      subtitle: "Trabalho em andamento (WIP), por pessoa, em todo board"
+      screen:
+        - "**1:** a fila recusa um segundo item"
+        - "**3:** até o trabalho começar a passar por subagentes"
+        - "**10:** uma sessão agora segura várias issues ao mesmo tempo"
+      source: "O Guia do Kanban"
+      notes: |-
+        **O Kanban pede para controlar o trabalho em andamento.** O guia diz isso com clareza: controlar o número de itens do início ao fim. O número é do time.
+
+        **Nós o mudamos duas vezes.** Uma sessão passa suas issues para subagentes, então o limite que servia a uma pessoa sozinha não servia mais ao trabalho. Ele continua existindo, e continua recusando.
+
+        **Fonte no repositório:** docs/vision.md, #615 (o limite de dez).
+
+  - name: wip-script
+    act: flow
+    message: "The rule became a script"
+    accent: "a script"
+    subtitle: "Nobody has to remember it"
+    terminal:
+      cwd: "~/nereus"
+      steps:
+        - comment: "Take an eleventh issue"
+          run: "scripts/board/queue claim 111"
+          output: |-
+            refused: #101, #102, #103, #104, #105, #106, #107, #108, #109, #110 already In Progress for maria (WIP limit 10); finish one or release it first
+    notes: |-
+      **An agent does not remember a rule because it read it once.** So the rule goes where it cannot be forgotten: a script, a hook or a test. AI stays only where judgement is needed.
+
+      **The same goes for commits on main:** a hook refuses them, instead of trusting anyone to remember.
+
+      **Source in the repository:** scripts/board/queue, docs/vision.md, "Deterministic first".
+    pt:
+      message: "A regra virou script"
+      accent: "script"
+      subtitle: "Ninguém precisa lembrar"
+      terminal:
+        cwd: "~/nereus"
+        steps:
+          - comment: "Pegar uma décima primeira issue"
+            run: "scripts/board/queue claim 111"
+            output: |-
+              refused: #101, #102, #103, #104, #105, #106, #107, #108, #109, #110 already In Progress for maria (WIP limit 10); finish one or release it first
+      notes: |-
+        **Um agente não lembra de uma regra porque a leu uma vez.** Então a regra vai para onde não pode ser esquecida: um script, um hook ou um teste. A IA fica só onde é preciso julgamento.
+
+        **O mesmo vale para commits na main:** um hook os recusa, em vez de confiar que alguém vai lembrar.
+
+        **Fonte no repositório:** scripts/board/queue, docs/vision.md, "Deterministic first".
+
+  - name: board
+    act: flow
+    message: "The real board, live"
+    accent: "live"
+    subtitle: "The same flow metrics, read by people and agents"
+    terminal:
+      cwd: "~/nereus"
+      steps:
+        - comment: "Who holds what, right now"
+          run: "scripts/board/queue team"
+        - comment: "What arrived and what was completed, per week"
+          run: "scripts/board/queue metrics"
+          options: ["--weeks 4"]
+    source: "The Kanban Guide"
+    refs: [kanban-guide]
+    notes: |-
+      **Two to three minutes, on the real board.** Open the board in the browser and run the two commands. If the network fails, show the screenshot kept for this moment.
+
+      **The board's order is the plan.** The owner reprioritizes it, and an agent takes the next item from the top.
+
+      **Next step, not on the screen:** a forecast that comes from what was delivered, not from estimates, is still open in #95 (flow metrics and a Monte Carlo forecast).
+    pt:
+      message: "O board real, ao vivo"
+      accent: "ao vivo"
+      subtitle: "As mesmas métricas de fluxo, lidas por pessoas e agentes"
+      terminal:
+        cwd: "~/nereus"
+        steps:
+          - comment: "Quem está com o quê, agora"
+            run: "scripts/board/queue team"
+          - comment: "O que chegou e o que foi concluído, por semana"
+            run: "scripts/board/queue metrics"
+            options: ["--weeks 4"]
+      source: "O Guia do Kanban"
+      notes: |-
+        **Dois a três minutos, no board real.** Abra o board no navegador e rode os dois comandos. Se a rede falhar, mostre a captura de tela guardada para este momento.
+
+        **A ordem do board é o plano.** O dono muda as prioridades, e um agente pega o próximo item do topo.
+
+        **Próximo passo, fora da tela:** uma previsão que vem do que foi entregue, não de estimativas, ainda está aberta na #95 (métricas de fluxo e previsão Monte Carlo).
+
+  - name: division
+    act: division
+    message: "A session coordinates, subagents deliver"
+    accent: "subagents deliver"
+    subtitle: "And the owner decides"
+    screen:
+      - "**Creating an agent:** one issue, its own worktree, a brief that stands alone"
+      - "**The session:** holds several issues, reviews, relays what matters"
+      - "**The owner:** sets the priorities and the merge order, and says when to push"
+    notes: |-
+      **Who coordinates, who delivers, who decides: the question is old.** The answer now has one more layer.
+
+      **Creating an agent is writing a good brief.** A subagent knows only what the brief says, so it stands alone, and mechanical work goes to a lighter model.
+
+      **A push or a merge always waits for the owner.**
+
+      **Source in the repository:** docs/agent/peers.md.
+    pt:
+      message: "Uma sessão coordena, subagentes entregam"
+      accent: "subagentes entregam"
+      subtitle: "E o dono decide"
+      screen:
+        - "**Criar um agente:** uma issue, sua própria worktree, um briefing que se sustenta sozinho"
+        - "**A sessão:** segura várias issues, revisa, repassa o que importa"
+        - "**O dono:** define as prioridades e a ordem dos merges, e diz quando fazer push"
+      notes: |-
+        **Quem coordena, quem entrega, quem decide: a pergunta é antiga.** A resposta agora tem mais uma camada.
+
+        **Criar um agente é escrever um bom briefing.** Um subagente sabe só o que o briefing diz, então ele se sustenta sozinho, e o trabalho mecânico vai para um modelo mais leve.
+
+        **Um push ou um merge sempre espera o dono.**
+
+        **Fonte no repositório:** docs/agent/peers.md.
+
+  - name: room
+    act: talking
+    message: "Sessions talk before they collide"
+    accent: "before they collide"
+    screen:
+      - "**A name:** each session gets one from the NATO alphabet, from a hook"
+      - "**[claim]:** the issue, the worktree and the paths it will touch"
+      - "**[ask]:** before a shared resource, such as a cluster"
+      - "**[release]:** what it no longer holds"
+    notes: |-
+      **Teams have always agreed on who takes what.** Now the ones agreeing are sessions on the same machine, through Claude Code's cross-session messages.
+
+      **A message is information, not an order.** A session acts on it within the owner's word only.
+
+      **Source in the repository:** docs/agent/peers.md, the `room` skill.
+    pt:
+      message: "As sessões conversam antes de colidir"
+      accent: "antes de colidir"
+      screen:
+        - "**Um nome:** cada sessão recebe um do alfabeto da OTAN, por um hook"
+        - "**[claim]:** a issue, a worktree e os caminhos que vai tocar"
+        - "**[ask]:** antes de um recurso compartilhado, como um cluster"
+        - "**[release]:** o que não segura mais"
+      notes: |-
+        **Times sempre combinaram quem pega o quê.** Agora quem combina são sessões na mesma máquina, pelas mensagens entre sessões do Claude Code.
+
+        **Uma mensagem é informação, não ordem.** A sessão age sobre ela só dentro da palavra do dono.
+
+        **Fonte no repositório:** docs/agent/peers.md, a skill `room`.
+
+  - name: remote
+    act: talking
+    message: "An order can come from a phone"
+    accent: "from a phone"
+    screen:
+      - "**Remote sessions:** the same session, followed and driven from a phone"
+      - "**Triton:** the switchboard that hands an order to an idle agent"
+      - "**The beach:** work orders that leave a voice session and reach a local agent"
+    notes: |-
+      **Remote work is old; a remote worker that never left the machine is new.** The owner gives an order while away from the desk, and the agent runs on the machine.
+
+      **Source in the repository:** docs/agent/beach.md, docs/agent/peers.md.
+    pt:
+      message: "Uma ordem pode vir do celular"
+      accent: "do celular"
+      screen:
+        - "**Sessões remotas:** a mesma sessão, acompanhada e conduzida pelo celular"
+        - "**Triton:** a central que entrega uma ordem a um agente livre"
+        - "**A beach:** ordens de trabalho que saem de uma sessão de voz e chegam a um agente local"
+      notes: |-
+        **Trabalho remoto é antigo; um trabalhador remoto que nunca saiu da máquina é novo.** O dono dá uma ordem longe da mesa, e o agente roda na máquina.
+
+        **Fonte no repositório:** docs/agent/beach.md, docs/agent/peers.md.
+
+  - name: costs
+    act: costs
+    message: "Every order has a price"
+    accent: "a price"
+    subtitle: "Estimated from its tokens and recorded; the figures stay private"
+    screen:
+      - "**One order per session:** every call reads the whole context again"
+      - "**Filtered output:** what enters the context is read on every later call"
+      - "**Subagents:** for mechanical work, on a lighter model"
+      - "**Every week:** tokens and cost per order, against the week before"
+    notes: |-
+      **A project budget is an old idea; a price per order is not.** Each order records its tokens and an estimated cost, so a practice can be judged by a number.
+
+      **Quality comes first.** The pillar is the same quality for fewer tokens: a saving that brings rework is no saving. Two hooks warn about a long context and a big output; they never block.
+
+      **Source in the repository:** docs/agent/tokens.md. The method is public, the figures are not.
+    pt:
+      message: "Toda ordem tem um preço"
+      accent: "um preço"
+      subtitle: "Estimado pelos tokens e registrado; os valores ficam privados"
+      screen:
+        - "**Uma ordem por sessão:** cada chamada lê todo o contexto de novo"
+        - "**Saída filtrada:** o que entra no contexto é lido em toda chamada seguinte"
+        - "**Subagentes:** para trabalho mecânico, em um modelo mais leve"
+        - "**Toda semana:** tokens e custo por ordem, contra a semana anterior"
+      notes: |-
+        **Orçamento de projeto é uma ideia antiga; preço por ordem, não.** Cada ordem registra seus tokens e um custo estimado, então uma prática pode ser julgada por um número.
+
+        **A qualidade vem primeiro.** O pilar é a mesma qualidade com menos tokens: uma economia que traz retrabalho não é economia. Dois hooks avisam sobre contexto longo e saída grande; nunca bloqueiam.
+
+        **Fonte no repositório:** docs/agent/tokens.md. O método é público, os valores não.
+
+  - name: memory
+    act: memory
+    message: "ADRs have a new reader: the agent"
+    accent: "the agent"
+    subtitle: "Every session is a new person on the project"
+    screen:
+      - "**2011:** short, numbered decision records, kept in the repository"
+      - "**Now:** a session starts empty and reads them before designing"
+      - "**Guides:** one page per topic, read when the topic comes up"
+    source: "Michael Nygard, Documenting Architecture Decisions"
+    refs: [nygard-adr]
+    notes: |-
+      **Nygard wrote about the new person on a project.** "A new person coming on to a project may be perplexed, baffled, delighted, or infuriated by some past decision."
+
+      **Here, that new person arrives many times a day.** This is the project's own observation: a record that a person might skip, an agent reads at the start.
+
+      **Source in the repository:** docs/agent/adr.md, CLAUDE.md.
+    pt:
+      message: "Os ADRs têm um novo leitor: o agente"
+      accent: "o agente"
+      subtitle: "Toda sessão é uma pessoa nova no projeto"
+      screen:
+        - "**2011:** registros de decisão curtos e numerados, guardados no repositório"
+        - "**Agora:** uma sessão começa vazia e os lê antes de projetar"
+        - "**Guias:** uma página por assunto, lida quando o assunto aparece"
+      source: "Michael Nygard, Documenting Architecture Decisions"
+      notes: |-
+        **Nygard escreveu sobre a pessoa nova no projeto.** "A new person coming on to a project may be perplexed, baffled, delighted, or infuriated by some past decision."
+
+        **Aqui, essa pessoa nova chega muitas vezes por dia.** Esta é uma observação do próprio projeto: um registro que uma pessoa poderia pular, um agente lê no início.
+
+        **Fonte no repositório:** docs/agent/adr.md, CLAUDE.md.
+
+  - name: improvement
+    act: improvement
+    message: "The team still reflects, the agents read it"
+    accent: "the agents"
+    screen:
+      - "**Every order:** its tokens, estimated cost and pull request, by a script"
+      - "**Every wave:** a panel of stakeholders proposes improvements as issues"
+      - "**The pillars:** written for the agents too, so they come to value them"
+    source: "Agile Manifesto principles"
+    refs: [agile-principles]
+    notes: |-
+      **The retrospective is in the Manifesto.** "At regular intervals, the team reflects on how to become more effective, then tunes and adjusts its behavior accordingly."
+
+      **What is new is where the result goes.** What an attempt teaches becomes an issue, a rule, an ADR or a measurement, and the next session reads it.
+
+      **This is why the pillars exist.** Agents come to value what the project's people value.
+
+      **Source in the repository:** docs/vision.md, the `panel` skill.
+    pt:
+      message: "O time ainda reflete, os agentes leem"
+      accent: "os agentes"
+      screen:
+        - "**Toda ordem:** tokens, custo estimado e pull request, por um script"
+        - "**Toda onda:** um painel de stakeholders propõe melhorias como issues"
+        - "**Os pilares:** escritos também para os agentes, para que passem a valorizá-los"
+      source: "Princípios do Manifesto Ágil"
+      notes: |-
+        **A retrospectiva está no Manifesto.** "At regular intervals, the team reflects on how to become more effective, then tunes and adjusts its behavior accordingly."
+
+        **O novo é para onde vai o resultado.** O que uma tentativa ensina vira issue, regra, ADR ou medição, e a próxima sessão lê.
+
+        **É por isso que os pilares existem.** Os agentes passam a valorizar o que as pessoas do projeto valorizam.
+
+        **Fonte no repositório:** docs/vision.md, a skill `panel`.
+
+  - name: sentence
+    act: closing
+    message: "Nothing new under the sun, except the AI agents"
+    accent: "except the AI agents"
+    animations: none
+    refs: [ecclesiastes, caroli-teams]
+    notes: |-
+      **Now the whole sentence.** The practices were already there. The AI accelerates, people set the direction, so the discipline around it changes the result.
+
+      **Leave it on the screen for a moment.**
+    pt:
+      message: "Nada de novo debaixo do sol, a não ser os agentes de IA"
+      accent: "a não ser os agentes de IA"
+      notes: |-
+        **Agora a frase inteira.** As práticas já estavam lá. A IA acelera, as pessoas dão a direção, então a disciplina em volta dela muda o resultado.
+
+        **Deixe na tela por um momento.**
+
+  - name: next-week
+    act: closing
+    message: "Next week, try one old practice with your agents"
+    accent: "one old practice"
+    screen:
+      - "**The WIP limit:** pick a number, and make a script refuse the next item"
+      - "**An issue an agent can carry out alone:** with a check it runs itself"
+      - "**An ADR:** one decision your agent should read before changing it"
+    notes: |-
+      **One practice, for one week.** Pick the one that hurts most; the WIP limit is the easiest to start.
+
+      **The references are one key away.** Press D or the References button: each source has its QR code.
+    pt:
+      message: "Na semana que vem, teste uma prática antiga com seus agentes"
+      accent: "uma prática antiga"
+      screen:
+        - "**O limite de WIP:** escolha um número, e faça um script recusar o próximo item"
+        - "**Uma issue que um agente executa sozinho:** com uma verificação que ele mesmo roda"
+        - "**Um ADR:** uma decisão que seu agente deve ler antes de mudá-la"
+      notes: |-
+        **Uma prática, por uma semana.** Escolha a que mais dói; o limite de WIP é o mais fácil de começar.
+
+        **As referências estão a uma tecla.** Aperte D ou o botão References: cada fonte tem seu QR code.
+
+  - name: thanks
+    act: closing
+    message: "Thank you"
+    animations: none
+    dependsOn: [next-week]
+    notes: |-
+      **Thank the audience and open for questions.**
+    pt:
+      message: "Obrigado"
+      notes: |-
+        **Agradeça à plateia e abra para perguntas.**

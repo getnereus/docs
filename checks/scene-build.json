@@ -1,0 +1,12 @@
+{
+  "name": "scene-build",
+  "command": "test/scene-build",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 1712,
+  "passed": 64,
+  "failed": 3,
+  "failure": null,
+  "commit": "744ae567",
+  "started": "2026-11-14T19:49:00Z"
+}

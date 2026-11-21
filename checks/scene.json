@@ -1,0 +1,949 @@
+{
+  "name": "scene",
+  "command": "test/scene",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 1197,
+  "passed": 250,
+  "failed": 26,
+  "failure": null,
+  "commit": "00f8a44a+",
+  "started": "2026-11-16T13:03:52Z",
+  "parts": [
+    {
+      "name": "setup",
+      "ms": 448,
+      "waitMs": 0,
+      "steps": [
+        {
+          "name": "uv sync the CLI",
+          "kind": "command",
+          "ms": 18,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "local Nereids image",
+      "ms": 16552,
+      "waitMs": 0,
+      "steps": [
+        {
+          "name": "make nereids",
+          "kind": "command",
+          "ms": 16509,
+          "result": "pass"
+        },
+        {
+          "name": "build and push the reference images (in the background)",
+          "kind": "command",
+          "ms": 7314,
+          "result": "pass"
+        },
+        {
+          "name": "ensure_scene_caches (test/scene-cache)",
+          "kind": "command",
+          "ms": 40,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "init: cluster and core",
+      "ms": 21973,
+      "waitMs": 0,
+      "steps": [
+        {
+          "name": "nereus init --target k3d --create-cluster --name nereus-scn-1652-0419b6 --ingress-port 36959 --yes --check-slo",
+          "kind": "command",
+          "ms": 19998,
+          "result": "pass",
+          "steps": [
+            {
+              "name": "prerequisites",
+              "ms": 57,
+              "result": "pass"
+            },
+            {
+              "name": "registry localhost:5111",
+              "ms": 36,
+              "result": "pass"
+            },
+            {
+              "name": "cluster nereus-scn-1652-0419b6",
+              "ms": 16834,
+              "result": "pass"
+            },
+            {
+              "name": "kinds",
+              "ms": 292,
+              "result": "pass"
+            },
+            {
+              "name": "nereus",
+              "ms": 1539,
+              "result": "pass"
+            },
+            {
+              "name": "installation",
+              "ms": 540,
+              "result": "pass"
+            }
+          ]
+        },
+        {
+          "name": "nereus reef list",
+          "kind": "command",
+          "ms": 1969,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "tenancy reef",
+      "ms": 5697,
+      "waitMs": 0,
+      "steps": [
+        {
+          "name": "nereus reef apply tenancy --from-file reefs/tenancy/",
+          "kind": "command",
+          "ms": 1978,
+          "result": "pass"
+        },
+        {
+          "name": "nereus reef apply tenancy --from-file reefs/tenancy/",
+          "kind": "command",
+          "ms": 1697,
+          "result": "pass"
+        },
+        {
+          "name": "nereus reef delete tenancy",
+          "kind": "command",
+          "ms": 1264,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "profile internal-developer-platform",
+      "ms": 144267,
+      "waitMs": 0,
+      "steps": [
+        {
+          "name": "nereus profile apply internal-developer-platform",
+          "kind": "command",
+          "ms": 139043,
+          "result": "pass",
+          "steps": [
+            {
+              "name": "reef teams",
+              "ms": 2342,
+              "result": "pass"
+            },
+            {
+              "name": "reef secrets",
+              "ms": 3137,
+              "result": "pass"
+            },
+            {
+              "name": "reef release",
+              "ms": 4162,
+              "result": "pass"
+            },
+            {
+              "name": "reef environment",
+              "ms": 1104,
+              "result": "pass"
+            },
+            {
+              "name": "nereid k3d",
+              "ms": 9224,
+              "result": "pass"
+            },
+            {
+              "name": "reef catalog",
+              "ms": 2241,
+              "result": "pass"
+            },
+            {
+              "name": "nereid openbao",
+              "ms": 17662,
+              "result": "pass"
+            },
+            {
+              "name": "flux",
+              "ms": 11675,
+              "result": "pass"
+            },
+            {
+              "name": "namespace nereus-system-catalog",
+              "ms": 130,
+              "result": "pass"
+            },
+            {
+              "name": "nereid catalog",
+              "ms": 13547,
+              "result": "pass"
+            },
+            {
+              "name": "mandate local",
+              "ms": 813,
+              "result": "pass"
+            },
+            {
+              "name": "nereid flux",
+              "ms": 1455,
+              "result": "pass"
+            },
+            {
+              "name": "mandate flux",
+              "ms": 848,
+              "result": "pass"
+            },
+            {
+              "name": "reef database",
+              "ms": 1027,
+              "result": "pass"
+            },
+            {
+              "name": "gateway-api",
+              "ms": 11261,
+              "result": "pass"
+            },
+            {
+              "name": "mandate catalog-default",
+              "ms": 855,
+              "result": "pass"
+            },
+            {
+              "name": "reef metrics",
+              "ms": 2,
+              "result": "pass"
+            },
+            {
+              "name": "networkpolicy vmsingle-nereus",
+              "ms": 6,
+              "result": "pass"
+            },
+            {
+              "name": "nereid victoriametrics",
+              "ms": 50198,
+              "result": "pass"
+            },
+            {
+              "name": "nereid cloudnative-pg",
+              "ms": 9070,
+              "result": "pass"
+            },
+            {
+              "name": "mandate default",
+              "ms": 7,
+              "result": "pass"
+            },
+            {
+              "name": "public key",
+              "ms": 5016,
+              "result": "pass"
+            },
+            {
+              "name": "vault default",
+              "ms": 9,
+              "result": "pass"
+            },
+            {
+              "name": "reef environment",
+              "ms": 36,
+              "result": "pass"
+            },
+            {
+              "name": "nereid vcluster",
+              "ms": 3443,
+              "result": "pass"
+            },
+            {
+              "name": "mandate database-default",
+              "ms": 898,
+              "result": "pass"
+            },
+            {
+              "name": "reef authentication",
+              "ms": 1043,
+              "result": "pass"
+            },
+            {
+              "name": "mandate ephemeral",
+              "ms": 835,
+              "result": "pass"
+            },
+            {
+              "name": "repository istio",
+              "ms": 3014,
+              "result": "pass"
+            },
+            {
+              "name": "reef authorization",
+              "ms": 4097,
+              "result": "pass"
+            },
+            {
+              "name": "nereid keycloak",
+              "ms": 96269,
+              "result": "pass"
+            },
+            {
+              "name": "source istio-base",
+              "ms": 4021,
+              "result": "pass"
+            },
+            {
+              "name": "networkpolicy openfga",
+              "ms": 8,
+              "result": "pass"
+            },
+            {
+              "name": "nereid openfga",
+              "ms": 78938,
+              "result": "pass"
+            },
+            {
+              "name": "source istiod",
+              "ms": 2015,
+              "result": "pass"
+            },
+            {
+              "name": "source istio-gateway",
+              "ms": 2014,
+              "result": "pass"
+            },
+            {
+              "name": "target istio-system",
+              "ms": 3016,
+              "result": "pass"
+            },
+            {
+              "name": "release istio-base",
+              "ms": 15702,
+              "result": "pass"
+            },
+            {
+              "name": "release istiod",
+              "ms": 26187,
+              "result": "pass"
+            },
+            {
+              "name": "mandate metrics-default",
+              "ms": 5120,
+              "result": "pass"
+            },
+            {
+              "name": "reef delivery",
+              "ms": 1038,
+              "result": "pass"
+            },
+            {
+              "name": "policy controller-kubernetes-read-tokens",
+              "ms": 24,
+              "result": "pass"
+            },
+            {
+              "name": "nereid kubernetes",
+              "ms": 1720,
+              "result": "pass"
+            },
+            {
+              "name": "mandate kubernetes",
+              "ms": 891,
+              "result": "pass"
+            },
+            {
+              "name": "reef registry",
+              "ms": 2060,
+              "result": "pass"
+            },
+            {
+              "name": "nereid zot",
+              "ms": 8384,
+              "result": "pass"
+            },
+            {
+              "name": "release istio-gateway",
+              "ms": 37906,
+              "result": "pass"
+            },
+            {
+              "name": "mandate registry-default",
+              "ms": 500,
+              "result": "pass"
+            },
+            {
+              "name": "reef build",
+              "ms": 2059,
+              "result": "pass"
+            },
+            {
+              "name": "namespace builds",
+              "ms": 332,
+              "result": "pass"
+            },
+            {
+              "name": "nereid buildkit",
+              "ms": 25557,
+              "result": "pass"
+            },
+            {
+              "name": "mandate authorization-default",
+              "ms": 6975,
+              "result": "pass"
+            },
+            {
+              "name": "mandate build-default",
+              "ms": 110,
+              "result": "pass"
+            },
+            {
+              "name": "reef scm",
+              "ms": 2071,
+              "result": "pass"
+            },
+            {
+              "name": "namespace nereus-system-forgejo",
+              "ms": 22,
+              "result": "pass"
+            },
+            {
+              "name": "nereid forgejo",
+              "ms": 3045,
+              "result": "pass"
+            },
+            {
+              "name": "mandate forgejo-scm",
+              "ms": 14,
+              "result": "pass"
+            },
+            {
+              "name": "gateway ingress",
+              "ms": 34,
+              "result": "pass"
+            },
+            {
+              "name": "mandate keycloak",
+              "ms": 6710,
+              "result": "pass"
+            },
+            {
+              "name": "reef portal",
+              "ms": 3,
+              "result": "pass"
+            },
+            {
+              "name": "nereid nereus-portal",
+              "ms": 3094,
+              "result": "pass"
+            },
+            {
+              "name": "mandate nereus-portal",
+              "ms": 693,
+              "result": "pass"
+            }
+          ]
+        },
+        {
+          "name": "nereus reef list",
+          "kind": "command",
+          "ms": 1880,
+          "result": "pass"
+        },
+        {
+          "name": "nereus profile describe internal-developer-platform",
+          "kind": "command",
+          "ms": 576,
+          "result": "pass"
+        },
+        {
+          "name": "nereus profile describe internal-developer-platform",
+          "kind": "command",
+          "ms": 564,
+          "result": "pass"
+        },
+        {
+          "name": "nereus profile list",
+          "kind": "command",
+          "ms": 559,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "installation, second init and SLO",
+      "ms": 100896,
+      "waitMs": 0,
+      "steps": [
+        {
+          "name": "expect_profile_mirror (test/scene-nereids)",
+          "kind": "command",
+          "ms": 51422,
+          "result": "pass"
+        },
+        {
+          "name": "nereus init --target k3d --create-cluster --name nereus-scn-1652-0419b6 --ingress-port 36959 --profile internal-develope",
+          "kind": "command",
+          "ms": 33309,
+          "result": "pass",
+          "steps": [
+            {
+              "name": "prerequisites",
+              "ms": 105,
+              "result": "pass"
+            },
+            {
+              "name": "registry localhost:5111",
+              "ms": 42,
+              "result": "pass"
+            },
+            {
+              "name": "cluster nereus-scn-1652-0419b6",
+              "ms": 96,
+              "result": "pass"
+            },
+            {
+              "name": "kinds",
+              "ms": 2037,
+              "result": "pass"
+            },
+            {
+              "name": "nereus",
+              "ms": 2126,
+              "result": "pass"
+            },
+            {
+              "name": "installation",
+              "ms": 111,
+              "result": "pass"
+            },
+            {
+              "name": "ready",
+              "ms": 28100,
+              "result": "pass"
+            },
+            {
+              "name": "public key",
+              "ms": 8,
+              "result": "pass"
+            },
+            {
+              "name": "environment naxos",
+              "ms": 31,
+              "result": "pass"
+            }
+          ]
+        },
+        {
+          "name": "nereus nereid apply forgejo --reef scm --set MIRROR_ALLOWED_DOMAINS=fake-git.fake-git.svc --set MIRROR_ALLOW_HTTP=true",
+          "kind": "command",
+          "ms": 16675,
+          "result": "pass"
+        },
+        {
+          "name": "scene_login (test/scene-login)",
+          "kind": "command",
+          "ms": 6534,
+          "result": "pass"
+        },
+        {
+          "name": "helm upgrade --install nereus-reefs --take-ownership",
+          "kind": "command",
+          "ms": 888,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "the charts nereus-reefs and nereus through Flux",
+      "ms": 15959,
+      "waitMs": 9854,
+      "steps": [
+        {
+          "name": "HelmRelease nereus-reefs Ready at 0.0.0-dev",
+          "kind": "wait",
+          "ms": 4125,
+          "result": "pass"
+        },
+        {
+          "name": "nereus init --target k3d --create-cluster --name nereus-scn-1652-0419b6 --ingress-port 36959 --profile internal-develope",
+          "kind": "command",
+          "ms": 2906,
+          "result": "pass",
+          "steps": [
+            {
+              "name": "prerequisites",
+              "ms": 64,
+              "result": "pass"
+            },
+            {
+              "name": "registry localhost:5111",
+              "ms": 39,
+              "result": "pass"
+            },
+            {
+              "name": "cluster nereus-scn-1652-0419b6",
+              "ms": 82,
+              "result": "pass"
+            },
+            {
+              "name": "kinds",
+              "ms": 2006,
+              "result": "pass"
+            },
+            {
+              "name": "nereus",
+              "ms": 39,
+              "result": "pass"
+            },
+            {
+              "name": "installation",
+              "ms": 2,
+              "result": "pass"
+            },
+            {
+              "name": "ready",
+              "ms": 0,
+              "result": "pass"
+            },
+            {
+              "name": "public key",
+              "ms": 0,
+              "result": "pass"
+            },
+            {
+              "name": "environment naxos",
+              "ms": 6,
+              "result": "pass"
+            }
+          ]
+        },
+        {
+          "name": "kubectl wait for the chart registry Available",
+          "kind": "wait",
+          "ms": 2596,
+          "result": "pass"
+        },
+        {
+          "name": "HelmRelease nereus-reefs Ready at 99.0.0",
+          "kind": "wait",
+          "ms": 2081,
+          "result": "pass"
+        },
+        {
+          "name": "the chart registry in the cluster answers",
+          "kind": "wait",
+          "ms": 1013,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "reference images (wait for the build)",
+      "ms": 0,
+      "waitMs": 0,
+      "steps": [
+        {
+          "name": "wait for the reference image builds",
+          "kind": "wait",
+          "ms": 0,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "reference Nereids, reefs and hostile images",
+      "ms": 85082,
+      "waitMs": 280,
+      "steps": [
+        {
+          "name": "nereus nereid apply --image localhost:5111/reference-pipeline-controller:second",
+          "kind": "command",
+          "ms": 15628,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid apply --image localhost:5111/reference-pipeline-controller@sha256:f7d6a18bb8b9b7ec0dd70cc9cca7fdbe761ed727",
+          "kind": "command",
+          "ms": 12740,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid apply --image localhost:5111/reference-docs-controller:docs",
+          "kind": "command",
+          "ms": 3743,
+          "result": "pass"
+        },
+        {
+          "name": "nereus reef apply release",
+          "kind": "command",
+          "ms": 3575,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid apply --image localhost:5111/reference-pipeline-controller:0.1.0",
+          "kind": "command",
+          "ms": 3464,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "chaos",
+      "ms": 6471,
+      "waitMs": 4841,
+      "steps": [
+        {
+          "name": "reference-pipeline serves again (chaos-scaled)",
+          "kind": "wait",
+          "ms": 1173,
+          "result": "pass"
+        },
+        {
+          "name": "kubectl wait for reference-pipeline's pod deleted",
+          "kind": "wait",
+          "ms": 1077,
+          "result": "pass"
+        },
+        {
+          "name": "kubectl delete reference-pipeline's pod and wait",
+          "kind": "wait",
+          "ms": 999,
+          "result": "pass"
+        },
+        {
+          "name": "reference-pipeline serves again (chaos-killed)",
+          "kind": "wait",
+          "ms": 879,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid list",
+          "kind": "command",
+          "ms": 801,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "delete and swap",
+      "ms": 36618,
+      "waitMs": 0,
+      "steps": [
+        {
+          "name": "nereus nereid apply --image localhost:5111/reference-pipeline-controller:0.1.0",
+          "kind": "command",
+          "ms": 3905,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid delete reference-pipeline",
+          "kind": "command",
+          "ms": 3732,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid delete reference-pipeline",
+          "kind": "command",
+          "ms": 3640,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid delete reference-pipeline-twin",
+          "kind": "command",
+          "ms": 3259,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid delete reference-docs",
+          "kind": "command",
+          "ms": 3101,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "keycloak, OIDC flow and nereus-mcp",
+      "ms": 221019,
+      "waitMs": 7232,
+      "steps": [
+        {
+          "name": "nereus registry delete scene",
+          "kind": "command",
+          "ms": 71844,
+          "result": "pass"
+        },
+        {
+          "name": "nereus tenancy project delete scene-tree",
+          "kind": "command",
+          "ms": 10896,
+          "result": "pass"
+        },
+        {
+          "name": "nereus release repository delete scene-charts --timeout 120",
+          "kind": "command",
+          "ms": 8955,
+          "result": "pass"
+        },
+        {
+          "name": "nereus tenancy project get scene-tree",
+          "kind": "command",
+          "ms": 7275,
+          "result": "pass"
+        },
+        {
+          "name": "nereus release repository create scene-charts --url https://codecentric.github.io/helm-charts --type http",
+          "kind": "command",
+          "ms": 7225,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "teams and authorization",
+      "ms": 377265,
+      "waitMs": 233387,
+      "steps": [
+        {
+          "name": "the openfga Nereid Ready again",
+          "kind": "wait",
+          "ms": 222336,
+          "result": "pass"
+        },
+        {
+          "name": "nereus profile apply internal-developer-platform --without keycloak --without nereus-portal",
+          "kind": "command",
+          "ms": 71660,
+          "result": "pass"
+        },
+        {
+          "name": "scene_login (test/scene-login)",
+          "kind": "command",
+          "ms": 12616,
+          "result": "pass"
+        },
+        {
+          "name": "nereus database delete openfga --timeout 300",
+          "kind": "command",
+          "ms": 10555,
+          "result": "pass"
+        },
+        {
+          "name": "nereus tenancy project create payments --parent project/nereus",
+          "kind": "command",
+          "ms": 6371,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "secrets with openbao",
+      "ms": 47658,
+      "waitMs": 21019,
+      "steps": [
+        {
+          "name": "nereus secrets binding delete keycloak-google --namespace identity",
+          "kind": "command",
+          "ms": 6526,
+          "result": "pass"
+        },
+        {
+          "name": "OpenBao entries gone",
+          "kind": "wait",
+          "ms": 4346,
+          "result": "pass"
+        },
+        {
+          "name": "3 secrets Ready",
+          "kind": "wait",
+          "ms": 3853,
+          "result": "pass"
+        },
+        {
+          "name": "helm uninstall binding-demo --wait",
+          "kind": "wait",
+          "ms": 2943,
+          "result": "pass"
+        },
+        {
+          "name": "nereus secrets binding create keycloak-google --secret default/google-oauth --namespace identity --key client-id=GOOGLE_",
+          "kind": "command",
+          "ms": 2561,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "openbao deleted",
+      "ms": 90408,
+      "waitMs": 0,
+      "steps": [
+        {
+          "name": "nereus profile apply internal-developer-platform --without openbao --without flux --without cloudnative-pg --without key",
+          "kind": "command",
+          "ms": 89218,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid list",
+          "kind": "command",
+          "ms": 1173,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "secrets with the reference Nereid",
+      "ms": 22610,
+      "waitMs": 12545,
+      "steps": [
+        {
+          "name": "vault default Ready with reference-secrets",
+          "kind": "wait",
+          "ms": 7810,
+          "result": "pass"
+        },
+        {
+          "name": "1 secrets Ready",
+          "kind": "wait",
+          "ms": 4735,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid delete reference-secrets",
+          "kind": "command",
+          "ms": 4110,
+          "result": "pass"
+        },
+        {
+          "name": "nereus nereid apply reference-secrets --reef secrets --image localhost:5111/reference-secrets-controller:0.1.0",
+          "kind": "command",
+          "ms": 3123,
+          "result": "pass"
+        },
+        {
+          "name": "nereus secrets create google-oauth --from-env GOOGLE_CLIENT_ID --from-env GOOGLE_CLIENT_SECRET",
+          "kind": "command",
+          "ms": 974,
+          "result": "pass"
+        }
+      ]
+    },
+    {
+      "name": "cleanup",
+      "ms": 4179,
+      "waitMs": 0,
+      "steps": [
+        {
+          "name": "k3d cluster delete",
+          "kind": "command",
+          "ms": 3654,
+          "result": "pass"
+        }
+      ]
+    }
+  ]
+}

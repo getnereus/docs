@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" aria-label="Three depths" role="img" viewBox="0 0 360 120"><g data-part="all">
+<g font-size="10" text-anchor="middle">
+<rect fill="none" height="60" rx="10" stroke="var(--cx-pr)" stroke-width="2" width="100" x="10" y="30"></rect><text fill="var(--cx-pr)" font-weight="600" x="60" y="52">figura</text><text fill="var(--muted)" font-size="8" x="60" y="68">Pearl layers</text><text fill="var(--muted)" font-size="8" x="60" y="80">onde a ideia está</text>
+<rect fill="none" height="60" rx="10" stroke="var(--cx-order)" stroke-width="2" width="100" x="130" y="30"></rect><text fill="var(--cx-order)" font-weight="600" x="180" y="52">classificação</text><text fill="var(--muted)" font-size="8" x="180" y="68">estágio, critério</text><text fill="var(--muted)" font-size="8" x="180" y="80">confiança, quem</text>
+<rect fill="none" height="60" rx="10" stroke="var(--cx-raw)" stroke-width="2" width="100" x="250" y="30"></rect><text fill="var(--cx-raw)" font-weight="600" x="300" y="52">bruto</text><text fill="var(--muted)" font-size="8" x="300" y="68">o trecho exato</text><text fill="var(--muted)" font-size="8" x="300" y="80">quem disse, quando</text>
+<text fill="var(--faint)" font-size="14" x="120" y="63">›</text><text fill="var(--faint)" font-size="14" x="240" y="63">›</text>
+<text fill="var(--faint)" font-size="8" x="180" y="110">mesmo caminho da extração, lido de trás para frente</text>
+</g></g></svg>

@@ -1,0 +1,11 @@
+{
+  "name": "scene-release",
+  "command": "test/scene-release",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 457,
+  "passed": 112,
+  "failure": null,
+  "commit": "87d7db4+",
+  "started": "2026-11-13T04:37:34Z"
+}

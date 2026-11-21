@@ -1,0 +1,121 @@
+deck:
+  name: ideas
+  title: "The ideas reef"
+  subtitle: "The owner's classified notes, served inside the cluster for Tide"
+  accent: "classified notes"
+  pt:
+    title: "O reef ideas"
+    subtitle: "As notas classificadas do dono, servidas dentro do cluster para o Tide"
+    accent: "notas classificadas"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: setup
+    title: "Setup"
+    question: "What reads the notes?"
+    pt: {title: "Preparação", question: "O que lê as notas?"}
+
+slides:
+  - name: cover
+    act: opening
+    cover: true
+    message: "The ideas reef"
+    notes: |-
+      **The ideas reef has no kinds** (#1106, part of #1102), like the portal reef: its Nereid, `doris`, reads the folder its Mandate's `source` names with the generator of #1104, keeps the notes in memory and reloads them every five minutes. The notes are the owner's private data: they never enter the repository.
+    pt:
+      message: "O reef ideas"
+      notes: |-
+        **O reef ideas não tem kinds** (#1106, parte do #1102), como o reef portal: a sua Nereid, `doris`, lê a pasta que o `source` do seu Mandate nomeia com o gerador do #1104, guarda as notas em memória e as recarrega a cada cinco minutos. As notas são dados privados do dono: nunca entram no repositório.
+
+  - name: reef-apply
+    act: setup
+    topic: "reef apply"
+    status: built
+    message: "The {reef:ideas} reef, with no kinds"
+    accent: "no kinds"
+    terminal:
+      steps:
+        - comment: "No contract to pin: a reef with no kinds is made from its name"
+          run: "nereus reef apply ideas"
+          output: |-
+            ✓ core/reefs/ideas created (ideas.getnereus.dev/v1alpha1)
+
+            Next steps:
+
+              nereus ideas --help
+              nereus nereid apply <nereid> --reef ideas
+    notes: |-
+      **The CLI pins it as a reef with no kinds by design** (`contracts.REEFS_WITHOUT_KINDS`), so its Nereid is Ready with no kinds to serve.
+    pt:
+      topic: "reef apply"
+      message: "O reef {reef:ideas}, sem kinds"
+      accent: "sem kinds"
+      notes: |-
+        **O CLI o fixa como um reef sem kinds por design** (`contracts.REEFS_WITHOUT_KINDS`), então a sua Nereid fica Ready sem kinds para servir.
+
+  - name: nereid-apply
+    act: setup
+    topic: "nereid apply"
+    status: built
+    message: "The doris Nereid reads the node's notes folder"
+    accent: "notes folder"
+    terminal:
+      steps:
+        - comment: "The node's /var/lib/doris/notes, read-only in its Pod"
+          run: "nereus nereid apply doris"
+          options: ["--reef ideas"]
+          output: |-
+            ✓ core/nereids/doris created, Ready, pinned to sha256:3c1d2e4f5a6b: see 'nereus ideas --help'
+              core/mandates/doris created (reef: ideas, nereid: doris, default)
+
+            Next steps:
+
+              nereus mandate apply doris --reef ideas --nereid doris --param source=/var/lib/doris/notes --param readers=ideas-readers
+    notes: |-
+      **`nereid apply` makes its Mandate too**, with no parameters yet, so `MissingParam` until the next command. **The folder is a stand-in:** `rclone sync` fills it on the host every hour, and a new k3d cluster mounts it when `NEREUS_K3D_NOTES` names it (`controllers/doris/README.md`).
+    pt:
+      topic: "nereid apply"
+      message: "A Nereid doris lê a pasta de notas do nó"
+      accent: "pasta de notas"
+      notes: |-
+        **O `nereid apply` cria o seu Mandate também**, ainda sem parâmetros, então `MissingParam` até o próximo comando. **A pasta é um stand-in:** o `rclone sync` a preenche no host a cada hora, e um cluster k3d novo a monta quando `NEREUS_K3D_NOTES` a nomeia (`controllers/doris/README.md`).
+
+  - name: mandate-apply
+    act: setup
+    topic: "mandate apply"
+    status: built
+    message: "The source and the readers, then the count of notes"
+    accent: "count of notes"
+    terminal:
+      steps:
+        - comment: "readers names the group the Nereus API lets see the notes (#1107)"
+          run: "nereus mandate apply doris"
+          options: ["--reef ideas", "--nereid doris", "--param source=/var/lib/doris/notes", "--param readers=ideas-readers"]
+          output: |-
+            ✓ core/mandates/doris configured (reef: ideas, nereid: doris, default)
+
+            Next steps:
+
+              nereus mandate list
+        - comment: "What the Nereid wrote, in the Mandate's status"
+          run: "nereus mandate get doris"
+          output: |-
+            Name:         doris
+            Reef:         ideas
+            Nereid:       doris
+            Default:      true
+            Params:       readers=ideas-readers, source=/var/lib/doris/notes
+            Status:       Ready
+            Notes:        42
+            Last reload:  2026-11-06T21:20:00Z
+            Age:          5m
+    notes: |-
+      **The Mandate is `Ready` with the reason `Serving`**, else `MissingParam`, `InvalidParam`, `SourceMissing` or `ReloadFailed`, which keeps the notes of the last good reload. Inside the cluster, doris answers `GET /notes?since=YYYY-MM-DD` with the notes JSON of #1104.
+    pt:
+      topic: "mandate apply"
+      message: "O source e os readers, depois a contagem de notas"
+      accent: "contagem de notas"
+      notes: |-
+        **O Mandate fica `Ready` com o motivo `Serving`**, senão `MissingParam`, `InvalidParam`, `SourceMissing` ou `ReloadFailed`, que mantém as notas da última recarga boa. Dentro do cluster, a doris responde `GET /notes?since=YYYY-MM-DD` com o JSON de notas do #1104.

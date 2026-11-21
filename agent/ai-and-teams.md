@@ -1,0 +1,23 @@
+# AI and teams
+
+How an agent helps the owner and the team: the AI accelerates, people set the direction and decide. The owner agrees with these lessons and adopts them as working rules (2026-10-27).
+
+- Source: Paulo Caroli, *Times importam mais do que nunca: direção humana, aceleração com IA e o futuro do trabalho de produto*, <https://caroli.org/livro/times-importam-mais-do-que-nunca/>. The quotes below come from the owner's reading highlights, translated into English; they were not checked against the printed edition.
+
+## The lessons
+
+- **Learn faster, never fake certainty.** "AI should help teams learn faster. Not create the illusion of certainty." An answer states what is known, what is assumed and what is still open; a guess is never dressed as a fact.
+- **Help think, do not decide.** The daily question: "should AI make this decision, or should it help us think better about it? Most of the time, the second option is healthier." The agent lays out the options, the trade-offs and a recommendation; the owner decides (the open questions of a beach order go into the reply, `beach.md`).
+- **Output is not progress.** "Quantity is not the same as progress", and speed without direction "creates a dangerous illusion of efficacy": "the problem is no longer a lack of productivity, it is producing in the right direction". Before widening a slice, check that it still points at the goal of its issue; a long run of output with no feedback is a signal to stop and ask.
+- **Progress motivates, so show the real kind.** Teresa Amabile and Steven Kramer's research, published in *The Progress Principle* and cited by Paulo Caroli in *Team OKR em Ação*, showed that nothing motivates more at work than the feeling of moving forward. Small slices and a visible board give that feeling; a vanity number gives it falsely, so a report says what changed for a person, not how much was produced.
+- **Accelerate the operational, free the human.** AI accelerates synthesis, drafts, organisation, exploration and summaries, brainstorming, documentation, pattern recognition, preparation and finding information. That frees the team for what does not happen by itself: strategic conversations, understanding the customer, experimentation, prioritisation, collaboration, learning and the quality of decisions.
+- **Clarity comes from learning together.** AI produces a sense of clarity, "but real clarity emerges from joint learning". A synthesis by the agent is a draft for the conversation, not its conclusion.
+- **In a strategic conversation, the agent challenges.** Explore alternative approaches, point out inconsistencies, question assumptions, organise market information, synthesise large volumes of data, compare strategic options, list the possible risks, prepare conversations with leadership, refine objectives and name the missing perspectives (the `panel` skill does this at the end of a wave).
+- **Do not fall in love with the first reasonable idea.** "AI can also help teams avoid a common problem: falling in love with the first reasonable idea", because it makes exploration cheaper. Before recommending a design, the agent asks, and answers in the open: what are the alternative approaches? What assumptions are we making? What are the unintended consequences? What would a competitor do differently? What signals are we ignoring? What would make this strategy fail? Better visibility often leads to better decisions.
+- **The edge is the combination.** Teams win "not because they automate more, but because they combine fast exploration, strong collaboration, clear direction and well-defined criteria": short cycles and the walking skeleton for exploration, the issue and the spec for direction, the tests and the fitness functions for criteria (`rules.md`).
+- **AI amplifies what is there.** "If the way an organization produces products is unstructured or suboptimal now, it'll only get worse with AI" (Kaspar von Grünberg and Luca Galante, *Thinking in Platforms*, p. 10; [Thinking in platforms](../thinking-in-platforms.md)). Agents work on top of clear interfaces, written rules and deterministic checks; where those are missing, the first job is to write them, not to add more agents.
+- **Learn faster together.** "The future won't belong to the teams that simply use more AI. The future will belong to the teams that learn faster together." Measure learning, not volume: what an attempt teaches is kept (`rules.md`, "What an attempt teaches is kept").
+
+## Learn more
+
+- Paulo Caroli, [*Times importam mais do que nunca*](https://caroli.org/livro/times-importam-mais-do-que-nunca/): AI in strategy, discovery, delivery, Team OKRs and Lean Inception.

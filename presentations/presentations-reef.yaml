@@ -1,0 +1,999 @@
+deck:
+  name: presentations-reef
+  title: "The presentations reef"
+  subtitle: "The journey to present from the phone"
+  accent: "from the phone"
+  pt:
+    title: "O reef presentations"
+    subtitle: "A jornada para apresentar pelo celular"
+    accent: "pelo celular"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: decisions
+    title: "The decisions"
+    question: "What did we decide before building?"
+    pt: {title: "As decisões", question: "O que decidimos antes de construir?"}
+  - name: cli
+    title: "The CLI"
+    question: "What does a speaker type?"
+    pt: {title: "A CLI", question: "O que uma pessoa que apresenta digita?"}
+  - name: slice
+    title: "The six journeys"
+    question: "How is it delivered, piece by piece?"
+    pt: {title: "As seis jornadas", question: "Como é entregue, peça por peça?"}
+  - name: journey
+    title: "The journey"
+    question: "Who decides what along the way?"
+    pt: {title: "A jornada", question: "Quem decide o quê pelo caminho?"}
+  - name: after
+    title: "After the slice"
+    question: "What comes next?"
+    pt: {title: "Depois da fatia", question: "O que vem depois?"}
+
+references:
+  - name: kahoot
+    title: "Kahoot!: a game-based learning platform"
+    author: "Kahoot!"
+    url: "https://kahoot.com/"
+    about: "A quiz platform where the audience joins from the phone with a short code and the screen in the room shows the game."
+    forUs: "The model of the audience page: a thin page **fed by the server**, which only redraws the state it receives and never runs the speaker's deck."
+    pt:
+      about: "Uma plataforma de quiz em que a plateia entra pelo celular com um código curto e a tela da sala mostra o jogo."
+      forUs: "O modelo da página da plateia: uma página leve **alimentada pelo servidor**, que só redesenha o estado que recebe e nunca executa o deck de quem apresenta."
+  - name: claper
+    title: "Claper: the open-source alternative to Slido"
+    author: "The Claper project"
+    url: "https://github.com/ClaperCo/Claper"
+    about: "An open-source tool for live questions, polls and reactions during a talk, self-hosted."
+    forUs: "Evaluated in step E0, open source first: how it would fit as a Nereid of a separate **survey** reef, without bending Nereus's architecture."
+    pt:
+      about: "Uma ferramenta open-source de perguntas, enquetes e reações ao vivo durante uma palestra, auto-hospedada."
+      forUs: "Avaliado na etapa E0, open source primeiro: como encaixaria como Nereid de um reef **survey** à parte, sem ferir a arquitetura do Nereus."
+  - name: json-schema
+    title: "JSON Schema"
+    author: "The JSON Schema project"
+    url: "https://json-schema.org/"
+    about: "A vocabulary to describe and validate the shape of JSON and YAML documents, read by editors and tools."
+    forUs: "The outline's published schema, versioned by `outlineVersion`: any agent or editor outside Nereus writes a deck that Nereus accepts."
+    pt:
+      about: "Um vocabulário para descrever e validar a forma de documentos JSON e YAML, lido por editores e ferramentas."
+      forUs: "O schema publicado do outline, versionado por `outlineVersion`: qualquer agente ou editor fora do Nereus escreve um deck que o Nereus aceita."
+  - name: helm-oci
+    title: "Helm: use OCI-based registries"
+    author: "The Helm project (CNCF)"
+    url: "https://helm.sh/docs/topics/registries/"
+    about: "A Helm chart is a packaged archive first; an OCI registry is only one way to move and store it."
+    forUs: "The package is a deterministic tar whose sha256 is the revision; OCI comes later, as a way to share it."
+    pt:
+      about: "Um Helm chart é primeiro um arquivo empacotado; um registry OCI é só um jeito de movê-lo e guardá-lo."
+      forUs: "O pacote é um tar determinístico cujo sha256 é a revisão; OCI vem depois, como um jeito de compartilhá-lo."
+  - name: epub
+    title: "EPUB 3.3"
+    author: "W3C"
+    year: 2023
+    url: "https://www.w3.org/TR/epub-33/"
+    about: "A book as one archive with a manifest at its root that lists its files and the version of the format."
+    forUs: "The idea of `package.json`: the files, their hashes, the `outlineVersion` and where each copied file came from."
+    pt:
+      about: "Um livro como um arquivo único com um manifesto na raiz que lista os seus arquivos e a versão do formato."
+      forUs: "A ideia do `package.json`: os arquivos, os seus hashes, o `outlineVersion` e de onde veio cada arquivo copiado."
+  - name: lgpd
+    title: "Lei Geral de Proteção de Dados (Law 13,709/2018)"
+    author: "Brazil"
+    year: 2018
+    url: "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"
+    about: "Brazil's data protection law: consent, the right to deletion, and anonymized data outside its scope."
+    forUs: "Sign-up is a choice, e-mails can be refused, deletion waits only for a prize to be delivered, and what stays is anonymized."
+    pt:
+      about: "A lei brasileira de proteção de dados: consentimento, direito à exclusão, e dados anonimizados fora do seu alcance."
+      forUs: "O cadastro é uma escolha, os e-mails podem ser recusados, a exclusão espera só a entrega de um prêmio, e o que fica é anonimizado."
+  - name: journeys
+    title: "Journeys"
+    author: "Nereus"
+    url: "https://github.com/getnereus/nereus/blob/main/docs/agent/journeys.md"
+    about: "A goal owned end to end by one session inside a decision envelope agreed with the owner at the start."
+    forUs: "This journey's envelope: what the session decides alone, what it reports in a batch, and what waits for the owner."
+    pt:
+      about: "Um objetivo carregado de ponta a ponta por uma sessão, dentro de um envelope de decisões combinado com o dono no início."
+      forUs: "O envelope desta jornada: o que a sessão decide sozinha, o que relata em lote e o que espera pelo dono."
+  - name: delegation-poker
+    title: "Delegation Poker"
+    author: "Jurgen Appelo, Management 3.0"
+    url: "https://management30.com/practice/delegation-poker/"
+    about: "Seven levels of delegation between tell and delegate, agreed per decision area."
+    forUs: "The three bands of the envelope are three of those levels: decide, decide and report, ask first."
+    pt:
+      about: "Sete níveis de delegação entre mandar e delegar, combinados por área de decisão."
+      forUs: "As três faixas do envelope são três desses níveis: decidir, decidir e relatar, perguntar antes."
+  - name: phillips
+    title: "How to avoid death by PowerPoint"
+    author: "David JP Phillips"
+    year: 2014
+    url: "https://www.youtube.com/watch?v=Iwpi1Lm6dFo"
+    about: "A talk on slides that help an audience: one message per slide, few objects, size and contrast that lead the eye."
+    forUs: "The style of this deck: **one moment per slide**, the notes for what is said."
+    pt:
+      about: "Uma palestra sobre slides que ajudam a plateia: uma mensagem por slide, poucos objetos, tamanho e contraste que guiam o olhar."
+      forUs: "O estilo deste deck: **um momento por slide**, as notas para o que é falado."
+
+slides:
+  # ── Opening ─────────────────────────────────────────
+  - name: title
+    act: opening
+    cover: true
+    message: "A talk driven from the phone, followed by the room"
+    refs: [phillips]
+    notes: |-
+      **This deck reviews the journey before any issue is opened.** It gathers what the owner said in the raw notes and the issues about presentations, and every decision taken in the review of 2026-11-16.
+
+      **Route:** the decisions, the commands, the first slice step by step, the decision envelope, and what comes after.
+    pt:
+      message: "Uma palestra conduzida pelo celular, acompanhada pela sala"
+      notes: |-
+        **Este deck revisa a jornada antes de abrir qualquer issue.** Ele junta o que o dono disse nos dados brutos e nas issues sobre apresentações, e cada decisão tomada na revisão de 2026-11-16.
+
+        **Roteiro:** as decisões, os comandos, a primeira fatia passo a passo, o envelope de decisões e o que vem depois.
+
+  - name: goal
+    act: opening
+    topic: "The goal"
+    message: "The phone drives, and every other screen follows"
+    accent: "drives"
+    screen:
+      - "**Speaker:** drives the talk from the phone, with the time in view"
+      - "**Projector:** a full screen that follows the speaker's step"
+      - "**Audience:** follows by QR code, anonymous, on its own phone"
+      - "**Staff:** sees the pace and the questions waiting for the end"
+    notes: |-
+      **One goal, four screens.** The {reef:presentations} reef is ready when a speaker imports a deck, starts a session and drives it from the phone, while the projector, the audience and the staff follow.
+
+      **Phone first:** every screen is designed for a phone, then checked on a computer.
+    pt:
+      topic: "A meta"
+      message: "O celular conduz, e todas as outras telas acompanham"
+      accent: "conduz"
+      screen:
+        - "**Palestrante:** conduz pelo celular, com o tempo à vista"
+        - "**Projetor:** uma tela cheia que segue o passo de quem apresenta"
+        - "**Plateia:** segue pelo QR code, anônima, no próprio celular"
+        - "**Staff:** vê o ritmo e as perguntas que esperam o fim"
+      notes: |-
+        **Uma meta, quatro telas.** O reef {reef:presentations} está pronto quando alguém importa um deck, inicia uma sessão e a conduz pelo celular, enquanto o projetor, a plateia e o staff acompanham.
+
+        **Celular primeiro:** cada tela é desenhada para o celular, depois conferida no computador.
+
+  - name: survey
+    act: opening
+    topic: "What we found"
+    message: "Four voice notes and sixteen issues, no decision yet"
+    screen:
+      - "**Raw notes:** four voice notes, from 2026-10-30 to 2026-11-07"
+      - "**Issues:** #218 and its children, recommendations only"
+      - "**The owner's order:** present with a QR code, then questions at the end, then live"
+    notes: |-
+      **The raw material was thin.** Only four voice notes carry weight; the main one is the note of 2026-11-01 about a presentation reef with its own Nereid.
+
+      **The issues held recommendations, never decisions** on the reef itself: #218 (refine the presentations reef) and its children #1194, #221, #305, #1196, #1197, #1195, #1199, #1201, #1202.
+
+      **The owner's own order:** build and present with a public link and a QR code, then questions at the end, then live questions, a word cloud and answers published as posts.
+    pt:
+      topic: "O que encontramos"
+      message: "Quatro notas de voz e dezesseis issues, nenhuma decisão"
+      screen:
+        - "**Dados brutos:** quatro notas de voz, de 2026-10-30 a 2026-11-07"
+        - "**Issues:** a #218 e as filhas, só recomendações"
+        - "**A ordem do dono:** apresentar com QR code, depois perguntas no fim, depois ao vivo"
+      notes: |-
+        **O material bruto era pouco.** Só quatro notas de voz têm peso; a principal é a nota de 2026-11-01 sobre um reef de apresentação com a sua própria Nereid.
+
+        **As issues tinham recomendações, nunca decisões** sobre o reef em si: #218 (refinar o reef presentations) e as filhas #1194, #221, #305, #1196, #1197, #1195, #1199, #1201, #1202.
+
+        **A ordem do próprio dono:** montar e apresentar com link público e QR code, depois perguntas no fim, depois perguntas ao vivo, nuvem de palavras e respostas publicadas em posts.
+
+  # ── The decisions ───────────────────────────────────
+  - name: kinds
+    act: decisions
+    topic: "The kinds"
+    message: "Two kinds: the deck, and each time it is given"
+    accent: "each time"
+    heading: "presentations.getnereus.dev/v1alpha1"
+    screen:
+      - "**Presentation:** the deck and its revisions"
+      - "**Session:** one time it is given, a rehearsal included"
+      - "**Later:** Event groups sessions, Workshop has steps"
+    notes: |-
+      **Each kind answers one question.** A Presentation is what is shown; a Session is each time it is shown, with its link, its code, its step, its questions and its feedback.
+
+      **Event and Workshop come after the slice:** the event's name and venue live on the Session until then.
+
+      **Recorded in ADR 0028 (the presentations reef),** Accepted on 2026-11-16, after the owner tried J1.
+    pt:
+      topic: "Os kinds"
+      message: "Dois kinds: o deck, e cada vez que ele é apresentado"
+      accent: "cada vez"
+      heading: "presentations.getnereus.dev/v1alpha1"
+      screen:
+        - "**Presentation:** o deck e as suas revisões"
+        - "**Session:** uma vez em que é apresentado, ensaio incluído"
+        - "**Depois:** Event agrupa sessões, Workshop tem passos"
+      notes: |-
+        **Cada kind responde uma pergunta.** Uma Presentation é o que se mostra; uma Session é cada vez que se mostra, com o link, o código, o passo, as perguntas e o feedback.
+
+        **Event e Workshop vêm depois da fatia:** o nome e o local do evento ficam na Session até lá.
+
+        **Registrado no ADR 0028 (o reef presentations),** Accepted em 2026-11-16, depois que o dono testou a J1.
+
+  - name: source
+    act: decisions
+    topic: "The source"
+    message: "Nereus keeps the deck, wherever it was written"
+    accent: "keeps"
+    screen:
+      - "**Schema:** a published JSON Schema, versioned by `outlineVersion`"
+      - "**Anywhere:** any agent or editor writes, Nereus validates on import"
+      - "**Git:** only an optional origin to import from"
+      - "**Replaces:** the decision of 2026-10-19 on #218, source in Git"
+    refs: [json-schema]
+    notes: |-
+      **Nobody needs a repository to present.** Nereus is the source of truth: the deck is written anywhere against the published schema, then imported, and Nereus keeps its history.
+
+      **The schema is served on a public route and by the CLI**, and a deck names it with `$schema`, so an editor or an agent validates before importing. What the schema cannot say (links, references, fitting the screen) is checked by a dry run.
+
+      **This replaces the owner's decision of 2026-10-19** on #218, where the source lived in Git; the reason goes to the ADR.
+    pt:
+      topic: "A fonte"
+      message: "O Nereus guarda o deck, onde quer que tenha sido escrito"
+      accent: "guarda"
+      screen:
+        - "**Schema:** um JSON Schema publicado, versionado por `outlineVersion`"
+        - "**Em qualquer lugar:** qualquer agente ou editor escreve, o Nereus valida no import"
+        - "**Git:** só uma origem opcional de import"
+        - "**Substitui:** a decisão de 2026-10-19 na #218, fonte no Git"
+      notes: |-
+        **Ninguém precisa de repositório para apresentar.** O Nereus é a fonte da verdade: o deck é escrito em qualquer lugar seguindo o schema publicado, depois importado, e o Nereus guarda o histórico.
+
+        **O schema é servido numa rota pública e pela CLI**, e o deck aponta para ele com `$schema`, então um editor ou um agente valida antes de importar. O que o schema não diz (links, referências, caber na tela) é conferido num dry run.
+
+        **Isso substitui a decisão do dono de 2026-10-19** na #218, em que a fonte ficava no Git; o motivo vai para o ADR.
+
+  - name: package
+    act: decisions
+    topic: "The package"
+    message: "One package per revision, never changed afterwards"
+    accent: "never changed"
+    screen:
+      - "**Tar:** `deck.yaml`, its assets and a `package.json` manifest"
+      - "**Copies:** files outside the folder and the references, with their origin"
+      - "**Revision:** the tar's sha256; a Session points to the one it showed"
+    refs: [helm-oci, epub]
+    notes: |-
+      **A deck is a package, not one file.** Several decks show diagrams and files from sibling folders and cite shared references, so the import takes the YAML and everything it points to.
+
+      **Files from outside are copied in on import,** with their path and commit; in the repository the rule "show the real file" still holds. The revision shows each file as it was when it was presented.
+
+      **The sha256 of a deterministic tar is the revision.** OCI comes later, only as a way to share it.
+    pt:
+      topic: "O pacote"
+      message: "Um pacote por revisão, que nunca muda depois"
+      accent: "nunca muda"
+      screen:
+        - "**Tar:** `deck.yaml`, os assets e um manifesto `package.json`"
+        - "**Cópias:** arquivos de fora da pasta e as referências, com a origem"
+        - "**Revisão:** o sha256 do tar; a Session aponta para a que mostrou"
+      notes: |-
+        **Um deck é um pacote, não um arquivo.** Vários decks mostram diagramas e arquivos de pastas irmãs e citam referências compartilhadas, então o import leva o YAML e tudo o que ele aponta.
+
+        **Arquivos de fora são copiados no import,** com o caminho e o commit; no repositório a regra "mostrar o arquivo real" continua valendo. A revisão mostra cada arquivo como era quando foi apresentado.
+
+        **O sha256 de um tar determinístico é a revisão.** OCI vem depois, só como um jeito de compartilhar.
+
+  - name: storage
+    act: decisions
+    topic: "Storage"
+    message: "One database for the revisions and the live state"
+    accent: "One database"
+    screen:
+      - "**Blobs:** each revision by its digest, behind a small put and get"
+      - "**Live:** the step, the followers, the questions and the feedback"
+      - "**Which database:** step E0 chooses, on k3d today, managed later, cost weighed"
+    notes: |-
+      **Below 1 MB per revision, blobs in the database add no component.** The interface is small (put and get by digest), so OCI or object storage can replace it later without changing the package.
+
+      **The database is not chosen yet.** Managed PostgreSQL is expensive in the cloud, so step E0 compares open-source options that run inside k3d today and match a managed service later.
+    pt:
+      topic: "Armazenamento"
+      message: "Um banco para as revisões e para o estado ao vivo"
+      accent: "Um banco"
+      screen:
+        - "**Blobs:** cada revisão pelo seu digest, atrás de um put e get pequenos"
+        - "**Ao vivo:** o passo, quem acompanha, as perguntas e o feedback"
+        - "**Qual banco:** a etapa E0 escolhe, no k3d hoje, gerenciado depois, com o custo pesado"
+      notes: |-
+        **Abaixo de 1 MB por revisão, blobs no banco não acrescentam componente.** A interface é pequena (put e get por digest), então OCI ou object storage podem substituí-la depois sem mudar o pacote.
+
+        **O banco ainda não está escolhido.** PostgreSQL gerenciado é caro na nuvem, então a etapa E0 compara opções open-source que rodam no k3d hoje e combinam com um serviço gerenciado depois.
+
+  - name: audience
+    act: decisions
+    topic: "The audience"
+    message: "The audience is anonymous, and sign-up is a choice"
+    accent: "a choice"
+    screen:
+      - "**Page:** fed by the server, it redraws the state it receives"
+      - "**Anonymous:** a random id per device, no login to follow"
+      - "**Optional sign-up:** e-mails or not, deleted when the person wants"
+    refs: [kahoot]
+    notes: |-
+      **The audience page never runs the speaker's deck.** Like a quiz app, it receives only the current state (the slide, the open question, a result) and draws it; the channel carries only the step.
+
+      **Everyone follows anonymously.** Whoever wants signs up and chooses what to do with it: receive e-mails or not, delete it at any time. The first slice delivers the anonymous follow; the sign-up comes right after.
+    pt:
+      topic: "A plateia"
+      message: "A plateia é anônima, e o cadastro é uma escolha"
+      accent: "uma escolha"
+      screen:
+        - "**Página:** alimentada pelo servidor, redesenha o estado que recebe"
+        - "**Anônima:** um id aleatório por aparelho, sem login para seguir"
+        - "**Cadastro opcional:** com ou sem e-mails, apagado quando a pessoa quiser"
+      notes: |-
+        **A página da plateia nunca executa o deck de quem apresenta.** Como num app de quiz, ela recebe só o estado atual (o slide, a pergunta aberta, um resultado) e o desenha; o canal carrega só o passo.
+
+        **Todos acompanham anônimos.** Quem quiser se cadastra e escolhe o que fazer com o cadastro: receber e-mails ou não, apagá-lo a qualquer momento. A primeira fatia entrega o acompanhamento anônimo; o cadastro vem logo depois.
+
+  - name: security
+    act: decisions
+    topic: "Security policy"
+    message: "The deck fits the portal's policy, with no exception"
+    accent: "no exception"
+    screen:
+      - "**Portal:** the JS and the CSS as their own files, under `default-src 'self'`"
+      - "**Offline:** one HTML file with everything inline, outside the portal"
+    notes: |-
+      **The portal's policy stays as it is.** The renderer writes the script and the style as separate files for the portal, so no exception opens for anyone.
+
+      **The offline export keeps one self-contained file,** since modules and fetch fail from `file://`, and the portal's policy does not apply there.
+    pt:
+      topic: "Política de segurança"
+      message: "O deck cabe na política do portal, sem exceção"
+      accent: "sem exceção"
+      screen:
+        - "**Portal:** o JS e o CSS em arquivos próprios, sob `default-src 'self'`"
+        - "**Offline:** um HTML único com tudo embutido, fora do portal"
+      notes: |-
+        **A política do portal fica como está.** O renderizador escreve o script e o estilo em arquivos separados para o portal, então nenhuma exceção é aberta para ninguém.
+
+        **O export offline mantém um arquivo único,** já que módulos e fetch falham por `file://`, e a política do portal não vale ali.
+
+  - name: sharing
+    act: decisions
+    topic: "Sharing"
+    message: "A public link to the deck, with an expiry"
+    accent: "an expiry"
+    screen:
+      - "**First slice:** a public link, with an optional expiry"
+      - "**Next:** specific Users, through the authorization reef"
+    notes: |-
+      **Sharing works like sharing a file.** The speaker makes a public link that anyone opens, with an expiry when wanted; a link from one deck to another is such a link.
+
+      **Specific Users come right after the slice,** as bindings of the {reef:authorization} reef.
+    pt:
+      topic: "Compartilhar"
+      message: "Um link público para o deck, com expiração"
+      accent: "expiração"
+      screen:
+        - "**Primeira fatia:** um link público, com expiração opcional"
+        - "**Depois:** Users específicos, pelo reef de autorização"
+      notes: |-
+        **Compartilhar funciona como compartilhar um arquivo.** Quem apresenta gera um link público que qualquer pessoa abre, com expiração quando quiser; um link de um deck para outro é um link desses.
+
+        **Users específicos vêm logo depois da fatia,** como bindings do reef {reef:authorization}.
+
+  - name: session
+    act: decisions
+    topic: "The Session"
+    message: "A Session knows where, when and with whom"
+    accent: "where, when and with whom"
+    screen:
+      - "**Event:** its name and its venue"
+      - "**Room:** a room or a stage"
+      - "**Speakers:** often several, each with a User when there is one"
+      - "**Times:** the start, the talk and the questions"
+      - "**Staff:** a team of Nereus Users, named once for the whole event"
+    notes: |-
+      **Large events are tight on time and share the stage.** The Session records the event, the room or stage, the speakers and the time for the talk and for the questions.
+
+      **Only one speaker drives at a time.** The staff are Users the speaker names, with the staff role through the {reef:authorization} reef.
+    pt:
+      topic: "A Session"
+      message: "Uma Session sabe onde, quando e com quem"
+      accent: "onde, quando e com quem"
+      screen:
+        - "**Evento:** o nome e o local"
+        - "**Sala:** uma sala ou um palco"
+        - "**Palestrantes:** muitas vezes vários, cada um com o User quando houver"
+        - "**Tempos:** o início, a apresentação e as perguntas"
+        - "**Staff:** um time de Users do Nereus, nomeado uma vez para o evento todo"
+      notes: |-
+        **Eventos grandes têm pouco tempo e dividem o palco.** A Session registra o evento, a sala ou o palco, os palestrantes e o tempo da apresentação e das perguntas.
+
+        **Só um palestrante conduz por vez.** O staff são Users que quem apresenta nomeia, com o papel de staff pelo reef {reef:authorization}.
+
+  - name: time
+    act: decisions
+    topic: "Time"
+    message: "The speaker always knows how much time is left"
+    accent: "time is left"
+    screen:
+      - "**Timer:** the time spent and the time left"
+      - "**Slides:** how many are done and how many to go"
+      - "**Pace:** ahead or behind, slide by slide, against the last rehearsal"
+      - "**Rehearsal:** a Session with no public link that records each slide's time"
+    notes: |-
+      **The time is set when the Session is created** and followed live on the speaker's phone; the turn to the questions comes from the time itself.
+
+      **Rehearsals give the pace.** A rehearsal records how long each slide took, and the real talk compares itself with the last one.
+    pt:
+      topic: "Tempo"
+      message: "Quem apresenta sempre sabe quanto tempo falta"
+      accent: "quanto tempo falta"
+      screen:
+        - "**Cronômetro:** o tempo decorrido e o que falta"
+        - "**Slides:** quantos já foram e quantos faltam"
+        - "**Ritmo:** adiantado ou atrasado, slide a slide, contra o último ensaio"
+        - "**Ensaio:** uma Session sem link público que grava o tempo de cada slide"
+      notes: |-
+        **O tempo é definido quando a Session é criada** e acompanhado ao vivo no celular de quem apresenta; a passagem para as perguntas vem do próprio tempo.
+
+        **Os ensaios dão o ritmo.** Um ensaio grava quanto tempo cada slide levou, e a palestra de verdade se compara com o último.
+
+  - name: nereid
+    act: decisions
+    topic: "The Nereid"
+    message: "The {nereid:leagore} Nereid gathers the people"
+    accent: "gathers the people"
+    screen:
+      - "**Name:** Leagore, the Nereid who gathers the people"
+      - "**nameOrigin:** a new field that explains every Nereid's name"
+      - "**Reserved:** never given to an agent session"
+    notes: |-
+      **One Nereid for the reef, Nereus's own code,** so it takes a sea name, as {nereid:doris}, {nereid:thetis} and {nereid:triton} do.
+
+      **The name explains itself in a new field, nameOrigin,** shown by the CLI and the portal. The field for every Nereid is its own issue; {nereid:leagore} is born with it. The name joins the reserved list, so no agent session gets it.
+    pt:
+      topic: "A Nereid"
+      message: "A Nereid {nereid:leagore} reúne o povo"
+      accent: "reúne o povo"
+      screen:
+        - "**Nome:** Leagore, a Nereida que reúne o povo"
+        - "**nameOrigin:** um campo novo que explica o nome de cada Nereid"
+        - "**Reservado:** nunca dado a uma sessão de agente"
+      notes: |-
+        **Uma Nereid para o reef, código do próprio Nereus,** então leva um nome do mar, como {nereid:doris}, {nereid:thetis} e {nereid:triton}.
+
+        **O nome se explica num campo novo, nameOrigin,** mostrado pela CLI e pelo portal. O campo em todas as Nereids é uma issue à parte; a {nereid:leagore} já nasce com ele. O nome entra na lista de reservados, então nenhuma sessão de agente o recebe.
+
+  - name: questions
+    act: decisions
+    topic: "Question slides"
+    message: "The speaker asks the room as often as wanted"
+    accent: "as often as wanted"
+    screen:
+      - "**Where:** any number of question slides, placed anywhere in the deck"
+      - "**Kinds:** single choice, a scale, a short text"
+      - "**Time:** each one has its own time to answer, shown on every screen"
+      - "**Result:** shown when the time ends"
+    notes: |-
+      **A question is a slide like any other,** a `poll` item in the outline, so the speaker decides how many there are and where they go; Nereus imposes neither.
+
+      **The knowledge level is a scale question with no fixed place.** Asking before a topic can bias the answers (pretest sensitization), so whether it comes before, after or both is the speaker's choice.
+    pt:
+      topic: "Slides de pergunta"
+      message: "Quem apresenta pergunta à sala quantas vezes quiser"
+      accent: "quantas vezes quiser"
+      screen:
+        - "**Onde:** quantos slides de pergunta quiser, em qualquer ponto do deck"
+        - "**Tipos:** escolha única, uma escala, um texto curto"
+        - "**Tempo:** cada uma tem o seu tempo para responder, visto em todas as telas"
+        - "**Resultado:** aparece quando o tempo acaba"
+      notes: |-
+        **Uma pergunta é um slide como outro qualquer,** um item `poll` no outline, então quem apresenta decide quantas são e onde ficam; o Nereus não impõe nenhuma das duas coisas.
+
+        **O nível de conhecimento é uma pergunta de escala sem lugar fixo.** Perguntar antes de um tema pode enviesar as respostas (pretest sensitization), então se ela vem antes, depois ou nos dois é escolha de quem apresenta.
+
+  - name: pace
+    act: decisions
+    topic: "The pace"
+    message: "The room tells the speaker if it is too slow or too fast"
+    accent: "too slow or too fast"
+    screen:
+      - "**Switch:** the speaker turns it on per Session"
+      - "**Tap:** too slow or too fast, at any time, each tap fading after a minute"
+      - "**Seen by:** the speaker's phone and the staff screen, as a thermometer"
+    notes: |-
+      **A live hint, never a vote that stops the talk.** Each tap fades after a minute, so the thermometer shows the room as it is now.
+    pt:
+      topic: "O ritmo"
+      message: "A sala diz a quem apresenta se está lento ou rápido"
+      accent: "lento ou rápido"
+      screen:
+        - "**Chave:** quem apresenta liga por Session"
+        - "**Toque:** lento ou rápido, a qualquer momento, cada toque some depois de um minuto"
+        - "**Quem vê:** o celular de quem apresenta e a tela do staff, como um termômetro"
+      notes: |-
+        **Uma dica ao vivo, nunca uma votação que para a palestra.** Cada toque some depois de um minuto, então o termômetro mostra a sala como ela está agora.
+
+  # ── The CLI ─────────────────────────────────────────
+  - name: create
+    act: cli
+    topic: "1 · The deck"
+    message: "A folder becomes a revision with one command"
+    accent: "one command"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "Check a deck against the schema, nothing stored"
+          run: "nereus presentations presentation create storytelling"
+          options: ["--from talks/storytelling.yaml", "--dry-run"]
+          output: |-
+            ✗ slide 'closing': the message has 64 characters, at most 60 (outlineVersion 1)
+        - comment: "Import it: the YAML, its assets and the files it cites"
+          run: "nereus presentations presentation create storytelling"
+          options: ["--from talks/storytelling.yaml"]
+          output: |-
+            ✓ presentations/presentations/storytelling created, revision 1 (sha256:3f9c2a71)
+              copied 6 references and 2 files from outside the folder, origin recorded
+    notes: |-
+      **A contract, not built yet.** The import is `create --from` and the check is `--dry-run`, the verbs of ADR 0013 (commands), so no new verb is needed.
+
+      **The dry run returns the Nereid's own errors,** including what the schema cannot express.
+    pt:
+      topic: "1 · O deck"
+      message: "Uma pasta vira uma revisão com um comando"
+      accent: "um comando"
+      terminal:
+        cwd: "~/example"
+        steps:
+          - comment: "Confere um deck contra o schema, sem gravar nada"
+            run: "nereus presentations presentation create storytelling"
+            options: ["--from talks/storytelling.yaml", "--dry-run"]
+            output: |-
+              ✗ slide 'closing': the message has 64 characters, at most 60 (outlineVersion 1)
+          - comment: "Importa: o YAML, os assets e os arquivos que ele cita"
+            run: "nereus presentations presentation create storytelling"
+            options: ["--from talks/storytelling.yaml"]
+            output: |-
+              ✓ presentations/presentations/storytelling created, revision 1 (sha256:3f9c2a71)
+                copied 6 references and 2 files from outside the folder, origin recorded
+      notes: |-
+        **Um contrato, ainda não construído.** O import é `create --from` e a conferência é `--dry-run`, os verbos do ADR 0013 (comandos), então nenhum verbo novo é preciso.
+
+        **O dry run devolve os erros da própria Nereid,** incluindo o que o schema não consegue expressar.
+
+  - name: session-create
+    act: cli
+    topic: "2 · The Session"
+    message: "The staff is a team, named once for the Session"
+    accent: "a team"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "The staff is a team of Nereus Users, made once"
+          run: "nereus teams create stage-2-staff"
+          options: ["--owner project/example-conf"]
+          output: |-
+            ✓ teams/teams/stage-2-staff created
+        - comment: "Each member by User name, never an e-mail"
+          run: "nereus teams member create ana"
+          options: ["--team stage-2-staff"]
+          output: |-
+            ✓ teams/members/ana created (team stage-2-staff)
+        - comment: "The Session names the whole team at once"
+          run: "nereus presentations session create platform-day"
+          options: ["--presentation storytelling", "--staff stage-2-staff", "--talk 30m", "--questions 10m"]
+          output: |-
+            ✓ presentations/sessions/platform-day created (revision sha256:3f9c2a71)
+              follow: https://nereus.example.com/p/K7Q4
+    notes: |-
+      **A contract, not built yet.** The staff is a team of the {reef:teams} reef, so no e-mail reaches a command, a log or the object; the same team serves every session of the event. The event, the room, the start and the speakers (by User name) take options of their own, left out here to fit the screen.
+
+      **The follow link is public, with a short code;** the drive link needs the right to present.
+    pt:
+      topic: "2 · A Session"
+      message: "O staff é um time, nomeado uma vez na Session"
+      accent: "um time"
+      terminal:
+        cwd: "~/example"
+        steps:
+          - comment: "O staff é um time de Users do Nereus, criado uma vez"
+            run: "nereus teams create stage-2-staff"
+            options: ["--owner project/example-conf"]
+            output: |-
+              ✓ teams/teams/stage-2-staff created
+          - comment: "Cada membro pelo nome do User, nunca um e-mail"
+            run: "nereus teams member create ana"
+            options: ["--team stage-2-staff"]
+            output: |-
+              ✓ teams/members/ana created (team stage-2-staff)
+          - comment: "A Session nomeia o time inteiro de uma vez"
+            run: "nereus presentations session create platform-day"
+            options: ["--presentation storytelling", "--staff stage-2-staff", "--talk 30m", "--questions 10m"]
+            output: |-
+              ✓ presentations/sessions/platform-day created (revision sha256:3f9c2a71)
+                follow: https://nereus.example.com/p/K7Q4
+      notes: |-
+        **Um contrato, ainda não construído.** O staff é um time do reef {reef:teams}, então nenhum e-mail chega a um comando, a um log ou ao objeto; o mesmo time serve a todas as sessões do evento. O evento, a sala, o início e os palestrantes (pelo nome do User) têm opções próprias, deixadas de fora para caber na tela.
+
+        **O link de seguir é público, com código curto;** o de conduzir exige o direito de apresentar.
+
+  - name: rehearsal-export
+    act: cli
+    topic: "3 · Rehearse and export"
+    message: "A rehearsal sets the pace, an export runs offline"
+    accent: "offline"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "A rehearsal records each slide's time, with no public link"
+          run: "nereus presentations session create rehearsal-1"
+          options: ["--presentation storytelling", "--rehearsal"]
+          output: |-
+            ✓ presentations/sessions/rehearsal-1 created (rehearsal, no public link)
+        - comment: "One HTML file that opens in any browser, offline"
+          run: "nereus presentations presentation get storytelling"
+          options: ["--output html"]
+          output: |-
+            ✓ storytelling.html written (revision sha256:3f9c2a71, opens offline)
+    notes: |-
+      **A contract, not built yet.** The export is `get --output html`, again a verb of ADR 0013.
+
+      **The export runs anywhere without Nereus,** and brings back the offline mode #221 described.
+    pt:
+      topic: "3 · Ensaiar e exportar"
+      message: "Um ensaio dá o ritmo, um export roda offline"
+      accent: "offline"
+      terminal:
+        cwd: "~/example"
+        steps:
+          - comment: "Um ensaio grava o tempo de cada slide, sem link público"
+            run: "nereus presentations session create rehearsal-1"
+            options: ["--presentation storytelling", "--rehearsal"]
+            output: |-
+              ✓ presentations/sessions/rehearsal-1 created (rehearsal, no public link)
+          - comment: "Um HTML que abre em qualquer navegador, offline"
+            run: "nereus presentations presentation get storytelling"
+            options: ["--output html"]
+            output: |-
+              ✓ storytelling.html written (revision sha256:3f9c2a71, opens offline)
+      notes: |-
+        **Um contrato, ainda não construído.** O export é `get --output html`, de novo um verbo do ADR 0013.
+
+        **O export roda em qualquer lugar sem o Nereus,** e devolve o modo offline que a #221 descrevia.
+
+  # ── The six journeys ────────────────────────────────
+  - name: journeys
+    act: slice
+    topic: "Overview"
+    message: "Six journeys, each one ending on the owner's phone"
+    accent: "Six journeys"
+    screen:
+      - "**J1, drive and follow:** the walking skeleton"
+      - "**J2, the real deck:** the schema, the package, offline and sharing"
+      - "**J3, time and rehearsal:** the timer and the pace against a rehearsal"
+      - "**J4, the room speaks at the end:** a question and feedback"
+      - "**J5, live:** question slides and the pace thermometer"
+      - "**J6, staff and rights:** who may present, the staff, the final scene"
+    notes: |-
+      **One slice would have been about 45 sub-issues,** four times #1644 (the first slice of authorization), with the owner touching it only at the end. A Fable agent split it into six journeys of about #1644's size.
+
+      **Each journey closes the same way:** its own scene, an install on `k3d-nereus`, and the owner trying it on the phone. A parent journey gathers the six; each is a journey of its own, with its sub-issues and its envelope.
+    pt:
+      topic: "Visão geral"
+      message: "Seis jornadas, cada uma terminando no celular do dono"
+      accent: "Seis jornadas"
+      screen:
+        - "**J1, conduzir e seguir:** o esqueleto"
+        - "**J2, o deck de verdade:** o schema, o pacote, offline e compartilhar"
+        - "**J3, tempo e ensaio:** o cronômetro e o ritmo contra um ensaio"
+        - "**J4, a sala fala no fim:** uma pergunta e o feedback"
+        - "**J5, ao vivo:** slides de pergunta e o termômetro de ritmo"
+        - "**J6, staff e direitos:** quem pode apresentar, o staff, a cena final"
+      notes: |-
+        **Uma fatia só teria cerca de 45 subissues,** quatro vezes a #1644 (a primeira fatia de autorização), com o dono tocando nela só no fim. Um agente Fable dividiu em seis jornadas do tamanho da #1644.
+
+        **Cada jornada fecha do mesmo jeito:** a sua própria cena, a instalação no `k3d-nereus`, e o dono testando no celular. Uma jornada pai reúne as seis; cada uma é uma jornada própria, com as suas subissues e o seu envelope.
+
+  - name: j1
+    act: slice
+    topic: "J1 · Drive and follow"
+    message: "J1 crosses every new layer, crude on purpose"
+    accent: "crude on purpose"
+    screen:
+      - "**First:** two spikes, SSE through the Nereus API and the renderer under the CSP"
+      - "**Takes:** the ADR, minimal kinds, {nereid:leagore}, a short code, the follow page"
+      - "**Crude:** one YAML as a blob, only the talk time, any token of the reef drives"
+      - "**Done when:** a phone drives, another phone and a full-screen browser follow"
+    notes: |-
+      **The skeleton proves the risky part first:** real time from a phone on a mobile network. It goes through the kind, the CLI, the Nereid, the database, SSE through the API, a route with no token, the portal under its policy and a public page.
+
+      **Two spikes open it.** The Nereus API has no stream today, so the relay, the ingress's buffering, reconnecting on a phone and many open connections are proved first; the renderer's inline style breaks the portal's policy, so its violations are counted before E3 is estimated.
+
+      **The database is a time-boxed evaluation inside J1,** since the put and get by digest make the choice reversible. The {nereid:leagore} Nereid is born with `nameOrigin`. The ADR is accepted after the owner tries J1.
+    pt:
+      topic: "J1 · Conduzir e seguir"
+      message: "A J1 atravessa todas as camadas novas, rústica de propósito"
+      accent: "rústica de propósito"
+      screen:
+        - "**Primeiro:** dois spikes, SSE pela Nereus API e o renderizador sob o CSP"
+        - "**Leva:** o ADR, kinds mínimos, {nereid:leagore}, um código curto, a página de seguir"
+        - "**Rústico:** um YAML como blob, só o tempo da palestra, qualquer token do reef conduz"
+        - "**Pronto quando:** um celular conduz, outro celular e um navegador em tela cheia seguem"
+      notes: |-
+        **O esqueleto prova primeiro a parte arriscada:** tempo real a partir de um celular numa rede móvel. Ele passa pelo kind, a CLI, a Nereid, o banco, SSE pela API, uma rota sem token, o portal sob a sua política e uma página pública.
+
+        **Dois spikes abrem a jornada.** A Nereus API não tem nenhum stream hoje, então o repasse, o buffering do ingress, a reconexão no celular e muitas conexões abertas são provados primeiro; o estilo embutido do renderizador quebra a política do portal, então as violações são contadas antes de estimar a E3.
+
+        **O banco é uma avaliação com prazo dentro da J1,** já que o put e get por digest deixam a escolha reversível. A Nereid {nereid:leagore} nasce com `nameOrigin`. O ADR é aceito depois que o dono testa a J1.
+
+  - name: j2-j3
+    act: slice
+    topic: "J2 and J3"
+    message: "J2 brings the real deck, J3 keeps the time"
+    accent: "the real deck"
+    screen:
+      - "**J2:** the schema, the package with its copies, the dry run, the offline export"
+      - "**J2:** a public link with an expiry, and the import from the portal"
+      - "**J3:** the full timer, the rehearsal, the pace against it, the Session's details"
+    notes: |-
+      **J2 is done when the storytelling deck of #190,** with files from outside its folder, is imported, shared and opened offline.
+
+      **J3 is done when a rehearsal followed by a session** shows the speaker ahead or behind. Each detail of the Session enters when a screen shows it.
+
+      **They run in parallel,** after J1: the package and the CLI on one side, the portal tab and the Session on the other.
+    pt:
+      topic: "J2 e J3"
+      message: "A J2 traz o deck de verdade, a J3 cuida do tempo"
+      accent: "o deck de verdade"
+      screen:
+        - "**J2:** o schema, o pacote com as cópias, o dry run, o export offline"
+        - "**J2:** um link público com expiração, e o import pelo portal"
+        - "**J3:** o cronômetro completo, o ensaio, o ritmo contra ele, os detalhes da Session"
+      notes: |-
+        **A J2 fica pronta quando o deck de storytelling da #190,** com arquivos de fora da pasta, é importado, compartilhado e aberto offline.
+
+        **A J3 fica pronta quando um ensaio seguido de uma sessão** mostra quem apresenta adiantado ou atrasado. Cada detalhe da Session entra quando uma tela o mostra.
+
+        **As duas rodam em paralelo,** depois da J1: o pacote e a CLI de um lado, a aba do portal e a Session do outro.
+
+  - name: j4-j5
+    act: slice
+    topic: "J4 and J5"
+    message: "First the room speaks at the end, then live"
+    accent: "then live"
+    screen:
+      - "**J4:** an id per device, a question and feedback at the end, the QR code, the export"
+      - "**J5:** Claper evaluated first, then question slides and the pace thermometer"
+    refs: [claper]
+    notes: |-
+      **The owner's own order:** present first, then questions at the end, then live. J4 is done when a question asked on a phone reaches the speaker's; the export for agents comes here, once there is something to export.
+
+      **J5 opens with Claper,** where its answer changes something: if it fits, it becomes the Nereid of a separate survey reef. J5 is done when a question opens on the phones, its time runs and the result shows.
+    pt:
+      topic: "J4 e J5"
+      message: "Primeiro a sala fala no fim, depois ao vivo"
+      accent: "depois ao vivo"
+      screen:
+        - "**J4:** um id por aparelho, pergunta e feedback no fim, o QR code, o export"
+        - "**J5:** o Claper avaliado primeiro, depois slides de pergunta e o termômetro de ritmo"
+      notes: |-
+        **A ordem do próprio dono:** apresentar primeiro, depois perguntas no fim, depois ao vivo. A J4 fica pronta quando uma pergunta feita num celular chega ao de quem apresenta; o export para agentes entra aqui, quando já há o que exportar.
+
+        **A J5 abre com o Claper,** onde a resposta muda algo: se servir, vira a Nereid de um reef survey à parte. A J5 fica pronta quando uma pergunta abre nos celulares, o tempo corre e o resultado aparece.
+
+  - name: j6
+    act: slice
+    topic: "J6 · Staff and rights"
+    message: "J6 adds the staff and the rights, then the final scene"
+    accent: "the final scene"
+    screen:
+      - "**Rights:** presenting and the staff role through the authorization reef"
+      - "**Staff:** the pace, the thermometer and the queue of questions, from the phone"
+      - "**Close:** the profile, the walkthrough, a scene with four browsers"
+    notes: |-
+      **Think of whoever runs a room at a large conference.** The staff, Users the speaker names, follow the pace, the thermometer and the queue of questions, warned when there are too many for the time left.
+
+      **Presenting becomes a right like any other,** answered by `nereus authorization can-i`. Building events in Nereus comes later, with #1202.
+    pt:
+      topic: "J6 · Staff e direitos"
+      message: "A J6 traz o staff e os direitos, e a cena final"
+      accent: "a cena final"
+      screen:
+        - "**Direitos:** apresentar e o papel de staff pelo reef de autorização"
+        - "**Staff:** o ritmo, o termômetro e a fila de perguntas, pelo celular"
+        - "**Fechamento:** o profile, o walkthrough, uma cena com quatro navegadores"
+      notes: |-
+        **Pense em quem cuida de uma sala numa conferência grande.** O staff, Users que quem apresenta nomeia, acompanha o ritmo, o termômetro e a fila de perguntas, avisado quando há muitas para o tempo que resta.
+
+        **Apresentar vira um direito como outro qualquer,** respondido por `nereus authorization can-i`. Montar eventos no Nereus vem depois, com a #1202.
+
+  - name: order
+    act: slice
+    topic: "The order"
+    message: "J1 alone, then two journeys at a time"
+    accent: "two journeys at a time"
+    screen:
+      - "**First:** J1 alone"
+      - "**Then:** J2 and J3 together, then J4"
+      - "**Last:** J5 and J6 together, agreeing on the staff's thermometer"
+    notes: |-
+      **At most two presentations journeys at once,** so a slot stays free for other journeys, such as #1559 (the continuous deploy of Nereus on Nereus).
+
+      **Inside J1, the renderer's split comes first,** since `render-outline` is one large file that E2, E3 and the question slides all touch.
+    pt:
+      topic: "A ordem"
+      message: "A J1 sozinha, depois duas jornadas por vez"
+      accent: "duas jornadas por vez"
+      screen:
+        - "**Primeiro:** a J1 sozinha"
+        - "**Depois:** a J2 e a J3 juntas, depois a J4"
+        - "**Por fim:** a J5 e a J6 juntas, combinando o termômetro do staff"
+      notes: |-
+        **No máximo duas jornadas de presentations ao mesmo tempo,** para sobrar espaço para outras jornadas, como a #1559 (o deploy contínuo do Nereus no Nereus).
+
+        **Dentro da J1, a divisão do renderizador vem primeiro,** já que o `render-outline` é um arquivo grande que a E2, a E3 e os slides de pergunta tocam.
+
+  # ── The journey ─────────────────────────────────────
+  - name: envelope
+    act: journey
+    topic: "The envelope"
+    message: "The journey decides alone inside an agreed envelope"
+    accent: "an agreed envelope"
+    screen:
+      - "**🟢 Decide and record:** inside a step, and its merge once the checks pass"
+      - "**🟠 Report in a batch:** a gap settled with a Fable agent, a new sub-issue, a dropped step"
+      - "**🔴 Wait for the owner:** the ADR after J1, any cloud resource, anything outside the plan"
+    refs: [journeys, delegation-poker]
+    notes: |-
+      **The envelope is agreed once, when the journey opens,** so the owner is not asked at every step. One session owns the journey end to end, with one Opus agent and a few subagents.
+
+      **Green** is everything inside a step of the plan (code, tests, names the plan leaves open) and the merge once `make checks` and the step's scene pass. **Amber** is decided and reported in one summary; the owner's silence accepts it. **Red** waits: accepting the ADR, any cloud resource, anything outside Docker on the host or outside the plan, the one-way doors.
+    pt:
+      topic: "O envelope"
+      message: "A jornada decide sozinha dentro de um envelope combinado"
+      accent: "um envelope combinado"
+      screen:
+        - "**🟢 Decide e registra:** dentro de uma etapa, e o merge quando as checagens passam"
+        - "**🟠 Relata em lote:** uma lacuna resolvida com um agente Fable, uma subissue nova, uma etapa abandonada"
+        - "**🔴 Espera o dono:** o ADR depois da J1, qualquer recurso de nuvem, qualquer coisa fora do plano"
+      notes: |-
+        **O envelope é combinado uma vez, quando a jornada abre,** para o dono não ser perguntado a cada passo. Uma sessão é dona da jornada de ponta a ponta, com um agente Opus e alguns subagentes.
+
+        **Verde** é tudo dentro de uma etapa do plano (código, testes, nomes que o plano deixa livres) e o merge quando o `make checks` e a cena da etapa passam. **Laranja** é decidido e relatado num resumo; o silêncio do dono aceita. **Vermelho** espera: aceitar o ADR, qualquer recurso de nuvem, qualquer coisa fora do Docker local ou fora do plano, as portas de mão única.
+
+  - name: done
+    act: journey
+    topic: "Done when"
+    message: "Done when the room follows a rehearsal and a talk"
+    accent: "a rehearsal and a talk"
+    screen:
+      - "**The scene:** speaker, projector, audience and staff, four headless browsers"
+      - "**k3d-nereus:** the slice installed on the kept cluster"
+      - "**The owner's phone:** a rehearsal, then a real session with the storytelling deck"
+    notes: |-
+      **This is the end of J6, the last of the six;** each journey before it closes with its own scene, `k3d-nereus` and the owner's phone.
+
+      **The final scene proves the four screens together,** on the throwaway cluster of `make scene`: the speaker drives, the projector and an anonymous follower move with it, a question arrives at the end, and the staff see the pace.
+
+      **The last step is the owner's,** with the deck of #190 (the storytelling talk): first a rehearsal, then a session followed from another phone.
+    pt:
+      topic: "Pronto quando"
+      message: "Pronto quando a sala acompanha um ensaio e uma palestra"
+      accent: "um ensaio e uma palestra"
+      screen:
+        - "**A cena:** quem apresenta, projetor, plateia e staff, quatro navegadores headless"
+        - "**k3d-nereus:** a fatia instalada no cluster mantido"
+        - "**O celular do dono:** um ensaio, depois uma sessão real com o deck de storytelling"
+      notes: |-
+        **Este é o fim da J6, a última das seis;** cada jornada antes dela fecha com a sua cena, o `k3d-nereus` e o celular do dono.
+
+        **A cena final prova as quatro telas juntas,** no cluster descartável do `make scene`: quem apresenta conduz, o projetor e alguém anônimo da plateia acompanham, uma pergunta chega no fim, e o staff vê o ritmo.
+
+        **O último passo é do dono,** com o deck da #190 (a palestra de storytelling): primeiro um ensaio, depois uma sessão acompanhada de outro celular.
+
+  # ── After the slice ─────────────────────────────────
+  - name: signup-raffle
+    act: after
+    topic: "Sign-up and raffle"
+    message: "Sign-up and the raffle come right after the slice"
+    accent: "right after"
+    screen:
+      - "**Sign-up:** links the device to a User, e-mails optional, deletion any time"
+      - "**Raffle:** optional per Session, only for those signed up"
+      - "**Winner:** shows a one-time QR code, scanned by the speaker or the staff"
+      - "**Deletion:** only after the prize is delivered, what stays is anonymized"
+      - "**Rules:** a slide made by Nereus or the speaker, accepted before joining"
+    refs: [lgpd]
+    notes: |-
+      **The raffle of #1198 needs the sign-up,** so it comes right after it. The draw runs on the server from a secure random source and is recorded on the Session.
+
+      **Presence in the room is proved by the winner's QR code,** scanned through Nereus by the speaker or the staff, who check the details and confirm the delivery.
+
+      **Deletion waits only for the delivery;** afterwards Nereus keeps anonymized statistics and the audit trail, with the person replaced by an opaque id. The rules slide is generated from the raffle's data or customized, and Nereus warns when a custom one leaves out a required item.
+    pt:
+      topic: "Cadastro e sorteio"
+      message: "O cadastro e o sorteio vêm logo depois da fatia"
+      accent: "logo depois"
+      screen:
+        - "**Cadastro:** liga o aparelho a um User, e-mails opcionais, exclusão quando quiser"
+        - "**Sorteio:** opcional por Session, só para quem tem cadastro"
+        - "**Ganhador:** mostra um QR code de uso único, escaneado por quem apresenta ou pelo staff"
+        - "**Exclusão:** só depois da entrega do prêmio, o que fica é anonimizado"
+        - "**Regras:** um slide feito pelo Nereus ou por quem apresenta, aceito antes de concorrer"
+      notes: |-
+        **O sorteio da #1198 precisa do cadastro,** então vem logo depois dele. O sorteio roda no servidor com uma fonte aleatória segura e fica registrado na Session.
+
+        **A presença na sala é provada pelo QR code do ganhador,** escaneado pelo Nereus por quem apresenta ou pelo staff, que confere os dados e confirma a entrega.
+
+        **A exclusão espera só a entrega;** depois o Nereus guarda estatísticas anonimizadas e a trilha de auditoria, com a pessoa trocada por um id opaco. O slide de regras é gerado a partir dos dados do sorteio ou customizado, e o Nereus avisa quando um customizado deixa de fora um item obrigatório.
+
+  - name: next
+    act: after
+    topic: "In order"
+    message: "Then the rest, one step at a time"
+    screen:
+      - "**Authoring:** Nereus builds and edits the deck with an agent (#219)"
+      - "**Git:** an optional sync with a repository"
+      - "**Sharing:** OCI, signed by the signature reef"
+      - "**Live:** a word cloud, voted and moderated questions (#305, #1197)"
+      - "**Transcription:** the speaker's audio, live (#1195)"
+      - "**Workshops:** steps, progress and prerequisites (#1199, #1201)"
+      - "**Events:** agenda, registration and check-in (#1202)"
+      - "**Agents:** the Session read through MCP (#1196)"
+    notes: |-
+      **Each item becomes an issue after the slice,** in this order, each with its own refinement.
+
+      **The agent that builds a deck** writes against the same published schema as any outside tool, and the speaker accepts each change from the phone.
+    pt:
+      topic: "Em ordem"
+      message: "Depois o resto, um passo de cada vez"
+      screen:
+        - "**Autoria:** o Nereus monta e edita o deck com um agente (#219)"
+        - "**Git:** uma sincronização opcional com um repositório"
+        - "**Compartilhar:** OCI, assinado pelo reef de assinatura"
+        - "**Ao vivo:** nuvem de palavras, perguntas votadas e moderadas (#305, #1197)"
+        - "**Transcrição:** o áudio de quem apresenta, ao vivo (#1195)"
+        - "**Workshops:** passos, progresso e pré-requisitos (#1199, #1201)"
+        - "**Eventos:** agenda, inscrição e check-in (#1202)"
+        - "**Agentes:** a Session lida pelo MCP (#1196)"
+      notes: |-
+        **Cada item vira uma issue depois da fatia,** nesta ordem, cada um com o seu refinamento.
+
+        **O agente que monta um deck** escreve contra o mesmo schema publicado que qualquer ferramenta de fora, e quem apresenta aceita cada mudança pelo celular.
+
+  - name: new-reefs
+    act: after
+    topic: "New reefs"
+    message: "Three reefs may be born from this journey"
+    accent: "Three reefs"
+    screen:
+      - "**Signature (name to decide):** signs and verifies any artifact, cosign the first Nereid"
+      - "**references:** sources cited by name, shared between decks"
+      - "**survey:** questions and polls, if Claper fits in E0"
+    notes: |-
+      **Each is a concept, never a tool.** The signature reef gathers what #670, #671, #672, #673, #1355 and #239 ask case by case; its name (signing, signature or another) is decided in its own refinement.
+
+      **They are refinements of their own,** outside this journey.
+    pt:
+      topic: "Reefs novos"
+      message: "Três reefs podem nascer desta jornada"
+      accent: "Três reefs"
+      screen:
+        - "**Assinatura (nome a decidir):** assina e verifica qualquer artefato, cosign a primeira Nereid"
+        - "**references:** fontes citadas pelo nome, compartilhadas entre decks"
+        - "**survey:** perguntas e enquetes, se o Claper encaixar na E0"
+      notes: |-
+        **Cada um é um conceito, nunca uma ferramenta.** O reef de assinatura junta o que #670, #671, #672, #673, #1355 e #239 pedem caso a caso; o nome (signing, signature ou outro) é decidido no seu próprio refinamento.
+
+        **São refinamentos próprios,** fora desta jornada.

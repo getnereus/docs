@@ -1,0 +1,830 @@
+deck:
+  name: authorization
+  title: "The authorization reef"
+  subtitle: "Every command of the first slice: Users, teams, roles and bindings, and who may do what"
+  accent: "who may do what"
+  pt:
+    title: "O reef authorization"
+    subtitle: "Todos os comandos da primeira fatia: Users, times, papéis e bindings, e quem pode fazer o quê"
+    accent: "quem pode fazer o quê"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: setup
+    title: "Setup"
+    question: "Where does the answer come from?"
+    pt: {title: "Preparação", question: "De onde vem a resposta?"}
+  - name: people
+    title: "People"
+    question: "Who is on the platform, and with whom?"
+    pt: {title: "Pessoas", question: "Quem está na plataforma, e com quem?"}
+  - name: roles
+    title: "Roles"
+    question: "What can a role do?"
+    pt: {title: "Papéis", question: "O que um papel pode fazer?"}
+  - name: bindings
+    title: "Bindings"
+    question: "Who receives a role, and where?"
+    pt: {title: "Bindings", question: "Quem recebe um papel, e onde?"}
+  - name: asking
+    title: "Asking"
+    question: "May I?"
+    pt: {title: "Perguntando", question: "Eu posso?"}
+  - name: enforcement
+    title: "Enforcement"
+    question: "What happens when the answer is no?"
+    pt: {title: "Na prática", question: "O que acontece quando a resposta é não?"}
+  - name: closing
+    title: "Closing"
+    pt: {title: "Fechamento"}
+
+references:
+  - name: openfga
+    title: "OpenFGA"
+    author: "The OpenFGA Authors, a CNCF project"
+    url: "https://openfga.dev/"
+    about: "An open source authorization engine based on relationships, inspired by Google's Zanzibar: a model of types and relations, tuples that say who relates to what, and a check that answers yes or no."
+    forUs: "The Nereid of this reef: it keeps the tuples the roles, bindings and teams turn into, and answers every check the Nereus API asks."
+    pt:
+      title: "OpenFGA"
+      author: "Os autores do OpenFGA, um projeto da CNCF"
+      about: "Um motor de autorização de código aberto baseado em relações, inspirado no Zanzibar do Google: um modelo de tipos e relações, tuplas que dizem quem se relaciona com o quê, e uma verificação que responde sim ou não."
+      forUs: "A Nereid deste reef: guarda as tuplas em que os papéis, bindings e times se transformam, e responde a toda verificação que a Nereus API pergunta."
+  - name: kubernetes-rbac
+    title: "Using RBAC Authorization"
+    author: "The Kubernetes Authors"
+    url: "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"
+    about: "Kubernetes' role-based access control: a Role lists rules (API groups, resources, verbs) and a RoleBinding grants it to subjects."
+    forUs: "The shape of a role's rule here, in the CLI's own words: reef, kinds, verbs."
+    pt:
+      title: "Usando a autorização RBAC"
+      author: "Os autores do Kubernetes"
+      about: "O controle de acesso baseado em papéis do Kubernetes: um Role lista regras (grupos de API, recursos, verbos) e um RoleBinding o concede a sujeitos."
+      forUs: "A forma da regra de um papel aqui, nas palavras do próprio CLI: reef, kinds, verbos."
+  - name: thinking-in-platforms
+    title: "Thinking in Platforms"
+    author: "Kaspar von Grünberg and Luca Galante"
+    year: "2026"
+    url: "https://internaldeveloperplatform.org/community/books/"
+    about: "Platform engineering as the operating model for work in the AI era."
+    forUs: "The order of the checks: identity, team membership and resource quotas are resolved before any path is invoked."
+    pt:
+      title: "Thinking in Platforms"
+      author: "Kaspar von Grünberg e Luca Galante"
+      about: "Engenharia de plataforma como o modelo operacional do trabalho na era da IA."
+      forUs: "A ordem das verificações: identidade, participação em times e cotas de recursos são resolvidas antes de qualquer caminho ser invocado."
+
+slides:
+  - name: cover
+    act: opening
+    cover: true
+    message: "The authorization reef"
+    notes: |-
+      **The commands of the first slice of authorization, built** (#897, Refine the authorization reef; journey #1644). The deck was the contract the slice was built from, and its outputs are what the final scene printed; only `member delete` with a `Position` stays planned (#1307).
+
+      **The story crosses three homes.** A User belongs to core (ADR 0006, the person is a User of core), a team and its members to the `teams` reef (#1307, The teams reef), a role and a binding to this reef. The team commands live in the teams deck (docs/specs/cli/reefs/teams.html), built with #1646 (the teams reef); the User commands move to the core deck when they are built, and are here so the story reads in one place.
+
+      **The model was decided in #1306** (How teams, roles and Users relate), on the tenancy tree of ADR 0015 (tenancy: Organization and Project), with the commands of ADR 0013 (command conventions).
+    pt:
+      message: "O reef authorization"
+      notes: |-
+        **Os comandos da primeira fatia de autorização, prontos** (#897, Refine the authorization reef; jornada #1644). O deck foi o contrato a partir do qual a fatia foi construída, e as suas saídas são o que a cena final imprimiu; só o `member delete` com uma `Position` continua planejado (#1307).
+
+        **A história atravessa três casas.** Um User pertence ao core (ADR 0006, a pessoa é um User do core), um time e os seus membros ao reef `teams` (#1307, The teams reef), um papel e um binding a este reef. Os comandos de time ficam no deck teams (docs/specs/cli/reefs/teams.html), construído com a #1646 (o reef teams); os comandos de User vão para o deck do core quando forem construídos, e estão aqui para a história ser lida em um só lugar.
+
+        **O modelo foi decidido na #1306** (How teams, roles and Users relate), sobre a árvore de tenancy do ADR 0015 (tenancy: Organization e Project), com os comandos do ADR 0013 (convenções de comando).
+
+  - name: concepts
+    act: opening
+    topic: "concepts"
+    message: "Three concepts, one list of members"
+    accent: "one list of members"
+    screen:
+      - "**User:** the person, one in core, whatever the login"
+      - "**Team:** who works together, each member with an optional position"
+      - "**Role and binding:** what a team, a position or a User may do on a node of the tenancy tree"
+      - "**Access comes from the team:** joining grants it, leaving removes it"
+    notes: |-
+      **Three concepts kept apart** (#1306, How teams, roles and Users relate): a User answers who the person is, a team answers who they work with and in which position, a role answers what they may do.
+
+      **There is no second list of groups to keep in sync.** A binding gives a role to a team, to one position of a team or, as an exception, to a single User. An identity provider's groups are an output, never the source.
+
+      **A position is a name on the member in this slice** (`tech-lead`, `architect`). The `Position` kind with its skills and places comes with #1307 (The teams reef), and the same name then points to it.
+    pt:
+      topic: "conceitos"
+      message: "Três conceitos, uma só lista de membros"
+      accent: "uma só lista de membros"
+      screen:
+        - "**User:** a pessoa, uma só no core, qualquer que seja o login"
+        - "**Time:** quem trabalha junto, cada membro com uma posição opcional"
+        - "**Papel e binding:** o que um time, uma posição ou um User pode fazer em um nó da árvore de tenancy"
+        - "**O acesso vem do time:** entrar concede, sair remove"
+      notes: |-
+        **Três conceitos mantidos separados** (#1306, How teams, roles and Users relate): um User responde quem é a pessoa, um time responde com quem ela trabalha e em qual posição, um papel responde o que ela pode fazer.
+
+        **Não existe uma segunda lista de grupos para manter em sincronia.** Um binding dá um papel a um time, a uma posição de um time ou, como exceção, a um único User. Os grupos de um provedor de identidade são uma saída, nunca a fonte.
+
+        **Uma posição é um nome no membro nesta fatia** (`tech-lead`, `architect`). O kind `Position`, com as suas skills e vagas, vem com a #1307 (The teams reef), e o mesmo nome passa a apontar para ele.
+
+  - name: order
+    act: opening
+    topic: "the order"
+    message: "Who, may they, is there room: in this order"
+    accent: "in this order"
+    screen:
+      - "**Who:** {reef:authentication} turns the token into a User"
+      - "**May they:** {reef:authorization} answers for a verb, a kind and a node"
+      - "**Is there room:** quota, a later slice"
+    refs: [thinking-in-platforms]
+    notes: |-
+      **The Nereus API resolves the three before any Nereid acts**, deterministically and in this order. The idea comes from the book _Thinking in Platforms_: identity, team membership and resource quotas are resolved before any path is invoked.
+
+      **The subject of every check is the User's id**, never a `sub` of an identity provider (ADR 0006, the person is a User of core). A token whose identity is linked to no User has no permission: having a login is not having permission.
+
+      **Quota is out of this slice.** Teams sit on a node of the tenancy tree, so a quota has where to attach later.
+    pt:
+      topic: "a ordem"
+      message: "Quem, pode, e há espaço: nesta ordem"
+      accent: "nesta ordem"
+      screen:
+        - "**Quem:** {reef:authentication} transforma o token em um User"
+        - "**Pode:** {reef:authorization} responde para um verbo, um kind e um nó"
+        - "**Há espaço:** cota, uma fatia posterior"
+      notes: |-
+        **A Nereus API resolve os três antes de qualquer Nereid agir**, de forma determinística e nesta ordem. A ideia vem do livro _Thinking in Platforms_: identidade, participação em times e cotas de recursos são resolvidas antes de qualquer caminho ser invocado.
+
+        **O sujeito de toda verificação é o id do User**, nunca um `sub` de um provedor de identidade (ADR 0006, a pessoa é um User do core). Um token cuja identidade não está ligada a nenhum User não tem permissão: ter login não é ter permissão.
+
+        **Cota está fora desta fatia.** Os times ficam em um nó da árvore de tenancy, então uma cota tem onde se prender depois.
+
+  - name: reef-apply
+    act: setup
+    topic: "reef apply"
+    status: built
+    issue: 897
+    message: "The {reef:authorization} reef brings roles and bindings"
+    accent: "roles and bindings"
+    terminal:
+      steps:
+        - comment: "The kinds of the reef"
+          run: "nereus reef apply authorization"
+          output: |-
+            ✓ core/reefs/authorization created (authorization.getnereus.dev/v1alpha1: bindings, roles)
+
+            Next steps:
+
+              nereus nereid apply openfga --reef authorization
+    notes: |-
+      **Two kinds, `Role` and `Binding`, and neither names OpenFGA** (#1306, How teams, roles and Users relate): the API never names a Nereid, so another tool can answer the same question later.
+
+      **Until a Nereid answers for this reef, nothing changes:** every write stays with the `nereus-admins` group, as today. Permissions start when authorization is installed.
+    pt:
+      topic: "reef apply"
+      message: "O reef {reef:authorization} traz papéis e bindings"
+      accent: "papéis e bindings"
+      notes: |-
+        **Dois kinds, `Role` e `Binding`, e nenhum cita o OpenFGA** (#1306, How teams, roles and Users relate): a API nunca cita uma Nereid, então outra ferramenta pode responder à mesma pergunta depois.
+
+        **Até uma Nereid responder por este reef, nada muda:** toda escrita continua com o grupo `nereus-admins`, como hoje. As permissões começam quando a autorização é instalada.
+
+  - name: nereid-apply
+    act: setup
+    topic: "nereid apply"
+    status: built
+    issue: 897
+    message: "{nereid:openfga} answers who may do what"
+    accent: "who may do what"
+    terminal:
+      steps:
+        - comment: "The profile installs the Nereid and its default Mandate (an excerpt)"
+          run: "nereus profile apply internal-developer-platform"
+          output: |-
+            ✓ networkpolicy openfga                      0.0s  networkpolicies/openfga applied (only nereus-api and vmagent-nereus reach openfga)
+            ✓ nereid openfga                            1m19s  core/nereids/openfga created, Ready
+            ✓ mandate openfga                            7.0s  core/mandates/openfga created (reef: authorization, nereid: openfga, default)
+    dependsOn: [reef-apply]
+    refs: [openfga]
+    notes: |-
+      **The Nereid installs OpenFGA from its official Helm chart**, through the release reef, with its data in a Postgres database asked through the `Database` kind: the same path the keycloak Nereid takes.
+
+      **The objects of Nereus are the source of truth.** Users, teams, members, roles and bindings are written as tuples by the Nereid, which reconciles them; losing OpenFGA's data loses nothing, the Nereid writes it again.
+
+      **The model is one fixed `.fga` file**, versioned with the Nereid and tested with OpenFGA's own model tests. A new role becomes tuples, never a new model.
+    pt:
+      topic: "nereid apply"
+      message: "{nereid:openfga} responde quem pode fazer o quê"
+      accent: "quem pode fazer o quê"
+      notes: |-
+        **A Nereid instala o OpenFGA a partir do seu chart Helm oficial**, pelo reef release, com os dados em um banco Postgres pedido pelo kind `Database`: o mesmo caminho que a Nereid keycloak segue.
+
+        **Os objetos do Nereus são a fonte da verdade.** Users, times, membros, papéis e bindings são escritos como tuplas pela Nereid, que os reconcilia; perder os dados do OpenFGA não perde nada, a Nereid os escreve de novo.
+
+        **O modelo é um arquivo `.fga` fixo**, versionado com a Nereid e testado com os testes de modelo do próprio OpenFGA. Um papel novo vira tuplas, nunca um modelo novo.
+
+  - name: user-create
+    act: people
+    topic: "user create"
+    status: built
+    issue: 897
+    message: "A person is one User, whatever the login"
+    accent: "one User"
+    terminal:
+      steps:
+        - comment: "The tech lead"
+          run: "nereus user create ana"
+          options: ["--email ana@example.com"]
+          output: |-
+            ✓ core/users/ana created
+        - comment: "A developer"
+          run: "nereus user create bruno"
+          options: ["--email bruno@example.com"]
+          output: |-
+            ✓ core/users/bruno created
+
+            Next steps:
+
+              nereus teams create <team> --owner project/<project>
+    notes: |-
+      **`User` is a kind of core** (ADR 0006, the person is a User of core): the platform gives it its id, and it holds a list of identities, one per identity provider the person signs in with. This command moves to the core deck when it is built.
+
+      **The first sign-in links the identity:** the token's verified e-mail matches the User's, and its issuer and `sub` join the User's identities. Linking a second identity to the same User asks for an e-mail code (ADR 0006) and is out of this slice; the list is already there for it.
+
+      **A User alone may do nothing:** no team, no role.
+    pt:
+      topic: "user create"
+      message: "Uma pessoa é um só User, qualquer que seja o login"
+      accent: "um só User"
+      notes: |-
+        **`User` é um kind do core** (ADR 0006, a pessoa é um User do core): a plataforma dá o seu id, e ele guarda uma lista de identidades, uma por provedor de identidade com que a pessoa entra. Este comando vai para o deck do core quando for construído.
+
+        **O primeiro login liga a identidade:** o e-mail verificado do token casa com o do User, e o seu issuer e `sub` entram nas identidades do User. Ligar uma segunda identidade ao mesmo User pede um código por e-mail (ADR 0006) e está fora desta fatia; a lista já existe para isso.
+
+        **Um User sozinho não pode nada:** nenhum time, nenhum papel.
+
+  - name: user-list
+    act: people
+    topic: "user list"
+    status: built
+    issue: 897
+    message: "Every User, and how many identities each has"
+    accent: "how many identities"
+    terminal:
+      steps:
+        - comment: "The people of this instance"
+          run: "nereus user list"
+          output: |-
+            NAME   EMAIL              IDENTITIES  AGE
+            ana    ana@example.com    1           2m
+            bruno  bruno@example.com  0           1m
+    dependsOn: [user-create]
+    notes: |-
+      **`IDENTITIES` counts the logins linked to the User.** Ana has signed in once; Bruno has not yet, so his User waits for its first identity.
+
+      **Lists are alphabetical** and take `--sort-by` and `--output` (ADR 0013, command conventions).
+    pt:
+      topic: "user list"
+      message: "Todo User, e quantas identidades cada um tem"
+      accent: "quantas identidades"
+      notes: |-
+        **`IDENTITIES` conta os logins ligados ao User.** A Ana já entrou uma vez; o Bruno ainda não, então o User dele espera a primeira identidade.
+
+        **As listas são alfabéticas** e aceitam `--sort-by` e `--output` (ADR 0013, convenções de comando).
+
+  - name: role-list
+    act: roles
+    topic: "role list"
+    status: built
+    issue: 897
+    message: "One built-in role, three examples to edit"
+    accent: "three examples"
+    terminal:
+      steps:
+        - comment: "The roles of this instance"
+          run: "nereus authorization role list"
+          output: |-
+            NAME           RULES                    BUILT IN
+            administrator  *:*:*                    yes
+            developer      *:*:list,get and 3 more  -
+            team-lead      *:*:list,get and 5 more  -
+            viewer         *:*:list,get             -
+    dependsOn: [nereid-apply]
+    notes: |-
+      **`administrator` is the only built-in role**, applied with the reef (`nereus reef apply authorization`), with every verb on every kind of every reef, present and future (#1306, How teams, roles and Users relate).
+
+      **`viewer`, `developer` and `team-lead` are examples in `reefs/authorization/samples/`,** applied with `nereus authorization role apply --path`, each a YAML file to edit or to copy: a viewer reads everything, a developer also writes builds, deliveries and releases, a team lead also creates environments and manages the team's members.
+    pt:
+      topic: "role list"
+      message: "Um papel embutido, três exemplos para editar"
+      accent: "três exemplos"
+      notes: |-
+        **`administrator` é o único papel embutido**, aplicado com o reef (`nereus reef apply authorization`), com todo verbo em todo kind de todo reef, presente e futuro (#1306, How teams, roles and Users relate).
+
+        **`viewer`, `developer` e `team-lead` são exemplos em `reefs/authorization/samples/`,** aplicados com `nereus authorization role apply --path`, cada um um arquivo YAML para editar ou copiar: um viewer lê tudo, um developer também escreve builds, deliveries e releases, um team lead também cria ambientes e gerencia os membros do time.
+
+  - name: role-get
+    act: roles
+    topic: "role get"
+    status: built
+    issue: 897
+    message: "A role is a list of rules: reef, kinds, verbs"
+    accent: "reef, kinds, verbs"
+    terminal:
+      steps:
+        - comment: "What a team lead may do"
+          run: "nereus authorization role get team-lead"
+          output: |-
+            team-lead: 6 rules
+            REEF         KINDS         VERBS
+            *            *             list,get
+            build        builds        create,apply,delete
+            delivery     deliveries    create,apply,delete
+            environment  environments  create,delete
+            release      releases      create,apply,delete
+            teams        members       create,delete
+    dependsOn: [role-list]
+    refs: [kubernetes-rbac]
+    notes: |-
+      **A rule reads `<reef>:<kinds>:<verbs>`**, in the words the CLI already uses (ADR 0013, command conventions), as a Kubernetes Role lists API groups, resources and verbs. A `*` covers every reef, kind or verb, including the ones installed later.
+
+      **The last two rules are what sets the team lead apart from a developer:** creating and deleting environments, and managing the members of the team.
+    pt:
+      topic: "role get"
+      message: "Um papel é uma lista de regras: reef, kinds, verbos"
+      accent: "reef, kinds, verbos"
+      notes: |-
+        **Uma regra se lê `<reef>:<kinds>:<verbos>`**, nas palavras que o CLI já usa (ADR 0013, convenções de comando), como um Role do Kubernetes lista grupos de API, recursos e verbos. Um `*` cobre todo reef, kind ou verbo, inclusive os instalados depois.
+
+        **As duas regras que separam o team lead de um developer:** criar e apagar ambientes, e gerenciar os membros do time.
+
+  - name: role-create
+    act: roles
+    topic: "role create"
+    status: built
+    issue: 897
+    message: "A new role takes the words the CLI already uses"
+    accent: "the words the CLI already uses"
+    terminal:
+      steps:
+        - comment: "A role of this instance's own"
+          run: "nereus authorization role create release-manager"
+          options: ["--rule release:releases:create,apply,delete"]
+          output: |-
+            ✓ authorization/roles/release-manager created
+
+            Next steps:
+
+              nereus authorization binding create <name> --role release-manager --team <team> --owner project/<project>
+    dependsOn: [role-get]
+    notes: |-
+      **Roles are registered, never a fixed list** (#1306, How teams, roles and Users relate). `--rule` repeats, one rule each; `apply --from-file` takes the same role as YAML.
+
+      **Who may create a role or a binding is itself a rule,** on `authorization:roles,bindings`.
+    pt:
+      topic: "role create"
+      message: "Um papel novo usa as palavras que o CLI já usa"
+      accent: "as palavras que o CLI já usa"
+      notes: |-
+        **Papéis são registrados, nunca uma lista fixa** (#1306, How teams, roles and Users relate). `--rule` se repete, uma regra por vez; `apply --from-file` recebe o mesmo papel em YAML.
+
+        **Quem pode criar um papel ou um binding é em si uma regra,** sobre `authorization:roles,bindings`.
+
+  - name: role-delete
+    act: roles
+    topic: "role delete"
+    status: built
+    issue: 897
+    message: "The administrator role cannot be deleted"
+    accent: "cannot be deleted"
+    terminal:
+      steps:
+        - comment: "No one locks the instance out"
+          run: "nereus authorization role delete administrator"
+          output: |-
+            ✗ authorization/roles/administrator is built in: it cannot be changed or deleted. To see who holds it, run:
+              nereus authorization binding list --role administrator
+              Nothing was changed.
+    dependsOn: [role-list]
+    notes: |-
+      **A built-in role is neither narrowed nor deleted,** so no one locks the instance out (#1306, How teams, roles and Users relate). The message says what happened and what to run next (ADR 0012, error messages).
+
+      **A role that a binding uses is refused too,** until its bindings are deleted.
+    pt:
+      topic: "role delete"
+      message: "O papel administrator não pode ser apagado"
+      accent: "não pode ser apagado"
+      notes: |-
+        **Um papel embutido não é restringido nem apagado,** então ninguém tranca a instância por fora (#1306, How teams, roles and Users relate). A mensagem diz o que aconteceu e o que rodar em seguida (ADR 0012, mensagens de erro).
+
+        **Um papel que um binding usa também é recusado,** até os seus bindings serem apagados.
+
+  - name: binding-team
+    act: bindings
+    topic: "binding create"
+    status: built
+    issue: 897
+    message: "A binding gives a role to a team on a node"
+    accent: "to a team on a node"
+    terminal:
+      steps:
+        - comment: "Everyone in the team is a developer of the Project"
+          run: "nereus authorization binding create payments-developers"
+          options: ["--role developer", "--team payments", "--owner project/payments"]
+          output: |-
+            ✓ authorization/bindings/payments-developers created
+
+            Next steps:
+
+              nereus authorization binding list --owner project/payments
+    dependsOn: [role-list]
+    notes: |-
+      **Three parts: a role, a subject and a node.** The subject is a team, a position of a team, or one User (`--user`, the exception). The node is an Organization or a Project of the tenancy tree, and the permission flows down the tree, never up (ADR 0015, tenancy: Organization and Project).
+
+      **Without `--owner`, the binding holds for the whole instance.**
+    pt:
+      topic: "binding create"
+      message: "Um binding dá um papel a um time em um nó"
+      accent: "a um time em um nó"
+      notes: |-
+        **Três partes: um papel, um sujeito e um nó.** O sujeito é um time, uma posição de um time, ou um User (`--user`, a exceção). O nó é uma Organization ou um Project da árvore de tenancy, e a permissão desce a árvore, nunca sobe (ADR 0015, tenancy: Organization e Project).
+
+        **Sem `--owner`, o binding vale para a instância inteira.**
+
+  - name: binding-position
+    act: bindings
+    topic: "binding create"
+    status: built
+    issue: 897
+    message: "A position narrows the binding to the tech lead"
+    accent: "narrows the binding"
+    terminal:
+      steps:
+        - comment: "Only who holds the position"
+          run: "nereus authorization binding create payments-leads"
+          options: ["--role team-lead", "--team payments", "--position tech-lead", "--owner project/payments"]
+          output: |-
+            ✓ authorization/bindings/payments-leads created
+
+            Next steps:
+
+              nereus authorization binding list --owner project/payments
+    dependsOn: [binding-team]
+    notes: |-
+      **`--position` gives the role only to the members of the team who hold that position.** When another person takes the position, the access moves with it, and no binding changes.
+
+      **This is how a tech lead or an architect gets more than the rest of the team** without a second team and without a binding per person.
+    pt:
+      topic: "binding create"
+      message: "Uma posição restringe o binding ao tech lead"
+      accent: "restringe o binding"
+      notes: |-
+        **`--position` dá o papel só aos membros do time que ocupam aquela posição.** Quando outra pessoa assume a posição, o acesso vai junto, e nenhum binding muda.
+
+        **É assim que um tech lead ou um arquiteto ganha mais do que o resto do time** sem um segundo time e sem um binding por pessoa.
+
+  - name: binding-list
+    act: bindings
+    topic: "binding list"
+    status: built
+    issue: 897
+    message: "Every binding of a node, and who it reaches"
+    accent: "who it reaches"
+    terminal:
+      steps:
+        - comment: "Who may do what on the Project"
+          run: "nereus authorization binding list"
+          options: ["--owner project/payments"]
+          output: |-
+            NAME                 SUBJECT                  ROLE       OWNER
+            payments-developers  team/payments            developer  project/payments
+            payments-leads       team/payments/tech-lead  team-lead  project/payments
+    dependsOn: [binding-position]
+    notes: |-
+      **The audit question in one command:** who has which role here. `--role` and `--team` filter the same list.
+    pt:
+      topic: "binding list"
+      message: "Todo binding de um nó, e quem ele alcança"
+      accent: "quem ele alcança"
+      notes: |-
+        **A pergunta de auditoria em um comando:** quem tem qual papel aqui. `--role` e `--team` filtram a mesma lista.
+
+  - name: can-i-yes
+    act: asking
+    topic: "can-i"
+    status: built
+    issue: 897
+    message: "Ana asks, and the answer names the binding"
+    accent: "names the binding"
+    terminal:
+      steps:
+        - comment: "Signed in as ana: with no --user, the question is about the caller"
+          run: "nereus authorization can-i create environment/environments"
+          options: ["--owner project/payments"]
+          output: |-
+            yes: authorization/bindings/payments-leads gives team-lead to team/payments/tech-lead at project/payments
+    dependsOn: [binding-list]
+    notes: |-
+      **`can-i <verb> <reef>/<kinds>` asks the same question the Nereus API asks before it acts,** and the answer says which binding grants it. The exit code is 0 for yes and 1 for no, for scripts.
+
+      **`can-i` is a new verb,** outside the list of ADR 0013 (command conventions); the slice amends the ADR.
+    pt:
+      topic: "can-i"
+      message: "A Ana pergunta, e a resposta cita o binding"
+      accent: "cita o binding"
+      notes: |-
+        **`can-i <verbo> <reef>/<kinds>` faz a mesma pergunta que a Nereus API faz antes de agir,** e a resposta diz qual binding concede. O código de saída é 0 para sim e 1 para não, para scripts.
+
+        **`can-i` é um verbo novo,** fora da lista do ADR 0013 (convenções de comando); a fatia emenda o ADR.
+
+  - name: can-i-no
+    act: asking
+    topic: "can-i --user"
+    status: built
+    issue: 897
+    message: "Bruno may not, and the answer says why"
+    accent: "says why"
+    terminal:
+      steps:
+        - comment: "About someone else"
+          run: "nereus authorization can-i create environment/environments"
+          options: ["--owner project/payments", "--user bruno"]
+          output: |-
+            no: no binding gives bruno create on environment/environments at project/payments
+
+            Next steps:
+
+              nereus authorization binding list --owner project/payments
+    dependsOn: [can-i-yes]
+    notes: |-
+      **Asking about another person is itself a permission:** an administrator, or a role that carries it, may; anyone may ask about themselves.
+
+      **`--team` asks about a whole team** the same way.
+    pt:
+      topic: "can-i --user"
+      message: "O Bruno não pode, e a resposta diz por quê"
+      accent: "diz por quê"
+      notes: |-
+        **Perguntar sobre outra pessoa é em si uma permissão:** um administrador, ou um papel que a carregue, pode; qualquer um pode perguntar sobre si mesmo.
+
+        **`--team` pergunta sobre um time inteiro** do mesmo jeito.
+
+  - name: can-i-shortcut
+    act: asking
+    topic: "can-i"
+    status: built
+    issue: 897
+    message: "The shortcut asks the same question"
+    accent: "the same question"
+    terminal:
+      steps:
+        - comment: "Signed in as bruno: a developer creates builds"
+          run: "nereus can-i create build/builds"
+          options: ["--owner project/payments"]
+          output: |-
+            yes: authorization/bindings/payments-developers gives developer to team/payments at project/payments
+    dependsOn: [can-i-no]
+    notes: |-
+      **`nereus can-i` is `nereus authorization can-i`,** as `nereus whoami` is the authentication reef's. A shortcut never bypasses a permission: the answer comes from the Nereus API.
+    pt:
+      topic: "can-i"
+      message: "O atalho faz a mesma pergunta"
+      accent: "a mesma pergunta"
+      notes: |-
+        **`nereus can-i` é `nereus authorization can-i`,** como `nereus whoami` é do reef authentication. Um atalho nunca contorna uma permissão: a resposta vem da Nereus API.
+
+  - name: can-i-drive
+    act: asking
+    topic: "can-i drive"
+    status: built
+    issue: 1726
+    message: "Presenting is a right: a Session's speakers drive it"
+    accent: "speakers drive it"
+    terminal:
+      steps:
+        - comment: "Ana is a speaker of platform-day"
+          run: "nereus authorization can-i drive presentations/sessions/platform-day"
+          options: ["--user ana"]
+          output: |-
+            yes: ana is a speaker of platform-day
+        - comment: "Bruno is not"
+          run: "nereus authorization can-i drive presentations/sessions/platform-day"
+          options: ["--user bruno"]
+          output: |-
+            no: bruno is not a speaker of platform-day, and no binding gives bruno drive on presentations/sessions
+
+            Next steps:
+
+              nereus presentations session get platform-day
+              nereus authorization binding list
+    dependsOn: [can-i-shortcut]
+    notes: |-
+      **`drive` is a verb of the authorization reef** (#1726): every drive of a Session (its step, its end, the projector's QR code, its questions and rating, the speaker's deck, questions, feedback and export) asks it on the Session's own node, under its owner. The Session's speakers hold it; a role may grant it too, as `administrator` does.
+
+      **The follow route stays public:** the audience needs only the Session's code. With the authorization reef down, every drive is refused, as any other request (#1644).
+    pt:
+      topic: "can-i drive"
+      message: "Apresentar é um direito: os speakers de uma Session a conduzem"
+      accent: "a conduzem"
+      notes: |-
+        **`drive` é um verbo do reef authorization** (#1726): toda condução de uma Session (o passo, o fim, o QR code no projetor, as perguntas e a avaliação, o deck do speaker, as perguntas, o feedback e o export) o pergunta no nó da própria Session, sob o seu dono. Os speakers da Session o têm; um papel também pode concedê-lo, como `administrator`.
+
+        **A rota de follow continua pública:** a plateia precisa só do código da Session. Com o reef authorization fora do ar, toda condução é recusada, como qualquer outra requisição (#1644).
+
+  - name: can-i-assist
+    act: asking
+    topic: "can-i assist"
+    status: built
+    issue: 1727
+    message: "The staff assists a Session, and never drives it"
+    accent: "never drives it"
+    terminal:
+      steps:
+        - comment: "Carla is on the staff team of platform-day"
+          run: "nereus authorization can-i assist presentations/sessions/platform-day"
+          options: ["--user carla"]
+          output: |-
+            yes: carla is on the staff of platform-day (team stage-2-staff)
+        - comment: "Ana drives it, so she assists it too"
+          run: "nereus authorization can-i assist presentations/sessions/platform-day"
+          options: ["--user ana"]
+          output: |-
+            yes: ana is a speaker of platform-day
+        - comment: "Bruno is neither"
+          run: "nereus authorization can-i assist presentations/sessions/platform-day"
+          options: ["--user bruno"]
+          output: |-
+            no: bruno is neither a speaker nor on the staff of platform-day, and no binding gives bruno assist on presentations/sessions
+
+            Next steps:
+
+              nereus presentations session get platform-day
+              nereus authorization binding list
+    dependsOn: [can-i-drive]
+    notes: |-
+      **`assist` is the staff's verb** (#1727): the Session names its staff once, a team of the teams reef (`session create --staff stage-2-staff`), and the team's members follow its pace, thermometer and questions from the phone. They never drive through being staff.
+
+      **Whoever may drive may assist,** asked in the Nereus API and never in the model's condition, so it reaches no other reef. A team that does not exist is refused at create; one deleted later gives nobody the right.
+    pt:
+      topic: "can-i assist"
+      message: "O staff acompanha uma Session, e nunca a conduz"
+      accent: "nunca a conduz"
+      notes: |-
+        **`assist` é o verbo do staff** (#1727): a Session nomeia o seu staff uma vez, um time do reef teams (`session create --staff stage-2-staff`), e os membros do time acompanham o ritmo, o termômetro e as perguntas pelo celular. Ser staff nunca dá o direito de conduzir.
+
+        **Quem pode conduzir pode acompanhar,** o que é perguntado na Nereus API e nunca na condição do modelo, então não chega a nenhum outro reef. Um time que não existe é recusado no create; um apagado depois não dá o direito a ninguém.
+
+  - name: enforce-denied
+    act: enforcement
+    topic: "environment create"
+    status: built
+    issue: 897
+    message: "Bruno's environment is refused, politely"
+    accent: "refused"
+    terminal:
+      steps:
+        - comment: "Signed in as bruno"
+          run: "nereus environment create staging"
+          options: ["--owner project/payments"]
+          output: |-
+            ✗ environment/environments/staging: bruno may not create environment/environments at project/payments. To see who may, run:
+              nereus authorization binding list --owner project/payments
+              Nothing was changed.
+    dependsOn: [can-i-no]
+    notes: |-
+      **The Nereus API asks before it acts,** on every route: the token's User, the verb, the kind and the object's owner. The refusal says what happened and what to do next (ADR 0012, error messages).
+
+      **The one door is what makes it hold** (ADR 0018, the Nereus API): `nereus environment` reaches the platform through the API, never through a kubeconfig (#1320, The CLI never knows the cluster).
+    pt:
+      topic: "environment create"
+      message: "O ambiente do Bruno é recusado, com educação"
+      accent: "recusado"
+      notes: |-
+        **A Nereus API pergunta antes de agir,** em toda rota: o User do token, o verbo, o kind e o owner do objeto. A recusa diz o que aconteceu e o que fazer em seguida (ADR 0012, mensagens de erro).
+
+        **A porta única é o que faz valer** (ADR 0018, a Nereus API): o `nereus environment` chega à plataforma pela API, nunca por um kubeconfig (#1320, The CLI never knows the cluster).
+
+  - name: enforce-allowed
+    act: enforcement
+    topic: "environment create"
+    status: built
+    issue: 897
+    message: "Ana's environment is created"
+    accent: "created"
+    terminal:
+      steps:
+        - comment: "Signed in as ana, the tech lead"
+          run: "nereus environment create staging"
+          options: ["--owner project/payments"]
+          output: |-
+            ✓ environment/environments/staging created (mandate: vcluster, nereid: vcluster)
+
+            Next steps:
+
+              nereus environment get staging --watch
+    dependsOn: [enforce-denied]
+    notes: |-
+      **The same command, another person, another answer.** Nothing in the environment reef changed: the question is asked at the door.
+    pt:
+      topic: "environment create"
+      message: "O ambiente da Ana é criado"
+      accent: "criado"
+      notes: |-
+        **O mesmo comando, outra pessoa, outra resposta.** Nada mudou no reef environment: a pergunta é feita na porta.
+
+  - name: leave-team
+    act: enforcement
+    topic: "member delete"
+    status: planned
+    issue: 1307
+    message: "Leaving the team removes the access"
+    accent: "removes the access"
+    terminal:
+      steps:
+        - comment: "Ana leaves the team"
+          run: "nereus teams member delete ana"
+          options: ["--team payments"]
+          output: |-
+            ✓ teams/teams/payments/members/ana deleted
+        - comment: "And the answer changes with her"
+          run: "nereus authorization can-i create environment/environments"
+          options: ["--owner project/payments", "--user ana"]
+          output: |-
+            no: no binding gives ana create on environment/environments at project/payments
+    dependsOn: [enforce-allowed]
+    notes: |-
+      **No binding was touched:** the member left, the Nereid removed its tuple, and the next check answers no. This is the end-to-end scene of the slice: create a team, add a member, yes; remove the member, no; a write by a non-member is refused.
+    pt:
+      topic: "member delete"
+      message: "Sair do time remove o acesso"
+      accent: "remove o acesso"
+      notes: |-
+        **Nenhum binding foi tocado:** o membro saiu, a Nereid removeu a sua tupla, e a próxima verificação responde não. Esta é a cena de ponta a ponta da fatia: criar um time, adicionar um membro, sim; remover o membro, não; uma escrita de quem não é membro é recusada.
+
+  - name: fail-closed
+    act: enforcement
+    topic: "fail closed"
+    status: built
+    issue: 897
+    message: "Without {nereid:openfga}, everything closes"
+    accent: "everything closes"
+    terminal:
+      steps:
+        - comment: "A read while the Nereid does not answer"
+          run: "nereus environment list"
+          output: |-
+            ✗ authorization does not answer (nereid: openfga): nothing is allowed until it is back. To see what is down, run:
+              nereus doctor
+              Nothing was changed.
+        - comment: "What stays open says why"
+          run: "nereus doctor"
+          output: |-
+            CHECK           RESULT  DETAIL
+            api             pass    answered
+            nereids         fail    13 of 14 Ready, not Ready: openfga (Unavailable)
+            emergency-exit  warn    nereus-admins passed through the emergency exit 199 times since the API started, the last less than a minute ago by admin: give the administrators their own User and a binding of administrator
+    dependsOn: [enforce-denied]
+    notes: |-
+      **Fail closed, reads included:** with no answer, the Nereus API refuses, so an outage is never a way to read what one could not. `nereus whoami`, `nereus status` and `nereus doctor` stay open, so a person can see what is down.
+
+      **The `nereus-admins` group is the emergency exit:** it does not depend on the Nereid, it is the same rule that holds before authorization is installed, and `nereus doctor` warns when it is used. The instance's root User (#1306, How teams, roles and Users relate) takes its place in a later slice.
+    pt:
+      topic: "fecha tudo"
+      message: "Sem {nereid:openfga}, tudo se fecha"
+      accent: "tudo se fecha"
+      notes: |-
+        **Fecha tudo, leituras inclusive:** sem resposta, a Nereus API recusa, então uma queda nunca é um jeito de ler o que não se podia. `nereus whoami`, `nereus status` e `nereus doctor` continuam abertos, para a pessoa ver o que caiu.
+
+        **O grupo `nereus-admins` é a saída de emergência:** não depende da Nereid, é a mesma regra que vale antes de a autorização ser instalada, e o `nereus doctor` avisa quando ela é usada. O User root da instância (#1306, How teams, roles and Users relate) toma o seu lugar em uma fatia posterior.
+
+  - name: later
+    act: closing
+    topic: "later"
+    message: "Out of this slice, each with its next step"
+    accent: "its next step"
+    screen:
+      - "**A second identity:** linked to the same User after an e-mail code"
+      - "**Agents as subjects:** acting for a person, with the same access or less"
+      - "**Quotas:** per Organization, Project and team"
+      - "**Kubernetes RBAC:** bindings projected into the namespaces"
+      - "**Position as a kind:** with its skills and places"
+      - "**Identity provider groups:** written from the teams, never read"
+    notes: |-
+      **Each one fits what this slice builds, with no change to it.** A User already holds a list of identities (ADR 0006, the person is a User of core). A member has a kind, a person today and an agent later, acting for a person by token exchange. A team sits on a node of the tenancy tree, where a quota attaches.
+
+      **Projecting bindings into Kubernetes RBAC is the next layer:** control held in more than one place, so a person with a kubeconfig is refused there too. The `Position` kind comes with #1307 (The teams reef), and the groups of an identity provider are an output of the teams (#1306, How teams, roles and Users relate).
+    pt:
+      topic: "depois"
+      message: "Fora desta fatia, cada um com o seu próximo passo"
+      accent: "o seu próximo passo"
+      screen:
+        - "**Uma segunda identidade:** ligada ao mesmo User depois de um código por e-mail"
+        - "**Agentes como sujeitos:** agindo por uma pessoa, com o mesmo acesso ou menos"
+        - "**Cotas:** por Organization, Project e time"
+        - "**RBAC do Kubernetes:** bindings projetados nos namespaces"
+        - "**Position como kind:** com as suas skills e vagas"
+        - "**Grupos do provedor de identidade:** escritos a partir dos times, nunca lidos"
+      notes: |-
+        **Cada um cabe no que esta fatia constrói, sem mudá-la.** Um User já guarda uma lista de identidades (ADR 0006, a pessoa é um User do core). Um membro tem um kind, uma pessoa hoje e um agente depois, agindo por uma pessoa por token exchange. Um time fica em um nó da árvore de tenancy, onde uma cota se prende.
+
+        **Projetar os bindings no RBAC do Kubernetes é a próxima camada:** o controle mantido em mais de um lugar, então uma pessoa com um kubeconfig também é recusada lá. O kind `Position` vem com a #1307 (The teams reef), e os grupos de um provedor de identidade são uma saída dos times (#1306, How teams, roles and Users relate).

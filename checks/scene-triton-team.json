@@ -1,0 +1,12 @@
+{
+  "name": "scene-triton-team",
+  "command": "test/scene-triton-team",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 106,
+  "passed": 72,
+  "failed": 0,
+  "failure": null,
+  "commit": "bb968642+",
+  "started": "2026-11-20T16:35:16Z"
+}

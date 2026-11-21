@@ -1,0 +1,480 @@
+deck:
+  name: more-than-an-idp
+  title: "Nereus"
+  subtitle: "A composable platform API, more than an IDP"
+  accent: "more than an IDP"
+  pt:
+    title: "Nereus"
+    subtitle: "Uma API de plataforma componível, mais que um IDP"
+    accent: "mais que um IDP"
+
+acts:
+  - name: thesis
+    title: "The thesis"
+    pt: {title: "A tese"}
+  - name: difference
+    title: "The difference"
+    pt: {title: "A diferença"}
+  - name: examples
+    title: "Examples"
+    pt: {title: "Exemplos"}
+  - name: method
+    title: "How we work"
+    pt: {title: "Como trabalhamos"}
+  - name: closing
+    title: "Closing"
+    pt: {title: "Fechamento"}
+
+references:
+  - name: thinking-in-platforms
+    title: "Thinking in Platforms"
+    author: "Kaspar von Grünberg and Luca Galante"
+    year: "2026"
+    url: "https://read.amazon.com/kp/kshare?asin=B0HF615873"
+    about: "Platform engineering as the operating model for work in the AI era."
+    forUs: "A platform is the operating model of knowledge work; an Internal Developer Platform is one profile of it."
+    pt:
+      about: "Platform engineering como o modelo operacional do trabalho na era da IA."
+      forUs: "Uma plataforma é o modelo operacional do trabalho do conhecimento; um Internal Developer Platform é um profile dela."
+  - name: platform-tooling
+    title: "Platform tooling landscape"
+    author: "platformengineering.org"
+    url: "https://platformengineering.org/platform-tooling"
+    about: "The five planes of a platform and the tools in each."
+    forUs: "Each box in a plane is a candidate Reef, with one API in front."
+    pt:
+      about: "Os cinco planos de uma plataforma e as ferramentas de cada um."
+      forUs: "Cada caixa de um plano é um Reef candidato, com uma API na frente."
+  - name: xp
+    title: "Extreme Programming"
+    author: "Kent Beck"
+    year: "1999"
+    url: "https://en.wikipedia.org/wiki/Extreme_programming"
+    about: "Small steps that each end in working software."
+    forUs: "The practices are old; what is new is that an agent takes the steps."
+    pt:
+      about: "Passos pequenos que terminam em software funcionando."
+      forUs: "As práticas são antigas; o novo é que um agente dá os passos."
+  - name: death-by-powerpoint
+    title: "How to avoid death by PowerPoint"
+    author: "David JP Phillips"
+    year: "2014"
+    url: "https://www.youtube.com/watch?v=Iwpi1Lm6dFo"
+    about: "One message per slide, few words, the presenter carries the rest."
+    forUs: "The style of this deck."
+    pt:
+      about: "Uma mensagem por slide, poucas palavras, quem apresenta carrega o resto."
+      forUs: "O estilo deste deck."
+
+
+slides:
+  # ── The thesis ───────────────────────────────────────
+  - name: title
+    act: thesis
+    cover: true
+    message: "Nereus"
+    notes: |-
+      **Fifteen minutes to show why I think this is bigger than an IDP.** The idea, what sets it apart, two examples, and how the work happens.
+
+      **The ask comes at the end:** one small, concrete step.
+    pt:
+      message: "Nereus"
+      notes: |-
+        **Quinze minutos para mostrar por que acho que isto é maior que um IDP.** A ideia, o que a diferencia, dois exemplos e como o trabalho acontece.
+
+        **O pedido vem no fim:** um passo pequeno e concreto.
+
+  - name: idp-is-a-profile
+    act: thesis
+    topic: "One door"
+    message: "An IDP is one profile, not the product"
+    accent: "profile"
+    subtitle: "One API in front, every client speaks of capabilities"
+    diagram: "../assets/docs/landscape.svg"
+    reveal: [planes, api, clients]
+    accumulate: true
+    refs: [platform-tooling, thinking-in-platforms]
+    notes: |-
+      **The product is the Platform API, the one door.** The CLI, a portal, an IDE reading an `app.yaml` and an agent all go through it; none needs a kubeconfig, and all speak of capabilities, never of the tools behind them.
+
+      **An Internal Developer Platform is one profile:** a list of capabilities installed together. Thinking in Platforms gives the same thesis words: a platform serves any recurring knowledge work, with an "internal marketing platform" and a "patient tracking platform" as examples (p. 20).
+
+      **The five planes come from the platform tooling landscape;** each box is a candidate capability.
+    pt:
+      topic: "Uma porta"
+      message: "Um IDP é um profile, não o produto"
+      accent: "profile"
+      subtitle: "Uma API na frente, todo cliente fala de capacidades"
+      notes: |-
+        **O produto é a Platform API, a porta única.** A CLI, um portal, uma IDE lendo um `app.yaml` e um agente passam todos por ela; nenhum precisa de kubeconfig, e todos falam de capacidades, nunca das ferramentas por trás.
+
+        **Um Internal Developer Platform é um profile:** uma lista de capacidades instaladas juntas. O Thinking in Platforms dá palavras à mesma tese: uma plataforma serve qualquer trabalho do conhecimento recorrente, com uma "internal marketing platform" e uma "patient tracking platform" como exemplos (p. 20).
+
+        **Os cinco planos vêm do platform tooling landscape;** cada caixa é uma capacidade candidata.
+
+  # ── The difference ───────────────────────────────────
+  - name: starts-empty
+    act: difference
+    topic: "The model"
+    message: "The platform starts empty and grows at runtime"
+    accent: "empty"
+    screen:
+      - "**{reef:Reef}:** a capability's contract, one API group"
+      - "**{nereid:Nereid}:** a controller that implements it with a tool"
+      - "**{mandate:Mandate}:** the default and the rules for its use"
+    notes: |-
+      **Three words carry the whole model (ADR 0002).** A Reef is the contract, say `authentication`. A Nereid is the implementation, say Keycloak. A Mandate says which Nereid is the default and with what settings.
+
+      **Everything is installed at runtime:** a new Reef brings its API, a new Nereid brings its own commands to the CLI. Nothing is compiled into the platform.
+
+      The full deck: docs/presentations/nereus.html.
+    pt:
+      topic: "O modelo"
+      message: "A plataforma começa vazia e cresce em runtime"
+      accent: "vazia"
+      screen:
+        - "**{reef:Reef}:** o contrato de uma capacidade, um API group"
+        - "**{nereid:Nereid}:** um controller que a implementa com uma ferramenta"
+        - "**{mandate:Mandate}:** o padrão e as regras de uso"
+      notes: |-
+        **Três palavras carregam o modelo inteiro (ADR 0002).** Um Reef é o contrato, por exemplo `authentication`. Um Nereid é a implementação, por exemplo Keycloak. Um Mandate diz qual Nereid é o padrão e com que configuração.
+
+        **Tudo é instalado em runtime:** um Reef novo traz sua API, um Nereid novo traz seus próprios comandos para a CLI. Nada é compilado dentro da plataforma.
+
+        O deck completo: docs/presentations/nereus.html.
+
+  - name: swap-the-tool
+    act: difference
+    topic: "Moving parts"
+    message: "Swapping the tool changes no command"
+    accent: "no command"
+    screen:
+      - "**Elsewhere:** code soon depends on each tool chosen"
+      - "**Here:** a second {nereid:Nereid} joins the same {reef:Reef}"
+      - "**The switch:** the default {mandate:Mandate} changes, clients don't"
+    notes: |-
+      **This is the difference from the IDPs I know.** A platform team picks tools from the CNCF Landscape, and soon scripts, templates and apps depend on each choice; changing it is a project.
+
+      **Here the choice stays a moving part from day one (ADR 0011).** A team tries a tool as a Nereid; if it does not fit, it adds another to the same Reef and switches the default Mandate. No command, client or app declaration changes.
+    pt:
+      topic: "Peças móveis"
+      message: "Trocar a ferramenta não muda nenhum comando"
+      accent: "nenhum comando"
+      screen:
+        - "**Nos outros:** o código logo depende de cada ferramenta escolhida"
+        - "**Aqui:** um segundo {nereid:Nereid} entra no mesmo {reef:Reef}"
+        - "**A troca:** muda o {mandate:Mandate} padrão, os clientes não"
+      notes: |-
+        **Esta é a diferença para os IDPs que conheço.** Um time de plataforma escolhe ferramentas do CNCF Landscape, e logo scripts, templates e apps dependem de cada escolha; trocar vira um projeto.
+
+        **Aqui a escolha continua uma peça móvel desde o primeiro dia (ADR 0011).** Um time testa uma ferramenta como Nereid; se não servir, acrescenta outro ao mesmo Reef e troca o Mandate padrão. Nenhum comando, cliente ou declaração de app muda.
+
+  - name: it-runs
+    act: difference
+    topic: "It runs"
+    message: "A {nereid:Nereid} brings its own commands"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "Prepare a cluster"
+          run: "nereus init"
+          output: |-
+            ✓ core/api installed
+        - comment: "Apply the environment Reef"
+          run: "nereus reef apply environment"
+          output: |-
+            ✓ core/reefs/environment created
+
+            Next steps:
+
+              nereus environment --help
+              nereus nereid apply <nereid> --reef environment
+    notes: |-
+      **It is not a drawing: the first slice runs on a local k3d.** `nereus init` prepares a cluster, a Reef arrives with its API, and the CLI learns the commands its Nereid publishes.
+
+      **Every output says what changed and what comes next,** in kubectl's words. The exact output here is abbreviated; the profile today already runs tenancy, release, environment, database, metrics, secrets, authentication, catalog, scm, delivery, registry and build.
+    pt:
+      topic: "Roda"
+      message: "Um {nereid:Nereid} traz os próprios comandos"
+      notes: |-
+        **Não é um desenho: a primeira fatia roda num k3d local.** `nereus init` prepara um cluster, um Reef chega com sua API, e a CLI aprende os comandos que seu Nereid publica.
+
+        **Toda saída diz o que mudou e o que vem depois,** com as palavras do kubectl. A saída aqui está resumida; o profile hoje já roda tenancy, release, environment, database, metrics, secrets, authentication, catalog, scm, delivery, registry e build.
+
+  # ── Examples ─────────────────────────────────────────
+  - name: comparator-contract
+    act: examples
+    topic: "The comparator · 1/3"
+    message: "One contract, two {nereid:Nereids} behind it"
+    accent: "One contract"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "The authentication Reef: the interface every client uses"
+          run: "nereus reef get authentication"
+          output: |-
+            authentication.getnereus.dev/v1alpha1
+              sessions  create get list delete   # nereus login
+    notes: |-
+      **An interface is a Reef.** Clients only know `sessions create`, which is `nereus login`; they never know which tool answers.
+
+      **Both live at once:** the {nereid:keycloak} Nereid and an {nereid:auth0} Nereid, behind the same contract, each with a share of the traffic. Every request goes through Nereus, so both are measured with the same yardstick.
+
+      The full deck: docs/presentations/implementation-comparator.html.
+    pt:
+      topic: "O comparator · 1/3"
+      message: "Um contrato, dois {nereid:Nereids} por trás"
+      accent: "Um contrato"
+      notes: |-
+        **Uma interface é um Reef.** Os clientes só conhecem `sessions create`, que é o `nereus login`; nunca sabem qual ferramenta responde.
+
+        **Os dois no ar ao mesmo tempo:** o Nereid {nereid:keycloak} e um Nereid {nereid:auth0}, atrás do mesmo contrato, cada um com uma parte do tráfego. Todo pedido passa pelo Nereus, então os dois são medidos com a mesma régua.
+
+        O deck completo: docs/presentations/implementation-comparator.html.
+
+  - name: comparator-measure
+    act: examples
+    topic: "The comparator · 2/3"
+    message: "A {nereid:Nereid} compares the implementations"
+    accent: "compares"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "Compare both on login, over 30 days"
+          run: "nereus comparison create auth-10"
+          options: ["--reef authentication", "--verb login", "--window 30d"]
+          stepwise: true
+          output: |-
+            {dim:scope: sessions create (login)}
+            {dim:weights: perf 30 · sat 30 · cost 40}
+
+            {dim:sli          slo     }{nereid:keycloak}  {nereid:auth0}
+            login <1s    {dim:≥99%   } 99.2% ✓   99.6% ✓
+            satisfaction {dim:≥4.5   } 4.1   ~   4.3   ~
+            total cost   {dim:≤R$10k } R$26k ✗   R$11k ~
+            error budget         20%       60%
+            sla                  {dim:own team}  vendor
+            verdict      {nereid:auth0}
+    notes: |-
+      **Three measures, weights the team sets:** performance from one trace, from request to Ready; satisfaction from a one-key score; total cost, license plus who keeps it running.
+
+      **Faster login doesn't decide on its own.** Keycloak has no license, but someone keeps it running: the cost a benchmark doesn't show. Hypotheses are proven with experiment metrics, and we measure flow, never individuals.
+    pt:
+      topic: "O comparator · 2/3"
+      message: "Um {nereid:Nereid} compara as implementações"
+      accent: "compara"
+      notes: |-
+        **Três medidas, com pesos que o time define:** performance de um trace só, do pedido ao Ready; satisfação de uma nota com uma tecla; custo total, licença mais quem mantém de pé.
+
+        **Login mais rápido não decide sozinho.** O Keycloak não tem licença, mas alguém mantém de pé: o custo que o benchmark não mostra. Hipóteses são provadas com métricas de experimentos, e medimos fluxo, nunca indivíduos.
+
+  - name: comparator-decision
+    act: examples
+    topic: "The comparator · 3/3"
+    message: "A decision switches the default {mandate:Mandate}"
+    accent: "decision"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "Record the decision; the default Mandate follows"
+          run: "nereus comparison decision create keycloak-to-auth0"
+          options: ["--comparison auth-10", "--choose auth0"]
+          output: |-
+            ✓ decision/keycloak-to-auth0 created
+            by:       maria
+            at:       2026-10-21 14:32
+            based on: comparison/auth-10
+            verdict:  auth0 (marginal)
+            event:    authentication.defaultmandate.changed
+    notes: |-
+      **A person decides, the platform records and applies.** The decision names who, when and on what data; its event switches the default Mandate, and no client changes.
+
+      **The platform becomes a laboratory for technical decisions:** every tool choice tested in production, measured and reversible, instead of argued in a meeting. These commands are the contract of the proposal, not built yet.
+    pt:
+      topic: "O comparator · 3/3"
+      message: "Uma decisão troca o {mandate:Mandate} padrão"
+      accent: "decisão"
+      notes: |-
+        **Uma pessoa decide, a plataforma registra e aplica.** A decisão diz quem, quando e com base em quais dados; o seu evento troca o Mandate padrão, e nenhum cliente muda.
+
+        **A plataforma vira um laboratório de decisões técnicas:** toda escolha de ferramenta testada em produção, medida e reversível, em vez de discutida numa reunião. Estes comandos são o contrato da proposta, ainda não construídos.
+
+  - name: agent-is-a-client
+    act: examples
+    topic: "Agents"
+    message: "An agent is just one more client of the API"
+    accent: "one more client"
+    screen:
+      - "**The ask:** \"create a Postgres for greeting-api\""
+      - "**No kubeconfig:** it speaks of {reef:database}, not of the tool"
+      - "**One door that cannot lie:** what it sees is what runs"
+    notes: |-
+      **The same door serves people and agents.** An agent asked for a Postgres calls the {reef:database} Reef; the {nereid:cloudnative-pg} Nereid does the work.
+
+      **The API is the one door, and it cannot lie (a pillar):** permissions, policy and cost apply to the agent as to anyone, and what it reports is the real state.
+    pt:
+      topic: "Agentes"
+      message: "Um agente é só mais um cliente da API"
+      accent: "mais um cliente"
+      screen:
+        - "**O pedido:** \"crie um Postgres para greeting-api\""
+        - "**Sem kubeconfig:** fala de {reef:database}, não da ferramenta"
+        - "**Uma porta que não mente:** o que ele vê é o que roda"
+      notes: |-
+        **A mesma porta serve pessoas e agentes.** Um agente que recebe o pedido de um Postgres chama o Reef {reef:database}; o Nereid {nereid:cloudnative-pg} faz o trabalho.
+
+        **A API é a porta única, e não pode mentir (uma pillar):** permissões, policy e custo valem para o agente como para qualquer um, e o que ele relata é o estado real.
+
+  - name: agents-talk
+    act: examples
+    topic: "Collaboration"
+    message: "Agents talk before they collide"
+    accent: "talk"
+    screen:
+      - "**Claim:** a session takes an issue and says which files"
+      - "**Ask:** before a shared cluster or file, it waits for peers"
+      - "**Triton:** one agent asks another, every word on record"
+    notes: |-
+      **Several agent sessions work on this repository at once,** each on its own issue and worktree. They coordinate with four messages only: claim, ask, release and note.
+
+      **Triton takes this to the platform:** a room across users and machines, where an order can come from a phone and one agent can ask another, logged in to Nereus and on record.
+
+      The decks: docs/presentations/triton.html and docs/presentations/how-we-work.html.
+    pt:
+      topic: "Colaboração"
+      message: "Agentes conversam antes de colidir"
+      accent: "conversam"
+      screen:
+        - "**Claim:** uma sessão pega uma issue e diz quais arquivos"
+        - "**Ask:** antes de um cluster ou arquivo compartilhado, espera os pares"
+        - "**Triton:** um agente pede a outro, cada palavra registrada"
+      notes: |-
+        **Várias sessões de agentes trabalham neste repositório ao mesmo tempo,** cada uma na sua issue e worktree. Elas se coordenam com quatro mensagens apenas: claim, ask, release e note.
+
+        **O Triton leva isto para a plataforma:** uma sala entre usuários e máquinas, onde uma ordem pode vir do celular e um agente pode pedir a outro, autenticado no Nereus e com registro.
+
+        Os decks: docs/presentations/triton.html e docs/presentations/how-we-work.html.
+
+  # ── How we work ─────────────────────────────────────
+  - name: nothing-new
+    act: method
+    topic: "Method"
+    message: "Nothing new under the sun, except the agents"
+    accent: "except the agents"
+    screen:
+      - "**Old practices:** Agile, XP, WIP limits, walking skeleton"
+      - "**New executor:** an agent carries out each issue alone"
+      - "**Rule becomes script:** a hook enforces what an agent forgets"
+    refs: [xp, death-by-powerpoint]
+    notes: |-
+      **The practices are fifty years old; what is new is who carries them out.** Each issue holds all its context so an agent can deliver it alone, and the board limits work in progress.
+
+      **Deterministic first, AI only where it is good:** a rule that depends on an agent remembering it becomes a hook, a test or a script.
+
+      The full deck: docs/presentations/how-we-work.html.
+    pt:
+      topic: "Método"
+      message: "Nada de novo sob o sol, exceto os agentes"
+      accent: "exceto os agentes"
+      screen:
+        - "**Práticas antigas:** Agile, XP, limites de WIP, walking skeleton"
+        - "**Novo executor:** um agente entrega cada issue sozinho"
+        - "**A regra vira script:** um hook garante o que o agente esquece"
+      notes: |-
+        **As práticas têm cinquenta anos; o novo é quem as executa.** Cada issue carrega todo o contexto para um agente entregá-la sozinho, e o board limita o trabalho em andamento.
+
+        **Determinístico primeiro, IA só onde é boa:** uma regra que depende de o agente lembrar vira um hook, um teste ou um script.
+
+        O deck completo: docs/presentations/how-we-work.html.
+
+  - name: references
+    act: method
+    topic: "The groundwork"
+    message: "1165 references back the decisions"
+    accent: "1165"
+    screen:
+      - "**Platform engineering:** 175"
+      - "**Security:** 158"
+      - "**AI and agents:** 142"
+      - "**DevOps and SRE:** 120"
+      - "**Agile and lean:** 97"
+    notes: |-
+      **Every decision names where it came from.** The list in docs/references.md has 1165 sources in sixteen themes, each marked with who brought it and whether it was checked on the web.
+
+      **Twenty-three pillars guide the work,** from the Agile Manifesto to "the same quality for fewer tokens"; the agents read them, so they value what the project values.
+
+      Source: docs/references.md and docs/vision.md.
+    pt:
+      topic: "O referencial"
+      message: "1165 referências sustentam as decisões"
+      accent: "1165"
+      screen:
+        - "**Platform engineering:** 175"
+        - "**Security:** 158"
+        - "**AI and agents:** 142"
+        - "**DevOps and SRE:** 120"
+        - "**Agile and lean:** 97"
+      notes: |-
+        **Toda decisão diz de onde veio.** A lista em docs/references.md tem 1165 fontes em dezesseis temas, cada uma marcada com quem a trouxe e se foi verificada na web.
+
+        **Vinte e três pillars guiam o trabalho,** do Manifesto Ágil a "a mesma qualidade com menos tokens"; os agentes as leem, então valorizam o que o projeto valoriza.
+
+        Fonte: docs/references.md e docs/vision.md.
+
+  - name: hero-to-platform
+    act: method
+    topic: "Where we stand"
+    message: "From hero to platform"
+    accent: "platform"
+    subtitle: "Each explicit rule moves the design out of one head"
+    screen:
+      - "**Artisanal:** implicit design, fragmented ownership"
+      - "**Hero-based:** implicit design, ownership in few heads"
+      - "**Bureaucratic:** explicit design, diffuse ownership"
+      - "**Platform:** explicit design, end-to-end ownership"
+    refs: [thinking-in-platforms]
+    notes: |-
+      **Thinking in Platforms places production systems on two axes** (p. 36-37): whether the design is explicit or implicit, and whether ownership is concentrated or fragmented.
+
+      **Nereus starts close to hero-based:** one owner holds most of the context. Each written rule, hook and self-contained issue moves it toward the platform quadrant; the risk on the way is bureaucracy, so each rule names its reason.
+    pt:
+      topic: "Onde estamos"
+      message: "Do herói à plataforma"
+      accent: "plataforma"
+      subtitle: "Cada regra explícita tira o desenho de uma cabeça só"
+      screen:
+        - "**Artesanal:** desenho implícito, ownership fragmentado"
+        - "**Herói:** desenho implícito, ownership em poucas cabeças"
+        - "**Burocrático:** desenho explícito, ownership difuso"
+        - "**Plataforma:** desenho explícito, ownership de ponta a ponta"
+      notes: |-
+        **O Thinking in Platforms coloca os sistemas de produção em dois eixos** (p. 36-37): se o desenho é explícito ou implícito, e se o ownership é concentrado ou fragmentado.
+
+        **O Nereus começa perto do modelo herói:** um dono guarda a maior parte do contexto. Cada regra escrita, hook e issue autossuficiente o move para o quadrante de plataforma; o risco no caminho é a burocracia, então cada regra diz o seu motivo.
+
+  # ── Closing ──────────────────────────────────────────
+  - name: the-ask
+    act: closing
+    topic: "The ask"
+    message: "A pilot of the comparator?"
+    accent: "pilot"
+    screen:
+      - "**Scope:** one capability, two tools, one real team"
+      - "**Measure:** performance, satisfaction and cost"
+      - "**Outcome:** a tool decision backed by data, not opinion"
+    notes: |-
+      **One small, concrete step:** pick one capability where there is a real tool debate, run both behind the same contract, and let the comparator decide.
+
+      **If it works, it shows the bigger idea in practice:** a platform as the operating model of the work, with the IDP as its first profile.
+    pt:
+      topic: "O pedido"
+      message: "Um piloto do comparator?"
+      accent: "piloto"
+      screen:
+        - "**Escopo:** uma capacidade, duas ferramentas, um time real"
+        - "**Medida:** performance, satisfação e custo"
+        - "**Resultado:** uma decisão de ferramenta baseada em dados, não opinião"
+      notes: |-
+        **Um passo pequeno e concreto:** escolher uma capacidade onde existe um debate real de ferramenta, rodar as duas atrás do mesmo contrato e deixar o comparator decidir.
+
+        **Se funcionar, mostra a ideia maior na prática:** uma plataforma como modelo operacional do trabalho, com o IDP como o primeiro profile.

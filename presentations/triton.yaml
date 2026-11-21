@@ -1,0 +1,559 @@
+deck:
+  name: triton
+  title: "Triton's roadmap"
+  subtitle: "From a room that says hello to a Nereid that carries messages between agents"
+  accent: "carries messages"
+  pt:
+    title: "O roadmap do Tritão"
+    subtitle: "De uma sala que diz oi a uma Nereida que leva mensagens entre agentes"
+    accent: "leva mensagens"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: today
+    title: "Today"
+    question: "What does Triton do right now?"
+    pt: {title: "Hoje", question: "O que o Tritão faz agora?"}
+  - name: roadmap
+    title: "The roadmap"
+    question: "Which slices take it from a demo to a Nereid?"
+    pt: {title: "O roadmap", question: "Que fatias o levam de uma demo a uma Nereida?"}
+  - name: decisions
+    title: "Decisions"
+    question: "What did the owner decide, and what is left?"
+    pt: {title: "Decisões", question: "O que o dono decidiu, e o que falta?"}
+
+references:
+  - name: triton-myth
+    title: "Triton (mythology)"
+    author: "Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Triton_(mythology)"
+    about: "Triton is the son of Poseidon and Amphitrite, the herald of the sea, who blows a conch shell to calm or raise the waves."
+    forUs: "The name of the mediator: **the herald** who carries messages, son of Amphitrite, the Nereid that provides the agents."
+    pt:
+      about: "Tritão é filho de Poseidon e de Anfitrite, o arauto do mar, que sopra uma concha para acalmar ou levantar as ondas."
+      forUs: "O nome do mediador: **o arauto** que leva as mensagens, filho de Anfitrite, a Nereida que fornece os agentes."
+  - name: nats
+    title: "Core NATS publish and subscribe"
+    author: "The NATS project (CNCF)"
+    url: "https://docs.nats.io/nats-concepts/core-nats/pubsub"
+    about: "NATS is a messaging server: whoever publishes on a subject reaches everyone subscribed to it, at most once and with nothing stored."
+    forUs: "The room is the subject `room.default`; **JetStream**, the part of NATS that stores messages, is what step 3 turns on."
+    pt:
+      about: "O NATS é um servidor de mensagens: quem publica num assunto alcança todos os assinantes dele, no máximo uma vez e sem guardar nada."
+      forUs: "A sala é o assunto `room.default`; o **JetStream**, a parte do NATS que guarda mensagens, é o que a etapa 3 liga."
+  - name: nats-channel
+    title: "nats-channel: Claude Code as a NATS agent"
+    author: "Synadia"
+    url: "https://github.com/synadia-ai/synadia-agents/tree/main/agents/claude-code"
+    about: "A Claude Code plugin that turns an open session into an agent that receives prompts over NATS and replies with a tool."
+    forUs: "The agent's side of Triton is **not ours**: m15 listens through this plugin, and Triton speaks its protocol."
+    pt:
+      about: "Um plugin do Claude Code que transforma uma sessão aberta num agente que recebe prompts pelo NATS e responde com uma ferramenta."
+      forUs: "O lado do agente na porta **não é nosso**: o m15 escuta por esse plugin, e o Tritão fala o protocolo dele."
+  - name: mcp
+    title: "Model Context Protocol: Streamable HTTP"
+    author: "The MCP project"
+    url: "https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http"
+    about: "MCP (Model Context Protocol) lets an AI app call tools of a server; Streamable HTTP is how a remote server is reached."
+    forUs: "Triton is an MCP server with **two tools**, `send_order` and `list_orders`, added in claude.ai as a custom connector."
+    pt:
+      about: "O MCP (Model Context Protocol) deixa um app de IA chamar ferramentas de um servidor; o Streamable HTTP é como um servidor remoto é alcançado."
+      forUs: "A porta do Tritão é um servidor MCP com **duas ferramentas**, `send_order` e `list_orders`, adicionado no claude.ai como conector."
+  - name: cloudflare-tunnel-dns
+    title: "Cloudflare Tunnel: DNS records"
+    author: "Cloudflare"
+    url: "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/dns/"
+    about: "A named tunnel gets an address `<UUID>.cfargotunnel.com`, and a CNAME record sends a hostname to it."
+    forUs: "\"The cfargotunnel.com subdomain only proxies traffic for DNS records in the same Cloudflare account\": **the zone lives on Cloudflare** while Nereus runs behind a tunnel."
+    pt:
+      about: "Um túnel com nome ganha um endereço `<UUID>.cfargotunnel.com`, e um registro CNAME manda um hostname para ele."
+      forUs: "\"The cfargotunnel.com subdomain only proxies traffic for DNS records in the same Cloudflare account\": **a zona fica na Cloudflare** enquanto o Nereus roda atrás de um túnel."
+  - name: openfga
+    title: "OpenFGA"
+    author: "OpenFGA (CNCF)"
+    url: "https://openfga.dev/"
+    about: "Open source relationship-based authorization, created by the Auth0/Okta team, inspired by Google Zanzibar, a CNCF project."
+    forUs: "The future {nereid:openfga} Nereid of the {reef:authorization} reef: **inviting outside people comes later**, after the owner logs in alone."
+    pt:
+      about: "Autorização baseada em relacionamentos, open source, criada pelo time do Auth0/Okta, inspirada no Google Zanzibar, um projeto da CNCF."
+      forUs: "A futura Nereida {nereid:openfga} do reef {reef:authorization}: **convidar gente de fora vem depois**, quando o dono já entra sozinho."
+  - name: phillips
+    title: "How to avoid death by PowerPoint"
+    author: "David JP Phillips"
+    year: 2014
+    url: "https://www.youtube.com/watch?v=Iwpi1Lm6dFo"
+    about: "A talk on slides that help an audience: one message per slide, few objects, size and contrast that lead the eye."
+    forUs: "The style of this deck: **one moment per slide**, at most two items, the notes for what is said."
+    pt:
+      about: "Uma palestra sobre slides que ajudam a plateia: uma mensagem por slide, poucos objetos, tamanho e contraste que guiam o olhar."
+      forUs: "O estilo deste deck: **um momento por slide**, no máximo dois itens, as notas para o que é falado."
+
+slides:
+  # ── Opening ─────────────────────────────────────────
+  - name: title
+    act: opening
+    cover: true
+    message: "Five thin slices take Triton from a demo to the messenger of the platform"
+    refs: [phillips]
+    notes: |-
+      What we want to say: **every step works end to end and can be used the day it lands**. Steps 1 to 3 make the order channel reliable, and only then it replaces the Drive beach; steps 4 and 5 make Triton grow.
+
+      **Route:** what runs today, the five steps, and the decisions the owner makes before the first one.
+
+      Source: controllers/triton/README.md.
+    pt:
+      message: "Cinco fatias finas levam o Tritão de uma demo a mensageiro da plataforma"
+      notes: |-
+        O que queremos dizer: **cada etapa funciona de ponta a ponta e pode ser usada no dia em que entra**. As etapas 1 a 3 deixam o canal de ordens confiável, e só então ele substitui a beach no Drive; as etapas 4 e 5 fazem o Tritão crescer.
+
+        **Roteiro:** o que roda hoje, as cinco etapas e as decisões que o dono toma antes da primeira.
+
+        Fonte: controllers/triton/README.md.
+
+  - name: why-triton
+    act: opening
+    topic: "The name"
+    message: "Triton is the herald of the sea, son of Amphitrite"
+    accent: "herald"
+    screen: ["**Amphitrite:** the Nereid that provides AI agents", "**Triton:** her first agent, the one that carries messages"]
+    refs: [triton-myth]
+    notes: |-
+      What we want to say: **the name says the job**. In the myth Triton blows a conch to carry messages; here he carries them between agents.
+
+      He sits next to Glaucus, the messenger of the beach: Glaucus carries rafts through Drive, Triton carries messages in real time.
+
+      Source: controllers/triton/README.md, beach orders 20261028-1708 and 20261028-1712.
+    pt:
+      message: "Tritão é o arauto do mar, filho de Anfitrite"
+      topic: "O nome"
+      accent: "arauto"
+      screen: ["**Anfitrite:** a Nereida que fornece agentes de IA", "**Tritão:** o primeiro agente dela, o que leva as mensagens"]
+      notes: |-
+        O que queremos dizer: **o nome diz o trabalho**. No mito o Tritão sopra uma concha para levar recados; aqui ele leva recados entre agentes.
+
+        Ele fica ao lado do Glauco, o mensageiro da beach: o Glauco leva jangadas pelo Drive, o Tritão leva mensagens em tempo real.
+
+        Fonte: controllers/triton/README.md, ordens da beach 20261028-1708 e 20261028-1712.
+
+  # ── Today ───────────────────────────────────────────
+  - name: today-room
+    act: today
+    topic: "The room"
+    message: "Today Triton keeps a room where every agent hears everything"
+    accent: "hears everything"
+    screen: ["**Hello:** an agent says hi and Triton answers hi back", "**Log:** every message with its time and its sender"]
+    refs: [nats]
+    notes: |-
+      What we want to say: **a fixed rule, no AI yet**. The room is the NATS subject `room.default`; Triton greets and writes things down.
+
+      Merged in #468 (a NATS room where agents say hello and Triton answers).
+
+      Source: controllers/triton/README.md, section "Run it".
+    pt:
+      message: "Hoje o Tritão cuida de uma sala onde todo agente ouve tudo"
+      topic: "A sala"
+      accent: "ouve tudo"
+      screen: ["**Oi:** um agente cumprimenta e o Tritão responde", "**Registro:** cada mensagem com a hora e quem falou"]
+      notes: |-
+        O que queremos dizer: **uma regra fixa, ainda sem IA**. A sala é o assunto do NATS `room.default`; o Tritão cumprimenta e anota.
+
+        Mergeado em #468 (uma sala no NATS onde os agentes dizem oi e o Tritão responde).
+
+        Fonte: controllers/triton/README.md, seção "Run it".
+
+  - name: today-server
+    act: today
+    topic: "Triton"
+    message: "Triton's MCP server carries an order from the phone to the session on m15"
+    accent: "from the phone"
+    screen: ["**In:** claude.ai calls Triton, a server of MCP (Model Context Protocol)", "**Out:** sent, received, in progress, done or failed"]
+    refs: [mcp, nats-channel]
+    dependsOn: [today-room]
+    notes: |-
+      What we want to say: **you speak on the phone and the order reaches the open session on your machine**, and you can ask how it is going.
+
+      Triton's MCP server is a second container of Triton's pod; the session listens through Synadia's nats-channel plugin. Merged in #469 (an MCP server that sends orders to agents over NATS).
+
+      Source: controllers/triton/README.md, section "Triton".
+    pt:
+      message: "O servidor MCP do Tritão leva uma ordem do celular até a sessão no m15"
+      topic: "O servidor MCP"
+      accent: "do celular"
+      screen: ["**Entrada:** o claude.ai chama o Tritão, um servidor MCP (Model Context Protocol)", "**Saída:** enviada, recebida, em andamento, concluída ou falhou"]
+      notes: |-
+        O que queremos dizer: **você fala no celular e a ordem chega à sessão aberta na sua máquina**, e dá para perguntar em que pé está.
+
+        O servidor MCP é um segundo container do pod do Tritão; a sessão escuta pelo plugin nats-channel da Synadia. Mergeado em #469 (um servidor MCP que manda ordens aos agentes pelo NATS).
+
+        Fonte: controllers/triton/README.md, seção "Triton".
+
+  - name: today-limits
+    act: today
+    topic: "Limits"
+    message: "It works, but it forgets, trusts anyone and changes address"
+    accent: "forgets"
+    screen: ["**Memory:** a restart loses every order", "**Trust:** anyone in the room can claim to be another agent"]
+    dependsOn: [today-server]
+    notes: |-
+      What we want to say: **three gaps keep the beach as the main channel for now**.
+
+      The third: the quick tunnel gets a new address at every start, so the connector in claude.ai has to be edited each time.
+
+      Source: controllers/triton/README.md, sections "Security (OWASP)" and "What is missing".
+    pt:
+      message: "Funciona, mas esquece, confia em qualquer um e muda de endereço"
+      topic: "Limites"
+      accent: "esquece"
+      screen: ["**Memória:** um reinício perde todas as ordens", "**Confiança:** qualquer um na sala pode fingir ser outro agente"]
+      notes: |-
+        O que queremos dizer: **três lacunas mantêm a beach como canal principal por enquanto**.
+
+        A terceira: o túnel rápido ganha um endereço novo a cada início, então o conector no claude.ai precisa ser editado toda vez.
+
+        Fonte: controllers/triton/README.md, seções "Security (OWASP)" e "What is missing".
+
+  # ── The roadmap ─────────────────────────────────────
+  - name: step-1-address
+    act: roadmap
+    topic: "Step 1 · A fixed address · 1/6"
+    message: "Nereus runs on this machine for a while, so a tunnel publishes it"
+    accent: "a tunnel"
+    screen: ["**Tunnel:** cloudflared, from this machine, with no public IP", "**Zone on Cloudflare:** a named tunnel only answers records of its own account"]
+    refs: [cloudflare-tunnel-dns]
+    dependsOn: [today-limits]
+    notes: |-
+      What we want to say: **the money decides where Nereus runs, and the tunnel decides where the zone lives**. A record in Azure DNS cannot point to a Cloudflare tunnel: "The cfargotunnel.com subdomain only proxies traffic for DNS records in the same Cloudflare account".
+
+      So the getnereus.dev zone moves to Cloudflare's free plan, and the GoDaddy nameservers point there, once. The registration stays at GoDaddy.
+
+      Source: Cloudflare Tunnel docs, "DNS records".
+    pt:
+      message: "O Nereus roda nesta máquina por um tempo, então um túnel o publica"
+      topic: "Etapa 1 · Endereço fixo · 1/6"
+      accent: "um túnel"
+      screen: ["**Túnel:** o cloudflared, desta máquina, sem IP público", "**Zona na Cloudflare:** um túnel com nome só atende registros da própria conta"]
+      notes: |-
+        O que queremos dizer: **o dinheiro decide onde o Nereus roda, e o túnel decide onde a zona fica**. Um registro na Azure DNS não consegue apontar para um túnel da Cloudflare: "The cfargotunnel.com subdomain only proxies traffic for DNS records in the same Cloudflare account".
+
+        Então a zona getnereus.dev vai para o plano gratuito da Cloudflare, e os nameservers na GoDaddy apontam para lá, uma vez. O registro do domínio continua na GoDaddy.
+
+        Fonte: documentação do Cloudflare Tunnel, "DNS records".
+
+  - name: step-1-cloudflare
+    act: roadmap
+    topic: "Step 1 · A fixed address · 2/6"
+    message: "Before any command, the owner moves the zone by hand, DNSSEC first"
+    accent: "DNSSEC first"
+    screen: ["**Cloudflare:** add the site getnereus.dev on the free plan and note its two nameservers", "**GoDaddy, DNSSEC:** turn it off before the nameservers change, or the domain may stop resolving"]
+    refs: [cloudflare-tunnel-dns]
+    dependsOn: [step-1-address]
+    notes: |-
+      What we want to say: **the first part of step 1 is by hand, and only the owner can do it**. The personal Cloudflare account already exists: add the site getnereus.dev there, on the free plan, and write down the two nameservers Cloudflare assigns.
+
+      Then at GoDaddy, in Domain Portfolio > getnereus.dev > DNS > DNSSEC, check whether DNSSEC (Domain Name System Security Extensions) is on, and turn it off before the nameservers change. Signatures left at the registrar for a zone that now lives elsewhere make the domain stop resolving. It can be turned on again later, from Cloudflare.
+    pt:
+      message: "Antes de qualquer comando, o dono move a zona à mão, o DNSSEC primeiro"
+      topic: "Etapa 1 · Endereço fixo · 2/6"
+      accent: "o DNSSEC primeiro"
+      screen: ["**Cloudflare:** adicionar o site getnereus.dev no plano gratuito e anotar os dois nameservers", "**GoDaddy, DNSSEC:** desligar antes de trocar os nameservers, senão o domínio pode parar de resolver"]
+      notes: |-
+        O que queremos dizer: **a primeira parte da etapa 1 é manual, e só o dono pode fazer**. A conta pessoal na Cloudflare já existe: adicionar lá o site getnereus.dev, no plano gratuito, e anotar os dois nameservers que a Cloudflare atribuir.
+
+        Depois, na GoDaddy, em Domain Portfolio > getnereus.dev > DNS > DNSSEC, ver se o DNSSEC (Domain Name System Security Extensions) está ligado e desligá-lo antes de trocar os nameservers. Assinaturas deixadas no registrador para uma zona que agora mora em outro lugar fazem o domínio parar de resolver. Dá para religar depois, pela Cloudflare.
+
+  - name: step-1-nameservers
+    act: roadmap
+    topic: "Step 1 · A fixed address · 3/6"
+    message: "Then the nameservers change once, and a named tunnel replaces the quick one"
+    accent: "a named tunnel"
+    screen: ["**GoDaddy, nameservers:** replace them with Cloudflare's two; it takes minutes to a few hours", "**Named tunnel:** triton.getnereus.dev, a stable URL for the claude.ai connector"]
+    dependsOn: [step-1-cloudflare]
+    notes: |-
+      What we want to say: **after the swap, the address stops changing**. At GoDaddy, replace the nameservers with the two Cloudflare gave; propagation takes from minutes to a few hours, and Cloudflare e-mails when the zone becomes active.
+
+      Then a named tunnel with the hostname triton.getnereus.dev replaces the quick tunnel, whose `trycloudflare.com` address changes on every start. The custom connector in claude.ai gets a URL it keeps.
+    pt:
+      message: "Depois os nameservers mudam uma vez, e um túnel com nome substitui o rápido"
+      topic: "Etapa 1 · Endereço fixo · 3/6"
+      accent: "um túnel com nome"
+      screen: ["**GoDaddy, nameservers:** trocar pelos dois da Cloudflare; leva de minutos a algumas horas", "**Túnel com nome:** triton.getnereus.dev, uma URL estável para o conector do claude.ai"]
+      notes: |-
+        O que queremos dizer: **depois da troca, o endereço para de mudar**. Na GoDaddy, trocar os nameservers pelos dois que a Cloudflare deu; a propagação leva de minutos a algumas horas, e a Cloudflare manda um e-mail quando a zona fica ativa.
+
+        Depois um túnel com nome, com o hostname triton.getnereus.dev, substitui o túnel rápido, cujo endereço `trycloudflare.com` muda a cada início. O conector no claude.ai ganha uma URL que não muda.
+
+  - name: step-1-tunnel
+    act: roadmap
+    topic: "Step 1 · A fixed address · 4/6"
+    message: "Three cloudflared commands give Triton its name"
+    accent: "its name"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "Has the delegation arrived?"
+          run: "dig NS getnereus.dev +short"
+          output: |-
+            ada.ns.cloudflare.com.
+            bob.ns.cloudflare.com.
+        - comment: "Authorize cloudflared on the zone (opens the browser)"
+          run: "cloudflared tunnel login"
+        - comment: "Create the named tunnel"
+          run: "cloudflared tunnel create triton"
+          output: |-
+            Created tunnel triton with id <UUID>
+        - comment: "Point the hostname to it"
+          run: "cloudflared tunnel route dns triton triton.getnereus.dev"
+          output: |-
+            Added CNAME triton.getnereus.dev which will route to this tunnel
+    dependsOn: [step-1-nameservers]
+    notes: |-
+      What we want to say: **by hand today, this is exactly what the {nereid:cloudflare} Nereid will do**. The credentials file of `tunnel create` stays on m15, or in a Secret; an ingress rule sends triton.getnereus.dev to `http://triton-server.triton.svc:8080`, and `cloudflared` runs as a Deployment in the cluster, so no port-forward is needed.
+
+      The connector URL becomes `https://triton.getnereus.dev/<token>/mcp`, the same on every start.
+
+      Source: controllers/triton/README.md, section "A named tunnel on getnereus.dev".
+    pt:
+      message: "Três comandos do cloudflared dão nome à porta"
+      topic: "Etapa 1 · Endereço fixo · 4/6"
+      accent: "dão nome"
+      notes: |-
+        O que queremos dizer: **à mão hoje, é exatamente o que a Nereida {nereid:cloudflare} vai fazer**. O arquivo de credenciais do `tunnel create` fica na m15, ou num Secret; uma regra de ingress manda triton.getnereus.dev para `http://triton-server.triton.svc:8080`, e o `cloudflared` roda como Deployment no cluster, sem port-forward.
+
+        A URL do conector vira `https://triton.getnereus.dev/<token>/mcp`, a mesma a cada início.
+
+        Fonte: controllers/triton/README.md, seção "A named tunnel on getnereus.dev".
+
+  - name: step-1-zone
+    act: roadmap
+    topic: "Step 1 · A fixed address · 5/6"
+    message: "The {reef:edge} reef takes the domain, and the {nereid:cloudflare} Nereid does the work"
+    accent: "takes the domain"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "Delegate the domain to the platform"
+          run: "nereus edge zone create getnereus.dev"
+          options: ["--mandate cloudflare"]
+          output: |-
+            ✓ zone/getnereus.dev created, waiting for its nameservers
+
+            Next steps:
+
+              Set the nameservers at your registrar: ada.ns.cloudflare.com, bob.ns.cloudflare.com
+    dependsOn: [step-1-tunnel]
+    notes: |-
+      What we want to say: **the domain becomes part of the platform**, as #250 (an edge Interface: domains, DNS and certificates) proposes. Kinds Zone (the delegated domain, its nameservers in the status), Route (an endpoint at a hostname) and, later, Record (a CNAME or an A entry). These commands are the contract, not built yet; the idea is #470 (Refine publishing a reef's endpoint at a hostname), a sub-issue of #250.
+
+      The {nereid:cloudflare} Nereid handles the zone, the records and the tunnel. A second Nereid, {nereid:azure-dns}, comes when environments run on Azure with a public IP: swapping one for the other is swapping the {mandate:cloudflare} Mandate, and Zone and Route stay the same.
+    pt:
+      message: "O reef {reef:edge} assume o domínio, e a Nereida {nereid:cloudflare} faz o trabalho"
+      topic: "Etapa 1 · Endereço fixo · 5/6"
+      accent: "assume o domínio"
+      notes: |-
+        O que queremos dizer: **o domínio vira parte da plataforma**, como propõe a #250 (uma interface edge: domínios, DNS e certificados). Kinds Zone (o domínio delegado, com os nameservers no status), Route (um endpoint num hostname) e, depois, Record (uma entrada CNAME ou A). Estes comandos são o contrato, ainda não construído; a ideia é a #470 (refinar a publicação do endpoint de um reef num hostname), sub-issue da #250.
+
+        A Nereida {nereid:cloudflare} cuida da zona, dos registros e do túnel. Uma segunda Nereida, {nereid:azure-dns}, entra quando houver ambientes na Azure com IP público: trocar uma pela outra é trocar a Mandate {mandate:cloudflare}, e Zone e Route continuam iguais.
+
+  - name: step-1-route
+    act: roadmap
+    topic: "Step 1 · A fixed address · 6/6"
+    message: "A route publishes what a reef offers, never where it runs"
+    accent: "never where it runs"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "What the reefs offer to publish"
+          run: "nereus edge endpoint list"
+          output: |-
+            REEF        ENDPOINT   PROTOCOL   PUBLISHED
+            messaging   mcp        mcp        no
+        - comment: "Publish Triton at a fixed address"
+          run: "nereus edge route create triton"
+          options: ["--hostname triton.getnereus.dev", "--endpoint messaging/mcp"]
+          output: |-
+            ✓ route/triton created, Ready: https://triton.getnereus.dev
+    dependsOn: [step-1-zone]
+    notes: |-
+      What we want to say: **the person names a reef's endpoint, never a cluster, a namespace or a port**. Each Nereid publishes its endpoints in its status (ADR 0005, one writer per field: reading status is how the API and the CLI learn what a Nereid offers), and the API reads them without naming the Nereid (ADR 0002, the conceptual model).
+
+      So the {reef:messaging} reef offers `mcp`, and the {nereid:cloudflare} Nereid resolves `messaging/mcp` to whatever runs behind it. If Triton moves, or Kubernetes gives way to something else, the route does not change.
+
+      Done when you send an order from the phone in the morning and it arrives without you touching anything; the session that listens stays open in tmux.
+    pt:
+      message: "Uma rota publica o que um reef oferece, nunca onde ele roda"
+      topic: "Etapa 1 · Endereço fixo · 6/6"
+      accent: "nunca onde ele roda"
+      notes: |-
+        O que queremos dizer: **a pessoa nomeia o endpoint de um reef, nunca um cluster, um namespace ou uma porta**. Cada Nereida publica os seus endpoints no status (ADR 0005, um escritor por campo: é lendo o status que a API e a CLI sabem o que uma Nereida oferece), e a API os lê sem nomear a Nereida (ADR 0002, o modelo conceitual).
+
+        Então o reef {reef:messaging} oferece `mcp`, e a Nereida {nereid:cloudflare} resolve `messaging/mcp` para o que estiver rodando por trás. Se o Tritão mudar de lugar, ou o Kubernetes der lugar a outra coisa, a rota não muda.
+
+        Pronto quando você manda uma ordem do celular de manhã e ela chega sem você mexer em nada; a sessão que escuta fica aberta no tmux.
+
+  - name: step-2-security
+    act: roadmap
+    topic: "Step 2 · Security"
+    message: "Triton takes orders only from someone logged in to Nereus"
+    accent: "logged in to Nereus"
+    screen: ["**First:** the {reef:authentication} reef, with its {nereid:keycloak} Nereid logging the owner in", "**Then:** each agent its own NATS credential, only its own subjects"]
+    dependsOn: [step-1-address]
+    notes: |-
+      What we want to say: **no Nereus login, no order**. Decided by the owner on 2026-10-29: Triton accepts no order until the {reef:authentication} reef is installed and its {nereid:keycloak} Nereid authenticates the user; the login replaces the shared token.
+
+      The reef and the Nereid already exist: ADR 0006 (the authentication reef) and #407 (the authentication reef with a local Keycloak Nereid, the OAuth authorization server of the claude.ai connector), already used by `nereus-mcp` in #415 (nereus-mcp over public HTTPS: the status tool, OAuth with the keycloak Nereid, and a cloudflared quick tunnel). Triton follows the same path. At first a single administrator, the owner; inviting outside people comes later, through the {reef:authorization} reef.
+
+      Done when a random pod of the cluster, or anyone without a login, can no longer send orders to m15. Triton also checks that the `from` of a message matches the identity of the connection. It closes OWASP A01 (Broken Access Control) and A07 (Identification and Authentication Failures).
+
+      Built, the first half: #495 (Triton takes orders only from someone logged in to Nereus). Triton checks a token of the realm `nereus` for the audience `triton-door`, which only the client `triton` issues, so a token of `nereus-mcp`'s connector does not open it; Keycloak is public at `auth.getnereus.dev` through the same tunnel, only its realm. The second half: #497 (each agent joins NATS with its Nereus login). A NATS auth callout checks the agent's Keycloak token (client `nereus-nats`, device flow, audience `nats`) and answers with a user JWT that allows only that agent's subjects; Triton has its own password, and no one joins anonymously. An agent logged in as `agent-a` that subscribes to m15's prompts is cut off. The login lasts 10 hours: the plugin reads it only at start.
+
+      Source: controllers/triton/README.md, section "Security (OWASP)"; docs/guides/access/authentication.md.
+    pt:
+      message: "A porta só aceita ordens de quem entrou no Nereus"
+      topic: "Etapa 2 · Segurança"
+      accent: "entrou no Nereus"
+      screen: ["**Primeiro:** o reef {reef:authentication}, com a Nereida {nereid:keycloak} autenticando o dono", "**Depois:** cada agente com a própria credencial no NATS, só os próprios assuntos"]
+      notes: |-
+        O que queremos dizer: **sem login no Nereus, sem ordem**. Decidido pelo dono em 2026-10-29: o servidor MCP do Tritão não aceita ordem até o reef {reef:authentication} estar instalado e a Nereida {nereid:keycloak} autenticar o usuário; o login substitui a senha única.
+
+        O reef e a Nereida já existem: ADR 0006 (o reef authentication) e #407 (o reef authentication com uma Nereida Keycloak local, o servidor de autorização OAuth do conector do claude.ai), já usados pelo `nereus-mcp` em #415 (o nereus-mcp em HTTPS público: a ferramenta status, OAuth com a Nereida keycloak e um quick tunnel do cloudflared). O servidor MCP segue o mesmo caminho. No começo um único administrador, o dono; convidar gente de fora vem depois, pelo reef {reef:authorization}.
+
+        Pronto quando um pod qualquer do cluster, ou qualquer um sem login, não consegue mais mandar ordens ao m15. O Tritão também confere se o `from` da mensagem bate com a identidade da conexão. Fecha o OWASP A01 (Broken Access Control) e o A07 (Identification and Authentication Failures).
+
+        Construída, a primeira metade: #495 (o servidor MCP do Tritão só aceita ordens de quem entrou no Nereus). O servidor MCP confere um token do realm `nereus` para o audience `triton-door`, que só o client `triton` emite, então um token do conector do `nereus-mcp` não o abre; o Keycloak fica público em `auth.getnereus.dev` pelo mesmo tunnel, só o seu realm. A segunda metade: #497 (cada agente entra no NATS com o seu login do Nereus). Um auth callout do NATS confere o token Keycloak do agente (client `nereus-nats`, device flow, audience `nats`) e responde com um JWT de usuário que só libera os assuntos daquele agente; o Tritão tem a própria senha, e ninguém entra anônimo. Um agente logado como `agent-a` que assina as ordens do m15 é cortado. O login dura 10 horas: o plugin só o lê ao iniciar.
+
+        Fonte: controllers/triton/README.md, seção "Security (OWASP)"; docs/guides/access/authentication.md.
+
+  - name: step-3-memory
+    act: roadmap
+    topic: "Step 3 · Memory"
+    message: "Orders survive a restart, and the beach becomes the backup"
+    accent: "the backup"
+    screen: ["**JetStream:** NATS stores the orders, and a returning agent reads what it missed", "**Session logs:** the m15 sessions, today raw on Drive, move to JetStream too"]
+    refs: [nats]
+    dependsOn: [step-2-security]
+    notes: |-
+      What we want to say: **done when you restart Triton and the orders are still there**. From here on, the Drive beach is only the backup.
+
+      The m15 sessions keep a raw log on Drive until Triton is the channel: #471 (m15 sessions keep a raw log on Drive until Triton is the channel). With JetStream the same log goes to Triton, and Drive becomes the backup of the sessions as well as of the orders.
+
+      Also here: a tool to cancel an order, and the audit log of who asked what, which closes OWASP A09 (Security Logging and Monitoring Failures).
+
+      Built, the first half: #506 (orders survive a restart: Triton keeps them on JetStream, an agent that comes back gets what it missed). Each order is a key of the KV bucket `orders`, one revision per change of status, kept 7 days; Triton reads them back when it starts. An order sent while m15's session is closed waits, and goes at the first heartbeat of the session, which the channel plugin sends every 5 s. `cancel_order` cancels an order no agent has taken yet, and the bucket's history, with the sender of each order, is the audit log. The second half: the m15 session logs on JetStream.
+
+      Source: controllers/triton/README.md, section "Orders survive a restart".
+    pt:
+      message: "As ordens sobrevivem a um reinício, e a beach vira reserva"
+      topic: "Etapa 3 · Memória"
+      accent: "reserva"
+      screen: ["**JetStream:** o NATS guarda as ordens, e o agente que volta lê o que perdeu", "**Logs das sessões:** as sessões do m15, hoje brutas no Drive, também vão para o JetStream"]
+      notes: |-
+        O que queremos dizer: **pronto quando você reinicia o Tritão e as ordens continuam lá**. A partir daqui, a beach no Drive é só reserva.
+
+        As sessões do m15 guardam um log bruto no Drive até o Tritão ser o canal: #471 (as sessões do m15 guardam um log bruto no Drive até o Tritão ser o canal). Com o JetStream, o mesmo log vai para o Tritão, e o Drive vira reserva das sessões e também das ordens.
+
+        Também aqui: uma ferramenta para cancelar uma ordem, e o log de auditoria de quem pediu o quê, que fecha o OWASP A09 (Security Logging and Monitoring Failures).
+
+        Feita, a primeira metade: #506 (as ordens sobrevivem a um reinício: o Tritão as guarda no JetStream, e o agente que volta recebe o que perdeu). Cada ordem é uma chave do KV bucket `orders`, uma revisão por mudança de status, guardada por 7 dias; o Tritão as lê de volta quando sobe. Uma ordem enviada com a sessão do m15 fechada espera, e vai no primeiro heartbeat da sessão, que o plugin do canal manda a cada 5 s. O `cancel_order` cancela uma ordem que nenhum agente pegou ainda, e o histórico do bucket, com quem mandou cada ordem, é o log de auditoria. A segunda metade: os logs das sessões do m15 no JetStream.
+
+        Fonte: controllers/triton/README.md, seção "Orders survive a restart".
+
+  - name: step-4-bridge
+    act: roadmap
+    topic: "Step 4 · The bridge"
+    message: "One agent asks another through Triton, and every word is on record"
+    accent: "on record"
+    screen: ["**Rules first:** a fixed bridge, with its log", "**AI later:** Amphitrite only to summarise or help negotiate"]
+    dependsOn: [step-3-memory]
+    notes: |-
+      What we want to say: **done when m15 asks another agent for help and you read the whole conversation afterwards**.
+
+      Deterministic first, AI only where it is better. It touches #274 (a decision answered emits an event, so agents subscribe instead of polling).
+
+      Source: controllers/triton/README.md, section "What is missing to make it a Nereid".
+    pt:
+      message: "Um agente pergunta a outro pelo Tritão, e cada palavra fica registrada"
+      topic: "Etapa 4 · A ponte"
+      accent: "registrada"
+      screen: ["**Regras primeiro:** uma ponte fixa, com o seu registro", "**IA depois:** a Anfitrite só para resumir ou ajudar a negociar"]
+      notes: |-
+        O que queremos dizer: **pronto quando o m15 pede ajuda a outro agente e você lê a conversa inteira depois**.
+
+        Determinístico primeiro, IA só onde é melhor. Toca em #274 (uma decisão respondida emite um evento, e os agentes assinam em vez de perguntar o tempo todo).
+
+        Fonte: controllers/triton/README.md, seção "What is missing to make it a Nereid".
+
+  - name: step-5-nereid
+    act: roadmap
+    topic: "Step 5 · A Nereid"
+    message: "Triton becomes the {nereid:triton} Nereid of the {reef:messaging} reef"
+    accent: "Nereid"
+    screen: ["**The reef:** kinds such as Room and Message, proposed and then an ADR (Architecture Decision Record)", "**NATS:** installed by a Nereid of its own, no YAML by hand"]
+    dependsOn: [step-4-bridge]
+    notes: |-
+      What we want to say: **from a program in a pod to a part of the platform**. Triton reads `spec`, writes `status`, and publishes commands such as `nereus messaging room list`, a contract not built yet.
+
+      It meets Amphitrite there: #225 (AI agents on behalf of the platform) and #66 (AI agents as Controllers inside the platform). Triton becomes a declared Agent.
+
+      Source: controllers/triton/README.md, section "What is missing to make it a Nereid".
+    pt:
+      message: "O Tritão vira a Nereida {nereid:triton} do reef {reef:messaging}"
+      topic: "Etapa 5 · Uma Nereida"
+      accent: "Nereida"
+      screen: ["**O reef:** kinds como Room e Message, propostos e depois um ADR (Architecture Decision Record)", "**NATS:** instalado por uma Nereida própria, sem YAML na mão"]
+      notes: |-
+        O que queremos dizer: **de um programa num pod a uma parte da plataforma**. O Tritão lê o `spec`, escreve o `status` e publica comandos como `nereus messaging room list`, um contrato ainda não construído.
+
+        Ele encontra a Anfitrite aí: #225 (agentes de IA a serviço da plataforma) e #66 (agentes de IA como Controllers dentro da plataforma). O Tritão vira um Agent declarado.
+
+        Fonte: controllers/triton/README.md, seção "What is missing to make it a Nereid".
+
+  # ── Decisions ───────────────────────────────────────
+  - name: decide-domain-order
+    act: decisions
+    topic: "For the owner · 1/2"
+    message: "Security comes first, and one action is left for step 1"
+    accent: "Security comes first"
+    screen: ["**Decided:** one administrator, the owner, logged in by {nereid:keycloak}; outside people later, through {reef:authorization} with {nereid:openfga}", "**Left:** at GoDaddy, DNSSEC off first, then point getnereus.dev to Cloudflare, once"]
+    refs: [openfga]
+    dependsOn: [step-5-nereid]
+    notes: |-
+      What we want to say: **decided by the owner on 2026-10-29, security first, and stronger than proposed**: Triton accepts no order until the {reef:authentication} reef is installed and its {nereid:keycloak} Nereid authenticates the user. Only users logged in to Nereus send orders. Storing orders that anyone can forge would only keep the forgery, so memory (step 3) comes after.
+
+      At first a single administrator, the owner. Inviting outside people comes later, through a second reef, {reef:authorization}, with an {nereid:openfga} Nereid: OpenFGA is open source, created by the Auth0/Okta team, inspired by Google Zanzibar, a CNCF project. ADR 0014 (Profiles, bundles of reefs, Nereids and Mandates) already names both, not built yet.
+
+      Still the owner's action: **step 1 waits for the nameservers**; until GoDaddy points to Cloudflare, the zone is not active and the tunnel cannot have a name. Decided on 2026-10-29 too: the zone on Cloudflare now, Azure DNS later as a second Nereid.
+    pt:
+      message: "Segurança vem primeiro, e falta uma ação para a etapa 1"
+      topic: "Para o dono · 1/2"
+      accent: "Segurança vem primeiro"
+      screen: ["**Decidido:** um administrador, o dono, autenticado pela {nereid:keycloak}; gente de fora depois, pelo {reef:authorization} com a {nereid:openfga}", "**Falta:** na GoDaddy, o DNSSEC desligado primeiro, depois apontar o getnereus.dev para a Cloudflare, uma vez"]
+      notes: |-
+        O que queremos dizer: **decidido pelo dono em 2026-10-29, segurança primeiro, e mais forte do que o proposto**: o servidor MCP do Tritão não aceita ordem até o reef {reef:authentication} estar instalado e a Nereida {nereid:keycloak} autenticar o usuário. Só quem entrou no Nereus manda ordens. Guardar ordens que qualquer um pode forjar só guardaria a falsificação, então a memória (etapa 3) vem depois.
+
+        No começo um único administrador, o dono. Convidar gente de fora vem depois, por um segundo reef, {reef:authorization}, com uma Nereida {nereid:openfga}: o OpenFGA é open source, criado pelo time do Auth0/Okta, inspirado no Google Zanzibar, um projeto da CNCF. O ADR 0014 (Profiles, pacotes de reefs, Nereidas e Mandates) já cita os dois, ainda não construídos.
+
+        Ainda é ação do dono: **a etapa 1 espera os nameservers**; até a GoDaddy apontar para a Cloudflare, a zona não fica ativa e o túnel não pode ter nome. Também decidido em 2026-10-29: a zona na Cloudflare agora, a Azure DNS depois como segunda Nereida.
+
+  - name: decide-reef
+    act: decisions
+    topic: "For the owner · 2/2"
+    message: "One {reef:messaging} reef, with Triton as its Nereid"
+    accent: "One"
+    screen: ["**Decided:** one reef, {reef:messaging}, with {nereid:triton} as its Nereid, for now", "**Later:** split into two reefs only if it proves useful"]
+    dependsOn: [decide-domain-order]
+    notes: |-
+      What we want to say: **decided by the owner on 2026-10-29**: one {reef:messaging} reef, and Triton its Nereid; a second reef for the switchboard only if it proves useful. The ADR of step 5 starts from this name.
+
+      Next: one issue per step, chained, each with its context, once the owner says go.
+    pt:
+      message: "Um reef {reef:messaging}, com o Tritão como Nereida"
+      topic: "Para o dono · 2/2"
+      accent: "Um"
+      screen: ["**Decidido:** um reef, {reef:messaging}, com a {nereid:triton} como Nereida, por enquanto", "**Depois:** dividir em dois reefs só se for útil"]
+      notes: |-
+        O que queremos dizer: **decidido pelo dono em 2026-10-29**: um reef {reef:messaging}, e o Tritão como a sua Nereida; um segundo reef para a telefonista só se for útil. O ADR da etapa 5 parte deste nome.
+
+        Próximo passo: uma issue por etapa, encadeadas, cada uma com o seu contexto, assim que o dono der o go.

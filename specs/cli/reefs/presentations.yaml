@@ -1,0 +1,261 @@
+deck:
+  name: presentations
+  title: "The presentations reef"
+  subtitle: "The first slice: a deck kept by the platform, and a Session a phone drives and a room follows"
+  accent: "a Session a phone drives"
+  pt:
+    title: "O reef presentations"
+    subtitle: "A primeira fatia: um deck guardado pela plataforma, e uma Session que um celular conduz e uma sala acompanha"
+    accent: "uma Session que um celular conduz"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: setup
+    title: "Setup"
+    question: "What is shown, and what keeps it?"
+    pt: {title: "Preparação", question: "O que é mostrado, e o que o guarda?"}
+  - name: show
+    title: "Show"
+    question: "How does a room follow a talk?"
+    pt: {title: "Mostrar", question: "Como uma sala acompanha uma palestra?"}
+
+slides:
+  - name: cover
+    act: opening
+    cover: true
+    message: "The presentations reef"
+    notes: |-
+      **The presentations reef** (ADR 0028, spec 0012, #1694, part of #1688): two kinds, `Presentation` (what is shown) and `Session` (each time it is shown). The API writes the objects and calls the reef's Nereid, `leagore` (#1695), which keeps the deck and the Session's live state.
+    pt:
+      message: "O reef presentations"
+      notes: |-
+        **O reef presentations** (ADR 0028, spec 0012, #1694, parte do #1688): dois kinds, `Presentation` (o que é mostrado) e `Session` (cada vez que é mostrado). A API escreve os objetos e chama a Nereid do reef, `leagore` (#1695), que guarda o deck e o estado ao vivo da Session.
+
+  - name: reef-apply
+    act: setup
+    topic: "reef apply"
+    status: built
+    issue: 1694
+    message: "The {reef:presentations} reef brings decks and sessions"
+    accent: "decks and sessions"
+    terminal:
+      steps:
+        - comment: "The kinds of the reef; its Nereid, leagore, comes in #1695"
+          run: "nereus reef apply presentations"
+          output: |-
+            ✓ core/reefs/presentations created (presentations.getnereus.dev/v1alpha1: presentations, sessions)
+
+            Next steps:
+
+              nereus presentations --help
+    notes: |-
+      **`Presentation` is the default kind**, so `nereus presentations create` is `nereus presentations presentation create` (ADR 0013, command conventions).
+
+      **With no Mandate for the reef**, a create answers the API's error and names `nereus mandate list` as the check; nothing is left behind.
+    pt:
+      topic: "reef apply"
+      message: "O reef {reef:presentations} traz decks e sessões"
+      accent: "decks e sessões"
+      notes: |-
+        **`Presentation` é o kind padrão**, então `nereus presentations create` é `nereus presentations presentation create` (ADR 0013, convenções de comando).
+
+        **Sem Mandate para o reef**, um create responde o erro da API e nomeia `nereus mandate list` como a verificação; nada fica para trás.
+
+  - name: schema
+    act: setup
+    topic: "presentations schema get"
+    status: built
+    issue: 1700
+    message: "A deck is written anywhere, against a published schema"
+    accent: "a published schema"
+    terminal:
+      steps:
+        - comment: "The outline versions, and where the Nereus API serves each with no token"
+          run: "nereus presentations schema list"
+          output: |-
+            OUTLINE VERSION  URL
+            1                https://nereus.example.com/v1/presentations/schemas/outline/1.json
+        - comment: "The schema itself, read from the CLI, for an editor or an agent"
+          run: "nereus presentations schema get > outline.schema.json"
+    notes: |-
+      **A deck names the schema with `$schema`** and its version with `outlineVersion` (1 when absent), so an editor flags a wrong field before the import. The schema ships with the CLI and the API serves the same file, so `get` needs no instance. What a schema cannot say (links, files, fitting the screen) is the Nereid's dry run (#1702). `schema` is read-only: it takes only `get` and `list` (ADR 0013).
+    pt:
+      topic: "presentations schema get"
+      message: "Um deck é escrito em qualquer lugar, contra um schema publicado"
+      accent: "um schema publicado"
+      notes: |-
+        **Um deck nomeia o schema com `$schema`** e a sua versão com `outlineVersion` (1 quando ausente), para um editor apontar um campo errado antes do import. O schema vem com o CLI e a API serve o mesmo arquivo, então o `get` não precisa de instância. O que um schema não diz (links, arquivos, caber na tela) é o dry run da Nereid (#1702). `schema` é só leitura: aceita apenas `get` e `list` (ADR 0013).
+
+  - name: presentation-create
+    act: setup
+    topic: "presentations presentation create"
+    status: built
+    issue: 1701
+    message: "A deck travels as a package the platform keeps by its digest"
+    accent: "by its digest"
+    terminal:
+      steps:
+        - comment: "The deck and every file it names, at most 1 MB; the object holds only its digest"
+          run: "nereus presentations presentation create storytelling"
+          options: ["--from talks/storytelling.yaml"]
+          output: |-
+            ✓ presentations/presentations/storytelling created, revision 1 (sha256:3f9c2a71)
+              copied 8 references and 1 file from outside the folder, origin recorded
+
+            Next steps:
+
+              nereus presentations session create <name> --presentation storytelling --talk 30m
+    dependsOn: [reef-apply, schema]
+    notes: |-
+      **The deck is a package the Nereid keeps** (#1701), never in the object: a tar of the YAML, every file it names (diagrams, code frames, relative links, the references it cites) and a `package.json` manifest with each file's sha256 and origin (its path in Git and its last commit, never a path of this machine). The same files give the same bytes; the digest is `sha256:` and the hex of the tar, shown as its first 8 characters. `--dry-run` checks the outline's schema here, then has the Nereid check what the schema cannot (links, references, what the engine renders), prints every problem on its own line and changes nothing (#1702).
+    pt:
+      topic: "presentations presentation create"
+      message: "Um deck viaja como um pacote que a plataforma guarda pelo seu digest"
+      accent: "pelo seu digest"
+      notes: |-
+        **O deck é um pacote que a Nereid guarda** (#1701), nunca no objeto: um tar do YAML, de cada arquivo que ele nomeia (diagramas, quadros de código, links relativos, as referências que cita) e de um manifesto `package.json` com o sha256 e a origem de cada arquivo (o caminho no Git e o último commit, nunca um caminho desta máquina). Os mesmos arquivos dão os mesmos bytes; o digest é `sha256:` e o hex do tar, mostrado pelos 8 primeiros caracteres. `--dry-run` verifica o schema do outline aqui, depois pede à Nereid o que o schema não expressa (links, referências, o que o motor renderiza), mostra cada problema numa linha e não muda nada (#1702).
+
+  - name: presentation-export
+    act: setup
+    topic: "presentations presentation get --output html"
+    status: built
+    issue: 1703
+    message: "The deck goes home as one file that opens offline"
+    accent: "opens offline"
+    terminal:
+      steps:
+        - comment: "The latest revision, with its notes, as one self-contained HTML file"
+          run: "nereus presentations presentation get storytelling"
+          options: ["--output html"]
+          output: |-
+            ✓ storytelling.html written (revision sha256:3f9c2a71, opens offline)
+    dependsOn: [presentation-create]
+    notes: |-
+      **One file, no Nereus, no network** (#1703): the Nereid renders the latest revision as one page, its style, script and diagrams inline, with the speaker's notes, and the CLI writes it as `<name>.html` in the current folder. It opens from `file://` in any browser; the portal's CSP does not apply to it, since it never runs on the portal. Reading it asks what changing the Presentation asks, as the notes are in it.
+    pt:
+      topic: "presentations presentation get --output html"
+      message: "O deck vai para casa como um arquivo que abre offline"
+      accent: "abre offline"
+      notes: |-
+        **Um arquivo, sem Nereus, sem rede** (#1703): a Nereid renderiza a última revisão como uma página, com estilo, script e diagramas inline e as notas do palestrante, e o CLI a grava como `<name>.html` na pasta atual. Abre de `file://` em qualquer navegador; a CSP do portal não se aplica, pois ela nunca roda no portal. Lê-la pede o mesmo que mudar a Presentation, já que as notas estão nela.
+
+  - name: link-create
+    act: setup
+    topic: "presentations link create"
+    status: built
+    issue: 1704
+    message: "A public link opens the deck for anyone, until it expires"
+    accent: "until it expires"
+    terminal:
+      steps:
+        - comment: "A link anyone can open for thirty days, no login"
+          run: "nereus presentations link create storytelling"
+          options: ["--expires 30d"]
+          output: |-
+            ✓ presentations/presentations/storytelling link created
+              public: https://nereus.example.com/d/9FK2PQ7XMZ4HR8TV3WKN6PQ2JD (expires 2026-12-17)
+
+            Next steps:
+
+              nereus presentations link delete storytelling
+    dependsOn: [presentation-create]
+    notes: |-
+      **No Session, no login** (#1704): `/d/<link>` shows the latest revision as a follower sees it, without the notes, and the reader moves through it on their own. The link is 26 characters, one per Presentation; `--expires` takes hours, days or weeks (`12h`, `30d`, `2w`), and with none it never expires. Once expired it answers 410 and the page says so; a new one is `link delete` and `link create` again. `link get`, `link list` and deleting the Presentation follow ADR 0013's verbs, so there is no `presentation update --public`.
+    pt:
+      topic: "presentations link create"
+      message: "Um link público abre o deck para todos, até expirar"
+      accent: "até expirar"
+      notes: |-
+        **Sem Session, sem login** (#1704): `/d/<link>` mostra a última revisão como um seguidor a vê, sem as notas, e quem lê avança sozinho. O link tem 26 caracteres, um por Presentation; `--expires` aceita horas, dias ou semanas (`12h`, `30d`, `2w`), e sem ele nunca expira. Expirado, responde 410 e a página diz isso; um novo é `link delete` e `link create` de novo. `link get`, `link list` e apagar a Presentation seguem os verbos do ADR 0013, por isso não há `presentation update --public`.
+
+  - name: session-create
+    act: show
+    topic: "presentations session create"
+    status: built
+    issue: 1694
+    message: "A Session gives the link a room follows"
+    accent: "the link a room follows"
+    terminal:
+      steps:
+        - comment: "A talk of thirty minutes, on the revision fixed now"
+          run: "nereus presentations session create platform-day"
+          options: ["--presentation storytelling", "--talk 30m"]
+          output: |-
+            ✓ presentations/sessions/platform-day created (revision sha256:3f9c2a71)
+              follow: https://nereus.example.com/p/K7Q4
+
+            Next steps:
+
+              nereus presentations session get platform-day
+    dependsOn: [presentation-create]
+    notes: |-
+      **The short code is given at once** by the Nereid, inside the create request, so the link is printed with it. `--talk` takes a duration: `30m`, `1h`, `90m` or `1h30m`.
+    pt:
+      topic: "presentations session create"
+      message: "Uma Session dá o link que uma sala acompanha"
+      accent: "o link que uma sala acompanha"
+      notes: |-
+        **O código curto é dado na hora** pela Nereid, dentro do pedido de create, então o link sai impresso com ele. `--talk` recebe uma duração: `30m`, `1h`, `90m` ou `1h30m`.
+
+  - name: session-get
+    act: show
+    topic: "presentations session get"
+    status: built
+    issue: 1694
+    message: "A Session shows its step and its link"
+    accent: "its step and its link"
+    terminal:
+      steps:
+        - comment: "The step is the Nereid's live one; the followers count arrives with the follow stream (#1696)"
+          run: "nereus presentations session get platform-day"
+          output: |-
+            NAME          PRESENTATION  STEP  FOLLOWERS  FOLLOW
+            platform-day  storytelling  0/24  0          https://nereus.example.com/p/K7Q4
+        - comment: "For an agent: the slides with their notes, the questions per slide and the feedback, no device (#1718)"
+          run: "nereus presentations session get platform-day"
+          options: ["--output agent > platform-day.yaml"]
+          output: |-
+            ✓ platform-day.yaml written (24 slides, 7 questions, 31 feedback answers)
+    dependsOn: [session-create]
+    notes: |-
+      **The link joins the installation's address with `/p/<code>`**, the portal's public page (#1697). `--output agent` writes one YAML an agent reads; the line goes to stderr, only when the output is a file or a pipe.
+    pt:
+      topic: "presentations session get"
+      message: "Uma Session mostra o seu passo e o seu link"
+      accent: "o seu passo e o seu link"
+      notes: |-
+        **O link junta o endereço da instalação com `/p/<código>`**, a página pública do portal (#1697). `--output agent` escreve um YAML que um agente lê; a linha vai para o stderr, só quando a saída é um arquivo ou um pipe.
+
+  - name: list-delete
+    act: show
+    topic: "presentations session list, delete"
+    status: built
+    issue: 1694
+    message: "Ending a Session frees its code"
+    accent: "frees its code"
+    terminal:
+      steps:
+        - comment: "Every Session"
+          run: "nereus presentations session list"
+          output: |-
+            NAME          PRESENTATION  TALK  CODE  STEP  AGE
+            platform-day  storytelling  30m   K7Q4  0/24  5m
+        - comment: "End it: the code is free again"
+          run: "nereus presentations session delete platform-day"
+          output: |-
+            ✓ presentations/sessions/platform-day deleted
+
+            Next steps:
+
+              nereus presentations session list
+    dependsOn: [session-create]
+    notes: |-
+      **A Presentation a Session shows is not deleted:** the refusal names the Session and the command to end it first.
+    pt:
+      topic: "presentations session list, delete"
+      message: "Terminar uma Session libera o seu código"
+      accent: "libera o seu código"
+      notes: |-
+        **Uma Presentation que uma Session mostra não é apagada:** a recusa nomeia a Session e o comando para terminá-la antes.

@@ -1,0 +1,515 @@
+deck:
+  name: nereus
+  title: "Nereus"
+  subtitle: "A composable API platform: {reef:Reefs} add the APIs, {nereid:Nereids} look after them, installed at runtime"
+  accent: "installed at runtime"
+  pt:
+    title: "Nereus"
+    subtitle: "Uma plataforma de APIs componível: {reef:Reefs} adicionam as APIs, {nereid:Nereids} cuidam delas, instalados em tempo de execução"
+    accent: "instalados em tempo de execução"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: idea
+    title: "The idea"
+    question: "What changes when every capability is installed at runtime?"
+    pt: {title: "A ideia", question: "O que muda quando toda capacidade é instalada em tempo de execução?"}
+  - name: model
+    title: "The model"
+    question: "Which words does the platform speak?"
+    pt: {title: "O modelo", question: "Que palavras a plataforma fala?"}
+  - name: slice
+    title: "The first slice"
+    question: "What can a person run today?"
+    pt: {title: "A primeira fatia", question: "O que uma pessoa consegue rodar hoje?"}
+  - name: heading
+    title: "Where it is heading"
+    question: "What is the API for?"
+    pt: {title: "Para onde vai", question: "Para que serve a API?"}
+
+slides:
+  # ── Opening ─────────────────────────────────────────
+  - name: title
+    act: opening
+    cover: true
+    message: "A platform starts empty and grows with {reef:Reefs} and {nereid:Nereids}"
+    notes: |-
+      What we want to say: **the platform starts empty**, and every capability arrives later as a Reef with a Nereid that looks after it.
+
+      **Route:** the idea, the model behind it, the first slice that runs today, and where the API is heading.
+    pt:
+      message: "A plataforma começa vazia e cresce com {reef:Reefs} e {nereid:Nereids}"
+      notes: |-
+        O que queremos dizer: **a plataforma começa vazia**, e toda capacidade chega depois como um Reef com um Nereid que cuida dele.
+
+        **Roteiro:** a ideia, o modelo por trás dela, a primeira fatia que roda hoje e para onde a API vai.
+
+  # ── The idea ────────────────────────────────────────
+  - name: init-prepares
+    act: idea
+    topic: "Installed at runtime"
+    message: "`nereus init` prepares a cluster"
+    subtitle: "{reef:Reefs} come later"
+    screen: ["**Before:** init installs the whole platform", "**Here:** a cluster, ready for {reef:Reefs}"]
+    notes: |-
+      What we want to say: **init does the least it can**.
+
+      In the project this one grew from, init installed identity, the API, every controller, ingress and observability. Adding or swapping a capability meant changing init, and there was no way to run the platform with less, or with something else.
+
+      Here a platform is the set of Reefs applied to it and the Nereids that look after them, so two installations can differ in what they offer. A profile lists which ones `nereus init` applies (ADR 0014).
+
+      Source: docs/adr/0003-init-and-nereids-at-runtime.md.
+    pt:
+      topic: "Instalado em tempo de execução"
+      message: "`nereus init` prepara um cluster"
+      subtitle: "Os {reef:Reefs} vêm depois"
+      screen: ["**Antes:** o init instala a plataforma inteira", "**Aqui:** um cluster, pronto para {reef:Reefs}"]
+      notes: |-
+        O que queremos dizer: **o init faz o mínimo possível**.
+
+        No projeto de onde este nasceu, o init instalava identidade, a API, todos os controllers, ingress e observabilidade. Acrescentar ou trocar uma capacidade era mudar o init, e não havia como rodar a plataforma com menos, ou com outra coisa.
+
+        Aqui uma plataforma é o conjunto de Reefs aplicados a ela e dos Nereids que cuidam deles, então duas instalações podem oferecer coisas diferentes. Um profile lista quais o `nereus init` aplica (ADR 0014).
+
+        Fonte: docs/adr/0003-init-and-nereids-at-runtime.md.
+
+  - name: reefs-extend-cli
+    act: idea
+    topic: "Installed at runtime"
+    message: "A {nereid:Nereid} adds commands to the CLI"
+    screen: ["**Published:** commands as data in its status", "**Built:** by the CLI at runtime", "**Downloaded:** no code"]
+    dependsOn: [init-prepares]
+    notes: |-
+      What we want to say: **a new Nereid needs no new CLI release**.
+
+      The Nereid describes its commands (names, arguments, help) in the `status` of its `Nereid` object. The CLI caches that description and builds the Reef's command group from it, as `kubectl` caches API discovery.
+
+      Nothing runs on the user's machine: a run goes to the Nereid, which runs it and returns the output.
+
+      Source: docs/adr/0004-reefs-extend-the-cli.md.
+    pt:
+      topic: "Instalado em tempo de execução"
+      message: "Um {nereid:Nereid} acrescenta comandos à CLI"
+      screen: ["**Publicados:** comandos como dados no seu status", "**Montados:** pela CLI em tempo de execução", "**Baixado:** nenhum código"]
+      notes: |-
+        O que queremos dizer: **um Nereid novo não precisa de uma versão nova da CLI**.
+
+        O Nereid descreve os seus comandos (nomes, argumentos, ajuda) no `status` do seu objeto `Nereid`. A CLI guarda essa descrição em cache e monta com ela o grupo de comandos do Reef, como o `kubectl` faz com a descoberta da API.
+
+        Nada roda na máquina de quem usa: a execução vai para o Nereid, que roda e devolve a saída.
+
+        Fonte: docs/adr/0004-reefs-extend-the-cli.md.
+
+  - name: published-commands
+    act: idea
+    topic: "Installed at runtime"
+    message: "All a {nereid:Nereid} publishes to build its commands"
+    code: {file: ../../controllers/reference/commands.yaml, lines: 3-17}
+    dependsOn: [reefs-extend-cli]
+    notes: |-
+      What we want to say: **two commands, with their help and examples, as data**.
+
+      The reference Nereid of the first slice looks after the `release` Reef and publishes `repo add` and `repo list`. The CLI turns them into `nereus release repo add NAME URL` and `nereus release repo list`, with their help text and examples.
+    pt:
+      topic: "Instalado em tempo de execução"
+      message: "Tudo o que um {nereid:Nereid} publica para montar os comandos"
+      notes: |-
+        O que queremos dizer: **dois comandos, com a ajuda e os exemplos, como dados**.
+
+        O Nereid de referência da primeira fatia cuida do Reef `release` e publica `repo add` e `repo list`. A CLI transforma isso em `nereus release repo add NAME URL` e `nereus release repo list`, com o texto de ajuda e os exemplos.
+
+  # ── The model ───────────────────────────────────────
+  - name: three-kinds
+    act: model
+    topic: "Vocabulary and rules"
+    message: "Three kinds describe a platform"
+    screen: ["**{reef:Reef}:** a capability, its own API group", "**{nereid:Nereid}:** the controller that looks after it", "**{mandate:Mandate}:** binds one {reef:Reef} to one {nereid:Nereid}"]
+    notes: |-
+      What we want to say: **the person asking names the Reef, never the tool behind it**.
+
+      A Reef is a capability with its own API group: `environment` is `environment.getnereus.dev`. A Nereid is the controller that looks after one or more Reefs: `vcluster` today, `azure-aks` later, interchangeable. A Mandate binds a Reef to one Nereid and may override its target parameters; one Mandate per Reef is the default.
+
+      Kubernetes already does this for storage (PersistentVolumeClaim, StorageClass, provisioner) and for traffic (Gateway, GatewayClass, controllerName).
+
+      Source: docs/adr/0011-reefs-nereids-and-mandates.md; the layers of docs/adr/0002-conceptual-model.md.
+    pt:
+      topic: "Vocabulário e regras"
+      message: "Três kinds descrevem uma plataforma"
+      screen: ["**{reef:Reef}:** uma capacidade, com o seu API group", "**{nereid:Nereid}:** o controller que cuida dele", "**{mandate:Mandate}:** liga um {reef:Reef} a um {nereid:Nereid}"]
+      notes: |-
+        O que queremos dizer: **quem pede nomeia o Reef, nunca a ferramenta por trás dele**.
+
+        Um Reef é uma capacidade com o seu API group: `environment` é `environment.getnereus.dev`. Um Nereid é o controller que cuida de um ou mais Reefs: `vcluster` hoje, `azure-aks` depois, intercambiáveis. Um Mandate liga um Reef a um Nereid e pode sobrescrever os seus parâmetros de destino; um Mandate por Reef é o padrão.
+
+        O Kubernetes já faz isso com storage (PersistentVolumeClaim, StorageClass, provisioner) e com tráfego (Gateway, GatewayClass, controllerName).
+
+        Fonte: docs/adr/0011-reefs-nereids-and-mandates.md; as camadas de docs/adr/0002-conceptual-model.md.
+
+  - name: one-writer
+    act: model
+    topic: "Vocabulary and rules"
+    message: "Every field has one writer"
+    subtitle: "`spec` asked, `status` done"
+    screen: ["**spec:** the API, or the CLI before it exists", "**status:** the {nereid:Nereid}"]
+    dependsOn: [three-kinds]
+    notes: |-
+      What we want to say: **two writers on one field is a design bug**.
+
+      With Nereids applied and swapped at runtime, several processes touch the same objects. When two of them write the same field, the last write wins and the bug shows up far from its cause.
+
+      Source: docs/adr/0005-one-writer-per-field.md.
+    pt:
+      topic: "Vocabulário e regras"
+      message: "Todo campo tem um escritor"
+      subtitle: "`spec` pedido, `status` feito"
+      screen: ["**spec:** a API, ou a CLI enquanto ela não existe", "**status:** o {nereid:Nereid}"]
+      notes: |-
+        O que queremos dizer: **dois escritores num mesmo campo é um bug de design**.
+
+        Com Nereids aplicados e trocados em tempo de execução, vários processos mexem nos mesmos objetos. Quando dois escrevem o mesmo campo, a última escrita vence e o bug aparece longe da causa.
+
+        Fonte: docs/adr/0005-one-writer-per-field.md.
+
+  - name: nereid-crd
+    act: model
+    topic: "Vocabulary and rules"
+    message: "The {nereid:Nereid} kind"
+    subtitle: "The CLI writes spec, the {nereid:Nereid} status"
+    code: {file: ../../cli/src/nereus/crds/nereid.yaml, lines: "34-37,39-40,43-44,78-82,98-99", focus: 34-44}
+    dependsOn: [one-writer]
+    notes: |-
+      What we want to say: **the rule is visible in the schema**. `spec` (the image, pinned by digest, and the Reefs it looks after) is written by the CLI; `status.conditions` and `status.commands` belong to the Nereid.
+    pt:
+      topic: "Vocabulário e regras"
+      message: "O kind {nereid:Nereid}"
+      subtitle: "A CLI escreve o spec, o {nereid:Nereid} o status"
+      notes: |-
+        O que queremos dizer: **a regra aparece no schema**. O `spec` (a imagem, fixada por digest, e os Reefs de que cuida) é escrito pela CLI; `status.conditions` e `status.commands` são do Nereid.
+
+  # ── The first slice ─────────────────────────────────
+  - name: apply-reef
+    act: slice
+    topic: "An environment on k3d"
+    message: "Apply the {reef:environment} {reef:Reef}"
+    subtitle: "The output says what's next"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "Apply the environment Reef"
+          run: "nereus reef apply environment"
+          output: |-
+            ✓ core/reefs/environment created (environment.getnereus.dev/v1alpha1)
+
+            Next steps:
+
+              nereus environment --help
+              nereus nereid apply <nereid> --reef environment
+    notes: |-
+      What we want to say: **every command teaches the next one**. The output says what changed, with kubectl's words (created, configured, unchanged, deleted), and ends with "Next steps:".
+
+      The Reef `environment` is a virtual cluster on the local k3d, as in the first proof of concept. It is in the profile `internal-developer-platform` (ADR 0014); its Nereid is still to be built, so this output is the contract, not a recording.
+
+      Source: docs/adr/0013-command-conventions.md.
+    pt:
+      topic: "Um environment no k3d"
+      message: "Aplique o {reef:Reef} {reef:environment}"
+      subtitle: "A saída diz o que vem depois"
+      notes: |-
+        O que queremos dizer: **todo comando ensina o próximo**. A saída diz o que mudou, com as palavras do kubectl (created, configured, unchanged, deleted), e termina com "Next steps:".
+
+        O Reef `environment` é um cluster virtual no k3d local, como na primeira prova de conceito. Ele está no profile `internal-developer-platform` (ADR 0014); o seu Nereid ainda vai ser construído, então esta saída é o contrato, não uma gravação.
+
+        Fonte: docs/adr/0013-command-conventions.md.
+
+  - name: apply-nereid
+    act: slice
+    topic: "An environment on k3d"
+    message: "The {nereid:vcluster} {nereid:Nereid}'s first {mandate:Mandate} becomes the default"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "Apply the vcluster Nereid to the environment Reef"
+          run: "nereus nereid apply vcluster"
+          options: ["--reef environment"]
+          output: |-
+            ✓ core/nereids/vcluster created, Ready, pinned to sha256:3f9c2a7e1b04: see 'nereus environment --help'
+              core/mandates/vcluster created (reef: environment, nereid: vcluster, default)
+
+            Next steps:
+
+              nereus nereid list
+        - comment: "See every Reef and the Nereid that looks after it"
+          run: "nereus status"
+          output: |-
+            REEF            NEREID    VERSION  STATUS  AGE
+            core            built-in  0.1.0    Ready   5m
+            environment     vcluster  0.1.0    Ready   20s
+            secrets         openbao   0.1.0    Ready   5m
+    dependsOn: [apply-reef]
+    notes: |-
+      What we want to say: **the Reef stays, the Nereid is interchangeable**. `vcluster` today on k3d; `azure-aks` may come later, behind the same Reef and the same commands.
+
+      Long options only, one per line: a command reads the same on a slide, in the docs and in a terminal.
+
+      `nereus status` is also the first tool of the MCP server, so an agent sees the same rows.
+    pt:
+      topic: "Um environment no k3d"
+      message: "O primeiro {mandate:Mandate} do {nereid:Nereid} {nereid:vcluster} vira o padrão"
+      notes: |-
+        O que queremos dizer: **o Reef fica, o Nereid é intercambiável**. `vcluster` hoje no k3d; `azure-aks` pode vir depois, atrás do mesmo Reef e dos mesmos comandos.
+
+        Só opções longas, uma por linha: um comando se lê igual num slide, na documentação e num terminal.
+
+        `nereus status` também é a primeira ferramenta do servidor MCP, então um agente vê as mesmas linhas.
+
+  - name: the-scene
+    act: slice
+    topic: "The scene"
+    message: "The first slice ends with a scene run from the CLI"
+    screen: ["**init:** a k3d cluster, ready", "**apply:** a {reef:Reef} and its {nereid:Nereid}", "**run:** the commands it published", "**delete:** they are gone"]
+    dependsOn: [reefs-extend-cli]
+    notes: |-
+      What we want to say: **walking skeleton first**. The thinnest slice that proves both ideas: init only prepares a cluster, and an applied Nereid extends the CLI.
+
+      The scene is `test/scene`, on a throwaway k3d cluster, and the walkthrough in the docs is the same scene one step per page, with the output each command really prints.
+
+      Source: docs/specs/0001-first-slice.md.
+    pt:
+      topic: "A cena"
+      message: "A primeira fatia termina com uma cena rodada pela CLI"
+      screen: ["**init:** um cluster k3d, pronto", "**apply:** um {reef:Reef} e o seu {nereid:Nereid}", "**run:** os comandos que ele publicou", "**delete:** eles somem"]
+      notes: |-
+        O que queremos dizer: **walking skeleton primeiro**. A fatia mais fina que prova as duas ideias: o init só prepara um cluster, e um Nereid aplicado estende a CLI.
+
+        A cena é o `test/scene`, num cluster k3d descartável, e o walkthrough da documentação é a mesma cena, um passo por página, com a saída que cada comando realmente imprime.
+
+        Fonte: docs/specs/0001-first-slice.md.
+
+  # ── Where it is heading ─────────────────────────────
+  - name: profiles
+    act: heading
+    topic: "Profiles"
+    message: "A profile lists the {reef:Reefs}, {nereid:Nereids} and {mandate:Mandates} to install"
+    screen: ["**core:** only the engine", "**internal-developer-platform:**", "- {reef:authentication}", "- {reef:database}", "- {reef:environment}", "- {reef:metrics}", "- {reef:release}", "- {reef:secrets}"]
+    dependsOn: [three-kinds]
+    notes: |-
+      What we want to say: **Nereus is a generic engine, and the Internal Developer Platform is its first distribution**.
+
+      `nereus init` with no profile installs `core`. `nereus init --profile internal-developer-platform` adds keycloak for authentication, cloudnative-pg for database, vcluster for environment, victoriametrics for metrics, flux for release and openbao for secrets, all open source and local.
+
+      Source: docs/adr/0014-profiles.md.
+    pt:
+      topic: "Profiles"
+      message: "Um profile lista os {reef:Reefs}, {nereid:Nereids} e {mandate:Mandates} a instalar"
+      screen: ["**core:** só o motor", "**internal-developer-platform:**", "- {reef:authentication}", "- {reef:database}", "- {reef:environment}", "- {reef:metrics}", "- {reef:release}", "- {reef:secrets}"]
+      notes: |-
+        O que queremos dizer: **o Nereus é um motor genérico, e a Internal Developer Platform é a sua primeira distribuição**.
+
+        `nereus init` sem profile instala o `core`. `nereus init --profile internal-developer-platform` acrescenta keycloak para authentication, cloudnative-pg para database, vcluster para environment, victoriametrics para metrics, flux para release e openbao para secrets, tudo open source e local.
+
+        Fonte: docs/adr/0014-profiles.md.
+
+  - name: landscape
+    act: heading
+    topic: "The inspiration"
+    message: "The platform tooling landscape inspired us"
+    subtitle: "Five planes, with one API in front"
+    diagram: "../assets/docs/landscape.svg"
+    show: [planes]
+    reveal: [api, clients]
+    accumulate: true
+    source: "[platformengineering.org/platform-tooling](https://platformengineering.org/platform-tooling)"
+    dependsOn: [profiles]
+    notes: |-
+      What we want to say: **this is where the idea started**. The five planes come from the Platform tooling landscape of platformengineering.org; the API in front of them and its clients are what we drew on top.
+
+      **The API is worth having for what crosses the Reefs.** `kubectl` reaches the CRDs of one cluster. The CLI, a portal, an IDE reading an `app.yaml` and an agent all speak of Reefs, and none of them should need a kubeconfig.
+
+      **Each box in a plane is a candidate Reef:** Delivery is `release`, Identity is `authentication`, Data is `database`. The next slide shows what became of them.
+
+      Source: https://platformengineering.org/platform-tooling and docs/vision.md.
+    pt:
+      topic: "A inspiração"
+      message: "O platform tooling landscape nos inspirou"
+      subtitle: "Cinco planos, com uma API na frente"
+      notes: |-
+        O que queremos dizer: **foi daqui que a ideia partiu**. Os cinco planos vêm do Platform tooling landscape do platformengineering.org; a API na frente deles e os seus clientes são o que desenhamos por cima.
+
+        **A API vale pelo que atravessa os Reefs.** O `kubectl` alcança os CRDs de um cluster. A CLI, um portal, uma IDE que lê um `app.yaml` e um agente falam todos de Reefs, e nenhum deles deveria precisar de um kubeconfig.
+
+        **Cada caixa de um plano é um Reef candidato:** Delivery é `release`, Identity é `authentication`, Data é `database`. O próximo slide mostra no que deram.
+
+        Fonte: https://platformengineering.org/platform-tooling e docs/vision.md.
+
+  - name: idp-profile
+    act: heading
+    topic: "internal-developer-platform"
+    message: "What the profile runs today"
+    subtitle: "A dashed line is not in the profile yet"
+    diagram: "../assets/docs/idp-profile.svg"
+    show: [legend]
+    reveal: [api, plane.1, plane.2, plane.3, plane.4, plane.5, built.tenancy, built.catalog, built.scm, built.release, built.registry, built.delivery, built.environment, built.database, built.metrics, built.secrets, built.authentication, built.build, todo.edge, todo.authorization, todo.policy, client.1, client.2, client.3]
+    accumulate: true
+    details:
+      built.tenancy:
+        title: "{reef:tenancy}"
+        tip: "The tree of this instance: Organizations and Projects"
+        body: "The kinds `Organization` and `Project`, in every profile. No Nereid: the API keeps the objects. [The commands](../specs/cli/reefs/tenancy.html)"
+      built.release:
+        title: "{reef:release} · {nereid:flux} · {mandate:flux}"
+        tip: "Takes a chart from where it comes from to where it runs"
+        body: "Turns Repository, Source, Target and Release into Flux `HelmRepository` and `HelmRelease` objects and copies their status back. A Nereid that needs a chart writes its own Release. [The commands](../specs/cli/reefs/release.html)"
+      built.environment:
+        title: "{reef:environment} · {nereid:vcluster} · {mandate: vcluster}"
+        tip: "Makes each Environment a vcluster"
+        body: "Each Environment is a vcluster in the current cluster, through a Release of its chart in the release reef. [The commands](../specs/cli/reefs/environment.html)"
+      built.database:
+        title: "{reef:database} · {nereid:cloudnative-pg} · {mandate:cloudnative-pg}"
+        tip: "Makes each Database through CloudNativePG"
+        body: "Releases the CloudNativePG operator once, after checking its chart's SHA-256, and looks after each Database. Keycloak keeps its realm, users and sessions in one. [The commands](../specs/cli/reefs/database.html)"
+      built.metrics:
+        title: "{reef:metrics} · {nereid:victoriametrics} · {mandate:victoriametrics}"
+        tip: "Keeps 14 days of every Nereid's metrics"
+        body: "Releases the VictoriaMetrics operator through the release reef, keeps 14 days of every Nereid's metrics and the kubelets' cAdvisor, and publishes the address of the Prometheus query API."
+      built.secrets:
+        title: "{reef:secrets} · {nereid:openbao} · {mandate:default}"
+        tip: "Keeps secrets the CLI encrypted on the client"
+        body: "The CLI encrypts a value with the public key `openbao` publishes. OpenBao opens it in memory and keeps it in KV v2, a new version per change; a SecretBinding makes a Kubernetes Secret from it. [The commands](../specs/cli/reefs/secrets.html)"
+      built.authentication:
+        title: "{reef:authentication} · {nereid:keycloak} · {mandate:keycloak}"
+        tip: "Signs people in through Keycloak"
+        body: "Writes its own Release of Keycloak, keeps its realm in a Database and publishes its OpenID Connect (OIDC) issuer. `nereus login` and the Nereus API rely on it. [The commands](../specs/cli/reefs/authentication.html)"
+      built.catalog:
+        title: "{reef:catalog} · {nereid:catalog} · {mandate:catalog}"
+        tip: "Says what Nereus has: its Workloads and Packages"
+        body: "Says what Nereus has (what runs, what is published, whether it holds together), with `nereus catalog apply`, `list`, `get`, `delete` and `check`. The Nereid writes each entry's `status`; the profile installs it. [The commands](../specs/cli/reefs/catalog.html)"
+      built.scm:
+        title: "{reef:scm} · {nereid:forgejo} · {mandate:forgejo}"
+        tip: "The source in the cluster: a repository mirrored into Forgejo"
+        body: "`nereus scm mirror create <name> --from https://github.com/<owner>/<repository>` copies a public repository into a Forgejo the Nereid runs in the cluster, pulled on an interval, with no App; the profile installs it, `forgejo` the reef's default (#1255, #1327). [The commands](../specs/cli/reefs/scm.html)"
+      built.delivery:
+        title: "{reef:delivery} · {nereid:kubernetes} · {mandate:kubernetes}"
+        tip: "Takes a Workload to an Environment"
+        body: "`nereus workload deploy --image`, or `--build`, takes a Workload to an Environment. The Nereid resolves a tag to a digest, never the client, and writes the objects of the release reef (ADR 0020). [The commands](../specs/cli/reefs/delivery.html)"
+      built.registry:
+        title: "{reef:registry} · {nereid:zot} · {mandate:zot}"
+        tip: "An image registry inside the cluster"
+        body: "The `zot` Nereid runs an open source registry in the cluster, one Repository per Workload, each with its own push credential, and reads it only for its owner (ADR 0021). [The commands](../specs/cli/reefs/registry.html)"
+      built.build:
+        title: "{reef:build} · {nereid:buildkit} · {mandate:buildkit}"
+        tip: "Builds a Workload's image inside the cluster"
+        body: "Built: one Job per Build clones, builds rootless with BuildKit and pushes to the registry, and `nereus workload deploy --build` runs it by digest. The profile installs it, its containment proved (#1069, #1257, spec 0009). [The commands](../specs/cli/reefs/build.html)"
+      todo.edge:
+        title: "{reef:edge} · {nereid:cloudflare} · proposed"
+        tip: "Proposed: publishes an endpoint at a hostname"
+        body: "Not built. Domains, zones and routes: a `cloudflare` Nereid would publish a reef's endpoint at a hostname (#577). [The commands](../specs/cli/reefs/edge.html)"
+      todo.authorization:
+        title: "{reef:authorization} · {nereid:openfga} · proposed"
+        tip: "Proposed, still open: who may do what"
+        body: "Not built, and still being refined. The first idea: the Nereus API asks one question, whether a person may do a verb on an object, with the tenancy tree as the hierarchy. OpenFGA is the candidate named by ADR 0014 (#897)."
+      todo.policy:
+        title: "{reef:policy} · {nereid:kyverno} · proposed"
+        tip: "Proposed, still open: refuses what breaks a rule"
+        body: "Not built, and still being refined. The first idea: a small kind for a rule a Workload or Release must follow, common to every Nereid, and one refusal a person can see. Kyverno is the candidate named by ADR 0014, to weigh against native admission policies (#898)."
+    dependsOn: [landscape]
+    notes: |-
+      What we want to say: **the planes are still there, and now each box has a name that runs**. Every card reads top to bottom: the Reef is the API, the Nereid looks after it, the Mandate binds the two.
+
+      **The order on screen:** the Nereus API, the five planes one at a time, the cards that run, the dashed cards as the next steps, and the clients last. Hover a solid card for a tip; click it for the details.
+
+      **The solid cards:** `tenancy` has no Nereid, since the API keeps its objects; `catalog` is built, and the profile installs its Nereid; the other eight are what `nereus init --profile internal-developer-platform` installs today, `registry` and `delivery` among them.
+
+      **The dashed cards:** not in the profile yet. `build` with `buildkit` runs today with `nereus nereid apply buildkit --reef build`, and joins the profile once #1069 (the build reef's containment is proved) closes; `edge` is #577 (the edge reef with a cloudflare Nereid); each number links to its place on the board. `authorization` with `openfga` is #897 (refine the authorization reef) and `policy` with `kyverno` is #898 (refine the policy reef), both named by ADR 0014 (profiles).
+
+      **The clients:** the Portal has its Nereid, `nereus-portal`, which the profile installs behind the cluster's entrance: on a k3d cluster it answers at `http://localhost:<ingress port>`, and another address goes in its Mandate (#896, the profile installs the nereus-portal Nereid).
+
+      Source: cli/src/nereus/profiles.py, cli/src/nereus/local_nereids.py and docs/specs/cli/reefs.
+    pt:
+      topic: "internal-developer-platform"
+      message: "O que o profile roda hoje"
+      subtitle: "Linha tracejada ainda não está no profile"
+      details:
+        built.tenancy:
+          title: "{reef:tenancy}"
+          tip: "A árvore desta instância: Organizations e Projects"
+          body: "Os kinds `Organization` e `Project`, em todo profile. Sem Nereid: a API guarda os objetos. [Os comandos](../specs/cli/reefs/tenancy.html)"
+        built.release:
+          title: "{reef:release} · {nereid:flux} · {mandate:flux}"
+          tip: "Leva um chart de onde ele vem até onde ele roda"
+          body: "Transforma Repository, Source, Target e Release em objetos `HelmRepository` e `HelmRelease` do Flux e copia o status de volta. Um Nereid que precisa de um chart escreve o seu próprio Release. [Os comandos](../specs/cli/reefs/release.html)"
+        built.environment:
+          title: "{reef:environment} · {nereid:vcluster} · {mandate: vcluster}"
+          tip: "Faz de cada Environment um vcluster"
+          body: "Cada Environment é um vcluster no cluster atual, por meio de um Release do seu chart no reef release. [Os comandos](../specs/cli/reefs/environment.html)"
+        built.database:
+          title: "{reef:database} · {nereid:cloudnative-pg} · {mandate:cloudnative-pg}"
+          tip: "Cria cada Database com o CloudNativePG"
+          body: "Faz o release do operador CloudNativePG uma vez, depois de conferir o SHA-256 do chart, e cuida de cada Database. O Keycloak guarda num deles o realm, os usuários e as sessões. [Os comandos](../specs/cli/reefs/database.html)"
+        built.metrics:
+          title: "{reef:metrics} · {nereid:victoriametrics} · {mandate:victoriametrics}"
+          tip: "Guarda 14 dias de métricas de cada Nereid"
+          body: "Faz o release do operador VictoriaMetrics pelo reef release, guarda 14 dias de métricas de cada Nereid e o cAdvisor dos kubelets, e publica o endereço da API de consulta do Prometheus."
+        built.secrets:
+          title: "{reef:secrets} · {nereid:openbao} · {mandate:default}"
+          tip: "Guarda secrets que a CLI cifrou no cliente"
+          body: "A CLI cifra um valor com a chave pública que o `openbao` publica. O OpenBao o abre em memória e o guarda no KV v2, uma versão nova a cada mudança; um SecretBinding gera dele um Secret do Kubernetes. [Os comandos](../specs/cli/reefs/secrets.html)"
+        built.authentication:
+          title: "{reef:authentication} · {nereid:keycloak} · {mandate:keycloak}"
+          tip: "Faz o login das pessoas pelo Keycloak"
+          body: "Escreve o seu próprio Release do Keycloak, guarda o realm num Database e publica o seu issuer OpenID Connect (OIDC). O `nereus login` e a Nereus API dependem dele. [Os comandos](../specs/cli/reefs/authentication.html)"
+        built.catalog:
+          title: "{reef:catalog} · {nereid:catalog} · {mandate:catalog}"
+          tip: "Diz o que o Nereus tem: os seus Workloads e Packages"
+          body: "Diz o que o Nereus tem (o que roda, o que está publicado, se tudo se sustenta), com `nereus catalog apply`, `list`, `get`, `delete` e `check`. O Nereid escreve o `status` de cada entrada; o profile o instala. [Os comandos](../specs/cli/reefs/catalog.html)"
+        built.scm:
+          title: "{reef:scm} · {nereid:forgejo} · {mandate:forgejo}"
+          tip: "O código no cluster: um repositório espelhado no Forgejo"
+          body: "`nereus scm mirror create <name> --from https://github.com/<owner>/<repository>` copia um repositório público para um Forgejo que o Nereid roda no cluster, atualizado num intervalo, sem App; o profile o instala, com `forgejo` como o padrão do reef (#1255, #1327). [Os comandos](../specs/cli/reefs/scm.html)"
+        built.delivery:
+          title: "{reef:delivery} · {nereid:kubernetes} · {mandate:kubernetes}"
+          tip: "Leva um Workload a um Environment"
+          body: "`nereus workload deploy --image`, ou `--build`, leva um Workload a um Environment. O Nereid resolve a tag para um digest, nunca o cliente, e escreve os objetos do reef release (ADR 0020). [Os comandos](../specs/cli/reefs/delivery.html)"
+        built.registry:
+          title: "{reef:registry} · {nereid:zot} · {mandate:zot}"
+          tip: "Um registry de imagens dentro do cluster"
+          body: "O Nereid `zot` roda um registry open source no cluster, um Repository por Workload, cada um com a sua credencial de push, e só o lê para o seu dono (ADR 0021). [Os comandos](../specs/cli/reefs/registry.html)"
+        built.build:
+          title: "{reef:build} · {nereid:buildkit} · {mandate:buildkit}"
+          tip: "Constrói a imagem de um Workload dentro do cluster"
+          body: "Construído: um Job por Build clona, constrói sem root com o BuildKit e faz o push para o registry, e `nereus workload deploy --build` o roda pelo digest. O profile o instala, com a sua contenção provada (#1069, #1257, spec 0009). [Os comandos](../specs/cli/reefs/build.html)"
+        todo.edge:
+          title: "{reef:edge} · {nereid:cloudflare} · proposta"
+          tip: "Proposta: publica um endpoint num hostname"
+          body: "Não construído. Domínios, zonas e rotas: um Nereid `cloudflare` publicaria o endpoint de um reef num hostname (#577). [Os comandos](../specs/cli/reefs/edge.html)"
+        todo.authorization:
+          title: "{reef:authorization} · {nereid:openfga} · proposta"
+          tip: "Proposta, ainda em aberto: quem pode fazer o quê"
+          body: "Não construído, ainda em refinamento. A primeira ideia: a Nereus API faz uma pergunta, se uma pessoa pode executar um verbo sobre um objeto, com a árvore do tenancy como hierarquia. O OpenFGA é o candidato citado no ADR 0014 (#897)."
+        todo.policy:
+          title: "{reef:policy} · {nereid:kyverno} · proposta"
+          tip: "Proposta, ainda em aberto: recusa o que quebra uma regra"
+          body: "Não construído, ainda em refinamento. A primeira ideia: um kind pequeno para uma regra que um Workload ou Release deve seguir, comum a todo Nereid, e uma recusa que a pessoa consiga ver. O Kyverno é o candidato citado no ADR 0014, a comparar com as admission policies nativas (#898)."
+      notes: |-
+        O que queremos dizer: **os planos continuam lá, e agora cada caixa tem um nome que roda**. Cada cartão se lê de cima para baixo: o Reef é a API, o Nereid cuida dela, o Mandate liga os dois.
+
+        **A ordem na tela:** a Nereus API, os cinco planos um de cada vez, os cartões que rodam, os tracejados como próximos passos e os clientes por último. Passe o mouse num cartão sólido para ver a dica; clique para ver os detalhes.
+
+        **Os cartões sólidos:** o `tenancy` não tem Nereid, pois a API guarda os seus objetos; o `catalog` está construído, e o profile instala o seu Nereid; os outros oito são o que `nereus init --profile internal-developer-platform` instala hoje, entre eles `registry` e `delivery`.
+
+        **Os cartões tracejados:** ainda fora do profile. `build` com `buildkit` já roda com `nereus nereid apply buildkit --reef build`, e entra no profile quando o #1069 (a contenção do reef build é provada) fechar; `edge` é o #577 (o reef edge com um Nereid cloudflare); cada número leva ao seu lugar no board. `authorization` com `openfga` é o #897 (refinar o reef authorization) e `policy` com `kyverno` é o #898 (refinar o reef policy), ambos citados no ADR 0014 (profiles).
+
+        **Os clientes:** o Portal tem o seu Nereid, `nereus-portal`, que o profile instala atrás da entrada do cluster: num cluster k3d ele responde em `http://localhost:<porta do ingress>`, e outro endereço vai no seu Mandate (#896, o profile instala o Nereid nereus-portal).
+
+        Fonte: cli/src/nereus/profiles.py, cli/src/nereus/local_nereids.py e docs/specs/cli/reefs.
+
+  - name: closing
+    act: heading
+    message: "Thank you"
+    notes: |-
+      Questions.
+    pt:
+      message: "Obrigado"
+      notes: |-
+        Perguntas.

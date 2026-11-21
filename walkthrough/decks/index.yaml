@@ -1,0 +1,80 @@
+deck:
+  name: walkthrough
+  title: "How to use Nereus"
+  subtitle: "One goal per walkthrough, each step a link to its command in the CLI reference"
+  accent: "a link to its command"
+  pt:
+    title: "Como usar o Nereus"
+    subtitle: "Um objetivo por walkthrough, cada passo um link para o seu comando na referência do CLI"
+    accent: "um link para o seu comando"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: guide
+    title: "The guide"
+    question: "Where does the what end and the how begin?"
+    pt: {title: "O guia", question: "Onde termina o quê e começa o como?"}
+  - name: goals
+    title: "Goals"
+    question: "What can you do with Nereus?"
+    pt: {title: "Objetivos", question: "O que dá para fazer com o Nereus?"}
+
+slides:
+  - name: cover
+    act: opening
+    cover: true
+    message: "How to use Nereus"
+    notes: |-
+      **The guide to using Nereus, as decks while the docs site is not published** (owner, 2026-10-29). The pages in `docs/walkthrough/*.md` follow the same standard for the site.
+    pt:
+      message: "Como usar o Nereus"
+      notes: |-
+        **O guia de uso do Nereus, em decks enquanto o site da documentação não é publicado** (o dono, 2026-10-29). As páginas em `docs/walkthrough/*.md` seguem o mesmo padrão para o site.
+
+  - name: what-and-how
+    act: guide
+    message: "The walkthrough is the index of what to do, the CLI reference is how"
+    accent: "how"
+    screen:
+      - "**Walkthrough:** the steps toward a goal, in order, and why each one is there"
+      - "**[CLI reference](../../specs/cli/index.html):** every command, its options and what it prints, one deck per reef"
+    notes: |-
+      **A command is written in one place only**, the CLI reference, so a change to it is one change (#477). Each step of a walkthrough links to its command's slide, and the deck engine refuses a link to a slide that does not exist.
+
+      **A walkthrough is as ready as its least ready step:** built, planned (with its issues) or idea.
+    pt:
+      message: "O walkthrough é o índice do que fazer, a referência do CLI é o como"
+      accent: "o como"
+      screen:
+        - "**Walkthrough:** os passos até um objetivo, em ordem, e por que cada um está ali"
+        - "**[Referência do CLI](../../specs/cli/index.html):** cada comando, as suas opções e o que ele imprime, um deck por reef"
+      notes: |-
+        **Um comando é escrito num lugar só**, a referência do CLI, então mudá-lo é uma mudança só (#477). Cada passo de um walkthrough aponta para o slide do seu comando, e o motor de decks recusa um link para um slide que não existe.
+
+        **Um walkthrough está tão pronto quanto o seu passo menos pronto:** pronto, planejado (com as suas issues) ou ideia.
+
+  - name: goals
+    act: goals
+    message: "Each goal is a walkthrough of its own"
+    accent: "of its own"
+    screen:
+      - "**[Publish a reef's endpoint at a hostname](edge.html):** planned #470, #475"
+      - "**[Get started, from no cluster to a reef at runtime](get-started.html):** built"
+      - "**[Release a chart](release.html):** built"
+      - "**Sign in through the authentication reef:** built · page only, to port"
+      - "**Connect to the cloud:** built · page only, to port"
+    notes: |-
+      **The first walkthroughs as decks are the edge reef's, planned, Release a chart, built and the first one ported (#479), and Get started, its steps in the core deck (#482).** The other built ones keep their pages in `docs/walkthrough/` with the commands inline, until their reef's deck is in the CLI reference; each port turns them into a deck of links.
+    pt:
+      message: "Cada objetivo é um walkthrough próprio"
+      accent: "próprio"
+      screen:
+        - "**[Publicar o endpoint de um reef num hostname](edge.html):** planejado #470, #475"
+        - "**[Começar, de nenhum cluster a um reef em runtime](get-started.html):** pronto"
+        - "**[Fazer o release de um chart](release.html):** pronto"
+        - "**Entrar pelo reef authentication:** pronto · só a página, a migrar"
+        - "**Conectar à nuvem:** pronto · só a página, a migrar"
+      notes: |-
+        **Os primeiros walkthroughs em deck são o do reef edge, planejado, Fazer o release de um chart, pronto e o primeiro migrado (#479), e Começar, com os seus passos no deck do core (#482).** Os outros prontos mantêm as suas páginas em `docs/walkthrough/` com os comandos escritos nelas, até o deck do seu reef estar na referência do CLI; cada migração os transforma num deck de links.

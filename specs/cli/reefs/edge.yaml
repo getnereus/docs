@@ -1,0 +1,409 @@
+deck:
+  name: edge
+  title: "The edge reef"
+  subtitle: "Every command of the edge reef: domains, zones and routes, in the order a person types them"
+  accent: "in the order a person types them"
+  pt:
+    title: "O reef edge"
+    subtitle: "Todos os comandos do reef edge: domínios, zonas e rotas, na ordem em que uma pessoa os digita"
+    accent: "na ordem em que uma pessoa os digita"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: setup
+    title: "Setup"
+    question: "What comes before the first domain?"
+    pt: {title: "Preparação", question: "O que vem antes do primeiro domínio?"}
+  - name: zone
+    title: "Zone"
+    question: "Who answers for the domain's names?"
+    pt: {title: "Zona", question: "Quem responde pelos nomes do domínio?"}
+  - name: domain
+    title: "Domain"
+    question: "Where does the registrar send the domain?"
+    pt: {title: "Domínio", question: "Para onde a registradora manda o domínio?"}
+  - name: route
+    title: "Route"
+    question: "How does a reef's endpoint get a name?"
+    pt: {title: "Rota", question: "Como o endpoint de um reef ganha um nome?"}
+
+slides:
+  - name: cover
+    act: opening
+    cover: true
+    message: "The edge reef"
+    notes: |-
+      **The source of truth for the commands of the edge reef.** Every command, built or only imagined, is here first; the tag after each label says whether it is built, planned (with the issue that builds it) or an idea.
+
+      The reef is refined in #470 (the edge reef publishes a reef's endpoint at a hostname); its domains in #475 (a godaddy Nereid that changes a domain at its registrar).
+    pt:
+      message: "O reef edge"
+      notes: |-
+        **A fonte da verdade dos comandos do reef edge.** Todo comando, pronto ou só imaginado, está aqui primeiro; a etiqueta depois de cada rótulo diz se ele está pronto, planejado (com a issue que o constrói) ou se é uma ideia.
+
+        O reef é refinado no #470 (o reef edge publica o endpoint de um reef num hostname); os seus domínios no #475 (uma Nereid godaddy que muda um domínio na registradora).
+
+  - name: apply-reef
+    act: setup
+    topic: "reef"
+    status: built
+    issue: 1949
+    message: "One command applies the {reef:edge} reef, with its first kind, Route"
+    accent: "One command"
+    terminal:
+      steps:
+        - comment: "Apply the edge reef"
+          run: "nereus reef apply edge"
+          output: |-
+            ✓ core/reefs/edge 0.1.0 created
+
+            Next steps:
+
+              nereus edge --help
+              nereus nereid apply <nereid> --reef edge
+    notes: |-
+      **The reef comes first, with no tool behind it.** Its first kind is `Route` (a hostname that reaches the platform, #1949); `Zone` (who answers for the domain's names, #1960), `Domain` (where the registrar sends the domain, #475) and `Record` (a CNAME or an A entry) come later.
+    pt:
+      topic: "reef"
+      message: "Um comando aplica o reef {reef:edge}, com o seu primeiro kind, Route"
+      accent: "Um comando"
+      notes: |-
+        **O reef vem primeiro, sem ferramenta por trás.** O seu primeiro kind é `Route` (um hostname que chega à plataforma, #1949); `Zone` (quem responde pelos nomes do domínio, #1960), `Domain` (para onde a registradora manda o domínio, #475) e `Record` (uma entrada CNAME ou A) vêm depois.
+
+  - name: apply-cloudflare
+    act: setup
+    topic: "tunnel"
+    status: built
+    issue: 1949
+    message: "The {nereid:cloudflare} Nereid runs the tunnel its Mandate names"
+    accent: "the tunnel"
+    terminal:
+      steps:
+        - comment: "Apply the cloudflare Nereid to the edge reef"
+          run: "nereus nereid apply cloudflare"
+          options: ["--reef edge"]
+          output: |-
+            ✓ core/nereids/cloudflare created, Ready
+
+            Next steps:
+
+              nereus mandate create cloudflare --reef edge --nereid cloudflare --param tunnel=<tunnel> --param credentialsSecret=edge/<secret> --default
+              nereus edge route create <name> --hostname <hostname>
+        - comment: "Its Mandate: the named tunnel and its credentials, a secret of the secrets reef"
+          run: "nereus mandate create cloudflare"
+          options: ["--reef edge", "--nereid cloudflare", "--param tunnel=nereus", "--param credentialsSecret=edge/cloudflare-tunnel", "--default"]
+          output: |-
+            ✓ core/mandates/cloudflare created (reef: edge, nereid: cloudflare, default)
+    dependsOn: [apply-reef]
+    notes: |-
+      **The Nereid runs cloudflared for the Mandate's named tunnel** (#1949), its credentials bound from the secrets reef, so the cluster needs no `kubectl apply` and no open terminal. With the Mandate's `apiTokenSecret`, it also makes each Route's CNAME through Cloudflare's API (#1950) and the zone (#1960); with it and no `credentialsSecret`, it gets the tunnel itself, adopting the one of that name or creating it, its credentials sealed into the vault `edge` as `edge/cloudflared-<mandate>` (#1961). It binds secrets of the vault `edge` alone, which `nereid apply` makes and its admission policy holds it to (#1967): a secret of another vault is `SecretOutsideVault`. An `azure-dns` Nereid may take its place later, by swapping the Mandate; the commands stay the same.
+    pt:
+      topic: "túnel"
+      message: "A Nereid {nereid:cloudflare} roda o túnel que o seu Mandate nomeia"
+      accent: "o túnel"
+      notes: |-
+        **A Nereid roda o cloudflared do túnel nomeado do Mandate** (#1949), com as credenciais vindas do reef secrets, então o cluster não precisa de `kubectl apply` nem de terminal aberto. Com o `apiTokenSecret` do Mandate, ela também faz o CNAME de cada Route pela API da Cloudflare (#1950) e a zona (#1960); com ele e sem `credentialsSecret`, ela obtém o próprio túnel, adotando o de mesmo nome ou criando-o, com as credenciais seladas no vault `edge` como `edge/cloudflared-<mandate>` (#1961). Ela vincula só secrets do vault `edge`, que o `nereid apply` cria e a sua admission policy impõe (#1967): um secret de outro vault é `SecretOutsideVault`. Uma Nereid `azure-dns` pode tomar o seu lugar depois, trocando o Mandate; os comandos continuam os mesmos.
+
+  - name: apply-godaddy
+    act: setup
+    topic: "registrar"
+    status: planned
+    issue: 475
+    message: "The {nereid:godaddy} Nereid talks to the registrar, through its Mandate"
+    accent: "registrar"
+    terminal:
+      steps:
+        - comment: "Apply the godaddy Nereid to the edge reef"
+          run: "nereus nereid apply godaddy"
+          options: ["--reef edge"]
+          output: |-
+            ✓ core/nereids/godaddy created, Ready
+
+            Next steps:
+
+              nereus mandate create godaddy --reef edge --nereid godaddy
+        - comment: "Bind it to the reef"
+          run: "nereus mandate create godaddy"
+          options: ["--reef edge", "--nereid godaddy"]
+          output: |-
+            ✓ core/mandates/godaddy created
+
+            Next steps:
+
+              nereus edge domain list --at-registrar --mandate godaddy
+    dependsOn: [apply-reef]
+    notes: |-
+      **The API never names the registrar** (ADR 0002): a `Domain` says which nameservers it delegates to, and the Mandate picks `godaddy`. Another registrar's Nereid takes its place by swapping the Mandate.
+    pt:
+      topic: "registradora"
+      message: "A Nereid {nereid:godaddy} fala com a registradora, pelo seu Mandate"
+      accent: "registradora"
+      notes: |-
+        **A API nunca nomeia a registradora** (ADR 0002): um `Domain` diz para quais nameservers delega, e o Mandate escolhe `godaddy`. A Nereid de outra registradora toma o seu lugar trocando o Mandate.
+
+  - name: zone-create
+    act: zone
+    topic: "create"
+    status: built
+    issue: 1960
+    message: "A zone gives the domain the nameservers that will answer for it"
+    accent: "nameservers"
+    terminal:
+      steps:
+        - comment: "Delegate the domain to the platform"
+          run: "nereus edge zone create getnereus.dev"
+          options: ["--mandate cloudflare"]
+          output: |-
+            ✓ edge/zones/getnereus.dev created, waiting for its delegation
+              nameservers: ada.ns.cloudflare.com, bob.ns.cloudflare.com
+              point the registrar of getnereus.dev at them; the zone turns Active once Cloudflare sees it
+
+            Next steps:
+
+              nereus edge zone get getnereus.dev
+        - comment: "Every zone and whether its delegation arrived"
+          run: "nereus edge zone list"
+          output: |-
+            NAME            MANDATE     STATUS   NAMESERVERS
+            getnereus.dev   cloudflare  Pending  ada.ns.cloudflare.com, bob.ns.cloudflare.com
+    dependsOn: [apply-cloudflare]
+    notes: |-
+      **The zone publishes its nameservers in `status`**; Cloudflare assigns them when the zone is created. Until the registrar points to them, the zone waits.
+
+      **`create` waits for the nameservers, never for `Active`**: the delegation is the registrar's step. `delete` forgets the Zone, and the zone stays at Cloudflare (owner, 2026-11-20).
+    pt:
+      topic: "create"
+      message: "Uma zona dá ao domínio os nameservers que vão responder por ele"
+      accent: "nameservers"
+      notes: |-
+        **A zona publica os seus nameservers no `status`**; o Cloudflare os atribui quando a zona é criada. Até a registradora apontar para eles, a zona espera.
+
+        **`create` espera os nameservers, nunca o `Active`**: a delegação é o passo da registradora. `delete` esquece a Zone, e a zona fica no Cloudflare (o dono, 2026-11-20).
+
+  - name: domain-list-registrar
+    act: domain
+    topic: "list at the registrar"
+    status: planned
+    issue: 475
+    message: "The registrar shows its domains, with the credentials asked for now and never stored"
+    accent: "never stored"
+    terminal:
+      steps:
+        - comment: "What the registrar holds"
+          run: "nereus edge domain list"
+          options: ["--at-registrar", "--mandate godaddy"]
+          output: |-
+            GoDaddy API key: ****
+            GoDaddy API secret: ****
+            NAME            NAMESERVERS                  EXPIRES      MANAGED
+            getnereus.dev   ns01.domaincontrol.com (+1)  2029-10-25   no
+            example.com     ns01.domaincontrol.com (+1)  2029-10-25   no
+            example.org     ns01.domaincontrol.com (+1)  2028-06-11   no
+
+            Next steps:
+
+              nereus edge domain get <name> --at-registrar --mandate godaddy
+              nereus edge domain apply <name> --mandate godaddy
+    dependsOn: [apply-godaddy]
+    notes: |-
+      **A list shows one nameserver and `(+N)` for the others**; `get` shows them all (the owner, 2026-10-29). `MANAGED` says whether Nereus already looks after the domain.
+
+      **The credentials are asked for at the time of use** (the owner, 2026-10-29); keeping them in the secrets reef is decided in #475. The GoDaddy Domains API may be closed to small accounts: #475 checks it first.
+    pt:
+      topic: "lista na registradora"
+      message: "A registradora mostra os seus domínios, com as credenciais pedidas na hora e nunca guardadas"
+      accent: "nunca guardadas"
+      notes: |-
+        **Uma lista mostra um nameserver e `(+N)` para os outros**; `get` mostra todos (o dono, 2026-10-29). `MANAGED` diz se o Nereus já cuida do domínio.
+
+        **As credenciais são pedidas na hora do uso** (o dono, 2026-10-29); guardá-las no reef secrets é decidido no #475. A API de domínios da GoDaddy pode estar fechada para contas pequenas: o #475 verifica isso primeiro.
+
+  - name: domain-apply
+    act: domain
+    topic: "apply"
+    status: planned
+    issue: 475
+    message: "Nereus takes the domain and sends it to the zone's nameservers"
+    accent: "takes the domain"
+    terminal:
+      steps:
+        - comment: "Delegate getnereus.dev to the zone"
+          run: "nereus edge domain apply getnereus.dev"
+          options: ["--nameservers-from zone/getnereus.dev", "--mandate godaddy"]
+          output: |-
+            ✓ domain/getnereus.dev created
+
+            Next steps:
+
+              nereus edge domain get getnereus.dev --watch
+    dependsOn: [zone-create, domain-list-registrar]
+    notes: |-
+      **`--nameservers-from zone/<name>` takes the nameservers the zone publishes**; `--nameservers <ns1>,<ns2>` writes them by hand, for a zone outside Nereus.
+    pt:
+      topic: "apply"
+      message: "O Nereus assume o domínio e o manda para os nameservers da zona"
+      accent: "assume o domínio"
+      notes: |-
+        **`--nameservers-from zone/<nome>` usa os nameservers que a zona publica**; `--nameservers <ns1>,<ns2>` os escreve à mão, para uma zona fora do Nereus.
+
+  - name: domain-list
+    act: domain
+    topic: "list"
+    status: planned
+    issue: 475
+    message: "The list shows the domains Nereus looks after"
+    accent: "Nereus looks after"
+    terminal:
+      steps:
+        - comment: "What Nereus looks after"
+          run: "nereus edge domain list"
+          output: |-
+            NAME            MANDATE  NAMESERVERS                 DELEGATED
+            getnereus.dev   godaddy  ada.ns.cloudflare.com (+1)  True
+
+            Next steps:
+
+              nereus edge domain get getnereus.dev
+    dependsOn: [domain-apply]
+    notes: |-
+      **Without `--at-registrar`, the list shows the `Domain` objects**, the ones Nereus looks after. The nameservers are examples; Cloudflare assigns the real ones.
+    pt:
+      topic: "list"
+      message: "A lista mostra os domínios de que o Nereus cuida"
+      accent: "o Nereus cuida"
+      notes: |-
+        **Sem `--at-registrar`, a lista mostra os objetos `Domain`**, os de que o Nereus cuida. Os nameservers são exemplos; o Cloudflare atribui os reais.
+
+  - name: domain-get
+    act: domain
+    topic: "get"
+    status: planned
+    issue: 475
+    message: "One domain shows every detail, its nameservers one per line"
+    accent: "one per line"
+    terminal:
+      steps:
+        - comment: "Every detail of one domain"
+          run: "nereus edge domain get getnereus.dev"
+          output: |-
+            Name:         getnereus.dev
+            Mandate:      godaddy
+            Delegated:    True
+            Expires:      2029-10-25
+            Nameservers:
+              ada.ns.cloudflare.com
+              bob.ns.cloudflare.com
+              (from zone/getnereus.dev)
+
+            Next steps:
+
+              nereus edge domain get getnereus.dev --watch
+    dependsOn: [domain-list]
+    notes: |-
+      **Nameservers are always a list, one per line** (the owner, 2026-10-29), and the line under them says where they came from.
+    pt:
+      topic: "get"
+      message: "Um domínio mostra todos os detalhes, os nameservers um por linha"
+      accent: "um por linha"
+      notes: |-
+        **Os nameservers são sempre uma lista, um por linha** (o dono, 2026-10-29), e a linha embaixo deles diz de onde vieram.
+
+  - name: route-hostname
+    act: route
+    topic: "hostname"
+    status: built
+    issue: 1949
+    message: "A route makes a hostname reach the platform"
+    accent: "reach the platform"
+    terminal:
+      steps:
+        - comment: "Carry Triton's hostname through the tunnel"
+          run: "nereus edge route create triton"
+          options: ["--hostname triton.getnereus.dev"]
+          output: |-
+            ✓ edge/routes/triton created, Ready: https://triton.getnereus.dev
+
+            Next steps:
+
+              nereus edge route get triton
+        - comment: "Every hostname the platform answers"
+          run: "nereus edge route list"
+          output: |-
+            NAME     HOSTNAME               ENDPOINT  MANDATE     READY   URL
+            auth     auth.getnereus.dev     -         cloudflare  True    https://auth.getnereus.dev
+            portal   portal.getnereus.dev   -         cloudflare  True    https://portal.getnereus.dev
+            triton   triton.getnereus.dev   -         cloudflare  True    https://triton.getnereus.dev
+    dependsOn: [apply-cloudflare]
+    notes: |-
+      **The first slice** (#1949): a hostname goes to the instance's entrance, where the reefs' own routes pick the backend; it names no cluster, Service or port. With the Mandate's API token, the Nereid makes its CNAME and deletes it with the Route (#1950); without one, the record is made by hand. A reef's endpoint is named with `--endpoint` (#1951).
+    pt:
+      topic: "hostname"
+      message: "Uma rota faz um hostname chegar à plataforma"
+      accent: "chegar à plataforma"
+      notes: |-
+        **A primeira fatia** (#1949): um hostname vai para a entrada da instância, onde as rotas dos próprios reefs escolhem o backend; não nomeia cluster, Service nem porta. Com o token de API do Mandate, a Nereid faz o seu CNAME e o apaga junto com a Route (#1950); sem ele, o registro é feito à mão. O endpoint de um reef é nomeado com `--endpoint` (#1951).
+
+  - name: endpoint-list
+    act: route
+    topic: "endpoints"
+    status: built
+    issue: 1951
+    message: "The Nereids say what they serve, never where it runs"
+    accent: "never where it runs"
+    terminal:
+      steps:
+        - comment: "What the Nereids serve at the instance's entrance"
+          run: "nereus edge endpoint list"
+          output: |-
+            REEF       ENDPOINT  NEREID  PROTOCOL  PATHS  HOSTS               PUBLISHABLE  PUBLISHED  ROUTES
+            messaging  mcp       triton  http      /      triton.example.com  yes          no         -
+        - comment: "Grant it: only an endpoint its Nereid's spec.publish names is ever published"
+          run: "nereus nereid apply triton"
+          options: ["--publish mcp"]
+          output: |-
+            ✓ core/nereids/triton unchanged, Ready
+            ✓ core/nereids/triton configured (publishes: mcp)
+    dependsOn: [route-hostname]
+    notes: |-
+      **An endpoint is something a Nereid publishes in its `status`** (ADR 0005, Nereids publish endpoints and commands in status), named `<reef>/<endpoint>` by its Nereid's first reef: never a cluster, a namespace, a Service or a port (the owner, 2026-10-29). It is published only when the Nereid marks it publishable (an admin surface is not) and its `spec.publish` grants it, written by `nereus nereid apply --publish` (#1951); `--publish ""` takes the grant away. An entry the Nereid CRD would refuse is dropped, never shown (ADR 0004).
+    pt:
+      topic: "endpoints"
+      message: "As Nereids dizem o que servem, nunca onde rodam"
+      accent: "nunca onde rodam"
+      notes: |-
+        **Um endpoint é algo que uma Nereid publica no seu `status`** (ADR 0005, as Nereids publicam endpoints e comandos no status), com o nome `<reef>/<endpoint>` pelo primeiro reef da sua Nereid: nunca um cluster, um namespace, um Service ou uma porta (o dono, 2026-10-29). Ele só é publicado quando a Nereid o marca como publicável (uma superfície de admin não é) e o seu `spec.publish` o concede, escrito por `nereus nereid apply --publish` (#1951); `--publish ""` retira a concessão. Uma entrada que o CRD da Nereid recusaria é descartada, nunca mostrada (ADR 0004).
+
+  - name: route-create
+    act: route
+    topic: "create"
+    status: built
+    issue: 1951
+    message: "A route publishes a reef's endpoint at a fixed address"
+    accent: "a fixed address"
+    terminal:
+      steps:
+        - comment: "Publish Triton's MCP endpoint"
+          run: "nereus edge route create triton"
+          options: ["--hostname triton.example.com", "--endpoint messaging/mcp"]
+          output: |-
+            ✓ edge/routes/triton created, Ready: https://triton.example.com
+
+            Next steps:
+
+              nereus edge route get triton
+        - comment: "Not granted: the Route stays, and says what is missing"
+          run: "nereus edge route create docs"
+          options: ["--hostname docs.example.com", "--endpoint messaging/admin"]
+          output: |-
+            ✗ timed out after 120s waiting for edge/routes/docs to be Ready (Ready: NotPublishable: <its Nereid's message>); it is left as it is: see 'nereus edge route get docs'
+    dependsOn: [endpoint-list]
+    notes: |-
+      **Triton is the first use** (the Triton roadmap, step 1). The cloudflare Nereid carries the hostname only when the endpoint is publishable, granted by its Nereid's `spec.publish` and served on that hostname; otherwise the Route's Ready says why: `NoEndpoint`, `NotPublishable`, `NotPublished`, `NotServed` or `Ambiguous` (#1951). The endpoint is fixed once created, as the Mandate.
+    pt:
+      topic: "create"
+      message: "Uma rota publica o endpoint de um reef num endereço fixo"
+      accent: "num endereço fixo"
+      notes: |-
+        **O servidor MCP do Tritão é o primeiro uso** (o roadmap do Tritão, passo 1). A Nereid cloudflare só leva o hostname quando o endpoint é publicável, concedido pelo `spec.publish` da sua Nereid e servido naquele hostname; senão o Ready da Route diz o porquê: `NoEndpoint`, `NotPublishable`, `NotPublished`, `NotServed` ou `Ambiguous` (#1951). O endpoint fica fixo depois de criado, como o Mandate.

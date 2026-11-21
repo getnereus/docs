@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" aria-label="Beach flow" role="img" viewBox="0 0 360 170">
+<defs><marker id="ar3-en" markerHeight="6" markerWidth="6" orient="auto" refX="9" refY="5" viewBox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="var(--faint)"></path></marker></defs><g data-part="all">
+<g font-size="9" text-anchor="middle">
+<rect fill="none" height="44" rx="8" stroke="var(--cx-human)" stroke-width="2" width="78" x="6" y="14"></rect><text fill="var(--cx-human)" font-weight="600" x="45" y="32">me + AI</text><text fill="var(--muted)" font-size="8" x="45" y="46">voice or chat</text>
+<rect fill="none" height="44" rx="8" stroke="var(--cx-order)" stroke-width="2" width="78" x="141" y="14"></rect><text fill="var(--cx-order)" font-weight="600" x="180" y="32">beach</text><text fill="var(--muted)" font-size="8" x="180" y="46">folder on my Drive</text>
+<rect fill="none" height="44" rx="8" stroke="var(--cx-agent)" stroke-width="2" width="78" x="276" y="14"></rect><text fill="var(--cx-agent)" font-weight="600" x="315" y="32">agent m15</text><text fill="var(--muted)" font-size="8" x="315" y="46">my machine</text>
+<rect fill="none" height="44" rx="8" stroke="var(--cx-pr)" stroke-width="2" width="78" x="276" y="112"></rect><text fill="var(--cx-pr)" font-weight="600" x="315" y="130">GitHub</text><text fill="var(--muted)" font-size="8" x="315" y="144">issue + PR</text>
+<line marker-end="url(#ar3-en)" stroke="#5f6368" x1="84" x2="139" y1="30" y2="30"></line><text fill="var(--cx-order)" font-size="8" x="112" y="24">Glaucus</text>
+<line marker-end="url(#ar3-en)" stroke="#5f6368" x1="219" x2="274" y1="30" y2="30"></line><text fill="var(--muted)" font-size="8" x="247" y="24">watches</text>
+<line marker-end="url(#ar3-en)" stroke="#5f6368" x1="315" x2="315" y1="58" y2="110"></line>
+<path d="M276,48 C250,70 230,70 219,50" fill="none" marker-end="url(#ar3-en)" stroke="#5f6368" stroke-dasharray="3 3"></path><text fill="var(--muted)" font-size="8" x="247" y="80">replies</text>
+<path d="M141,48 C120,72 100,72 84,50" fill="none" marker-end="url(#ar3-en)" stroke="#5f6368" stroke-dasharray="3 3"></path><text fill="var(--muted)" font-size="8" x="112" y="80">I read</text>
+</g></g></svg>

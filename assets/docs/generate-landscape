@@ -1,0 +1,124 @@
+#!/usr/bin/env python3
+"""Draws landscape.svg: the five planes of the platform tooling landscape (platformengineering.org/platform-tooling)
+inside the Platform API, with the clients that use it on the left. Each piece is a `<g data-part>` that a deck's `diagram`
+slide shows, dims or reveals: `planes.<key>-plane` an empty plane, `planes.<key>.N` its capabilities, `api` the frame,
+`clients.N` a client. `planes` addresses the five planes and their capabilities at once.
+
+Ported from the first proof of concept (wasp-idp, `docs/presentation/diagrams/landscape/build.py`, its `layered()`), #1490.
+Arrowheads are polygons, not markers: a deck inlines the SVG once per step, and markers break inside hidden stages."""
+import argparse
+from pathlib import Path
+
+PANEL, LINE, CHIP = "#111827", "#1f2937", "#0a0e1a"
+WHITE, MUTED, SOFT = "#ffffff", "#6b7a8d", "#9fb3c8"
+AMBER, BLUE = "#e5c07b", "#4a9ef4"
+MONO = 'font-family="DejaVu Sans Mono, monospace"'
+CHIP_FS = 17
+
+PLANES = {
+  "dev": "Developer Control", "ind": "Integration & Delivery", "res": "Resource",
+  "obs": "Observability", "sec": "Security",
+}
+# Developer Control in narrative order: the catalog, how an app enters it, then the path that creates both.
+# Integration & Delivery in flow order (code, artifact, spec, resources), read row by row.
+CAPS = {
+  "dev": ["Software Catalog", "App Declaration", "Golden Paths"],
+  "ind": ["Version Control", "CI", "Registry", "Orchestrator", "IaC", "Delivery"],
+  "res": ["Compute", "Data", "Networking", "Services"],
+  "obs": ["Monitoring & Logging", "Observability", "FinOps", "Incident Mgmt"],
+  "sec": ["Code Analysis", "Secrets", "Identity", "Policy", "Network Security"],
+}
+CLIENTS = [
+  ("{ }", "IDE", ["app.yaml", "AGENTS.md"]),
+  (">_", "CLI", ["$ nereus init", "$ platform deploy"]),
+  ("◧", "Portal", ["Browse the catalog", "Create from template"]),
+  ("✦", "Agents", ["“Create a Postgres", "for greeting-api”"]),
+]
+
+
+def esc(s):
+  return s.replace("&", "&amp;").replace("<", "&lt;")
+
+
+def text(x, y, s, size=26, weight=600, fill=WHITE, anchor="start", ls=0, extra=""):
+  lines = s.split("\n")
+  dy0 = -(len(lines) - 1) * size * 0.6
+  spans = "".join(f'<tspan x="{x}" dy="{dy0 if i == 0 else size * 1.2}">{esc(line)}</tspan>' for i, line in enumerate(lines))
+  return (f'<text x="{x}" y="{y}" font-size="{size}" font-weight="{weight}" fill="{fill}" '
+          f'text-anchor="{anchor}" letter-spacing="{ls}" dominant-baseline="middle" {extra}>{spans}</text>')
+
+
+def rect(x, y, w, h, rx=12, fill=PANEL, stroke=LINE, sw=2):
+  return f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{rx}" fill="{fill}" stroke="{stroke}" stroke-width="{sw}" />'
+
+
+def arrow(x1, y, x2, color=SOFT, sw=3):
+  return (f'<line x1="{x1}" y1="{y}" x2="{x2 - 10}" y2="{y}" stroke="{color}" stroke-width="{sw}"/>'
+          f'<polygon points="{x2 - 14},{y - 8} {x2},{y} {x2 - 14},{y + 8}" fill="{color}"/>')
+
+
+def chip(x, y, w, h, label):
+  return rect(x, y, w, h, 10, CHIP, LINE, 2) + text(x + w / 2, y + h / 2, label, CHIP_FS, 500, SOFT, "middle")
+
+
+def api_frame(x0, y0, x1, y1, label="PLATFORM API"):
+  frame = f'<path d="M{x0},{y0 + 18} a18,18 0 0 1 18,-18 h{x1 - x0 - 36} a18,18 0 0 1 18,18 v28 h-{x1 - x0} z" fill="#0d1a2e"/>'
+  frame += f'<rect x="{x0}" y="{y0}" width="{x1 - x0}" height="{y1 - y0}" rx="18" fill="none" stroke="{BLUE}" stroke-width="3"/>'
+  return frame + text(x0 + 28, y0 + 24, label, 17, 800, BLUE, "start", 4)
+
+
+def client_card(x, y, w, h, icon, name, lines):
+  card = rect(x, y, w, h, 14, PANEL, LINE, 2)
+  card += text(x + 22, y + 30, icon, 22, 800, SOFT, "start", 0, MONO) + text(x + 70, y + 30, name, 22, 800, WHITE)
+  for i, line in enumerate(lines):
+    mono = line.startswith("$") or line.endswith((".yaml", ".md"))
+    card += text(x + 22, y + 68 + i * 28, line, 17, 500, SOFT, "start", 0, (MONO if mono else "") + ' xml:space="preserve"')
+  return card
+
+
+def draw():
+  """The SVG, its parts in drawing order."""
+  x0, x1, gap, yo, yb, hb, ys = 420, 1470, 56, 232, 362, 340, 732
+  parts = {f"planes.{key}-plane": "" for key in PLANES} | {"api": ""}
+  # The bands: Observability on top, Security at the bottom, their capabilities sized by their names.
+  for key, y in (("obs", yo), ("sec", ys)):
+    parts[f"planes.{key}-plane"] += rect(x0, y, x1 - x0, 100, 14, PANEL, AMBER) + text(x0 + 30, y + 50, PLANES[key], 26, 700, AMBER)
+    cx = x0 + 300
+    room = x1 - 30 - cx - 10 * (len(CAPS[key]) - 1)
+    total = sum(len(c) + 6 for c in CAPS[key])
+    for n, label in enumerate(CAPS[key], start=1):
+      w = room * (len(label) + 6) / total
+      parts[f"planes.{key}.{n}"] = chip(cx, y + 22, w, 56, label)
+      cx += w + 10
+  # The flow: Developer Control, Integration & Delivery and Resource, each arrow part of the plane it points to.
+  room = x1 - x0 - 2 * gap
+  widths = [room * f for f in (0.3, 0.4, 0.3)]
+  for i, key in enumerate(["dev", "ind", "res"]):
+    bw = widths[i]
+    x = x0 + sum(widths[:i]) + i * gap
+    parts[f"planes.{key}-plane"] += rect(x, yb, bw, hb, 16) + text(x + 30, yb + 42, PLANES[key] + " Plane", 18, 700)
+    cols = 2 if len(CAPS[key]) > 4 else 1
+    cw = (bw - 60 - 12 * (cols - 1)) / cols
+    for j, label in enumerate(CAPS[key]):
+      parts[f"planes.{key}.{j + 1}"] = chip(x + 30 + (j % cols) * (cw + 12), yb + 80 + (j // cols) * 62, cw, 50, label)
+    if i:
+      parts[f"planes.{key}-plane"] = arrow(x - gap + 12, yb + hb / 2, x - 8) + parts[f"planes.{key}-plane"]
+  parts["api"] = api_frame(400, 182, 1490, 862)
+  # The CLIENTS label belongs to the first client; each card is its own part.
+  for j, (icon, name, lines) in enumerate(CLIENTS):
+    label = text(120, 206, "CLIENTS", 17, 800, MUTED, "start", 4) if j == 0 else ""
+    y = 232 + j * 155
+    parts[f"clients.{j + 1}"] = label + client_card(120, y, 236, 135, icon, name, lines) + arrow(360, y + 67.5, 396)
+  body = "".join(f'<g data-part="{key}">{value}</g>' for key, value in parts.items() if value)
+  return f'<svg viewBox="100 170 1400 702" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, sans-serif">{body}</svg>\n'
+
+
+def main(argv=None):
+  parser = argparse.ArgumentParser(description="Draw the platform tooling landscape, in parts, as an SVG.")
+  parser.add_argument("--output", type=Path, default=Path(__file__).with_name("landscape.svg"), help="the file to write")
+  args = parser.parse_args(argv)
+  args.output.write_text(draw())
+
+
+if __name__ == "__main__":
+  main()

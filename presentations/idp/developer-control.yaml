@@ -1,0 +1,1230 @@
+deck:
+  name: idp-developer-control
+  title: "Developer Control Plane"
+  subtitle: "The catalog, the app declaration and the golden paths: where the developer starts"
+  accent: "where the developer starts"
+  pt:
+    title: "Developer Control Plane"
+    subtitle: "O catálogo, a declaração da app e os golden paths: por onde o dev começa"
+    accent: "por onde o dev começa"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: catalog
+    title: "Software Catalog"
+    pt: {title: "Catálogo de software"}
+  - name: declaration
+    title: "App Declaration"
+    pt: {title: "Declaração da app"}
+  - name: golden-paths
+    title: "Golden Paths"
+    pt: {title: "Golden paths"}
+
+references:
+  - name: backstage-catalog
+    title: "Backstage Software Catalog: system model, FAQ and life of an entity"
+    author: "Backstage documentation"
+    url: "https://backstage.io/docs/features/software-catalog/system-model#ecosystem-modeling"
+    about: "The documentation of the Backstage software catalog: the entities (Component, API, Resource, System, Domain, Group), why the catalog does not hold versions, and how a file enters the catalog."
+    forUs: "\"We do not recommend trying to represent fine grained versions in the catalog.\" The catalog holds \"the human concept of a thing\"."
+    pt:
+      about: "A documentação do catálogo de software do Backstage: as entidades (Component, API, Resource, System, Domain, Group), por que o catálogo não guarda versões e como um arquivo entra no catálogo."
+      forUs: "\"We do not recommend trying to represent fine grained versions in the catalog.\" O catálogo guarda \"the human concept of a thing\"."
+  - name: score
+    title: "Score specification reference"
+    author: "Score documentation"
+    url: "https://docs.score.dev/docs/score-specification/score-spec-reference/"
+    about: "A platform- and environment-independent workload spec (apiVersion score.dev/v1b1): the developer describes what the app needs, the platform decides how and where."
+    forUs: "Its sections (metadata, containers, service, resources) are the model of the app declaration on these slides; resources are asked for by type, never by cloud service."
+    pt:
+      about: "Uma especificação de workload independente de plataforma e de ambiente (apiVersion score.dev/v1b1): o dev descreve o que a app precisa, e a plataforma decide como e onde."
+      forUs: "As suas seções (metadata, containers, service, resources) são o modelo da declaração da app nestes slides; os recursos são pedidos por tipo, nunca por serviço de nuvem."
+  - name: platform-illusion-2026
+    title: "The Platform Engineering Illusion"
+    author: "David Iyanu Jonathan"
+    year: 2026
+    url: "https://platformengineering.com/features/the-platform-engineering-illusion-why-most-internal-developer-platforms-fail-before-developers-ever-use-them/"
+    about: "An opinion piece: internal developer platforms fail because they are run as tooling initiatives when they are a product discipline."
+    forUs: "\"Why would a developer, mid-deadline, exhausted, half paying attention, choose your paved road over the goat trail they already know?\" Its figures are the author's own account and stay off the screen."
+    pt:
+      about: "Um artigo de opinião: as plataformas internas falham porque são tocadas como iniciativas de ferramentas quando são uma disciplina de produto."
+      forUs: "\"Why would a developer, mid-deadline, exhausted, half paying attention, choose your paved road over the goat trail they already know?\" Os números são o relato do próprio autor e ficam fora da tela."
+  - name: platform-as-a-product-2025
+    title: "Platform as a Product"
+    author: "Abby Bangser, Daniel Bryant, Colin Humphreys and Cat Morris"
+    year: 2025
+    url: "https://www.syntasso.io/platform-as-a-product-oreilly-report"
+    about: "An O'Reilly report: a platform is a product, with users, a value proposition, a feedback loop and a focus on adoption, not an infrastructure project with a delivery date."
+    forUs: "\"abstractions should be composable and optional. They should guide without constraining.\" (p. 11), and the golden cage: a rigid, top-down golden path breeds shadow platforms. The four authors work for Syntasso, the company behind Kratix."
+    pt:
+      about: "Um relatório da O'Reilly: plataforma é produto, com usuários, proposta de valor, ciclo de feedback e foco em adoção, não um projeto de infraestrutura com data de entrega."
+      forUs: "\"abstractions should be composable and optional. They should guide without constraining.\" (p. 11), e a golden cage: um golden path rígido, imposto de cima, gera shadow platforms. Os quatro autores trabalham na Syntasso, a empresa por trás do Kratix."
+
+slides:
+  # ── Opening ─────────────────────────────────────────
+  - name: title
+    act: opening
+    cover: true
+    message: "The Developer Control Plane is where the developer starts"
+    notes: |-
+      What we want to say: **the developer enters the platform here**: the catalog says who the app is, the declaration says what it needs, and the golden path creates both at once.
+
+      **Route of this deck:** the Software Catalog, the App Declaration and the Golden Paths, in the order a developer meets them.
+    pt:
+      message: "O Developer Control Plane é por onde o dev começa"
+      notes: |-
+        O que queremos dizer: **o dev entra na plataforma por aqui**: o catálogo diz quem a app é, a declaração diz do que ela precisa, e o golden path cria os dois de uma vez.
+
+        **Roteiro deste deck:** o catálogo de software, a declaração da app e os golden paths, na ordem em que o dev os encontra.
+
+  - name: landscape-dev
+    act: opening
+    topic: "Capabilities"
+    message: "The Developer Control Plane has three pieces: catalog, app declaration and golden paths"
+    accent: "three pieces"
+    heading: "Developer Control Plane"
+    diagram: "../../assets/docs/landscape.svg"
+    show: [planes.dev-plane, planes.ind-plane, planes.res-plane, planes.obs-plane, planes.sec-plane]
+    reveal: [planes.dev.1, planes.dev.2, planes.dev.3]
+    accumulate: true
+    source: "platformengineering.org/platform-tooling · planes as parallel layers; the journey order is ours"
+    dependsOn: [title]
+    notes: |-
+      What we want to say: **the developer enters here**: the catalog says who the app is, the declaration says what it needs, and the golden path creates both at once.
+
+      **The three boxes are the three acts of this deck**, one slide of the drawing for each.
+    pt:
+      topic: "Capacidades"
+      message: "O Developer Control Plane tem três peças: catálogo, declaração da app e golden paths"
+      accent: "três peças"
+      heading: "Developer Control Plane"
+      notes: |-
+        O que queremos dizer: **o dev entra por aqui**: o catálogo diz quem a app é, a declaração diz do que ela precisa, e o golden path cria os dois de uma vez.
+
+        **As três caixas são os três atos deste deck**, um slide do desenho para cada uma.
+
+  # ── Software Catalog ────────────────────────────────
+  - name: detail-catalog
+    act: catalog
+    topic: "Software Catalog"
+    message: "The catalog says what exists and who owns it"
+    accent: "who owns it"
+    heading: "Software Catalog"
+    diagram: "../../assets/docs/landscape.svg"
+    dim: [planes.dev-plane, planes.ind-plane, planes.res-plane, planes.obs-plane, planes.sec-plane, planes.dev.2, planes.dev.3]
+    show: [planes.dev.1]
+    source: "platformengineering.org/platform-tooling · planes as parallel layers; the journey order is ours"
+    dependsOn: [landscape-dev]
+    notes: |-
+      What we want to say: **the first item of the Developer Control Plane is the catalog**: the map of what exists and of who answers for each thing.
+
+      **Unlike the platformengineering.org landscape, the Portal is not in here**: it becomes a client of the platform, like the CLI and the agents. We show that after the planes.
+    pt:
+      topic: "Catálogo de software"
+      message: "O catálogo diz o que existe e quem é dono"
+      accent: "quem é dono"
+      heading: "Software Catalog"
+      notes: |-
+        O que queremos dizer: **o primeiro item do Developer Control é o catálogo**: o mapa do que existe e de quem responde por cada coisa.
+
+        **Diferente do landscape do platformengineering.org, o Portal não está aqui dentro**: ele vira um cliente da plataforma, como a CLI e os agentes. Mostramos isso depois dos planes.
+
+  - name: catalog-ownership
+    act: catalog
+    topic: "Software Catalog"
+    message: "The catalog answers what exists and who owns it"
+    accent: "who owns it"
+    heading: "The catalog answers"
+    screen: ["**Question:** what exists?", "**Question:** who owns it?"]
+    refs: [backstage-catalog, platform-illusion-2026]
+    dependsOn: [detail-catalog]
+    notes: |-
+      What we want to say: **the catalog answers what exists and who owns it.**
+
+      **The catalog is the register of the organization's software, kept next to the code.** The portal is one way to see it; it comes back after the planes, as a client of the platform.
+
+      **What exists:** the inventory of today's services, APIs, databases and queues.
+
+      **Who owns it:** the question that is worth the most. Every Component, API, Resource and System has an `owner` (the Backstage model). **Without an owner, the catalog becomes a dead list.**
+
+      **It goes back to the tribal knowledge of the first act:** "whom do I ask?" no longer depends on who happens to know, and gets a **written answer that serves the developer and the agent**.
+
+      **An account** from "The platform engineering illusion": a Backstage launched with 43 services in the catalog, 12 of them out of date, and everybody celebrating the launch.
+
+      Source: references/backstage-catalog.md, references/platform-illusion.md
+    pt:
+      topic: "Catálogo de software"
+      message: "O catálogo responde o que existe e quem é dono"
+      accent: "quem é dono"
+      heading: "O catálogo responde"
+      screen: ["**Pergunta:** o que existe?", "**Pergunta:** quem é dono?"]
+      notes: |-
+        O que queremos dizer: **o catálogo responde o que existe e quem é dono.**
+
+        **O catálogo é o registro do software da organização, mantido junto do código.** O portal é uma das formas de vê-lo; ele volta depois dos planes, como cliente da plataforma.
+
+        **O que existe:** o inventário de serviços, APIs, bancos e filas de hoje.
+
+        **Quem é dono:** a pergunta que mais vale. Todo Component, API, Resource e System tem `owner` (modelo do Backstage). **Sem dono, o catálogo vira lista morta.**
+
+        **Volta ao conhecimento tribal do primeiro ato:** "a quem eu pergunto?" deixa de depender de quem sabe e passa a ter uma **resposta escrita, que serve ao dev e ao agente**.
+
+        **Um relato** de "The platform engineering illusion": um Backstage lançado com 43 serviços no catálogo, 12 deles desatualizados, e todo mundo comemorando o lançamento.
+
+        Fonte: references/backstage-catalog.md, references/platform-illusion.md
+
+  - name: catalog-levels
+    act: catalog
+    topic: "Software Catalog · two views"
+    message: "The catalog sees the software in two ways: through the business and through engineering"
+    accent: "two ways"
+    heading: "The catalog has two views"
+    screen: ["**Business view:** how leadership sees it", "**Engineering view:** how teams build it"]
+    refs: [backstage-catalog]
+    dependsOn: [catalog-ownership]
+    notes: |-
+      What we want to say: **the same catalog serves those who talk business and those who build.**
+
+      **Business view:** how product and leadership see the software. **Engineering view:** how the teams build it.
+
+      **The same catalog links the two:** every piece that is built belongs to a business capability. The next two slides open each view.
+
+      Source: references/backstage-catalog.md
+    pt:
+      topic: "Catálogo de software · duas visões"
+      message: "O catálogo enxerga o software de dois jeitos: pelo negócio e pela engenharia"
+      accent: "dois jeitos"
+      heading: "O catálogo tem duas visões"
+      screen: ["**Visão de negócio:** como a liderança o vê", "**Visão de engenharia:** como os times o constroem"]
+      notes: |-
+        O que queremos dizer: **o mesmo catálogo serve a quem fala de negócio e a quem constrói.**
+
+        **Visão de negócio:** como produto e liderança enxergam o software. **Visão de engenharia:** como os times o constroem.
+
+        **O mesmo catálogo liga as duas:** cada peça construída pertence a uma capacidade de negócio. Os próximos dois slides abrem cada visão.
+
+        Fonte: references/backstage-catalog.md
+
+  - name: catalog-business-view
+    act: catalog
+    topic: "Software Catalog · business view"
+    message: "The business view groups the software by area and by capability"
+    accent: "area and by capability"
+    heading: "Business view"
+    screen: ["**Domain:** a business area", "**System:** a capability with public APIs"]
+    refs: [backstage-catalog]
+    dependsOn: [catalog-levels]
+    notes: |-
+      What we want to say: **the business view groups the software by area and by capability.**
+
+      **Domain:** groups Systems that share terminology, model and business purpose, a bounded context.
+
+      **System:** the set of Components and Resources that delivers a capability and exposes one or more public APIs, **hiding the implementation from those who consume it**.
+
+      Source: references/backstage-catalog.md
+    pt:
+      topic: "Catálogo de software · visão de negócio"
+      message: "A visão de negócio agrupa o software por área e por capacidade"
+      accent: "área e por capacidade"
+      heading: "Visão de negócio"
+      screen: ["**Domain:** uma área de negócio", "**System:** uma capacidade com APIs públicas"]
+      notes: |-
+        O que queremos dizer: **a visão de negócio agrupa o software por área e por capacidade.**
+
+        **Domain:** agrupa Systems que compartilham terminologia, modelo e propósito de negócio, um bounded context.
+
+        **System:** o conjunto de Components e Resources que entrega uma capacidade e expõe uma ou mais APIs públicas, **escondendo a implementação de quem consome**.
+
+        Fonte: references/backstage-catalog.md
+
+  - name: catalog-engineering-view
+    act: catalog
+    topic: "Software Catalog · engineering view"
+    message: "The engineering view shows what is built, how the pieces talk and what they depend on"
+    accent: "what is built"
+    heading: "Engineering view"
+    screen: ["**Component:** what you _build_ and _deploy_", "**API:** the _boundary_ between components", "**Resource:** what it _needs_ at runtime"]
+    refs: [backstage-catalog]
+    dependsOn: [catalog-business-view]
+    notes: |-
+      What we want to say: **the engineering view shows what is built**, how the pieces talk and what they depend on.
+
+      **Acronym:** API (Application Programming Interface) is the boundary between Components.
+
+      **Component:** the piece of software: a service, a website, a data pipeline. **API:** the **boundary between Components**, in a machine-readable format. **Resource:** the infrastructure the Component needs **at runtime**: a database, a queue, a bucket.
+
+      **Every Component belongs to a System, which belongs to a Domain**, and that is where the two views meet. The next slides show each entity with a familiar example.
+
+      Source: references/backstage-catalog.md
+    pt:
+      topic: "Catálogo de software · visão de engenharia"
+      message: "A visão de engenharia mostra o que se constrói, como as peças conversam e do que dependem"
+      accent: "o que se constrói"
+      heading: "Visão de engenharia"
+      screen: ["**Component:** o que você _constrói_ e _entrega_", "**API:** a _fronteira_ entre components", "**Resource:** o que ele _precisa_ em runtime"]
+      notes: |-
+        O que queremos dizer: **a visão de engenharia mostra o que se constrói**, como as peças conversam e do que dependem.
+
+        **Sigla:** API (Application Programming Interface) é a fronteira entre Components.
+
+        **Component:** a peça de software: serviço, site, pipeline de dados. **API:** a **fronteira entre Components**, em formato legível por máquina. **Resource:** a infraestrutura de que o Component precisa **em runtime**: banco, fila, bucket.
+
+        **Cada Component pertence a um System, que pertence a um Domain**, e é aí que as duas visões se encontram. Os próximos slides mostram cada entidade com um exemplo conhecido.
+
+        Fonte: references/backstage-catalog.md
+
+  - name: entity-component
+    act: catalog
+    topic: "Software Catalog · Component"
+    message: "A Component is a piece of software that someone maintains and delivers"
+    accent: "maintains and delivers"
+    heading: "Component"
+    screen: ["**What:** software you build and deploy"]
+    refs: [backstage-catalog]
+    dependsOn: [catalog-engineering-view]
+    notes: |-
+      What we want to say: **a Component is the software that a team maintains and delivers**: a service, a website, a library, a data pipeline.
+
+      Source: references/backstage-catalog.md
+    pt:
+      topic: "Catálogo de software · Component"
+      message: "Component é uma peça de software que alguém mantém e entrega"
+      accent: "mantém e entrega"
+      heading: "Component"
+      screen: ["**O quê:** software que você constrói e entrega"]
+      notes: |-
+        O que queremos dizer: **Component é o software que um time mantém e entrega**: serviço, site, biblioteca, pipeline de dados.
+
+        Fonte: references/backstage-catalog.md
+
+  - name: entity-component-example
+    act: catalog
+    topic: "Software Catalog · Component example"
+    message: "The seat-selection service, from the example catalog of Tailwind Air, is a Component"
+    accent: "is a Component"
+    screen: ["**Component:** `seat-selection`, a service", "**Does:** shows the free seats, holds the seat a passenger picks"]
+    dependsOn: [entity-component]
+    notes: |-
+      What we want to say: **`seat-selection` is the service that shows the seat map** and books the seat the passenger picks.
+
+      **It comes from the example catalog of the first proof of concept**, which models Tailwind Air, a fictional airline.
+    pt:
+      topic: "Catálogo de software · exemplo de Component"
+      message: "O seat-selection, do catálogo de exemplo da Tailwind Air, é um Component"
+      accent: "é um Component"
+      screen: ["**Component:** `seat-selection`, um serviço", "**Faz:** mostra os assentos livres, guarda o assento que o passageiro escolhe"]
+      notes: |-
+        O que queremos dizer: **`seat-selection` é o serviço que mostra o mapa de assentos** e reserva o assento que o passageiro escolhe.
+
+        **Vem do catálogo de exemplo da primeira prova de conceito**, que modela a Tailwind Air, uma companhia aérea fictícia.
+
+  - name: entity-api
+    act: catalog
+    topic: "Software Catalog · API"
+    message: "An API is the contract between Components"
+    accent: "the contract"
+    heading: "API"
+    screen: ["**What:** the contract between components"]
+    refs: [backstage-catalog]
+    dependsOn: [entity-component]
+    notes: |-
+      What we want to say: **the API is the contract**; whoever consumes it depends on the contract, not on the implementation.
+
+      **Acronym:** API (Application Programming Interface).
+
+      **It is a machine-readable boundary** (OpenAPI, AsyncAPI, gRPC, GraphQL).
+
+      Source: references/backstage-catalog.md
+    pt:
+      topic: "Catálogo de software · API"
+      message: "API é o contrato entre Components"
+      accent: "o contrato"
+      heading: "API"
+      screen: ["**O quê:** o contrato entre components"]
+      notes: |-
+        O que queremos dizer: **API é o contrato**; quem consome depende dele, não da implementação.
+
+        **Sigla:** API (Application Programming Interface).
+
+        **É uma fronteira legível por máquina** (OpenAPI, AsyncAPI, gRPC, GraphQL).
+
+        Fonte: references/backstage-catalog.md
+
+  - name: entity-api-example
+    act: catalog
+    topic: "Software Catalog · API example"
+    message: "The web-checkin Component consumes the seats API, provided by the seat-selection Component"
+    accent: "consumes the seats API"
+    screen: ["**API:** `seats`, a REST API, provided by `seat-selection`", "**Consumed by:** `web-checkin`, a website"]
+    dependsOn: [entity-api]
+    notes: |-
+      What we want to say: **the check-in website `web-checkin` (`type: website`) consumes the `seats` API** (`consumesApis`), which the `seat-selection` microservice (`type: service`) exposes (`providesApis`). The type comes from the `spec.type` field of each Component in the Tailwind Air catalog.
+
+      **`seat-selection` is the Component** (`type: service`), the service that runs; **the API is `seats`**, the contract it provides and `web-checkin` consumes. The name says what the piece does, and the type stays in `spec.type`, which is what the catalog filters by: a Component named `*-api` confuses the service with the contract, and a `*-service` repeats the type.
+    pt:
+      topic: "Catálogo de software · exemplo de API"
+      message: "O Component web-checkin consome a API seats, fornecida pelo Component seat-selection"
+      accent: "consome a API seats"
+      screen: ["**API:** `seats`, uma API REST, fornecida pelo `seat-selection`", "**Consumida por:** `web-checkin`, um site"]
+      notes: |-
+        O que queremos dizer: **o site de check-in `web-checkin` (`type: website`) consome a API `seats`** (`consumesApis`), que o microsserviço `seat-selection` (`type: service`) expõe (`providesApis`). O tipo vem do campo `spec.type` de cada Component no catálogo da Tailwind Air.
+
+        **`seat-selection` é o Component** (`type: service`), o serviço que roda; **a API é `seats`**, o contrato que ele fornece e que o `web-checkin` consome. O nome diz o que a peça faz, e o tipo fica no `spec.type`, por onde o catálogo filtra: um Component chamado `*-api` confunde o serviço com o contrato, e um `*-service` repete o tipo.
+
+  - name: entity-resource
+    act: catalog
+    topic: "Software Catalog · Resource"
+    message: "A Resource is the infrastructure a Component needs to run"
+    accent: "needs to run"
+    heading: "Resource"
+    screen: ["**What:** infrastructure needed at runtime"]
+    refs: [backstage-catalog]
+    dependsOn: [entity-api]
+    notes: |-
+      What we want to say: **a Resource is the infrastructure the Component needs to run**: a database, a queue, a bucket.
+
+      **A hook for the Resource Plane:** here the Resource is described **by its role** (database); there it becomes a concrete service.
+
+      Source: references/backstage-catalog.md
+    pt:
+      topic: "Catálogo de software · Resource"
+      message: "Resource é a infraestrutura de que o Component precisa para rodar"
+      accent: "precisa para rodar"
+      heading: "Resource"
+      screen: ["**O quê:** infraestrutura necessária em runtime"]
+      notes: |-
+        O que queremos dizer: **Resource é a infraestrutura de que o Component precisa para rodar**: banco, fila, bucket.
+
+        **Gancho para o Resource Plane:** aqui o Resource é descrito **pelo papel** (database); lá vira um serviço concreto.
+
+        Fonte: references/backstage-catalog.md
+
+  - name: entity-resource-example
+    act: catalog
+    topic: "Software Catalog · Resource example"
+    message: "The seat-selection service depends on the passengers-db database"
+    accent: "depends on"
+    screen: ["**Resource:** `passengers-db`, a database", "**Used by:** `seat-selection`, owned by the `reservations` system"]
+    dependsOn: [entity-resource]
+    notes: |-
+      What we want to say: **the `seat-selection` microservice (`type: service`) depends on `passengers-db` (`type: database`)**, which holds the reservations and their passengers.
+    pt:
+      topic: "Catálogo de software · exemplo de Resource"
+      message: "O seat-selection depende do banco passengers-db"
+      accent: "depende do banco"
+      screen: ["**Resource:** `passengers-db`, um banco de dados", "**Usado por:** `seat-selection`, de propriedade do system `reservations`"]
+      notes: |-
+        O que queremos dizer: **o microsserviço `seat-selection` (`type: service`) depende de `passengers-db` (`type: database`)**, que guarda as reservas e os seus passageiros.
+
+  - name: entity-system
+    act: catalog
+    topic: "Software Catalog · System"
+    message: "A System groups the Components, APIs and Resources that deliver a capability, and hides the rest"
+    accent: "hides the rest"
+    heading: "System"
+    screen: ["**What:** components that deliver a capability"]
+    refs: [backstage-catalog]
+    dependsOn: [entity-resource]
+    notes: |-
+      What we want to say: **a System groups the pieces that deliver a capability** and hides what is inside.
+
+      **Those outside see only the public APIs of the System**; what is inside can change without telling anybody.
+
+      **It is a team's unit of ownership.**
+
+      Source: references/backstage-catalog.md
+    pt:
+      topic: "Catálogo de software · System"
+      message: "System junta Components, APIs e Resources que entregam uma capacidade, e esconde o resto"
+      accent: "esconde o resto"
+      heading: "System"
+      screen: ["**O quê:** components que entregam uma capacidade"]
+      notes: |-
+        O que queremos dizer: **System junta as peças que entregam uma capacidade** e esconde o que há dentro.
+
+        **Quem está fora enxerga só as APIs públicas do System**; o que há dentro pode mudar sem avisar ninguém.
+
+        **É a unidade de ownership de um time.**
+
+        Fonte: references/backstage-catalog.md
+
+  - name: entity-system-example
+    act: catalog
+    topic: "Software Catalog · System example"
+    message: "The seat-map System brings the previous pieces together"
+    accent: "brings the previous pieces together"
+    screen: ["**System:** `seat-map`", "**Groups:** `web-checkin`, `seat-selection` and `seats`"]
+    dependsOn: [entity-system]
+    notes: |-
+      What we want to say: **the `seat-map` System gathers the `web-checkin` website, the `seat-selection` microservice and the `seats` API between them**, the pieces of the previous slides. A System groups **Components, APIs and Resources**.
+
+      **The `passengers-db` database is a shared Resource:** it belongs to the `reservations` System and is also used by `boarding-pass` and `miles`. `seat-selection` declares the dependency (`dependsOn`) without the database changing owner.
+    pt:
+      topic: "Catálogo de software · exemplo de System"
+      message: "O System seat-map junta as peças anteriores"
+      accent: "junta as peças anteriores"
+      screen: ["**System:** `seat-map`", "**Agrupa:** `web-checkin`, `seat-selection` e `seats`"]
+      notes: |-
+        O que queremos dizer: **o System `seat-map` reúne o site `web-checkin`, o microsserviço `seat-selection` e a API `seats` entre eles**, as peças dos slides anteriores. Um System junta **Components, APIs e Resources**.
+
+        **O banco `passengers-db` é um Resource compartilhado:** pertence ao System `reservations` e é usado também por `boarding-pass` e `miles`. O `seat-selection` declara a dependência (`dependsOn`) sem que o banco mude de dono.
+
+  - name: entity-domain
+    act: catalog
+    topic: "Software Catalog · Domain"
+    message: "A Domain groups the Systems of the same business area"
+    accent: "same business area"
+    heading: "Domain"
+    screen: ["**What:** systems of one business area"]
+    refs: [backstage-catalog]
+    dependsOn: [entity-system]
+    notes: |-
+      What we want to say: **a Domain groups the Systems of the same business area.**
+
+      **Domain is a bounded context:** the same terminology, the same metrics, the same purpose.
+
+      **Domain is how leadership talks about the product.**
+
+      Source: references/backstage-catalog.md
+    pt:
+      topic: "Catálogo de software · Domain"
+      message: "Domain agrupa Systems da mesma área de negócio"
+      accent: "mesma área de negócio"
+      heading: "Domain"
+      screen: ["**O quê:** systems de uma área de negócio"]
+      notes: |-
+        O que queremos dizer: **Domain agrupa Systems da mesma área de negócio.**
+
+        **Domain é um bounded context:** a mesma terminologia, as mesmas métricas, o mesmo propósito.
+
+        **Domain é como a liderança conversa sobre o produto.**
+
+        Fonte: references/backstage-catalog.md
+
+  - name: entity-domain-example
+    act: catalog
+    topic: "Software Catalog · Domain example"
+    message: "The tailwind Domain has one subdomain for each business area"
+    accent: "one subdomain"
+    screen: ["**Domain:** `tailwind`", "**Contains:** the `airport` and `booking` subdomains"]
+    dependsOn: [entity-domain]
+    notes: |-
+      What we want to say: **`tailwind`, the airline's Domain, has one subdomain (`subdomainOf`) for each business area.** On screen, two of them: `airport` (check-in, seats, boarding, baggage) and `booking` (search, fare, reservation). The others are `flight-ops`, `loyalty` and `crew`.
+    pt:
+      topic: "Catálogo de software · exemplo de Domain"
+      message: "O Domain tailwind tem um subdomínio por área de negócio"
+      accent: "um subdomínio"
+      screen: ["**Domain:** `tailwind`", "**Contém:** os subdomínios `airport` e `booking`"]
+      notes: |-
+        O que queremos dizer: **`tailwind`, o Domain da companhia, tem um subdomínio (`subdomainOf`) por área de negócio.** Na tela, dois deles: `airport` (check-in, assentos, embarque, bagagem) e `booking` (busca, tarifa, reserva). Os outros são `flight-ops`, `loyalty` e `crew`.
+
+  - name: tailwind-tree
+    act: catalog
+    topic: "Software Catalog · the tree"
+    message: "Putting it together: from the business to the service, a single tree"
+    accent: "a single tree"
+    heading: "Tailwind Air catalog"
+    screen: ["**Domain:** `tailwind`", "**Subdomain:** `airport`", "**System:** `seat-map`", "**Component:** `seat-selection`"]
+    refs: [backstage-catalog]
+    dependsOn: [catalog-levels]
+    notes: |-
+      What we want to say: **from the business to the code, the catalog is a single tree.**
+
+      **The tree:** Domain `tailwind`, then the `airport` subdomain, then the System `seat-map`, then the Component `seat-selection`. It comes from the example catalog of a fictional airline in the first proof of concept.
+
+      **For an executive audience, this slide replaces the five previous ones:** the example without the theory.
+
+      **Live demo:** the first proof of concept had a script that brought Backstage up with only the Tailwind Air catalog, with each entity of these slides.
+
+      Source: references/backstage-catalog.md
+    pt:
+      topic: "Catálogo de software · a árvore"
+      message: "Juntando: do negócio ao serviço, uma árvore só"
+      accent: "uma árvore só"
+      heading: "Catálogo da Tailwind Air"
+      screen: ["**Domain:** `tailwind`", "**Subdomínio:** `airport`", "**System:** `seat-map`", "**Component:** `seat-selection`"]
+      notes: |-
+        O que queremos dizer: **do negócio ao código, o catálogo é uma árvore só.**
+
+        **A árvore:** Domain `tailwind`, depois o subdomínio `airport`, depois o System `seat-map`, depois o Component `seat-selection`. Vem do catálogo de exemplo de uma companhia aérea fictícia, na primeira prova de conceito.
+
+        **Para o público executive, este slide substitui os cinco anteriores:** o exemplo sem a teoria.
+
+        **Demo ao vivo:** a primeira prova de conceito tinha um script que subia o Backstage só com o catálogo da Tailwind Air, com cada entidade destes slides.
+
+        Fonte: references/backstage-catalog.md
+
+  - name: tailwind-dependents
+    act: catalog
+    topic: "Software Catalog · across the domain"
+    message: "A flight delay becomes one event that reaches five subdomains, and the catalog shows who depends on it"
+    accent: "who depends on it"
+    heading: "Across the Tailwind domain"
+    screen: ["**Topic:** `flight-events`, written by `flight-tracker`", "**Readers:** four services, in four other subdomains"]
+    refs: [backstage-catalog]
+    dependsOn: [tailwind-tree]
+    notes: |-
+      What we want to say: **the tree shows the path from top to bottom; the catalog also shows what crosses the branches.**
+
+      **A flight delay becomes an event on the `flight-events` topic.** The one who writes to the topic is `flight-tracker`, in `flight-ops`; the readers are in **four other subdomains**: `boarding-pass-issuer` reissues the boarding pass and `bag-tracker` redirects the bags (`airport`), `rebooking-assistant` rebooks the passengers of a cancelled flight onto the next one with free seats (`booking`), `miles-ledger` reverses the miles of a cancelled flight (`loyalty`) and `roster-planner` redoes the crew roster (`crew`).
+
+      **Whoever changes the event needs to know who reads it.** The catalog answers without anybody asking in the chat: in Backstage, the page of `flight-events` lists the four Components. In the Nereus API this arrives when the Components enter the catalog through discovery.
+
+      **The names come from the example catalog of the first proof of concept.**
+
+      Source: references/backstage-catalog.md
+    pt:
+      topic: "Catálogo de software · através do domínio"
+      message: "Um atraso de voo vira um evento que chega a cinco subdomínios, e o catálogo mostra quem depende dele"
+      accent: "quem depende dele"
+      heading: "Através do domínio Tailwind"
+      screen: ["**Tópico:** `flight-events`, escrito pelo `flight-tracker`", "**Leitores:** quatro serviços, em quatro outros subdomínios"]
+      notes: |-
+        O que queremos dizer: **a árvore mostra o caminho de cima para baixo; o catálogo também mostra o que atravessa os galhos.**
+
+        **Um atraso no voo vira um evento no tópico `flight-events`.** Quem escreve no tópico é o `flight-tracker`, em `flight-ops`; quem lê está em **quatro outros subdomínios**: o `boarding-pass-issuer` reemite o cartão de embarque e o `bag-tracker` redireciona as malas (`airport`), o `rebooking-assistant` remarca os passageiros de um voo cancelado no próximo com assentos livres (`booking`), o `miles-ledger` estorna as milhas de um voo cancelado (`loyalty`) e o `roster-planner` refaz a escala da tripulação (`crew`).
+
+        **Quem muda o evento precisa saber quem o lê.** O catálogo responde sem ninguém perguntar no chat: no Backstage, a página do `flight-events` lista os quatro Components. Na API do Nereus isso chega quando os Components entram no catálogo pela discovery.
+
+        **Os nomes vêm do catálogo de exemplo da primeira prova de conceito.**
+
+        Fonte: references/backstage-catalog.md
+
+  - name: declare-name
+    act: catalog
+    topic: "Software Catalog · catalog-info.yaml"
+    message: "In the catalog, the app is a short file next to the code, starting with its name and what it does"
+    accent: "a short file"
+    code: {file: snippets/catalog-info.yaml, focus: "3-4"}
+    refs: [backstage-catalog]
+    dependsOn: [tailwind-dependents]
+    notes: |-
+      What we want to say: **every app declares itself in the catalog with a short file next to the code**; the first lines say the name and what the app does, in human language. That is what shows up in the catalog search.
+
+      Source: references/backstage-catalog.md
+    pt:
+      topic: "Catálogo de software · catalog-info.yaml"
+      message: "No catálogo, a app é um arquivo curto junto do código, começando pelo nome e pelo que ela faz"
+      accent: "um arquivo curto"
+      notes: |-
+        O que queremos dizer: **cada app se declara no catálogo com um arquivo curto, junto do código**; as primeiras linhas dizem o nome e o que a app faz, em linguagem humana. É o que aparece na busca do catálogo.
+
+        Fonte: references/backstage-catalog.md
+
+  - name: declare-system
+    act: catalog
+    topic: "Software Catalog · System"
+    message: "Which system it belongs to and what type it is"
+    code: {file: snippets/catalog-info.yaml, focus: "6-7"}
+    refs: [backstage-catalog]
+    dependsOn: [declare-name]
+    notes: |-
+      What we want to say: **`system` places the app in the tree**: it links to the System `seat-map`, which links to the `airport` subdomain of Tailwind Air.
+
+      **`type: service` says the type of Component:** it could be `website` or `library`.
+
+      Source: references/backstage-catalog.md
+    pt:
+      topic: "Catálogo de software · System"
+      message: "A que sistema pertence e de que tipo é"
+      notes: |-
+        O que queremos dizer: **`system` posiciona a app na árvore**: liga ao System `seat-map`, que liga ao subdomínio `airport` da Tailwind Air.
+
+        **`type: service` diz o tipo de Component:** poderia ser `website` ou `library`.
+
+        Fonte: references/backstage-catalog.md
+
+  - name: declare-ownership
+    act: catalog
+    topic: "Software Catalog · ownership"
+    message: "Whose it is and where it is on the journey"
+    code: {file: snippets/catalog-info.yaml, focus: "8-9"}
+    refs: [backstage-catalog]
+    dependsOn: [declare-system]
+    notes: |-
+      What we want to say: **`owner` says who answers for the app**: it links to the Group `team-airport`.
+
+      **`lifecycle: production` says how far it can be trusted;** for an Internal Product, where it is on the journey.
+
+      Source: references/backstage-catalog.md
+    pt:
+      topic: "Catálogo de software · ownership"
+      message: "De quem é e em que ponto da jornada está"
+      notes: |-
+        O que queremos dizer: **`owner` diz quem responde pela app**: liga ao Group `team-airport`.
+
+        **`lifecycle: production` diz o quanto dá para confiar nela;** para um Internal Product, em que ponto da jornada ele está.
+
+        Fonte: references/backstage-catalog.md
+
+  - name: ip-lifecycle
+    act: catalog
+    topic: "Software Catalog · lifecycle"
+    message: "The lifecycle marks the journey of an Internal Product, from idea to shared product, until it is retired"
+    accent: "from idea to shared product"
+    heading: "Lifecycle of an Internal Product"
+    screen: ["`experimental`: _an idea_ being built", "`production`: validated, _shared_ with the org", "`deprecated`: _being retired_"]
+    refs: [backstage-catalog]
+    dependsOn: [declare-ownership]
+    notes: |-
+      What we want to say: **sharing with the organization is a change of state**, and the catalog already has the field for it.
+
+      **Well-known Backstage values:** `experimental`, `production` and `deprecated`, in the `spec.lifecycle` of Component, API, Resource and System (see the [descriptor format](https://backstage.io/docs/features/software-catalog/descriptor-format)). In the Tailwind Air catalog everything is `production`; the example catalog of the platform is `experimental`.
+
+      **A proposal (an idea, not decided):** `experimental` is where the owner provisions, tests and refines. `production` is validated and **shared**, so other teams may depend on it. `deprecated` is being retired, and whoever depends on it gets a warning and a deadline.
+
+      **Moving up to `production` can become a platform gate:** an owner, observability, attributed cost and security up to date.
+
+      Source: references/internal-products.md
+    pt:
+      topic: "Catálogo de software · lifecycle"
+      message: "O lifecycle marca a jornada de um Internal Product: de ideia a produto compartilhado, até a descontinuação"
+      accent: "de ideia a produto compartilhado"
+      heading: "Lifecycle de um Internal Product"
+      screen: ["`experimental`: _uma ideia_ em construção", "`production`: validado, _compartilhado_ com a org", "`deprecated`: _em descontinuação_"]
+      notes: |-
+        O que queremos dizer: **compartilhar com a organização é uma mudança de estado**, e o catálogo já tem o campo para isso.
+
+        **Valores bem conhecidos do Backstage:** `experimental`, `production` e `deprecated`, no `spec.lifecycle` de Component, API, Resource e System (veja o [descriptor format](https://backstage.io/docs/features/software-catalog/descriptor-format)). Na Tailwind Air, todo o catálogo está em `production`; o catálogo de exemplo da plataforma, em `experimental`.
+
+        **Uma proposta (ideia, não decidida):** `experimental` é onde o dono provisiona, testa e refina. `production` é validado e **compartilhado**, então outros times podem depender dele. `deprecated` está em descontinuação, e quem depende recebe aviso e prazo.
+
+        **Subir para `production` pode virar gate da plataforma:** dono, observabilidade, custo atribuído e segurança em dia.
+
+        Fonte: references/internal-products.md
+
+  - name: declare-apis
+    act: catalog
+    topic: "Software Catalog · APIs"
+    message: "The contract the app offers"
+    code: {file: snippets/catalog-info.yaml, focus: "10-11"}
+    refs: [backstage-catalog]
+    dependsOn: [declare-ownership]
+    notes: |-
+      What we want to say: **the app declares the contract it offers.** `providesApis` points to the API entity `seats`; `web-checkin` declares `consumesApis` for it.
+
+      **Whoever consumes declares `consumesApis` on the other side:** the catalog draws the edge.
+
+      Source: references/backstage-catalog.md
+    pt:
+      topic: "Catálogo de software · APIs"
+      message: "O contrato que a app oferece"
+      notes: |-
+        O que queremos dizer: **a app declara o contrato que oferece.** `providesApis` aponta para a entidade API `seats`; o `web-checkin` declara `consumesApis` dela.
+
+        **Quem consome declara `consumesApis` do outro lado:** o catálogo desenha a aresta.
+
+        Fonte: references/backstage-catalog.md
+
+  - name: declare-dependencies
+    act: catalog
+    topic: "Software Catalog · dependencies"
+    message: "What it depends on to run, described by its role"
+    code: {file: snippets/catalog-info.yaml, focus: "12-13"}
+    refs: [backstage-catalog]
+    dependsOn: [declare-apis]
+    notes: |-
+      What we want to say: **the app declares what it depends on by role, never by cloud service.**
+
+      **`passengers-db` is a relational database, and no line says which cloud product:** the same principle that comes back in the app declaration.
+
+      **It is a shared Resource:** it belongs to the `reservations` System, and `seat-selection` only uses it (slide `entity-resource-example`). Based on the example catalog of the first proof of concept.
+
+      Source: references/backstage-catalog.md
+    pt:
+      topic: "Catálogo de software · dependências"
+      message: "Do que depende para rodar, descrito pelo papel"
+      notes: |-
+        O que queremos dizer: **a app declara do que depende pelo papel, nunca pelo serviço de nuvem.**
+
+        **O `passengers-db` é um banco relacional, e nenhuma linha diz qual produto de nuvem:** o mesmo princípio que reaparece na declaração da app.
+
+        **É um Resource compartilhado:** pertence ao System `reservations`, e o `seat-selection` só o usa (slide `entity-resource-example`). Baseado no catálogo de exemplo da primeira prova de conceito.
+
+        Fonte: references/backstage-catalog.md
+
+  - name: declare-discovery
+    act: catalog
+    topic: "Software Catalog · discovery"
+    message: "The portal finds the file and keeps the catalog up to date by itself"
+    accent: "by itself"
+    heading: "How the file reaches the catalog"
+    screen: ["**Source:** `catalog-info.yaml` in the repository", "**Discovery:** the portal scans the GitHub organization", "**Refresh:** reprocessed on a schedule, no manual edits"]
+    refs: [backstage-catalog]
+    dependsOn: [declare-dependencies]
+    notes: |-
+      What we want to say: **nobody edits the catalog by hand**; the portal finds the file and keeps it up to date.
+
+      **Discovery:** the file lives in the app's repository. The portal finds it in two ways: through a registered **location** (the URL of the YAML) or by **scanning the GitHub organization** for files with that name. The example in the documentation runs **every 30 minutes**.
+
+      **Refresh:** the processing loop reprocesses each entity periodically. When the file changes in the pull request (PR), the catalog follows.
+
+      Source: references/backstage-catalog.md
+    pt:
+      topic: "Catálogo de software · descoberta"
+      message: "O portal encontra o arquivo e mantém o catálogo em dia sozinho"
+      accent: "sozinho"
+      heading: "Como o arquivo chega ao catálogo"
+      screen: ["**Origem:** `catalog-info.yaml` no repositório", "**Descoberta:** o portal varre a organização no GitHub", "**Atualização:** reprocessado em intervalos, sem edição manual"]
+      notes: |-
+        O que queremos dizer: **ninguém edita o catálogo à mão**; o portal acha o arquivo e o mantém em dia.
+
+        **Descoberta:** o arquivo mora no repositório da app. O portal o encontra de dois jeitos: por uma **location** registrada (a URL do YAML) ou **varrendo a organização no GitHub** atrás de arquivos com esse nome. O exemplo da doc roda **a cada 30 minutos**.
+
+        **Atualização:** o processing loop reprocessa cada entidade periodicamente. Mudou o arquivo no pull request (PR), o catálogo acompanha.
+
+        Fonte: references/backstage-catalog.md
+
+  - name: no-versions
+    act: catalog
+    topic: "Software Catalog · versions"
+    message: "The catalog does not represent versions: it keeps the human concept of a thing, stable data curated by its owner"
+    accent: "the human concept of a thing"
+    heading: "What the catalog stores"
+    screen: ["**Not:** versions", "**Only:** the human concept"]
+    refs: [backstage-catalog]
+    dependsOn: [declare-discovery]
+    notes: |-
+      What we want to say: **the catalog is the human mental model of the platform**, not its live state.
+
+      **The Backstage documentation is explicit (catalog FAQ):** "We do not recommend trying to represent fine grained versions in the catalog." It holds "the human concept of a thing", data that is "rarely changing, human curated", maintained by the owner.
+
+      Source: references/backstage-catalog.md
+    pt:
+      topic: "Catálogo de software · versões"
+      message: "O catálogo não representa versões: guarda o conceito humano de uma coisa, dado estável, curado pelo dono"
+      accent: "o conceito humano de uma coisa"
+      heading: "O que o catálogo guarda"
+      screen: ["**Não:** versões", "**Só:** o conceito humano"]
+      notes: |-
+        O que queremos dizer: **o catálogo é o modelo mental humano da plataforma**, não o estado vivo dela.
+
+        **A documentação do Backstage é explícita (FAQ do catálogo):** "We do not recommend trying to represent fine grained versions in the catalog." Ele guarda "the human concept of a thing", dado "rarely changing, human curated", mantido pelo dono.
+
+        Fonte: references/backstage-catalog.md
+
+  - name: no-versions-example
+    act: catalog
+    topic: "Software Catalog · versions example"
+    message: "seat-selection is one Component, with several versions running"
+    accent: "one Component"
+    screen: ["**Component:** `seat-selection`, 1 component, N versions running"]
+    dependsOn: [no-versions]
+    notes: |-
+      What we want to say: **`seat-selection`, the seat service of Tailwind Air, is one Component, even with several versions running at the same time.** That is an explicit recommendation of the Backstage documentation (catalog FAQ). The live state is kept somewhere else.
+    pt:
+      topic: "Catálogo de software · exemplo de versões"
+      message: "seat-selection é um Component, com várias versões rodando"
+      accent: "um Component"
+      screen: ["**Component:** `seat-selection`, 1 component, N versões rodando"]
+      notes: |-
+        O que queremos dizer: **o `seat-selection`, o serviço de assentos da Tailwind Air, é um Component, mesmo com várias versões rodando ao mesmo tempo.** É uma recomendação explícita da documentação do Backstage (FAQ do catálogo). O estado vivo fica em outro lugar.
+
+  - name: major-breaking
+    act: catalog
+    topic: "Software Catalog · breaking change"
+    message: "The exception is a broken contract: a major breaking change becomes a new entity"
+    accent: "a new entity"
+    heading: "The exception: breaking change"
+    screen: ["**Rule:** a major breaking change _is_ a new entity"]
+    refs: [backstage-catalog]
+    dependsOn: [no-versions]
+    notes: |-
+      What we want to say: **when the contract breaks, the concept changes**, and the consumers need to migrate explicitly.
+
+      Source: references/backstage-catalog.md
+    pt:
+      topic: "Catálogo de software · quebra de contrato"
+      message: "A exceção é a quebra de contrato: uma major breaking vira uma entidade nova"
+      accent: "uma entidade nova"
+      heading: "A exceção: quebra de contrato"
+      screen: ["**Regra:** uma major breaking change _é_ uma entidade nova"]
+      notes: |-
+        O que queremos dizer: **quebrou o contrato, mudou o conceito**, e os consumidores precisam migrar de forma explícita.
+
+        Fonte: references/backstage-catalog.md
+
+  - name: major-breaking-example
+    act: catalog
+    topic: "Software Catalog · breaking change example"
+    message: "Breaking the seats contract creates the seats2 API, next to seats"
+    accent: "creates the seats2 API"
+    screen: ["**Before:** the `seats` API", "**After:** the `seats2` API, next to `seats`"]
+    dependsOn: [major-breaking]
+    notes: |-
+      What we want to say: **at Tailwind Air, changing the `seats` contract in an incompatible way creates the `seats2` API**, and `web-checkin` migrates explicitly, swapping its `consumesApis`. The two live together until `seats` is `deprecated`.
+
+      **It is the same pattern as the Backstage FAQ example:** `customerinfo` becomes `customerinfo2`.
+    pt:
+      topic: "Catálogo de software · exemplo de quebra de contrato"
+      message: "Quebrar o contrato de assentos cria a API seats2, ao lado da seats"
+      accent: "cria a API seats2"
+      screen: ["**Antes:** a API `seats`", "**Depois:** a API `seats2`, ao lado da `seats`"]
+      notes: |-
+        O que queremos dizer: **na Tailwind Air, mudar o contrato de `seats` de forma incompatível cria a API `seats2`**, e o `web-checkin` migra de forma explícita, trocando o `consumesApis`. As duas convivem até a `seats` ser `deprecated`.
+
+        **É o mesmo padrão do exemplo da FAQ do Backstage:** `customerinfo` vira `customerinfo2`.
+
+  - name: plugins
+    act: catalog
+    topic: "Software Catalog · where versions live"
+    message: "Versions and environments live in other systems and come back to the portal through plugins"
+    accent: "other systems"
+    heading: "Where versions live"
+    screen: ["**How:** other systems _feed_ the portal via plugins"]
+    refs: [backstage-catalog]
+    dependsOn: [no-versions]
+    notes: |-
+      What we want to say: **versions and environments are owned by other systems**; the portal only shows them.
+
+      **The fine-grained versions come from external systems** (CI/CD, registry, deploy) and show up in the Backstage portal through its plugins.
+
+      **A question that comes back in Integration & Delivery:** which systems are those?
+
+      Source: references/backstage-catalog.md
+    pt:
+      topic: "Catálogo de software · onde vivem as versões"
+      message: "Versões e ambientes vivem em outros sistemas e voltam ao portal por plugins"
+      accent: "outros sistemas"
+      heading: "Onde vivem as versões"
+      screen: ["**Como:** outros sistemas _alimentam_ o portal por plugins"]
+      notes: |-
+        O que queremos dizer: **versões e ambientes têm dono em outros sistemas**; o portal só os mostra.
+
+        **As versões de grão fino vêm de sistemas externos** (CI/CD, registry, deploy) e aparecem no portal do Backstage por plugins.
+
+        **Pergunta que volta no Integration & Delivery:** que sistemas são esses?
+
+        Fonte: references/backstage-catalog.md
+
+  # ── App Declaration ─────────────────────────────────
+  - name: detail-app-declaration
+    act: declaration
+    topic: "App Declaration"
+    message: "The app declares what it needs to run, without saying where or how"
+    accent: "without saying where or how"
+    heading: "App Declaration"
+    diagram: "../../assets/docs/landscape.svg"
+    dim: [planes.dev-plane, planes.ind-plane, planes.res-plane, planes.obs-plane, planes.sec-plane, planes.dev.1, planes.dev.3]
+    show: [planes.dev.2]
+    source: "platformengineering.org/platform-tooling · planes as parallel layers; the journey order is ours"
+    refs: [score]
+    dependsOn: [plugins]
+    notes: |-
+      What we want to say: **the catalog says who the app is; the declaration says what it needs**: container, port, database, route.
+
+      **It is a workload spec in the model of Score:** the developer describes the need, and the platform decides where and how to meet it.
+
+      Source: references/score.md
+    pt:
+      topic: "Declaração da app"
+      message: "A app declara do que precisa para rodar, sem dizer onde nem como"
+      accent: "sem dizer onde nem como"
+      heading: "App Declaration"
+      notes: |-
+        O que queremos dizer: **o catálogo diz quem a app é; a declaração diz do que ela precisa**: container, porta, banco, rota.
+
+        **É uma spec de workload no modelo do Score:** o dev descreve a necessidade, e a plataforma decide onde e como atender.
+
+        Fonte: references/score.md
+
+  - name: spec-db
+    act: declaration
+    topic: "App Declaration · resources"
+    message: "The app declares what it needs to run, starting with a postgres database: the type, not the product"
+    accent: "the type, not the product"
+    code: {file: snippets/app-spec.yaml, focus: "7-8"}
+    refs: [score]
+    dependsOn: [detail-app-declaration]
+    notes: |-
+      What we want to say: **the app declaration says what the app needs, without saying where or how**, and it starts with the resources, asked for by **type**.
+
+      **The developer asks for a postgres database, and nothing else.** The platform chooses the concrete service, per environment: the same principle as the catalog Resources, described by their role.
+
+      **No line says which managed service, size, version or network:** all of that comes from the environment profile.
+
+      **Format:** the Score model (`score.dev/v1b1`, see the [spec reference](https://docs.score.dev/docs/score-specification/score-spec-reference/)). **Catalog is not declaration:** `catalog-info.yaml` says who the app is; `app-spec.yaml` says what it needs.
+
+      Source: references/score.md
+    pt:
+      topic: "Declaração da app · recursos"
+      message: "A app declara do que precisa para rodar, começando por um banco postgres: o tipo, não o produto"
+      accent: "o tipo, não o produto"
+      notes: |-
+        O que queremos dizer: **a declaração da app diz do que ela precisa, sem dizer onde nem como**, e começa pelos recursos, pedidos por **tipo**.
+
+        **O dev pede um banco postgres, e só isso.** Quem escolhe o serviço concreto é a plataforma, por ambiente: o mesmo princípio dos Resources do catálogo, descritos pelo papel.
+
+        **Nenhuma linha diz qual serviço gerenciado, tamanho, versão ou rede:** tudo isso vem do perfil do ambiente.
+
+        **Formato:** o modelo do Score (`score.dev/v1b1`, veja a [referência da spec](https://docs.score.dev/docs/score-specification/score-spec-reference/)). **Catálogo não é declaração:** o `catalog-info.yaml` diz quem a app é; o `app-spec.yaml`, do que ela precisa.
+
+        Fonte: references/score.md
+
+  - name: spec-variables
+    act: declaration
+    topic: "App Declaration · variables"
+    message: "The container receives the database by reference, not by value"
+    accent: "by reference"
+    code: {file: snippets/app-spec.yaml, focus: "21-25"}
+    refs: [score]
+    dependsOn: [spec-db]
+    notes: |-
+      What we want to say: **the variables have no value, they point to outputs of the resource** (`${resources.db.host}`).
+
+      **They are resolved at deploy time**, with the value of the target environment: the same file serves development and production, and the password never sits in the repository.
+
+      Source: references/score.md
+    pt:
+      topic: "Declaração da app · variáveis"
+      message: "O container recebe o banco por referência, não por valor"
+      accent: "por referência"
+      notes: |-
+        O que queremos dizer: **as variáveis não têm valor, apontam para outputs do recurso** (`${resources.db.host}`).
+
+        **São resolvidas no deploy**, com o valor do ambiente de destino: o mesmo arquivo serve para dev e produção, e a senha nunca fica no repo.
+
+        Fonte: references/score.md
+
+  - name: spec-route
+    act: declaration
+    topic: "App Declaration · route"
+    message: "Name and route: how the app is reached from outside"
+    code: {file: snippets/app-spec.yaml, focus: "9-16"}
+    refs: [score]
+    dependsOn: [spec-variables]
+    notes: |-
+      What we want to say: **the app asks for a name (`dns`) and a route (`route`)**, and a reference links the two (`${resources.dns.host}`).
+
+      **No ingress, load balancer or certificate:** that belongs to the platform.
+
+      Source: references/score.md
+    pt:
+      topic: "Declaração da app · rota"
+      message: "Nome e rota: como a app é alcançada de fora"
+      notes: |-
+        O que queremos dizer: **a app pede um nome (`dns`) e uma rota (`route`)**, e uma referência liga os dois (`${resources.dns.host}`).
+
+        **Nada de ingress, load balancer ou certificado:** isso é da plataforma.
+
+        Fonte: references/score.md
+
+  - name: spec-service
+    act: declaration
+    topic: "App Declaration · service"
+    message: "The port the service exposes"
+    code: {file: snippets/app-spec.yaml, focus: "27-31"}
+    refs: [score]
+    dependsOn: [spec-route]
+    notes: |-
+      What we want to say: **the developer only says the port**: logical port **80** forwarded to container port **8080**.
+
+      **Image:** `image: .` means "the image the CI has just built"; the version is injected at delivery, not written here.
+
+      Source: references/score.md
+    pt:
+      topic: "Declaração da app · serviço"
+      message: "A porta que o serviço expõe"
+      notes: |-
+        O que queremos dizer: **o dev só diz a porta**: porta lógica **80** encaminhada para a porta do container **8080**.
+
+        **Imagem:** `image: .` significa "a imagem que a CI acabou de buildar"; a versão é injetada na entrega, não escrita aqui.
+
+        Fonte: references/score.md
+
+  - name: score-what-not
+    act: declaration
+    topic: "App Declaration · what is left out"
+    message: "No line says where, in which cloud, or with which tool"
+    accent: "where, in which cloud, or with which tool"
+    heading: "What the spec leaves out"
+    screen: ["**Where:** no cluster, no region", "**Cloud:** no Azure, no AWS", "**Tool:** no Helm, no Terraform"]
+    refs: [score, platform-illusion-2026]
+    dependsOn: [spec-service]
+    notes: |-
+      What we want to say: **where, in which cloud and with which tool are decisions of the platform**, not of the developer.
+
+      **A question that stays for Integration & Delivery:** who answers that? The orchestrator.
+
+      **In "The platform engineering illusion"**, the best platform teams measure themselves "partly by what they refuse to expose to developers", not only by what they expose.
+
+      Source: references/score.md, references/platform-illusion.md
+    pt:
+      topic: "Declaração da app · o que fica de fora"
+      message: "Nenhuma linha diz onde, em qual nuvem, nem com qual ferramenta"
+      accent: "onde, em qual nuvem, nem com qual ferramenta"
+      heading: "O que a spec deixa de fora"
+      screen: ["**Onde:** nem cluster, nem região", "**Nuvem:** nem Azure, nem AWS", "**Ferramenta:** nem Helm, nem Terraform"]
+      notes: |-
+        O que queremos dizer: **onde, em qual nuvem e com qual ferramenta são decisões da plataforma**, não do dev.
+
+        **Pergunta que fica para o Integration & Delivery:** quem responde isso? O orquestrador.
+
+        **Em "The platform engineering illusion"**, os melhores times de plataforma se medem "partly by what they refuse to expose to developers", não só pelo que expõem.
+
+        Fonte: references/score.md, references/platform-illusion.md
+
+  # ── Golden Paths ────────────────────────────────────
+  - name: detail-golden-paths
+    act: golden-paths
+    topic: "Golden Paths"
+    message: "The golden path creates the repository, the declaration and the spec at once"
+    accent: "at once"
+    heading: "Golden Paths"
+    diagram: "../../assets/docs/landscape.svg"
+    dim: [planes.dev-plane, planes.ind-plane, planes.res-plane, planes.obs-plane, planes.sec-plane, planes.dev.1, planes.dev.2]
+    show: [planes.dev.3]
+    source: "platformengineering.org/platform-tooling · planes as parallel layers; the journey order is ours"
+    dependsOn: [score-what-not]
+    notes: |-
+      What we want to say: **nobody writes those files from scratch**: the golden path creates the repository already with the catalog descriptor and the app declaration, the right way.
+
+      **That is why it comes last in the Developer Control Plane:** it **joins** the catalog and the declaration, and delivers a repository, which is where the next plane starts.
+    pt:
+      topic: "Golden paths"
+      message: "O golden path cria o repo, a declaração e a spec de uma vez"
+      accent: "de uma vez"
+      heading: "Golden Paths"
+      notes: |-
+        O que queremos dizer: **ninguém escreve esses arquivos do zero**: o golden path cria o repo já com o descritor do catálogo e a declaração da app, seguindo o jeito certo.
+
+        **É por isso que vem por último no Developer Control:** ele **junta** catálogo e declaração, e entrega um repo, que é onde o próximo plane começa.
+
+  - name: golden-paths
+    act: golden-paths
+    topic: "Golden Paths · why developers choose it"
+    message: "The right way has to be the easiest: that is what makes the developer choose the golden path"
+    accent: "the easiest"
+    heading: "Why developers choose it"
+    screen: ["**What:** the supported path for a recurring task", "**Rule:** the easy way _is_ the right way"]
+    refs: [platform-illusion-2026]
+    dependsOn: [detail-golden-paths]
+    notes: |-
+      What we want to say: **the right way has to be the easiest**: it is the ease, not the obligation, that makes the developer follow it.
+
+      **A golden path is the path the platform supports for a recurring task**, like creating a service or asking for a database. When it is the easiest path, following the standard stops being an obligation.
+
+      **The question that decides adoption**, according to "The platform engineering illusion": "Why would a developer, mid-deadline, exhausted, half paying attention, choose your paved road over the goat trail they already know?"
+
+      Source: references/platform-illusion.md
+    pt:
+      topic: "Golden paths · por que o dev o escolhe"
+      message: "O caminho certo precisa ser o mais fácil: é isso que faz o dev escolher o golden path"
+      accent: "o mais fácil"
+      heading: "Por que o dev o escolhe"
+      screen: ["**O quê:** o caminho suportado para uma tarefa recorrente", "**Regra:** o jeito fácil _é_ o jeito certo"]
+      notes: |-
+        O que queremos dizer: **o caminho certo precisa ser o mais fácil**: é a facilidade, não a obrigação, que faz o dev segui-lo.
+
+        **Golden path é o caminho suportado pela plataforma para uma tarefa recorrente**, como criar um serviço ou pedir um banco. Quando ele é o caminho mais fácil, seguir o padrão deixa de ser obrigação.
+
+        **A pergunta que decide a adoção**, segundo "The platform engineering illusion": "Why would a developer, mid-deadline, exhausted, half paying attention, choose your paved road over the goat trail they already know?"
+
+        Fonte: references/platform-illusion.md
+
+  - name: golden-paths-shape
+    act: golden-paths
+    topic: "Golden Paths · how it guides"
+    message: "The golden path guides without trapping: it is optional and composes with others"
+    accent: "guides without trapping"
+    heading: "How it guides"
+    screen: ["**Shape:** optional and composable", "**Risk:** a golden cage _breeds_ shadow platforms"]
+    refs: [platform-as-a-product-2025, platform-illusion-2026]
+    dependsOn: [golden-paths]
+    notes: |-
+      What we want to say: **the golden path guides without becoming a cage.**
+
+      **Platform as a Product, p. 11:** "abstractions should be composable and optional. They should guide without constraining. They should reduce complexity without hiding critical details."
+
+      **A caveat:** the "golden cage", a rigid path imposed from above, breeds shadow platforms, and there is no universal golden path (p. 11).
+
+      **Imposing the path does not solve it:** "mandated usage generates resentment rather than advocacy, and resentment metastasizes into **shadow infrastructure**" ("The platform engineering illusion"), a source independent of Syntasso for the same caveat.
+
+      Source: references/platform-as-a-product.md, references/platform-illusion.md
+    pt:
+      topic: "Golden paths · como ele guia"
+      message: "O golden path guia sem prender: é opcional e se compõe com outros"
+      accent: "guia sem prender"
+      heading: "Como ele guia"
+      screen: ["**Forma:** opcional e composável", "**Risco:** uma golden cage _gera_ shadow platforms"]
+      notes: |-
+        O que queremos dizer: **o golden path guia sem virar jaula.**
+
+        **Platform as a Product, p. 11:** "abstractions should be composable and optional. They should guide without constraining. They should reduce complexity without hiding critical details."
+
+        **Ressalva:** a "golden cage", um caminho rígido imposto de cima, gera shadow platforms, e não existe golden path universal (p. 11).
+
+        **Impor o caminho não resolve:** "mandated usage generates resentment rather than advocacy, and resentment metastasizes into **shadow infrastructure**" ("The platform engineering illusion"), uma fonte independente da Syntasso para a mesma ressalva.
+
+        Fonte: references/platform-as-a-product.md, references/platform-illusion.md
+
+  - name: golden-paths-output
+    act: golden-paths
+    topic: "Golden Paths · what it creates"
+    message: "The golden path joins the catalog and the declaration: it creates the repository with both files, the CI and the agent's context"
+    accent: "joins the catalog and the declaration"
+    heading: "What it creates"
+    screen: ["**Repo:** `catalog-info.yaml` + `app-spec.yaml`", "**Build:** CI to the registry", "**Agent:** `AGENTS.md`"]
+    dependsOn: [golden-paths-shape]
+    notes: |-
+      What we want to say: **nobody writes `catalog-info.yaml` and `app-spec.yaml` from scratch**: the golden path creates the repository already with both.
+
+      **It comes last in the Developer Control Plane** because it **joins** the catalog and the declaration and delivers a repository, which is where the next plane starts.
+
+      **Besides the two files**, the repository is born with the CI that publishes the image to the registry and with `AGENTS.md`, the context of the agent that works on the code.
+    pt:
+      topic: "Golden paths · o que ele cria"
+      message: "O golden path junta catálogo e declaração: cria o repo já com os dois arquivos, a CI e o contexto do agente"
+      accent: "junta catálogo e declaração"
+      heading: "O que ele cria"
+      screen: ["**Repo:** `catalog-info.yaml` + `app-spec.yaml`", "**Build:** CI até o registry", "**Agente:** `AGENTS.md`"]
+      notes: |-
+        O que queremos dizer: **ninguém escreve o `catalog-info.yaml` e o `app-spec.yaml` do zero**: o golden path cria o repo já com os dois.
+
+        **Vem por último no Developer Control** porque **junta** catálogo e declaração e entrega um repo, que é onde o próximo plane começa.
+
+        **Além dos dois arquivos**, o repo nasce com a CI que publica a imagem no registry e com o `AGENTS.md`, o contexto do agente que trabalha no código.
+
+  - name: golden-paths-output-example
+    act: golden-paths
+    topic: "Golden Paths · what it creates, an example"
+    message: "The next Nereid is born from the nereid-python template, and one apply registers it in the catalog next to Triton"
+    accent: "one apply"
+    status: idea
+    terminal:
+      cwd: "~/git/nereus"
+      steps:
+        - comment: "The golden path: the edge-cloudflare Nereid from the nereid-python template (a Template of the catalog, an idea)"
+          run: "nereus template render nereid-python"
+          options: ["--path controllers/edge-cloudflare/", "--param name=edge-cloudflare"]
+          output: |-
+            ✓ catalog/templates/nereid-python rendered at controllers/edge-cloudflare/ (15 files, catalog/workloads/edge-cloudflare.yaml written)
+        - comment: "Register what the repository says it has: the new entry, and Triton already imported"
+          run: "nereus catalog apply"
+          options: ["--from-file catalog/"]
+          output: |-
+            ✓ catalog/workloads/edge-cloudflare created (owner: Project/nereids, type: controller)
+              catalog/workloads/triton unchanged (owner: Project/triton, type: service)
+
+            Next steps:
+
+              nereus catalog check
+    dependsOn: [golden-paths-output]
+    notes: |-
+      What we want to say: **the template comes first, because it writes the files; the catalog only registers what exists.** The `nereid-python` template renders the next Nereid of the backlog, `edge-cloudflare` (#470, publishing a reef's endpoint at a hostname), **15 files**, with its catalog entry written next to the code; then one `nereus catalog apply` registers it and leaves Triton, imported earlier the same way, `unchanged`. The command has [its own slide](../../specs/cli/reefs/catalog.html#workload-apply) in the catalog reef's deck.
+
+      **`template render` is a contract, not built yet; `catalog apply` is built** (owner, 2026-10-30, #559, the catalog reef: Workload, Package and their types; 2026-11-02, #851, the Template kind): a `Template` is a kind of the catalog that writes files, and creating a repository stays with #279 (the repository reef); the catalog is a `catalog/` folder in the repository, one file per entry, and the file is the truth, so registering an existing thing is `apply` (ADR 0013, command conventions). A `Workload` (what runs: `controller`, `service`, `web-app`, `static-site`, `worker`, `job`, `function`) replaces Backstage's Component, and a `Package` holds what is published; each names its owner in the tenancy tree, a `Project` that may sit under another one instead of a System and a Domain (#21, Organization and nested Projects).
+
+      **It is Nereus itself in the example**, not a `hello-api`: the catalog's first entries are the platform's own Nereids, Triton, the CLI and the images (dogfooding).
+    pt:
+      topic: "Golden paths · o que ele cria, um exemplo"
+      message: "O próximo Nereid nasce do template nereid-python, e um apply o registra no catálogo ao lado do Triton"
+      accent: "um apply"
+      notes: |-
+        O que queremos dizer: **o template vem primeiro, porque ele escreve os arquivos; o catálogo só registra o que existe.** O template `nereid-python` renderiza o próximo Nereid do backlog, o `edge-cloudflare` (#470, publicar o endpoint de um reef num hostname), **15 arquivos**, com a entrada do catálogo escrita ao lado do código; depois um `nereus catalog apply` o registra e deixa o Triton, importado antes do mesmo jeito, `unchanged`. O comando tem [o seu próprio slide](../../specs/cli/reefs/catalog.html#workload-apply) no deck do reef catalog.
+
+        **O `template render` é um contrato, ainda não construído; o `catalog apply` está pronto** (owner, 2026-10-30, #559, o reef catalog: Workload, Package e seus tipos; 2026-11-02, #851, o kind Template): um `Template` é um kind do catálogo que escreve arquivos, e criar um repositório fica com o #279 (o reef repository); o catálogo é uma pasta `catalog/` no repositório, um arquivo por entrada, e o arquivo é a verdade, então registrar algo que já existe é `apply` (ADR 0013, convenções de comando). Um `Workload` (o que roda: `controller`, `service`, `web-app`, `static-site`, `worker`, `job`, `function`) substitui o Component do Backstage, e um `Package` guarda o que é publicado; cada um nomeia seu dono na árvore de tenancy, um `Project` que pode ficar debaixo de outro no lugar de System e Domain (#21, Organization e Projects aninhados).
+
+        **O exemplo é o próprio Nereus**, não um `hello-api`: as primeiras entradas do catálogo são os Nereids da plataforma, o Triton, a CLI e as imagens (dogfooding).

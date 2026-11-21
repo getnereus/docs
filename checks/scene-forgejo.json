@@ -1,0 +1,11 @@
+{
+  "name": "scene-forgejo",
+  "command": "test/scene-forgejo",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 304,
+  "passed": 39,
+  "failure": null,
+  "commit": "f91ccb2",
+  "started": "2026-11-11T00:50:06Z"
+}

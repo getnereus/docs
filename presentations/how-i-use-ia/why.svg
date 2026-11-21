@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" aria-label="Build Measure Learn loop" role="img" viewBox="26 36 308 112">
+<defs><marker id="ar2-en" markerHeight="6" markerWidth="6" orient="auto" refX="9" refY="5" viewBox="0 0 10 10"><path d="M0,0 L10,5 L0,10 z" fill="var(--faint)"></path></marker></defs><g data-part="all">
+<g font-size="10" text-anchor="middle">
+<circle cx="60" cy="75" fill="none" r="32" stroke="var(--cx-agent)" stroke-width="2"></circle><text dominant-baseline="central" fill="var(--cx-agent)" font-size="10" font-weight="600" x="60" y="75">build</text>
+<circle cx="180" cy="75" fill="none" r="32" stroke="var(--cx-order)" stroke-width="2"></circle><text dominant-baseline="central" fill="var(--cx-order)" font-size="10" font-weight="600" x="180" y="75">measure</text>
+<circle cx="300" cy="75" fill="none" r="32" stroke="var(--cx-pr)" stroke-width="2"></circle><text dominant-baseline="central" fill="var(--cx-pr)" font-size="10" font-weight="600" x="300" y="75">learn</text>
+<line marker-end="url(#ar2-en)" stroke="var(--faint)" x1="94" x2="144" y1="75" y2="75"></line><line marker-end="url(#ar2-en)" stroke="var(--faint)" x1="214" x2="264" y1="75" y2="75"></line>
+<path d="M300,108 C300,142 60,142 60,110" fill="none" marker-end="url(#ar2-en)" stroke="var(--faint)"></path>
+</g></g></svg>

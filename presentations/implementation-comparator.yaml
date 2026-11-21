@@ -1,0 +1,1241 @@
+deck:
+  name: implementation-comparator
+  title: Two implementations. One decision
+  subtitle: How do you swap Keycloak for Auth0 with data instead of opinion?
+  pt:
+    title: Duas implementações. Uma decisão
+    subtitle: Como trocar o Keycloak pelo Auth0 com dados, e não com opinião?
+acts:
+- name: experiment
+  title: Experiment
+  pt:
+    title: Experimento
+- name: reef
+  title: The reef
+  pt:
+    title: O reef
+- name: cost
+  title: Cost
+  pt:
+    title: Custo
+- name: decision
+  title: Decision
+  pt:
+    title: Decisão
+- name: choice
+  title: Choice
+  pt:
+    title: Escolha
+- name: permissions
+  title: Permissions
+  pt:
+    title: Permissões
+- name: platform
+  title: Platform
+  pt:
+    title: Plataforma
+- name: beyond
+  title: Beyond login
+  pt:
+    title: Além do login
+- name: proof
+  title: Proof
+  pt:
+    title: Prova
+- name: closing
+  title: Closing
+  pt:
+    title: Encerramento
+slides:
+- name: title
+  act: experiment
+  cover: true
+  message: Two implementations. One decision
+  notes: |-
+    A company wants to **swap Keycloak for Auth0**.
+
+    Today that decision comes from **opinion** or a **login benchmark**.
+
+    The proposal: the platform helps **decide with data**.
+  pt:
+    message: Duas implementações. Uma decisão
+    notes: |-
+      Uma empresa quer **trocar o Keycloak pelo Auth0**.
+
+      Hoje essa decisão sai de **opinião** ou de um **benchmark de login**.
+
+      A proposta: a plataforma ajudar a **decidir com dados**.
+- name: hypotheses
+  act: experiment
+  topic: Two pillars
+  message: Hypotheses are proven with experiment metrics
+  code:
+    file: implementation-comparator/hypothesis.md
+  notes: '**Pillar 1:** every hypothesis is proven with **experiment metrics**, defined before building. No metric, the issue isn''t ready.'
+  pt:
+    topic: Dois pilares
+    message: Hipóteses são provadas com métricas de experimentos
+    code:
+      file: implementation-comparator/hipotese.md
+    notes: '**Pilar 1:** toda hipótese é provada com **métricas de experimento**, definidas antes de construir. Sem métrica, a issue não está pronta.'
+- name: flow
+  act: experiment
+  topic: Two pillars
+  message: We measure flow. Never individuals
+  subtitle: A metric on someone becomes a target and stops measuring.
+  notes: |-
+    **Pillar 2:** the platform measures **flow and process, never individuals**. That holds for people cost, satisfaction scores, talks and the legal flow.
+
+    A metric on someone **becomes a target and stops measuring**.
+  pt:
+    topic: Dois pilares
+    message: Medimos fluxo. Nunca indivíduos
+    subtitle: Métrica sobre alguém vira meta e deixa de medir.
+    notes: |-
+      **Pilar 2:** a plataforma mede **fluxo e processo, nunca indivíduos**. Vale para custo de pessoas, notas de satisfação, palestras e o fluxo do jurídico.
+
+      Métrica sobre alguém **vira meta e deixa de medir**.
+- name: interface
+  act: reef
+  topic: The interface
+  message: An interface is a reef
+  terminal:
+    steps:
+    - run: nereus reef get authentication
+      output: |-
+        {reef:authentication.getnereus.dev/v1alpha1}
+
+        sessions  create get list delete  # nereus login
+  notes: |-
+    In Nereus, **an interface is a reef**, the equivalent of a Kubernetes API Group.
+
+    Installing the **authentication** reef installs the CRDs, among them **sessions**: that's how **login becomes a create**. **Users** live in **core**, because identity belongs to the platform, not to the reef.
+
+    The version in the name states the maturity: **v1alpha1**, **v1beta1** and, once validated, **v1**.
+  pt:
+    topic: A interface
+    message: Uma interface é um reef
+    notes: |-
+      No Nereus, **interface é um reef**, o equivalente ao API Group do Kubernetes.
+
+      Instalar o reef **authentication** instala os CRDs, entre eles **sessions**: é assim que o **login vira um create**. Os **users** ficam no **core**, porque a identidade é da plataforma, não do reef.
+
+      A versão no nome diz a maturidade: **v1alpha1**, **v1beta1** e, depois de validada, **v1**.
+- name: implementations
+  act: reef
+  topic: The implementations
+  message: Two Nereids, one contract
+  diagram: implementation-comparator/implementations.svg
+  show:
+  - reef
+  - fork
+  - keycloak
+  - auth0
+  notes: |-
+    Keycloak and Auth0 are **Nereids** of the **same reef**.
+
+    It's the **Gateway API** model: one contract, many implementations.
+  pt:
+    topic: As implementações
+    message: Duas Nereidas, o mesmo contrato
+    diagram: implementation-comparator/implementacoes.svg
+    notes: |-
+      Keycloak e Auth0 são **Nereidas** do **mesmo reef**.
+
+      É o modelo do **Gateway API**: um contrato, várias implementações.
+- name: side-by-side
+  act: reef
+  topic: Side by side
+  message: Both live. A {mandate:Mandate} splits the users
+  diagram: implementation-comparator/split.svg
+  show:
+  - bar
+  - legend
+  notes: |-
+    Both run **at the same time**.
+
+    A **mandate**, like GatewayClass, says which Nereid serves each reef.
+
+    Each person **stays on one provider** during the experiment.
+  pt:
+    topic: Lado a lado
+    message: Os dois no ar. Um {mandate:Mandate} divide os usuários
+    diagram: implementation-comparator/divisao.svg
+    notes: |-
+      Os dois rodam **ao mesmo tempo**.
+
+      Um **mandate**, como o GatewayClass, diz qual Nereida atende cada reef.
+
+      Cada pessoa **fica num provedor só** durante o experimento.
+- name: measured
+  act: reef
+  topic: Measured by design
+  message: Everything goes through Nereus. Same yardstick
+  screen:
+  - '**Portal** · web'
+  - '**platform** CLI'
+  - '**Agents** · MCP'
+  - '**Usage, latency and errors:** from request to `Ready`, per implementation and channel, in one trace'
+  notes: |-
+    Base hypothesis: **every access goes through Nereus**: web, CLI or MCP.
+
+    Measurement belongs to **the platform**, not each implementation. Install the Nereid and **usage, latency and errors** show up.
+
+    It's the **service mesh** effect: one yardstick for all.
+  pt:
+    topic: Medido por construção
+    message: Tudo passa pelo Nereus. A régua é a mesma
+    screen:
+    - '**Portal** · web'
+    - '**platform** CLI'
+    - '**Agentes** · MCP'
+    - '**Uso, latência e erros:** do pedido ao `Ready`, por implementação e canal, num trace só'
+    notes: |-
+      Hipótese de base: **todo acesso passa pelo Nereus**: web, CLI ou MCP.
+
+      A medição é **da plataforma**, não de cada implementação. Instalou a Nereida, **uso, latência e erros** já aparecem.
+
+      É o efeito do **service mesh**: a mesma régua para todos.
+- name: not-free
+  act: reef
+  topic: What isn't free
+  message: Three things the platform can't see alone
+  screen:
+  - '**Satisfaction:** a one-key score, per implementation'
+  - '**Human time:** login with and without typing time'
+  - '✓ **MCP:** Model Context Protocol: each tool call measured, scored by whoever asked'
+  notes: |-
+    Three things the platform **doesn't observe on its own, but gives a way to measure**.
+
+    **Satisfaction:** now and then, a **one-key score**, tied to the implementation that served.
+
+    **Human time:** the comparison shows login **with and without** the person's typing time. Without it, it compares **implementations**; with it, the **experience**.
+
+    **MCP:** the agent acts **on behalf of whoever asked**. We measure **every tool call** in one trace, and **the score comes from the person** who delegated.
+  pt:
+    topic: O que não vem de graça
+    message: Três coisas que a plataforma não vê sozinha
+    screen:
+    - '**Satisfação:** uma nota com uma tecla, por implementação'
+    - '**Tempo humano:** login com e sem a pessoa digitando'
+    - '✓ **MCP:** Model Context Protocol: cada tool medida, nota de quem pediu'
+    notes: |-
+      Três coisas que a plataforma **não observa sozinha, mas oferece como medir**.
+
+      **Satisfação:** de vez em quando, uma **nota com uma tecla**, ligada à implementação que atendeu.
+
+      **Tempo humano:** a comparação mostra o login **com e sem** o tempo da pessoa digitando. Sem ele, compara as **implementações**; com ele, a **experiência**.
+
+      **MCP:** o agente age **em nome de quem pediu**. Medimos **cada tool** num trace só, e a **nota vem da pessoa** que delegou.
+- name: problem
+  act: cost
+  topic: The problem
+  message: Faster login doesn't decide on its own
+  subtitle: Same function, costs of a different nature.
+  notes: |-
+    But **performance isn't enough**.
+
+    Same function, **costs of a different nature**.
+  pt:
+    topic: O problema
+    message: Login mais rápido não decide sozinho
+    subtitle: Mesma função, custos de natureza diferente.
+    notes: |-
+      Só que **desempenho não basta**.
+
+      Mesma função, **custos de natureza diferente**.
+- name: keycloak
+  act: cost
+  topic: Keycloak
+  message: No license. But someone keeps it running
+  screen:
+  - '**Database**, replicated'
+  - '**Workload** with high availability'
+  - '**Monitoring** and on-call'
+  - '**A team** for upgrades and patches: the cost a benchmark doesn''t show'
+  notes: |-
+    Keycloak has **no license**, but needs a **database, workload, monitoring, upgrades and on-call**.
+
+    Depending on size, it **becomes a team**: the cost a benchmark doesn't show.
+  pt:
+    topic: Keycloak
+    message: Sem licença. Mas alguém mantém de pé
+    screen:
+    - '**Banco** replicado'
+    - '**Workload** com alta disponibilidade'
+    - '**Monitoramento** e plantão'
+    - '**Um time** para upgrades e patches: o custo que o benchmark não mostra'
+    notes: |-
+      Keycloak **não tem licença**, mas exige **banco, workload, monitoramento, upgrades e plantão**.
+
+      Dependendo do tamanho, **vira um time**: o custo que o benchmark não mostra.
+- name: auth0
+  act: cost
+  topic: Auth0
+  message: Little to operate. A bill that grows with users
+  screen:
+  - '**Monthly license:** depends on how many users and features the context needs'
+  notes: 'Auth0 is the opposite: **little to operate**, but a **monthly license that grows with users**.'
+  pt:
+    topic: Auth0
+    message: Pouco para operar. Uma fatura que cresce com os usuários
+    screen:
+    - '**Licença mensal:** depende de quantos usuários e recursos o contexto precisa'
+    notes: 'Auth0 é o oposto: **pouco para operar**, mas uma **licença mensal que cresce com os usuários**.'
+- name: hypothesis
+  act: cost
+  topic: The hypothesis
+  message: The platform is the best place to cross it all
+  screen:
+  - '**Metrics** · automatic: usage, performance and satisfaction'
+  - '**Infrastructure** · automatic: Keycloak''s database and workload, with the cost'
+  - '**Licenses** · external: vendor invoice'
+  - '**Teams** · external: from the People team, never individual'
+  notes: |-
+    The platform is the **best place to cross it all**.
+
+    **Metrics and infrastructure** arrive on their own: it knows which resources Keycloak uses and what they cost. **Who provisions** them is still open.
+
+    **Licenses and teams** come from outside: invoices and the People team, **always aggregated by team**.
+  pt:
+    topic: A hipótese
+    message: A plataforma é o melhor lugar para cruzar tudo
+    screen:
+    - '**Métricas** · automático: uso, desempenho e satisfação'
+    - '**Infraestrutura** · automático: banco e workload do Keycloak, com o custo'
+    - '**Licenças** · externo: fatura do fornecedor'
+    - '**Times** · externo: pela área de Pessoas, nunca individual'
+    notes: |-
+      A plataforma é o **melhor lugar para cruzar tudo**.
+
+      **Métricas e infraestrutura** chegam sozinhas: ela sabe quais recursos o Keycloak usa e quanto custam. **Quem provisiona** ainda está em aberto.
+
+      **Licenças e times** vêm de fora: fatura e área de Pessoas, **sempre agregado por time**.
+- name: comparison
+  act: cost
+  topic: The comparison
+  message: The nuances side by side
+  subtitle: 'Estimate: 5,000 monthly active users, 120 environments'
+  terminal:
+    steps:
+    - run: nereus comparison get auth-10
+      output: |-
+        {dim:                     }{nereid:keycloak}     {nereid:auth0}
+        login · system       1.0 s        0.9 s
+        login · with person  13 s         9 s
+        satisfaction         4.1          4.3
+        infra/month          R$ 3k        —
+        people/month         R$ 23k ~     R$ 3k
+        license/month        —            R$ 8k
+        total/month          R$ 26k       R$ 11k ✓
+      stepwise: true
+  notes: |-
+    Numbers from a **quick internet search**, just for an **order of magnitude**. Not a quote, no real salaries.
+
+    **Scenario:** 5,000 monthly active users, 120 environments.
+
+    **Auth0:** B2B Professional plan, ~**US$ 1,500/month** (dollar at R$ 5.50).
+
+    **Keycloak:** **two people at half time**, because of on-call, with payroll costs.
+
+    **Takeaway:** **people cost changes the total**. With many more users, the math can flip.
+
+    **Why managed won here:** with Keycloak, people cost is **fixed**; with Auth0, the license is **variable** and grows with users. At small scale, the fixed part weighs more.
+
+    **On the other side:** 37signals left the cloud and saves ~**US$ 2 million a year**, with no new hires. Dropbox saved ~**US$ 75 million** over two years. Large scale, existing team.
+
+    **The counterpoint:** those numbers often leave out people, hardware and data centers.
+
+    **The director's question:** at **how many users does the math flip**?
+
+    **Sources:** [Auth0 pricing](https://markaicode.com/pricing/auth0-pricing/) · [DevOps salaries (BR)](https://jobrise.io/pt/blog/salario-devops-no-brasil-2026-quanto-paga/) · [Payroll cost (BR)](https://valorfinal.com.br/estudos/quanto-custa-um-funcionario-clt) · [Self-hosted Keycloak](https://skycloak.io/blog/self-hosted-vs-managed-authentication-cost/) · [37signals](https://world.hey.com/dhh/our-cloud-exit-savings-will-now-top-ten-million-over-five-years-c7d9b5bd) · [a16z](https://a16z.com/the-cost-of-cloud-a-trillion-dollar-paradox/) · [Counterpoint](https://www.lastweekinaws.com/blog/the-trillion-dollar-paradoxical-arguments-of-a16z)
+  pt:
+    topic: A comparação
+    message: As nuances lado a lado
+    subtitle: 'Estimativa: 5 mil usuários ativos por mês, 120 ambientes'
+    terminal:
+      steps:
+      - run: nereus comparison get auth-10
+        output: |-
+          {dim:                     }{nereid:keycloak}     {nereid:auth0}
+          login · sistema      1,0 s        0,9 s
+          login · com a pessoa 13 s         9 s
+          satisfação           4,1          4,3
+          infra/mês            R$ 3 mil     —
+          pessoas/mês          R$ 23 mil ~  R$ 3 mil
+          licença/mês          —            R$ 8 mil
+          total/mês            R$ 26 mil    R$ 11 mil ✓
+        stepwise: true
+    notes: |-
+      Números de uma **pesquisa rápida na internet**, só para dar **ordem de grandeza**. Não é cotação nem usa salários reais.
+
+      **Cenário:** 5 mil usuários ativos por mês, 120 ambientes.
+
+      **Auth0:** plano B2B Professional, ~**US$ 1.500/mês** (dólar a R$ 5,50).
+
+      **Keycloak:** **duas pessoas a meio tempo**, por causa do plantão, com encargos.
+
+      **Conclusão:** o **custo de pessoas muda o total**. Com muito mais usuários, a conta pode virar.
+
+      **Por que o gerenciado ganhou aqui:** no Keycloak, o custo de pessoas é **fixo**; no Auth0, a licença é **variável** e cresce com os usuários. Em escala pequena, o fixo pesa mais.
+
+      **Do outro lado:** a 37signals saiu da nuvem e economiza ~**US$ 2 milhões por ano**, sem contratar ninguém. O Dropbox economizou ~**US$ 75 milhões** em dois anos. Escala grande e time já existente.
+
+      **O contraponto:** essas contas costumam deixar de fora pessoas, hardware e data center.
+
+      **A pergunta do diretor:** a partir de **quantos usuários a conta vira**?
+
+      **Fontes:** [Preços Auth0](https://markaicode.com/pricing/auth0-pricing/) · [Salários DevOps](https://jobrise.io/pt/blog/salario-devops-no-brasil-2026-quanto-paga/) · [Custo CLT](https://valorfinal.com.br/estudos/quanto-custa-um-funcionario-clt) · [Keycloak self-hosted](https://skycloak.io/blog/self-hosted-vs-managed-authentication-cost/) · [37signals](https://world.hey.com/dhh/our-cloud-exit-savings-will-now-top-ten-million-over-five-years-c7d9b5bd) · [a16z](https://a16z.com/the-cost-of-cloud-a-trillion-dollar-paradox/) · [Contraponto](https://www.lastweekinaws.com/blog/the-trillion-dollar-paradoxical-arguments-of-a16z)
+- name: tipping-point
+  act: cost
+  topic: The tipping point
+  message: Below ~16k users, Auth0 is cheaper
+  subtitle: In this example, 5k users today. Past 16k, the choice flips.
+  diagram: implementation-comparator/tipping-point.svg
+  show:
+  - base
+  reveal:
+  - auth0
+  - cross
+  accumulate: true
+  notes: |-
+    **The director's question:** at how many users does the math flip?
+
+    **Keycloak** is almost a flat line: **people cost is fixed** (R$ 23k), and only infrastructure grows a little with users.
+
+    **Auth0** climbs with users: the **license** is about R$ 1.60 per active user, plus little operating effort.
+
+    With linear math, the lines cross near **16,000 monthly active users**. Below that, Auth0 is cheaper; above it, Keycloak's fixed cost gets diluted.
+
+    **Caution:** Auth0 pricing doesn't grow in a straight line forever. At higher volumes a **negotiated enterprise contract** kicks in, so the real point may differ. As on the previous slide, this is an **order of magnitude**.
+
+    **The platform delivers the projection, and it is optional.** Infrastructure the platform **already observes**. The license comes from a **pricing model declared on the mandate**, for example a spec.pricing on the Auth0 mandate with per-user tiers. People cost is **entered by hand**, aggregated by team.
+
+    Whoever wants the forecast **provides the data**. Whoever lacks the data or thinks it isn't worth it **doesn't**, and keeps just the comparison from the previous slide. The projection always shows up as an **estimate**.
+  pt:
+    topic: O ponto de virada
+    message: Abaixo de ~16 mil usuários, o Auth0 sai mais barato
+    subtitle: No cenário do exemplo, são 5 mil usuários hoje. Passando de 16 mil, a escolha vira.
+    diagram: implementation-comparator/ponto-de-virada.svg
+    notes: |-
+      **A pergunta do diretor:** a partir de quantos usuários a conta vira?
+
+      **Keycloak** é quase uma linha reta: o custo de **pessoas é fixo** (R$ 23 mil), e só a infraestrutura cresce um pouco com os usuários.
+
+      **Auth0** sobe com os usuários: a **licença** é de uns R$ 1,60 por usuário ativo, mais pouco esforço de operação.
+
+      Numa conta linear, as linhas se cruzam perto de **16 mil usuários ativos por mês**. Abaixo disso, o Auth0 sai mais barato; acima, o custo fixo do Keycloak se dilui.
+
+      **Cuidado:** o preço do Auth0 não cresce em linha reta para sempre. Em volumes maiores entra contrato **enterprise negociado**, então o ponto real pode ser outro. Como no slide anterior, é **ordem de grandeza**.
+
+      **Quem entrega a projeção é a plataforma, e ela é opcional.** A infraestrutura a plataforma **já observa**. A licença vem de um **modelo de preço declarado no mandate**, por exemplo um spec.pricing no mandate do Auth0 com as faixas por usuário. O custo de pessoas é **lançado à mão**, agregado por time.
+
+      Quem quer a previsão **informa os dados**. Quem não tem os dados ou acha que não vale a pena **não informa** e fica só com a comparação do slide anterior. A projeção sempre aparece como **estimativa**.
+- name: comparator
+  act: decision
+  topic: The comparator
+  message: A Nereid compares the implementations
+  terminal:
+    steps:
+    - run: nereus comparison create auth-10
+      options:
+      - --reef authentication
+      - --verb login
+      - --window 30d
+      output: |-
+        {dim:scope: sessions create (login)}
+        {dim:weights: perf 30 · sat 30 · cost 40}
+
+        {dim:sli          slo     }{nereid:keycloak}  {nereid:auth0}
+        login <1s    {dim:≥99%   } 99.2% ✓  99.6% ✓
+        satisfaction {dim:≥4.5   } 4.1   ~  4.3   ~
+        total cost   {dim:≤R$10k } R$26k ✗  R$11k ~
+        error budget         20%      60%
+        sla                  {dim:own team}  vendor
+        verdict      {nereid:auth0}
+  notes: |-
+    The **comparator** is also a **Nereid**: it compares any pair of implementations of the **same reef**, on demand or automatically.
+
+    **The comparison is of a verb, not the whole reef.** The authentication reef has several kinds, and measuring them together would dilute what matters. Here the target is **login** (sessions create): the **time** is login time, **satisfaction** is the score given right after signing in, and **cost** is what the implementation spends serving that verb, apportioned by call volume.
+
+    **In SRE terms:** the **SLI** is what's measured, here the share of logins under 1 s, the score and the cost. The **SLO** is the internal target for that SLI: 99% of logins under 1 s over 30 days. The **SLA** is the contract with consequences: Auth0 offers a vendor one; with Keycloak, the team itself is on the hook.
+
+    The **error budget** is what's left between the SLO and 100%: with a 99% target, 1% of slow logins fit. Keycloak has already spent 80% of that slack; Auth0, 40%. It's the margin for changing things without breaking the target.
+
+    Each row shows the **measured SLI**, the **SLO** and whether it was met: **✓ within**, **~ close**, **✗ off**.
+
+    The **weights** say how much each row counts: here **cost weighs most** (40), and that's exactly where Keycloak misses the target. That's why Auth0 wins.
+
+    Behind the scenes, the platform turns each value into a **score** and applies the weights. The math **stays with the platform**.
+
+    **SLOs and weights are defined up front**, per **reef and verb**, along with the contract. Nobody tweaks anything after seeing the result.
+  pt:
+    topic: O comparador
+    message: Uma Nereida compara as implementações
+    notes: |-
+      O **comparador** também é uma **Nereida**: compara qualquer par de implementações do **mesmo reef**, a pedido ou automaticamente.
+
+      **A comparação é de um verbo, não do reef inteiro.** O reef authentication tem vários kinds, e medir tudo junto diluiria o que importa. Aqui o alvo é o **login** (sessions create): o **tempo** é o do login, a **satisfação** é a nota dada logo depois de entrar, e o **custo** é o que a implementação gasta para atender esse verbo, rateado pelo volume de chamadas.
+
+      **No vocabulário de SRE:** o **SLI** é o que se mede, aqui a fração de logins abaixo de 1 s, a nota e o custo. O **SLO** é a meta interna para esse SLI: 99% dos logins abaixo de 1 s em 30 dias. O **SLA** é o contrato com consequência: o Auth0 oferece um do fornecedor; no Keycloak, quem responde é o próprio time.
+
+      O **error budget** é o que sobra entre o SLO e o 100%: com meta de 99%, cabe 1% de logins lentos. O Keycloak já gastou 80% dessa folga; o Auth0, 40%. É a margem para mudar sem quebrar a meta.
+
+      Cada linha mostra o **SLI medido**, o **SLO** e se bateu: **✓ dentro**, **~ perto**, **✗ fora**.
+
+      Os **pesos** dizem quanto cada linha conta: aqui o **custo pesa mais** (40), e é justamente onde o Keycloak está fora da meta. Por isso o Auth0 vence.
+
+      Por trás, a plataforma transforma cada valor numa **nota** e aplica os pesos. O detalhe do cálculo **fica com ela**.
+
+      Os **SLOs e os pesos são definidos antes**, por **reef e verbo**, junto com o contrato. Ninguém ajusta nada depois de ver o resultado.
+- name: marginal
+  act: decision
+  topic: The comparator
+  message: A marginal result?
+  subtitle: When the gap is small, a person decides.
+  notes: |-
+    **Marginal result:** when the gap is small, the verdict is **marginal** and **a person decides**.
+
+    The model comes from **Kayenta**, an open tool by **Netflix and Google** that compares a new version with the current one across several metrics and decides whether to promote, roll back or ask for a human review. It comes back on slide 36. [Kayenta](https://cloud.google.com/blog/products/gcp/introducing-kayenta-an-open-automated-canary-analysis-tool-from-google-and-netflix) · [Google SRE: SLOs](https://sre.google/sre-book/service-level-objectives/)
+  pt:
+    topic: O comparador
+    message: Resultado marginal?
+    subtitle: Quando a diferença é pequena, quem decide é uma pessoa.
+    notes: |-
+      **Resultado marginal:** quando a diferença é pequena, o veredito é **marginal** e quem decide é **uma pessoa**.
+
+      O modelo vem do **Kayenta**, ferramenta aberta da **Netflix e do Google** que compara uma versão nova com a atual em várias métricas e decide entre promover, reverter ou pedir avaliação humana. Ele volta no slide 36. [Kayenta](https://cloud.google.com/blog/products/gcp/introducing-kayenta-an-open-automated-canary-analysis-tool-from-google-and-netflix) · [Google SRE: SLOs](https://sre.google/sre-book/service-level-objectives/)
+- name: decision
+  act: decision
+  topic: The decision
+  message: The decision becomes a resource. And triggers the swap
+  terminal:
+    steps:
+    - run: nereus comparison decision create keycloak-to-auth0
+      options:
+      - --comparison auth-10
+      - --choose auth0
+      output: |-
+        decision/keycloak-to-auth0 created
+        {dim:by:      } maria
+        {dim:at:      } 2026-10-21 14:32
+        {dim:based on:} comparison/auth-10
+        {dim:verdict: } {nereid:auth0} (marginal)
+        {dim:event:   } authentication.defaultmandate.changed
+  notes: |-
+    **The decision is a resource too**, derived from the comparison. When the verdict is marginal, a person decides, and that decision **is recorded**.
+
+    Creating the decision **publishes an event**. The authentication Nereid consumes it and switches the **default mandate**: new sessions go to Auth0, and existing ones finish where they started.
+
+    We know **who decided, when, and based on which comparison**. The decision also records whether the person followed the verdict, and that feeds the criterion on the next slide.
+  pt:
+    topic: A decisão
+    message: A decisão vira recurso. E dispara a troca
+    notes: |-
+      **A decisão também é um recurso**, derivado da comparação. Quando o veredito é marginal, quem decide é uma pessoa, e essa decisão **fica registrada**.
+
+      Criar a decisão **publica um evento**. A Nereida de authentication consome o evento e troca o **mandate default**: as novas sessões vão para o Auth0, e as existentes terminam onde começaram.
+
+      Ficamos sabendo **quem decidiu, quando e com base em qual comparação**. A decisão também guarda se a pessoa seguiu o veredito ou não, e isso alimenta o critério do próximo slide.
+- name: criterion
+  act: decision
+  topic: The criterion
+  message: Each comparison records whether cost changed the winner
+  terminal:
+    steps:
+    - run: nereus comparison list
+      output: |-
+        {dim:NAME      WINNER  FASTEST   FLIPPED}
+        auth-07   {nereid:auth0}   {nereid:auth0}     no
+        auth-10   {nereid:auth0}   {nereid:keycloak}  yes
+        cache-09  {nereid:valkey}  {nereid:valkey}    no
+
+        flipped: 1 of 3
+  notes: |-
+    **How to know whether the idea works:** each comparison stores **two winners**. WINNER comes from the full analysis, with cost and people; FASTEST comes **from performance only**, as a load test would.
+
+    **Set before starting:** how many comparisons until evaluating, which rate counts as success, and **locked weights**, so nobody raises the cost weight until it flips.
+
+    The **recorded decisions** show whether people followed the verdict: whether the comparator changes **decisions** or only **reports**.
+  pt:
+    topic: O critério
+    message: Cada comparação registra se o custo mudou o vencedor
+    notes: |-
+      **Como saber se a ideia funciona:** cada comparação guarda **dois vencedores**. O WINNER sai da análise completa, com custo e pessoas; o FASTEST sai **só do desempenho**, como um teste de carga faria.
+
+      **Definido antes de começar:** quantas comparações até avaliar, qual taxa conta como sucesso, e os **pesos travados**, para ninguém aumentar o peso do custo até virar.
+
+      As **decisões registradas** dizem se as pessoas seguiram o veredito: mostram se o comparador muda **decisões** ou só **relatórios**.
+- name: criterion-falls
+  act: decision
+  topic: The criterion
+  message: If it never does, the idea falls
+  subtitle: And that is a result too.
+  notes: When they differ, **looking at cost changed the winner**. If after many comparisons that **never happens**, the comparator adds nothing and **the hypothesis falls**. And learning that early **is a result too**.
+  pt:
+    topic: O critério
+    message: Se nunca mudar, a ideia cai
+    subtitle: E isso também é resultado.
+    notes: Quando os dois são diferentes, **olhar o custo mudou o vencedor**. Se depois de muitas comparações isso **nunca acontecer**, o comparador não acrescenta nada e **a hipótese cai**. E saber disso cedo **também é resultado**.
+- name: who-chooses
+  act: choice
+  topic: Who picks the implementation
+  message: Every implementation is swappable. What changes is who picks
+  screen:
+  - '**The platform picks** · authentication: Keycloak or Auth0, and people don''t even notice'
+  - '**The team picks the destination** · cloud account: Azure or AWS, and the choice costs money. How to get there stays with the platform'
+  notes: |-
+    **Every implementation is swappable.** What changes is **who picks**.
+
+    **Authentication:** people don't even know whether it's Keycloak or Auth0. The **nereus** decides, through the **mandate**.
+
+    **Cloud account:** the **team picks the destination**, Azure or AWS, because the destination is what they are asking for. And that choice **costs money**.
+
+    Even so, the implementation behind Azure **is still swappable**: the platform can rewrite the Nereid or change how it provisions, and the team **doesn't notice**, because the destination is still Azure.
+  pt:
+    topic: Quem escolhe a implementação
+    message: Toda implementação é trocável. Muda quem escolhe
+    screen:
+    - '**A plataforma escolhe** · authentication: Keycloak ou Auth0, e a pessoa nem percebe'
+    - '**O time escolhe o destino** · cloud account: Azure ou AWS, e a escolha gera custo. O jeito de chegar lá continua com a plataforma'
+    notes: |-
+      **Toda implementação é trocável.** O que muda é **quem escolhe**.
+
+      **Authentication:** a pessoa nem sabe se é Keycloak ou Auth0. Quem decide é a **plataforma**, pelo **mandate**.
+
+      **Cloud account:** o **time escolhe o destino**, Azure ou AWS, porque o destino é o que ele está pedindo. E essa escolha **gera custo**.
+
+      Mesmo assim, a implementação por trás do Azure **continua trocável**: a plataforma pode reescrever a Nereida ou mudar o jeito de provisionar, e o time **não percebe**, porque o destino continua sendo Azure.
+- name: cloud-account
+  act: choice
+  topic: Example · cloud account
+  message: The team picks the mandate, or gets the default
+  terminal:
+    steps:
+    - run: nereus cloudaccount create payments-dev
+      output: |-
+        {dim:cloudaccount/payments-dev created}
+        {dim:mandate:} {mandate:azure} {dim:(default)}
+        hint: nereus cloudaccount mandate list
+    - run: nereus cloudaccount database create orders
+      options:
+      - --type sql
+      - --account payments-dev
+      output: '{dim:database/orders created (}{mandate:azure}{dim: · sql)}'
+  notes: |-
+    **In the CLI**, the order follows the reef: **reef → kind → verb**. Installing the reef hangs that tree under nereus.
+
+    **Without --mandate**, the **default mandate** applies, like Kubernetes **StorageClass**. The output shows which one was used and **suggests** where to see the others, because a destination **costs money**.
+
+    **The database is a child of the account:** its name is positional, the account goes in **--account**. That is the **gcloud** (--instance) and **az** pattern. In the resource it becomes an **accountRef**, like Crossplane's **providerConfigRef**.
+
+    To avoid repeating --account, you can **set the account once**, like kubectl's current namespace.
+  pt:
+    topic: Exemplo · cloud account
+    message: O time escolhe o mandate, ou recebe o default
+    terminal:
+      steps:
+      - run: nereus cloudaccount create pagamentos-dev
+        output: |-
+          {dim:cloudaccount/pagamentos-dev created}
+          {dim:mandate:} {mandate:azure} {dim:(default)}
+          hint: nereus cloudaccount mandate list
+      - run: nereus cloudaccount database create pedidos
+        options:
+        - --type sql
+        - --account pagamentos-dev
+        output: '{dim:database/pedidos created (}{mandate:azure}{dim: · sql)}'
+    notes: |-
+      **Na CLI**, a ordem segue o reef: **reef → kind → verbo**. Instalar o reef pendura essa árvore embaixo de nereus.
+
+      **Sem --mandate**, vale o **mandate default**, como na **StorageClass** do Kubernetes. A saída mostra qual foi usado e **sugere** onde ver as outras, porque destino **gera custo**.
+
+      **O database é filho da conta:** o nome vai na posição, a conta em **--account**. É o padrão do **gcloud** (--instance) e do **az**. No recurso, vira um **accountRef**, como o **providerConfigRef** do Crossplane.
+
+      Para não repetir --account, dá para **fixar a conta uma vez**, como o namespace atual do kubectl.
+- name: mandates
+  act: choice
+  topic: Example · mandates
+  message: The hint leads to the mandates
+  terminal:
+    steps:
+    - run: nereus cloudaccount mandate list
+      output: |-
+        {dim:NAME          DEFAULT}
+        {mandate:alibaba}{dim:       false}
+        {mandate:aws}{dim:           false}
+        {mandate:azure}{dim:         true}
+        {mandate:cloudamqp}{dim:     false}
+        {mandate:digitalocean}{dim:  false}
+        {mandate:gcp}{dim:           false}
+        {mandate:hostinger}{dim:     false}
+        {mandate:ibm}{dim:           false}
+        {mandate:magalu}{dim:        false}
+        {mandate:oracle}{dim:        false}
+  notes: |-
+    **The hint leads to the mandates.** mandate list shows the options and **which one is the default**.
+
+    Which mandate is the default is also **the platform's decision**, and it can change with the comparator's result. Existing accounts stay on the mandate they were created with.
+  pt:
+    topic: Exemplo · mandates
+    message: A dica leva aos mandates
+    notes: |-
+      **A dica leva aos mandates.** O mandate list mostra as opções e **qual é a default**.
+
+      Qual mandate é o default também é **decisão da plataforma**, e pode mudar com o resultado do comparador. Contas existentes continuam no mandate com que foram criadas.
+- name: mandate
+  act: choice
+  topic: Example · mandate
+  message: Each mandate says who implements it
+  terminal:
+    steps:
+    - run: nereus cloudaccount mandate get azure
+      options:
+      - --output yaml
+      output: |-
+        {dim:apiVersion:}
+          {reef:cloudaccount.getnereus.dev/v1alpha1}
+        {dim:kind:} Mandate
+        {dim:metadata:}
+        {dim:  name:} {mandate:azure}
+        {dim:spec:}
+        {dim:  nereid:}
+            {nereid:azure}
+  notes: |-
+    **get --output yaml** shows the full resource, like kubectl.
+
+    **metadata.name** is the name the team picks. **spec.nereid** says which Nereid implements it, like the controllerName in **GatewayClass**.
+
+    To **swap the implementation**, the platform points the same name to another Nereid. The team keeps asking for **azure** and **doesn't notice** the swap.
+  pt:
+    topic: Exemplo · mandate
+    message: Cada mandate diz quem implementa
+    notes: |-
+      O **get --output yaml** mostra o recurso completo, como no kubectl.
+
+      **metadata.name** é o nome que o time escolhe. **spec.nereid** diz qual Nereida implementa, como o controllerName do **GatewayClass**.
+
+      Para **trocar a implementação**, a plataforma aponta o mesmo nome para outra Nereida. O time continua pedindo **azure** e **não percebe** a troca.
+- name: permissions-accounts
+  act: permissions
+  topic: accounts
+  message: Creating an account is a permission too. The `mandate` is the condition
+  terminal:
+    steps:
+    - run: nereus cloudaccount can-i
+      options:
+      - --team payments
+      output: |-
+        {dim:RESOURCE       VERB    MANDATE}
+        {dim:cloudaccounts}  create  {mandate:azure}  ✓
+                               {mandate:aws}    ✗
+                               {mandate:gcp}    ✗
+  notes: |-
+    **Before using an account, someone creates it.** And creating an account is a permission too: without --account, can-i answers what the team can do **at the organization level**.
+
+    Here the **mandate is a condition**: the payments team can create accounts on **azure**, but not on aws or gcp. That's where the cost is born, so it's a governance decision, and a rare one.
+
+    **Why let teams create their own accounts:** the platform knows **who owns** each account, and cloud billing **already comes split by account**. It's easy to know whom to charge, both in the cloud console and inside the platform.
+
+    **can-i hangs off the hierarchy:** asking under cloudaccount answers about accounts; under cloudaccount database, only about databases. The top-level nereus can-i shows everything, across all reefs. Every installed reef gets its own can-i, just like create and list.
+
+    **Without a flag, the question is about whoever asks:** can-i answers your effective permissions, your direct ones plus your teams'. --team shows only what the team grants; --user shows someone else's effective permissions, and asking about someone else **is a permission too**, like kubectl's --as.
+
+    **Who is asking:** the authentication reef brings nereus authentication whoami (user, organization, teams), like kubectl auth whoami. Authorization is a separate reef, authorization, with OpenFGA as one of its mandates, and the top-level nereus can-i is nereus authorization can-i. Spelling both names out avoids the ambiguity of “auth”. The top-level nereus whoami and nereus can-i are only **shortcuts**: the CLI expands it to the full command before calling the API, so authorization is checked against the real resource, and the shortcut **never bypasses permissions**. authn and authz can also be accepted as short aliases for the two reefs. Only core reefs register top-level shortcuts, and the platform rejects collisions.
+  pt:
+    topic: contas
+    message: Criar conta também é permissão. O `mandate` entra como condição
+    terminal:
+      steps:
+      - run: nereus cloudaccount can-i
+        options:
+        - --team pagamentos
+        output: |-
+          {dim:RESOURCE       VERB    MANDATE}
+          {dim:cloudaccounts}  create  {mandate:azure}  ✓
+                                 {mandate:aws}    ✗
+                                 {mandate:gcp}    ✗
+    notes: |-
+      **Antes de usar uma conta, alguém cria a conta.** E criar conta também é permissão: sem --account, o can-i responde o que o time pode fazer **no nível da organização**.
+
+      Aqui o **mandate entra como condição**: o time pagamentos pode criar contas na **azure**, mas não na aws nem na gcp. É onde nasce o custo, então é uma decisão de governança, e rara.
+
+      **Por que deixar o time criar a própria conta:** a plataforma sabe **de quem é** cada conta, e a cobrança da nuvem **já vem separada por conta**. Fica fácil saber de quem cobrar, tanto no console da nuvem quanto dentro da plataforma.
+
+      **O can-i fica pendurado na hierarquia:** perguntar em cloudaccount responde sobre contas; em cloudaccount database, só sobre databases. O nereus can-i no topo mostra tudo, de todos os reefs. Cada reef instalado ganha o seu can-i, como ganha create e list.
+
+      **Sem flag, a pergunta é sobre quem pergunta:** o can-i responde as suas permissões efetivas, as diretas somadas às dos seus times. O --team mostra só o que o time concede; o --user mostra o efetivo de outra pessoa, e perguntar sobre outra pessoa **também é permissão**, como o --as do kubectl.
+
+      **Quem está perguntando:** o reef authentication traz o nereus authentication whoami (usuário, organização, times), como o kubectl auth whoami. A autorização é outro reef, authorization, com o OpenFGA como um dos mandates, e o nereus can-i do topo é o nereus authorization can-i. Os dois nomes por extenso evitam a ambiguidade de “auth”. O nereus whoami e o nereus can-i no topo são só **atalhos**: a CLI expande para o comando completo antes de chamar a API, então a autorização é checada no recurso real, e o atalho **nunca contorna a permissão**. Também dá para aceitar authn e authz como apelidos curtos dos dois reefs. Só reefs do core registram atalhos no topo, e a plataforma recusa colisões.
+- name: permissions-inside
+  act: permissions
+  topic: inside the account
+  message: The account is the scope. A permission is `resource + verb`
+  terminal:
+    steps:
+    - run: nereus cloudaccount can-i
+      options:
+      - --team payments
+      - --account payments-dev
+      output: |-
+        {dim:RESOURCE      VERB}
+        {dim:payments-dev  }get     ✓
+                      delete  ✗
+        {dim:  databases   }create  ✓
+                      get     ✓
+                      list    ✓
+        {dim:  clusters    }get     ✓
+                      list    ✓
+                      create  ✗
+  notes: |-
+    **The account is the scope**, like a Kubernetes namespace. Inside it, a permission is **resource + verb**: cloudaccount database create, cloudaccount cluster list. The mandate no longer shows up, because the account already carries the destination.
+
+    Kubernetes has a **use** verb for something similar (PodSecurityPolicy, and OpenShift SCC). We chose not to add a new verb: resource + verb already says it all.
+  pt:
+    topic: dentro da conta
+    message: A conta é o escopo. A permissão é `recurso + verbo`
+    terminal:
+      steps:
+      - run: nereus cloudaccount can-i
+        options:
+        - --team pagamentos
+        - --account pagamentos-dev
+        output: |-
+          {dim:RESOURCE        VERB}
+          {dim:pagamentos-dev  }get     ✓
+                          delete  ✗
+          {dim:  databases     }create  ✓
+                          get     ✓
+                          list    ✓
+          {dim:  clusters      }get     ✓
+                          list    ✓
+                          create  ✗
+    notes: |-
+      **A conta é o escopo**, como o namespace no Kubernetes. Dentro dela, a permissão é **recurso + verbo**: cloudaccount database create, cloudaccount cluster list. O mandate não aparece mais, porque a conta já carrega o destino.
+
+      O Kubernetes tem um verbo **use** para algo parecido (PodSecurityPolicy, e o SCC do OpenShift). Preferimos não criar verbo novo: recurso + verbo já diz tudo.
+- name: one-door
+  act: permissions
+  topic: inside the account
+  message: One door
+  subtitle: 'OpenFGA: organization, project, reef, account, resource and verb.'
+  notes: 'All of this with **OpenFGA**: organization, project, reef, account, resource and verb. **One door:** Nereus checks OpenFGA before every action.'
+  pt:
+    topic: dentro da conta
+    message: Uma só porta
+    subtitle: 'OpenFGA: organization, project, reef, conta, recurso e verbo.'
+    notes: 'Tudo isso com **OpenFGA**: organization, project, reef, conta, recurso e verbo. **Uma só porta:** o Nereus consulta o OpenFGA antes de qualquer ação.'
+- name: kubernetes
+  act: platform
+  topic: Kubernetes fades
+  message: “The future of Kubernetes is that it has to go away.”
+  subtitle: Kelsey Hightower · GitHub's ReadME podcast, 2023
+  screen:
+  - '[**The New Stack**](https://thenewstack.io/kelsey-hightower-predicts-how-the-kubernetes-community-will-evolve/): Kelsey Hightower predicts how the Kubernetes community will evolve'
+  notes: |-
+    **Kelsey Hightower**, one of the best-known voices in Kubernetes, on **GitHub's ReadME podcast**, in 2023: the future of Kubernetes is that **it has to go away**. And if it goes away, that's **a sign of progress**.
+
+    He added: if we're still talking about Kubernetes **20 years from now**, that would be a sad moment, because we didn't come up with any better ideas.
+
+    Earlier, he had already called Kubernetes **a platform for building platforms**: a starting point, not the endgame.
+
+    **Nereus takes both seriously.** Underneath it's all Kubernetes: reefs are CRDs, Nereids are operators. But users only see **nereus**: secrets, authentication, organization. Nobody types kubectl, nobody sees a namespace. The target can be Azure, AWS or a local cluster, and the command is the same.
+
+    [Article on The New Stack](https://thenewstack.io/kelsey-hightower-predicts-how-the-kubernetes-community-will-evolve/)
+  pt:
+    topic: Kubernetes some
+    message: “O futuro do Kubernetes é que ele tem que sumir.”
+    subtitle: Kelsey Hightower · podcast ReadME, do GitHub, 2023
+    screen:
+    - '[**The New Stack**](https://thenewstack.io/kelsey-hightower-predicts-how-the-kubernetes-community-will-evolve/): Kelsey Hightower prevê como a comunidade Kubernetes vai evoluir'
+    notes: |-
+      **Kelsey Hightower**, uma das vozes mais conhecidas do Kubernetes, no podcast **ReadME, do GitHub**, em 2023: o futuro do Kubernetes é **ter que sumir**. E se ele sumir, é **sinal de progresso**.
+
+      Ele completou: se ainda estivermos falando de Kubernetes **daqui a 20 anos**, será um momento triste, porque não tivemos ideia melhor.
+
+      Antes, ele já tinha dito que o Kubernetes é **uma plataforma para construir plataformas**: um ponto de partida, não o fim do caminho.
+
+      **O Nereus leva as duas a sério.** Por baixo é tudo Kubernetes: reefs são CRDs, Nereidas são operators. Mas quem usa só vê **nereus**: secrets, authentication, organization. Ninguém digita kubectl, ninguém vê namespace. O target pode ser Azure, AWS ou um cluster local, e o comando é o mesmo.
+
+      [Artigo no The New Stack](https://thenewstack.io/kelsey-hightower-predicts-how-the-kubernetes-community-will-evolve/)
+- name: two-levels
+  act: platform
+  topic: Two levels of swapping
+  message: Nereus guarantees the contract, not the APIs
+  screen:
+  - '**Swap the implementation** · recommended: Same API, new Nereid. CLI and can-i keep working'
+  - '**Swap the API** · possible: The customer''s own reefs and Nereids'
+  - '✓ **The contract** · annotations: Follow the contract, get CLI and can-i'
+  notes: |-
+    **Two levels of swapping.** The first is the recommended one: the customer keeps **our API** and writes a **new Nereid**, which becomes one more mandate. CLI, can-i and catalog keep working.
+
+    The second is possible, but not recommended: the customer installs **their own reefs** and implements their own Nereids.
+
+    **The platform guarantees the contract, not our APIs.** The CLI knows no API in advance: it **discovers what is installed** in that instance, like kubectl discovery. The CRD **annotations** state the group's name in the CLI, which field points to the parent (accountRef becomes --account), whether there is a mandate and which one is the default, and which shortcuts the reef requests.
+
+    Whoever follows the contract gets **CLI, can-i and catalog for free**. A **conformance test**, like Gateway API's, checks it before installation.
+
+    **Every instance starts empty.** Whoever initializes it becomes the **administrator**, and then installs the reefs and Nereids, including authentication and authorization. That answers who authorizes before authorization exists.
+  pt:
+    topic: Dois níveis de troca
+    message: O Nereus garante o contrato, não as APIs
+    screen:
+    - '**Trocar a implementação** · recomendado: Mesma API, Nereida nova. CLI e can-i continuam'
+    - '**Trocar a API** · possível: Reefs e Nereidas do próprio cliente'
+    - '✓ **O contrato** · annotations: Seguiu o contrato, ganha CLI e can-i'
+    notes: |-
+      **Dois níveis de troca.** O primeiro é o recomendado: o cliente mantém a **nossa API** e escreve uma **Nereida nova**, que vira mais um mandate. CLI, can-i e catálogo continuam funcionando.
+
+      O segundo é possível, mas não recomendado: o cliente instala **os próprios reefs** e implementa as próprias Nereidas.
+
+      **A plataforma garante o contrato, não as nossas APIs.** A CLI não conhece nenhuma API de antemão: ela **descobre o que está instalado** naquela instância, como o discovery do kubectl. As **annotations** do CRD dizem o nome do reef na CLI, qual campo aponta para o pai (accountRef vira --account), se há mandate e qual é o default, e quais atalhos o grupo pede.
+
+      Quem segue o contrato ganha **CLI, can-i e catálogo de graça**. Um **teste de conformidade**, como o do Gateway API, verifica isso antes da instalação.
+
+      **Toda instância nasce vazia.** Quem a inicializa vira o **administrador**, e daí instala os reefs e as Nereidas, inclusive authentication e authorization. É assim que se resolve quem autoriza antes de existir autorização.
+- name: marketplace
+  act: platform
+  topic: Marketplace
+  message: Everything comes in signed. Each Nereid asks for the `topics` it wants
+  terminal:
+    steps:
+    - run: nereus nereid create azure
+      options:
+      - --reef cloudaccount
+      output: |-
+        {dim:signature }  ✓ getnereus
+        {dim:consumes  }  cloudaccount.create
+                    cloudaccount.delete
+        {dim:publishes }  cloudaccount.ready
+                    cloudaccount.failed
+        nereid/{nereid:azure} created
+  notes: |-
+    **The marketplace is where reefs and Nereids come from.** Each one is a **signed artifact**, and signing is itself a reef. An instance installs straight from the marketplace or just references it.
+
+    **The catalog Nereid** knows the marketplace: it knows when there is a **new version** or a **new product** and raises alerts. It's the model of Kubernetes **OLM**, behind OperatorHub: a catalog, a subscription with update channels (stable, alpha) and an install plan with manual approval. Crossplane does part of this with packages signed with cosign.
+
+    **Each instance says whom it trusts.** Our APIs come signed with our key. A customer who brings their own signs with their key, and the instance has a policy stating which keys it accepts. "We don't recommend it, but you can" becomes an **explicit administrator decision**, not a shortcut.
+
+    **The marketplace is also a platform instance.** Ours exposes the catalog and the **installation profiles** (reefs, the Nereid for each and the topics, in one package). Every new instance points to it by default. A customer can run their own marketplace, with their own key and their own profiles. The course deck shows a profile being created and installed.
+  pt:
+    topic: Marketplace
+    message: Tudo entra assinado. Cada Nereida pede os `tópicos` que quer usar
+    terminal:
+      steps:
+      - run: nereus nereid create azure
+        options:
+        - --reef cloudaccount
+        output: |-
+          {dim:assinatura}  ✓ getnereus
+          {dim:consome   }  cloudaccount.create
+                      cloudaccount.delete
+          {dim:publica   }  cloudaccount.ready
+                      cloudaccount.failed
+          nereid/{nereid:azure} created
+    notes: |-
+      **O marketplace é de onde vêm os reefs e as Nereidas.** Cada um é um **artefato assinado**, e a assinatura é ela mesma um reef. Uma instância instala direto do marketplace ou só o referencia.
+
+      **A Nereida de catálogo** conhece o marketplace: sabe quando há **versão nova** ou **produto novo** e gera alertas. É o modelo do **OLM** do Kubernetes, por trás do OperatorHub: catálogo, assinatura com canais de atualização (stable, alpha) e plano de instalação com aprovação manual. O Crossplane faz parte disso com pacotes assinados com cosign.
+
+      **Cada instância diz em quem confia.** As nossas APIs vêm assinadas pela nossa chave. O cliente que trouxer as próprias assina com a chave dele, e a instância tem uma política dizendo quais chaves aceita. O "não recomendamos, mas pode" vira uma **decisão explícita do administrador**, e não um atalho.
+
+      **O marketplace também é uma instância da plataforma.** A nossa expõe o catálogo e os **perfis de instalação** (reefs, a Nereida de cada um e os tópicos, num pacote só). Toda instância nova aponta para ela por padrão. Um cliente pode subir o próprio marketplace, com a própria chave e os próprios perfis. O deck do curso mostra a criação e a instalação de um perfil.
+- name: install
+  act: platform
+  topic: Marketplace
+  message: Installing is approving
+  subtitle: The administrator picks which topics the Nereid talks on.
+  notes: |-
+    **Topics belong to the platform, not to each Nereid.** Nereids talk through **messaging, with asynchronous commands**: the platform publishes events that several Nereids receive, each handling them its own way, and what one publishes another consumes. They **interact without knowing each other**.
+
+    **At install time, the Nereid asks; the administrator picks.** It works like an Android permissions manifest: the Nereid lists the topics it wants to consume and publish, splitting **required** from **optional**, and whoever installs it, with the privilege to do so, approves all or only part. From then on, the Nereid is a **subject in authorization**, checked by the same can-i as people.
+
+    **Publishing weighs more than consuming:** a Nereid publishing to cloudaccount.ready is claiming an account is ready. Each event's format is part of the **reef contract**.
+  pt:
+    topic: Marketplace
+    message: Instalar é aprovar
+    subtitle: O administrador escolhe em quais tópicos a Nereida fala.
+    notes: |-
+      **Os tópicos são da plataforma, não de cada Nereida.** As Nereidas falam por **mensageria, com comandos assíncronos**: a plataforma publica eventos que vários Nereidas recebem, cada um tratando do seu jeito, e o que um publica outro consome. Eles **interagem sem se conhecer**.
+
+      **Na instalação, a Nereida pede; o administrador escolhe.** Funciona como o manifesto de permissões do Android: a Nereida lista os tópicos que quer consumir e publicar, separando os **obrigatórios** dos **opcionais**, e quem instala, com privilégio para isso, aprova tudo ou só uma parte. Depois, a Nereida vira um **sujeito no authorization**, checado pelo mesmo can-i das pessoas.
+
+      **Publicar pesa mais que consumir:** uma Nereida que publica em cloudaccount.ready está afirmando que uma conta ficou pronta. O formato de cada evento faz parte do **contrato do reef**.
+- name: end-to-end
+  act: platform
+  topic: End to end
+  message: From an empty instance to the lifecycle, step by step
+  subtitle: From the foundation to the platform developing itself.
+  screen:
+  - '[**Nereus Walkthrough**](https://claude.ai/artifact/73BVxXTqktYds6J9hLMYQt): Foundation, people, catalog, composition, lifecycle'
+  notes: |-
+    The full step-by-step is in a separate deck: an **end-to-end walkthrough**, from the empty instance to the software development lifecycle.
+
+    **Foundation:** the file, the instance, secrets, authentication and login, in dependency order. Then **people** joining through an **invite QR Code**, the **catalog**, **composition** with reefs and the **lifecycle** with agents coordinated by the **Agent Coordinator**.
+
+    It ends on the **inception** pillar: once the MVP is live, the platform is developed inside itself.
+
+    The card opens the **walkthrough**, in the same format as this one.
+  pt:
+    topic: Ponta a ponta
+    message: Da instância vazia ao ciclo de vida, passo a passo
+    subtitle: Da foundation à plataforma desenvolvendo a si mesma.
+    screen:
+    - '[**Nereus Walkthrough**](https://claude.ai/artifact/73BVxXTqktYds6J9hLMYQt): Foundation, pessoas, catálogo, composição, ciclo de vida'
+    notes: |-
+      O passo a passo completo está num deck à parte: um **walkthrough de ponta a ponta**, da instância vazia ao ciclo de vida de desenvolvimento.
+
+      **Foundation:** o arquivo, a instância, secrets, authentication e login, na ordem das dependências. Depois, **pessoas** entrando por um **QR Code de convite**, o **catálogo**, a **composição** com reefs e o **ciclo de vida** com agentes coordenados pelo **Agent Coordinator**.
+
+      Termina no pilar **inception**: com o MVP no ar, a plataforma passa a ser desenvolvida dentro dela mesma.
+
+      O cartão abre o **walkthrough**, no mesmo formato deste.
+- name: another-reef
+  act: beyond
+  topic: Another reef
+  message: This presentation could be a platform resource
+  screen:
+  - '**Per-slide metrics:** who reached the end, without identifying anyone'
+  - '**Survey before and after:** how much the audience thinks it knows'
+  - '**Word cloud:** an agent suggests, the speaker decides'
+  - '**Fixes become issues:** in another reef, without leaving the platform'
+  notes: |-
+    The same pattern works for **the presentation itself**: a **presentations** reef, with the slide engine as a Nereid.
+
+    **Per-slide metrics**, anonymous. A **survey** at the start and end.
+
+    A **word cloud** moderated by an agent, with the **speaker deciding**. And **fixes become issues**.
+  pt:
+    topic: Outro reef
+    message: Esta apresentação poderia ser um recurso da plataforma
+    screen:
+    - '**Métricas por slide:** quem chegou ao fim, sem identificar ninguém'
+    - '**Pesquisa antes e depois:** quanto a plateia acha que sabe'
+    - '**Nuvem de palavras:** o agente sugere, quem apresenta decide'
+    - '**Correção vira issue:** em outro reef, sem sair da plataforma'
+    notes: |-
+      O mesmo padrão serve para **a própria apresentação**: um reef de **presentations**, com o motor de slides como Nereida.
+
+      **Métricas por slide**, anônimas. **Pesquisa** no início e no fim.
+
+      **Nuvem de palavras** moderada por um agente, com o **palestrante decidindo**. E **correção vira issue**.
+- name: approvals
+  act: beyond
+  topic: Approvals
+  message: The talk is ready. The prize draw waits for legal
+  screen:
+  - ✓ **Ready:** the talk can run
+  - '**RaffleApproved:** pending with legal: prioritized by a director, assigned, with a recorded opinion'
+  - '**Flow efficiency:** how much of the time was work and how much was waiting'
+  notes: |-
+    What if the talk has a **prize draw**? In Brazil, promotional draws **need authorization**.
+
+    The platform opens a **request for legal** in an **approvals** reef. The talk is **ready**; the draw, **pending**.
+
+    A director prioritizes, legal takes it and approves with a **recorded opinion**. Time to approval becomes a **flow metric**.
+
+    **Sources:** [Cescon Barrieu](https://cesconbarrieu.com.br/portaria-promocoes-comerciais/) · [Mattos Filho](https://www.mattosfilho.com.br/unico/promocoes-comerciais-pontos-de-atencao/)
+  pt:
+    topic: Aprovações
+    message: A palestra está pronta. O sorteio espera o jurídico
+    screen:
+    - ✓ **Ready:** a palestra pode rodar
+    - '**RaffleApproved:** pendente no jurídico: priorizado por um diretor, assumido, com parecer registrado'
+    - '**Eficiência de fluxo:** quanto do tempo foi trabalho e quanto foi espera'
+    notes: |-
+      E se a palestra tiver **sorteio**? No Brasil, sorteio promocional **precisa de autorização**.
+
+      A plataforma cria uma **pendência para o jurídico** num reef de **approvals**. A palestra fica **pronta**; o sorteio, **pendente**.
+
+      Diretor prioriza, jurídico assume e aprova com **parecer registrado**. O tempo até a aprovação vira **métrica de fluxo**.
+
+      **Fontes:** [Cescon Barrieu](https://cesconbarrieu.com.br/portaria-promocoes-comerciais/) · [Mattos Filho](https://www.mattosfilho.com.br/unico/promocoes-comerciais-pontos-de-atencao/)
+- name: converges
+  act: beyond
+  topic: Everything converges
+  message: From the first course to hiring, in one place
+  screen:
+  - '**University** · courses: Log in, and your courses are there'
+  - '**Skills** · map: Completed courses and what each person declares'
+  - '**Teams** · composition: The skills a team needs, and who already has them'
+  - '**Openings and hiring** · when missing: Opening, interview and hiring'
+  notes: |-
+    **The platform is where developers already are every day.** So the rest of their life at the company can live there too.
+
+    **University:** internal courses from the corporate university come in as one more reef. When someone logs in, the platform already knows **which courses they have**.
+
+    **Skills:** completed courses and what people declare become a **skills map**.
+
+    **Teams:** when a team is assembled, the platform says which skills it needs and **whether the company already has the people**.
+
+    **Openings, interviews and hiring:** when someone is missing, the opening is posted there, the interview is scheduled there and hiring is completed there, with an **audit trail**, like everything else.
+
+    **The same care as pillar 2:** the map is for **composing teams**, not for ranking people.
+  pt:
+    topic: Tudo converge
+    message: Do primeiro curso à contratação, no mesmo lugar
+    screen:
+    - '**Universidade** · cursos: Ao logar, os cursos já estão lá'
+    - '**Skills** · mapa: Cursos concluídos e o que cada um declara'
+    - '**Times** · composição: As skills que o time precisa, e quem já as tem'
+    - '**Vagas e contratação** · quando falta: Vaga, entrevista e contratação'
+    notes: |-
+      **A plataforma é onde o desenvolvedor já está todos os dias.** Então o resto da vida dele na empresa pode morar ali também.
+
+      **Universidade:** os cursos internos da universidade corporativa entram como mais um reef. Quando a pessoa faz login, a plataforma já sabe **quais cursos ela tem**.
+
+      **Skills:** cursos concluídos e o que a pessoa declara viram um **mapa de skills**.
+
+      **Times:** ao montar um time, a plataforma diz quais skills ele precisa e **se a empresa já tem as pessoas**.
+
+      **Vagas, entrevistas e contratação:** quando falta alguém, a vaga abre ali, a entrevista é agendada ali e a contratação termina ali, com **trilha de auditoria**, como todo o resto.
+
+      **O mesmo cuidado do pilar 2:** o mapa serve para **compor times**, não para ranquear pessoas.
+- name: teams
+  act: beyond
+  topic: Everything converges · teams
+  message: Assembling a team already shows what is missing
+  terminal:
+    steps:
+    - run: nereus team create check-in
+      options:
+      - --skills kotlin,terraform,a11y
+      output: |-
+        team/check-in created
+        {dim:kotlin   } 6 people ✓
+        {dim:terraform} 3 people ✓
+        {dim:a11y     } none ✗
+
+        hint: nereus university course get a11y-101
+        hint: nereus hiring position create --skill a11y
+  notes: |-
+    **An example with Tailwind Air:** assembling Tailwind's check-in team.
+
+    The team asks for **three skills**. The platform checks the map: there are people for **kotlin** and **terraform**, and **nobody for accessibility (a11y)**.
+
+    Both paths show up in the output itself: a university **course**, for people already at the company, or an **opening**, posted right there.
+
+    The numbers are **headcounts**, not names or scores. People are still chosen by people.
+  pt:
+    topic: Tudo converge · times
+    message: Montar um time já mostra o que falta
+    notes: |-
+      **Um exemplo com a Tailwind Air:** montar o time do check-in da Tailwind.
+
+      O time pede **três skills**. A plataforma cruza com o mapa: há gente para **kotlin** e **terraform**, e **ninguém para acessibilidade (a11y)**.
+
+      Os dois caminhos aparecem na própria saída: um **curso** da universidade, para quem já está na empresa, ou uma **vaga**, aberta ali mesmo.
+
+      Os números são **quantidade de pessoas**, não nomes nem notas. Quem escolhe as pessoas continua sendo gente.
+- name: prior-art
+  act: proof
+  topic: Who did it before
+  message: The pieces exist. Putting them together is new
+  screen:
+  - '**Gateway API** · Kubernetes: one API Group, many implementations, conformance tests'
+  - '**Scientist** · GitHub: runs new code beside the old and logs the differences'
+  - '**Kayenta** · Netflix and Google: weighted score: promote, roll back or marginal'
+  - '**Cost Insights** · Spotify: cloud cost visible to each team'
+  notes: |-
+    **The pieces exist.**
+
+    **Gateway API:** one group, many implementations, with conformance. **Scientist:** a GitHub library for rewriting critical code without risk. Each request runs through both paths, old and new; people always get the old result, and Scientist compares the results and the timing of each. When the new path always agrees and isn't slower, the swap is safe. It's the same idea as running Keycloak and Auth0 at the same time, except here traffic is split between them instead of duplicated. **Kayenta:** weighted score. **Cost Insights:** cost visible to teams.
+
+    What's new is **adding teams to the math**.
+
+    **Sources:** [Scientist](https://www.plushcap.com/content/github/blog/github-scientist-measure-twice-cut-once) · [Kayenta](https://cloud.google.com/blog/products/gcp/introducing-kayenta-an-open-automated-canary-analysis-tool-from-google-and-netflix) · [Spotify](https://engineering.atspotify.com/2020/09/managing-clouds-from-the-ground-up-cost-engineering-at-spotify/)
+  pt:
+    topic: Quem já fez
+    message: As peças existem. A junção é nova
+    screen:
+    - '**Gateway API** · Kubernetes: um API Group, várias implementações, testes de conformidade'
+    - '**Scientist** · GitHub: roda o código novo ao lado do antigo e registra as diferenças'
+    - '**Kayenta** · Netflix e Google: nota ponderada: promove, reverte ou marginal'
+    - '**Cost Insights** · Spotify: custo de nuvem visível para cada time'
+    notes: |-
+      **As peças existem.**
+
+      **Gateway API:** um grupo, várias implementações, com conformidade. **Scientist:** biblioteca do GitHub para reescrever partes críticas sem risco. Cada requisição roda nos dois caminhos, o antigo e o novo; a pessoa recebe sempre o resultado do antigo, e o Scientist compara os resultados e o tempo de cada um. Quando o novo concorda sempre e não é mais lento, a troca é segura. É a mesma ideia de rodar Keycloak e Auth0 ao mesmo tempo, só que aqui o tráfego é dividido entre os dois em vez de duplicado. **Kayenta:** nota ponderada. **Cost Insights:** custo visível para os times.
+
+      O novo é **juntar times nessa conta**.
+
+      **Fontes:** [Scientist](https://www.plushcap.com/content/github/blog/github-scientist-measure-twice-cut-once) · [Kayenta](https://cloud.google.com/blog/products/gcp/introducing-kayenta-an-open-automated-canary-analysis-tool-from-google-and-netflix) · [Spotify](https://engineering.atspotify.com/2020/09/managing-clouds-from-the-ground-up-cost-engineering-at-spotify/)
+- name: pitfalls
+  act: proof
+  topic: Where others failed
+  message: Three traps
+  screen:
+  - '**Connecting everything:** as with CMDBs, data goes stale and nobody maintains it'
+  - '**Measuring people:** the metric becomes a target and stops measuring'
+  - '**Starting with the hardest:** authentication has sessions, passwords and security'
+  notes: |-
+    Where others failed.
+
+    **Connecting everything**, like CMDBs: data goes stale.
+
+    **Measuring people:** the metric becomes a target.
+
+    **Starting with the hardest:** authentication has sessions, passwords and security. So by-design capture is proven first with a **simple reef**.
+
+    **Sources:** [CMDB](https://virima.com/blog/the-real-reason-your-cmdb-keeps-failing-and-how-to-fix-it) · [Pragmatic Engineer](https://newsletter.pragmaticengineer.com/p/measuring-developer-productivity)
+  pt:
+    topic: Onde outros falharam
+    message: Três armadilhas
+    screen:
+    - '**Conectar tudo:** como nos CMDBs, os dados envelhecem e ninguém mantém'
+    - '**Medir pessoas:** a métrica vira meta e deixa de medir'
+    - '**Começar pelo mais difícil:** authentication tem sessões, senhas e segurança'
+    notes: |-
+      Onde outros falharam.
+
+      **Conectar tudo**, como nos CMDBs: os dados envelhecem.
+
+      **Medir pessoas:** a métrica vira meta.
+
+      **Começar pelo mais difícil:** authentication tem sessões, senhas e segurança. Por isso a captura by design se prova antes com um **reef simples**.
+
+      **Fontes:** [CMDB](https://virima.com/blog/the-real-reason-your-cmdb-keeps-failing-and-how-to-fix-it) · [Pragmatic Engineer](https://newsletter.pragmaticengineer.com/p/measuring-developer-productivity)
+- name: prove
+  act: proof
+  topic: How to prove it
+  message: Two hypotheses, in four steps
+  screen:
+  - '**By-design capture:** a Nereid with no instrumentation; metrics in minutes'
+  - '**Two implementations:** same reef; license and people entered by hand'
+  - '**Comparator:** `nereus comparison` with configurable weights'
+  - '**Projection · optional:** with the mandate pricing model, where the math flips'
+  notes: |-
+    **Step 1:** by-design capture. A Nereid **with no instrumentation**, metrics **in minutes**.
+
+    **Step 2:** **two implementations** of the same reef, with license and team costs entered by hand.
+
+    **Step 3:** the **comparator**.
+
+    **Step 4, optional:** the **projection**. With the pricing model provided on the mandate, the comparator shows **when the math flips**.
+  pt:
+    topic: Como provar
+    message: Duas hipóteses, em quatro passos
+    screen:
+    - '**Captura by design:** Nereida sem instrumentação; métricas em minutos'
+    - '**Duas implementações:** mesmo reef; licença e pessoas à mão'
+    - '**Comparador:** `nereus comparison` com pesos configuráveis'
+    - '**Projeção · opcional:** com o modelo de preço do mandate, onde a conta vira'
+    notes: |-
+      **Passo 1:** captura by design. Uma Nereida **sem instrumentação**, métricas **em minutos**.
+
+      **Passo 2:** **duas implementações** do mesmo reef, com licença e times lançados à mão.
+
+      **Passo 3:** o **comparador**.
+
+      **Passo 4, opcional:** a **projeção**. Com o modelo de preço informado no mandate, o comparador mostra **a partir de quando a conta vira**.
+- name: thanks
+  act: closing
+  topic: Implementation comparator
+  message: Thank you!
+  subtitle: Questions?
+  notes: '**Thank the audience** and open the floor for questions.'
+  pt:
+    topic: Comparador de implementações
+    message: Obrigado!
+    subtitle: Perguntas?
+    notes: '**Agradeça** e abra para perguntas.'

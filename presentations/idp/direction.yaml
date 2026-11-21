@@ -1,0 +1,139 @@
+deck:
+  name: idp-direction
+  title: "Where we're heading"
+  subtitle: "From an idea to a shared product, through five planes"
+  accent: "five planes"
+  pt:
+    title: "Para onde vamos"
+    subtitle: "De uma ideia a um produto compartilhado, através de cinco planes"
+    accent: "cinco planes"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: goal
+    title: "The goal"
+    question: "What are we building toward?"
+    pt: {title: "O objetivo", question: "Para onde estamos construindo?"}
+  - name: proposal
+    title: "The proposal"
+    question: "How is a platform organized?"
+    pt: {title: "A proposta", question: "Como uma plataforma se organiza?"}
+
+references:
+  - name: backstage-descriptor
+    title: "Descriptor Format of Catalog Entities"
+    author: "Backstage"
+    url: "https://backstage.io/docs/features/software-catalog/descriptor-format"
+    about: "The format of every entity in Backstage's software catalog: Component, API, Resource, System and their fields."
+    forUs: "`spec.lifecycle` already has three well-known values, `experimental`, `production` and `deprecated`: sharing an internal product is moving it to `production`."
+    pt:
+      about: "O formato de toda entidade do catálogo de software do Backstage: Component, API, Resource, System e os seus campos."
+      forUs: "`spec.lifecycle` já tem três valores conhecidos, `experimental`, `production` e `deprecated`: compartilhar um produto interno é passá-lo para `production`."
+  - name: platform-tooling
+    title: "Platform tooling"
+    author: "platformengineering.org"
+    url: "https://platformengineering.org/platform-tooling"
+    about: "A landscape of platform tools in five planes: Developer Control, Integration & Delivery, Resource, Observability and Security."
+    forUs: "The five planes are parallel layers of a landscape, not a sequence; the order in which this series walks them, the journey of a request, is our own."
+    pt:
+      about: "Um landscape de ferramentas de plataforma em cinco planes: Developer Control, Integration & Delivery, Resource, Observability e Security."
+      forUs: "Os cinco planes são camadas paralelas de um landscape, não uma sequência; a ordem em que esta série os percorre, a jornada de um pedido, é nossa."
+
+slides:
+  # ── Opening ─────────────────────────────────────────
+  - name: title
+    act: opening
+    cover: true
+    message: "The goal is more than faster provisioning, and the platform is organized in five planes"
+    notes: |-
+      What we want to say: **the platform has a goal beyond speed**, and a shape that serves it.
+
+      **Route:** the goal, an idea that becomes a shared product, and the proposal, five planes that the next decks fill one by one.
+    pt:
+      message: "O objetivo vai além de provisionar mais rápido, e a plataforma se organiza em cinco planes"
+      notes: |-
+        O que queremos dizer: **a plataforma tem um objetivo além da velocidade**, e um formato que o serve.
+
+        **Roteiro:** o objetivo, uma ideia que vira produto compartilhado, e a proposta, cinco planes que os próximos decks preenchem um a um.
+
+  # ── The goal ────────────────────────────────────────
+  - name: idea-to-product
+    act: goal
+    topic: "From idea to Internal Product"
+    message: "The goal goes beyond faster provisioning: anyone takes an idea to a shared product"
+    accent: "anyone"
+    heading: "From idea to Internal Product"
+    screen: ["**Today:** good products start as someone's idea", "**Goal:** anyone takes an idea to a shared product"]
+    refs: [backstage-descriptor]
+    notes: |-
+      What we want to say: provisioning an environment faster helps, but **the goal is to encourage creativity**: to make it easy to create a new product inside the organization.
+
+      **IP (Internal Product):** an application or solution created internally.
+
+      **Today:** many internal products **start as someone's idea** and become products, to the credit of whoever built them. The platform wants to make that path **repeatable** for anyone.
+
+      **The journey the platform enables:** **register** the idea on the platform, with an owner; **provision** resources and **deploy**; **test**, **monitor** and **refine**; **share** it with the rest of the organization.
+
+      **Sharing has a state:** Backstage's catalog already marks each app with a `lifecycle` (`experimental`, `production`, `deprecated`). A validated IP moves to `production`; we come back to this when an app is declared.
+
+      Source: references/internal-products.md
+    pt:
+      topic: "Da ideia ao Internal Product"
+      message: "O objetivo vai além de provisionar mais rápido: qualquer pessoa leva uma ideia a um produto compartilhado"
+      accent: "qualquer pessoa"
+      heading: "Da ideia ao Internal Product"
+      screen: ["**Hoje:** bons produtos nascem da ideia de alguém", "**Objetivo:** qualquer pessoa leva uma ideia a um produto compartilhado"]
+      notes: |-
+        O que queremos dizer: provisionar ambiente mais rápido ajuda, mas **o objetivo é estimular a criatividade**: tornar fácil criar produto novo dentro da organização.
+
+        **IP (Internal Product):** aplicação ou solução criada internamente.
+
+        **Hoje:** muitos produtos internos **nascem como ideias** de alguém e viram produtos, mérito de quem os construiu. A plataforma quer tornar esse caminho **repetível** para qualquer pessoa.
+
+        **A jornada que a plataforma habilita:** **registrar** a ideia na plataforma, com dono; **provisionar** recursos e fazer **deploy**; **testar**, **monitorar** e **refinar**; **compartilhar** com o restante da organização.
+
+        **Compartilhar tem estado:** o catálogo do Backstage já marca cada app com um `lifecycle` (`experimental`, `production`, `deprecated`). Um IP validado passa para `production`; voltamos a isso ao declarar uma app.
+
+        Fonte: references/internal-products.md
+
+  # ── The proposal ────────────────────────────────────
+  - name: landscape-empty
+    act: proposal
+    topic: "Five planes"
+    message: "A platform is organized in five planes: three carry the flow, two hold up the three"
+    accent: "five planes"
+    heading: "Five planes"
+    diagram: "../../assets/docs/landscape.svg"
+    reveal: [planes.dev-plane, planes.ind-plane, planes.res-plane, planes.obs-plane, planes.sec-plane]
+    accumulate: true
+    source: "platformengineering.org/platform-tooling · planes as parallel layers; the journey order is ours"
+    refs: [platform-tooling]
+    dependsOn: [idea-to-product]
+    notes: |-
+      What we want to say: **a platform is organized in five planes**, and here they appear empty on purpose.
+
+      **The arrows come in with the boxes:** the developer's intent crosses three planes until it becomes running software. **Developer Control** is where the developer declares what they want; **Integration & Delivery** is where the declaration becomes an artifact and a delivery; **Resource** is where it runs.
+
+      **Observability and Security are not steps of the flow:** they hold up the three all the time.
+
+      **The planes come from platformengineering.org's reference architecture; the order of the journey is ours.** No tool on screen on purpose: the categories hold for any choice of stack.
+
+      Source: references/base-deck.md
+    pt:
+      topic: "Cinco planes"
+      message: "Uma plataforma se organiza em cinco planes: três fazem o fluxo, dois sustentam os três"
+      accent: "cinco planes"
+      heading: "Cinco planes"
+      source: "platformengineering.org/platform-tooling · os planes são camadas paralelas; a ordem da jornada é nossa"
+      notes: |-
+        O que queremos dizer: **a plataforma se organiza em cinco planes**, e aqui eles aparecem vazios de propósito.
+
+        **As setas entram com as caixas:** a intenção do dev atravessa três planes até virar software rodando. **Developer Control** é onde o dev declara o que quer; **Integration & Delivery** é onde a declaração vira artefato e entrega; **Resource** é onde roda.
+
+        **Observability e Security não são etapas do fluxo:** sustentam os três o tempo todo.
+
+        **Os planes vêm da arquitetura de referência do platformengineering.org; a ordem da jornada é nossa.** Nenhuma ferramenta na tela de propósito: as categorias valem para qualquer escolha de stack.
+
+        Fonte: references/base-deck.md

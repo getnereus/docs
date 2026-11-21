@@ -1,0 +1,435 @@
+deck:
+  name: idp-problem
+  title: "Why a platform"
+  subtitle: "Building an Internal Developer Platform is a shared journey, for humans and agents"
+  accent: "a shared journey"
+  pt:
+    title: "Por que uma plataforma"
+    subtitle: "Construir uma Internal Developer Platform é uma jornada compartilhada, para humanos e agentes"
+    accent: "uma jornada compartilhada"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: friction
+    title: "Developer friction"
+    question: "Who absorbs the complexity today?"
+    pt: {title: "Fricção para o dev", question: "Quem absorve a complexidade hoje?"}
+  - name: ai
+    title: "AI needs a platform"
+    question: "Why has AI not paid off yet?"
+    pt: {title: "A IA precisa de plataforma", question: "Por que a IA ainda não deu retorno?"}
+  - name: product
+    title: "Platform as a product"
+    question: "Who is the platform for?"
+    pt: {title: "Plataforma como produto", question: "Para quem é a plataforma?"}
+
+references:
+  - name: dora-roi-2026
+    title: "The ROI of AI-assisted Software Development"
+    author: "DORA and Google Cloud"
+    year: 2026
+    url: "https://dora.dev/ai/roi/report/"
+    about: "A framework to compute the return on AI in software delivery, built on the findings of the DORA 2025 report, with a calculator of example assumptions."
+    forUs: "It names the platform's role in the agentic era: \"a platform that treats the developer—or any builder—as the user, minimizing the cognitive load required to move code from an agent's prompt to a production environment\" (p. 40)."
+    pt:
+      about: "Um framework para calcular o retorno da IA na entrega de software, apoiado nos achados do relatório DORA 2025, com uma calculadora de premissas de exemplo."
+      forUs: "Nomeia o papel da plataforma na era agêntica: \"a platform that treats the developer—or any builder—as the user, minimizing the cognitive load required to move code from an agent's prompt to a production environment\" (p. 40)."
+  - name: platform-illusion-2026
+    title: "The Platform Engineering Illusion"
+    author: "David Iyanu Jonathan"
+    year: 2026
+    url: "https://platformengineering.com/features/the-platform-engineering-illusion-why-most-internal-developer-platforms-fail-before-developers-ever-use-them/"
+    about: "An opinion piece: internal developer platforms fail because they are run as tooling initiatives when they are a product discipline."
+    forUs: "\"A technology platform is infrastructure with an API. A developer platform is a product with users.\" Its figures are the author's own account and stay off the screen."
+    pt:
+      about: "Um artigo de opinião: as plataformas internas falham porque são tocadas como iniciativas de ferramentas quando são uma disciplina de produto."
+      forUs: "\"A technology platform is infrastructure with an API. A developer platform is a product with users.\" Os números são o relato do próprio autor e ficam fora da tela."
+  - name: empathy-gap-2026
+    title: "The empathy gap: Why your platform needs UX, not just APIs"
+    author: "Tatiana Mikhaleva"
+    year: 2026
+    url: "https://platformengineering.org/blog/the-empathy-gap-why-your-platform-needs-ux-not-just-apis"
+    about: "An opinion piece: platforms invest in infrastructure and forget the person who uses it, and adoption stays low."
+    forUs: "\"A backend engineer should not need deep Kubernetes knowledge to get a URL for their service.\""
+    pt:
+      about: "Um artigo de opinião: as plataformas investem na infraestrutura e esquecem quem a usa, e a adoção fica baixa."
+      forUs: "\"A backend engineer should not need deep Kubernetes knowledge to get a URL for their service.\""
+  - name: state-of-ai-pe-2026
+    title: "State of AI in Platform Engineering, Volume 2"
+    author: "Sam Barlien, Luca Galante and Florian Lipp (Weave Intelligence)"
+    year: 2026
+    url: "https://weaveintelligence.io/research/state-of-ai-in-platform-engineering-2026"
+    about: "A survey of 350 practitioners, April to August 2026, on how organizations adopt AI in platform engineering; maturity levels and gains are self-reported."
+    forUs: "\"Throughput is not return\" (p. 22): 38% ship at least twice as much since adopting AI, only 8% call the return transformative, and platform readiness is the first blocker (p. 24)."
+    pt:
+      about: "Uma pesquisa com 350 profissionais, de abril a agosto de 2026, sobre como as organizações adotam IA em platform engineering; os níveis de maturidade e os ganhos são autorrelatados."
+      forUs: "\"Throughput is not return\" (p. 22): 38% entregam pelo menos o dobro desde que adotaram IA, só 8% chamam o retorno de transformador, e a prontidão da plataforma é o primeiro obstáculo (p. 24)."
+  - name: dora-2025
+    title: "State of AI-assisted Software Development 2025"
+    author: "DORA and Google Cloud"
+    year: 2025
+    url: "https://dora.dev/dora-report-2025/"
+    about: "DORA's 2025 report, a survey of 4,867 technology professionals on AI in software delivery."
+    forUs: "\"AI adoption has a negligible effect on organizational performance when platform quality is low, but when platform quality is high, the effect is strong and positive\" (p. 71)."
+    pt:
+      about: "O relatório DORA de 2025, uma pesquisa com 4.867 profissionais de tecnologia sobre IA na entrega de software."
+      forUs: "\"AI adoption has a negligible effect on organizational performance when platform quality is low, but when platform quality is high, the effect is strong and positive\" (p. 71)."
+  - name: platform-as-a-product-2025
+    title: "Platform as a Product"
+    author: "Abby Bangser, Daniel Bryant, Colin Humphreys and Cat Morris"
+    year: 2025
+    url: "https://www.syntasso.io/platform-as-a-product-oreilly-report"
+    about: "An O'Reilly report: a platform is a product, with users, a value proposition, a feedback loop and a focus on adoption, not an infrastructure project with a delivery date."
+    forUs: "\"The model is based on enablement rather than enforcement and self-service rather than ticket queues\" (p. 3). The four authors work for Syntasso, the company behind Kratix."
+    pt:
+      about: "Um relatório da O'Reilly: plataforma é produto, com usuários, proposta de valor, ciclo de feedback e foco em adoção, não um projeto de infraestrutura com data de entrega."
+      forUs: "\"The model is based on enablement rather than enforcement and self-service rather than ticket queues\" (p. 3). Os quatro autores trabalham na Syntasso, a empresa por trás do Kratix."
+
+slides:
+  # ── Opening ─────────────────────────────────────────
+  - name: title
+    act: opening
+    cover: true
+    message: "Building an Internal Developer Platform is a shared journey with clear goals, not a drawing to deliver"
+    notes: |-
+      What we want to say: **building an IDP (Internal Developer Platform) is not deploying the final drawing**. It is a journey we take together, with clear goals.
+
+      **When we started, the idea was to show the drawing of the five planes.** On the way it became clear it involves much more: the catalog and ownership, contracts and gates, identity, cost, security, and agents as new users of the platform.
+
+      **Route of the series:** this deck is the problem; the next ones are where we are heading, each plane piece by piece, the API and its clients, the journey from the idea to a running service, the full drawing, and what changes when the user is an agent.
+
+      **Goal:** agree on what the platform is and what it is not, and leave the room with allies.
+    pt:
+      message: "Construir uma Internal Developer Platform é uma jornada compartilhada, com objetivos claros, não um desenho a entregar"
+      notes: |-
+        O que queremos dizer: **construir um IDP (Internal Developer Platform) não é implantar o desenho final**. É uma jornada que fazemos juntos, com objetivos claros.
+
+        **Quando começamos, a ideia era mostrar o desenho dos cinco planes.** No caminho ficou claro que ele envolve muito mais: o catálogo e o ownership, contratos e gates, identidade, custo, segurança, e agentes como novos usuários da plataforma.
+
+        **Roteiro da série:** este deck é o problema; os próximos são para onde vamos, cada plane peça por peça, a API e os seus clientes, a jornada da ideia a um serviço rodando, o desenho completo, e o que muda quando o usuário é um agente.
+
+        **Objetivo:** alinhar o que a plataforma é e o que não é, e sair daqui com aliados.
+
+  # ── Developer friction ──────────────────────────────
+  - name: delivery-friction
+    act: friction
+    topic: "Our starting point"
+    message: "Infrastructure teams look after the infrastructure, and whoever has an idea still has to ask another team"
+    accent: "has to ask"
+    heading: "Asking for infrastructure today"
+    screen: ["**Request:** to another team", "**Knowledge:** documented, _not self-service_"]
+    refs: [dora-roi-2026]
+    notes: |-
+      What we want to say: **the developer does not carry the infrastructure alone**, an infrastructure team looks after it. What still weighs is the path: **whoever has an idea has to ask**, and gets the package that exists.
+
+      **Request:** even when creating an environment is already automated for whoever operates it (a pull request handled by an operator, for example), it is still a request to another team, which has its own schedule.
+
+      **Knowledge:** the "how to" is written down, in how-tos and runbooks, and part of it already runs by itself. But it was written **for whoever operates**: whoever has the idea does not run it alone. The platform turns that same knowledge into a **golden path** the developer uses without asking, and that an agent uses too, because an agent **only uses what is written in a format a machine reads** (DORA, DevOps Research and Assessment, ROI report, p. 41).
+
+      **Ask the room for an example of their own:** it works well here.
+
+      Source: references/dora-roi-ai.md
+    pt:
+      topic: "Nosso ponto de partida"
+      message: "Times de infraestrutura cuidam da infra, e quem tem uma ideia ainda precisa pedir a outro time"
+      accent: "precisa pedir"
+      heading: "Pedir infraestrutura hoje"
+      screen: ["**Pedido:** a outro time", "**Conhecimento:** documentado, _não self-service_"]
+      notes: |-
+        O que queremos dizer: **o dev não carrega a infra sozinho**, um time de infraestrutura cuida dela. O que ainda pesa é o caminho: **quem tem uma ideia precisa pedir**, e recebe o pacote que existe.
+
+        **Pedido:** mesmo quando a criação de um ambiente já é automatizada para quem opera (um pull request conduzido por um operator, por exemplo), continua sendo um pedido a outro time, que tem a sua própria agenda.
+
+        **Conhecimento:** o "como se faz" está escrito, em how-tos e runbooks, e parte dele já roda sozinho. Mas foi escrito **para quem opera**: quem tem a ideia não o executa por conta própria. A plataforma leva esse mesmo conhecimento a um **golden path** que o dev usa sem pedir, e que um agente também usa, porque um agente **só usa o que está escrito num formato que a máquina lê** (DORA, DevOps Research and Assessment, relatório de ROI, p. 41).
+
+        **Peça à plateia um exemplo próprio:** funciona bem aqui.
+
+        Fonte: references/dora-roi-ai.md
+
+  - name: cognitive-load
+    act: friction
+    topic: "Who absorbs the complexity"
+    message: "Today people absorb the complexity one ticket at a time; a platform absorbs it once, as self-service"
+    accent: "once"
+    heading: "Who absorbs the complexity"
+    screen: ["**Today:** infra teams, one ticket at a time", "**Platform:** once, as self-service"]
+    refs: [dora-roi-2026, platform-illusion-2026]
+    dependsOn: [delivery-friction]
+    notes: |-
+      What we want to say: at the starting point **the developer does not carry the whole stack**, the infrastructure teams do, **one request at a time**. A platform absorbs that complexity **once**, and the request becomes self-service.
+
+      **The complexity of cloud native does not go away:** either people absorb it on every request, or the people who build the platform absorb it once. The first model grows with the number of infrastructure people; the second does not.
+
+      **DORA ROI** (return on investment, p. 40): "a platform that treats the developer—or any builder—as the user, minimizing the cognitive load required to move code from an agent's prompt to a production environment."
+
+      **David Iyanu Jonathan, "The platform engineering illusion"** (platformengineering.com, 2026-07-31): "you build it, you run it" became **"you build it, you run it, you secure it, you monitor it, you cost-optimize it, and you keep current on eleven CVE feeds."** The platform's job is to **"reduce unnecessary complexity while preserving necessary complexity"**, without hiding so much that debugging becomes archaeology.
+
+      Source: references/dora-roi-ai.md, references/platform-illusion.md
+    pt:
+      topic: "Quem absorve a complexidade"
+      message: "Hoje pessoas absorvem a complexidade um ticket por vez; a plataforma a absorve uma vez, como self-service"
+      accent: "uma vez"
+      heading: "Quem absorve a complexidade"
+      screen: ["**Hoje:** times de infra, um ticket por vez", "**Plataforma:** uma vez, como self-service"]
+      notes: |-
+        O que queremos dizer: no ponto de partida **o dev não carrega a stack inteira**, os times de infraestrutura carregam, **um pedido por vez**. A plataforma absorve essa complexidade **uma vez**, e o pedido vira self-service.
+
+        **A complexidade do cloud native não some:** ou pessoas a absorvem a cada pedido, ou quem constrói a plataforma a absorve uma vez. O primeiro modelo cresce com o número de pessoas de infraestrutura; o segundo, não.
+
+        **DORA ROI** (retorno sobre investimento, p. 40): "a platform that treats the developer—or any builder—as the user, minimizing the cognitive load required to move code from an agent's prompt to a production environment."
+
+        **David Iyanu Jonathan, "The platform engineering illusion"** (platformengineering.com, 2026-07-31): o "you build it, you run it" virou **"you build it, you run it, you secure it, you monitor it, you cost-optimize it, and you keep current on eleven CVE feeds."** O trabalho da plataforma é **"reduce unnecessary complexity while preserving necessary complexity"**, sem esconder tanto que depurar vire arqueologia.
+
+        Fonte: references/dora-roi-ai.md, references/platform-illusion.md
+
+  - name: empathy-gap
+    act: friction
+    topic: "The empathy gap"
+    message: "A powerful platform that is hard to use is not adopted: what is missing is empathy, not an API"
+    accent: "empathy"
+    heading: "The empathy gap"
+    screen: ["**Symptom:** powerful but hard to use", "**Question:** how does it feel to use?"]
+    refs: [empathy-gap-2026, platform-illusion-2026]
+    dependsOn: [cognitive-load]
+    notes: |-
+      What we want to say: a powerful platform that is hard to use is not adopted; **what is missing is empathy, not an API**.
+
+      **Tatiana Mikhaleva, "The empathy gap: Why your platform needs UX, not just APIs"** (platformengineering.org, 2026-03-23): IDPs fail by investing in the infrastructure and forgetting who uses it.
+
+      **Two quotes from the article:** "We forget the most critical component in the stack. We forget the human being trying to use it." And: "A backend engineer should not need deep Kubernetes knowledge to get a URL for their service."
+
+      **Caveat:** an opinion piece; the figures in the text have no original source, do not use them.
+
+      **A second voice, the same thesis,** in "The platform engineering illusion": "the platform was correct and nobody wanted it." The team built the platform the way you build a bridge, and developers lived it "the way you experience a toll booth". Also opinion: the figures of the account stay off the screen.
+
+      Source: references/empathy-gap.md, references/platform-illusion.md
+    pt:
+      topic: "A falta de empatia"
+      message: "Plataforma poderosa e difícil de usar não é adotada: falta empatia, não API"
+      accent: "empatia"
+      heading: "A falta de empatia"
+      screen: ["**Sintoma:** poderosa, mas difícil de usar", "**Pergunta:** como é usar?"]
+      notes: |-
+        O que queremos dizer: plataforma poderosa e difícil de usar não é adotada; **falta empatia, não API**.
+
+        **Tatiana Mikhaleva, "The empathy gap: Why your platform needs UX, not just APIs"** (platformengineering.org, 2026-03-23): IDPs falham por investir na infraestrutura e esquecer quem a usa.
+
+        **Duas citações do artigo:** "We forget the most critical component in the stack. We forget the human being trying to use it." E: "A backend engineer should not need deep Kubernetes knowledge to get a URL for their service."
+
+        **Ressalva:** artigo de opinião; os números citados no texto não têm fonte original, não usar.
+
+        **Uma segunda voz, a mesma tese,** em "The platform engineering illusion": "the platform was correct and nobody wanted it." O time construiu a plataforma como quem constrói uma ponte, e o dev a viveu "the way you experience a toll booth". Também opinião: os números do relato ficam fora da tela.
+
+        Fonte: references/empathy-gap.md, references/platform-illusion.md
+
+  # ── AI needs a platform ─────────────────────────────
+  - name: ai-gap
+    act: ai
+    topic: "Throughput is not return"
+    message: "AI sped up writing code, but the return has not come yet for most"
+    accent: "the return"
+    heading: "Since adopting AI, organizations report"
+    screen: ["**Throughput:** 38% ship 2x or more", "**Return:** only 8% call it transformative"]
+    source: "State of AI in Platform Engineering, Vol. 2 (2026), pp. 20-22"
+    refs: [state-of-ai-pe-2026]
+    dependsOn: [cognitive-load]
+    notes: |-
+      What we want to say: AI raised the volume delivered, but **almost nobody saw the return in the business**.
+
+      **These are two different questions of the survey** (State of AI in Platform Engineering Vol. 2, Weave Intelligence, 2026).
+
+      **Throughput:** how much more engineering delivers since adopting AI (Figure 7, p. 20). The **38%** add those who reported 2x to 3x (29%) and 5x or more (9%).
+
+      **Return:** the impact of AI on the whole life cycle (Figure 9, p. 22). Only **8%** call it transformative; 29% are still experimenting, with no value realized, and 14% have a negative return once licences, tokens and review are counted.
+
+      **The message is the report's own:** "Throughput is not return" (p. 22). Shipping more features is not the same as shipping more business results. That gap is the thread of the whole report (p. 8).
+
+      **Caveat:** self-reported data, 350 respondents.
+
+      Source: references/state-of-ai-in-platform-engineering.md
+    pt:
+      topic: "Throughput não é retorno"
+      message: "A IA acelerou a escrita de código, mas o retorno ainda não veio para a maioria"
+      accent: "o retorno"
+      heading: "Desde que adotaram IA, as organizações relatam"
+      screen: ["**Throughput:** 38% entregam 2x ou mais", "**Retorno:** só 8% o chamam de transformador"]
+      source: "State of AI in Platform Engineering, Vol. 2 (2026), pp. 20-22"
+      notes: |-
+        O que queremos dizer: a IA aumentou o volume entregue, mas **quase ninguém viu o retorno no negócio**.
+
+        **São duas perguntas diferentes da pesquisa** (State of AI in Platform Engineering Vol. 2, Weave Intelligence, 2026).
+
+        **Throughput:** quanto a engenharia passou a entregar desde que adotou IA (Figure 7, p. 20). Os **38%** somam quem relatou 2x a 3x (29%) e 5x ou mais (9%).
+
+        **Retorno:** o impacto da IA no ciclo de vida inteiro (Figure 9, p. 22). Só **8%** o descrevem como transformador; 29% ainda estão em experimentação, sem valor realizado, e 14% têm retorno negativo quando se contam licenças, tokens e revisão.
+
+        **A mensagem é a do próprio relatório:** "Throughput is not return" (p. 22). Entregar mais features não é o mesmo que entregar mais resultado de negócio. Essa lacuna é o fio do relatório inteiro (p. 8).
+
+        **Ressalva:** dado autorrelatado, 350 respondentes.
+
+        Fonte: references/state-of-ai-in-platform-engineering.md
+
+  - name: platform-readiness
+    act: ai
+    topic: "The blocker"
+    message: "The obstacle is not the model, it is the platform around it"
+    accent: "the platform"
+    heading: "Main blockers to scaling AI"
+    screen: ["**#1 Platform readiness:** cited by 27%", "**#4 Model capability:** cited by 11%"]
+    source: "State of AI in Platform Engineering, Vol. 2 (2026), p. 24"
+    refs: [state-of-ai-pe-2026]
+    dependsOn: [ai-gap]
+    notes: |-
+      What we want to say: what holds AI back is **the platform around the model**, not the model.
+
+      **State of AI Vol. 2, p. 24:** "platform readiness" leads the blockers to scaling AI (**27%**); "model capability" comes fourth (**11%**).
+
+      **A supporting quote:** "It's because they have the platform around the model." (Rickey Zachary, Thoughtworks, p. 24). Nobody is waiting for a better model.
+
+      Source: references/state-of-ai-in-platform-engineering.md
+    pt:
+      topic: "O obstáculo"
+      message: "O obstáculo não é o modelo, é a plataforma ao redor dele"
+      accent: "a plataforma"
+      heading: "Principais obstáculos para escalar a IA"
+      screen: ["**#1 Prontidão da plataforma:** citada por 27%", "**#4 Capacidade do modelo:** citada por 11%"]
+      source: "State of AI in Platform Engineering, Vol. 2 (2026), p. 24"
+      notes: |-
+        O que queremos dizer: o que trava a IA é **a plataforma em volta do modelo**, não o modelo.
+
+        **State of AI Vol. 2, p. 24:** "platform readiness" lidera os obstáculos para escalar IA (**27%**); "model capability" fica em quarto (**11%**).
+
+        **Citação de apoio:** "It's because they have the platform around the model." (Rickey Zachary, Thoughtworks, p. 24). Ninguém está esperando um modelo melhor.
+
+        Fonte: references/state-of-ai-in-platform-engineering.md
+
+  - name: rebuild-platform
+    act: ai
+    topic: "Maturity pays in steps"
+    message: "Agents without rebuilding the platform yield little; rebuilding the platform yields four times more"
+    accent: "four times more"
+    heading: "Share that at least doubled throughput"
+    screen: ["**Agents added** (Level 1 → 2): 30% → 36%", "**Platform rebuilt** (Level 2 → 3): 36% → 60%"]
+    source: "State of AI in Platform Engineering, Vol. 2 (2026), pp. 18, 21"
+    refs: [state-of-ai-pe-2026]
+    dependsOn: [platform-readiness]
+    notes: |-
+      What we want to say: putting agents on the same platform yields little; **the jump comes from rebuilding the platform**.
+
+      **The same throughput question as the previous slide,** now cut by level of agentic maturity (Figure 8, p. 21): the share of each level that **at least doubled delivery** since adopting AI.
+
+      **The levels measure how much work the agent carries** (Figure 5, p. 18): at Level 1 the AI suggests and a person executes; at Level 2 agents open pull requests in parallel, and a person triggers and checks; at Level 3 agents work continuously from observed signals, and review becomes the exception.
+
+      **Level 1 to 2:** agents arrive, the platform stays the same, **+6 p.p.** (percentage points). **Level 2 to 3:** the platform is rebuilt, with governed paths a machine can run in code, review and test, **+24 p.p.** Maturity pays in steps, not in a gradient.
+
+      **Caveats, said aloud and not on screen:** the levels and gains are self-reported (p. 18, p. 21); the Level 3 sample is small, **n = 50** (Level 1: 143; Level 2: 110; Level 4: only 14); Syntasso, the company behind Kratix, is a partner of the report. It is a direction, not a precise measurement.
+
+      Source: references/state-of-ai-in-platform-engineering.md
+    pt:
+      topic: "A maturidade paga em degraus"
+      message: "Agentes sem reconstruir a plataforma rendem pouco; reconstruir a plataforma rende quatro vezes mais"
+      accent: "quatro vezes mais"
+      heading: "Parcela que ao menos dobrou o throughput"
+      screen: ["**Agentes adicionados** (Level 1 → 2): 30% → 36%", "**Plataforma reconstruída** (Level 2 → 3): 36% → 60%"]
+      source: "State of AI in Platform Engineering, Vol. 2 (2026), pp. 18, 21"
+      notes: |-
+        O que queremos dizer: pôr agentes sobre a mesma plataforma rende pouco; **o salto vem de reconstruir a plataforma**.
+
+        **A mesma pergunta de throughput do slide anterior,** agora cortada por nível de maturidade agêntica (Figure 8, p. 21): a parcela de cada nível que **pelo menos dobrou a entrega** desde que adotou IA.
+
+        **Os níveis medem quanto trabalho o agente carrega** (Figure 5, p. 18): no Level 1 a IA sugere e uma pessoa executa; no Level 2 agentes abrem pull requests em paralelo, e uma pessoa dispara e verifica; no Level 3 agentes trabalham continuamente a partir de sinais observados, e o review vira exceção.
+
+        **Level 1 para 2:** entram os agentes, a plataforma continua igual, **+6 p.p.** (pontos percentuais). **Level 2 para 3:** a plataforma é reconstruída, com paths governados e executáveis por máquina em código, review e teste, **+24 p.p.** A maturidade paga em degrau, não em gradiente.
+
+        **Ressalvas, ditas em voz alta e não na tela:** os níveis e os ganhos são autorrelatados (p. 18, p. 21); a amostra do Level 3 é pequena, **n = 50** (Level 1: 143; Level 2: 110; Level 4: só 14); a Syntasso, empresa do Kratix, é parceira do relatório. É direção, não medição precisa.
+
+        Fonte: references/state-of-ai-in-platform-engineering.md
+
+  - name: platform-amplifier
+    act: ai
+    topic: "AI amplifies what exists"
+    message: "AI amplifies the system that already exists: with a weak platform, the effect disappears"
+    accent: "amplifies"
+    heading: "AI amplifies what exists"
+    screen: ["**Weak platform:** no effect", "**Quality platform:** strong effect"]
+    source: "DORA State of AI-assisted Software Development (2025), p. 71"
+    refs: [dora-2025, dora-roi-2026, platform-illusion-2026]
+    dependsOn: [rebuild-platform]
+    notes: |-
+      What we want to say: AI amplifies the system that already exists; **without a quality platform, the effect disappears**.
+
+      **DORA 2025, p. 71:** "AI adoption has a negligible effect on organizational performance when platform quality is low, but when platform quality is high, the effect is strong and positive." DORA is DevOps Research and Assessment.
+
+      **It is a neutral source** (Google and DORA, 4,867 respondents) that confirms the previous slide without Syntasso's bias.
+
+      **A concrete picture from DORA ROI** (p. 13): code generated faster "simply piles up in front of manual security reviews or brittle deployment pipelines".
+
+      **Caveat:** a quality platform also brings a little more instability and friction (DORA 2025, p. 62 and p. 70).
+
+      **A counterpoint,** in "The platform engineering illusion": AI does not solve adoption, because "adoption was never a tooling problem to begin with — it was a trust and design problem". The tool that generates the config got smarter; the developer's trust does not move faster because of it.
+
+      Source: references/dora-ai-report.md, references/dora-roi-ai.md, references/platform-illusion.md
+    pt:
+      topic: "A IA amplifica o que existe"
+      message: "A IA amplifica o sistema que já existe: com plataforma fraca, o efeito some"
+      accent: "amplifica"
+      heading: "A IA amplifica o que existe"
+      screen: ["**Plataforma fraca:** sem efeito", "**Plataforma de qualidade:** efeito forte"]
+      source: "DORA State of AI-assisted Software Development (2025), p. 71"
+      notes: |-
+        O que queremos dizer: a IA amplifica o sistema que já existe; **sem plataforma de qualidade, o efeito some**.
+
+        **DORA 2025, p. 71:** "AI adoption has a negligible effect on organizational performance when platform quality is low, but when platform quality is high, the effect is strong and positive." DORA é DevOps Research and Assessment.
+
+        **É uma fonte neutra** (Google e DORA, 4.867 respondentes) que confirma o slide anterior sem o viés da Syntasso.
+
+        **Uma imagem concreta do DORA ROI** (p. 13): o código gerado mais rápido "simply piles up in front of manual security reviews or brittle deployment pipelines".
+
+        **Ressalva:** plataforma de qualidade também traz um pouco mais de instabilidade e fricção (DORA 2025, p. 62 e p. 70).
+
+        **Contraponto,** em "The platform engineering illusion": a IA não resolve adoção, porque "adoption was never a tooling problem to begin with — it was a trust and design problem". A ferramenta que gera a config ficou mais esperta; a confiança do dev não anda mais rápido por isso.
+
+        Fonte: references/dora-ai-report.md, references/dora-roi-ai.md, references/platform-illusion.md
+
+  # ── Platform as a product ───────────────────────────
+  - name: platform-as-product
+    act: product
+    topic: "Developers are the customers"
+    message: "Treat the platform as a product: the developer is a customer, not someone who opens tickets"
+    accent: "a customer"
+    heading: "Developers are the customers"
+    screen: ["**Self-service**, not ticket queues", "**Enablement**, not enforcement"]
+    refs: [platform-as-a-product-2025, platform-illusion-2026]
+    dependsOn: [rebuild-platform, empathy-gap]
+    notes: |-
+      What we want to say: **the platform is a product, and the developer is its customer**.
+
+      **Back to the first slide of the act:** tickets and waits become self-service, and the "how to" that was tribal knowledge becomes a product. The report sums it up: "The model is based on enablement rather than enforcement and self-service rather than ticket queues." (Platform as a Product, p. 3).
+
+      **A product has users,** a value proposition, a feedback loop and a focus on adoption (pp. 3-4, 9-11). It is not an infrastructure project with a delivery date: it has a roadmap and is measured by those who use it.
+
+      **Caveat:** the four authors work for Syntasso, the company behind Kratix.
+
+      **In the same line,** in "The platform engineering illusion": "A technology platform is infrastructure with an API. A developer platform is a product with users", with preferences, workarounds and a memory of every time the tool let them down. And: "every manual step in a "self-service" system is really just a support queue wearing a costume."
+
+      Source: references/platform-as-a-product.md, references/platform-illusion.md
+    pt:
+      topic: "O dev é o cliente"
+      message: "Tratar a plataforma como produto: o dev é cliente, não quem abre ticket"
+      accent: "cliente"
+      heading: "O dev é o cliente"
+      screen: ["**Self-service**, não fila de tickets", "**Habilitar**, não impor"]
+      notes: |-
+        O que queremos dizer: **a plataforma é um produto, e o dev é o cliente** dela.
+
+        **Volta ao primeiro slide do ato:** tickets e esperas viram self-service, e o "como se faz" que era conhecimento tribal vira produto. O relatório resume: "The model is based on enablement rather than enforcement and self-service rather than ticket queues." (Platform as a Product, p. 3).
+
+        **Produto tem usuários,** proposta de valor, ciclo de feedback e foco em adoção (pp. 3-4, 9-11). Não é projeto de infraestrutura com data de entrega: tem roadmap e é medido por quem usa.
+
+        **Ressalva:** os quatro autores trabalham na Syntasso, a empresa por trás do Kratix.
+
+        **Na mesma linha,** em "The platform engineering illusion": "A technology platform is infrastructure with an API. A developer platform is a product with users", com preferências, workarounds e memória de cada vez que a ferramenta os deixou mal. E: "every manual step in a "self-service" system is really just a support queue wearing a costume."
+
+        Fonte: references/platform-as-a-product.md, references/platform-illusion.md

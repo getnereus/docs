@@ -1,0 +1,196 @@
+deck:
+  name: database
+  title: "The database reef"
+  subtitle: "Every command of the database reef: a PostgreSQL per Database, owned by a node of the tenancy tree"
+  accent: "a PostgreSQL per Database"
+  pt:
+    title: "O reef database"
+    subtitle: "Todos os comandos do reef database: um PostgreSQL por Database, de um nó da árvore de tenancy"
+    accent: "um PostgreSQL por Database"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: setup
+    title: "Setup"
+    question: "What makes a Database?"
+    pt: {title: "Preparação", question: "O que faz uma Database?"}
+  - name: use
+    title: "Use"
+    question: "How does a Workload get one and reach it?"
+    pt: {title: "Uso", question: "Como um Workload pede uma e chega a ela?"}
+
+slides:
+  - name: cover
+    act: opening
+    cover: true
+    message: "The database reef"
+    notes: |-
+      **`nereus database create keycloak` gives Keycloak a PostgreSQL that keeps its data** (#653, for #498 (a persistent Keycloak)). The contract is small (owner, engine); the provider is the Mandate's (ADR 0017: resource reefs, a small contract kind per family, the provider in the Mandate).
+    pt:
+      message: "O reef database"
+      notes: |-
+        **O `nereus database create keycloak` dá ao Keycloak um PostgreSQL que guarda os dados** (#653, para o #498 (um Keycloak persistente)). O contrato é pequeno (owner, engine); o provedor é do Mandate (ADR 0017: resource reefs, um kind de contrato pequeno por família, o provedor no Mandate).
+
+  - name: reef-apply
+    act: setup
+    topic: "reef apply"
+    status: built
+    message: "The {reef:database} reef: one kind, Database"
+    accent: "one kind"
+    terminal:
+      steps:
+        - comment: "The release reef with flux comes first: the Nereid releases the operator through it"
+          run: "nereus reef apply database"
+          output: |-
+            ✓ core/reefs/database 0.1.0 created (database.getnereus.dev/v1alpha1: databases)
+
+            Next steps:
+
+              nereus database --help
+              nereus nereid apply <nereid> --reef database
+    notes: |-
+      **`nereus init --profile internal-developer-platform` runs this, the Nereid and its Mandate**, a line each.
+    pt:
+      topic: "reef apply"
+      message: "O reef {reef:database}: um kind, Database"
+      accent: "um kind"
+      notes: |-
+        **O `nereus init --profile internal-developer-platform` roda isto, a Nereid e o seu Mandate**, uma linha cada.
+
+  - name: nereid-apply
+    act: setup
+    topic: "nereid apply"
+    status: built
+    message: "The cloudnative-pg Nereid makes the reef's default Mandate"
+    accent: "default Mandate"
+    terminal:
+      steps:
+        - comment: "CloudNativePG's operator, its chart pinned by version and SHA-256"
+          run: "nereus nereid apply cloudnative-pg"
+          options: ["--reef database"]
+          output: |-
+            ✓ core/nereids/cloudnative-pg created, Ready, pinned to sha256:4908bacf6ac8: see 'nereus database --help'
+              core/mandates/cloudnative-pg created (reef: database, nereid: cloudnative-pg, default)
+
+            Next steps:
+
+              nereus database create <name> --owner project/<name> --engine postgres
+    notes: |-
+      **An admission policy holds the Nereid to its own objects:** Secrets, Clusters and release objects labelled `core.getnereus.dev/nereid=cloudnative-pg`, and only the chart and values its image declares.
+    pt:
+      topic: "nereid apply"
+      message: "A Nereid cloudnative-pg cria o Mandate default do reef"
+      accent: "Mandate default"
+      notes: |-
+        **Uma admission policy segura a Nereid nos próprios objetos:** Secrets, Clusters e objetos do release com o label `core.getnereus.dev/nereid=cloudnative-pg`, e só o chart e os values que a sua imagem declara.
+
+  - name: create
+    act: use
+    topic: "database create"
+    status: built
+    message: "A Database names its owner in the tenancy tree"
+    accent: "its owner"
+    terminal:
+      steps:
+        - comment: "In nereus-system, for Keycloak"
+          run: "nereus database create keycloak"
+          options: ["--owner project/nereids", "--engine postgres"]
+          output: |-
+            ✓ database/databases/keycloak created (mandate: cloudnative-pg, nereid: cloudnative-pg)
+
+            Next steps:
+
+              nereus database get keycloak
+    notes: |-
+      **The Nereid makes a CloudNativePG Cluster `db-keycloak`** (one instance, 1Gi, the Mandate's `params.storage` to change it); the `db-` prefix keeps it off the Nereids' ServiceAccounts.
+    pt:
+      topic: "database create"
+      message: "Uma Database diz o seu owner na árvore de tenancy"
+      accent: "o seu owner"
+      notes: |-
+        **A Nereid cria um Cluster `db-keycloak` do CloudNativePG** (uma instância, 1Gi, o `params.storage` do Mandate para mudar); o prefixo `db-` o mantém longe das ServiceAccounts das Nereids.
+
+  - name: get
+    act: use
+    topic: "database get, list"
+    status: built
+    message: "Ready, with its connection in a Secret"
+    accent: "in a Secret"
+    terminal:
+      steps:
+        - run: "nereus database get keycloak"
+          output: |-
+            Name:        keycloak
+            Owner:       Project/nereids
+            Engine:      postgres
+            Mandate:     cloudnative-pg
+            Nereid:      cloudnative-pg
+            Ready:       True
+            Connection:  secret nereus-system/keycloak-database (host, port, dbname, username, password, uri)
+        - run: "nereus database list"
+          output: |-
+            DATABASE  OWNER            ENGINE    MANDATE         READY
+            keycloak  Project/nereids  postgres  cloudnative-pg  True
+    notes: |-
+      **`keycloak-database` follows the Service Binding layout** (`type: postgresql`, `provider: cloudnative-pg`). The scene writes a row through its `uri`, deletes the PostgreSQL pod, and reads the row back.
+    pt:
+      topic: "database get, list"
+      message: "Ready, com a conexão num Secret"
+      accent: "num Secret"
+      notes: |-
+        **O `keycloak-database` segue o layout do Service Binding** (`type: postgresql`, `provider: cloudnative-pg`). O scene grava uma linha pelo seu `uri`, apaga o pod do PostgreSQL e lê a linha de volta.
+
+  - name: refused
+    act: use
+    topic: "owner"
+    status: built
+    message: "An owner missing from the tree is refused"
+    accent: "refused"
+    terminal:
+      steps:
+        - run: "nereus database create orders"
+          options: ["--owner project/missing", "--engine postgres"]
+          output: |-
+            ✗ database/databases/orders: owner Project/missing does not exist. To fix it, run:
+              nereus tenancy project list
+              Nothing was changed.
+    notes: |-
+      **The CLI checks the owner; the API does not yet**, the same open point as the tenancy tree's missing parent (#651).
+    pt:
+      topic: "owner"
+      message: "Um owner fora da árvore é recusado"
+      accent: "recusado"
+      notes: |-
+        **O CLI confere o owner; a API ainda não**, o mesmo ponto em aberto do parent inexistente da árvore de tenancy (#651).
+
+  - name: delete
+    act: use
+    topic: "database delete"
+    status: built
+    message: "Delete removes the Secret, then the Cluster and its volume"
+    accent: "and its volume"
+    terminal:
+      steps:
+        - run: "nereus database delete keycloak"
+          options: ["--dry-run"]
+          output: |-
+            database/databases/keycloak deleted (dry run)
+        - run: "nereus database delete keycloak"
+          output: |-
+            2026-10-31T03:37:50Z  … secret   Deleting the Secret nereus-system/keycloak-database.
+            2026-10-31T03:37:50Z  … cluster  Deleting the CloudNativePG Cluster nereus-system/db-keycloak: CloudNativePG removes its pods and volumes.
+            ✓ database/databases/keycloak deleted
+
+            Next steps:
+
+              nereus database list
+    notes: |-
+      **The data goes with it:** `deletionPolicy: retain` is its own issue (#560 point 9).
+    pt:
+      topic: "database delete"
+      message: "O delete remove o Secret, depois o Cluster e o seu volume"
+      accent: "e o seu volume"
+      notes: |-
+        **Os dados vão junto:** o `deletionPolicy: retain` é uma issue à parte (#560 ponto 9).

@@ -1,0 +1,12 @@
+{
+  "name": "scene-registry-reef",
+  "command": "test/scene-registry-reef",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 1085,
+  "passed": 34,
+  "failed": 1,
+  "failure": null,
+  "commit": "07357883",
+  "started": "2026-11-15T13:01:55Z"
+}

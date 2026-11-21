@@ -1,0 +1,13 @@
+kind: Component
+metadata:
+  name: seat-selection
+  description: Serves the seat map and holds the seat a passenger picks
+spec:
+  system: seat-map
+  type: service
+  owner: team-airport
+  lifecycle: production
+  providesApis:
+    - seats
+  dependsOn:
+    - resource:passengers-db

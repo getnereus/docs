@@ -1,0 +1,11 @@
+{
+  "name": "scene-core-ghcr",
+  "command": "test/scene-core --from ghcr",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 190,
+  "passed": 43,
+  "failure": null,
+  "commit": "95f187da",
+  "started": "2026-11-14T14:14:50Z"
+}

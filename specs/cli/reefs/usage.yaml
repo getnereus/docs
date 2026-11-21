@@ -1,0 +1,203 @@
+deck:
+  name: usage
+  title: "The usage reef"
+  subtitle: "Every command that reports a coding agent's quota window and shows where it is heading"
+  accent: "where it is heading"
+  pt:
+    title: "O reef usage"
+    subtitle: "Todos os comandos que informam a janela de cota de um agente de código e mostram para onde ela vai"
+    accent: "para onde ela vai"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: window
+    title: "Window"
+    pt: {title: "Janela"}
+
+slides:
+  - name: cover
+    act: opening
+    cover: true
+    message: "The usage reef"
+    notes: |-
+      **The source of truth for the commands of the usage reef** (#1586, the usage reef: a coding agent's quota as a reef). #1590 builds its first slice: the kind `UsageWindow`, the Nereus API's routes `/v1/usage/windows`, `nereus usage report | get | list | delete | apply`, the reference Nereid `reference-usage` and the Usage screen's header. The group is `usage.getnereus.dev/v1alpha1`, cluster-scoped. The figures are the owner's `claude-usage-forecast` and `claude-usage-plan`, ported to `usage_rules` so the API, the CLI and the screen compute them from one code.
+    pt:
+      message: "O reef usage"
+      notes: |-
+        **A fonte da verdade dos comandos do reef usage** (#1586, o reef usage: a cota de um agente de código como um reef). A #1590 constrói a primeira fatia: o kind `UsageWindow`, as rotas `/v1/usage/windows` da Nereus API, `nereus usage report | get | list | delete | apply`, o Nereid de referência `reference-usage` e o cabeçalho da tela Usage. O grupo é `usage.getnereus.dev/v1alpha1`, com escopo de cluster. Os números são os do `claude-usage-forecast` e do `claude-usage-plan` do dono, portados para o `usage_rules`, para a API, a CLI e a tela calcularem a partir do mesmo código.
+
+  - name: kinds
+    act: opening
+    topic: "the kind"
+    message: "A UsageWindow is the last reading kept of one quota window"
+    accent: "the last reading kept"
+    screen:
+      - "**`UsageWindow`:** `spec` has `used` (0 to 100), `resetsAt` and `readAt`; `status` has `timeZone`, copied from its Mandate"
+      - "**The share only grows:** within one window the highest reading wins, and the reset only moves forward"
+      - "**Through the Nereus API only:** the CLI never opens a kubeconfig (ADR 0018)"
+    notes: |-
+      **The API computes the figures on every read** (`usage_rules.figures`): the forecast at the reset (`used × window / time gone`, hidden for the window's first 6 hours), its pace word (`push` below 70%, `steady` up to 95%, `slow` above), today's goal and the plan for the days left, cut in the window's time zone. **A window past its reset has no figures** until a new reading: it says `reset`.
+    pt:
+      topic: "o kind"
+      message: "Uma UsageWindow é a última leitura guardada de uma janela de cota"
+      accent: "a última leitura guardada"
+      screen:
+        - "**`UsageWindow`:** o `spec` tem `used` (de 0 a 100), `resetsAt` e `readAt`; o `status` tem `timeZone`, copiado do seu Mandate"
+        - "**A fatia só cresce:** dentro de uma janela vence a leitura mais alta, e o reset só anda para a frente"
+        - "**Só pela Nereus API:** a CLI nunca abre um kubeconfig (ADR 0018)"
+      notes: |-
+        **A API calcula os números a cada leitura** (`usage_rules.figures`): a previsão no reset (`used × janela / tempo decorrido`, escondida nas primeiras 6 horas da janela), a sua palavra de ritmo (`push` abaixo de 70%, `steady` até 95%, `slow` acima), a meta de hoje e o plano para os dias que faltam, cortados no fuso da janela. **Uma janela depois do seu reset não tem números** até uma leitura nova: ela diz `reset`.
+
+  - name: usage-report
+    act: window
+    topic: "usage report"
+    status: built
+    issue: 1590
+    message: "report sends a reading, read now"
+    accent: "read now"
+    terminal:
+      steps:
+        - comment: "75% used, resetting on Monday at 01:00 in São Paulo"
+          run: "nereus usage report weekly"
+          options: ["--used 75", "--resets-at 2026-11-16T01:00:00-03:00"]
+          output: |-
+            ✓ usage/windows/weekly reported (75% used, resets Mon 16/11 01:00)
+
+            Next steps:
+
+              nereus usage get weekly
+    notes: |-
+      **The API keeps the readings' rules of #1586:** a lower share of the same window leaves the kept one, and the command says so on a line of its own (exit 0): `usage/windows/weekly kept (80% used, resets Mon 16/11 01:00): this reading of 75% is lower, or of an earlier window, so the kept higher share stays`. A later window always replaces it. `--resets-at` takes a date-time with its offset; the API keeps it in UTC.
+    pt:
+      topic: "usage report"
+      message: "O report envia uma leitura, feita agora"
+      accent: "feita agora"
+      notes: |-
+        **A API mantém as regras das leituras da #1586:** uma fatia menor da mesma janela deixa a guardada, e o comando diz isso numa linha própria (exit 0): `usage/windows/weekly kept (80% used, resets Mon 16/11 01:00): this reading of 75% is lower, or of an earlier window, so the kept higher share stays`. Uma janela posterior sempre a substitui. O `--resets-at` aceita uma data-hora com o seu offset; a API a guarda em UTC.
+
+  - name: usage-offline
+    act: window
+    topic: "usage offline"
+    status: built
+    issue: 1592
+    message: "offline, report keeps the reading locally and get answers from it"
+    accent: "locally"
+    terminal:
+      steps:
+        - comment: "Nereus unreachable: the reading goes to the local cache"
+          run: "nereus usage report weekly"
+          options: ["--used 75", "--resets-at 2026-11-16T01:00:00-03:00"]
+          output: |-
+            ✓ usage/windows/weekly kept locally (75% used, resets Mon 16/11 01:00): Nereus unreachable, next try in 5m
+
+            Next steps:
+
+              nereus usage get weekly
+        - comment: "The figures computed from the cache, marked local"
+          run: "nereus usage get weekly"
+          output: |-
+            WINDOW  USED  RESETS           FORECAST  PACE    TODAY  READ
+            weekly  75%   Mon 16/11 01:00  91%       steady  ≤79%   local Sat 19:06
+    dependsOn: [usage-report]
+    notes: |-
+      **One JSON file per window** under `${XDG_STATE_HOME}/nereus/usage/`, so a status line reads the figures with `jq` on every render. `report` runs at most once a minute, only when the reading changed or the figures are 5 minutes old; it sends at most every 5 minutes, sooner when the day turns or the window resets; a failed send backs off 5, 10, 20 minutes up to an hour and sets `sendFailing`. An `flock` keeps two reports from running at once. Offline, the forecast, the word and the plan work as online; only the days gone another machine reported may be missing. Until the API first answers, the days are cut in the machine's time zone.
+    pt:
+      topic: "usage offline"
+      message: "Offline, o report guarda a leitura localmente e o get responde a partir dela"
+      accent: "localmente"
+      notes: |-
+        **Um arquivo JSON por janela** em `${XDG_STATE_HOME}/nereus/usage/`, para uma status line ler os números com `jq` a cada render. O `report` roda no máximo uma vez por minuto, só quando a leitura mudou ou os números têm 5 minutos; envia no máximo a cada 5 minutos, antes quando o dia vira ou a janela reseta; um envio que falha recua 5, 10, 20 minutos até uma hora e liga `sendFailing`. Um `flock` impede dois reports ao mesmo tempo. Offline, a previsão, a palavra e o plano funcionam como online; só podem faltar os dias passados que outra máquina reportou. Até a API responder pela primeira vez, os dias são cortados no fuso da máquina.
+
+  - name: usage-apply
+    act: window
+    topic: "usage apply"
+    status: built
+    issue: 1590
+    message: "apply writes the windows of a file, under the same rules"
+    accent: "the same rules"
+    terminal:
+      steps:
+        - comment: "A file of UsageWindows, or a folder of them"
+          run: "nereus usage apply"
+          options: ["--from-file weekly.yaml"]
+          output: |-
+            ✓ usage/windows/weekly created
+
+            Next steps:
+
+              nereus usage list
+    notes: |-
+      **`apply` is the group's** (ADR 0013, the standard verbs): each window of the file goes through the same `PUT` as `report`, so a lower share of the same window prints `kept`, and the same file again prints `unchanged`. `--dry-run` says what each window would become and changes nothing. A window given twice in one file refuses the whole file.
+    pt:
+      topic: "usage apply"
+      message: "O apply grava as janelas de um arquivo, sob as mesmas regras"
+      accent: "as mesmas regras"
+      notes: |-
+        **O `apply` é do grupo** (ADR 0013, os verbos padrão): cada janela do arquivo passa pelo mesmo `PUT` do `report`, então uma fatia menor da mesma janela imprime `kept`, e o mesmo arquivo de novo imprime `unchanged`. O `--dry-run` diz o que cada janela viraria e não muda nada. Uma janela repetida no mesmo arquivo recusa o arquivo inteiro.
+
+  - name: usage-get
+    act: window
+    topic: "usage get"
+    status: built
+    issue: 1591
+    message: "get shows the forecast at the reset, today's goal and the week day by day"
+    accent: "the week day by day"
+    terminal:
+      steps:
+        - comment: "The times in the window's time zone"
+          run: "nereus usage get weekly"
+          output: |-
+            WINDOW  USED  RESETS           FORECAST  PACE    TODAY  READ
+            weekly  75%   Mon 16/11 01:00  91%       steady  ≤75%   Sat 19:06
+
+            DAY        SHARE  TOTAL
+            Mon 09/11  +10%   10%
+            Tue 10/11  ~+11%  ~21%
+            Wed 11/11  +10%   31%
+            Thu 12/11  +10%   41%
+            Fri 13/11  +19%   60%
+            Sat 14/11  +15%   75%    today
+            Sun 15/11  +25%   100%   plan
+    dependsOn: [usage-report]
+    notes: |-
+      **The week day by day (#1591):** the reference Nereid keeps each day's start, the lowest share seen that day, cut in the Mandate's time zone and cleared when the window resets; a day's total is the share at its end, and a day with no reading of its own is interpolated, marked `~`. Today's goal stays fixed from today's start. **`--output json` prints the window as the API answers it**, with the plan for the days left: one row per day, its share and the total to reach by its end, the last one landing on 100%. A window that reset shows `reset` in FORECAST and PACE.
+    pt:
+      topic: "usage get"
+      message: "O get mostra a previsão no reset, a meta de hoje e a semana dia a dia"
+      accent: "a semana dia a dia"
+      notes: |-
+        **A semana dia a dia (#1591):** o Nereid de referência guarda o início de cada dia, a menor fatia vista naquele dia, cortado no fuso do Mandate e limpo quando a janela reseta; o total de um dia é a fatia no fim dele, e um dia sem leitura própria é interpolado, marcado com `~`. A meta de hoje fica fixa a partir do início de hoje. **O `--output json` imprime a janela como a API a responde**, com o plano para os dias que faltam: uma linha por dia, a sua fatia e o total a alcançar até o fim dele, a última chegando a 100%. Uma janela que resetou mostra `reset` em FORECAST e PACE.
+
+  - name: usage-list-delete
+    act: window
+    topic: "usage list and delete"
+    status: built
+    issue: 1590
+    message: "list shows every window, delete forgets one"
+    accent: "forgets one"
+    terminal:
+      steps:
+        - comment: "The same columns as get"
+          run: "nereus usage list"
+          output: |-
+            WINDOW  USED  RESETS           FORECAST  PACE    TODAY  READ
+            weekly  75%   Mon 16/11 01:00  91%       steady  ≤79%   Sat 19:06
+        - comment: "The window and its reading"
+          run: "nereus usage delete weekly"
+          output: |-
+            usage/windows/weekly deleted
+
+            Next steps:
+
+              nereus usage list
+    dependsOn: [usage-report]
+    notes: |-
+      **`list` takes `--output` and `--sort-by`** (a path into each window, such as `.resetsAt`), as every list does.
+    pt:
+      topic: "usage list e delete"
+      message: "O list mostra todas as janelas, o delete esquece uma"
+      accent: "esquece uma"
+      notes: |-
+        **O `list` aceita `--output` e `--sort-by`** (um caminho em cada janela, como `.resetsAt`), como todo list.

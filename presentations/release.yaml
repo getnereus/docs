@@ -1,0 +1,551 @@
+deck:
+  name: release
+  title: "The release reef"
+  subtitle: "From a chart repository to a running release, step by step"
+  accent: "step by step"
+  pt:
+    title: "O reef release"
+    subtitle: "De um repositório de charts até uma release rodando, passo a passo"
+    accent: "passo a passo"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: model
+    title: "The reef"
+    question: "Which questions does a release answer?"
+    pt: {title: "O reef", question: "Que perguntas uma release responde?"}
+  - name: install
+    title: "Step by step"
+    question: "What does a person type to run a chart?"
+    pt: {title: "Passo a passo", question: "O que uma pessoa digita para rodar um chart?"}
+  - name: hood
+    title: "Under the hood"
+    question: "What does the Nereid write, and what can change?"
+    pt: {title: "Por baixo", question: "O que o Nereid escreve, e o que pode mudar?"}
+
+references:
+  - name: flux
+    title: "Flux: the GitOps family of projects"
+    author: "The Flux project (CNCF)"
+    url: "https://fluxcd.io/flux/components/helm/"
+    about: "Flux keeps a cluster in sync with sources of configuration; its helm-controller reconciles HelmRelease objects from charts that its source-controller fetches."
+    forUs: "The `flux` Nereid writes a **HelmRepository** for each Repository and a **HelmRelease** for each Release, and copies Flux's Ready condition back, with a reason the reef's contract declares."
+    pt:
+      about: "O Flux mantém um cluster em sincronia com fontes de configuração; o seu helm-controller reconcilia objetos HelmRelease a partir de charts que o source-controller busca."
+      forUs: "O Nereid `flux` escreve um **HelmRepository** para cada Repository e um **HelmRelease** para cada Release, e copia de volta a condition Ready do Flux, com um reason que o contrato do reef declara."
+  - name: helm
+    title: "Helm: the package manager for Kubernetes"
+    author: "The Helm project (CNCF)"
+    url: "https://helm.sh/docs/"
+    about: "Helm packages Kubernetes applications as charts, versioned and configured by values."
+    forUs: "A **Source** is a chart at a version; a **Release** is that chart running in a Target, with its values."
+    pt:
+      about: "O Helm empacota aplicações Kubernetes como charts, versionados e configurados por values."
+      forUs: "Um **Source** é um chart numa versão; uma **Release** é esse chart rodando num Target, com os seus values."
+  - name: keycloakx
+    title: "The keycloakx chart"
+    author: "codecentric helm-charts"
+    url: "https://github.com/codecentric/helm-charts/tree/master/charts/keycloakx"
+    about: "A community Helm chart that runs the Quarkus distribution of Keycloak."
+    forUs: "The chart of the examples: Nereus runs its own Keycloak as a Release of `keycloakx` 7.0.1."
+    pt:
+      about: "Um Helm chart da comunidade que roda a distribuição Quarkus do Keycloak."
+      forUs: "O chart dos exemplos: o Nereus roda o próprio Keycloak como uma Release de `keycloakx` 7.0.1."
+  - name: phillips
+    title: "How to avoid death by PowerPoint"
+    author: "David JP Phillips"
+    year: 2014
+    url: "https://www.youtube.com/watch?v=Iwpi1Lm6dFo"
+    about: "A talk on slides that help an audience: one message per slide, few objects, size and contrast that lead the eye."
+    forUs: "The style of this deck: **one moment per slide**, at most two items, the notes for what is said."
+    pt:
+      about: "Uma palestra sobre slides que ajudam a plateia: uma mensagem por slide, poucos objetos, tamanho e contraste que guiam o olhar."
+      forUs: "O estilo deste deck: **um momento por slide**, no máximo dois itens, as notas para o que é falado."
+
+slides:
+  # ── Opening ─────────────────────────────────────────
+  - name: title
+    act: opening
+    cover: true
+    message: "Nine commands take a Helm chart from its repository to a running release"
+    refs: [phillips]
+    notes: |-
+      What we want to say: **a person names the reef, never the tool**. The {reef:release} reef runs a Helm chart without tying Nereus to Flux, Argo CD or plain Helm.
+
+      **Route:** the four kinds of the reef, the nine commands with Flux, what the Nereid writes underneath, and how the tool can change.
+
+      Source: docs/guides/reefs/release.md.
+    pt:
+      message: "Nove comandos levam um Helm chart do seu repositório a uma release rodando"
+      notes: |-
+        O que queremos dizer: **a pessoa nomeia o reef, nunca a ferramenta**. O reef {reef:release} roda um Helm chart sem amarrar o Nereus ao Flux, ao Argo CD ou ao Helm puro.
+
+        **Roteiro:** os quatro kinds do reef, os nove comandos com o Flux, o que o Nereid escreve por baixo e como a ferramenta pode mudar.
+
+        Fonte: docs/guides/reefs/release.md.
+
+  # ── The reef ────────────────────────────────────────
+  - name: kinds-where-what
+    act: model
+    topic: "Four kinds · 1/2"
+    message: "The {reef:release} reef splits a release into four questions, each one a kind"
+    accent: "four questions"
+    heading: "release.getnereus.dev/v1alpha1"
+    screen: ["**Repository:** where it comes from (http, oci or git)", "**Source:** what, a chart of a repository at a version"]
+    refs: [helm]
+    notes: |-
+      What we want to say: **each kind answers one question**, so each can change on its own.
+
+      A Repository is a Helm repository (`http`), an OCI (Open Container Initiative) registry (`oci`) or Git (`git`). A Source is one chart of a repository at a version.
+
+      Source: docs/guides/reefs/release.md, #445.
+    pt:
+      topic: "Quatro kinds · 1/2"
+      heading: "release.getnereus.dev/v1alpha1"
+      message: "O reef {reef:release} divide uma release em quatro perguntas, cada uma um kind"
+      accent: "quatro perguntas"
+      screen: ["**Repository:** de onde vem (http, oci ou git)", "**Source:** o quê, um chart de um repositório numa versão"]
+      notes: |-
+        O que queremos dizer: **cada kind responde uma pergunta**, então cada um pode mudar sozinho.
+
+        Um Repository é um repositório Helm (`http`), um registry OCI (Open Container Initiative, `oci`) ou Git (`git`). Um Source é um chart de um repositório numa versão.
+
+        Fonte: docs/guides/reefs/release.md, #445.
+
+  - name: kinds-target-release
+    act: model
+    topic: "Four kinds · 2/2"
+    message: "A Release is a Source running in a Target, with its values"
+    accent: "running"
+    heading: "release.getnereus.dev/v1alpha1"
+    screen: ["**Target:** where to, a namespace of an environment", "**Release:** the Source running in the Target"]
+    dependsOn: [kinds-where-what]
+    notes: |-
+      What we want to say: **the Release is the only kind that runs something**; the other three describe it.
+
+      Until the environment reef exists, every Target is the cluster Nereus runs in, and the Nereid says so in the Target's status.
+
+      Source: docs/guides/reefs/release.md.
+    pt:
+      topic: "Quatro kinds · 2/2"
+      heading: "release.getnereus.dev/v1alpha1"
+      message: "Uma Release é um Source rodando num Target, com os seus values"
+      accent: "rodando"
+      screen: ["**Target:** para onde, um namespace de um environment", "**Release:** o Source rodando no Target"]
+      notes: |-
+        O que queremos dizer: **a Release é o único kind que roda algo**; os outros três a descrevem.
+
+        Enquanto o reef environment não existe, todo Target é o cluster onde o Nereus roda, e o Nereid diz isso no status do Target.
+
+        Fonte: docs/guides/reefs/release.md.
+
+  # ── Step by step ────────────────────────────────────
+  - name: apply-reef
+    act: install
+    topic: "1 · The reef"
+    message: "One command applies the {reef:release} reef, and the CLI gains its commands"
+    accent: "One command"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "Apply the release reef"
+          run: "nereus reef apply release"
+          output: |-
+            ✓ core/reefs/release 0.1.0 created (release.getnereus.dev/v1alpha1: releases, repositories, sources, targets)
+
+            Next steps:
+
+              nereus release --help
+              nereus nereid apply <nereid> --reef release
+    notes: |-
+      What we want to say: **the reef comes first, with no tool behind it**. The CLI gains the command group `nereus release`, which says so while no Nereid looks after it.
+
+      Source: docs/guides/reefs/release.md.
+    pt:
+      topic: "1 · O reef"
+      message: "Um comando aplica o reef {reef:release}, e a CLI ganha os seus comandos"
+      accent: "Um comando"
+      notes: |-
+        O que queremos dizer: **o reef vem primeiro, sem ferramenta por trás**. A CLI ganha o grupo de comandos `nereus release`, que avisa isso enquanto nenhum Nereid cuida dele.
+
+        Fonte: docs/guides/reefs/release.md.
+
+  - name: apply-nereid
+    act: install
+    topic: "2 · The Nereid"
+    message: "The {nereid:flux} Nereid installs Flux first, pinned by version and digest"
+    accent: "first"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "Apply the flux Nereid to the release reef"
+          run: "nereus nereid apply flux"
+          options: ["--reef release"]
+          output: |-
+            ✓ core/nereids/flux created, Ready, pinned to sha256:e8731e3fb833: see 'nereus release --help'
+              flux/v2.9.6 created (source-controller, helm-controller in namespace flux-system)
+
+            Next steps:
+
+              nereus mandate create flux --reef release --nereid flux --default
+    dependsOn: [apply-reef]
+    refs: [flux]
+    notes: |-
+      What we want to say: **only the two controllers the reef uses**: source-controller and helm-controller, from Flux's `install.yaml` of the version the CLI pins, refused unless its digest is the pinned one.
+
+      Applying it again changes nothing. Who upgrades Flux is still open: #449 (decide who upgrades Flux, the Tool the flux Nereid installs).
+
+      Source: docs/guides/reefs/release.md.
+    pt:
+      topic: "2 · O Nereid"
+      message: "O Nereid {nereid:flux} instala o Flux primeiro, fixado por versão e digest"
+      accent: "primeiro"
+      notes: |-
+        O que queremos dizer: **só os dois controllers que o reef usa**: source-controller e helm-controller, do `install.yaml` do Flux na versão que a CLI fixa, recusado se o digest não for o fixado.
+
+        Aplicar de novo não muda nada. Quem atualiza o Flux ainda está aberto: #449 (decidir quem atualiza o Flux, a Tool que o Nereid flux instala).
+
+        Fonte: docs/guides/reefs/release.md.
+
+  - name: create-mandate
+    act: install
+    topic: "3 · The Mandate"
+    message: "A {mandate:Mandate} makes {nereid:flux} the default Nereid of the {reef:release} reef"
+    accent: "default"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "Bind the release reef to the flux Nereid, as the default"
+          run: "nereus mandate create flux"
+          options: ["--reef release", "--nereid flux", "--default"]
+          output: |-
+            ✓ core/mandates/flux created (reef: release, nereid: flux, default)
+              clusterrole/controller-flux configured (nereid flux writes the status of mandate flux)
+
+            Next steps:
+
+              nereus release repository create <name> --url <url>
+    dependsOn: [apply-nereid]
+    notes: |-
+      What we want to say: **the admin decides which Nereid serves the reef**, never the person who asks for a release.
+
+      The Mandate binds one reef to one Nereid; the default one serves every Release that names none.
+
+      Source: docs/guides/reefs/release.md, ADR 0011 (reefs, Nereids and Mandates).
+    pt:
+      topic: "3 · O Mandate"
+      message: "Um {mandate:Mandate} faz do {nereid:flux} o Nereid padrão do reef {reef:release}"
+      accent: "padrão"
+      notes: |-
+        O que queremos dizer: **o admin decide qual Nereid atende o reef**, nunca quem pede uma release.
+
+        O Mandate liga um reef a um Nereid; o padrão atende toda Release que não nomeia nenhum.
+
+        Fonte: docs/guides/reefs/release.md, ADR 0011 (reefs, Nereids e Mandates).
+
+  - name: create-repository
+    act: install
+    topic: "4 · Repository"
+    message: "A Repository says where the chart comes from"
+    accent: "where"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "Where the chart comes from"
+          run: "nereus release repository create codecentric"
+          options: ["--url https://codecentric.github.io/helm-charts", "--type http"]
+          output: |-
+            ✓ release/repositories/codecentric created
+            NAME         TYPE  URL                                        READY
+            codecentric  http  https://codecentric.github.io/helm-charts  True
+
+            Next steps:
+
+              nereus release source create <name> --repository codecentric --chart <chart> --version <version>
+    dependsOn: [create-mandate]
+    refs: [keycloakx]
+    notes: |-
+      What we want to say: **a private registry is one option more**: `--type oci` and `--secret <secret>`, a {secret:secret} of the secrets reef.
+
+      Source: docs/guides/reefs/release.md.
+    pt:
+      topic: "4 · Repository"
+      message: "Um Repository diz de onde o chart vem"
+      accent: "de onde"
+      notes: |-
+        O que queremos dizer: **um registry privado é só mais uma opção**: `--type oci` e `--secret <secret>`, um {secret:secret} do reef secrets.
+
+        Fonte: docs/guides/reefs/release.md.
+
+  - name: create-source
+    act: install
+    topic: "5 · Source"
+    message: "A Source says what: one chart at one version"
+    accent: "what"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "What: the chart and its version"
+          run: "nereus release source create keycloak"
+          options: ["--repository codecentric", "--chart keycloakx", "--version 7.0.1"]
+          output: |-
+            ✓ release/sources/keycloak created
+            NAME      REPOSITORY   CHART      VERSION  DIGEST  READY
+            keycloak  codecentric  keycloakx  7.0.1    -       True
+
+            Next steps:
+
+              nereus release target create <name> --namespace <namespace>
+    dependsOn: [create-repository]
+    notes: |-
+      What we want to say: **the version is pinned in the Source**, so every Release of it runs the same chart.
+
+      Source: docs/guides/reefs/release.md.
+    pt:
+      topic: "5 · Source"
+      message: "Um Source diz o quê: um chart numa versão"
+      accent: "o quê"
+      notes: |-
+        O que queremos dizer: **a versão fica fixada no Source**, então toda Release dele roda o mesmo chart.
+
+        Fonte: docs/guides/reefs/release.md.
+
+  - name: create-target
+    act: install
+    topic: "6 · Target"
+    message: "A Target says where to: a namespace of an environment"
+    accent: "where to"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "Where to: the environment and the namespace"
+          run: "nereus release target create dev-identity"
+          options: ["--environment dev", "--namespace identity"]
+          output: |-
+            ✓ release/targets/dev-identity created
+            NAME          ENVIRONMENT  NAMESPACE  READY
+            dev-identity  dev          identity   True
+
+            Next steps:
+
+              nereus release create <name> --source <source> --target dev-identity
+    dependsOn: [create-source]
+    notes: |-
+      What we want to say: **`--environment` is optional**. Until the environment reef exists, every Target is the cluster Nereus runs in, and the Nereid says so in the Target's status.
+
+      Source: docs/guides/reefs/release.md.
+    pt:
+      topic: "6 · Target"
+      message: "Um Target diz para onde: um namespace de um environment"
+      accent: "para onde"
+      notes: |-
+        O que queremos dizer: **`--environment` é opcional**. Enquanto o reef environment não existe, todo Target é o cluster onde o Nereus roda, e o Nereid diz isso no status do Target.
+
+        Fonte: docs/guides/reefs/release.md.
+
+  - name: values
+    act: install
+    topic: "7 · Values"
+    message: "The chart's values stay in a file of the person's own"
+    accent: "own"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "The values of the keycloakx chart"
+          run: "cat keycloak-values.yaml"
+          output: |-
+            replicas: 1
+            fullnameOverride: keycloak
+            command: ["/opt/keycloak/bin/kc.sh", "start-dev"]
+            cache:
+              stack: custom
+    dependsOn: [create-target]
+    notes: |-
+      What we want to say: **values are Helm's own**, untouched by Nereus.
+
+      Dev mode keeps its cache local, and the chart's default cache stack needs a DNS (Domain Name System) query for a cluster of pods, hence `cache.stack: custom`.
+
+      Source: docs/guides/reefs/release.md.
+    pt:
+      topic: "7 · Values"
+      message: "Os values do chart ficam num arquivo da própria pessoa"
+      accent: "própria"
+      notes: |-
+        O que queremos dizer: **os values são os do próprio Helm**, intocados pelo Nereus.
+
+        O dev mode guarda o cache localmente, e a pilha de cache padrão do chart precisa de uma consulta DNS (Domain Name System) para um cluster de pods, daí o `cache.stack: custom`.
+
+        Fonte: docs/guides/reefs/release.md.
+
+  - name: create-release
+    act: install
+    topic: "8 · Release"
+    message: "The Release runs the Source in the Target, through the {mandate:flux} Mandate"
+    accent: "runs"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "Run the chart in the target, with its values"
+          run: "nereus release create keycloak"
+          options: ["--source keycloak", "--target dev-identity", "--values-file keycloak-values.yaml", "--mandate flux"]
+          output: |-
+            ✓ release/releases/keycloak created (nereid: flux)
+
+            Next steps:
+
+              nereus release get keycloak --watch
+    dependsOn: [values]
+    notes: |-
+      What we want to say: **`nereus release create` is `nereus release release create`**: a kind named after its reef takes the reef's own verbs.
+
+      `--mandate` is optional: without it, the Release goes through the reef's default Mandate.
+
+      Source: docs/guides/reefs/release.md.
+    pt:
+      topic: "8 · Release"
+      message: "A Release roda o Source no Target, pelo Mandate {mandate:flux}"
+      accent: "roda"
+      notes: |-
+        O que queremos dizer: **`nereus release create` é `nereus release release create`**: um kind com o nome do reef usa os verbos do próprio reef.
+
+        `--mandate` é opcional: sem ele, a Release passa pelo Mandate padrão do reef.
+
+        Fonte: docs/guides/reefs/release.md.
+
+  - name: watch-release
+    act: install
+    topic: "9 · Watch"
+    message: "The status flows back from Flux until the Release is Ready"
+    accent: "Ready"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "Watch the release until the Nereid is done"
+          run: "nereus release get keycloak"
+          options: ["--watch"]
+          output: |-
+            NAME      SOURCE    TARGET        VERSION  NEREID  STATUS
+            keycloak  keycloak  dev-identity  7.0.1    flux    Pending
+            keycloak  keycloak  dev-identity  7.0.1    flux    Progressing
+            keycloak  keycloak  dev-identity  7.0.1    flux    Ready
+    dependsOn: [create-release]
+    notes: |-
+      What we want to say: **one writer per field**: the person writes the spec, the Nereid of the Mandate writes the status (ADR 0005, one writer per field).
+
+      The phase is Pending, Progressing, Ready or Failed; Failed only once Flux stops retrying.
+
+      Source: docs/guides/reefs/release.md.
+    pt:
+      topic: "9 · Acompanhar"
+      message: "O status volta do Flux até a Release ficar Ready"
+      accent: "Ready"
+      notes: |-
+        O que queremos dizer: **um escritor por campo**: a pessoa escreve o spec, o Nereid do Mandate escreve o status (ADR 0005, um escritor por campo).
+
+        A fase é Pending, Progressing, Ready ou Failed; Failed só quando o Flux para de tentar.
+
+        Fonte: docs/guides/reefs/release.md.
+
+  # ── Under the hood ──────────────────────────────────
+  - name: helmrelease
+    act: hood
+    topic: "Flux's objects"
+    message: "The {nereid:flux} Nereid writes a HelmRelease that the Release owns"
+    accent: "owns"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "The HelmRelease the flux Nereid wrote (abridged)"
+          run: "kubectl get helmrelease keycloak"
+          options: ["--namespace nereus-system", "--output yaml"]
+          output: |-
+            kind: HelmRelease
+            metadata:
+              ownerReferences:
+                - kind: Release
+                  name: keycloak
+            spec:
+              chart:
+                spec: {chart: keycloakx, version: "7.0.1"}
+              targetNamespace: identity
+              values:
+                replicas: 1
+    dependsOn: [watch-release]
+    refs: [flux]
+    notes: |-
+      What we want to say: **two objects for the same thing, on purpose**: the one people own and the one the Nereid makes, so Flux can be swapped without changing the first.
+
+      A Repository becomes a Flux HelmRepository, a Release a Flux HelmRelease, both in `nereus-system` and owned by the Nereus object.
+
+      Source: docs/guides/reefs/release.md, controllers/flux/flux.py.
+    pt:
+      topic: "Os objetos do Flux"
+      message: "O Nereid {nereid:flux} escreve um HelmRelease que pertence à Release"
+      accent: "pertence"
+      notes: |-
+        O que queremos dizer: **dois objetos para a mesma coisa, de propósito**: o que as pessoas possuem e o que o Nereid faz, para o Flux poder ser trocado sem mudar o primeiro.
+
+        Um Repository vira um HelmRepository do Flux, uma Release um HelmRelease do Flux, os dois em `nereus-system` e pertencentes ao objeto do Nereus.
+
+        Fonte: docs/guides/reefs/release.md, controllers/flux/flux.py.
+
+  - name: swap
+    act: hood
+    topic: "Another tool"
+    message: "Argo CD would be another Nereid and another Mandate, and the commands stay the same"
+    accent: "the same"
+    screen: ["**Changes:** the {nereid:Nereid} and its {mandate:Mandate}", "**Stays:** every `nereus release` command"]
+    dependsOn: [helmrelease]
+    notes: |-
+      What we want to say: **swapping the tool changes no command**, and CI checks it: `cli/tests/test_swap.py` compares the commands with one Nereid of the release reef and then another (#124, swapping a Nereid changes no command).
+
+      An Argo CD Nereid does not exist yet: this slide is the contract, not a recording.
+
+      Source: cli/tests/test_swap.py.
+    pt:
+      topic: "Outra ferramenta"
+      message: "Argo CD seria outro Nereid e outro Mandate, e os comandos continuam os mesmos"
+      accent: "os mesmos"
+      screen: ["**Muda:** o {nereid:Nereid} e o seu {mandate:Mandate}", "**Fica:** todo comando `nereus release`"]
+      notes: |-
+        O que queremos dizer: **trocar a ferramenta não muda nenhum comando**, e o CI confere: `cli/tests/test_swap.py` compara os comandos com um Nereid do reef release e depois com outro (#124, trocar um Nereid não muda nenhum comando).
+
+        Um Nereid de Argo CD ainda não existe: este slide é o contrato, não uma gravação.
+
+        Fonte: cli/tests/test_swap.py.
+
+  - name: delete-release
+    act: hood
+    topic: "Clean up"
+    message: "Deleting the Release deletes the HelmRelease, and Flux uninstalls the chart"
+    accent: "uninstalls"
+    terminal:
+      cwd: "~/example"
+      steps:
+        - comment: "Delete the release"
+          run: "nereus release delete keycloak"
+          output: |-
+            ✓ release/releases/keycloak deleted
+
+            Next steps:
+
+              nereus release list
+    dependsOn: [helmrelease]
+    notes: |-
+      What we want to say: **ownership does the clean up**: the HelmRelease is owned by the Release, so Kubernetes deletes it, and Flux uninstalls the chart.
+
+      `delete` is refused while another object names the one deleted: a Source used by a Release stays until the Release goes.
+
+      Source: docs/guides/reefs/release.md.
+    pt:
+      topic: "Limpeza"
+      message: "Apagar a Release apaga o HelmRelease, e o Flux desinstala o chart"
+      accent: "desinstala"
+      notes: |-
+        O que queremos dizer: **o ownership faz a limpeza**: o HelmRelease pertence à Release, então o Kubernetes o apaga, e o Flux desinstala o chart.
+
+        `delete` é recusado enquanto outro objeto nomeia o apagado: um Source usado por uma Release fica até a Release sair.
+
+        Fonte: docs/guides/reefs/release.md.

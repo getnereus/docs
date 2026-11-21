@@ -1,0 +1,331 @@
+deck:
+  name: authentication
+  title: "The authentication reef"
+  subtitle: "Who the person is, and who the platform is towards the systems it acts on"
+  accent: "who the platform is"
+  pt:
+    title: "O reef authentication"
+    subtitle: "Quem a pessoa é, e quem a plataforma é perante os sistemas em que age"
+    accent: "quem a plataforma é"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: session
+    title: "Session"
+    question: "How does a person log in from the terminal, and log out?"
+    pt: {title: "Sessão", question: "Como uma pessoa entra pelo terminal, e sai?"}
+  - name: platform
+    title: "The platform"
+    question: "How does the platform prove who it is to GitHub?"
+    pt: {title: "A plataforma", question: "Como a plataforma prova quem é para o GitHub?"}
+  - name: token
+    title: "Token"
+    question: "How does a Nereid read one private repository?"
+    pt: {title: "Token", question: "Como um Nereid lê um repositório privado?"}
+
+slides:
+  - name: cover
+    act: opening
+    cover: true
+    message: "The authentication reef"
+    notes: |-
+      **The source of truth for the commands of the authentication reef** (#477). `nereus login` and `nereus logout` are the reef's shortcut at the top of the CLI that ADR 0013 (command conventions) allows, built by the CLI itself (`cli/src/nereus/commands/login.py`, #605 (nereus login and logout)), a port of `wasp-idp`'s login. `nereus whoami` asks the Nereus API (#607, its `GET /v1/me`): the API, not the local token, says who you are.
+
+      **Nothing is fixed in the code:** the issuer and the CLI's client come from the reef's default Mandate, `status.oidc.issuer` and `status.oidc.cliClientId` (ADR 0006, the contract every authentication Nereid writes), and the endpoints from the issuer's discovery document. The tokens live in `~/.config/nereus/credentials` (0600) with the client that issued them, and are never printed.
+
+      **The platform has an identity too** (ADR 0006, rewritten 2026-11-09, #234): a GitHub App is a Mandate of the `github` Nereid (#1273), created in the browser by a Nereid action (#1275), and a consumer gets a short-lived installation token as a `Token`, the reef's first kind (#1274), built. The browser's slides are planned.
+    pt:
+      message: "O reef authentication"
+      notes: |-
+        **A fonte da verdade dos comandos do reef authentication** (#477). `nereus login` e `nereus logout` são o atalho do reef no topo do CLI que o ADR 0013 (convenções de comando) permite, construídos pelo próprio CLI (`cli/src/nereus/commands/login.py`, #605 (nereus login e logout)), um port do login do `wasp-idp`. O `nereus whoami` pergunta à API do Nereus (#607, o seu `GET /v1/me`): a API, não o token local, diz quem você é.
+
+        **Nada fica fixo no código:** o issuer e o client do CLI vêm do Mandate padrão do reef, `status.oidc.issuer` e `status.oidc.cliClientId` (ADR 0006, o contrato que toda Nereid de autenticação escreve), e os endpoints do documento de discovery do issuer. Os tokens ficam em `~/.config/nereus/credentials` (0600) com o client que os emitiu, e nunca são impressos.
+
+        **A plataforma também tem uma identidade** (ADR 0006, reescrito em 2026-11-09, #234): um GitHub App é um Mandate do Nereid `github` (#1273), criado no navegador por uma ação do Nereid (#1275), e um consumidor recebe um token de instalação de vida curta como um `Token`, o primeiro kind do reef (#1274), já construído. Os slides do navegador estão planejados.
+
+  - name: login
+    act: session
+    topic: "login"
+    status: built
+    message: "The browser opens, and the login comes back to the terminal"
+    accent: "comes back to the terminal"
+    terminal:
+      steps:
+        - comment: "Authorization code with PKCE, on a listener of 127.0.0.1"
+          run: "nereus login"
+          output: |-
+            Opening https://auth.example.com/realms/nereus/protocol/openid-connect/auth?... in the browser.
+            logged in as ana-silva (nereus-users), issuer https://auth.example.com/realms/nereus
+
+            Next steps:
+
+              nereus whoami
+              https://auth.example.com/realms/nereus/account/account-security/signing-in   (set a password, optional)
+    notes: |-
+      **Authorization code with PKCE (S256):** the CLI listens on a random port of `127.0.0.1`, opens the browser at the identity provider and prints the URL too, for a browser that does not open. The code comes back to the listener, which checks the `state` and refuses another `Host` (DNS rebinding); the CLI trades it for the tokens with the verifier.
+
+      **The sign-in pages speak the person's language:** the CLI forwards `ui_locales` from `locale` in the config, else from the terminal's (`LANG=pt_BR.UTF-8` is `pt-BR`).
+
+      **The line names the username and the groups the tokens carry**, a courtesy, never a decision. The username is the one the person chose on their first login, whatever they signed in with (#1163); a person who signed up with Google may set a password too, in the account console the next step names.
+    pt:
+      topic: "login"
+      message: "O navegador abre, e o login volta para o terminal"
+      accent: "volta para o terminal"
+      notes: |-
+        **Authorization code com PKCE (S256):** o CLI escuta numa porta aleatória de `127.0.0.1`, abre o navegador no provedor de identidade e imprime a URL também, para um navegador que não abre. O código volta para o listener, que confere o `state` e recusa outro `Host` (DNS rebinding); o CLI o troca pelos tokens com o verifier.
+
+        **As páginas de login falam a língua da pessoa:** o CLI repassa `ui_locales` a partir do `locale` da config, senão do terminal (`LANG=pt_BR.UTF-8` é `pt-BR`).
+
+        **A linha nomeia o username e os grupos que os tokens trazem**, uma cortesia, nunca uma decisão. O username é o que a pessoa escolheu no primeiro login, seja qual for a conta com que entra (#1163); quem entrou pelo Google também pode definir uma senha, no account console que o próximo passo indica.
+
+  - name: login-device
+    act: session
+    topic: "--use-device-code"
+    status: built
+    message: "A machine with no browser logs in from another device"
+    accent: "from another device"
+    terminal:
+      steps:
+        - comment: "The device grant: open the page elsewhere and type the code"
+          run: "nereus login"
+          options: ["--use-device-code"]
+          output: |-
+            Open https://auth.example.com/realms/nereus/device and enter ABCD-EFGH (expires in 10 minutes).
+            logged in as ana-silva (nereus-users), issuer https://auth.example.com/realms/nereus
+
+            Next steps:
+
+              nereus whoami
+              https://auth.example.com/realms/nereus/account/account-security/signing-in   (set a password, optional)
+    notes: |-
+      **The device grant (RFC 8628)**, for SSH sessions and containers: the person opens the page on any device and types the code the terminal shows, which is the check that the browser confirms this terminal. The CLI polls the identity provider, waits five seconds more at each `slow_down`, and stops when the code expires.
+    pt:
+      topic: "--use-device-code"
+      message: "Uma máquina sem navegador entra por outro dispositivo"
+      accent: "por outro dispositivo"
+      notes: |-
+        **O device grant (RFC 8628)**, para sessões SSH e containers: a pessoa abre a página em qualquer dispositivo e digita o código que o terminal mostra, que é a prova de que o navegador confirma este terminal. O CLI consulta o provedor de identidade, espera cinco segundos a mais a cada `slow_down`, e para quando o código expira.
+
+  - name: login-initial-admin
+    act: session
+    topic: "--initial-admin"
+    status: built
+    message: "A new instance has one obvious way in: its initial admin"
+    accent: "its initial admin"
+    terminal:
+      steps:
+        - comment: "The password goes to the clipboard, never to the terminal"
+          run: "nereus login"
+          options: ["--initial-admin"]
+          output: |-
+            The initial admin's password is in your clipboard (user nereus). Paste it on the login page.
+            Opening https://auth.example.com/realms/nereus/protocol/openid-connect/auth?... in the browser.
+            logged in as nereus (nereus-admins), issuer https://auth.example.com/realms/nereus
+
+            Next steps:
+
+              nereus whoami
+              https://auth.example.com/realms/nereus/account/account-security/signing-in   (set a password, optional)
+    notes: |-
+      **The initial admin (#1932)**: before the authentication reef the kubeconfig is the administrator; once it is installed, the realm's user `nereus`, in `nereus-admins`, is the instance's initial admin, and `nereus init` ends naming it. `--initial-admin` reads its password from the Secret `keycloak-user` of `nereus-system` with the person's kubeconfig and copies it with `wl-copy`, `xclip` or `pbcopy`, through the tool's stdin; with none of them it names the Secret and the `kubectl` line that reads it. The value is never printed. The login page always asks, `nereus` filled in, even with another session open in the realm (`prompt=login`, `login_hint`, #1995), and `nereus whoami` asks no User for it.
+    pt:
+      topic: "--initial-admin"
+      message: "Uma instância nova tem uma entrada óbvia: o seu admin inicial"
+      accent: "o seu admin inicial"
+      notes: |-
+        **O admin inicial (#1932)**: antes do reef de autenticação o kubeconfig é o administrador; depois dele, o usuário `nereus` do realm, em `nereus-admins`, é o admin inicial da instância, e o `nereus init` termina nomeando-o. `--initial-admin` lê a senha do Secret `keycloak-user` de `nereus-system` com o kubeconfig da pessoa e a copia com `wl-copy`, `xclip` ou `pbcopy`, pelo stdin da ferramenta; sem nenhum deles, nomeia o Secret e a linha `kubectl` que a lê. O valor nunca é impresso. A página de login sempre pede, com `nereus` preenchido, mesmo com outra sessão aberta no realm (`prompt=login`, `login_hint`, #1995), e o `nereus whoami` não pede User para ele.
+
+  - name: login-refresh
+    act: session
+    topic: "--refresh"
+    status: built
+    message: "A new token without the browser, with the groups read again"
+    accent: "without the browser"
+    terminal:
+      steps:
+        - comment: "Renew the session, so a group joined since the last login shows"
+          run: "nereus login"
+          options: ["--refresh"]
+          output: |-
+            token refreshed for ana-silva, valid until 14:05
+    dependsOn: [login]
+    notes: |-
+      **The refresh goes to the issuer and the client that issued the tokens**, kept with them in the credentials file, so it needs no cluster. Every command that uses the token renews it by itself when less than 60 s remain.
+    pt:
+      topic: "--refresh"
+      message: "Um token novo sem o navegador, com os grupos lidos de novo"
+      accent: "sem o navegador"
+      notes: |-
+        **O refresh vai para o issuer e o client que emitiram os tokens**, guardados com eles no arquivo de credenciais, então não precisa do cluster. Todo comando que usa o token o renova sozinho quando faltam menos de 60 s.
+
+  - name: logout
+    act: session
+    topic: "logout"
+    status: built
+    message: "Logging out ends the session at the identity provider too"
+    accent: "at the identity provider too"
+    terminal:
+      steps:
+        - comment: "Revoke the session, then delete the credentials"
+          run: "nereus logout"
+          output: |-
+            logged out nereus@example.com: session revoked, ~/.config/nereus/credentials deleted
+    dependsOn: [login]
+    notes: |-
+      **The refresh token is revoked at the issuer's revocation endpoint (RFC 7009)**, with the client that issued it, which ends the session there. When the identity provider cannot be reached, the credentials are deleted all the same and the line says `session not revoked`.
+    pt:
+      topic: "logout"
+      message: "Sair encerra a sessão no provedor de identidade também"
+      accent: "no provedor de identidade também"
+      notes: |-
+        **O refresh token é revogado no endpoint de revogação do issuer (RFC 7009)**, com o client que o emitiu, o que encerra a sessão lá. Quando o provedor de identidade não responde, as credenciais são apagadas do mesmo jeito e a linha diz `session not revoked`.
+
+  - name: whoami
+    act: session
+    topic: "whoami"
+    status: built
+    message: "The Nereus API says who you are"
+    accent: "says who you are"
+    terminal:
+      steps:
+        - comment: "GET /v1/me with the token of nereus login"
+          run: "nereus whoami"
+          output: |-
+            ana-silva (nereus-admins, nereus-users)
+        - comment: "The same answer for scripts and agents"
+          run: "nereus whoami"
+          options: ["--output json"]
+          output: |-
+            {"sub": "<sub8>", "email": "nereus@example.com", "groups": ["nereus-admins", "nereus-users"]}
+    dependsOn: [login]
+    notes: |-
+      **The answer comes from the Nereus API, never from the local token:** `nereus-api` runs in the cluster (`nereus init` installs it in `nereus-system`) and checks the token's signature against the default authentication Mandate's keys (`status.oidc.clusterJwksUrl`), its issuer and the audience `nereus-api`. The CLI reaches it through `kubectl port-forward`, or `NEREUS_API_URL` until the API has a public address (#577).
+
+      **An expired token, or one from another issuer, is refused** with `Not logged in` and the command to log in again.
+    pt:
+      topic: "whoami"
+      message: "A API do Nereus diz quem você é"
+      accent: "diz quem você é"
+      notes: |-
+        **A resposta vem da API do Nereus, nunca do token local:** a `nereus-api` roda no cluster (o `nereus init` a instala em `nereus-system`) e confere a assinatura do token com as chaves do Mandate padrão do reef authentication (`status.oidc.clusterJwksUrl`), o issuer e a audience `nereus-api`. O CLI chega nela por `kubectl port-forward`, ou por `NEREUS_API_URL` até a API ter um endereço público (#577).
+
+        **Um token expirado, ou de outro issuer, é recusado** com `Not logged in` e o comando para entrar de novo.
+
+  - name: app-mandate
+    act: platform
+    topic: "mandate"
+    message: "A GitHub App is a {mandate:Mandate} of the {nereid:github} Nereid"
+    accent: "is a {mandate:Mandate}"
+    screen:
+      - "**Create it:** [nereus mandate create](../core.html#mandate-create), with the App's id, its key and who may ask it a token"
+      - "**Read it:** [nereus mandate get](../core.html#mandate-get), what the App may do, as its Nereid wrote it"
+    notes: |-
+      **The Mandate's commands are core's, not the reef's** (#482): their slides moved to the core deck, with their outputs. No `--vendor` and no `Application` kind (owner, 2026-11-09): `github` appears only in `nereid apply` and `mandate create`, never in a reef's command.
+    pt:
+      topic: "mandate"
+      message: "Um GitHub App é um {mandate:Mandate} do Nereid {nereid:github}"
+      accent: "é um {mandate:Mandate}"
+      screen:
+        - "**Crie:** [nereus mandate create](../core.html#mandate-create), com o id do App, a sua chave e quem pode lhe pedir um token"
+        - "**Leia:** [nereus mandate get](../core.html#mandate-get), o que o App pode fazer, como a sua Nereid o escreveu"
+      notes: |-
+        **Os comandos do Mandate são do core, não do reef** (#482): os seus slides foram para o deck do core, com as suas saídas. Sem `--vendor` e sem kind `Application` (dono, 2026-11-09): `github` aparece só no `nereid apply` e no `mandate create`, nunca num comando de reef.
+
+  - name: app-register
+    act: platform
+    topic: "app-register"
+    status: built
+    issue: 1291
+    message: "With no App yet, the Nereid creates it in the browser"
+    accent: "in the browser"
+    terminal:
+      steps:
+        - comment: "An action the github Nereid publishes under the reef"
+          run: "nereus authentication app-register"
+          options: ["--mandate team", "--org example-team"]
+          output: |-
+            → opening the browser to create the GitHub App "nereus-prod"
+            ✓ secrets/team-app-key stored by the Nereid (the key never reaches this machine)
+            ✓ secrets/team-webhook-secret and secrets/team-oauth-client stored by the Nereid
+            ✓ core/mandates/team configured (appId 900001, privateKey team-app-key, webhookSecret team-webhook-secret)
+
+            Next steps:
+
+              Install it on the org: https://github.com/apps/nereus-prod/installations/new
+              nereus mandate get team
+    dependsOn: [app-mandate]
+    notes: |-
+      **A Nereid action (ADR 0010, ADR 0004), not a flag of `mandate create`** (owner, 2026-11-09). The CLI opens GitHub's manifest form (named `nereus-<installation>` after this installation, or `--name`; private, `metadata` and `contents` read, the `push` event, the webhook active only with `--webhook-url`) and hands only the one-time `code` to the Nereid's `POST /run`; the Nereid converts it, seals the key, the webhook secret and the OAuth client into the vault `default`, so the key never passes through the person's machine, and answers with the App's id and the secrets' names; the CLI, as the person's client, writes them to the Mandate's `spec`, the same shape as an existing App's. The code is single-use and expires in ten minutes; a code GitHub refuses ends with GitHub's reason. Until the App exists, the Mandate reads `NotRegistered`, and `mandate create` suggests this command.
+    pt:
+      topic: "app-register"
+      message: "Sem App ainda, o Nereid o cria no navegador"
+      accent: "no navegador"
+      notes: |-
+        **Uma ação do Nereid (ADR 0010, ADR 0004), não uma flag do `mandate create`** (dono, 2026-11-09). O CLI abre o formulário de manifest do GitHub (com o nome `nereus-<installation>` desta instalação, ou `--name`; privado, leitura de `metadata` e `contents`, o evento `push`, o webhook ativo só com `--webhook-url`) e entrega só o `code` de uso único ao `POST /run` do Nereid; o Nereid o converte, sela a chave, o secret do webhook e o cliente OAuth no vault `default`, de modo que a chave nunca passa pela máquina da pessoa, e responde com o id do App e os nomes dos secrets; o CLI, como cliente da pessoa, os grava no `spec` do Mandate, o mesmo formato de um App que já existe. O code é de uso único e expira em dez minutos; um code que o GitHub recusa termina com o motivo do GitHub. Até o App existir, o Mandate fica `NotRegistered`, e o `mandate create` sugere este comando.
+
+  - name: token-create
+    act: token
+    topic: "token create"
+    status: built
+    issue: 1274
+    message: "A Token lends one repository for an hour"
+    accent: "for an hour"
+    terminal:
+      steps:
+        - comment: "A token to read one repository, from the default Mandate"
+          run: "nereus authentication token create catalog"
+          options: ["--repository example/app", "--permission contents=read"]
+          output: |-
+            ✓ authentication/tokens/catalog created (expires in 1h, mandate github)
+
+            Next steps:
+
+              nereus authentication token get catalog
+        - comment: "A namespace the Mandate's allow does not name: refused before GitHub is asked, with the line to add"
+          run: "nereus authentication token create outside"
+          options: ["--namespace team-a", "--repository example/app", "--permission contents=read"]
+          output: |-
+            ✗ authentication/tokens/outside created, with no token yet (NotPermitted: mandate github allows no token for namespace team-a on example/app: add --param allow=team-a:example/app:contents=read to it). See 'nereus authentication token get outside'
+    dependsOn: [app-mandate]
+    notes: |-
+      **A consumer never holds the App's key.** The Nereid of the Mandate mints an installation token for that one repository, no wider than what the App was granted nor than the Mandate's `allow` entry for the requester's namespace (#1287: outside it, `NotPermitted` with the line to add, never narrowed), writes it to a Secret in the requester's namespace and refreshes it before its hour ends. `--mandate` chooses another App; `--namespace` the requester's namespace, where the Nereid may create only the Secrets of its Tokens, and read none. The catalog Nereid is the first consumer (#904's `SourceUnreachable`); the build (#1070) and the publish copy (#1250) follow. A Nereid asks it through the API; a person rarely does.
+    pt:
+      topic: "token create"
+      message: "Um Token empresta um repositório por uma hora"
+      accent: "por uma hora"
+      notes: |-
+        **Um consumidor nunca guarda a chave do App.** O Nereid do Mandate emite um token de instalação para aquele repositório, sem passar do que o App recebeu nem da entrada do `allow` do Mandate para o namespace de quem pede (#1287: fora dela, `NotPermitted` com a linha a acrescentar, nunca estreitado), o escreve num Secret no namespace de quem pediu e o renova antes de a hora acabar. O `--mandate` escolhe outro App; o `--namespace`, o namespace de quem pede, onde o Nereid só pode criar os Secrets dos seus Tokens, e não lê nenhum. O Nereid catalog é o primeiro consumidor (o `SourceUnreachable` da #904); o build (#1070) e a cópia do publish (#1250) vêm depois. Um Nereid o pede pela API; uma pessoa raramente o faz.
+
+  - name: token-list
+    act: token
+    topic: "token list"
+    status: built
+    issue: 1274
+    message: "list shows each Token, never its value"
+    accent: "never its value"
+    terminal:
+      steps:
+        - comment: "Every Token"
+          run: "nereus authentication token list"
+          output: |-
+            TOKEN    REPOSITORY   PERMISSIONS    MANDATE  EXPIRES  STATUS
+            catalog  example/app  contents=read  github   1h       Ready
+        - comment: "Delete one, and its Secret goes with it"
+          run: "nereus authentication token delete catalog"
+          output: |-
+            ✓ authentication/tokens/catalog deleted
+
+            Next steps:
+
+              nereus authentication token list
+    dependsOn: [token-create]
+    notes: |-
+      **`get` shows the Secret that holds the token, never the token.** Deleting a `Token` deletes its Secret.
+    pt:
+      topic: "token list"
+      message: "O list mostra cada Token, nunca o seu valor"
+      accent: "nunca o seu valor"
+      notes: |-
+        **O `get` mostra o Secret que guarda o token, nunca o token.** Apagar um `Token` apaga o seu Secret.

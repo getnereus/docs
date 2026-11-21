@@ -1,0 +1,11 @@
+{
+  "name": "scene-registry-reef-helm",
+  "command": "test/scene-registry-reef --install helm",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 695,
+  "passed": 20,
+  "failure": null,
+  "commit": "f511146",
+  "started": "2026-11-08T21:22:38Z"
+}

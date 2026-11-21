@@ -1,0 +1,12 @@
+{
+  "name": "scene-idp",
+  "command": "test/scene-idp",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 752,
+  "passed": 42,
+  "failed": 0,
+  "failure": null,
+  "commit": "a4e8fcd6",
+  "started": "2026-11-14T23:10:50Z"
+}

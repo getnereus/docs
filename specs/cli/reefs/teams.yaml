@@ -1,0 +1,347 @@
+deck:
+  name: teams
+  title: "The teams reef"
+  subtitle: "Every command of the first slice: teams on the tenancy tree, their members and positions"
+  accent: "their members and positions"
+  pt:
+    title: "O reef teams"
+    subtitle: "Todos os comandos da primeira fatia: times na árvore de tenancy, os seus membros e posições"
+    accent: "os seus membros e posições"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: setup
+    title: "Setup"
+    question: "Where do teams live?"
+    pt: {title: "Preparação", question: "Onde ficam os times?"}
+  - name: people
+    title: "People"
+    question: "Who works with whom?"
+    pt: {title: "Pessoas", question: "Quem trabalha com quem?"}
+  - name: changes
+    title: "Changes"
+    question: "How does a team change?"
+    pt: {title: "Mudanças", question: "Como um time muda?"}
+
+slides:
+  - name: cover
+    act: opening
+    cover: true
+    message: "The teams reef"
+    notes: |-
+      **The source of truth for the commands of the teams reef** (#1646, the teams reef of the first slice of teams and authorization). Its kinds are `Team`, the default kind, and `Member`, in `teams.getnereus.dev/v1alpha1`, cluster-scoped; the Nereus API's routes are `/v1/teams/teams` and `/v1/teams/members`, and the commands `nereus teams create | apply | list | get | delete` and `nereus teams member create | apply | list | get | delete`.
+
+      **No Nereid serves this reef:** the Nereus API keeps its objects and their rules, as it keeps the tenancy tree (ADR 0015, tenancy: Organization and Project). The authorization reef reads the teams to grant roles (docs/specs/cli/reefs/authorization.html).
+    pt:
+      message: "O reef teams"
+      notes: |-
+        **A fonte da verdade dos comandos do reef teams** (#1646, o reef teams da primeira fatia de times e autorização). Os seus kinds são `Team`, o kind padrão, e `Member`, em `teams.getnereus.dev/v1alpha1`, no escopo do cluster; as rotas da Nereus API são `/v1/teams/teams` e `/v1/teams/members`, e os comandos `nereus teams create | apply | list | get | delete` e `nereus teams member create | apply | list | get | delete`.
+
+        **Nenhuma Nereid serve este reef:** a Nereus API guarda os seus objetos e as suas regras, como guarda a árvore de tenancy (ADR 0015, tenancy: Organization e Project). O reef authorization lê os times para conceder papéis (docs/specs/cli/reefs/authorization.html).
+
+  - name: reef-apply
+    act: setup
+    topic: "reef apply"
+    status: built
+    issue: 1646
+    message: "The {reef:teams} reef brings teams and members"
+    accent: "teams and members"
+    terminal:
+      steps:
+        - comment: "The kinds of the reef, with no Nereid"
+          run: "nereus reef apply teams"
+          output: |-
+            ✓ core/reefs/teams created (teams.getnereus.dev/v1alpha1: members, teams)
+
+            Next steps:
+
+              nereus teams --help
+    notes: |-
+      **Two kinds and their admission policies:** a team with no owner is refused, and so is a member whose name does not start with its team, even when written with kubectl.
+
+      **No profile holds it yet:** a profile installs one lane per Nereid, and this reef has none, so it is applied on its own.
+    pt:
+      topic: "reef apply"
+      message: "O reef {reef:teams} traz times e membros"
+      accent: "times e membros"
+      notes: |-
+        **Dois kinds e as suas políticas de admissão:** um time sem owner é recusado, e também um membro cujo nome não começa pelo seu time, mesmo escrito com kubectl.
+
+        **Nenhum profile o guarda ainda:** um profile instala uma faixa por Nereid, e este reef não tem nenhuma, então é aplicado sozinho.
+
+  - name: team-create
+    act: people
+    topic: "teams create"
+    status: built
+    issue: 1646
+    message: "A team sits on a node of the tenancy tree"
+    accent: "a node of the tenancy tree"
+    terminal:
+      steps:
+        - comment: "The team of the payments Project"
+          run: "nereus teams create payments"
+          options: ["--owner project/payments"]
+          output: |-
+            ✓ teams/teams/payments created
+
+            Next steps:
+
+              nereus teams member create <user> --team payments
+    dependsOn: [reef-apply]
+    notes: |-
+      **`Team` is the default kind of the `teams` reef**, so `nereus teams create` acts on it (ADR 0013, command conventions).
+
+      **The owner is a node of the tenancy tree** (ADR 0015, tenancy: Organization and Project): an Organization or a Project, which must exist. Teams do not nest in this slice; the tree is the hierarchy.
+    pt:
+      topic: "teams create"
+      message: "Um time fica em um nó da árvore de tenancy"
+      accent: "um nó da árvore de tenancy"
+      notes: |-
+        **`Team` é o kind padrão do reef `teams`**, então `nereus teams create` age sobre ele (ADR 0013, convenções de comando).
+
+        **O owner é um nó da árvore de tenancy** (ADR 0015, tenancy: Organization e Project): uma Organization ou um Project, que precisa existir. Times não se aninham nesta fatia; a árvore é a hierarquia.
+
+  - name: team-missing-owner
+    act: people
+    topic: "teams create"
+    status: built
+    issue: 1646
+    message: "A team whose owner does not exist is refused"
+    accent: "is refused"
+    terminal:
+      steps:
+        - comment: "No Project billing yet"
+          run: "nereus teams create billing"
+          options: ["--owner project/billing"]
+          output: |-
+            ✗ teams/teams/billing: its owner project/billing does not exist: see 'nereus tenancy project list'
+    dependsOn: [team-create]
+    notes: |-
+      **The API checks the owner before it writes:** the kind must be one of the tenancy tree's, and the node must exist. Nothing is written when either is missing.
+    pt:
+      topic: "teams create"
+      message: "Um time cujo owner não existe é recusado"
+      accent: "é recusado"
+      notes: |-
+        **A API verifica o owner antes de escrever:** o kind precisa ser um dos da árvore de tenancy, e o nó precisa existir. Nada é escrito quando um dos dois falta.
+
+  - name: member-lead
+    act: people
+    topic: "member create"
+    status: built
+    issue: 1646
+    message: "Ana joins as the tech lead: a position"
+    accent: "a position"
+    terminal:
+      steps:
+        - comment: "A member with a position"
+          run: "nereus teams member create ana"
+          options: ["--team payments", "--position tech-lead"]
+          output: |-
+            ✓ teams/teams/payments/members/ana created
+
+            Next steps:
+
+              nereus teams get payments
+    dependsOn: [team-create]
+    notes: |-
+      **A position is a free name on the member in this slice.** It grants nothing by itself: only a binding that names it does.
+
+      **A member of a team that does not exist is refused**, with the command that creates the team.
+    pt:
+      topic: "member create"
+      message: "A Ana entra como tech lead: uma posição"
+      accent: "uma posição"
+      notes: |-
+        **Uma posição é um nome livre no membro nesta fatia.** Sozinha ela não concede nada: só um binding que a cite concede.
+
+        **Um membro de um time que não existe é recusado**, com o comando que cria o time.
+
+  - name: member-developer
+    act: people
+    topic: "member create"
+    status: built
+    issue: 1646
+    message: "Bruno joins with no position"
+    accent: "no position"
+    terminal:
+      steps:
+        - comment: "A member like most"
+          run: "nereus teams member create bruno"
+          options: ["--team payments"]
+          output: |-
+            ✓ teams/teams/payments/members/bruno created
+
+            Next steps:
+
+              nereus teams get payments
+    dependsOn: [member-lead]
+    notes: |-
+      **The member's name is the User's name**, unless `--user` names another (ADR 0006, the person is a User of core). The User must exist (#1645, the User kind in core): a member of a User that does not exist is refused, with `nereus user list`.
+
+      **A member is unique in its team:** its object is named `payments.bruno`, its path `teams/teams/payments/members/bruno`.
+    pt:
+      topic: "member create"
+      message: "O Bruno entra sem posição"
+      accent: "sem posição"
+      notes: |-
+        **O nome do membro é o nome do User**, a menos que `--user` cite outro (ADR 0006, a pessoa é um User do core). O User precisa existir (#1645, o kind User no core): um membro de um User que não existe é recusado, com `nereus user list`.
+
+        **Um membro é único no seu time:** o seu objeto se chama `payments.bruno`, o seu caminho `teams/teams/payments/members/bruno`.
+
+  - name: team-get
+    act: people
+    topic: "teams get"
+    status: built
+    issue: 1646
+    message: "The team shows its members and positions"
+    accent: "members and positions"
+    terminal:
+      steps:
+        - comment: "Who is in the team"
+          run: "nereus teams get payments"
+          output: |-
+            payments: 2 members, owner project/payments
+            MEMBER  POSITION   USER
+            ana     tech-lead  core/users/ana
+            bruno   -          core/users/bruno
+
+            Next steps:
+
+              nereus authorization binding create <name> --role <role> --team payments --owner project/payments
+    dependsOn: [member-developer]
+    notes: |-
+      **One list of members, and access derives from it.** The next step is a binding of the authorization reef: what this team, or one of its positions, may do.
+    pt:
+      topic: "teams get"
+      message: "O time mostra os seus membros e posições"
+      accent: "membros e posições"
+      notes: |-
+        **Uma só lista de membros, e o acesso deriva dela.** O próximo passo é um binding do reef authorization: o que este time, ou uma das suas posições, pode fazer.
+
+  - name: team-list
+    act: people
+    topic: "teams list"
+    status: built
+    issue: 1646
+    message: "Every team, its owner and how many members"
+    accent: "how many members"
+    terminal:
+      steps:
+        - comment: "The teams of the platform"
+          run: "nereus teams list"
+          output: |-
+            NAME      OWNER             MEMBERS  AGE
+            payments  project/payments  2        5m
+        - comment: "The members of one team"
+          run: "nereus teams member list"
+          options: ["--team payments"]
+          output: |-
+            TEAM      MEMBER  POSITION   USER              AGE
+            payments  ana     tech-lead  core/users/ana    5m
+            payments  bruno   -          core/users/bruno  4m
+    dependsOn: [team-get]
+    notes: |-
+      **`member list` with no `--team` lists the members of every team**, one row each, with its team first.
+    pt:
+      topic: "teams list"
+      message: "Todos os times, o seu owner e quantos membros"
+      accent: "quantos membros"
+      notes: |-
+        **`member list` sem `--team` lista os membros de todos os times**, uma linha cada, com o seu time primeiro.
+
+  - name: team-delete-refused
+    act: changes
+    topic: "teams delete"
+    status: built
+    issue: 1646
+    message: "A team with members is not deleted"
+    accent: "is not deleted"
+    terminal:
+      steps:
+        - comment: "Two members still in it"
+          run: "nereus teams delete payments"
+          output: |-
+            ✗ teams/teams/payments has 2 members (ana, bruno): delete them first:
+              nereus teams member delete ana --team payments
+              Nothing was changed.
+    dependsOn: [team-get]
+    notes: |-
+      **A team is deleted only once it has no member and no binding names it**, so access never points to a team that is gone. A binding that names it is refused the same way, with `nereus authorization binding delete <binding>`.
+    pt:
+      topic: "teams delete"
+      message: "Um time com membros não é apagado"
+      accent: "não é apagado"
+      notes: |-
+        **Um time só é apagado quando não tem membro e nenhum binding o cita**, então o acesso nunca aponta para um time que não existe. Um binding que o cite é recusado do mesmo jeito, com `nereus authorization binding delete <binding>`.
+
+  - name: member-delete
+    act: changes
+    topic: "member delete"
+    status: built
+    issue: 1646
+    message: "Bruno leaves the team"
+    accent: "leaves the team"
+    terminal:
+      steps:
+        - comment: "The team keeps its other members"
+          run: "nereus teams member delete bruno"
+          options: ["--team payments"]
+          output: |-
+            ✓ teams/teams/payments/members/bruno deleted
+
+            Next steps:
+
+              nereus teams get payments
+    dependsOn: [team-delete-refused]
+    notes: |-
+      **Leaving the team removes the access it gave**, since every grant comes from the list of members.
+    pt:
+      topic: "member delete"
+      message: "O Bruno sai do time"
+      accent: "sai do time"
+      notes: |-
+        **Sair do time remove o acesso que ele dava**, já que toda concessão vem da lista de membros.
+
+  - name: team-apply
+    act: changes
+    topic: "teams apply"
+    status: built
+    issue: 1646
+    message: "A file of teams and members, applied again with no change"
+    accent: "no change"
+    terminal:
+      steps:
+        - comment: "Teams first, then their members"
+          run: "nereus teams apply"
+          options: ["--from-file payments.yaml"]
+          output: |-
+            ✓ teams/teams/payments created
+            ✓ teams/teams/payments/members/ana created
+            ✓ teams/teams/payments/members/bruno created
+
+            Next steps:
+
+              nereus teams list
+        - comment: "The same file again"
+          run: "nereus teams apply"
+          options: ["--from-file payments.yaml"]
+          output: |-
+            teams/teams/payments unchanged
+            teams/teams/payments/members/ana unchanged
+            teams/teams/payments/members/bruno unchanged
+
+            Next steps:
+
+              nereus teams list
+    dependsOn: [team-create]
+    notes: |-
+      **`apply` creates or configures, and the same file twice changes nothing** (ADR 0013, command conventions). `nereus teams member apply` takes Members only; `--dry-run` says what would change.
+    pt:
+      topic: "teams apply"
+      message: "Um arquivo de times e membros, aplicado de novo sem mudança"
+      accent: "sem mudança"
+      notes: |-
+        **`apply` cria ou configura, e o mesmo arquivo duas vezes não muda nada** (ADR 0013, convenções de comando). `nereus teams member apply` aceita só Members; `--dry-run` diz o que mudaria.

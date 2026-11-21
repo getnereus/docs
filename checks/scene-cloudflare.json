@@ -1,0 +1,12 @@
+{
+  "name": "scene-cloudflare",
+  "command": "test/scene-cloudflare",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 246,
+  "passed": 64,
+  "failed": 6,
+  "failure": null,
+  "commit": "367efd72",
+  "started": "2026-11-21T03:45:48Z"
+}

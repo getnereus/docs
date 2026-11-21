@@ -1,0 +1,1799 @@
+deck:
+  name: how-i-use-ia
+  title: How I use AI
+  subtitle: I talk, the agents do, I decide
+  accent: decide
+  pt:
+    title: Como eu uso IA
+    subtitle: Eu falo, os agentes fazem, eu decido
+    accent: decido
+acts:
+- name: origins
+  title: Origins
+  pt:
+    title: Origens
+- name: why
+  title: Why
+  pt:
+    title: Por quê
+- name: loop
+  title: The loop
+  pt:
+    title: O ciclo
+- name: deciding
+  title: Deciding
+  pt:
+    title: Decidir
+- name: iterating
+  title: Iterating
+  pt:
+    title: Iterar
+- name: evidence
+  title: Evidence
+  pt:
+    title: Evidência
+- name: team
+  title: The team
+  pt:
+    title: O time
+- name: closing
+  title: Closing
+  pt:
+    title: Encerramento
+- name: appendix
+  title: Appendix
+  pt:
+    title: Apêndice
+slides:
+- name: title
+  act: origins
+  cover: true
+  message: How I use AI
+  notes: |-
+    One real night · 10/26/2026
+
+    **Open with the sentence:** I talk, the files remember, the agents execute, I decide.
+
+    Everything that follows happened **last night**, from 7:29 pm to 11:30 pm, with **files to prove it**.
+
+    No slide is hypothetical. Deck v5, 2026-10-27.
+  pt:
+    message: Como eu uso IA
+    notes: |-
+      Uma noite real · 26/10/2026
+
+      **Abrir com a frase:** eu falo, os arquivos lembram, os agentes executam, eu decido.
+
+      Tudo que vem depois aconteceu **ontem à noite**, das 19h29 às 23h30, com **arquivos para provar**.
+
+      Nenhum slide é hipotético. Deck v5, 27/10/2026.
+- name: humility
+  act: origins
+  topic: Humility
+  message: Nothing new under the sun
+  accent: new
+  screen:
+  - '**Most of the time:** someone already had our idea'
+  - '**Socrates:** "I know that I know nothing", in Plato''s _Apology_'
+  - '**Shoulders of giants:** Bernard of Chartres, c. 1130; Newton, 1675'
+  - '**Multiple discovery:** Darwin and Wallace, Newton and Leibniz'
+  - '**Dunning-Kruger:** the less we know, the more we think we know'
+  - '**The AI:** opens the collective knowledge; search first, then give credit'
+  notes: |-
+    Most of the time, our idea was already thought by someone else.
+
+    "I know that I know nothing" - Socrates, in Plato's Apology
+
+    Standing on the shoulders of giants - Bernard of Chartres, c. 1130; Newton, 1675
+
+    Multiple discovery - Darwin and Wallace, Newton and Leibniz
+
+    Dunning-Kruger: the less we know, the more we think we know
+
+    AI opens the collective knowledge. Search first, then give credit.
+
+    **The owner's point**: most of the time, the idea we are developing was already thought by another human. Knowing that should make us **humble** and remove the false feeling that we invented it.
+
+    It reminds me of **memento mori** ("remember you will die"). Here: **remember you don't know**.
+
+    **Shoulders of giants**: Bernard of Chartres, c. 1130 (via John of Salisbury, Metalogicon); Newton's letter to Hooke, 1675; Robert K. Merton, On the Shoulders of Giants (1965). Checked on the web.
+
+    **Multiple discovery** (Merton). **Cryptomnesia**: thinking an idea is yours when it is a forgotten memory. **Dunning-Kruger** (1999).
+
+    Link to the project rule: **look for an open source solution before building**. Details in file 208.
+  pt:
+    topic: Humildade
+    message: Nada de novo debaixo do sol
+    accent: novo
+    screen:
+    - '**Quase sempre:** alguém já pensou na nossa ideia'
+    - '**Sócrates:** "Só sei que nada sei", na _Apologia_ de Platão'
+    - '**Ombros de gigantes:** Bernardo de Chartres, c. 1130; Newton, 1675'
+    - '**Descoberta múltipla:** Darwin e Wallace, Newton e Leibniz'
+    - '**Dunning-Kruger:** quanto menos sabemos, mais achamos que sabemos'
+    - '**A IA:** abre o conhecimento coletivo; pesquise antes e dê o crédito'
+    notes: |-
+      Na maioria das vezes, a nossa ideia já foi pensada por outra pessoa.
+
+      "Só sei que nada sei" - Sócrates, na Apologia de Platão
+
+      Sobre ombros de gigantes - Bernardo de Chartres, c. 1130; Newton, 1675
+
+      Descoberta múltipla - Darwin e Wallace, Newton e Leibniz
+
+      Dunning-Kruger: quanto menos sabemos, mais achamos que sabemos
+
+      A IA abre o conhecimento coletivo. Pesquise antes e dê o crédito.
+
+      **Ponto do owner**: na maioria das vezes, a ideia que estamos desenvolvendo já foi pensada por outro ser humano. Saber disso deveria nos deixar **humildes** e tirar a falsa sensação de que inventamos algo.
+
+      Me lembra **memento mori** ("lembre-se de que vai morrer"). Aqui: **lembre-se de que você não sabe**.
+
+      **Ombros de gigantes**: Bernardo de Chartres, por volta de 1130 (via João de Salisbury, Metalogicon); carta de Newton a Hooke, 1675; Robert K. Merton, On the Shoulders of Giants (1965). Conferido na web.
+
+      **Descoberta múltipla** (Merton). **Criptomnésia**: achar que a ideia é sua quando é uma lembrança esquecida. **Dunning-Kruger** (1999).
+
+      Ligação com a regra do projeto: **procurar uma solução open source antes de construir**. Detalhes no arquivo 208.
+- name: memory
+  act: origins
+  topic: Memory
+  message: Why mythology? Memory
+  accent: Memory
+  screen:
+  - '**Method of loci:** the sea is the palace, the names are the places Simonides, via Cicero'
+  - '**Levels of processing:** meaning sticks more than form Craik and Lockhart, 1972'
+  - '**Schema theory:** the new fits into a story we know Bartlett, 1932'
+  - '**Conceptual metaphor:** the abstract understood through the concrete Lakoff and Johnson, 1980'
+  - '**Dual coding:** word and image, two cues Paivio, 1971'
+  notes: |-
+    Telling Nereus through Hesiod's Theogony, I remember the myth **and** the system.
+
+    **Levels of processing** (Craik and Lockhart, 1972): the deeper information is processed, by meaning rather than form, the longer it stays in memory.
+
+    **Schema theory** (Bartlett, 1932): we remember by fitting the new into structures we already know; a familiar story becomes the mold.
+
+    **Conceptual metaphor** (Lakoff and Johnson, 1980): we understand an abstract concept through a concrete one, like the system through the sea.
+
+    **Dual coding** (Paivio, 1971): a word together with an image gives memory two cues, so recall gets easier.
+
+    Nereus is a memory palace: the sea is the palace; reef, Nereids and Glaucus are the places.
+
+    **Observation by the owner**: telling Nereus through Hesiod's **Theogony**, I remember the myth and the system concepts.
+
+    **Method of loci**: "loci" is Latin for **places**, not a person. Picture a place you know, leave each item in a spot, walk it in your head to recall.
+
+    **Origin**: Simonides of Ceos left a banquet just before the roof fell and named the dead by where they sat. Told by **Cicero**, De Oratore. Oldest description: **Rhetorica ad Herennium**, anonymous, c. 80 BC.
+
+    **Books**: Frances Yates, The Art of Memory (1966); Joshua Foer, Moonwalking with Einstein (2011).
+
+    References brought by **Claude (Anthropic)**. Only Craik and Lockhart was checked on the web. Files 188 and 204.
+  pt:
+    topic: Memória
+    message: Por que mitologia? Memória
+    accent: Memória
+    screen:
+    - '**Método de loci:** o mar é o palácio, os nomes são os lugares Simônides, via Cícero'
+    - '**Níveis de processamento:** o significado fixa mais que a forma Craik e Lockhart, 1972'
+    - '**Teoria dos esquemas:** o novo se encaixa numa história conhecida Bartlett, 1932'
+    - '**Metáfora conceitual:** o abstrato entendido pelo concreto Lakoff e Johnson, 1980'
+    - '**Codificação dupla:** palavra e imagem, duas pistas Paivio, 1971'
+    notes: |-
+      Contando o Nereus pela Teogonia de Hesíodo, eu lembro do mito **e** do sistema.
+
+      **Níveis de processamento** (Craik e Lockhart, 1972): quanto mais fundo se processa uma informação, pelo significado e não pela forma, mais ela fica na memória.
+
+      **Teoria dos esquemas** (Bartlett, 1932): a gente lembra encaixando o novo em estruturas que já conhece; uma história conhecida vira o molde.
+
+      **Metáfora conceitual** (Lakoff e Johnson, 1980): entendemos um conceito abstrato por meio de outro concreto, como o sistema pelo mar.
+
+      **Codificação dupla** (Paivio, 1971): palavra junto com imagem cria duas pistas na memória, e lembrar fica mais fácil.
+
+      O Nereus é um palácio da memória: o mar é o palácio; reef, Nereidas e Glauco são os lugares.
+
+      **Observação do owner**: contando o Nereus pela **Teogonia** de Hesíodo, eu lembro do mito e dos conceitos do sistema.
+
+      **Método de loci**: "loci" é latim para **lugares**, não é uma pessoa. Imagine um lugar conhecido, deixe cada item num ponto e percorra de cabeça para lembrar.
+
+      **Origem**: Simônides de Ceos saiu de um banquete pouco antes de o teto cair e identificou os mortos pelo lugar onde estavam sentados. Contado por **Cícero**, De Oratore. Descrição mais antiga: **Rhetorica ad Herennium**, anônima, por volta de 80 a.C.
+
+      **Livros**: Frances Yates, A Arte da Memória (1966); Joshua Foer, A Arte e a Ciência de Memorizar Tudo (2011).
+
+      Referências trazidas pelo **Claude (Anthropic)**. Só Craik e Lockhart foi conferido na web. Arquivos 188 e 204.
+- name: the-names
+  act: origins
+  topic: The names
+  message: The names of the sea
+  screen:
+  - '**Nereus** (the old man of the sea): the platform'
+  - '**Nereids** (his daughters): the components (controllers)'
+  - '**reef** (the reef): the group of resources of an area'
+  - '**beach** (where the raft lands): the folder of orders'
+  - '**Glaucus** (a fisherman who became a sea god): the messenger'
+  - '**Doris, Tide, pearl** (mother of the Nereids, tide, pearl): extract ideas, see over time, delivered idea'
+  notes: |-
+    Before, in another project with the team, it was "send it through the **courier**".
+
+    **Glaucus** is the same role, with a name consistent with the sea.
+
+    Record: file 166.
+  pt:
+    topic: Os nomes
+    message: Os nomes do mar
+    screen:
+    - '**Nereus** (o velho do mar): a plataforma'
+    - '**Nereids** (as filhas dele): os componentes (controllers)'
+    - '**reef** (o recife): o grupo de recursos de uma área'
+    - '**praia** (onde a jangada chega): a pasta de ordens'
+    - '**Glauco** (pescador que virou deus do mar): o mensageiro'
+    - '**Doris, Tide, pearl** (mãe das Nereids, maré, pérola): extrair ideias, ver no tempo, ideia entregue'
+    notes: |-
+      Antes, num outro projeto com o time, era "manda pelo **courier**".
+
+      O **Glauco** é o mesmo papel, com nome consistente com o mar.
+
+      Registro: arquivo 166.
+- name: why
+  act: why
+  message: Build, measure, learn
+  diagram: how-i-use-ia/why.svg
+  show:
+  - all
+  screen:
+  - Dictation, the beach and Glaucus
+  - 'Use it for real: conversion, not volume'
+  - What went wrong becomes a rule
+  source: Eric Ries, _The Lean Startup_ (2011)
+  notes: |-
+    **Build.** I started with dictation because it is natural conversation and the raw capture guarantees nothing is lost. Since voice does not talk to agents, I put together the good enough: the beach on Drive and Glaucus. Last night: Pearl layers from v1 to v3.
+
+    **Measure.** Use it for real and watch. Last night: me on the phone, sending screenshots of the bugs. And measure what matters: conversion into backlog, not volume of ideas.
+
+    **Learn.** Turn what went wrong into a rule. Last night: the criteria of the five stages and progressive discovery. Each loop leaves me a bit closer to Nereus.
+
+    This is the **heart**: the deck shows the how, here is the **why**.
+
+    Each turn of the **Build-Measure-Learn** cycle leaves me a bit closer to the end goal.
+
+    Source: Eric Ries, The Lean Startup (2011). Record: file 167.
+
+    https://theleanstartup.com/principles
+  pt:
+    message: Construir, medir, aprender
+    diagram: how-i-use-ia/why.pt.svg
+    screen:
+    - Ditado, a praia e o Glauco
+    - 'Usar de verdade: conversão, não volume'
+    - O que deu errado vira regra
+    notes: |-
+      **Construir.** Comecei pelo ditado porque é conversa natural e o bruto garante que nada se perde. Como a voz não fala com agentes, montei o bom o bastante: a praia no Drive e o Glauco. Ontem: Pearl layers da v1 à v3.
+
+      **Medir.** Usar de verdade e observar. Ontem: eu no celular, mandando prints dos bugs. E medir o que importa: conversão em backlog, não volume de ideias.
+
+      **Aprender.** Transformar o que deu errado em regra. Ontem: os critérios dos cinco estágios e a descoberta progressiva. Cada volta deixa um pouco mais perto do Nereus.
+
+      Este é o **coração**: o deck mostra o como, aqui está o **porquê**.
+
+      Cada volta do ciclo **Build-Measure-Learn** deixa um pouco mais perto do objetivo final.
+
+      Fonte: Eric Ries, The Lean Startup (2011). Registro: arquivo 167.
+
+      https://theleanstartup.com/principles
+- name: agile
+  act: why
+  topic: Agile
+  message: The Agile Manifesto in four words
+  accent: four
+  screen:
+  - '**People**'
+  - '- Individuals and interactions over processes and tools'
+  - '**Working software**'
+  - '- Working software over comprehensive documentation'
+  - '**Collaboration**'
+  - '- Customer collaboration over contract negotiation'
+  - '**Responding to change**'
+  - '- Responding to change over following a plan'
+  source: Manifesto for Agile Software Development, Snowbird, Utah (2001), agilemanifesto.org
+  notes: |-
+    **The Agile Manifesto, February 2001.** Seventeen authors at Snowbird, Utah, among them Kent Beck, Martin Fowler and Ward Cunningham.
+
+    **A mnemonic: people, software, collaboration, change.** One word per value, and the full sentence below it.
+
+    **The items on the right still have value.** The items on the left are valued more.
+
+    Source: https://agilemanifesto.org/
+  pt:
+    topic: Ágil
+    message: O Manifesto Ágil em quatro palavras
+    accent: quatro
+    screen:
+    - '**Pessoas**'
+    - '- Indivíduos e interações mais que processos e ferramentas'
+    - '**Software**'
+    - '- Software em funcionamento mais que documentação abrangente'
+    - '**Colaboração**'
+    - '- Colaboração com o cliente mais que negociação de contratos'
+    - '**Mudança**'
+    - '- Responder a mudanças mais que seguir um plano'
+    notes: |-
+      **O Manifesto Ágil, fevereiro de 2001.** Dezessete autores em Snowbird, Utah, entre eles Kent Beck, Martin Fowler e Ward Cunningham.
+
+      **Um mnemônico: pessoas, software, colaboração, mudança.** Uma palavra por valor, e a frase inteira embaixo.
+
+      **Os itens da direita continuam tendo valor.** Os da esquerda são mais valorizados.
+
+      Fonte: https://agilemanifesto.org/iso/ptbr/manifesto.html
+- name: destination
+  act: why
+  topic: Destination
+  message: Where I want to get to, and what I use today
+  accent: today
+  screen:
+  - '**Where I want to get to:** voice talking directly to the agents'
+  - '**Mediator agent:** like centurions in a room, each person''s agents agree on the plan'
+  - '**Good enough, today:** files on Drive and a messenger'
+  notes: |-
+    Nereus as the meeting point: the voice conversation talking directly to the agents.
+
+    Voice does not talk to remote agents. So: files in a Drive folder (the beach) and a messenger (Glaucus).
+
+    The **good enough** points to the best.
+
+    The **beach on Drive** is the draft of the **event bus** inside Nereus.
+
+    **The mediator agent.** The first person of the team to log in for the day creates the room; the platform provisions the mediator; each person's agents join on their behalf, agree on plans, and the mediator weighs collisions and collects updates. The metaphor: centurions in the war tent.
+
+    **It starts by listening.** Agents on different machines do not know about each other, so the mediator is the only place where the whole team becomes observable: first it records every action as an event (replay, audit), then it starts intervening, and we compare before and after.
+
+    **Creating agents is not free.** The mediator needs a spending limit, and its own cost enters the cost pillar.
+
+    What I do today by voice (I talk, Claude weighs and sends the work to the right machine) is a manual prototype of the mediator. Raw files: 2026-10-24 conversation 01, file 04; files 05 and 107.
+  pt:
+    topic: Destino
+    message: Aonde quero chegar, e o que uso hoje
+    accent: hoje
+    screen:
+    - '**Aonde quero chegar:** a voz falando direto com os agentes'
+    - '**Agente mediador:** como centuriões numa sala, os agentes de cada um combinam o plano'
+    - '**Bom o bastante, hoje:** arquivos no Drive e um mensageiro'
+    notes: |-
+      O Nereus como ponto de encontro: a conversa por voz falando direto com os agentes.
+
+      A voz não conversa com agentes remotos. Então: arquivos numa pasta do Drive (a praia) e um mensageiro (o Glauco).
+
+      O **bom o bastante** aponta para o melhor.
+
+      A **praia no Drive** é o rascunho do **barramento de eventos** dentro do Nereus.
+
+      **O agente mediador.** O primeiro do time a entrar no dia cria a sala; a plataforma provisiona o mediador; os agentes de cada pessoa entram em nome dela, combinam os planos, e o mediador pesa as colisões e junta as atualizações. A metáfora: centuriões na tenda de guerra.
+
+      **Ele começa ouvindo.** Agentes em máquinas diferentes não sabem uns dos outros, então o mediador é o único lugar onde o time inteiro fica observável: primeiro ele grava cada ação como evento (replay, auditoria), depois passa a intervir, e comparamos o antes e o depois.
+
+      **Criar agentes não é de graça.** O mediador precisa de um limite de gasto, e o custo dele entra no pilar de custo.
+
+      O que eu faço hoje por voz (eu falo, o Claude pesa e manda o trabalho para a máquina certa) é um protótipo manual do mediador. Arquivos brutos: 24/10 conversa 01, arquivo 04; arquivos 05 e 107.
+- name: the-loop
+  act: loop
+  message: The full cycle
+  diagram: how-i-use-ia/the-loop.svg
+  show:
+  - all
+  screen:
+  - '**raw:** each conversation becomes numbered files'
+  - '**order:** "send it through Glaucus" becomes a work order'
+  - '**agent:** claims the order, works in its own worktree'
+  - '**issue + PR:** reviewable code, with CI (continuous integration)'
+  - '**handoff:** the next session reads it, not the chat'
+  notes: |-
+    **raw**: each conversation becomes numbered files on Drive, separating what I said from what the AI said, with the time and the type of contribution.
+
+    **order**: when I say "send it through Glaucus", the refined idea becomes a work order in a file and goes to the beach (the beach slide).
+
+    **agent**: a remote agent watches the beach, claims the order, confirms, and works in a git worktree of its own.
+
+    **issue + PR**: the result arrives as reviewable code, with CI, and the reply goes back to the beach.
+
+    **handoff**: the session ends by writing what was left open; the next one starts by reading that, not the chat. Name under review: maybe "let's move on", like a squad that keeps moving forward.
+
+    Central point: the **memory of the work stays outside the model**.
+
+    Last night at 11:25 pm the **model switched** in the middle of the session and **nothing was lost**.
+  pt:
+    message: O ciclo completo
+    diagram: how-i-use-ia/the-loop.pt.svg
+    screen:
+    - '**raw:** cada conversa vira arquivos numerados'
+    - '**order:** "manda pelo Glauco" vira ordem de serviço'
+    - '**agent:** pega a ordem, trabalha numa worktree própria'
+    - '**issue + PR:** código revisável, com CI (integração contínua)'
+    - '**handoff:** a próxima sessão lê isso, não o chat'
+    notes: |-
+      **raw**: cada conversa vira arquivos numerados no Drive, separando o que eu disse do que a IA disse, com hora e tipo de contribuição.
+
+      **order**: quando eu digo "manda pelo Glauco", a ideia refinada vira uma ordem de serviço num arquivo e vai para a praia (o slide da praia).
+
+      **agent**: um agente remoto vigia a beach, reivindica a ordem, confirma, trabalha num git worktree só dele.
+
+      **issue + PR**: o resultado chega como código revisável, com CI, e a resposta volta para a beach.
+
+      **handoff**: a sessão termina escrevendo o que ficou aberto; a próxima começa lendo isso, não o chat. Nome em revisão: talvez "vamos avançar", como um esquadrão que segue em frente.
+
+      Ponto central: a **memória do trabalho fica fora do modelo**.
+
+      Ontem às 23h25 o **modelo trocou** no meio da sessão e **nada se perdeu**.
+- name: hands-free
+  act: loop
+  topic: Hands-free
+  message: A walk with the dog, hands-free
+  accent: hands-free
+  screen:
+  - '**Wake word:** it answers only to "Claude"'
+  - '- Street test: someone asked for directions, it stayed silent'
+  - '- Bakery test: many voices, it stayed silent'
+  - '**Ideas on the way:** each one lands on Drive as raw data'
+  - '- A voice agent in every room of the house'
+  - '- The call dropped: record offline, process later'
+  - '- The raw data gets a name: Pontos, the father of Nereus'
+  - '**New rules:** learned on the walk'
+  - '- An audio "got it" before the tools'
+  - '- Repeat back before saving (the taxi stand number)'
+  - '**The conversation:** is the backlog'
+  notes: |-
+    It answers only when I start with "Claude"
+
+    Ideas captured while walking
+
+    The taxi number: I said it, it was saved
+
+    No signal outside the building: another idea
+
+    New rule: an audio "got it" before the tools
+
+    **Rule set by the owner**: Claude answers only when the sentence starts with **Claude**; otherwise I may be talking to the dog, a neighbor, the bakery. Today it became the **noisy mode**.
+
+    Timeline about 06:30-07:10. Ideas 189, 190, 191, 192.
+
+    **Taxi stand**: on the walk I just said it; Claude **repeated it back**, I corrected it, and it was saved. (Number kept off the slide.)
+
+    **Ideas from the walk**: offline audio capture, smart home voice agent, face and voice recognition, consent and enrollment flow.
+
+    **Learning**: no audio "got it" before tool calls, so I had to take the phone out.
+
+    Every idea lands in Drive as raw data, with credit.
+
+    **Message**: the conversation is the backlog.
+
+    **Two real tests of the wake word.** On the street a woman asked for directions and Claude stayed quiet; in the bakery, with staff and customers talking, it stayed quiet too. The only limit: the voice client forces a reply, so it said "(stays silent)" instead of nothing.
+
+    **Ideas captured walking:** a voice agent reachable from any room (189), face and voice recognition to tell who speaks (190), consent and enrollment (191), offline capture when the call dropped leaving the building (192), the geolocation of an idea (198).
+
+    **Naming the raw layer:** Mnemosyne first, then Pontos, easier to say: the primordial sea, father of Nereus (194 to 196).
+
+    **The taxi stand number** I always tried to write down: I just said it on the walk. Claude first said it was saved without repeating it; new rule: repeat back before noting (197, 206).
+  pt:
+    topic: Mãos livres
+    message: Passeio com o cachorro, mãos livres
+    accent: livres
+    screen:
+    - '**Palavra de ativação:** só responde a "Claude"'
+    - '- Teste na rua: alguém pediu informação, ficou em silêncio'
+    - '- Teste na padaria: muitas vozes, ficou em silêncio'
+    - '**Ideias no caminho:** cada uma cai no Drive como dado bruto'
+    - '- Agente de voz em todo cômodo da casa'
+    - '- A ligação caiu: gravar offline, processar depois'
+    - '- O bruto ganha nome: Pontos, o pai de Nereus'
+    - '**Regras novas:** aprendidas no passeio'
+    - '- Um "entendi" em áudio antes das ferramentas'
+    - '- Repetir o que entendeu antes de anotar (o número do táxi)'
+    - '**A conversa:** é o backlog'
+    notes: |-
+      Só responde quando a frase começa com "Claude"
+
+      Ideias capturadas andando
+
+      O número do táxi: falei, ficou salvo
+
+      Sem sinal ao sair do prédio: mais uma ideia
+
+      Regra nova: um "entendi" em áudio antes das ferramentas
+
+      **Regra do owner**: o Claude só responde quando a frase começa com **Claude**; senão posso estar falando com o cachorro, um vizinho, a padaria. Hoje virou o **modo barulhento**.
+
+      Linha do tempo por volta de 06:30-07:10. Ideias 189, 190, 191, 192.
+
+      **Ponto de táxi**: no passeio só falei; o Claude **repetiu**, eu corrigi, e ficou salvo. (O número fica fora do slide.)
+
+      **Ideias do passeio**: captura de áudio offline, agente de voz para casa inteligente, reconhecimento de rosto e voz, fluxo de consentimento e cadastro.
+
+      **Aprendizado**: sem um "entendi" em áudio antes das ferramentas, tive que tirar o celular do bolso.
+
+      Toda ideia cai no Drive como dado bruto, com crédito.
+
+      **Mensagem**: a conversa é o backlog.
+
+      **Dois testes reais da palavra de ativação.** Na rua, uma moça pediu informação e o Claude ficou quieto; na padaria, com atendentes e clientes falando, ficou quieto também. O único limite: o cliente de voz força uma resposta, então ele disse "(fica em silêncio)" em vez de nada.
+
+      **Ideias capturadas andando:** agente de voz em qualquer cômodo (189), reconhecimento de rosto e voz para saber quem fala (190), consentimento e cadastro (191), captura offline quando a ligação caiu ao sair do prédio (192), a geolocalização da ideia (198).
+
+      **Nome para o bruto:** primeiro Mnemosyne, depois Pontos, mais fácil de falar: o mar primordial, pai de Nereus (194 a 196).
+
+      **O número da parada de táxi** que eu sempre tentava anotar: no passeio, só falei. O Claude primeiro disse que salvou sem repetir; regra nova: repetir antes de anotar (197, 206).
+- name: the-beach
+  act: loop
+  topic: The beach
+  message: The beach, Glaucus and the agent at home
+  diagram: how-i-use-ia/the-beach.svg
+  show:
+  - all
+  screen:
+  - '**Me and the AI:** "send it through Glaucus" writes the order'
+  - '**Beach:** a Drive folder where orders arrive'
+  - '**Agent:** runs at home, claims the order and confirms'
+  - '**GitHub:** issue and PR; the reply goes back to the beach'
+  notes: |-
+    **The AI and I** talk by voice or chat. When the idea is ready, I say **"send it through Glaucus"**: the AI writes the order and leaves it on the beach. I choose the moment and say why.
+
+    **The beach** is a virtual place: a folder in my Google Drive where the orders arrive.
+
+    **The agent** runs on my personal machine. It watches the beach, picks up the order that is its own, confirms and starts.
+
+    **On GitHub** live the issue and the PR. The replies go back to the beach, and the next conversation reads from there. The best this points to: an **event bus** inside Nereus.
+
+    Tap the boxes in the drawing, one at a time, or use the ▼.
+
+    The **beach** is part of the Nereus sea metaphor.
+  pt:
+    topic: A praia
+    message: A praia, o Glauco e o agente em casa
+    diagram: how-i-use-ia/the-beach.pt.svg
+    screen:
+    - '**Eu e a IA:** "manda pelo Glauco" escreve a ordem'
+    - '**Praia:** uma pasta no Drive onde chegam as ordens'
+    - '**Agente:** roda em casa, pega a ordem e confirma'
+    - '**GitHub:** issue e PR; a resposta volta para a praia'
+    notes: |-
+      **Eu e a IA** conversamos por voz ou chat. Quando a ideia está pronta, eu digo **"manda pelo Glauco"**: a IA escreve a ordem e a deixa na praia. Eu escolho o momento e digo por quê.
+
+      **A praia** é um lugar virtual: uma pasta no meu Google Drive onde as ordens chegam.
+
+      **O agente** roda na minha máquina pessoal. Ele vigia a praia, pega a ordem que é dele, confirma e começa.
+
+      **No GitHub** ficam a issue e o PR. As respostas voltam para a praia, e a próxima conversa lê de lá. O melhor que isso aponta: um **barramento de eventos** dentro do Nereus.
+
+      Tocar nas caixas do desenho, uma por vez, ou usar o ▼.
+
+      A **praia** faz parte da metáfora do mar do Nereus.
+- name: one-question
+  act: deciding
+  message: The human decides, one question at a time
+  accent: question
+  screen:
+  - '**{agent:Claude}** · 20:03: Does Doris become a Nereid inside Nereus, or stay a tool outside it?'
+  - '**{human:Me}** · 20:03: From what we gathered, I would go with Nereid.'
+  - '**{agent:Claude}** · 20:04: Which reef does it implement? The deck suggested `ideas`. Go with that one or do you prefer another name?'
+  - '**{human:Me}** · 20:04: That one.'
+  notes: |-
+    Show that the conversation is **short on purpose**.
+
+    By voice, at the third question I have already forgotten the first: **one question at a time**.
+  pt:
+    message: Humano decide, uma pergunta por vez
+    accent: pergunta
+    screen:
+    - '**{agent:Claude}** · 20:03: A Doris vira uma Nereid dentro do Nereus, ou fica como ferramenta fora dele?'
+    - '**{human:Eu}** · 20:03: Pelo que levantamos, eu iria de Nereid.'
+    - '**{agent:Claude}** · 20:04: Qual reef ela implementa? O deck sugeria `ideas`. Vai com esse ou prefere outro nome?'
+    - '**{human:Eu}** · 20:04: Esse.'
+    notes: |-
+      Mostrar que a conversa é **curta de propósito**.
+
+      Em voz, na terceira pergunta eu já esqueci a primeira: **uma pergunta por vez**.
+- name: conversation-rules
+  act: deciding
+  message: The rules of the conversation
+  code:
+    file: how-i-use-ia/148-raw-decision-doris-is-a-nereid.md
+  screen:
+  - '**Recorded on the spot:** each decision, before the next question'
+  - '**Silence is not a decision:** "maybe" becomes a parked idea'
+  - '**The AI:** helps us think better'
+  source: Paulo Caroli, _Times importam mais do que nunca_
+  notes: |-
+    Every decision is **recorded on the spot**, with the time and the source file, before the next question.
+
+    The AI brings **options in a short table**; I answer with one word.
+
+    **Silence is not a decision.** "Maybe" and "for later" become a parked idea, not a choice.
+
+    "Should the AI make this decision, or should it **help us think better** about this decision? Most of the time, the second option is healthier."
+
+    Decisions recorded in files **148** and **149**.
+
+    Quote from **Caroli**: file 177.
+  pt:
+    message: As regras da conversa
+    code:
+      file: how-i-use-ia/pt/148-raw-decision-doris-is-a-nereid.md
+    screen:
+    - '**Gravada na hora:** cada decisão, antes da próxima pergunta'
+    - '**Silêncio não é decisão:** "talvez" vira ideia estacionada'
+    - '**A IA:** nos ajuda a pensar melhor'
+    notes: |-
+      Cada decisão é **gravada na hora**, com horário e arquivo-fonte, antes da próxima pergunta.
+
+      A IA traz **opções numa tabela curta**; eu respondo com uma palavra.
+
+      **Silêncio não é decisão.** "Talvez" e "para depois" viram ideia estacionada, não escolha.
+
+      "A IA deve tomar esta decisão, ou deve nos **ajudar a pensar melhor** sobre esta decisão? Na maioria das vezes, a segunda opção é mais saudável."
+
+      Decisões gravadas nos arquivos **148** e **149**.
+
+      Citação do **Caroli**: arquivo 177.
+- name: real-order
+  act: deciding
+  topic: Delegate
+  message: A real order
+  accent: real
+  code:
+    file: how-i-use-ia/20261026-1924-watcher-flags-unassigned-orders.md
+  screen:
+  - '**Header:** who asked, through what, when, for whom'
+  - '**Rules:** own worktree, tests, when it may merge'
+  notes: |-
+    Required header: who asked, through what, when, for whom.
+
+    Work rules inside the order: its own worktree, tests, when it may merge by itself.
+
+    This order was born from a mistake of mine in the header of another order. The fix was to make the system complain out loud, not a manual patch.
+
+    Result: **PR #448** and **PR #446** merged by the agent **the same night**.
+  pt:
+    topic: Delegar
+    message: Uma ordem de verdade
+    accent: verdade
+    code:
+      file: how-i-use-ia/pt/20261026-1924-watcher-flags-unassigned-orders.md
+    screen:
+    - '**Cabeçalho:** quem pediu, por onde, quando, para quem'
+    - '**Regras:** worktree própria, testes, quando pode fazer merge'
+    notes: |-
+      Cabeçalho obrigatório: quem pediu, por onde, quando, para quem.
+
+      Regras do trabalho dentro da ordem: worktree próprio, testes, quando pode fazer merge sozinho.
+
+      Esta ordem nasceu de um erro meu no cabeçalho de outra ordem. A correção foi fazer o sistema reclamar em voz alta, não um remendo manual.
+
+      Resultado: **PR #448** e **PR #446** mergeados pelo agente **na mesma noite**.
+- name: iterate
+  act: iterating
+  message: Five prototypes in three hours
+  accent: three
+  screen:
+  - '**20:05:** six visualizations to choose from'
+  - '**20:46:** two reference images, options 7 and 8'
+  - '**21:11:** timeline and Pearl layers, linked'
+  - '**22:52:** v2 with my late-night suggestions'
+  - '**23:15:** v3; a bug sent by screenshot, fixed in minutes'
+  notes: |-
+    **20:05 · file 150** Six numbered visualizations for me to choose from.
+
+    **20:46 · 152** I sent two reference images; options 7 and 8 came back, with a provocation: a network loses time.
+
+    **21:11 · 153** "Generate an example of your suggestion": timeline (when) + Pearl layers (how), linked.
+
+    **22:52 · 156** Pearl layers v2 with my late-night suggestions, found in the raw.
+
+    **23:15 · 158** v3: tapping the dot opens the notes of that moment. Bug reported by screenshot, fixed in minutes.
+
+    **Good enough now**, better later.
+
+    Each version exists as a **file**; any of them can be opened.
+  pt:
+    message: Cinco protótipos em três horas
+    accent: três
+    screen:
+    - '**20:05:** seis visualizações para escolher'
+    - '**20:46:** duas imagens de referência, opções 7 e 8'
+    - '**21:11:** timeline e Pearl layers, ligados'
+    - '**22:52:** v2 com as minhas sugestões da madrugada'
+    - '**23:15:** v3; bug mandado por print, corrigido em minutos'
+    notes: |-
+      **20:05 · arquivo 150** Seis visualizações numeradas para eu escolher.
+
+      **20:46 · 152** Mandei duas imagens de referência; vieram as opções 7 e 8, com uma provocação: rede perde o tempo.
+
+      **21:11 · 153** "Gera um exemplo na sua sugestão": timeline (quando) + Pearl layers (como), ligados.
+
+      **22:52 · 156** Pearl layers v2 com as minhas sugestões de madrugada, achadas no bruto.
+
+      **23:15 · 158** v3: toque na bolinha abre as notas daquele momento. Bug reportado por print, corrigido em minutos.
+
+      **Bom o bastante agora**, melhor depois.
+
+      Cada versão existe como **arquivo**; dá para abrir qualquer uma.
+- name: understand
+  act: iterating
+  topic: Understand
+  message: Progressive disclosure
+  diagram: how-i-use-ia/understand.svg
+  show:
+  - all
+  screen:
+  - '**{pr:Figure}**: I tap a moment to see where the idea is.'
+  - '**{order:Classification}**: I see how it was classified. It is a **hypothesis**: if I disagree, it becomes a new event.'
+  - '**{raw:Raw}**: only then do I read the exact excerpt that justifies the classification.'
+  notes: |-
+    Tap the three boxes, left to right, or use the ▼.
+
+    "AI should help teams **learn faster**. Not create the **illusion of certainty**." Paulo Caroli, Times importam mais do que nunca (file 178).
+
+    **Classification**: stage, criterion, confidence and who classified. Disagreeing **never edits** the classification; it records a new event.
+
+    **Raw**: exact excerpt, who said it and when. Every classification points to the excerpt that justifies it: the **grounded theory** rule.
+
+    Link to **Shneiderman**: overview, zoom and filter, details on demand.
+
+    Details in the **references deck**.
+  pt:
+    topic: Entender
+    message: Descoberta progressiva
+    diagram: how-i-use-ia/understand.pt.svg
+    screen:
+    - '**{pr:Figura}**: toco num momento para ver onde a ideia está.'
+    - '**{order:Classificação}**: vejo como foi classificado. É uma **hipótese**: se eu discordo, vira um evento novo.'
+    - '**{raw:Bruto}**: só então leio o trecho exato que justifica a classificação.'
+    notes: |-
+      Tocar nas três caixas, da esquerda para a direita, ou usar o ▼.
+
+      "A IA deve ajudar os times a **aprender mais rápido**. Não criar a **ilusão de certeza**." Paulo Caroli, Times importam mais do que nunca (arquivo 178).
+
+      **Classificação**: estágio, critério, confiança e quem classificou. Discordar **nunca edita** a classificação; grava um evento novo.
+
+      **Bruto**: trecho exato, quem disse e quando. Toda classificação aponta para o trecho que a justifica: regra da **grounded theory**.
+
+      Ligar com **Shneiderman**: overview, zoom e filtro, detalhe sob demanda.
+
+      Detalhes no **deck de referências**.
+- name: doris
+  act: iterating
+  topic: Demo
+  message: Doris, with yesterday's ideas
+  accent: yesterday's
+  screen:
+  - '**Each dot:** a moment; from left to right the idea climbs from the seabed (grain) to the pearl'
+  - '**One tap:** a quick card and the replay of the idea; Details opens classification and raw'
+  - '**I disagree:** a new event; the original classification stays'
+  - '[Open Doris](doris-demo.html)'
+  notes: |-
+    Each dot is a moment. From left to right, the idea climbs from the **seabed** (grain) to the **pearl**.
+
+    One tap lights up the idea's **path**; the second opens the **classification**, then the **raw**.
+
+    If I disagree, I generate a **new event**; the original classification stays.
+
+    Opens **filtered to yesterday**. "Back to the deck" brings you back to this slide.
+
+    A good dot for the "I disagree": **05:00, "Maybe one thing at a time"** (the "maybe" became a grain) and the **18:43 order** (invalid header).
+
+    The dashed ones from 27/10 wait for the **m15 pilot**.
+  pt:
+    topic: Demonstração
+    message: A Doris, com as ideias de ontem
+    accent: ontem
+    screen:
+    - '**Cada bolinha:** um momento; da esquerda para a direita, a ideia sobe do fundo do mar (grain) até a pérola'
+    - '**Um toque:** o resumo e o replay da ideia; Detalhes abre a classificação e o bruto'
+    - '**Discordo:** gera um evento novo; a classificação original fica'
+    - '[Abrir a Doris](doris-demo.html)'
+    notes: |-
+      Cada bolinha é um momento. Da esquerda para a direita, a ideia sobe do **fundo do mar** (grain) até a **pérola** (pearl).
+
+      Um toque acende o **caminho** da ideia; o segundo abre a **classificação**, depois o **bruto**.
+
+      Se eu discordo, gero um **evento novo**; a classificação original fica.
+
+      Abre **filtrada em ontem**. O "voltar ao deck" traz de volta para este slide.
+
+      Bolinha boa para o "discordo": **05:00, "Maybe one thing at a time"** (o "talvez" virou grain) e a **ordem das 18h43** (cabeçalho inválido).
+
+      As tracejadas de 27/10 aguardam o **piloto do m15**.
+- name: classify
+  act: iterating
+  topic: Classify
+  message: The five stages of an idea
+  screen:
+  - '**{raw:grain}:** Said once, in passing; nothing else points to it'
+  - '- "Mind Tracker" as a name, 03:10'
+  - '**{agent:shell}:** It was picked up again, gained scope or a name used later'
+  - '- Doris PWA, 04:55'
+  - '**{order:decision}:** I chose explicitly and that closed an open question'
+  - '- "Let''s go with Doris and Tide", 04:48'
+  - '**{pr:order / PR}:** The work left the conversation: an order with a valid recipient, an issue or a PR'
+  - '- order 1924, 19:24'
+  - '**pearl:** It exists and runs without depending on the conversation: merge done'
+  - '- PR #448, 18:36'
+  - '**The criteria caught a mistake:** a deck of mine marked as order/PR is a shell'
+  - '**Flags, not stages:** dropped, parked, question; the time is recorded or inferred'
+  notes: |-
+    Writing the criteria caught a mistake of mine from the day before: a deck of mine was marked as order/PR. By the criteria, it is a shell.
+
+    Flags that are not stages: dropped, parked, question. And the time can be recorded or inferred.
+
+    Caroli: teams gain an advantage not because they automate more, but because they combine **fast exploration**, **strong collaboration**, **clear direction** and **well-defined criteria** (file 178).
+
+    Full criteria in the **references deck, slide R2**.
+
+    For each stage: **test**, **evidence**, **what does not count** and **typical mistake**.
+  pt:
+    topic: Classificar
+    message: Os cinco estágios de uma ideia
+    screen:
+    - '**{raw:grain}:** Dito uma vez, de passagem; nada mais aponta para ele'
+    - '- "Mind Tracker" como nome, 03:10'
+    - '**{agent:shell}:** Foi retomado, ganhou escopo ou um nome usado depois'
+    - '- Doris PWA, 04:55'
+    - '**{order:decision}:** Eu escolhi explicitamente e isso fechou uma pergunta aberta'
+    - '- "Vamos de Doris e Tide", 04:48'
+    - '**{pr:order / PR}:** O trabalho saiu da conversa: ordem com destinatário válido, issue ou PR'
+    - '- ordem 1924, 19:24'
+    - '**pearl:** Existe e roda sem depender da conversa: merge feito'
+    - '- PR #448, 18:36'
+    - '**Os critérios pegaram um erro:** um deck meu marcado como order/PR é shell'
+    - '**Sinalizadores, não estágios:** dropped, parked, question; a hora é registrada ou inferida'
+    notes: |-
+      Escrever os critérios pegou um erro meu da véspera: um deck meu estava marcado como order/PR. Pelos critérios, é shell.
+
+      Sinalizadores que não são estágios: dropped, parked, question. E a hora pode ser registrada ou inferida.
+
+      Caroli: times ganham vantagem não porque automatizam mais, mas porque combinam **exploração rápida**, **colaboração forte**, **direção clara** e **critérios bem definidos** (arquivo 178).
+
+      Critérios completos no **deck de referências, slide R2**.
+
+      Para cada estágio: **teste**, **evidência**, **o que não conta** e **erro típico**.
+- name: failures
+  act: iterating
+  topic: Failures
+  message: What broke and how it healed
+  accent: healed
+  screen:
+  - The handoff found by title was stale
+  - '- New rule: a fixed handoff.md at the root; the AI updated its own memory'
+  - Order silently ignored by the watcher (wrong field in the header)
+  - '- New order: the watcher now complains in writing'
+  - Dot would not unselect
+  - '- Screenshot → fix in minutes → file replaced on Drive'
+  - I remembered suggesting things "in the AI's first chart"
+  - '- The raw showed it: the chart was from another agent; the suggestions were in file 97'
+  - The AI classified a deck as order/PR
+  - '- Writing the criteria caught the mistake'
+  notes: |-
+    **Transparency is a pillar**.
+
+    Mistakes are recorded with the **same honesty** as the wins.
+  pt:
+    topic: Falhas
+    message: O que quebrou e como se curou
+    accent: curou
+    screen:
+    - O handoff achado por título estava velho
+    - '- Regra nova: handoff.md fixo na raiz; a IA atualizou a própria memória'
+    - Ordem ignorada em silêncio pelo watcher (campo errado no cabeçalho)
+    - '- Ordem nova: o watcher passa a reclamar por escrito'
+    - Bolinha não desmarcava
+    - '- Print → correção em minutos → arquivo trocado no Drive'
+    - Eu lembrava de ter sugerido coisas "no primeiro gráfico da IA"
+    - '- O bruto mostrou: o gráfico era de outro agente; as sugestões estavam no arquivo 97'
+    - A IA classificou um deck como order/PR
+    - '- Escrever os critérios pegou o erro'
+    notes: |-
+      **Transparência é pilar**.
+
+      Erros ficam registrados com a **mesma honestidade** que os acertos.
+- name: numbers
+  act: evidence
+  topic: Numbers
+  message: One night in numbers
+  screen:
+  - '**18** files written to Drive (146-163)'
+  - '**5** HTML prototypes'
+  - '**4** decisions recorded'
+  - '**2** PRs merged per agent on the same day'
+  - '**10** references with credit'
+  - '**1** model switch midway, no loss'
+  - 'Earlier the same day: 263 events and 100 ideas extracted from the 25th by another agent.'
+  notes: |-
+    The numbers come from **record 162**.
+
+    If anyone asks, **every number points to a file**.
+  pt:
+    topic: Números
+    message: Uma noite em números
+    screen:
+    - '**18** arquivos escritos no Drive (146-163)'
+    - '**5** protótipos HTML'
+    - '**4** decisões gravadas'
+    - '**2** PRs mergeados por agente no mesmo dia'
+    - '**10** referências com crédito'
+    - '**1** troca de modelo no meio, sem perda'
+    - 'Mais cedo no mesmo dia: 263 eventos e 100 ideias extraídos do dia 25 por outro agente.'
+    notes: |-
+      Números vêm do **registro 162**.
+
+      Se alguém perguntar, **cada número aponta para um arquivo**.
+- name: science
+  act: evidence
+  topic: Science
+  message: None of this is new
+  screen:
+  - '**Progressive disclosure** (Jakob Nielsen): show only what is needed now.'
+  - '**"Overview first, zoom and filter, then details on demand"** (Ben Shneiderman, 1996): it is Pearl layers in full.'
+  - '**Grounded theory** (Glaser and Strauss, 1967): raw → code → category. It is what the extraction does.'
+  - '**Sensemaking loop** (Pirolli and Card, 2005): collect, filter, schematize, build the case.'
+  - '**W3C PROV**: provenance vocabulary: "derived from", "generated by", "attributed to".'
+  source: Jakob Nielsen, "Progressive Disclosure", NN/g (2006)
+  notes: |-
+    **Nielsen did not create progressive disclosure**; he popularized the term in 2006, in an article that already calls the idea "more than 30 years old".
+
+    **1984**: **"Training Wheels"** study, by **John M. Carroll** and **Caroline Carrithers**, at IBM. They blocked the advanced functions of a word processor for beginners.
+
+    **1985**: **Kristina Hooper Woolsey**, at Apple, writes about informing the user little by little (book User Centered System Design, Norman and Draper, 1986).
+
+    **1992**: the **Macintosh Human Interface Guidelines** have the section "Using Progressive Disclosure".
+
+    Who named it first is **not confirmed**.
+
+    Full table: **references deck, slide R1**. Before inventing a format, look at **REFI-QDA** (Rotterdam Exchange Format Initiative for Qualitative Data Analysis) and open tools: **Taguette**, **QualCoder**.
+
+    https://www.nngroup.com/articles/progressive-disclosure/
+
+    https://jakobnielsenphd.substack.com/p/progressive-disclosure
+
+    https://en.wikipedia.org/wiki/Progressive_disclosure
+  pt:
+    topic: Ciência
+    message: Nada disso é novo
+    screen:
+    - '**Progressive disclosure** (Jakob Nielsen): mostrar só o necessário agora.'
+    - '**"Overview first, zoom and filter, then details on demand"** (primeiro a visão geral, depois zoom e filtro, e detalhes sob demanda; Ben Shneiderman, 1996): é o Pearl layers inteiro.'
+    - '**Grounded theory** (Glaser e Strauss, 1967): bruto → código → categoria. É o que a extração faz.'
+    - '**Sensemaking loop** (Pirolli e Card, 2005): coletar, filtrar, esquematizar, montar o caso.'
+    - '**W3C PROV**: vocabulário de proveniência: "veio de", "gerado por", "atribuído a".'
+    notes: |-
+      **Nielsen não criou o progressive disclosure**; ele popularizou o termo em 2006, num artigo que já chama a ideia de "mais de 30 anos".
+
+      **1984**: estudo **"Training Wheels"** (rodinhas de bicicleta), de **John M. Carroll** e **Caroline Carrithers**, na IBM. Bloquearam as funções avançadas de um editor de texto para quem estava começando.
+
+      **1985**: **Kristina Hooper Woolsey**, da Apple, escreve sobre informar o usuário aos poucos (livro User Centered System Design, Norman e Draper, 1986).
+
+      **1992**: as **Macintosh Human Interface Guidelines** têm a seção "Using Progressive Disclosure".
+
+      Quem nomeou primeiro **não está confirmado**.
+
+      Tabela completa: **deck de referências, slide R1**. Antes de inventar formato, olhar **REFI-QDA** (Rotterdam Exchange Format Initiative for Qualitative Data Analysis) e ferramentas abertas: **Taguette**, **QualCoder**.
+
+      https://www.nngroup.com/articles/progressive-disclosure/
+
+      https://jakobnielsenphd.substack.com/p/progressive-disclosure
+
+      https://en.wikipedia.org/wiki/Progressive_disclosure
+- name: context
+  act: evidence
+  topic: Context
+  message: The context says which techniques apply here
+  accent: context
+  screen:
+  - '**What the model already knows:** All the techniques, books and authors that were in the training.'
+  - '**What I tell it:** Which ones I use, in what order, and how to treat a reference. It is saved as a preference and holds in every session.'
+  - '**Real author:** the original sentence, not just a quote'
+  - '**Later revisions:** without my asking, the AI would bring only the first version'
+  - '**Example:** Eric Ries and vanity metrics, in 2009, 2011 and the caveat of 2016'
+  - '**Checked or from memory:** mark which is which'
+  source: Eric Ries, "Vanity Metrics vs. Actionable Metrics" (2009)
+  notes: |-
+    Quoting a sentence is good. Bringing the **real author** and the **original sentence** is better.
+
+    And bringing **what the author revised later**. Without my asking, the AI would probably bring only the first version.
+
+    Example from yesterday: **Eric Ries** and vanity metrics, in **2009**, **2011** and the caveat of **2016**.
+
+    And marking what was **checked** and what came **from memory**.
+
+    A point for the team: **preparing the context is the work**.
+
+    The **saved preferences** (open source first, deterministic first, credit for every reference, one question at a time) turn a generic model into a **partner that works my way**.
+
+    Records: files 169, 170, 171.
+
+    Yesterday the AI itself warned that it had **not checked** the Ries quote; I asked, it checked and **corrected the record**.
+
+    **2009**: post on Tim Ferriss's blog, "Vanity Metrics vs. Actionable Metrics".
+
+    **2011**: The Lean Startup, "vanity metrics are dangerous".
+
+    **2016**: "actionable metrics don't guarantee you'll make good decisions".
+
+    https://tim.blog/2009/05/19/vanity-metrics-vs-actionable-metrics/
+
+    https://nextbigideaclub.com/magazine/ericries-vanity-metrics-dangerous/4781/
+  pt:
+    topic: Contexto
+    message: O contexto diz quais técnicas valem aqui
+    accent: contexto
+    screen:
+    - '**O que o modelo já sabe:** Todas as técnicas, livros e autores que estavam no treinamento.'
+    - '**O que eu digo a ele:** Quais eu uso, em que ordem, e como tratar uma referência. Fica gravado como preferência e vale em toda sessão.'
+    - '**Autor verdadeiro:** a frase original, não só a citação'
+    - '**Revisões depois:** sem eu pedir, a IA traria só a primeira versão'
+    - '**Exemplo:** Eric Ries e as métricas de vaidade, em 2009, 2011 e a ressalva de 2016'
+    - '**Conferido ou de memória:** marcar qual é qual'
+    notes: |-
+      Citar uma frase é bom. Trazer o **autor verdadeiro** e a **frase original** é melhor.
+
+      E trazer **o que o autor revisou depois**. Sem eu pedir, a IA provavelmente traria só a primeira versão.
+
+      Exemplo de ontem: **Eric Ries** e as métricas de vaidade, em **2009**, **2011** e a ressalva de **2016**.
+
+      E marcar o que foi **conferido** e o que veio **de memória**.
+
+      Ponto para o time: **preparar o contexto é o trabalho**.
+
+      As **preferências gravadas** (open source primeiro, determinístico primeiro, crédito de toda referência, uma pergunta por vez) transformam um modelo genérico num **parceiro do meu jeito de trabalhar**.
+
+      Registros: arquivos 169, 170, 171.
+
+      Ontem a própria IA avisou que **não tinha conferido** a citação do Ries; eu pedi, ela conferiu e **corrigiu o registro**.
+
+      **2009**: post no blog do Tim Ferriss, "Vanity Metrics vs. Actionable Metrics".
+
+      **2011**: The Lean Startup, "vanity metrics are dangerous" (métricas de vaidade são perigosas).
+
+      **2016**: "actionable metrics don't guarantee you'll make good decisions" (métricas acionáveis não garantem boas decisões).
+
+      https://tim.blog/2009/05/19/vanity-metrics-vs-actionable-metrics/
+
+      https://nextbigideaclub.com/magazine/ericries-vanity-metrics-dangerous/4781/
+- name: reference-count
+  act: evidence
+  topic: Context
+  message: 1,136 references around one project
+  accent: 1,136
+  screen:
+  - '**73** memory, humility, mythology'
+  - '**126** agile, lean, XP'
+  - '**66** product and teams'
+  - '**88** architecture'
+  - '**243** platform and Kubernetes'
+  - '**278** DevOps, SRE, security'
+  - '**142** AI and agents'
+  - '**120** communication, writing, other'
+  notes: |-
+    **Six agents read everything this morning**: Nereus, the first proof of concept (wasp-idp), the two earlier platform-api repositories and the raw voice sessions on Drive: docs, ADRs, decks, issues and commit messages.
+
+    **They found 1,295 mentions, 1,136 distinct**: techniques, books, papers, quotes, myths, tools as ideas.
+
+    **The point is not the number**: it is how much context surrounds a project, and how little of it any of us invented. It is the "nothing new under the sun" slide, measured.
+
+    **Honesty about attribution**: most came from me, but the evidence only proves it for 333; the others stay "unknown" until a file says who brought them. Three more agents checked 239 of them on the web; 121 were confirmed or corrected.
+  pt:
+    topic: Contexto
+    message: 1.136 referências em volta de um projeto
+    accent: '1.136'
+    screen:
+    - '**73** memória, humildade, mitologia'
+    - '**126** agile, lean, XP'
+    - '**66** produto e times'
+    - '**88** arquitetura'
+    - '**243** plataforma e Kubernetes'
+    - '**278** DevOps, SRE, segurança'
+    - '**142** IA e agentes'
+    - '**120** comunicação, escrita, outros'
+    notes: |-
+      **Seis agentes leram tudo hoje de manhã**: o Nereus, a primeira prova de conceito (wasp-idp), os dois repositórios platform-api anteriores e as sessões de voz brutas no Drive: docs, ADRs, decks, issues e mensagens de commit.
+
+      **Acharam 1.295 menções, 1.136 distintas**: técnicas, livros, papers, frases, mitos, ferramentas como ideia.
+
+      **O ponto não é o número**: é quanto contexto envolve um projeto, e quão pouco dele qualquer um de nós inventou. É o slide "nada de novo debaixo do sol", medido.
+
+      **Honestidade na atribuição**: a maioria veio de mim, mas a evidência só prova isso para 333; as outras ficam "desconhecidas" até um arquivo dizer quem trouxe. Mais três agentes conferiram 239 na web; 121 foram confirmadas ou corrigidas.
+- name: sample
+  act: evidence
+  topic: Context
+  message: A sample by theme
+  screen:
+  - '**Memory**: method of loci; levels of processing (Craik and Lockhart, 1972); dual coding (Paivio, 1971)'
+  - '**Humility**: nothing new under the sun; Socratic ignorance; the shoulders of giants (Merton, 1965)'
+  - '**Mythology**: Nereus, the old man of the sea; the Nereids; Hesiod''s _Theogony_'
+  - '**Agile and lean**: the Agile Manifesto (2001); _The Lean Startup_ (Ries, 2011); _The Mythical Man-Month_ (Brooks, 1975)'
+  - '**Extreme Programming**: walking skeleton; continuous integration (Fowler); eat your own dog food'
+  - '**Teams**: Conway''s law (1968); psychological safety (Edmondson, 1999); _Times importam mais do que nunca_ (Caroli)'
+  - '**Architecture**: ADRs (Nygard, 2011); fitness functions (Ford, Parsons, Kua, 2017); _Fundamentals of Software Architecture_'
+  - '**Platform engineering**: _Platform as a Product_ (2025); Kratix; Crossplane; kro'
+  - '**DevOps, SRE, security**: DORA; the Google SRE book (2016); the Therac-25 accidents (Leveson, 1993)'
+  - '**AI and agents**: DORA AI-assisted development (2025); the METR study (2025); AGENTS.md studies (2026)'
+  - '**Communication**: _How to avoid death by PowerPoint_ (Phillips, 2014); Elm "Compiler Errors for Humans"; clig.dev'
+  refs:
+  - memory
+  - humility
+  - mythology
+  - agile-and-lean
+  - extreme-programming
+  - teams
+  - architecture
+  - platform-engineering
+  - devops-sre-security
+  - ai-and-agents
+  - communication
+  notes: |-
+    **Three names per theme**, picked from the most repeated and the checked ones. Tap a QR code to enlarge it.
+
+    **Memory and mythology go together**: telling Nereus through the myth is a memory palace (the mythology slide).
+
+    The full list, grouped the same way, is `docs/references.md`.
+
+    **The second half of the sample.** Platform engineering, DevOps and security hold almost half of the 1,136 references: the area where the project lives.
+
+    **The AI studies are recent** (2025 and 2026): they show what the AI speeds up and where it does not.
+  pt:
+    topic: Contexto
+    message: Uma amostra por tema
+    screen:
+    - '**Memória**: método de loci; níveis de processamento (Craik e Lockhart, 1972); codificação dupla (Paivio, 1971)'
+    - '**Humildade**: nada de novo debaixo do sol; a ignorância socrática; os ombros de gigantes (Merton, 1965)'
+    - '**Mitologia**: Nereu, o velho do mar; as Nereidas; a _Teogonia_ de Hesíodo'
+    - '**Agile e lean**: o Manifesto Ágil (2001); _The Lean Startup_ (Ries, 2011); _The Mythical Man-Month_ (Brooks, 1975)'
+    - '**Extreme Programming**: walking skeleton; integração contínua (Fowler); comer a própria comida de cachorro'
+    - '**Times**: lei de Conway (1968); segurança psicológica (Edmondson, 1999); _Times importam mais do que nunca_ (Caroli)'
+    - '**Arquitetura**: ADRs (Nygard, 2011); fitness functions (Ford, Parsons, Kua, 2017); _Fundamentals of Software Architecture_'
+    - '**Engenharia de plataforma**: _Platform as a Product_ (2025); Kratix; Crossplane; kro'
+    - '**DevOps, SRE, segurança**: DORA; o livro de SRE do Google (2016); os acidentes do Therac-25 (Leveson, 1993)'
+    - '**IA e agentes**: DORA, desenvolvimento assistido por IA (2025); o estudo do METR (2025); estudos sobre AGENTS.md (2026)'
+    - '**Comunicação**: _How to avoid death by PowerPoint_ (Phillips, 2014); Elm "Compiler Errors for Humans"; clig.dev'
+    notes: |-
+      **Três nomes por tema**, escolhidos entre os mais repetidos e os conferidos. Toque num QR Code para ampliar.
+
+      **Memória e mitologia andam juntas**: contar o Nereus pelo mito é um palácio da memória (o slide de mitologia).
+
+      A lista completa, agrupada do mesmo jeito, está em `docs/references.md`.
+
+      **A segunda metade da amostra.** Engenharia de plataforma, DevOps e segurança somam quase metade das 1.136 referências: é a área onde o projeto vive.
+
+      **Os estudos de IA são recentes** (2025 e 2026): mostram o que a IA acelera e onde não acelera.
+- name: rules
+  act: team
+  topic: Rules
+  message: Rules of the game
+  screen:
+  - '**Good enough now:** review and improve later'
+  - '**Open source:** before inventing'
+  - '**Deterministic first:** AI only where it is good (classify, extract, tone)'
+  - '**Provoking:** part of the contract; the AI must disagree when it has a reason'
+  - '**Credit:** every sentence, book and technique, to whoever brought it'
+  - '**Append-only log:** fixing means writing a new event'
+  notes: |-
+    Good enough now; review and improve later.
+
+    Open source before inventing.
+
+    Deterministic first; AI only where it is good (classify, extract, tone).
+
+    Provoking is part of the contract: the AI must disagree when it has a reason.
+
+    Every sentence, book and technique credited to whoever brought it.
+
+    Append-only log: fixing means writing a new event.
+
+    These rules are saved in the **AI's memory** as preferences of mine.
+
+    It applies them **without my repeating them**.
+  pt:
+    topic: Regras
+    message: Regras do jogo
+    screen:
+    - '**Bom o bastante agora:** revisar e melhorar depois'
+    - '**Open source:** antes de inventar'
+    - '**Determinístico primeiro:** IA só onde ela é boa (classificar, extrair, tom)'
+    - '**Provocar:** faz parte do contrato; a IA tem de discordar quando tem motivo'
+    - '**Crédito:** toda frase, livro e técnica, para quem trouxe'
+    - '**Log só de acréscimo:** corrigir é escrever um evento novo'
+    notes: |-
+      Bom o bastante agora; revisar e melhorar depois.
+
+      Open source antes de inventar.
+
+      Determinístico primeiro; IA só onde ela é boa (classificar, extrair, tom).
+
+      Provocar faz parte do contrato: a IA tem de discordar quando tem motivo.
+
+      Toda frase, livro e técnica com crédito de quem trouxe.
+
+      Log só de acréscimo: corrigir é escrever um evento novo.
+
+      Estas regras estão gravadas na **memória da IA** como preferências minhas.
+
+      Ela as aplica **sem eu repetir**.
+- name: ai-and-the-team
+  act: team
+  topic: AI and the team
+  message: What AI speeds up, where the team puts its energy
+  accent: team
+  screen:
+  - '**AI should speed up:** synthesis, drafts, organization, exploration, summaries, brainstorming, documentation, pattern recognition, preparation, information retrieval'
+  - '**The team focuses on:** strategic conversations, understanding the customer, experimentation, prioritization, collaboration, learning, quality of decisions'
+  source: Paulo Caroli, _Times importam mais do que nunca_
+  notes: |-
+    Lists from the book **Times importam mais do que nunca**, by **Paulo Caroli** (file 176).
+
+    "When teams spend less energy on repetitive operational work, they can devote more of it **to what does not happen automatically**."
+
+    Tie it to the deck: AI writes the raw data and the drafts and organizes; **I decide** and **I experiment**.
+  pt:
+    topic: A IA e o time
+    message: O que a IA acelera, onde o time põe energia
+    accent: time
+    screen:
+    - '**A IA deve acelerar:** síntese, rascunhos, organização, exploração, resumos, brainstorming, documentação, reconhecimento de padrões, preparação, recuperação de informações'
+    - '**O time se dedica a:** conversas estratégicas, entendimento do cliente, experimentação, priorização, colaboração, aprendizado, qualidade das decisões'
+    notes: |-
+      Listas do livro **Times importam mais do que nunca**, de **Paulo Caroli** (arquivo 176).
+
+      "Quando os times gastam menos energia com o trabalho operacional repetitivo, podem se dedicar mais **ao que não acontece automaticamente**."
+
+      Ligar com o deck: a IA escreve o bruto, os rascunhos e organiza; **eu decido** e **experimento**.
+- name: experimenting
+  act: team
+  topic: Experimenting
+  message: Experimenting is expensive, and worth it
+  accent: worth
+  screen:
+  - '**Tokens:** measure what went in, not what was learned'
+  - '**Cost per learning:** the experiment divided by the decisions it produced'
+  - The future belongs to the teams that **learn faster together**
+  source: Paulo Caroli, _Times importam mais do que nunca_
+  notes: |-
+    **Cutting the experiment to save tokens also cuts the learning.** Many teams chase saving tokens.
+
+    **Token spend is a vanity metric**, in Eric Ries's sense: it measures what went in, not what was learned.
+
+    **The real gain is the team going through Build-Measure-Learn**, again and again; AI is the tool.
+
+    **Cost per learning** is the cost of the experiment divided by the decisions or backlog items it produced.
+
+    **Caroli, in full:** "The future will not belong to the teams that simply use more AI. The future will belong to the teams that learn faster together."
+
+    **The owner's idea**, spoken in the morning and recorded on 10/27 (file 175).
+
+    **Cost per learning**: a suggestion from Claude, not measured yet.
+
+    A similar line, **attributed to Jeff Bezos**: "Our success at Amazon is a function of how many experiments we do per year, per month, per week, per day." Quoted by Fast Company in 2016, from a Medium post; original date not confirmed.
+
+    https://www.fastcompany.com/3063846/why-these-tech-companies-keep-running-thousands-of-failed
+
+    Caroli quote: file 173.
+  pt:
+    topic: Experimentar
+    message: Experimentar custa caro, e vale
+    accent: vale
+    screen:
+    - '**Token:** mede o que entrou, não o que se aprendeu'
+    - '**Custo por aprendizado:** o experimento dividido pelas decisões que gerou'
+    - O futuro é dos times que **aprendem mais rápido juntos**
+    notes: |-
+      **Cortar o experimento para economizar token também corta o aprendizado.** Muitos times correm atrás de economizar token.
+
+      **Gasto de token é métrica de vaidade**, no sentido do Eric Ries: mede o que entrou, não o que se aprendeu.
+
+      **O ganho de verdade é o time passar pelo Build-Measure-Learn**, de novo e de novo; a IA é a ferramenta.
+
+      **Custo por aprendizado** é o custo do experimento dividido pelas decisões ou itens de backlog que ele gerou.
+
+      **Caroli, completo:** "O futuro não será dos times que simplesmente usam mais IA. O futuro será dos times que aprendem mais rápido juntos."
+
+      **Ideia do owner**, falada de manhã e registrada em 27/10 (arquivo 175).
+
+      **Custo por aprendizado**: sugestão do Claude, ainda não medida.
+
+      Frase parecida, **atribuída a Jeff Bezos**: "Nosso sucesso na Amazon é função de quantos experimentos fazemos por ano, por mês, por semana, por dia." Citada pela Fast Company em 2016, a partir de um post no Medium; data original não confirmada.
+
+      https://www.fastcompany.com/3063846/why-these-tech-companies-keep-running-thousands-of-failed
+
+      Citação do Caroli: arquivo 173.
+- name: security
+  act: team
+  topic: Security
+  message: Security alongside, not in front
+  accent: alongside
+  screen:
+  - '**Licenses:** the team got Claude on Monday, with remote access blocked'
+  - '**Security:** comes along from the first experiment'
+  - '**Without blocking:** blocking before experimenting pays for the license and loses the learning'
+  notes: |-
+    On Monday the team received the **Claude licenses**, but with **remote access blocked**.
+
+    Security has to **come along** from the first experiment.
+
+    But it **cannot stop the team from using the features**. Blocking before experimenting is paying for the license and losing the learning.
+
+    **The owner's idea** (10/27, file 175).
+
+    Point for the conversation: **what would we need to show** for security to allow remote access with limits?
+  pt:
+    topic: Segurança
+    message: Segurança junto, não na frente
+    accent: junto
+    screen:
+    - '**Licenças:** o time recebeu o Claude na segunda, com o acesso remoto bloqueado'
+    - '**Segurança:** vem junto desde o primeiro experimento'
+    - '**Sem bloquear:** bloquear antes de experimentar é pagar a licença e perder o aprendizado'
+    notes: |-
+      Segunda-feira o time recebeu as **licenças do Claude**, mas com o **acesso remoto bloqueado**.
+
+      A segurança tem que **vir junto** desde o primeiro experimento.
+
+      Mas ela **não pode impedir o time de usar os recursos**. Bloquear antes de experimentar é pagar a licença e perder o aprendizado.
+
+      **Ideia do owner** (27/10, arquivo 175).
+
+      Ponto para a conversa: **o que precisaríamos mostrar** para a segurança liberar o acesso remoto com limites?
+- name: next
+  act: closing
+  topic: Next
+  message: Next steps
+  screen:
+  - '**Doris:** the Nereid of the `ideas` reef; extract and classify with the criteria of the five stages'
+  - '**Tide v2:** the 263 real events; Pearl layers + timeline (when + how)'
+  - '**Two-tab panel:** classification first, raw after, with "I disagree"'
+  - '**Heat map:** by hour of the day, measuring conversion (ideas that became backlog), not volume'
+  notes: |-
+    Doris becomes the Nereid of the `ideas` reef: extract and classify, with the criteria of the five stages.
+
+    Tide v2 with the 263 real events: Pearl layers + timeline (when + how).
+
+    Two-tab panel: classification first, raw data after, with "I disagree".
+
+    Heat map by hour of the day, measuring **conversion** (ideas that became backlog), not volume.
+
+    First form of the heat map: **references deck, R4**.
+  pt:
+    topic: Próximos
+    message: Próximos passos
+    screen:
+    - '**Doris:** a Nereid do reef `ideas`; extrair e classificar com os critérios dos cinco estágios'
+    - '**Tide v2:** os 263 eventos reais; Pearl layers + timeline (quando + como)'
+    - '**Painel de duas abas:** classificação primeiro, bruto depois, com "discordo"'
+    - '**Mapa de calor:** por hora do dia, medindo conversão (ideias que viraram backlog), não volume'
+    notes: |-
+      Doris vira a Nereid do reef `ideas`: extrair e classificar, com os critérios dos cinco estágios.
+
+      Tide v2 com os 263 eventos reais: Pearl layers + timeline (quando + como).
+
+      Painel de duas abas: classificação primeiro, bruto depois, com "discordo".
+
+      Mapa de calor por hora do dia, medindo **conversão** (ideias que viraram backlog), não volume.
+
+      Primeira forma do mapa de calor: **deck de referências, R4**.
+- name: readings
+  act: closing
+  topic: Readings
+  message: To read and cite
+  screen:
+  - '**Eric Ries**, _The Lean Startup_ (2011): Build-Measure-Learn.'
+  - '**Eric Ries**, "Vanity Metrics vs. Actionable Metrics" (2009).'
+  - '**Jakob Nielsen**, "Progressive Disclosure" (2006).'
+  - '**Paulo Caroli**, _Team OKR em Ação_: vanity key results.'
+  - '**Paulo Caroli**, _Times importam mais do que nunca_: reading it now.'
+  - '**Marcus Fontoura**, _Human Agency in a Digital World_: not read yet; the thesis fits "human decides".'
+  refs:
+  - the-lean-startup
+  - vanity-metrics-vs-actionable-metrics
+  - progressive-disclosure
+  - team-okr-em-acao
+  - human-agency-in-a-digital-world
+  notes: |-
+    Tap the **QR Code** next to each reading to enlarge it.
+
+    Times importam mais do que nunca: still **no verified link**.
+
+    The Team OKR em Ação link was built from the book's Amazon code shared by the owner.
+  pt:
+    topic: Leituras
+    message: Para ler e citar
+    screen:
+    - '**Eric Ries**, _The Lean Startup_ (2011): Build-Measure-Learn.'
+    - '**Eric Ries**, "Vanity Metrics vs. Actionable Metrics" (2009).'
+    - '**Jakob Nielsen**, "Progressive Disclosure" (2006).'
+    - '**Paulo Caroli**, _Team OKR em Ação_: resultados-chave de vaidade.'
+    - '**Paulo Caroli**, _Times importam mais do que nunca_: estou lendo agora.'
+    - '**Marcus Fontoura**, _Human Agency in a Digital World_: ainda não li; a tese combina com "humano decide".'
+    notes: |-
+      Toque no **QR Code** ao lado de cada leitura para ampliar.
+
+      Times importam mais do que nunca: ainda **sem link conferido**.
+
+      Link do Team OKR em Ação montado a partir do código do livro na Amazon compartilhado pelo owner.
+- name: questions
+  act: closing
+  topic: Questions
+  message: Questions?
+  notes: |-
+    Close by **going back to the first slide's sentence**: "I talk, the files remember, the agents execute, I decide".
+
+    **Every claim has a file:** all of tonight's raw data is in the day's folder.
+
+    Leave the slide still during the questions.
+  pt:
+    topic: Perguntas
+    message: Perguntas?
+    notes: |-
+      Fechar **voltando à frase do primeiro slide**: "Eu falo, os arquivos lembram, os agentes executam, eu decido".
+
+      **Cada afirmação tem um arquivo:** o bruto desta noite está todo na pasta do dia.
+
+      Deixar o slide parado durante as perguntas.
+- name: techniques
+  act: appendix
+  topic: References
+  message: Techniques and what we do
+  screen:
+  - '**Metrics:** Vanity vs. actionable metrics'
+  - '- Eric Ries: 2009 post (Tim Ferriss''s blog); 2011 book; 2016 caveat'
+  - '- Counting ideas is vanity; conversion into backlog is actionable. And even the actionable one does not guarantee a good decision.'
+  - '**Product:** Build, Measure, Learn'
+  - '- Eric Ries, _The Lean Startup_, 2011'
+  - '- The reason behind it all: good enough today, each loop closer to the goal (Pearl layers v1 → v3).'
+  - '**Interface:** Progressive disclosure'
+  - '- Jakob Nielsen (NN/g)'
+  - '- Show only what is needed now; detail on demand. The panel on touch.'
+  - '**Visualization:** Visual Information-Seeking Mantra'
+  - '- Ben Shneiderman, 1996'
+  - '- Overview = Pearl layers; zoom and filter = ideas, cloud, search; details = touch.'
+  - '**Qualitative research:** Grounded theory (open, axial, selective coding)'
+  - '- Glaser and Strauss, 1967; Strauss and Corbin'
+  - '- Raw → code → category = raw → classification → idea. A code always points to the excerpt.'
+  - '**Qualitative research:** Thematic analysis (6 phases)'
+  - '- Braun and Clarke, 2006'
+  - '- A lighter recipe for the same thing; useful to explain to the team.'
+  - '**Analysis:** Sensemaking loop'
+  - '- Pirolli and Card, 2005'
+  - '- Foraging (collect, filter) and sensemaking (schematize, build the case): the Tide''s dive and replay.'
+  - '**Traceability:** PROV (entity, activity, agent)'
+  - '- W3C, 2013'
+  - '- Names the relations: wasDerivedFrom, wasGeneratedBy, wasAttributedTo. Adds to the CloudEvents + traceparent already in use.'
+  - '**Tools:** QDA and the REFI-QDA format'
+  - '- NVivo, ATLAS.ti, MAXQDA; open ones: Taguette, QualCoder'
+  - '- Look at the exchange format before Doris gets its own schema (open source first).'
+  - '**Events:** CloudEvents 1.0 + W3C Trace Context'
+  - '- CNCF; W3C'
+  - '- Envelope and tracing already adopted by the extraction of the 25th (263 events).'
+  notes: |-
+    Dates brought **from memory** by the AI on 26/10, **not checked** on the web that night.
+
+    Exception: **Eric Ries**, checked on 27/10 (file 170). Progressive disclosure checked on 27/10.
+
+    **Check the others before quoting in public.**
+
+    https://tim.blog/2009/05/19/vanity-metrics-vs-actionable-metrics/
+
+    https://nextbigideaclub.com/magazine/ericries-vanity-metrics-dangerous/4781/
+  pt:
+    topic: Referências
+    message: Técnicas e o que fazemos
+    screen:
+    - '**Métricas:** Vanity vs. actionable metrics'
+    - '- Eric Ries: post de 2009 (blog do Tim Ferriss); livro de 2011; ressalva de 2016'
+    - '- Contar ideias é vaidade; conversão em backlog é acionável. E nem a acionável garante boa decisão.'
+    - '**Produto:** Build, Measure, Learn'
+    - '- Eric Ries, _The Lean Startup_, 2011'
+    - '- O porquê de tudo: bom o bastante hoje, cada volta mais perto do objetivo (Pearl layers v1 → v3).'
+    - '**Interface:** Progressive disclosure'
+    - '- Jakob Nielsen (NN/g)'
+    - '- Mostrar só o necessário agora; detalhe sob demanda. O painel ao tocar.'
+    - '**Visualização:** Visual Information-Seeking Mantra'
+    - '- Ben Shneiderman, 1996'
+    - '- Overview = Pearl layers; zoom e filtro = ideias, nuvem, busca; detalhe = toque.'
+    - '**Pesquisa qualitativa:** Grounded theory (open, axial, selective coding)'
+    - '- Glaser e Strauss, 1967; Strauss e Corbin'
+    - '- Bruto → código → categoria = raw → classificação → ideia. Código sempre aponta para o trecho.'
+    - '**Pesquisa qualitativa:** Thematic analysis (6 fases)'
+    - '- Braun e Clarke, 2006'
+    - '- Receita mais leve para a mesma coisa; útil para explicar ao time.'
+    - '**Análise:** Sensemaking loop'
+    - '- Pirolli e Card, 2005'
+    - '- Foraging (coletar, filtrar) e sensemaking (esquematizar, montar o caso): o dive e o replay do Tide.'
+    - '**Rastreabilidade:** PROV (entity, activity, agent)'
+    - '- W3C, 2013'
+    - '- Nomeia as relações: wasDerivedFrom, wasGeneratedBy, wasAttributedTo. Soma ao CloudEvents + traceparent já usados.'
+    - '**Ferramentas:** QDA e o formato REFI-QDA'
+    - '- NVivo, ATLAS.ti, MAXQDA; abertos: Taguette, QualCoder'
+    - '- Olhar o formato de troca antes de a Doris ter schema próprio (open source primeiro).'
+    - '**Eventos:** CloudEvents 1.0 + W3C Trace Context'
+    - '- CNCF; W3C'
+    - '- Envelope e rastreio já adotados pela extração do dia 25 (263 eventos).'
+    notes: |-
+      Datas trazidas **de memória** pela IA em 26/10, **não conferidas** na web nessa noite.
+
+      Exceção: **Eric Ries**, conferido em 27/10 (arquivo 170). Progressive disclosure conferido em 27/10.
+
+      **Conferir as demais antes de citar em público.**
+
+      https://tim.blog/2009/05/19/vanity-metrics-vs-actionable-metrics/
+
+      https://nextbigideaclub.com/magazine/ericries-vanity-metrics-dangerous/4781/
+- name: criteria
+  act: appendix
+  topic: Criteria
+  message: Classification criteria (v1)
+  screen:
+  - '**{raw:grain}:** Said once, in passing'
+  - '- A single raw file; no name used later; no scope; no question'
+  - '- …asked "note it for later" with a scope (shell) or answered an open question (decision)'
+  - '**{agent:shell}:** Picked up again, with a scope or a name'
+  - '- A second file cites it; requirements listed; prototype or deck made to think; name used later'
+  - '- …was delegated to an agent (order) or closed a question (decision)'
+  - '**{order:decision}:** Explicit choice that closes a question'
+  - '- "let''s go with", "this one", "send it"; [decision] in the raw; handoff stops listing the question'
+  - '- …was silence, "maybe" or "for later"'
+  - '**{pr:order / PR}:** Work left the conversation'
+  - '- Order with a valid assigned_to; issue or PR; claim/ack by the agent'
+  - '- …is an artifact made by the AI inside the conversation (shell) or an order with an invalid header'
+  - '**pearl:** Exists and runs without the conversation'
+  - '- Merged PR (commit); closed issue; deliverable accepted and used'
+  - '- …open PR, red CI, or "done" without a commit'
+  - 'Gray area: a preference that changed the next action counts as a decision with medium confidence. Flags: dropped, parked, question. Time: recorded or inferred.'
+  notes: |-
+    Three open points at the end of **file 161**:
+
+    1. Does the AI prototype deserve its own stage (**"sketch"**)?
+
+    2. Does a **preference** count as a decision?
+
+    3. Does an idea **go down a stage** or just get a flag?
+  pt:
+    topic: Critérios
+    message: Critérios de classificação (v1)
+    screen:
+    - '**{raw:grain}:** Dito uma vez, de passagem'
+    - '- Um único arquivo bruto; sem nome usado depois; sem escopo; sem pergunta'
+    - '- …pediu "anota para depois" com escopo (shell) ou respondeu pergunta aberta (decision)'
+    - '**{agent:shell}:** Retomado, com escopo ou nome'
+    - '- Segundo arquivo cita; requisitos listados; protótipo ou deck feito para pensar; nome usado depois'
+    - '- …foi delegado a agente (order) ou fechou pergunta (decision)'
+    - '**{order:decision}:** Escolha explícita que fecha pergunta'
+    - '- "vamos de", "esse", "mande"; [decision] no bruto; handoff para de listar a pergunta'
+    - '- …foi silêncio, "talvez" ou "para depois"'
+    - '**{pr:order / PR}:** Trabalho saiu da conversa'
+    - '- Ordem com assigned_to válido; issue ou PR; claim/ack do agente'
+    - '- …é artefato feito pela IA dentro da conversa (shell) ou ordem com cabeçalho inválido'
+    - '**pearl:** Existe e roda sem a conversa'
+    - '- PR mergeado (commit); issue fechada; entregável aceito e usado'
+    - '- …PR aberto, CI vermelho, ou "done" sem commit'
+    - 'Zona cinzenta: preferência que mudou a ação seguinte conta como decision com confiança média. Sinalizadores: dropped, parked, question. Hora: recorded ou inferred.'
+    notes: |-
+      Três pontos abertos no fim do **arquivo 161**:
+
+      1. Protótipo da IA merece estágio próprio (**"sketch"**)?
+
+      2. **Preferência** conta como decisão?
+
+      3. Ideia **desce de estágio** ou só ganha sinalizador?
+- name: panel
+  act: appendix
+  topic: Panel
+  message: What the "classification" tab shows
+  screen:
+  - '**Stage:** with the one-line test it passed.'
+  - '**Evidence used:** files and the quoted excerpt (link to the raw tab).'
+  - '**Confidence:** high (two or more pieces of evidence), medium (one, or gray area), low (context only). With the reason.'
+  - '**Who classified:** `human:owner`, `coordinator:claude`, then `nereid:doris`.'
+  - '**Flags:** and the source of the time.'
+  - '**"I disagree" action:** writes a correction event pointing to this one. Not built yet.'
+  pt:
+    topic: Painel
+    message: O que a aba "classificação" mostra
+    screen:
+    - '**Estágio:** com o teste de uma linha que ele passou.'
+    - '**Evidência usada:** arquivos e o trecho citado (link para a aba bruto).'
+    - '**Confiança:** alta (duas ou mais evidências), média (uma, ou zona cinzenta), baixa (só contexto). Com o porquê.'
+    - '**Quem classificou:** `human:owner`, `coordinator:claude`, depois `nereid:doris`.'
+    - '**Sinalizadores:** e a origem da hora.'
+    - '**Ação "Discordo":** escreve um evento de correção apontando para este. Ainda não construído.'
+- name: analysis
+  act: appendix
+  topic: Analysis
+  message: When do ideas become backlog?
+  accent: backlog
+  screen:
+  - '**Conversion:** Per hour band (or weekday): ideas born there that reached order/PR or pearl ÷ ideas born there'
+  - '- At what time does what I say tend to become work?'
+  - '**Time to shell:** Median of (time of the 1st pickup − time of the grain), per birth band'
+  - '- How long does an idea take to be taken seriously?'
+  - '**Time to pearl:** Median of (merge − grain), only for the ones that got there'
+  - '- What is the real cycle from idea → delivery?'
+  - '**Pickups:** Number of times the idea comes back before becoming an order (layers of nacre)'
+  - '- Ideas that need more rounds of conversation'
+  - '**Mortality:** Ideas with dropped or no pickup in N days ÷ born, per band'
+  - '- What time produces the most "grain that becomes nothing"?'
+  - '**Visual:** heat map hour × weekday, color = conversion, size or number = volume. Volume alone misleads; conversion alone hides small samples (3 ideas, 2 made it = 67%). Show both.'
+  - '**First version, good enough:** a script over the JSONL (263 events of the 25th + today''s), grouping by the grain''s birth hour. Pandas or SQL in DuckDB; chart with D3 or Vega-Lite. All open source.'
+  - '**Careful with the conclusion:** few days of data and a strong bias (there is only time at night). This calls for comparison within the same period (8pm vs 11pm vs 4am), not night vs day.'
+  - '**Better than "good enough":** the same metric per channel (voice vs chat) and per type of AI contribution that preceded the decision (provocation vs reference). Then the question becomes "what helps the idea mature", not "what time is it".'
+  - 'The owner''s premise: counting ideas per hour will only show night and early morning, because he works during the day. What matters is not how many are born, but which ones reach a backlog item.'
+  - 'Counting ideas would be a **vanity key result**, as Paulo Caroli says in _Team OKR em Ação_: a number that goes up and pleases, but does not tell whether anything happened. Eric Ries calls them _vanity metrics_ in _The Lean Startup_.'
+  notes: |-
+    **The owner's idea** (26/10, 11:37-11:38pm): heat map per hour.
+
+    His own correction: measure **refinement until backlog**, not volume. He asked for another metric if it makes more sense.
+
+    **Proposal of the metrics**: Claude.
+  pt:
+    topic: Análise
+    message: Quando as ideias viram backlog?
+    accent: backlog
+    screen:
+    - '**Conversão:** Por faixa de hora (ou dia da semana): ideias nascidas ali que chegaram a order/PR ou pearl ÷ ideias nascidas ali'
+    - '- Em que horário o que eu falo tende a virar trabalho?'
+    - '**Tempo até a concha:** Mediana de (hora da 1ª retomada − hora do grain), por faixa de nascimento'
+    - '- Quanto tempo uma ideia leva para ser levada a sério?'
+    - '**Tempo até a pérola:** Mediana de (merge − grain), só para as que chegaram'
+    - '- Qual o ciclo real de ideia → entrega?'
+    - '**Retomadas:** Número de vezes que a ideia volta antes de virar order (camadas de nácar)'
+    - '- Ideias que precisam de mais rodadas de conversa'
+    - '**Mortalidade:** Ideias com dropped ou sem retomada em N dias ÷ nascidas, por faixa'
+    - '- Que horário gera mais "grão que não vira nada"?'
+    - '**Visual:** heat map hora × dia da semana, cor = conversão, tamanho ou número = volume. Volume sozinho engana; conversão sozinha esconde amostras pequenas (3 ideias, 2 viraram = 67%). Mostrar os dois.'
+    - '**Primeira versão, boa o bastante:** um script sobre o JSONL (263 eventos do dia 25 + os de hoje), agrupando por hora de nascimento do grain. Pandas ou SQL em DuckDB; gráfico com D3 ou Vega-Lite. Tudo open source.'
+    - '**Cuidado com a conclusão:** poucos dias de dados e um viés forte (só há tempo à noite). Isso pede comparação dentro do mesmo período (20h vs 23h vs 4h), não noite vs dia.'
+    - '**Melhor que o "bom o bastante":** a mesma métrica por canal (voz vs chat) e por tipo de contribuição da IA que antecedeu a decisão (provocação vs referência). Aí a pergunta vira "o que ajuda a ideia a amadurecer", não "que horas são".'
+    - 'Premissa do owner: contar ideias por hora vai só mostrar noite e madrugada, porque de dia ele trabalha. O que interessa não é quantas nascem, mas quais chegam a item de backlog.'
+    - 'Contar ideias seria um **resultado-chave de vaidade**, como diz Paulo Caroli em _Team OKR em Ação_: um número que sobe e agrada, mas não diz se algo aconteceu. Eric Ries chama de _vanity metrics_ em _The Lean Startup_.'
+    notes: |-
+      **Ideia do owner** (26/10, 23h37-23h38): mapa de calor por hora.
+
+      Correção dele mesmo: medir **refino até backlog**, não volume. Pediu outra métrica se fizer mais sentido.
+
+      **Proposta das métricas**: Claude.
+- name: credits
+  act: appendix
+  topic: Credits
+  message: Credits
+  screen:
+  - The ocean metaphor; "fixed bottom part, zoom in the center, search, clickable cloud"; grouping by idea; shells and pearls; touch to see notes; classification before the raw
+  - '- The owner'
+  - Names Doris and Tide (suggestion), six visualizations, Pearl layers, Coral ring, the "a network loses time" critique, v1 criteria
+  - '- Claude (Anthropic), coordinator'
+  - First timeline (263 events, 100 ideas, the 25th)
+  - '- Agent LN28'
+  - 'PRs #446 and #448'
+  - '- Agent m15'
+  - 'Reference images: cover of _Data Visualisation_ (Andy Kirk, SAGE); Neural Network Zoo (Fjodor van Veen and Stefan Leijnen, Asimov Institute)'
+  - '- Brought by the owner'
+  - 'Books: _Times importam mais do que nunca_ and _Team OKR em Ação_ ("vanity key results") (Paulo Caroli); _Human Agency in a Digital World_ (Marcus Fontoura)'
+  - '- Cited by the owner'
+  - The why (dictated → raw → beach as good enough → Nereus); the beach and Glaucus metaphor; "let's move on"; the context says which techniques are worth it and how to treat a reference (author, phrase, later review)
+  - '- The owner'
+  - Eric Ries (Build, Measure, Learn); Nielsen; Shneiderman; Glaser and Strauss; Braun and Clarke; Pirolli and Card; W3C PROV; REFI-QDA
+  - '- Brought by Claude'
+  pt:
+    topic: Créditos
+    message: Créditos
+    screen:
+    - Metáfora do oceano; "parte de baixo fixa, zoom no centro, busca, nuvem clicável"; agrupar por ideia; conchas e pérolas; tocar para ver notas; classificação antes do bruto
+    - '- O owner'
+    - Nomes Doris e Tide (sugestão), seis visualizações, Pearl layers, Coral ring, crítica "rede perde o tempo", critérios v1
+    - '- Claude (Anthropic), coordenador'
+    - Primeira timeline (263 eventos, 100 ideias, dia 25)
+    - '- Agente LN28'
+    - 'PRs #446 e #448'
+    - '- Agente m15'
+    - 'Imagens de referência: capa de _Data Visualisation_ (Andy Kirk, SAGE); Neural Network Zoo (Fjodor van Veen e Stefan Leijnen, Asimov Institute)'
+    - '- Trazidas pelo owner'
+    - 'Livros: _Times importam mais do que nunca_ e _Team OKR em Ação_ ("resultados-chave de vaidade") (Paulo Caroli); _Human Agency in a Digital World_ (Marcus Fontoura)'
+    - '- Citados pelo owner'
+    - O porquê (ditado → bruto → praia como bom o bastante → Nereus); metáfora da praia e do Glauco; "vamos avançar"; o contexto diz quais técnicas valem e como tratar uma referência (autor, frase, revisão posterior)
+    - '- O owner'
+    - Eric Ries (Build, Measure, Learn); Nielsen; Shneiderman; Glaser e Strauss; Braun e Clarke; Pirolli e Card; W3C PROV; REFI-QDA
+    - '- Trazidos por Claude'
+references:
+- name: memory
+  title: Memory
+  url: https://en.wikipedia.org/wiki/Levels_of_processing_model
+  about: method of loci; levels of processing (Craik and Lockhart, 1972); dual coding (Paivio, 1971)
+  pt:
+    about: método de loci; níveis de processamento (Craik e Lockhart, 1972); codificação dupla (Paivio, 1971)
+- name: humility
+  title: Humility
+  url: https://en.wikipedia.org/wiki/Standing_on_the_shoulders_of_giants
+  about: nothing new under the sun; Socratic ignorance; the shoulders of giants (Merton, 1965)
+  pt:
+    about: nada de novo debaixo do sol; a ignorância socrática; os ombros de gigantes (Merton, 1965)
+- name: mythology
+  title: Mythology
+  url: https://en.wikipedia.org/wiki/Nereus
+  about: Nereus, the old man of the sea; the Nereids; Hesiod's _Theogony_
+  pt:
+    about: Nereu, o velho do mar; as Nereidas; a _Teogonia_ de Hesíodo
+- name: agile-and-lean
+  title: Agile and lean
+  url: https://agilemanifesto.org/principles.html
+  about: the Agile Manifesto (2001); _The Lean Startup_ (Ries, 2011); _The Mythical Man-Month_ (Brooks, 1975)
+  pt:
+    about: o Manifesto Ágil (2001); _The Lean Startup_ (Ries, 2011); _The Mythical Man-Month_ (Brooks, 1975)
+- name: extreme-programming
+  title: Extreme Programming
+  url: https://martinfowler.com/articles/continuousIntegration.html
+  about: walking skeleton; continuous integration (Fowler); eat your own dog food
+  pt:
+    about: walking skeleton; integração contínua (Fowler); comer a própria comida de cachorro
+- name: teams
+  title: Teams
+  url: https://caroli.org/livro/times-importam-mais-do-que-nunca/
+  about: Conway's law (1968); psychological safety (Edmondson, 1999); _Times importam mais do que nunca_ (Caroli)
+  pt:
+    about: lei de Conway (1968); segurança psicológica (Edmondson, 1999); _Times importam mais do que nunca_ (Caroli)
+- name: architecture
+  title: Architecture
+  url: https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions
+  about: ADRs (Nygard, 2011); fitness functions (Ford, Parsons, Kua, 2017); _Fundamentals of Software Architecture_
+  pt:
+    about: ADRs (Nygard, 2011); fitness functions (Ford, Parsons, Kua, 2017); _Fundamentals of Software Architecture_
+- name: platform-engineering
+  title: Platform engineering
+  url: https://www.syntasso.io/platform-as-a-product-oreilly-report
+  about: _Platform as a Product_ (2025); Kratix; Crossplane; kro
+  pt:
+    about: _Platform as a Product_ (2025); Kratix; Crossplane; kro
+- name: devops-sre-security
+  title: DevOps, SRE, security
+  url: https://sre.google/sre-book/monitoring-distributed-systems/
+  about: DORA; the Google SRE book (2016); the Therac-25 accidents (Leveson, 1993)
+  pt:
+    about: DORA; o livro de SRE do Google (2016); os acidentes do Therac-25 (Leveson, 1993)
+- name: ai-and-agents
+  title: AI and agents
+  url: https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/
+  about: DORA AI-assisted development (2025); the METR study (2025); AGENTS.md studies (2026)
+  pt:
+    about: DORA, desenvolvimento assistido por IA (2025); o estudo do METR (2025); estudos sobre AGENTS.md (2026)
+- name: communication
+  title: Communication
+  url: https://clig.dev/
+  about: _How to avoid death by PowerPoint_ (Phillips, 2014); Elm "Compiler Errors for Humans"; clig.dev
+  pt:
+    about: _How to avoid death by PowerPoint_ (Phillips, 2014); Elm "Compiler Errors for Humans"; clig.dev
+- name: the-lean-startup
+  title: The Lean Startup
+  author: Eric Ries
+  year: 2011
+  url: https://theleanstartup.com/principles
+  about: '**Eric Ries**, _The Lean Startup_ (2011): Build-Measure-Learn.'
+  pt:
+    about: '**Eric Ries**, _The Lean Startup_ (2011): Build-Measure-Learn.'
+- name: vanity-metrics-vs-actionable-metrics
+  title: Vanity Metrics vs. Actionable Metrics
+  author: Eric Ries
+  year: 2009
+  url: https://tim.blog/2009/05/19/vanity-metrics-vs-actionable-metrics/
+  about: '**Eric Ries**, "Vanity Metrics vs. Actionable Metrics" (2009).'
+  pt:
+    about: '**Eric Ries**, "Vanity Metrics vs. Actionable Metrics" (2009).'
+- name: progressive-disclosure
+  title: Progressive Disclosure
+  author: Jakob Nielsen
+  year: 2006
+  url: https://www.nngroup.com/articles/progressive-disclosure/
+  about: '**Jakob Nielsen**, "Progressive Disclosure" (2006).'
+  pt:
+    about: '**Jakob Nielsen**, "Progressive Disclosure" (2006).'
+- name: team-okr-em-acao
+  title: Team OKR em Ação
+  author: Paulo Caroli
+  url: https://www.amazon.com.br/dp/B0FKKQ8S33
+  about: '**Paulo Caroli**, _Team OKR em Ação_: vanity key results.'
+  pt:
+    about: '**Paulo Caroli**, _Team OKR em Ação_: resultados-chave de vaidade.'
+- name: human-agency-in-a-digital-world
+  title: Human Agency in a Digital World
+  author: Marcus Fontoura
+  url: https://www.simonandschuster.ca/books/Human-Agency-in-a-Digital-World/Marcus-Fontoura/9798999755032
+  about: '**Marcus Fontoura**, _Human Agency in a Digital World_: not read yet; the thesis fits "human decides".'
+  pt:
+    about: '**Marcus Fontoura**, _Human Agency in a Digital World_: ainda não li; a tese combina com "humano decide".'

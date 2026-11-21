@@ -1,0 +1,11 @@
+{
+  "name": "scene-github",
+  "command": "test/scene-github",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 245,
+  "passed": 58,
+  "failure": null,
+  "commit": "235f74d",
+  "started": "2026-11-10T11:56:58Z"
+}

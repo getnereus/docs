@@ -1,0 +1,12 @@
+{
+  "name": "scene-delivery",
+  "command": "test/scene-delivery",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 654,
+  "passed": 50,
+  "failed": 8,
+  "failure": null,
+  "commit": "49659c02",
+  "started": "2026-11-14T16:01:50Z"
+}
