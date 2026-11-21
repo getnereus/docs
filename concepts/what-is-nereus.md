@@ -28,7 +28,7 @@ Reefs:
   secrets         Reef secrets, looked after by nereid openbao.
 ```
 
-## Picture
+## Overview
 
 <!-- diagram:architecture:start (scripts/docs/diagrams) -->
 <figure class="diagram architecture" markdown="0">

@@ -42,7 +42,7 @@ H1 once, `##` for the blocks below, in this order, with these exact names; `###`
 |---|---|---|---|
 | `tutorial` | a verb: "Install the CLI" | Run, What you get, Next | 250 words, at most 3 commands |
 | `howto` | the goal: "Keep a secret" | Before you start, Steps, Check it worked, *Clean up*, Next, *Learn more* | 600 words, at most 7 steps (`###` in Steps) |
-| `concept` | a noun: "Reef, Nereid and Mandate" | Example, *Picture*, How it works, Not this, Next | 400 words, at most 1 diagram, How it works at most 5 bullets |
+| `concept` | a noun: "Reef, Nereid and Mandate" | Example, *Overview*, How it works, Not this, Next | 400 words, at most 1 diagram, How it works at most 5 bullets |
 | `troubleshoot` | the symptom as printed | You see, Why, Fix, Check | 200 words, Why at most 2 sentences |
 | `reference` | the name: "Glossary" | free; one example per entry | paragraphs at most 40 words |
 | `landing` | the product | free | 300 words |
@@ -61,7 +61,7 @@ A command exists in `docs/specs/cli/**/*.yaml` and its flags in `uv run --projec
 - Inter for text, JetBrains Mono for code; the terminal look is `docs/javascripts/terminal.js`.
 - Callouts: `!!! note`, `!!! warning` (something changes or is deleted), `!!! tip`; no other kind.
 - Status: a chip only on what does not run yet, after the H1's first paragraph or a command link: `[planned #1234]`, `[idea]` (grey, told apart by a dashed or dotted border). What runs today carries no chip (owner, 2026-11-20): the front matter's `status` says it; the one exception is the Status column of `reference/what-is-built.md`. Never free text such as `· built` on a new page.
-- Diagrams: a ` ```mermaid ` block, left to right (`flowchart LR`), at most 7 nodes, a caption line in italics right below.
+- Diagrams: an SVG drawn by `scripts/docs/diagrams` between the page's markers (`<!-- diagram:<name>:start -->`), a wide drawing and a narrow one for a phone, in the line of Red Hat's OpenShift diagrams (square boxes, grey zones, thin right-angle arrows), a caption line in italics right below; `make docs-diagrams` redraws them and `make docs-lint` fails on a stale one or on a ` ```mermaid ` block (#2021).
 - Icons: Material outline icons on Home's cards only; no emoji in prose.
 - Phone: tables at most 3 columns, no side-by-side layouts; a terminal runs edge to edge, square, as Material's own code blocks do. No `$ ` before a command.
 

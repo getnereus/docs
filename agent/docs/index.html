@@ -7090,7 +7090,7 @@
 <tr>
 <td><code>concept</code></td>
 <td>a noun: "Reef, Nereid and Mandate"</td>
-<td>Example, <em>Picture</em>, How it works, Not this, Next</td>
+<td>Example, <em>Overview</em>, How it works, Not this, Next</td>
 <td>400 words, at most 1 diagram, How it works at most 5 bullets</td>
 </tr>
 <tr>
@@ -7123,7 +7123,7 @@
 <li>Inter for text, JetBrains Mono for code; the terminal look is <code>docs/javascripts/terminal.js</code>.</li>
 <li>Callouts: <code>!!! note</code>, <code>!!! warning</code> (something changes or is deleted), <code>!!! tip</code>; no other kind.</li>
 <li>Status: a chip only on what does not run yet, after the H1's first paragraph or a command link: <code>&lt;span class="chip planned"&gt;planned #1234&lt;/span&gt;</code>, <code>&lt;span class="chip idea"&gt;idea&lt;/span&gt;</code> (grey, told apart by a dashed or dotted border). What runs today carries no chip (owner, 2026-11-20): the front matter's <code>status</code> says it; the one exception is the Status column of <code>reference/what-is-built.md</code>. Never free text such as <code>· built</code> on a new page.</li>
-<li>Diagrams: a <code>```mermaid</code> block, left to right (<code>flowchart LR</code>), at most 7 nodes, a caption line in italics right below.</li>
+<li>Diagrams: an SVG drawn by <code>scripts/docs/diagrams</code> between the page's markers (<code>&lt;!-- diagram:&lt;name&gt;:start --&gt;</code>), a wide drawing and a narrow one for a phone, in the line of Red Hat's OpenShift diagrams (square boxes, grey zones, thin right-angle arrows), a caption line in italics right below; <code>make docs-diagrams</code> redraws them and <code>make docs-lint</code> fails on a stale one or on a <code>```mermaid</code> block (#2021).</li>
 <li>Icons: Material outline icons on Home's cards only; no emoji in prose.</li>
 <li>Phone: tables at most 3 columns, no side-by-side layouts; a terminal runs edge to edge, square, as Material's own code blocks do. No <code>$</code> before a command.</li>
 </ul>

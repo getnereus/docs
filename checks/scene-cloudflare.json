@@ -3,10 +3,10 @@
   "command": "test/scene-cloudflare",
   "result": "pass",
   "exit": 0,
-  "seconds": 246,
-  "passed": 64,
+  "seconds": 302,
+  "passed": 72,
   "failed": 6,
   "failure": null,
-  "commit": "367efd72",
-  "started": "2026-11-21T03:45:48Z"
+  "commit": "4100f9fd+",
+  "started": "2026-11-21T09:41:58Z"
 }

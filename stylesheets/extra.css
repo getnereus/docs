@@ -401,13 +401,8 @@
 .md-typeset .tip > .admonition-title::before,
 .md-typeset .tip > summary::before { background-color: var(--doc-muted); }
 
-/* Diagrams: Mermaid on the page's colors; the caption is the italic line right below. */
-.md-typeset .mermaid {
-  margin: 1em 0 .3em;
-  text-align: center;
-}
-
-.md-typeset .mermaid + p > em:only-child {
+/* A diagram's caption is the italic line right below it. */
+.md-typeset .diagram + p > em:only-child {
   color: var(--doc-muted);
   font-size: .75rem;
 }
@@ -610,6 +605,7 @@
 .rh .dash { fill: none; stroke: var(--doc-muted); stroke-width: 1.5; stroke-dasharray: 6 4; }
 .rh .ln { stroke: var(--doc-text); stroke-width: 1.25; fill: none; }
 .rh .ah { fill: var(--doc-text); }
+.rh .dashed { stroke-dasharray: 5 4; }
 .rh .cyl { fill: var(--doc-page); stroke: var(--doc-text); stroke-width: 1.25; }
 .rh .sep { stroke: var(--doc-muted); stroke-width: 1; opacity: .6; }
 .rh .b { fill: var(--doc-text); font-weight: 600; font-size: 15px; }

@@ -197,8 +197,10 @@ nereus edge endpoint list
 ```
 
 ``` { .text .output title="output" }
-REEF       ENDPOINT  NEREID  PROTOCOL  PATHS  HOSTS               PUBLISHABLE  PUBLISHED  ROUTES
-messaging  mcp       triton  http      /      triton.example.com  yes          no         -
+REEF            ENDPOINT  NEREID         PROTOCOL  PATHS                      HOSTS               PUBLISHABLE  PUBLISHED  ROUTES
+authentication  realm     keycloak       http      /realms/nereus,/resources  auth.example.com    yes          no         -
+messaging       mcp       triton         http      /                          triton.example.com  yes          no         -
+portal          web       nereus-portal  http      /                          portal.example.com  yes          no         -
 ```
 
 ### route-create

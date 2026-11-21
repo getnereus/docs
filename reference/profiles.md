@@ -37,6 +37,7 @@ Each Nereid comes after the Nereids of the reefs it requires. With this profile 
 - **Registry:** Nereid `zot` ([Run a registry](../guides/reefs/registry.md)).
 - **Messaging:** Nereid `nats` and Mandate `messaging-nats` ([Send messages](../guides/reefs/messaging.md)).
 - **Build and scm:** Nereids `buildkit` and `forgejo`.
+- **Usage and presentations:** Nereid `reference-usage` (the usage reef's reference Nereid, until it has a real one) and Nereid `leagore`, so the portal shows the Usage and Presentations tabs ([#2018](https://github.com/getnereus/nereus/issues/2018)).
 
 ## The secrets reef's key
 
