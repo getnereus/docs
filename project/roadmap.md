@@ -74,7 +74,7 @@ When an idea moves, its row changes ring and date in the same pull request.
 | Triton checks who speaks: a credential per agent | 2026-10-29 | no issue yet |
 | Triton remembers: JetStream survives a restart | 2026-10-29 | no issue yet |
 | Triton bridges agents, every word on record | 2026-10-29 | no issue yet |
-| Triton becomes the Nereid of a `messaging` reef | 2026-10-29 | [ADR 0030](../adr/0030-triton-messaging-nereid.md) |
+| Triton becomes the Nereid of the `rooms` reef, on a Topic of the `messaging` reef | 2026-10-29 | [ADR 0030](../adr/0030-triton-rooms-nereid.md) |
 | Amphitrite: an `Agent` reef that wraps kagent | 2026-10-28 | [#467](https://github.com/getnereus/nereus/pull/467) |
 
 ### Parked
@@ -115,6 +115,14 @@ Each ends in a spec or an ADR, not in code. Open issues only.
 | Decisions as records of the platform | [#275](https://github.com/getnereus/nereus/issues/275) | [idea] |
 | Agent runs as Instances | [#276](https://github.com/getnereus/nereus/issues/276) | [idea] |
 | A repository reef: repositories born private with CI | [#279](https://github.com/getnereus/nereus/issues/279) | [idea] |
+| Reef maturity at runtime: an alpha reef only for its audience | [#2033](https://github.com/getnereus/nereus/issues/2033) | [idea] |
+| Profile guarantees as runnable checks | [#2034](https://github.com/getnereus/nereus/issues/2034) | [idea] |
+| Fleet rollout and drift per Mandate | [#2035](https://github.com/getnereus/nereus/issues/2035) | [idea] |
+| The platform's two business metrics | [#2036](https://github.com/getnereus/nereus/issues/2036) | [idea] |
+| One installation per compliance zone | [#2037](https://github.com/getnereus/nereus/issues/2037) | [idea] |
+| Agents as subjects with their own identity and scope | [#2042](https://github.com/getnereus/nereus/issues/2042) | [idea] |
+| Resources outside Nereus, listed and adopted | [#2043](https://github.com/getnereus/nereus/issues/2043) | [idea] |
+| Change classes: gates alone or a person | [#2044](https://github.com/getnereus/nereus/issues/2044) | [idea] |
 
 ## Next
 

@@ -1,12 +1,12 @@
 deck:
   name: messaging
   title: "The messaging reef"
-  subtitle: "Every command of the messaging reef: topics, queues and the agents' sessions, with Triton's room beside it"
-  accent: "with Triton's room beside it"
+  subtitle: "Every command of the messaging reef: topics and queues, the engine under the rooms reef"
+  accent: "the engine under the rooms reef"
   pt:
     title: "O reef messaging"
-    subtitle: "Todos os comandos do reef messaging: tópicos, filas e as sessões dos agentes, com a sala do Tritão ao lado"
-    accent: "com a sala do Tritão ao lado"
+    subtitle: "Todos os comandos do reef messaging: tópicos e filas, o motor sob o reef rooms"
+    accent: "o motor sob o reef rooms"
 
 acts:
   - name: opening
@@ -25,13 +25,9 @@ acts:
     question: "Where does a message wait for one worker?"
     pt: {title: "Fila", question: "Onde uma mensagem espera por um worker?"}
   - name: session
-    title: "Session"
-    question: "How does a coding agent join the others?"
-    pt: {title: "Sessão", question: "Como um agente de código se junta aos outros?"}
-  - name: triton
-    title: "Triton's section"
-    question: "What does Triton, the agent beside the reef, offer?"
-    pt: {title: "A seção do Tritão", question: "O que o Tritão, o agente ao lado do reef, oferece?"}
+    title: "Until the rooms reef"
+    question: "Which commands of the rooms reef still run under their first names?"
+    pt: {title: "Até o reef rooms", question: "Quais comandos do reef rooms ainda rodam com os seus primeiros nomes?"}
 
 slides:
   - name: cover
@@ -41,37 +37,37 @@ slides:
     notes: |-
       **The source of truth for the commands of the messaging reef** (#483). Every command, built or only imagined, is here first; the tag after each label says whether it is built, planned (with the issue that builds it) or an idea.
 
-      **The built commands are the agents' sessions** (`cli/src/nereus/commands/messaging.py`, #1160) and Triton's room (`cli/src/nereus/commands/room.py`, #1417); the CLI holds them as a group of its own, named `messaging`, until the reef exists on the cluster (#576). Topics and queues are ideas.
+      **The commands are the topics' and the queues'** (#1597). The agents' sessions and the rooms have [the rooms deck](rooms.html) (ADR 0030, Triton is the rooms reef's Nereid); what is built of them today stays here, in the last section, until #2076.
     pt:
       message: "O reef messaging"
       notes: |-
         **A fonte da verdade dos comandos do reef messaging** (#483). Todo comando, pronto ou só imaginado, está aqui primeiro; a etiqueta depois de cada rótulo diz se ele está pronto, planejado (com a issue que o constrói) ou se é uma ideia.
 
-        **Os comandos prontos são as sessões dos agentes** (`cli/src/nereus/commands/messaging.py`, #1160) e a sala do Tritão (`cli/src/nereus/commands/room.py`, #1417); o CLI os guarda num grupo próprio, chamado `messaging`, até o reef existir no cluster (#576). Tópicos e filas são ideias.
+        **Os comandos são os dos tópicos e os das filas** (#1597). As sessões dos agentes e as salas têm [o deck rooms](rooms.html) (ADR 0030, o Tritão é a Nereid do reef rooms); o que está pronto delas hoje fica aqui, na última seção, até a #2076.
 
-  - name: not-triton
+  - name: rooms
     act: opening
-    topic: "the reef and Triton"
-    message: "The {reef:messaging} reef is NATS, and Triton only uses it"
-    accent: "only uses it"
+    topic: "the reef and the rooms"
+    message: "The {reef:messaging} reef is the engine the rooms run on"
+    accent: "the engine"
     screen:
-      - "**The reef:** NATS, looked after by the {nereid:nats} Nereid (#576)"
-      - "**Triton:** an agent that uses the reef, kept in its own section"
+      - "**The engine:** Topic and Queue, looked after by the {nereid:nats} Nereid (#576)"
+      - "**The conversation:** the {reef:rooms} reef, whose {nereid:triton} Nereid asks for a Topic per Room"
     notes: |-
-      **Triton uses NATS but is not the messaging reef** (the owner's correction, 2026-11-03). Messaging is a reef of its own, with its `nats` Nereid (#576); Triton is meant to be the first agent Amphitrite creates, a mediator that enters a room and coordinates other agents (#618, #225).
+      **Two small reefs, composed** (owner, 2026-11-21, ADR 0030, Triton is the rooms reef's Nereid). This reef knows nothing of rooms or agents: Triton requires it and asks it for a Topic per Room, as any other client would.
 
-      **Triton's commands stay in this deck, in a section of their own**, until the agents' reef exists (#225); its name (perhaps `ai`) is not decided.
+      **The agents' sessions, the rooms and the peers have [their own deck](rooms.html)** (#2069). The commands built today under their first names, `nereus messaging session` and `nereus room follow`, stay in this deck's last section until #2076 moves them.
     pt:
-      topic: "o reef e o Tritão"
-      message: "O reef {reef:messaging} é o NATS, e o Tritão só o usa"
-      accent: "só o usa"
+      topic: "o reef e as salas"
+      message: "O reef {reef:messaging} é o motor em que as salas rodam"
+      accent: "o motor"
       screen:
-        - "**O reef:** o NATS, cuidado pela Nereid {nereid:nats} (#576)"
-        - "**O Tritão:** um agente que usa o reef, numa seção própria"
+        - "**O motor:** Topic e Queue, cuidados pela Nereid {nereid:nats} (#576)"
+        - "**A conversa:** o reef {reef:rooms}, cuja Nereid {nereid:triton} pede um Topic por Room"
       notes: |-
-        **O Tritão usa o NATS, mas não é o reef messaging** (a correção do dono, 2026-11-03). Messaging é um reef próprio, com a sua Nereid `nats` (#576); o Tritão deve ser o primeiro agente que a Anfitrite cria, um mediador que entra numa sala e coordena outros agentes (#618, #225).
+        **Dois reefs pequenos, compostos** (dono, 2026-11-21, ADR 0030, o Tritão é a Nereid do reef rooms). Este reef não sabe nada de salas ou agentes: o Tritão o exige e pede a ele um Topic por Room, como qualquer outro cliente faria.
 
-        **Os comandos do Tritão ficam neste deck, numa seção própria**, até o reef dos agentes existir (#225); o seu nome (talvez `ai`) não está decidido.
+        **As sessões dos agentes, as salas e os pares têm [o seu próprio deck](rooms.html)** (#2069). Os comandos prontos hoje com os seus primeiros nomes, `nereus messaging session` e `nereus room follow`, ficam na última seção deste deck até a #2076 movê-los.
 
   - name: apply-reef
     act: setup
@@ -149,20 +145,42 @@ slides:
             Next steps:
 
               nereus messaging topic get orders
+        - comment: "A topic only its owner's user writes to, keeping its messages for 30 days, up to 16M"
+          run: "nereus messaging topic create team-ops"
+          options: ["--owner project/triton", "--engine nats", "--access owner", "--max-age 30d", "--max-bytes 16M"]
+          output: |-
+            ✓ messaging/topics/team-ops created (mandate: nats, nereid: nats)
+
+            Next steps:
+
+              nereus messaging topic get team-ops
         - comment: "The topics of the reef"
           run: "nereus messaging topic list"
           output: |-
-            TOPIC   OWNER           ENGINE  MANDATE  READY
-            orders  Project/triton  nats    nats     True
+            TOPIC     OWNER           ENGINE  MANDATE  MAX AGE  MAX BYTES  READY
+            orders    Project/triton  nats    nats     -        -          True
+            team-ops  Project/triton  nats    nats     30d      16M        True
     dependsOn: [apply-nats]
     notes: |-
       **A topic is the subject `topics.<name>`:** whoever is not listening when a message is sent misses it, unless the Mandate says `jetstream=true`, and then the stream `topic-<name>` keeps it. The owner is a node of the tenancy tree; the Mandate is the one whose match holds, the most specific (ADR 0017, #1598), else the reef's default, unless `--mandate` names one, and it is pinned in `spec.mandate`: a later Mandate never moves the topic.
+
+      **`--max-age` and `--max-bytes` set what its stream keeps** (#2070): `spec.maxAge` is a duration (`30d`, `12h`, `90m`, `45s`) and `spec.maxBytes` a decimal size as NATS says it (`512K`, `16M`, `1G`); both are optional, absent means no limit, and changing either updates the stream. Either needs `jetstream=true` in the Mandate: without it the topic fails, and its condition names the command that turns it on. **What a topic with a stream guarantees:** its messages are kept in order, each has a sequence, and a reader may start after a sequence.
+
+      **`--access owner` gives it a NATS user of its own** (#2071): the topic lives in the NATS account of its owner (`project-triton`), and its binding carries `username`, `password` and `inboxPrefix`; `client`, whom anyone reaching NATS logs in as, lives in the account `MESSAGING` and never reaches it. `shared`, the default, stays open to `client`. The boundary is the owner: two topics of one owner share its account. With a stream, the owner's account takes the Mandate's `ownerMaxFile` (`32M`) of the server's disk; an owner past the room fails, saying what to free. `--access` and `--owner` cannot change after create.
+
+      **A topic named `room-<room>` is a Room's** (#2094, ADR 0030): it lives in the namespace `nereus-rooms`, beside its Room, with its binding there, and the Nereid refuses one in `nereus-system`. `--engine` is optional for a topic: absent, the Mandate's Nereid serves it.
     pt:
       topic: "create e list"
       message: "Um tópico leva cada mensagem a todos que escutam"
       accent: "todos"
       notes: |-
         **Um tópico é o subject `topics.<name>`:** quem não está escutando quando uma mensagem é enviada a perde, a não ser que o Mandate diga `jetstream=true`, e então o stream `topic-<name>` a guarda. O dono é um nó da árvore de tenancy; o Mandate é aquele cujo match vale, o mais específico (ADR 0017, #1598), senão o padrão do reef, a não ser que `--mandate` nomeie outro, e ele fica fixado em `spec.mandate`: um Mandate posterior nunca move o tópico.
+
+        **`--max-age` e `--max-bytes` definem o que o stream guarda** (#2070): `spec.maxAge` é uma duração (`30d`, `12h`, `90m`, `45s`) e `spec.maxBytes` um tamanho decimal como o NATS o escreve (`512K`, `16M`, `1G`); ambos são opcionais, ausente significa sem limite, e mudar um deles atualiza o stream. Qualquer um exige `jetstream=true` no Mandate: sem ele o tópico falha, e a condição nomeia o comando que o liga. **O que um tópico com stream garante:** as mensagens são guardadas em ordem, cada uma tem uma sequência, e um leitor pode começar depois de uma sequência.
+
+        **`--access owner` dá ao tópico um usuário NATS próprio** (#2071): o tópico vive na conta NATS do seu dono (`project-triton`), e o binding leva `username`, `password` e `inboxPrefix`; o `client`, como entra quem alcança o NATS, vive na conta `MESSAGING` e nunca o alcança. `shared`, o padrão, fica aberto ao `client`. A fronteira é o dono: dois tópicos de um dono dividem a conta dele. Com stream, a conta do dono ocupa o `ownerMaxFile` do Mandate (`32M`) do disco do servidor; um dono que não cabe falha, dizendo o que liberar. `--access` e `--owner` não mudam depois do create.
+
+        **Um tópico chamado `room-<room>` é de uma Room** (#2094, ADR 0030): ele vive no namespace `nereus-rooms`, ao lado da sua Room, com o binding ali, e o Nereid recusa um em `nereus-system`. `--engine` é opcional para um tópico: ausente, o Nereid do Mandate o serve.
 
   - name: topic-get
     act: topic
@@ -181,6 +199,9 @@ slides:
             Mandate:          nats
             Nereid:           nats
             Deletion policy:  retain
+            Max age:          unlimited
+            Max bytes:        unlimited
+            Access:           shared
             Ready:            True
             Connection:       secret nereus-system/orders-topic (host, port, uri, subject)
         - comment: "Remove it"
@@ -193,13 +214,13 @@ slides:
               nereus messaging topic list
     dependsOn: [topic-create]
     notes: |-
-      **The connection is a Secret in the Service Binding layout:** `get` names its keys, never their values. It holds no credential of its own yet, a stand-in until each owner's bindings. `retain`, the default, keeps a stream's messages on delete.
+      **The connection is a Secret in the Service Binding layout:** `get` names its keys, never their values. A shared topic's has no credential; with `access: owner` it adds `username`, `password` and `inboxPrefix` (#2071). `retain`, the default, keeps a stream's messages on delete.
     pt:
       topic: "get e delete"
       message: "Um tópico mostra onde alcançá-lo, e o delete o remove"
       accent: "onde alcançá-lo"
       notes: |-
-        **A conexão é um Secret no formato do Service Binding:** o `get` nomeia as suas chaves, nunca os valores. Ele ainda não tem credencial própria, um stand-in até os bindings de cada dono. `retain`, o padrão, guarda as mensagens de um stream no delete.
+        **A conexão é um Secret no formato do Service Binding:** o `get` nomeia as suas chaves, nunca os valores. O de um tópico shared não tem credencial; com `access: owner` ele acrescenta `username`, `password` e `inboxPrefix` (#2071). `retain`, o padrão, guarda as mensagens de um stream no delete.
 
   - name: topic-apply
     act: topic
@@ -466,7 +487,7 @@ slides:
         **A lista vem do `list_agents` do Tritão**, com um token do próprio CLI (#1160). STARTED BY diz quem fez o login de cada agente (#1167); `--sort-by .last_heartbeat` a ordena. A saída é de uma execução gravada (`docs/guides/access/authentication.md`).
 
   - name: room-follow
-    act: triton
+    act: session
     topic: "room follow"
     status: built
     message: "A person follows the room where the agents talk"
@@ -482,7 +503,7 @@ slides:
             21:30:02  bob/doto    release  k3d-nereus
     dependsOn: [session-list]
     notes: |-
-      **This is Triton's section, not the messaging reef's:** Triton is an agent that uses the reef, and its commands stay in this deck until the agents' reef exists (#225). The CLI holds them in a group of its own, `room`.
+      **This command becomes `nereus rooms follow`** ([the rooms deck](rooms.html#follow), #2076); until then the CLI holds it in a group of its own, `room`.
 
       **Each room is an append-only JetStream stream** (#1417): an agent posts with the peer tool `post_room`, a hook pulls new messages into each session's context, and a person follows it here; `--since 1h --once` shows the last hour and exits. The output is a recorded run (`controllers/triton/README.md`).
 
@@ -492,91 +513,8 @@ slides:
       message: "Uma pessoa acompanha a sala onde os agentes conversam"
       accent: "acompanha a sala"
       notes: |-
-        **Esta é a seção do Tritão, não a do reef messaging:** o Tritão é um agente que usa o reef, e os seus comandos ficam neste deck até o reef dos agentes existir (#225). O CLI os guarda num grupo próprio, `room`.
+        **Este comando vira `nereus rooms follow`** ([o deck rooms](rooms.html#follow), #2076); até lá o CLI o guarda num grupo próprio, `room`.
 
         **Cada sala é um stream do JetStream só de acréscimo** (#1417): um agente posta com a ferramenta de pares `post_room`, um hook traz as mensagens novas para o contexto de cada sessão, e uma pessoa a acompanha aqui; `--since 1h --once` mostra a última hora e sai. A saída é de uma execução gravada (`controllers/triton/README.md`).
 
         **Quem pode entrar** (#1830): a sala é o nome de um repositório, o do git origin, e o login precisa estar no grupo `nereus-team` do Keycloak. O guia [Join the team's room](../../../guides/reefs/team-room.md) tem a parte do admin e a da pessoa.
-
-  - name: room-post
-    act: triton
-    topic: "room post"
-    status: idea
-    message: "A person posts to the room, as the agents do"
-    accent: "as the agents do"
-    terminal:
-      steps:
-        - comment: "Tell the room the cluster is taken"
-          run: "nereus room post \"k3d-nereus is mine until 21:30\""
-          options: ["--room nereus", "--kind note"]
-          output: |-
-            ✓ room/nereus note posted
-    dependsOn: [room-follow]
-    notes: |-
-      **An idea, shown as its contract:** the output is illustrative. Today only an agent's session posts, through the peer tool `post_room`; the kinds are the peers' (claim, ask, ok, wait, note, release), and a peer message is information, never an order.
-    pt:
-      topic: "room post"
-      message: "Uma pessoa posta na sala, como os agentes fazem"
-      accent: "como os agentes"
-      notes: |-
-        **Uma ideia, mostrada como o seu contrato:** a saída é ilustrativa. Hoje só a sessão de um agente posta, pela ferramenta de pares `post_room`; os tipos são os dos pares (claim, ask, ok, wait, note, release), e uma mensagem de par é informação, nunca uma ordem.
-
-  - name: orders
-    act: triton
-    topic: "orders"
-    status: idea
-    message: "An order goes to one idle agent, and the list follows it"
-    accent: "one idle agent"
-    terminal:
-      steps:
-        - comment: "Send an order to agent m15"
-          run: "nereus order create \"run make checks\""
-          options: ["--agent m15"]
-          output: |-
-            ✓ order/20261030-142549-4dae created, sent to m15
-        - comment: "The orders and their state"
-          run: "nereus order list"
-          output: |-
-            ID                    AGENT  STATUS       TEXT
-            20261030-142549-4dae  m15    in_progress  run make checks
-    dependsOn: [room-follow]
-    notes: |-
-      **Orders are off on this installation today:** Triton lists no order tool, and a session joins the room only (#1440, #1481). The commands are an idea, shown as their contract; the outputs are illustrative.
-
-      **Triton's MCP tools behind them** are `send_order` and `list_orders` (with `cancel_order` and `replay_orders`): an order is accepted only for a `ready`, idle agent and goes `sent`, `received`, `in_progress`, `done`, `failed` or `cancelled` (#592).
-    pt:
-      topic: "ordens"
-      message: "Uma ordem vai a um agente livre, e a lista a acompanha"
-      accent: "um agente livre"
-      notes: |-
-        **As ordens estão desligadas nesta instalação hoje:** o Tritão não lista ferramenta de ordem, e uma sessão só entra na sala (#1440, #1481). Os comandos são uma ideia, mostrada como o seu contrato; as saídas são ilustrativas.
-
-        **As ferramentas MCP do Tritão por trás deles** são `send_order` e `list_orders` (com `cancel_order` e `replay_orders`): uma ordem só é aceita para um agente `ready` e livre, e passa por `sent`, `received`, `in_progress`, `done`, `failed` ou `cancelled` (#592).
-
-  - name: door-endpoint
-    act: triton
-    topic: "the door"
-    status: planned
-    issue: 470
-    message: "Triton's door is an endpoint the edge reef publishes"
-    accent: "an endpoint"
-    terminal:
-      steps:
-        - comment: "What the reefs offer to publish"
-          run: "nereus edge endpoint list"
-          output: |-
-            REEF        ENDPOINT   PROTOCOL   PUBLISHED
-            messaging   mcp        mcp        no
-
-            Next steps:
-
-              nereus edge route create <name> --hostname <hostname> --endpoint messaging/mcp
-    dependsOn: [room-follow]
-    notes: |-
-      **Triton's MCP door is the first endpoint the edge reef publishes** ([the edge deck](edge.html#endpoint-list), #470). The output is the command's contract, the same as the edge deck's; it lists the door under `messaging` until the agents' reef exists (#225).
-    pt:
-      topic: "a porta"
-      message: "A porta do Tritão é um endpoint que o reef edge publica"
-      accent: "um endpoint"
-      notes: |-
-        **A porta MCP do Tritão é o primeiro endpoint que o reef edge publica** ([o deck edge](edge.html#endpoint-list), #470). A saída é o contrato do comando, a mesma do deck edge; ela lista a porta sob `messaging` até o reef dos agentes existir (#225).

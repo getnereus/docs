@@ -68,7 +68,11 @@ nereus mandate apply keycloak \
 
 ### 7. Set the portal's address and bring up Triton
 
-[`nereus mandate apply`](../../specs/cli/core.html#mandate-apply) `nereus-portal` with `--param publicUrl=https://portal.getnereus.dev`. Then the Mandate `messaging-nats` with `--param agents=true` holds Triton's account; `nereus nereid apply nats --reef messaging` writes it into NATS, and `nereus nereid apply triton --reef messaging` sets `TRITON_ISSUER`, `TRITON_JWKS_URL` and `TRITON_RESOURCE_URL`.
+[`nereus mandate apply`](../../specs/cli/core.html#mandate-apply) `nereus-portal` with `--param publicUrl=https://portal.getnereus.dev`.
+
+Then the Mandate `messaging-nats` with `--param agents=true` holds Triton's account. It is the messaging reef's default with no match (`--default`, no `--match`), so it holds the Rooms' Topics, which name no engine (ADR 0030).
+
+`nereus nereid apply nats --reef messaging` writes it into NATS, `nereus reef apply rooms` installs the rooms reef, and `nereus nereid apply triton --reef rooms` sets `TRITON_ISSUER`, `TRITON_JWKS_URL` and `TRITON_RESOURCE_URL`.
 
 Every other login is gone with the old realm: the claude.ai connector `Triton` signs in again, and a token saved from the old realm no longer works.
 

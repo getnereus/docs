@@ -150,10 +150,10 @@
       "md": "adr/0029-mcp-tools.md",
       "title": "MCP tools"
     },
-    "adr/0030-triton-messaging-nereid/": {
-      "goal": "Status: Proposed",
-      "md": "adr/0030-triton-messaging-nereid.md",
-      "title": "Triton, the messaging Nereid"
+    "adr/0030-triton-rooms-nereid/": {
+      "goal": "Status: Accepted",
+      "md": "adr/0030-triton-rooms-nereid.md",
+      "title": "Triton, the rooms Nereid"
     },
     "agent/": {
       "goal": "One page per topic, read on demand.",
@@ -455,6 +455,11 @@
       "md": "guides/reefs/team-room.md",
       "title": "Join the team's room"
     },
+    "guides/reefs/usage/": {
+      "goal": "Follow a coding agent's weekly quota, where it is heading at the reset and what today may use",
+      "md": "guides/reefs/usage.md",
+      "title": "Follow your agent's quota"
+    },
     "guides/troubleshoot/issuer-not-public/": {
       "goal": "Fix a nereid apply azure that stops because the cluster's issuer is not public",
       "md": "guides/troubleshoot/issuer-not-public.md",
@@ -620,6 +625,11 @@
       "md": "reference/reefs/release.md",
       "title": "release"
     },
+    "reference/reefs/rooms/": {
+      "goal": "Every command of the rooms reef",
+      "md": "reference/reefs/rooms.md",
+      "title": "rooms"
+    },
     "reference/reefs/scm/": {
       "goal": "Every command of the scm reef",
       "md": "reference/reefs/scm.md",
@@ -665,6 +675,11 @@
       "md": "research/board-tools.md",
       "title": "Board tools"
     },
+    "research/infrastructure-governance-agentic-era/": {
+      "goal": "Credit: Infrastructure governance for platform teams in the agentic era, an \"Enterprise in Practice\" report of 28 pages",
+      "md": "research/infrastructure-governance-agentic-era.md",
+      "title": "Infrastructure governance in the agentic era"
+    },
     "research/kagent/": {
       "goal": "Amphitrite is the Nereid that will give the platform its AI agents: a reef whose kind is Agent (plural agents), used by",
       "md": "research/kagent.md",
@@ -679,6 +694,11 @@
       "goal": "Asked by the owner (2026-11-17), from a voice session.",
       "md": "research/nereid-sdk-metrics.md",
       "title": "Nereid SDK metrics"
+    },
+    "research/platform-in-an-era-of-ai-agents/": {
+      "goal": "Credit: What does the concept of the platform mean in an era of AI agents?, Thoughtworks Technology Podcast, published 2",
+      "md": "research/platform-in-an-era-of-ai-agents.md",
+      "title": "Platform in an era of AI agents"
     },
     "research/platform-orchestrators/": {
       "goal": "Historical page (2026-10-19): it uses the model's words of that time (Interface, Implementation, platform); today's are",

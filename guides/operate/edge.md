@@ -64,7 +64,13 @@ nereus edge zone create getnereus.dev --mandate cloudflare
   point the registrar of getnereus.dev at them; the zone turns Active once Cloudflare sees it
 ```
 
-Changing the registrar from Nereus waits for the Nereid godaddy [planned] (#475).
+When the domain is registered at GoDaddy, the Nereid godaddy points it there for you (#475): [`nereus nereid apply godaddy`](../../specs/cli/reefs/edge.html#apply-godaddy), its Mandate with GoDaddy's key and secret in the vault `edge`, then [`nereus edge domain apply`](../../specs/cli/reefs/edge.html#domain-apply).
+
+```bash
+nereus edge domain apply getnereus.dev --nameservers-from zone/getnereus.dev --wait
+```
+
+GoDaddy answers 403 to an account that may not use its production Domains API; the Domain then says `RegistrarRefused`, and the registrar is changed by hand.
 
 ### 5. Carry the hostname through the tunnel
 
@@ -87,6 +93,10 @@ nereus edge route create triton --hostname triton.getnereus.dev --endpoint messa
 ```
 
 The tunnel carries the hostname only when the endpoint is publishable, granted and served on that hostname; otherwise the route says why (`NotPublished`, `NotServed`, `NoEndpoint`, or `Exposes` when the hostname also serves an endpoint that may not leave the cluster: the tunnel carries the whole hostname). The kept cluster's routes move to endpoints with #2011.
+
+Only a Nereid with an HTTPRoute of its own on the hostname counts for `Exposes`: what a Nereid says in its status alone never takes another Nereid's route off the air.
+
+Any other HTTPRoute the entrance's Gateway admits on the hostname makes the route `Exposes` too, naming it as `<namespace>/<name>`: one with no Nereid label (the chart's `nereus-api`, one a Release made), one of another namespace, or one whose Nereid publishes no granted endpoint there. Give such a host its own hostname, or publish its endpoint.
 
 ## Check it worked
 

@@ -54,6 +54,7 @@
 - [Send messages](https://docs.getnereus.dev/guides/reefs/messaging.md): Give a project a topic and a queue on NATS, each with a Secret that says where to reach it
 - [Join the team's room](https://docs.getnereus.dev/guides/reefs/team-room.md): Put your coding agent in the team's room on Triton, where the team's agents claim, ask and release
 - [Use the MCP server](https://docs.getnereus.dev/guides/reefs/mcp.md): Reach the tools of the installed reefs from Claude Code or claude.ai through the Nereus API's /mcp
+- [Follow your agent's quota](https://docs.getnereus.dev/guides/reefs/usage.md): Follow a coding agent's weekly quota, where it is heading at the reset and what today may use
 - [Run the CLI from a checkout](https://docs.getnereus.dev/guides/build/cli-checkout.md): Put an editable nereus on the PATH from a checkout, with Tab completion
 - [Start a new Nereid](https://docs.getnereus.dev/guides/build/new-nereid.md): Start a new Nereid from the template, with its tests passing, ready for the Tool's work
 - [Build a Nereid's image](https://docs.getnereus.dev/guides/build/image.md): Build a Nereid's image with the labels that name its reef, push it and apply it
@@ -82,6 +83,7 @@
 - [presentations](https://docs.getnereus.dev/reference/reefs/presentations.md): Every command of the presentations reef
 - [registry](https://docs.getnereus.dev/reference/reefs/registry.md): Every command of the registry reef
 - [release](https://docs.getnereus.dev/reference/reefs/release.md): Every command of the release reef
+- [rooms](https://docs.getnereus.dev/reference/reefs/rooms.md): Every command of the rooms reef
 - [scm](https://docs.getnereus.dev/reference/reefs/scm.md): Every command of the scm reef
 - [secrets](https://docs.getnereus.dev/reference/reefs/secrets.md): Every command of the secrets reef
 - [teams](https://docs.getnereus.dev/reference/reefs/teams.md): Every command of the teams reef
@@ -134,7 +136,7 @@
 - [Teams, roles and Users](https://docs.getnereus.dev/adr/0027-teams-roles-and-users.md): Status: Accepted (2026-11-16)
 - [Presentations reef](https://docs.getnereus.dev/adr/0028-presentations-reef.md): Status: Accepted (2026-11-16)
 - [MCP tools](https://docs.getnereus.dev/adr/0029-mcp-tools.md): Status: Proposed
-- [Triton, the messaging Nereid](https://docs.getnereus.dev/adr/0030-triton-messaging-nereid.md): Status: Proposed
+- [Triton, the rooms Nereid](https://docs.getnereus.dev/adr/0030-triton-rooms-nereid.md): Status: Accepted
 - [Specs](https://docs.getnereus.dev/project/specs.md): Find the spec that settles a slice or a design, with its status
 - [First slice](https://docs.getnereus.dev/specs/0001-first-slice.md): Status: Done (2026-10-17)
 - [Reef at runtime](https://docs.getnereus.dev/specs/0002-reef-at-runtime.md): Status: Done (2026-10-17)
@@ -155,6 +157,8 @@
 - [Production-grade checklist](https://docs.getnereus.dev/research/production-checklist.md): The list follows the production-grade infrastructure checklist in Yevgeniy Brikman's book Terraform: Up & Running: Writi
 - [Board tools](https://docs.getnereus.dev/research/board-tools.md): A snapshot of 2026-11-05: versions, activity and features change, so check them again before deciding.
 - [Nereid SDK metrics](https://docs.getnereus.dev/research/nereid-sdk-metrics.md): Asked by the owner (2026-11-17), from a voice session.
+- [Platform in an era of AI agents](https://docs.getnereus.dev/research/platform-in-an-era-of-ai-agents.md): Credit: What does the concept of the platform mean in an era of AI agents?, Thoughtworks Technology Podcast, published 2
+- [Infrastructure governance in the agentic era](https://docs.getnereus.dev/research/infrastructure-governance-agentic-era.md): Credit: Infrastructure governance for platform teams in the agentic era, an "Enterprise in Practice" report of 28 pages
 - [Decks](https://docs.getnereus.dev/project/decks.md): Find the presentation deck for a topic and what it is for
 - [References](https://docs.getnereus.dev/references.md): Every technique, book, quote and reference the project mentions, and who brought it
 - [Agent guides](https://docs.getnereus.dev/agent/index.md): One page per topic, read on demand.

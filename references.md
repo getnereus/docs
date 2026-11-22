@@ -32,15 +32,15 @@ The columns:
 | [Product and discovery](#product-and-discovery) | 40 | 18 | 6 | 3 |
 | [Teams and organisation](#teams-and-organisation) | 27 | 25 | 0 | 8 |
 | [Architecture](#architecture) | 88 | 21 | 19 | 5 |
-| [Platform engineering](#platform-engineering) | 175 | 47 | 22 | 18 |
+| [Platform engineering](#platform-engineering) | 183 | 55 | 22 | 20 |
 | [Kubernetes and cloud native](#kubernetes-and-cloud-native) | 86 | 9 | 24 | 2 |
 | [DevOps and SRE](#devops-and-sre) | 120 | 26 | 17 | 9 |
 | [Security](#security) | 158 | 27 | 21 | 1 |
-| [AI and agents](#ai-and-agents) | 142 | 43 | 24 | 27 |
+| [AI and agents](#ai-and-agents) | 143 | 44 | 24 | 27 |
 | [Communication and presentation](#communication-and-presentation) | 56 | 22 | 7 | 4 |
 | [Writing and documentation](#writing-and-documentation) | 29 | 7 | 1 | 0 |
 | [Other](#other) | 35 | 5 | 4 | 4 |
-| **Total** | **1165** | **343** | **208** | **135** |
+| **Total** | **1174** | **352** | **208** | **137** |
 
 ## Conflicting attributions
 
@@ -521,7 +521,15 @@ The references that appear in three or more of the six sources: the ideas that t
 
 | Name | Kind | Author / origin | Year | Brought by | Verified | Where |
 |---|---|---|---|---|---|---|
+| Infrastructure governance for platform teams in the agentic era (report) | paper | Sam Barlien (Weave Intelligence), commissioned by env zero | 2026 | Silvio | checked in the session (the PDF, 2026-11-21); no public URL found | `nereus:docs/research/infrastructure-governance-agentic-era.md:1` |
+| Shift down (past shift left: the capability embedded in the platform) | concept | Weave Intelligence, in the infrastructure governance report | 2026 | Silvio | checked in the session (the PDF, p. 16); origin of the term not searched | `nereus:docs/research/infrastructure-governance-agentic-era.md:32` |
+| TicketOps (requests wait in another team's queue) | myth | platformengineering.org community, cited in the infrastructure governance report | 2026 | Silvio | checked in the session (the PDF, p. 14); origin of the term not searched | `nereus:docs/research/infrastructure-governance-agentic-era.md:27` |
+| Ownership as platform data, not tags ("a tag records what someone typed") | principle | Sam Barlien (Weave Intelligence), infrastructure governance report | 2026 | Silvio | checked in the session (the PDF, p. 20) | `nereus:docs/research/infrastructure-governance-agentic-era.md:39` |
 | Kratix (Promises, multiple provisioning methods) | tool | Syntasso |  | unknown | yes ([source](https://docs.kratix.io/)) | `early-platform-api:docs/research/platform-orchestrators.md:59` `nereus:docs/research/platform-orchestrators.md:151-162` (+7) |
+| What does the concept of the platform mean in an era of AI agents? (podcast) | other | Thoughtworks Technology Podcast: Ken Mugrage (host), Abby Bangser (Syntasso) | 2026 | Silvio | yes ([source](https://www.thoughtworks.com/insights/podcasts/technology-podcasts/what-does-the-concept-of-the-platform-mean-in-an-era-of-ai-agents)) | `nereus:docs/research/platform-in-an-era-of-ai-agents.md:1` |
+| Golden bricks instead of golden paths | concept | unnamed, cited by Abby Bangser in the Thoughtworks podcast | 2026 | Silvio | not confirmed on the web: the episode does not name its author | `nereus:docs/research/platform-in-an-era-of-ai-agents.md:25` |
+| Platform as a marketplace, not a gatekeeper | concept | Abby Bangser (Syntasso), CNCF platforms white paper in progress | 2026 | Silvio | yes ([source](https://www.thoughtworks.com/insights/podcasts/technology-podcasts/what-does-the-concept-of-the-platform-mean-in-an-era-of-ai-agents)) | `nereus:docs/research/platform-in-an-era-of-ai-agents.md:36` |
+| Let a 1,000 flowers bloom and pull out 999 of them (blog post) | other | cited by Abby Bangser in the Thoughtworks podcast, author not named | | Silvio | not confirmed on the web: not searched | `nereus:docs/research/platform-in-an-era-of-ai-agents.md:40` |
 | Native first, build last | principle |  |  | Silvio, m15 inventory agent | project practice | `drive:beach/replies/20261025-0930-repo-inventory-three-voice-review/20261025-0930-03-docs.md:12` `drive:beach/replies/20261026-1236-messaging-reef-design/design.md:35` (+8) |
 | Radius (Resource Types, Recipe Packs) | tool | Radius project |  | unknown | yes ([source](https://docs.radapp.io/concepts/)) | `early-platform-api:docs/research/platform-orchestrators.md:99` `nereus:docs/research/platform-orchestrators.md:151-162` (+5) |
 | Crossplane composite resource definitions (contract vs composition) | pattern | Crossplane |  | Silvio | yes ([source](https://docs.crossplane.io/latest/composition/composite-resource-definitions/)) | `early-platform-api:docs/adr/0010-api-groups-at-runtime.md:11` `early-platform-api:docs/adr/0014-standard-verbs-from-the-crd.md:40` (+7) |
@@ -1081,6 +1089,7 @@ The references that appear in three or more of the six sources: the ideas that t
 
 | Name | Kind | Author / origin | Year | Brought by | Verified | Where |
 |---|---|---|---|---|---|---|
+| Shadow agents ("You can't govern agents that you don't know exist") | quote | Caroline Wong, Security by design for agentic AI (PlatformCon 2026), quoted in the infrastructure governance report | 2026 | Silvio | linked in the source, not opened ([link](https://youtu.be/4aid1uNBLGw)) | `nereus:docs/research/infrastructure-governance-agentic-era.md:22` |
 | Model Context Protocol (MCP) | standard | Anthropic, donated to Agentic AI Foundation (Linux Foundation) 2025-12-09 | 2025 | Silvio | known, page not opened ([source](https://anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation)) | `drive:#pontos/raw/2026-10-24/0000-voice-conversation-01-voice/05-api-group-ai-login.md:32` `wasp-idp:docs/presentations/references/mcp-platform-interface.md:28` (+4) |
 | One Developer, Two Dozen Agents, Zero Alignment | talk | Maggie Appleton (GitHub Next) | 2026 | unknown | yes ([source](https://maggieappleton.com/zero-alignment)) | `early-platform-api:docs/pitches/research/agent-coordination.md:9` `early-platform-api:docs/pitches/04-agent-coordinator.html:34` (+3) |
 | Stack Overflow Developer Survey 2025 (AI) | article | Stack Overflow | 2025 | unknown | yes ([source](https://survey.stackoverflow.co/2025/ai)) | `early-platform-api:docs/presentations/references/ai-delivery.md:8` `nereus:docs/presentations/references/ai-delivery.md:8,20` (+1) |

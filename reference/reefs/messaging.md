@@ -1,6 +1,6 @@
 # The messaging reef
 
-Every command of the messaging reef: topics, queues and the agents' sessions, with Triton's room beside it.
+Every command of the messaging reef: topics and queues, the engine under the rooms reef.
 
 ## Commands
 
@@ -17,9 +17,6 @@ Every command of the messaging reef: topics, queues and the agents' sessions, wi
 - [`nereus messaging session create m15`](../../specs/cli/reefs/messaging.html#session-create-orders) Where Triton serves orders, the agent also logs in to NATS
 - [`nereus messaging session list`](../../specs/cli/reefs/messaging.html#session-list) Every agent connected to Triton, and who started it
 - [`nereus room follow`](../../specs/cli/reefs/messaging.html#room-follow) A person follows the room where the agents talk
-- [`nereus room post "k3d-nereus is mine until 21:30"`](../../specs/cli/reefs/messaging.html#room-post) [idea] A person posts to the room, as the agents do
-- [`nereus order create "run make checks"`](../../specs/cli/reefs/messaging.html#orders) [idea] An order goes to one idle agent, and the list follows it
-- [`nereus edge endpoint list`](../../specs/cli/reefs/messaging.html#door-endpoint) [planned #470] Triton's door is an endpoint the edge reef publishes
 
 ## Examples
 
@@ -90,6 +87,9 @@ Engine:           nats
 Mandate:          nats
 Nereid:           nats
 Deletion policy:  retain
+Max age:          unlimited
+Max bytes:        unlimited
+Access:           shared
 Ready:            True
 Connection:       secret nereus-system/orders-topic (host, port, uri, subject)
 ```
@@ -249,48 +249,4 @@ nereus room follow \
 21:02:11  alice/speo  claim    #1406 in ../nereus-1406-size, paths controllers/vcluster/
 21:02:40  bob/doto    note     k3d-nereus is mine until 21:30
 21:30:02  bob/doto    release  k3d-nereus
-```
-
-### room-post
-
-Tell the room the cluster is taken.
-
-```bash
-nereus room post "k3d-nereus is mine until 21:30" \
-  --room nereus \
-  --kind note
-```
-
-``` { .text .output title="output" }
-✓ room/nereus note posted
-```
-
-### orders
-
-Send an order to agent m15.
-
-```bash
-nereus order create "run make checks" \
-  --agent m15
-```
-
-``` { .text .output title="output" }
-✓ order/20261030-142549-4dae created, sent to m15
-```
-
-### door-endpoint
-
-What the reefs offer to publish.
-
-```bash
-nereus edge endpoint list
-```
-
-``` { .text .output title="output" }
-REEF        ENDPOINT   PROTOCOL   PUBLISHED
-messaging   mcp        mcp        no
-
-Next steps:
-
-  nereus edge route create <name> --hostname <hostname> --endpoint messaging/mcp
 ```

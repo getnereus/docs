@@ -33,6 +33,12 @@ The [settings file](settings.md) also holds the id, so a cluster recreated from 
 
 What listings show; free text, at most 63 characters, no control characters. It may change; the name and id stay, and the settings file follows: [`nereus config installation set --alias "Acme Prod"`](../specs/cli/core.html#installation-set).
 
+## Address
+
+`spec.url` is the address the API is published at: the chart's `ingress.address`, rewritten on every release, so it is not a setting. An instance with none (no Gateway, only port-forward) has no `url`.
+
+`nereus status --output json` and `GET /v1/status` answer it as `installation.url`, `null` when absent. The portal's account sheet shows it with the `nereus login <url>` line.
+
 ## Naming overrides
 
 When a generated cloud name is taken, a naming override sets it: `issuer.storage`, `state.storage` or `secrets.vault`, each checked against its resource's rules, with `nereus config installation set --naming-override issuer.storage=acmeissuers01`. See [A name is taken](../guides/troubleshoot/name-taken.md).

@@ -1094,7 +1094,11 @@ nereus mandate apply keycloak \
 
 ### 7. Set the portal's address and bring up Triton
 
-[`nereus mandate apply`](../../specs/cli/core.html#mandate-apply) `nereus-portal` with `--param publicUrl=https://portal.getnereus.dev`. Then the Mandate `messaging-nats` with `--param agents=true` holds Triton's account; `nereus nereid apply nats --reef messaging` writes it into NATS, and `nereus nereid apply triton --reef messaging` sets `TRITON_ISSUER`, `TRITON_JWKS_URL` and `TRITON_RESOURCE_URL`.
+[`nereus mandate apply`](../../specs/cli/core.html#mandate-apply) `nereus-portal` with `--param publicUrl=https://portal.getnereus.dev`.
+
+Then the Mandate `messaging-nats` with `--param agents=true` holds Triton's account. It is the messaging reef's default with no match (`--default`, no `--match`), so it holds the Rooms' Topics, which name no engine (ADR 0030).
+
+`nereus nereid apply nats --reef messaging` writes it into NATS, `nereus reef apply rooms` installs the rooms reef, and `nereus nereid apply triton --reef rooms` sets `TRITON_ISSUER`, `TRITON_JWKS_URL` and `TRITON_RESOURCE_URL`.
 
 Every other login is gone with the old realm: the claude.ai connector `Triton` signs in again, and a token saved from the old realm no longer works.
 
@@ -1173,6 +1177,19 @@ nereus nereid apply keycloak \
 
 Run `make cli`, then `make nereids`, so the CLI and the images share a version. [`nereus init`](../../specs/cli/core.html#init) without `--create-cluster` upgrades the charts `nereus-reefs` and `nereus` in place; the API is ready a few seconds after the `nereus` line.
 
+When the registry lacks an image at the CLI's version (`make cli` ran again after `make nereids`), init stops at its `images` step, before the `nereus` line, and changes nothing:
+
+``` { .text .output title="output" }
+✗ images                    0.0s
+  total                     0.0s  slo 8m, 0% green
+✗ 2 images the release names are not in their registry: nereus-api, thetis
+  nereus-api  localhost:5111/nereus-api:0.1.41.dev146
+  thetis      localhost:5111/thetis-controller:0.1.41.dev146
+  fix         make nereids
+```
+
+Run the `fix` line, then init again. A Pod that cannot pull its image anyway (`ImagePullBackOff`) stops the `ready` step at once, naming the Pod, its image and the same `fix`, instead of waiting for the step's timeout of 30 minutes.
+
 ```bash
 nereus init \
   --target k3d \
@@ -1181,15 +1198,43 @@ nereus init \
   --yes
 ```
 
+The output below is what `test/scene-core-upgrade` prints on its cluster, profile `reference`, after one Nereid was applied by hand: only that one stops, and the other six already run their new digests.
+
 ``` { .text .output title="output" }
-✓ kinds               2.4s  release nereus-reefs revision 2, gateway-api/v1.7.0 unchanged (the Gateway API CRDs)
-✓ nereus              1.5s  release nereus revision 2, profile internal-developer-platform, images localhost:5111 at 0.1.40
-✓ installation        0.2s  kept nereus
+✓ kinds          1.2s  release nereus-reefs revision 2
+✓ nereus         3.3s  release nereus revision 2, profile reference, images localhost:5111 at 0.1.41.dev129-nereus-scn-2031-9bab4b-next
+✓ installation   0.3s  kept nereus-scn-2031-9bab4b
+✗ ready         1m32s
+  total         1m37s  slo 8m, 20% green
+✗ the cluster's Nereids keep their images: thetis does not change an image that is already there
+  reference-secrets  localhost:5111/reference-secrets-controller@sha256:0de294bd2444 → @sha256:780a0ec273e5
+  fix                nereus nereid apply reference-secrets --reef secrets --image localhost:5111/reference-secrets-controller@sha256:780a0ec273e5ca09d10175bb3835eb75e899fbc34f2718c5a795bd8e79b71a93
 ```
 
-### 5. Move each Nereid that should change
+thetis moves in place every Nereid whose image it installed itself: it records that image on the Nereid (the annotation `core.getnereus.dev/profile-image`), and while the Nereid still runs it, the new one replaces it. When nothing stops it, init's `ready` line counts them (`7 Nereids ready, 6 moved by thetis`).
 
-thetis never changes an image already there, so the Profile stays not Ready, naming the first Nereid whose digest differs. Move each one as in steps 2 and 3.
+A Nereid whose image was applied by hand, as in step 3, keeps it: thetis marks its step `Blocked`, reason `ImageApplied`, and the Profile's Ready condition says `ImageApplied`.
+
+init stops as soon as it reads that, instead of waiting for its timeout, and names only those Nereids; the API, the charts and the Nereids it moved stay as they are. [`nereus doctor`](../../specs/cli/core.html#doctor) shows the same list in its `profile` row.
+
+A Profile that names an image its registry lacks moves nothing either. thetis reads each image before it applies a Nereid: the step is `Blocked`, reason `ImageMissing`, with the image, and the steps after it go on, so a Nereid already there keeps its own. The Profile's Ready condition says `ImageMissing`; init stops at once and adds the fix:
+
+```text
+✗ ready          2 Nereids name an image the registry lacks: database, secrets
+  database  localhost:5111/database-controller:0.1.41.dev146
+  secrets   localhost:5111/secrets-controller:0.1.41.dev146
+  fix       make nereids
+```
+
+`nereus doctor`'s `profile` row says the same, with the same fix, before any image a Nereid keeps.
+
+A registry that does not answer leaves the step `Waiting` for the next pass.
+
+A Nereid installed before thetis recorded its images has no annotation, so the first update after it lists every such Nereid once; their `fix` lines adopt them, and the next update moves them.
+
+### 5. Move each Nereid applied by hand that should change
+
+Run each `fix` line init printed, as in steps 2 and 3. thetis's next pass finds every image as the Profile names it, records it, and the Profile turns Ready.
 
 ## Check it worked
 
@@ -1526,7 +1571,13 @@ nereus edge zone create getnereus.dev --mandate cloudflare
   point the registrar of getnereus.dev at them; the zone turns Active once Cloudflare sees it
 ```
 
-Changing the registrar from Nereus waits for the Nereid godaddy [planned] (#475).
+When the domain is registered at GoDaddy, the Nereid godaddy points it there for you (#475): [`nereus nereid apply godaddy`](../../specs/cli/reefs/edge.html#apply-godaddy), its Mandate with GoDaddy's key and secret in the vault `edge`, then [`nereus edge domain apply`](../../specs/cli/reefs/edge.html#domain-apply).
+
+```bash
+nereus edge domain apply getnereus.dev --nameservers-from zone/getnereus.dev --wait
+```
+
+GoDaddy answers 403 to an account that may not use its production Domains API; the Domain then says `RegistrarRefused`, and the registrar is changed by hand.
 
 ### 5. Carry the hostname through the tunnel
 
@@ -1549,6 +1600,10 @@ nereus edge route create triton --hostname triton.getnereus.dev --endpoint messa
 ```
 
 The tunnel carries the hostname only when the endpoint is publishable, granted and served on that hostname; otherwise the route says why (`NotPublished`, `NotServed`, `NoEndpoint`, or `Exposes` when the hostname also serves an endpoint that may not leave the cluster: the tunnel carries the whole hostname). The kept cluster's routes move to endpoints with #2011.
+
+Only a Nereid with an HTTPRoute of its own on the hostname counts for `Exposes`: what a Nereid says in its status alone never takes another Nereid's route off the air.
+
+Any other HTTPRoute the entrance's Gateway admits on the hostname makes the route `Exposes` too, naming it as `<namespace>/<name>`: one with no Nereid label (the chart's `nereus-api`, one a Release made), one of another namespace, or one whose Nereid publishes no granted endpoint there. Give such a host its own hostname, or publish its endpoint.
 
 ## Check it worked
 
@@ -3667,6 +3722,125 @@ nereus mcp client remove claude-code
 
 - [ADR 0029](../../adr/0029-mcp-tools.md): each reef declares its tools in its Nereid's contract, and the Nereus API serves them.
 
+# Follow your agent's quota
+
+Source: https://docs.getnereus.dev/guides/reefs/usage.md
+
+Report the share of a coding agent's quota window you read, and see where it is heading: the forecast at the reset, its pace, today's goal and the week day by day.
+
+## Before you start
+
+- A cluster from [Prepare the cluster](../../start/init.md) with `--profile internal-developer-platform`: it brings the usage reef with its Nereid `reference-usage`.
+- `nereus login` done: the readings go through the Nereus API.
+- The share used and the reset of the window, as your agent's status line shows them.
+
+## Steps
+
+### 1. Report a reading
+
+[`nereus usage report`](../../specs/cli/reefs/usage.html#usage-report) sends the share, read now. Within one window the higher share is kept: an idle session that reports an older, lower share changes nothing.
+
+```bash
+nereus usage report weekly \
+  --used 75 \
+  --resets-at 2026-11-16T01:00:00-03:00
+```
+
+``` { .text .output title="output" }
+✓ usage/windows/weekly reported (75% used, resets Mon 16/11 01:00)
+
+Next steps:
+
+  nereus usage get weekly
+```
+
+### 2. Read where it is heading
+
+[`nereus usage get`](../../specs/cli/reefs/usage.html#usage-get) shows the forecast at the reset and its pace (`push` below 70%, `steady` up to 95%, `slow` above), today's goal, and the week: the days gone (`~` when estimated), today and the plan for the days left.
+
+```bash
+nereus usage get weekly
+```
+
+``` { .text .output title="output" }
+WINDOW  USED  RESETS           FORECAST  PACE    TODAY  READ
+weekly  75%   Mon 16/11 01:00  91%       steady  ≤75%   Sat 19:06
+
+DAY        SHARE  TOTAL
+Mon 09/11  +10%   10%
+Tue 10/11  ~+11%  ~21%
+Wed 11/11  +10%   31%
+Thu 12/11  +10%   41%
+Fri 13/11  +19%   60%
+Sat 14/11  +15%   75%    today
+Sun 15/11  +25%   100%   plan
+```
+
+### 3. Cut the days where you live
+
+The days and the times are cut in the time zone of the reef's Mandate, UTC until you set one. [`nereus mandate apply`](../../specs/cli/core.html#mandate-apply) replaces every param, so name them all.
+
+```bash
+nereus mandate apply reference-usage \
+  --reef usage \
+  --nereid reference-usage \
+  --default \
+  --param timeZone=America/Sao_Paulo
+```
+
+### 4. Report a reset
+
+When the quota was reset and the share really went down, say so with `--replace`: the lower share wins, and the days gone stay. For an hour, a reading above it but not above the old peak is taken for a stale session's and ignored.
+
+```bash
+nereus usage report weekly \
+  --used 91 \
+  --resets-at 2026-11-16T01:00:00-03:00 \
+  --replace
+```
+
+``` { .text .output title="output" }
+✓ usage/windows/weekly replaced 98% (91% used, resets Mon 16/11 01:00), forecast 110.7% slow
+
+Next steps:
+
+  nereus usage get weekly
+```
+
+### 5. Report from the status line
+
+`report` keeps a local cache, one JSON file per window under `~/.local/state/nereus/usage/`, and sends at most every 5 minutes, so a status line can run it on every reading and read the figures back with `jq`. Offline, the cache keeps the reading and `get` answers from it, marked `local`.
+
+```bash
+jq '.figures.forecast' ~/.local/state/nereus/usage/weekly.json
+```
+
+## Check it worked
+
+`nereus usage get weekly` shows the share you reported, its forecast, and today never below zero after a reset.
+
+```bash
+nereus usage get weekly
+```
+
+``` { .text .output title="output" }
+WINDOW  USED  RESETS           FORECAST  PACE  TODAY  READ
+weekly  91%   Mon 16/11 01:00  111%      slow  ≤92%   Sat 19:06
+
+DAY        SHARE  TOTAL
+Mon 09/11  ~+18%  ~18%
+Tue 10/11  ~+18%  ~36%
+Wed 11/11  ~+19%  ~55%
+Thu 12/11  ~+18%  ~73%
+Fri 13/11  +18%   91%
+Sat 14/11  +0%    91%    today
+Sun 15/11  +8%    100%   plan
+```
+
+## Next
+
+- [The usage reef's commands](../../reference/reefs/usage.md), with `apply`, `list` and `delete`.
+
 # Run the CLI from a checkout
 
 Source: https://docs.getnereus.dev/guides/build/cli-checkout.md
@@ -5502,17 +5676,19 @@ Every command of the edge reef: domains, zones and routes, in the order a person
 
 ## Commands
 
-- [`nereus reef apply edge`](../../specs/cli/reefs/edge.html#apply-reef) One command applies the edge reef, with its first kind, Route
+- [`nereus reef apply edge`](../../specs/cli/reefs/edge.html#apply-reef) One command applies the edge reef, with its kinds Route, Zone and Domain
 - [`nereus nereid apply cloudflare`](../../specs/cli/reefs/edge.html#apply-cloudflare) The cloudflare Nereid runs the tunnel its Mandate names
-- [`nereus nereid apply godaddy`](../../specs/cli/reefs/edge.html#apply-godaddy) [planned #475] The godaddy Nereid talks to the registrar, through its Mandate
+- [`nereus nereid apply godaddy`](../../specs/cli/reefs/edge.html#apply-godaddy) The godaddy Nereid talks to the registrar, through its Mandate
 - [`nereus edge zone create getnereus.dev`](../../specs/cli/reefs/edge.html#zone-create) A zone gives the domain the nameservers that will answer for it
-- [`nereus edge domain list`](../../specs/cli/reefs/edge.html#domain-list-registrar) [planned #475] The registrar shows its domains, with the credentials asked for now and never stored
-- [`nereus edge domain apply getnereus.dev`](../../specs/cli/reefs/edge.html#domain-apply) [planned #475] Nereus takes the domain and sends it to the zone's nameservers
-- [`nereus edge domain list`](../../specs/cli/reefs/edge.html#domain-list) [planned #475] The list shows the domains Nereus looks after
-- [`nereus edge domain get getnereus.dev`](../../specs/cli/reefs/edge.html#domain-get) [planned #475] One domain shows every detail, its nameservers one per line
+- [`nereus edge domain list`](../../specs/cli/reefs/edge.html#domain-list-registrar) The registrar shows its domains, with the credentials asked for now and never stored
+- [`nereus edge domain apply getnereus.dev`](../../specs/cli/reefs/edge.html#domain-apply) Nereus takes the domain and sends it to the zone's nameservers
+- [`nereus edge domain list`](../../specs/cli/reefs/edge.html#domain-list) The list shows the domains Nereus looks after
+- [`nereus edge domain get getnereus.dev`](../../specs/cli/reefs/edge.html#domain-get) One domain shows every detail, its nameservers one per line
 - [`nereus edge route create triton`](../../specs/cli/reefs/edge.html#route-hostname) A route makes a hostname reach the platform
 - [`nereus edge endpoint list`](../../specs/cli/reefs/edge.html#endpoint-list) The Nereids say what they serve, never where it runs
 - [`nereus edge route create triton`](../../specs/cli/reefs/edge.html#route-create) A route publishes a reef's endpoint at a fixed address
+- [`nereus edge apply`](../../specs/cli/reefs/edge.html#apply-file) One file applies every Route and Zone, each checked before any is written
+- [`nereus edge route delete triton`](../../specs/cli/reefs/edge.html#route-delete) A delete waits until its Nereid takes away what it made, unless told not to
 
 ## Examples
 
@@ -5565,7 +5741,9 @@ nereus nereid apply godaddy \
 
 Next steps:
 
-  nereus mandate create godaddy --reef edge --nereid godaddy
+  nereus secrets create edge/godaddy --from-env key=GODADDY_KEY --from-env secret=GODADDY_SECRET
+  nereus mandate create godaddy --reef edge --nereid godaddy --param credentialsSecret=edge/godaddy
+  nereus edge domain list --at-registrar
 ```
 
 ### zone-create
@@ -5593,22 +5771,21 @@ What the registrar holds.
 
 ```bash
 nereus edge domain list \
-  --at-registrar \
-  --mandate godaddy
+  --at-registrar
 ```
 
 ``` { .text .output title="output" }
-GoDaddy API key: ****
-GoDaddy API secret: ****
-NAME            NAMESERVERS                  EXPIRES      MANAGED
-getnereus.dev   ns01.domaincontrol.com (+1)  2029-10-25   no
-example.com     ns01.domaincontrol.com (+1)  2029-10-25   no
-example.org     ns01.domaincontrol.com (+1)  2028-06-11   no
+GoDaddy API key:
+GoDaddy API secret:
+NAME           NAMESERVERS                  EXPIRES     MANAGED
+example.com    ns01.domaincontrol.com (+1)  2029-10-25  no
+example.org    ns01.domaincontrol.com (+1)  2028-06-11  no
+getnereus.dev  ns01.domaincontrol.com (+1)  2029-10-25  no
 
 Next steps:
 
-  nereus edge domain get <name> --at-registrar --mandate godaddy
-  nereus edge domain apply <name> --mandate godaddy
+  nereus edge domain get <name>
+  nereus edge domain apply <name> --nameservers-from zone/<name>     # Nereus starts looking after it
 ```
 
 ### domain-apply
@@ -5617,12 +5794,11 @@ Delegate getnereus.dev to the zone.
 
 ```bash
 nereus edge domain apply getnereus.dev \
-  --nameservers-from zone/getnereus.dev \
-  --mandate godaddy
+  --nameservers-from zone/getnereus.dev
 ```
 
 ``` { .text .output title="output" }
-✓ domain/getnereus.dev created
+✓ edge/domains/getnereus.dev created
 
 Next steps:
 
@@ -5638,12 +5814,8 @@ nereus edge domain list
 ```
 
 ``` { .text .output title="output" }
-NAME            MANDATE  NAMESERVERS                 DELEGATED
-getnereus.dev   godaddy  ada.ns.cloudflare.com (+1)  True
-
-Next steps:
-
-  nereus edge domain get getnereus.dev
+NAME           MANDATE  NAMESERVERS                 DELEGATED
+getnereus.dev  godaddy  ada.ns.cloudflare.com (+1)  True
 ```
 
 ### domain-get
@@ -5663,10 +5835,6 @@ Nameservers:
   ada.ns.cloudflare.com
   bob.ns.cloudflare.com
   (from zone/getnereus.dev)
-
-Next steps:
-
-  nereus edge domain get getnereus.dev --watch
 ```
 
 ### route-hostname
@@ -5717,6 +5885,41 @@ nereus edge route create triton \
 Next steps:
 
   nereus edge route get triton
+```
+
+### apply-file
+
+Apply a file: a Zone and a Route, in the file's order.
+
+```bash
+nereus edge apply \
+  --from-file edge.yaml
+```
+
+``` { .text .output title="output" }
+✓ edge/zones/example.com created
+✓ edge/routes/triton created
+
+Next steps:
+
+  nereus edge route list
+  nereus edge zone list
+```
+
+### route-delete
+
+Delete the Route: it waits until the hostname left the tunnel.
+
+```bash
+nereus edge route delete triton
+```
+
+``` { .text .output title="output" }
+✓ edge/routes/triton deleted (its Nereid took the hostname out of the tunnel)
+
+Next steps:
+
+  nereus edge route list
 ```
 
 # environment
@@ -5952,7 +6155,7 @@ Next steps:
 
 Source: https://docs.getnereus.dev/reference/reefs/messaging.md
 
-Every command of the messaging reef: topics, queues and the agents' sessions, with Triton's room beside it.
+Every command of the messaging reef: topics and queues, the engine under the rooms reef.
 
 ## Commands
 
@@ -5969,9 +6172,6 @@ Every command of the messaging reef: topics, queues and the agents' sessions, wi
 - [`nereus messaging session create m15`](../../specs/cli/reefs/messaging.html#session-create-orders) Where Triton serves orders, the agent also logs in to NATS
 - [`nereus messaging session list`](../../specs/cli/reefs/messaging.html#session-list) Every agent connected to Triton, and who started it
 - [`nereus room follow`](../../specs/cli/reefs/messaging.html#room-follow) A person follows the room where the agents talk
-- [`nereus room post "k3d-nereus is mine until 21:30"`](../../specs/cli/reefs/messaging.html#room-post) [idea] A person posts to the room, as the agents do
-- [`nereus order create "run make checks"`](../../specs/cli/reefs/messaging.html#orders) [idea] An order goes to one idle agent, and the list follows it
-- [`nereus edge endpoint list`](../../specs/cli/reefs/messaging.html#door-endpoint) [planned #470] Triton's door is an endpoint the edge reef publishes
 
 ## Examples
 
@@ -6042,6 +6242,9 @@ Engine:           nats
 Mandate:          nats
 Nereid:           nats
 Deletion policy:  retain
+Max age:          unlimited
+Max bytes:        unlimited
+Access:           shared
 Ready:            True
 Connection:       secret nereus-system/orders-topic (host, port, uri, subject)
 ```
@@ -6201,50 +6404,6 @@ nereus room follow \
 21:02:11  alice/speo  claim    #1406 in ../nereus-1406-size, paths controllers/vcluster/
 21:02:40  bob/doto    note     k3d-nereus is mine until 21:30
 21:30:02  bob/doto    release  k3d-nereus
-```
-
-### room-post
-
-Tell the room the cluster is taken.
-
-```bash
-nereus room post "k3d-nereus is mine until 21:30" \
-  --room nereus \
-  --kind note
-```
-
-``` { .text .output title="output" }
-✓ room/nereus note posted
-```
-
-### orders
-
-Send an order to agent m15.
-
-```bash
-nereus order create "run make checks" \
-  --agent m15
-```
-
-``` { .text .output title="output" }
-✓ order/20261030-142549-4dae created, sent to m15
-```
-
-### door-endpoint
-
-What the reefs offer to publish.
-
-```bash
-nereus edge endpoint list
-```
-
-``` { .text .output title="output" }
-REEF        ENDPOINT   PROTOCOL   PUBLISHED
-messaging   mcp        mcp        no
-
-Next steps:
-
-  nereus edge route create <name> --hostname <hostname> --endpoint messaging/mcp
 ```
 
 # portal
@@ -7262,6 +7421,265 @@ kubectl apply \
 gateway.gateway.networking.k8s.io/ingress created
 ```
 
+# rooms
+
+Source: https://docs.getnereus.dev/reference/reefs/rooms.md
+
+Every command of the rooms reef: rooms, peers and the agents' sessions, on a Topic of the messaging reef.
+
+## Commands
+
+- [`nereus reef apply rooms`](../../specs/cli/reefs/rooms.html#apply-reef) [planned #2072] One command applies the rooms reef and its kinds
+- [`nereus nereid apply triton`](../../specs/cli/reefs/rooms.html#apply-triton) [planned #2072] The triton Nereid looks after rooms and peers
+- [`nereus rooms create ops`](../../specs/cli/reefs/rooms.html#room-create) [planned #1491] A room is created by name, and its Topic comes with it
+- [`nereus rooms list`](../../specs/cli/reefs/rooms.html#room-list) [planned #1491] One room shows whose it is and the peers in it
+- [`nereus rooms create platform`](../../specs/cli/reefs/rooms.html#room-apply) [planned #1491] A room from a file: the dry run writes it, apply takes it
+- [`nereus rooms delete platform`](../../specs/cli/reefs/rooms.html#room-delete) [planned #1491] Deleting a room keeps its messages, unless it says otherwise
+- [`nereus rooms peer list`](../../specs/cli/reefs/rooms.html#peer-list) [planned #2074] Every agent's session in the rooms is a Peer
+- [`nereus rooms peer get ana.doto`](../../specs/cli/reefs/rooms.html#peer-get) [planned #2074] One Peer says whose agent it is, and which rooms it is in
+- [`nereus rooms session create`](../../specs/cli/reefs/rooms.html#session-create-dry-run) [planned #2076] A dry run says what the session would be, and starts nothing
+- [`nereus rooms session create`](../../specs/cli/reefs/rooms.html#session-create) [planned #2076] A coding agent joins a room with your own login
+- [`nereus rooms session list`](../../specs/cli/reefs/rooms.html#session-list) [planned #2076] Every agent connected to Triton, and who started it
+- [`nereus rooms follow`](../../specs/cli/reefs/rooms.html#follow) [planned #2076] A person follows the room where the agents talk
+- [`nereus rooms pull doto`](../../specs/cli/reefs/rooms.html#pull) [planned #2076] A hook pulls each room's new messages into the session
+- [`nereus rooms post "k3d-nereus is mine until 21:30"`](../../specs/cli/reefs/rooms.html#post) [planned #1889] A person posts to the room, as the agents do
+- [`nereus order create "run make checks"`](../../specs/cli/reefs/rooms.html#orders) [idea] An order goes to one idle agent, and the list follows it
+
+## Examples
+
+### apply-reef
+
+Apply the rooms reef.
+
+```bash
+nereus reef apply rooms
+```
+
+``` { .text .output title="output" }
+✓ core/reefs/rooms 0.1.0 created (rooms.getnereus.dev/v1alpha1: peers, rooms)
+
+Next steps:
+
+  nereus rooms --help
+  nereus nereid apply <nereid> --reef rooms
+```
+
+### apply-triton
+
+Apply the triton Nereid to the rooms reef.
+
+```bash
+nereus nereid apply triton \
+  --reef rooms
+```
+
+``` { .text .output title="output" }
+✓ core/nereids/triton created, Ready, pinned to sha256:<digest>: see 'nereus rooms --help'
+
+Next steps:
+
+  nereus rooms create <name>
+```
+
+### room-create
+
+A room for the operations peers.
+
+```bash
+nereus rooms create ops \
+  --owner project/payments \
+  --description "Operations peers"
+```
+
+``` { .text .output title="output" }
+✓ rooms/rooms/ops created (owner: project/payments)
+
+Next steps:
+
+  nereus rooms get ops
+```
+
+### room-list
+
+The rooms of the reef.
+
+```bash
+nereus rooms list
+```
+
+``` { .text .output title="output" }
+NAME    OWNER                 PEERS  MESSAGES  LAST MESSAGE  AGE
+nereus  organization/example  3      -         -             12d
+ops     project/payments      2      -         -             1m
+```
+
+### room-apply
+
+The YAML of a room, written by a dry run.
+
+```bash
+nereus rooms create platform \
+  --owner project/payments \
+  --description "Platform peers" \
+  --dry-run \
+  --output yaml
+```
+
+``` { .text .output title="output" }
+apiVersion: rooms.getnereus.dev/v1alpha1
+kind: Room
+metadata:
+  name: platform
+spec:
+  owner:
+    kind: Project
+    name: payments
+  description: Platform peers
+```
+
+### room-delete
+
+Remove the room: its Topic goes with it.
+
+```bash
+nereus rooms delete platform \
+  --yes
+```
+
+``` { .text .output title="output" }
+✓ rooms/rooms/platform deleted (deletionPolicy: retain, its messages are kept)
+
+Next steps:
+
+  nereus rooms list
+```
+
+### peer-list
+
+The peers of the reef.
+
+```bash
+nereus rooms peer list
+```
+
+``` { .text .output title="output" }
+NAME      ROOMS  PHASE  SINCE
+ana.doto  ops    Ready  10:02:11
+```
+
+### peer-get
+
+Every detail of one peer.
+
+```bash
+nereus rooms peer get ana.doto
+```
+
+``` { .text .output title="output" }
+Name:   ana.doto
+Owner:  User/ana
+Agent:  doto
+Tool:   claude-code
+Rooms:  ops
+Phase:  Ready
+Since:  10:02:11
+```
+
+### session-create-dry-run
+
+What would happen, with no name given.
+
+```bash
+nereus rooms session create \
+  --room ops \
+  --dry-run
+```
+
+``` { .text .output title="output" }
+would start claude-code as a Nereid's name free on Triton in the room ops on Triton
+```
+
+### session-create
+
+Start Claude Code in the room ops.
+
+```bash
+nereus rooms session create \
+  --room ops
+```
+
+``` { .text .output title="output" }
+starting doto with claude-code: in the room ops on Triton
+```
+
+### session-list
+
+The agents connected to Triton.
+
+```bash
+nereus rooms session list
+```
+
+``` { .text .output title="output" }
+OWNER   NAME  STATE  SINCE     LAST HEARTBEAT  STARTED BY
+bob     doto  ready  06:12:02  06:15:57        bob
+nereus  m16   ready  06:11:36  06:15:56        alice
+```
+
+### follow
+
+Follow the room nereus, until Ctrl-C.
+
+```bash
+nereus rooms follow \
+  --room nereus
+```
+
+``` { .text .output title="output" }
+21:02:11  alice/speo  claim    #1406 in ../nereus-1406-size, paths controllers/vcluster/
+21:02:40  bob/doto    note     k3d-nereus is mine until 21:30
+21:30:02  bob/doto    release  k3d-nereus
+```
+
+### pull
+
+What a session's hook runs: the new messages for agent doto.
+
+```bash
+nereus rooms pull doto
+```
+
+``` { .text .output title="output" }
+{"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": "[note] bob/doto: k3d-nereus is mine until 21:30"}}
+```
+
+### post
+
+Tell the room the cluster is taken.
+
+```bash
+nereus rooms post "k3d-nereus is mine until 21:30" \
+  --room nereus \
+  --kind note
+```
+
+``` { .text .output title="output" }
+✓ rooms/rooms/nereus note posted
+```
+
+### orders
+
+Send an order to agent m15.
+
+```bash
+nereus order create "run make checks" \
+  --agent m15
+```
+
+``` { .text .output title="output" }
+✓ order/20261030-142549-4dae created, sent to m15
+```
+
 # scm
 
 Source: https://docs.getnereus.dev/reference/reefs/scm.md
@@ -8163,6 +8581,7 @@ Every command that reports a coding agent's quota window and shows where it is h
 ## Commands
 
 - [`nereus usage report weekly`](../../specs/cli/reefs/usage.html#usage-report) report sends a reading, read now
+- [`nereus usage report weekly`](../../specs/cli/reefs/usage.html#usage-replace) --replace says the share really went down
 - [`nereus usage report weekly`](../../specs/cli/reefs/usage.html#usage-offline) offline, report keeps the reading locally and get answers from it
 - [`nereus usage apply`](../../specs/cli/reefs/usage.html#usage-apply) apply writes the windows of a file, under the same rules
 - [`nereus usage get weekly`](../../specs/cli/reefs/usage.html#usage-get) get shows the forecast at the reset, today's goal and the week day by day
@@ -8182,6 +8601,25 @@ nereus usage report weekly \
 
 ``` { .text .output title="output" }
 ✓ usage/windows/weekly reported (75% used, resets Mon 16/11 01:00)
+
+Next steps:
+
+  nereus usage get weekly
+```
+
+### usage-replace
+
+The usage was reset mid-week: 98% kept, 91% now.
+
+```bash
+nereus usage report weekly \
+  --used 91 \
+  --resets-at 2026-11-16T01:00:00-03:00 \
+  --replace
+```
+
+``` { .text .output title="output" }
+✓ usage/windows/weekly replaced 98% (91% used, resets Mon 16/11 01:00), forecast 110.7% slow
 
 Next steps:
 
@@ -8365,6 +8803,12 @@ The [settings file](settings.md) also holds the id, so a cluster recreated from 
 ## Alias
 
 What listings show; free text, at most 63 characters, no control characters. It may change; the name and id stay, and the settings file follows: [`nereus config installation set --alias "Acme Prod"`](../specs/cli/core.html#installation-set).
+
+## Address
+
+`spec.url` is the address the API is published at: the chart's `ingress.address`, rewritten on every release, so it is not a setting. An instance with none (no Gateway, only port-forward) has no `url`.
+
+`nereus status --output json` and `GET /v1/status` answer it as `installation.url`, `null` when absent. The portal's account sheet shows it with the `nereus login <url>` line.
 
 ## Naming overrides
 

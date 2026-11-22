@@ -68,7 +68,7 @@ slides:
     screen:
       - "**1 · Apply the {reef:edge} reef:** its kinds come first, with no tool behind them · [`nereus reef apply edge`](../../specs/cli/reefs/edge.html#apply-reef) · planned #470"
       - "**2 · Apply {nereid:cloudflare} and its Mandate:** it runs the zone and the tunnel · [`nereus nereid apply cloudflare`](../../specs/cli/reefs/edge.html#apply-cloudflare) · planned #470"
-      - "**3 · Apply {nereid:godaddy} and its Mandate:** it talks to the registrar · [`nereus nereid apply godaddy`](../../specs/cli/reefs/edge.html#apply-godaddy) · planned #475"
+      - "**3 · Apply {nereid:godaddy} and its Mandate:** it talks to the registrar · [`nereus nereid apply godaddy`](../../specs/cli/reefs/edge.html#apply-godaddy) · built #475"
     notes: |-
       **Each link opens the command's slide in the CLI reference**, with its options and what it prints. Another Nereid can take the place of cloudflare or godaddy by swapping the Mandate.
     pt:
@@ -78,7 +78,7 @@ slides:
       screen:
         - "**1 · Aplicar o reef {reef:edge}:** os seus kinds vêm primeiro, sem ferramenta por trás · [`nereus reef apply edge`](../../specs/cli/reefs/edge.html#apply-reef) · planejado #470"
         - "**2 · Aplicar {nereid:cloudflare} e o seu Mandate:** cuida da zona e do túnel · [`nereus nereid apply cloudflare`](../../specs/cli/reefs/edge.html#apply-cloudflare) · planejado #470"
-        - "**3 · Aplicar {nereid:godaddy} e o seu Mandate:** fala com a registradora · [`nereus nereid apply godaddy`](../../specs/cli/reefs/edge.html#apply-godaddy) · planejado #475"
+        - "**3 · Aplicar {nereid:godaddy} e o seu Mandate:** fala com a registradora · [`nereus nereid apply godaddy`](../../specs/cli/reefs/edge.html#apply-godaddy) · pronto #475"
       notes: |-
         **Cada link abre o slide do comando na referência do CLI**, com as suas opções e o que ele imprime. Outra Nereid pode tomar o lugar de cloudflare ou godaddy trocando o Mandate.
 
@@ -89,8 +89,8 @@ slides:
     accent: "sent to them"
     screen:
       - "**4 · Create the zone:** it gives the domain the nameservers that will answer for it · [`nereus edge zone create`](../../specs/cli/reefs/edge.html#zone-create) · planned #470"
-      - "**5 · See the domains at the registrar:** pick the one to bring in · [`nereus edge domain list`](../../specs/cli/reefs/edge.html#domain-list-registrar) · planned #475"
-      - "**6 · Delegate the domain to the zone:** the registrar sends it to the zone's nameservers · [`nereus edge domain apply`](../../specs/cli/reefs/edge.html#domain-apply) · planned #475"
+      - "**5 · See the domains at the registrar:** pick the one to bring in · [`nereus edge domain list`](../../specs/cli/reefs/edge.html#domain-list-registrar) · built #475"
+      - "**6 · Delegate the domain to the zone:** the registrar sends it to the zone's nameservers · [`nereus edge domain apply`](../../specs/cli/reefs/edge.html#domain-apply) · built #475"
     notes: |-
       **The zone comes before the domain**: its nameservers are what the domain is delegated to.
     pt:
@@ -99,8 +99,8 @@ slides:
       accent: "mandado para eles"
       screen:
         - "**4 · Criar a zona:** ela dá ao domínio os nameservers que vão responder por ele · [`nereus edge zone create`](../../specs/cli/reefs/edge.html#zone-create) · planejado #470"
-        - "**5 · Ver os domínios na registradora:** escolher o que trazer · [`nereus edge domain list`](../../specs/cli/reefs/edge.html#domain-list-registrar) · planejado #475"
-        - "**6 · Delegar o domínio para a zona:** a registradora o manda para os nameservers da zona · [`nereus edge domain apply`](../../specs/cli/reefs/edge.html#domain-apply) · planejado #475"
+        - "**5 · Ver os domínios na registradora:** escolher o que trazer · [`nereus edge domain list`](../../specs/cli/reefs/edge.html#domain-list-registrar) · pronto #475"
+        - "**6 · Delegar o domínio para a zona:** a registradora o manda para os nameservers da zona · [`nereus edge domain apply`](../../specs/cli/reefs/edge.html#domain-apply) · pronto #475"
       notes: |-
         **A zona vem antes do domínio**: os seus nameservers são para onde o domínio é delegado.
 
@@ -129,7 +129,7 @@ slides:
     message: "The domain shows its new nameservers, and the address answers"
     accent: "the address answers"
     screen:
-      - "**The domain:** `Delegated: True` and the zone's nameservers · [`nereus edge domain get`](../../specs/cli/reefs/edge.html#domain-get) · planned #475"
+      - "**The domain:** `Delegated: True` and the zone's nameservers · [`nereus edge domain get`](../../specs/cli/reefs/edge.html#domain-get) · built #475"
       - "**The address:** `https://triton.getnereus.dev` answers"
     notes: |-
       **Delegation takes minutes to hours**, the time the registrar takes to publish the new nameservers; `--watch` waits for it.
@@ -137,7 +137,7 @@ slides:
       message: "O domínio mostra os seus novos nameservers, e o endereço responde"
       accent: "o endereço responde"
       screen:
-        - "**O domínio:** `Delegated: True` e os nameservers da zona · [`nereus edge domain get`](../../specs/cli/reefs/edge.html#domain-get) · planejado #475"
+        - "**O domínio:** `Delegated: True` e os nameservers da zona · [`nereus edge domain get`](../../specs/cli/reefs/edge.html#domain-get) · pronto #475"
         - "**O endereço:** `https://triton.getnereus.dev` responde"
       notes: |-
         **A delegação leva de minutos a horas**, o tempo que a registradora leva para publicar os novos nameservers; `--watch` espera por ela.

@@ -182,13 +182,14 @@ slides:
             ✓ registry localhost:5111   0.0s  reused
             ✓ cluster nereus-local      0.1s  reused
             ✓ kinds                     0.4s  release nereus-reefs revision 2
+            ✓ images                    0.0s  1 image at 0.1.41.dev146 in localhost:5111
             ✓ nereus                    1.1s  release nereus revision 2, profile core
             ✓ installation              0.3s  kept nereus-local
               total                     1.8s  slo 4m, 0% green
             ✓ cluster ready in context k3d-nereus-local · config in ~/.config/nereus/config.yaml · values in ~/.config/nereus/values.yaml
     dependsOn: [init-dry-run]
     notes: |-
-      **`init` checks Docker, k3d and Helm first**, then creates or reuses the local registry and the k3d cluster, and runs two `helm upgrade --install`s: `kinds` (the chart `nereus-reefs`) and `nereus` (the Nereus API and the profile core, with the tenancy reef). `installation` reads back the installation's identity.
+      **`init` checks Docker, k3d and Helm first**, then creates or reuses the local registry and the k3d cluster, and runs two `helm upgrade --install`s: `kinds` (the chart `nereus-reefs`) and `nereus` (the Nereus API and the profile core, with the tenancy reef). Between them, `images` checks that the registry holds every image the release names, and stops with `fix: make nereids` when one is missing, before anything changes (#2062). `installation` reads back the installation's identity.
 
       **Each step prints its time, and the total is measured against the SLO** (spec 0004): 8 minutes on k3d; this run on a reused cluster was after `nereus config slo set --local 4m` ([The time SLO](../../guides/operate/slo.md)). Missing it never stops `init`; `--check-slo` fails past the tolerance.
     pt:
@@ -196,7 +197,7 @@ slides:
       message: "O core em duas releases do Helm, cada passo com o seu tempo"
       accent: "cada passo com o seu tempo"
       notes: |-
-        **O `init` confere o Docker, o k3d e o Helm primeiro**, depois cria ou reusa o registry local e o cluster k3d, e roda dois `helm upgrade --install`: `kinds` (o chart `nereus-reefs`) e `nereus` (a API do Nereus e o profile core, com o reef tenancy). O `installation` lê de volta a identidade da instalação.
+        **O `init` confere o Docker, o k3d e o Helm primeiro**, depois cria ou reusa o registry local e o cluster k3d, e roda dois `helm upgrade --install`: `kinds` (o chart `nereus-reefs`) e `nereus` (a API do Nereus e o profile core, com o reef tenancy). Entre os dois, o `images` confere que o registry tem cada imagem que a release nomeia, e para com `fix: make nereids` quando falta uma, antes de mudar qualquer coisa (#2062). O `installation` lê de volta a identidade da instalação.
 
         **Cada passo imprime o seu tempo, e o total é medido contra o SLO** (spec 0004): 8 minutos no k3d; esta execução num cluster reusado veio depois de `nereus config slo set --local 4m` ([O SLO de tempo](../../guides/operate/slo.md)). Perder o SLO nunca para o `init`; o `--check-slo` falha passada a tolerância.
 
@@ -1079,6 +1080,7 @@ slides:
             ✓ release istio-base              0.7s  release/releases/istio-base unchanged (nereid: flux)
             ✓ release istiod                  0.0s  release/releases/istiod unchanged (nereid: flux)
             ✓ release istio-gateway           0.0s  release/releases/istio-gateway unchanged (nereid: flux)
+            ✓ admission entrance              0.0s  ValidatingAdmissionPolicy nereus-entrance unchanged (one door to the entrance)
             ✓ gateway ingress                 0.0s  istio-system/ingress unchanged
             ✓ reef portal                     0.0s  core/reefs/portal unchanged (portal.getnereus.dev/v1alpha1)
             ✓ nereid nereus-portal            0.3s  core/nereids/nereus-portal unchanged, Ready
@@ -1380,3 +1382,42 @@ slides:
       accent: "no Claude Code"
       notes: |-
         **Ele roda o CLI do próprio agente** (`claude mcp add | get | remove`), nunca escreve as configurações dele e nunca copia o seu token: o Claude Code faz login para `aud: nereus-mcp` sozinho (#1880). O client OAuth `claude-code` e sua porta fixa de callback vêm do `/.well-known/nereus-configuration` da instância, já que o Claude Code escuta em `http://localhost:<porta>/callback` e o realm aceita só esse endereço exato.
+  - name: mcp-local
+    act: mcp
+    topic: "mcp local add | list | enable | disable"
+    status: built
+    message: "The CLI as the agent's own MCP server, its tools in groups"
+    accent: "in groups"
+    terminal:
+      steps:
+        - comment: "Register the CLI in Claude Code once, with the room's hooks"
+          run: "nereus mcp local add"
+          output: |-
+            ✓ nereus-local added to claude-code (user scope): MCP server `mcp local serve`, hooks PostToolUse, UserPromptSubmit
+
+            Next steps:
+
+              nereus mcp local enable rooms    # inside a Claude Code session, from the agent's Bash tool
+        - comment: "Inside a session: its groups of tools"
+          run: "nereus mcp local list"
+          output: |-
+            GROUP  STATE  TOOLS
+            rooms  off    whoami, list_agents, post_room, read_room
+        - comment: "Turn the room's tools on for this session"
+          run: "nereus mcp local enable rooms"
+          options: ["--agent speo"]
+          output: |-
+            ✓ rooms on: the session sees its tools now
+        - comment: "And off"
+          run: "nereus mcp local disable rooms"
+          output: |-
+            ✓ rooms off
+    dependsOn: [mcp-client-add]
+    notes: |-
+      **Local, not the instance's `/mcp`** (#2101, ADR 0030): `add` registers this CLI in Claude Code's user scope as the server `nereus-local` (`claude mcp add`, once; `nereus` stays the instance's `/mcp`), and the hooks that run `nereus room pull`. Each session keeps its groups in `~/.local/state/nereus/sessions/<claude pid>.json`; the server, started by the same Claude Code, watches it and sends `notifications/tools/list_changed`, so the tools come and go with the session open. With `rooms` off, no tool, no heartbeat and no call to Triton; on, it is the bridge to Triton: the peer tools only, the person's token, the agent named in `Nereus-Agent`. To take the server out: `claude mcp remove nereus-local`.
+    pt:
+      topic: "mcp local add | list | enable | disable"
+      message: "O CLI como o servidor MCP do próprio agente, suas ferramentas em grupos"
+      accent: "em grupos"
+      notes: |-
+        **Local, não o `/mcp` da instância** (#2101, ADR 0030): o `add` registra este CLI no escopo de usuário do Claude Code como o servidor `nereus-local` (`claude mcp add`, uma vez; `nereus` segue sendo o `/mcp` da instância), e os hooks que rodam `nereus room pull`. Cada sessão guarda seus grupos em `~/.local/state/nereus/sessions/<pid do claude>.json`; o servidor, iniciado pelo mesmo Claude Code, observa o arquivo e manda `notifications/tools/list_changed`, então as ferramentas vêm e vão com a sessão aberta. Com `rooms` desligado, nenhuma ferramenta, nenhum heartbeat e nenhuma chamada ao Triton; ligado, ele é a ponte para o Triton: só as ferramentas de peer, o token da pessoa, o agente nomeado em `Nereus-Agent`. Para tirar o servidor: `claude mcp remove nereus-local`.

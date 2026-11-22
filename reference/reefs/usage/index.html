@@ -1816,6 +1816,8 @@
       
         
       
+        
+      
     
     
     
@@ -2259,6 +2261,41 @@
     
   
     Use the MCP server
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/reefs/usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Follow your agent's quota
   
 
     
@@ -2923,6 +2960,8 @@
       
         
       
+        
+      
     
     
     
@@ -3463,6 +3502,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../rooms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    rooms
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--planned"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../scm/" class="md-nav__link">
         
   
@@ -3704,6 +3778,17 @@
     <span class="md-ellipsis">
       
         usage-report
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage-replace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        usage-replace
       
     </span>
   </a>
@@ -5301,14 +5386,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../adr/0030-triton-messaging-nereid/" class="md-nav__link">
+      <a href="../../../adr/0030-triton-rooms-nereid/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Triton, the messaging Nereid
+    Triton, the rooms Nereid
   
 
     
@@ -5810,6 +5895,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -6043,6 +6132,62 @@
     
   
     Nereid SDK metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../research/platform-in-an-era-of-ai-agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform in an era of AI agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../research/infrastructure-governance-agentic-era/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Infrastructure governance in the agentic era
   
 
     
@@ -6905,6 +7050,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#usage-replace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        usage-replace
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#usage-offline" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -6981,6 +7137,8 @@
 <ul>
 <li><a href="../../../specs/cli/reefs/usage.html#usage-report"><code>nereus usage report weekly</code></a><br>
   report sends a reading, read now</li>
+<li><a href="../../../specs/cli/reefs/usage.html#usage-replace"><code>nereus usage report weekly</code></a><br>
+  --replace says the share really went down</li>
 <li><a href="../../../specs/cli/reefs/usage.html#usage-offline"><code>nereus usage report weekly</code></a><br>
   offline, report keeps the reading locally and get answers from it</li>
 <li><a href="../../../specs/cli/reefs/usage.html#usage-apply"><code>nereus usage apply</code></a><br>
@@ -6998,6 +7156,19 @@
 <span class="w">  </span>--resets-at<span class="w"> </span><span class="m">2026</span>-11-16T01:00:00-03:00
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ usage/windows/weekly reported (75% used, resets Mon 16/11 01:00)
+
+Next steps:
+
+  nereus usage get weekly
+</code></pre></div>
+<h3 id="usage-replace">usage-replace<a class="headerlink" href="#usage-replace" title="Permanent link">&para;</a></h3>
+<p>The usage was reset mid-week: 98% kept, 91% now.</p>
+<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>usage<span class="w"> </span>report<span class="w"> </span>weekly<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--used<span class="w"> </span><span class="m">91</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--resets-at<span class="w"> </span><span class="m">2026</span>-11-16T01:00:00-03:00<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--replace
+</code></pre></div>
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ usage/windows/weekly replaced 98% (91% used, resets Mon 16/11 01:00), forecast 110.7% slow
 
 Next steps:
 

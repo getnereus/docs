@@ -1816,6 +1816,8 @@
       
         
       
+        
+      
     
     
     
@@ -2259,6 +2261,41 @@
     
   
     Use the MCP server
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/reefs/usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Follow your agent's quota
   
 
     
@@ -2916,6 +2953,8 @@
       
         
       
+        
+      
     
     
     
@@ -3439,6 +3478,41 @@
   
   
     <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/rooms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    rooms
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--planned"></span>
   
 
   
@@ -5162,14 +5236,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adr/0030-triton-messaging-nereid/" class="md-nav__link">
+      <a href="../../adr/0030-triton-rooms-nereid/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Triton, the messaging Nereid
+    Triton, the rooms Nereid
   
 
     
@@ -5671,6 +5745,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -5904,6 +5982,62 @@
     
   
     Nereid SDK metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/platform-in-an-era-of-ai-agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform in an era of AI agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/infrastructure-governance-agentic-era/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Infrastructure governance in the agentic era
   
 
     
@@ -7006,7 +7140,12 @@
 </tr>
 <tr>
 <td><strong>messaging</strong></td>
-<td>A resource reef (ADR 0017, #1597, the first cut of #576): <code>messaging.getnereus.dev/v1alpha1</code>, its kinds <code>Topic</code> and <code>Queue</code> (no default kind, so <code>nereus messaging topic create</code> and <code>nereus messaging queue create</code>, next to <code>nereus messaging session</code>) with <code>owner: {kind, name}</code> in the tenancy tree, <code>engine</code> (<code>nats</code>) and <code>deletionPolicy</code> (<code>retain</code>, the default, or <code>delete</code>), in the nereus namespace only; the Nereid <code>nats</code> of the admin's default Mandate (<code>--param jetstream=true</code>) runs NATS next to it and writes in <code>status.binding.secret</code> the Secret <code>&lt;name&gt;-topic</code> or <code>&lt;name&gt;-queue</code>.</td>
+<td>A resource reef (ADR 0017, #1597, the first cut of #576): <code>messaging.getnereus.dev/v1alpha1</code>, its kinds <code>Topic</code> and <code>Queue</code> (no default kind, so <code>nereus messaging topic create</code> and <code>nereus messaging queue create</code>; <code>nereus messaging session</code> stays beside them until #2076 moves it to the rooms reef) with <code>owner: {kind, name}</code> in the tenancy tree, <code>engine</code> (<code>nats</code>) and <code>deletionPolicy</code> (<code>retain</code>, the default, or <code>delete</code>), in the nereus namespace only; the Nereid <code>nats</code> of the admin's default Mandate (<code>--param jetstream=true</code>) runs NATS next to it and writes in <code>status.binding.secret</code> the Secret <code>&lt;name&gt;-topic</code> or <code>&lt;name&gt;-queue</code>.</td>
+<td>none</td>
+</tr>
+<tr>
+<td><strong>rooms</strong></td>
+<td>The reef of the conversation between agents (ADR 0030, #2067): <code>rooms.getnereus.dev/v1alpha1</code>, its kinds <code>Room</code> (the default kind, so <code>nereus rooms create</code>, <code>apply</code>, <code>list</code>, <code>get</code> and <code>delete</code>) and <code>Peer</code> (an agent's session in the rooms, <code>nereus rooms peer list</code> and <code>get</code>), with <code>nereus rooms session create</code> and <code>list</code> and <code>nereus rooms follow</code>, <code>pull</code> and <code>post</code>. The Nereid <code>triton</code> requires the messaging reef and asks it for a Topic <code>room-&lt;room&gt;</code> per Room. <code>create</code>, <code>apply</code>, <code>list</code>, <code>get</code> and <code>delete</code> of a Room go through the Nereus API, asked on the Room's owner: a team's members create rooms owned by the team's owner, admins delete them (#1491), and a new room past the default Mandate's <code>maxRooms</code> (20) fails. The rest is planned in <a href="../../specs/cli/reefs/rooms.html">its deck</a> until the journey #2067 builds it; until #2076 the sessions run as <code>nereus messaging session</code> and the room as <code>nereus room</code>.</td>
 <td>none</td>
 </tr>
 <tr>
@@ -7108,6 +7247,14 @@ nereus registry apply --from-file &lt;path&gt; [--wait=true|false] [--timeout &l
 nereus registry repository publish &lt;repository&gt; --registry &lt;registry&gt; --image &lt;image&gt;:&lt;tag&gt;
 nereus registry repository list|get|delete &lt;repository&gt;
 
+# The rooms reef (ADR 0030, #1491): Room, its default kind, owned by an organization or a project; without a name the
+# repository's, without --owner the owner of your team; a new room past the default Mandate's maxRooms (20) fails
+nereus rooms create [&lt;room&gt;] [--owner &lt;kind&gt;/&lt;name&gt;] [--description &lt;text&gt;] [--max-age &lt;duration&gt;] [--max-bytes &lt;size&gt;] [--deletion-policy retain|delete] [--dry-run]
+nereus rooms apply --from-file &lt;path&gt; [--dry-run]
+nereus rooms list|get &lt;room&gt;
+nereus rooms delete &lt;room&gt; --yes [--dry-run]
+nereus rooms peer list|get &lt;owner&gt;.&lt;agent&gt;
+
 # The platform's identity (ADR 0006, planned in the authentication deck): a GitHub App is a Mandate
 # of the opt-in github Nereid (#1273), its key a plain secret; Token is #1274, the browser action #1275
 nereus nereid apply github --reef authentication --reef scm
@@ -7154,6 +7301,7 @@ core/mandates/default unchanged (reef: secrets, nereid: openbao, default)
 <p><strong>Delete waits, as kubectl's does (#526):</strong> an object whose Nereid keeps its cleanup finalizer (#525) stays until the Nereid removed what it made; meanwhile <code>list</code> and <code>get</code> show <code>Terminating</code> in the state column (computed by the CLI from <code>metadata.deletionTimestamp</code>, never written in status, ADR 0005; the <code>--output</code> forms carry the object as it is). <code>delete</code> waits until the object is gone, printing each step of <code>status.steps</code> as it changes (the time it changed, <code>✓</code> Done, <code>…</code> InProgress, <code>·</code> Pending, <code>✗</code> Failed, its name, its message), then the deleted line; a step <code>Failed</code> or <code>Ready=False</code> with <code>reason: CleanupFailed</code> ends it with exit 1 and <code>Next steps:</code> naming <code>get</code>. <code>--wait=false</code> (kubectl's spelling: <code>--wait</code> takes <code>true</code> or <code>false</code>) returns at once with <code>&lt;path&gt; is Terminating: &lt;nereid&gt; removes what it made.</code>; <code>--timeout</code> (seconds, as <code>get --watch</code>'s) ends the wait with a failure naming the step in progress, the object left as it is. <code>get --watch</code> prints the steps too, and stops once a Terminating object is gone. The shared part lives in <code>cli/src/nereus/reefkinds.py</code>, for every reef's commands.</p>
 </li>
 <li><strong>What a delete must respect lives behind the API (#874):</strong> the vcluster Nereid holds an Environment's finalizer while a Target names it and says why in the status, for any client; <code>nereus environment delete</code> checks first only to refuse early, and refuses when it cannot check.</li>
+<li><strong>Discovery (#839):</strong> a reef's commands come from a cache, as <code>kubectl</code>'s discovery. <code>nereus login</code> fills it from <code>GET /v1/discovery</code>, open to any signed-in person (the kubeconfig without sign-in); a run naming a reef refreshes it past one hour or from another instance; an unknown first word rediscovers once, then fails naming <code>nereus status</code>. <code>--help</code> and completion never call.</li>
 <li>
 <p><strong>Next steps:</strong> every output ends with a <code>Next steps:</code> label, a blank line before and after it, and the command indented two spaces:</p>
 <div class="language-text highlight"><pre><span></span><code>core/reefs/secrets created (secrets.getnereus.dev/v1alpha1: secrets, secretbindings, vaults)

@@ -3,10 +3,10 @@
   "command": "test/scene-messaging",
   "result": "pass",
   "exit": 0,
-  "seconds": 109,
-  "passed": 43,
+  "seconds": 135,
+  "passed": 49,
   "failed": 2,
   "failure": null,
-  "commit": "c8564c0b",
-  "started": "2026-11-18T06:32:50Z"
+  "commit": "c440cefd+",
+  "started": "2026-11-22T01:41:57Z"
 }

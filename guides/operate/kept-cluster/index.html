@@ -2006,6 +2006,8 @@
       
         
       
+        
+      
     
     
     
@@ -2449,6 +2451,41 @@
     
   
     Use the MCP server
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reefs/usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Follow your agent's quota
   
 
     
@@ -3106,6 +3143,8 @@
       
         
       
+        
+      
     
     
     
@@ -3629,6 +3668,41 @@
   
   
     <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/reefs/rooms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    rooms
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--planned"></span>
   
 
   
@@ -5347,14 +5421,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../adr/0030-triton-messaging-nereid/" class="md-nav__link">
+      <a href="../../../adr/0030-triton-rooms-nereid/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Triton, the messaging Nereid
+    Triton, the rooms Nereid
   
 
     
@@ -5856,6 +5930,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -6089,6 +6167,62 @@
     
   
     Nereid SDK metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../research/platform-in-an-era-of-ai-agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform in an era of AI agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../research/infrastructure-governance-agentic-era/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Infrastructure governance in the agentic era
   
 
     
@@ -7109,7 +7243,9 @@
 <span class="w">  </span>--param<span class="w"> </span><span class="nv">googleAdmins</span><span class="o">=</span>owner@example.com
 </code></pre></div>
 <h3 id="7-set-the-portals-address-and-bring-up-triton">7. Set the portal's address and bring up Triton<a class="headerlink" href="#7-set-the-portals-address-and-bring-up-triton" title="Permanent link">&para;</a></h3>
-<p><a href="../../../specs/cli/core.html#mandate-apply"><code>nereus mandate apply</code></a> <code>nereus-portal</code> with <code>--param publicUrl=https://portal.getnereus.dev</code>. Then the Mandate <code>messaging-nats</code> with <code>--param agents=true</code> holds Triton's account; <code>nereus nereid apply nats --reef messaging</code> writes it into NATS, and <code>nereus nereid apply triton --reef messaging</code> sets <code>TRITON_ISSUER</code>, <code>TRITON_JWKS_URL</code> and <code>TRITON_RESOURCE_URL</code>.</p>
+<p><a href="../../../specs/cli/core.html#mandate-apply"><code>nereus mandate apply</code></a> <code>nereus-portal</code> with <code>--param publicUrl=https://portal.getnereus.dev</code>.</p>
+<p>Then the Mandate <code>messaging-nats</code> with <code>--param agents=true</code> holds Triton's account. It is the messaging reef's default with no match (<code>--default</code>, no <code>--match</code>), so it holds the Rooms' Topics, which name no engine (ADR 0030).</p>
+<p><code>nereus nereid apply nats --reef messaging</code> writes it into NATS, <code>nereus reef apply rooms</code> installs the rooms reef, and <code>nereus nereid apply triton --reef rooms</code> sets <code>TRITON_ISSUER</code>, <code>TRITON_JWKS_URL</code> and <code>TRITON_RESOURCE_URL</code>.</p>
 <p>Every other login is gone with the old realm: the claude.ai connector <code>Triton</code> signs in again, and a token saved from the old realm no longer works.</p>
 <h2 id="check-it-worked">Check it worked<a class="headerlink" href="#check-it-worked" title="Permanent link">&para;</a></h2>
 <p><a href="../../../specs/cli/core.html#status"><code>nereus status</code></a> shows every reef Ready; <code>curl</code> on <code>https://triton.getnereus.dev/healthz</code> and <code>https://portal.getnereus.dev/</code> answers 200, and the realm <code>master</code> answers 404 from outside.</p>

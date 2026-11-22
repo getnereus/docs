@@ -1512,10 +1512,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#5-move-each-nereid-that-should-change" class="md-nav__link">
+  <a href="#5-move-each-nereid-applied-by-hand-that-should-change" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. Move each Nereid that should change
+        5. Move each Nereid applied by hand that should change
       
     </span>
   </a>
@@ -1984,6 +1984,8 @@
       
         
       
+        
+      
     
     
     
@@ -2427,6 +2429,41 @@
     
   
     Use the MCP server
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reefs/usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Follow your agent's quota
   
 
     
@@ -3084,6 +3121,8 @@
       
         
       
+        
+      
     
     
     
@@ -3607,6 +3646,41 @@
   
   
     <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/reefs/rooms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    rooms
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--planned"></span>
   
 
   
@@ -5325,14 +5399,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../adr/0030-triton-messaging-nereid/" class="md-nav__link">
+      <a href="../../../adr/0030-triton-rooms-nereid/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Triton, the messaging Nereid
+    Triton, the rooms Nereid
   
 
     
@@ -5834,6 +5908,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -6067,6 +6145,62 @@
     
   
     Nereid SDK metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../research/platform-in-an-era-of-ai-agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform in an era of AI agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../research/infrastructure-governance-agentic-era/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Infrastructure governance in the agentic era
   
 
     
@@ -6962,10 +7096,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#5-move-each-nereid-that-should-change" class="md-nav__link">
+  <a href="#5-move-each-nereid-applied-by-hand-that-should-change" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. Move each Nereid that should change
+        5. Move each Nereid applied by hand that should change
       
     </span>
   </a>
@@ -7045,18 +7179,45 @@ Nothing changed (--dry-run).
 </code></pre></div>
 <h3 id="4-move-the-api-and-the-charts">4. Move the API and the charts<a class="headerlink" href="#4-move-the-api-and-the-charts" title="Permanent link">&para;</a></h3>
 <p>Run <code>make cli</code>, then <code>make nereids</code>, so the CLI and the images share a version. <a href="../../../specs/cli/core.html#init"><code>nereus init</code></a> without <code>--create-cluster</code> upgrades the charts <code>nereus-reefs</code> and <code>nereus</code> in place; the API is ready a few seconds after the <code>nereus</code> line.</p>
+<p>When the registry lacks an image at the CLI's version (<code>make cli</code> ran again after <code>make nereids</code>), init stops at its <code>images</code> step, before the <code>nereus</code> line, and changes nothing:</p>
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✗ images                    0.0s
+  total                     0.0s  slo 8m, 0% green
+✗ 2 images the release names are not in their registry: nereus-api, thetis
+  nereus-api  localhost:5111/nereus-api:0.1.41.dev146
+  thetis      localhost:5111/thetis-controller:0.1.41.dev146
+  fix         make nereids
+</code></pre></div>
+<p>Run the <code>fix</code> line, then init again. A Pod that cannot pull its image anyway (<code>ImagePullBackOff</code>) stops the <code>ready</code> step at once, naming the Pod, its image and the same <code>fix</code>, instead of waiting for the step's timeout of 30 minutes.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--target<span class="w"> </span>k3d<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--name<span class="w"> </span>nereus<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--profile<span class="w"> </span>internal-developer-platform<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--yes
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ kinds               2.4s  release nereus-reefs revision 2, gateway-api/v1.7.0 unchanged (the Gateway API CRDs)
-✓ nereus              1.5s  release nereus revision 2, profile internal-developer-platform, images localhost:5111 at 0.1.40
-✓ installation        0.2s  kept nereus
+<p>The output below is what <code>test/scene-core-upgrade</code> prints on its cluster, profile <code>reference</code>, after one Nereid was applied by hand: only that one stops, and the other six already run their new digests.</p>
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ kinds          1.2s  release nereus-reefs revision 2
+✓ nereus         3.3s  release nereus revision 2, profile reference, images localhost:5111 at 0.1.41.dev129-nereus-scn-2031-9bab4b-next
+✓ installation   0.3s  kept nereus-scn-2031-9bab4b
+✗ ready         1m32s
+  total         1m37s  slo 8m, 20% green
+✗ the cluster's Nereids keep their images: thetis does not change an image that is already there
+  reference-secrets  localhost:5111/reference-secrets-controller@sha256:0de294bd2444 → @sha256:780a0ec273e5
+  fix                nereus nereid apply reference-secrets --reef secrets --image localhost:5111/reference-secrets-controller@sha256:780a0ec273e5ca09d10175bb3835eb75e899fbc34f2718c5a795bd8e79b71a93
 </code></pre></div>
-<h3 id="5-move-each-nereid-that-should-change">5. Move each Nereid that should change<a class="headerlink" href="#5-move-each-nereid-that-should-change" title="Permanent link">&para;</a></h3>
-<p>thetis never changes an image already there, so the Profile stays not Ready, naming the first Nereid whose digest differs. Move each one as in steps 2 and 3.</p>
+<p>thetis moves in place every Nereid whose image it installed itself: it records that image on the Nereid (the annotation <code>core.getnereus.dev/profile-image</code>), and while the Nereid still runs it, the new one replaces it. When nothing stops it, init's <code>ready</code> line counts them (<code>7 Nereids ready, 6 moved by thetis</code>).</p>
+<p>A Nereid whose image was applied by hand, as in step 3, keeps it: thetis marks its step <code>Blocked</code>, reason <code>ImageApplied</code>, and the Profile's Ready condition says <code>ImageApplied</code>.</p>
+<p>init stops as soon as it reads that, instead of waiting for its timeout, and names only those Nereids; the API, the charts and the Nereids it moved stay as they are. <a href="../../../specs/cli/core.html#doctor"><code>nereus doctor</code></a> shows the same list in its <code>profile</code> row.</p>
+<p>A Profile that names an image its registry lacks moves nothing either. thetis reads each image before it applies a Nereid: the step is <code>Blocked</code>, reason <code>ImageMissing</code>, with the image, and the steps after it go on, so a Nereid already there keeps its own. The Profile's Ready condition says <code>ImageMissing</code>; init stops at once and adds the fix:</p>
+<div class="language-text highlight"><pre><span></span><code>✗ ready          2 Nereids name an image the registry lacks: database, secrets
+  database  localhost:5111/database-controller:0.1.41.dev146
+  secrets   localhost:5111/secrets-controller:0.1.41.dev146
+  fix       make nereids
+</code></pre></div>
+<p><code>nereus doctor</code>'s <code>profile</code> row says the same, with the same fix, before any image a Nereid keeps.</p>
+<p>A registry that does not answer leaves the step <code>Waiting</code> for the next pass.</p>
+<p>A Nereid installed before thetis recorded its images has no annotation, so the first update after it lists every such Nereid once; their <code>fix</code> lines adopt them, and the next update moves them.</p>
+<h3 id="5-move-each-nereid-applied-by-hand-that-should-change">5. Move each Nereid applied by hand that should change<a class="headerlink" href="#5-move-each-nereid-applied-by-hand-that-should-change" title="Permanent link">&para;</a></h3>
+<p>Run each <code>fix</code> line init printed, as in steps 2 and 3. thetis's next pass finds every image as the Profile names it, records it, and the Profile turns Ready.</p>
 <h2 id="check-it-worked">Check it worked<a class="headerlink" href="#check-it-worked" title="Permanent link">&para;</a></h2>
 <p><a href="../../../specs/cli/core.html#nereid-list"><code>nereus nereid list</code></a> shows each Nereid Ready with the image you applied, and <a href="../../../specs/cli/core.html#status"><code>nereus status</code></a> shows every reef Ready.</p>
 <h2 id="next">Next<a class="headerlink" href="#next" title="Permanent link">&para;</a></h2>

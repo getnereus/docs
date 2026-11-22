@@ -91,7 +91,7 @@ A second opinion on this design came from an agent on another model, on 2026-11-
 - The Nereid SDK and `templates/nereid` learn the `tools` field and `contractVersion` `2` (#1807); `leagore` declares `presentations_list` first.
 - The API serves `/mcp` and `GET /v1/tools`, and `nereus mcp tool list` reads it (#1808); the instance's switch comes with `nereus mcp tool enable | disable` (#1809); `nereus-mcp` and its line in the kubeconfig allow-list went (#1810).
 - A reef's description reaches a model through the person's connector: installing a reef trusts its text as it trusts its screens' code (ADR 0022). The length, character and count limits narrow it; they do not make it trusted.
-- Triton, today a second MCP server for the messaging reef, becomes the reef's Nereid of rooms and peers behind the Nereus API, and its own connector goes (ADR 0030, #1812).
+- Triton, today a second MCP server, becomes the Nereid of the `rooms` reef behind the Nereus API, and its own connector goes (ADR 0030, #1812).
 - Until v1.0.0 this ADR is rewritten in place when the decision changes (ADR 0001).
 
 ## Origin

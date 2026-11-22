@@ -77,6 +77,48 @@ slides:
       notes: |-
         **A API mantém as regras das leituras da #1586:** uma fatia menor da mesma janela deixa a guardada, e o comando diz isso numa linha própria (exit 0): `usage/windows/weekly kept (80% used, resets Mon 16/11 01:00): this reading of 75% is lower, or of an earlier window, so the kept higher share stays`. Uma janela posterior sempre a substitui. O `--resets-at` aceita uma data-hora com o seu offset; a API a guarda em UTC.
 
+  - name: usage-replace
+    act: window
+    topic: "usage report --replace"
+    status: built
+    issue: 2128
+    message: "--replace says the share really went down"
+    accent: "really went down"
+    terminal:
+      steps:
+        - comment: "The usage was reset mid-week: 98% kept, 91% now"
+          run: "nereus usage report weekly"
+          options: ["--used 91", "--resets-at 2026-11-16T01:00:00-03:00", "--replace"]
+          output: |-
+            ✓ usage/windows/weekly replaced 98% (91% used, resets Mon 16/11 01:00), forecast 110.7% slow
+
+            Next steps:
+
+              nereus usage get weekly
+        - comment: "The forecast at 91%, the days gone kept, today never negative"
+          run: "nereus usage get weekly"
+          output: |-
+            WINDOW  USED  RESETS           FORECAST  PACE  TODAY  READ
+            weekly  91%   Mon 16/11 01:00  111%      slow  ≤92%   Sat 19:06
+
+            DAY        SHARE  TOTAL
+            Mon 09/11  ~+18%  ~18%
+            Tue 10/11  ~+18%  ~36%
+            Wed 11/11  ~+19%  ~55%
+            Thu 12/11  ~+18%  ~73%
+            Fri 13/11  +18%   91%
+            Sat 14/11  +0%    91%    today
+            Sun 15/11  +8%    100%   plan
+    dependsOn: [usage-report]
+    notes: |-
+      **A lower share wins only on the person's word** (`replace: true` in the API's body): every session's status line reports its own reading, and an idle one can report an older, lower share, so without `--replace` the higher share stays. One rule, `usage_rules.taken`, for the API and the local cache. **The stale guard:** for an hour after a replace (`REPLACE_GUARD_SECONDS`), a reading above the replaced share but not above the peak it replaced (98% here, kept as `spec.replacedPeak` with `spec.replacedAt`) is a stale session's and prints `kept`; a reading above that peak always wins. A replace skips the report's limits and goes to the API at once; offline it stays in the cache and fails, so the person reports it again. **The days' starts stay:** today's start moves down to the replaced share when it is lower, so today's share is never negative; the days before keep theirs. Without `--replace`, the only way out was `nereus usage delete weekly`, which lost the days' starts.
+    pt:
+      topic: "usage report --replace"
+      message: "O --replace diz que a fatia caiu de verdade"
+      accent: "caiu de verdade"
+      notes: |-
+        **Uma fatia menor só ganha pela palavra da pessoa** (`replace: true` no corpo da API): a status line de cada sessão reporta a sua leitura, e uma sessão parada pode reportar uma fatia antiga e menor, então sem `--replace` a fatia maior fica. Uma regra, `usage_rules.taken`, para a API e para o cache local. **A proteção contra leitura velha:** por uma hora depois de um replace (`REPLACE_GUARD_SECONDS`), uma leitura acima da fatia substituída mas não acima do pico que ela substituiu (98% aqui, guardado em `spec.replacedPeak` com `spec.replacedAt`) é de uma sessão velha e imprime `kept`; uma leitura acima desse pico sempre ganha. Um replace pula os limites do report e vai à API na hora; offline fica no cache e falha, para a pessoa reportar de novo. **Os inícios dos dias ficam:** o início de hoje desce para a fatia substituída quando ela é menor, então a fatia de hoje nunca é negativa; os dias anteriores mantêm os seus. Sem `--replace`, a única saída era `nereus usage delete weekly`, que perdia os inícios dos dias.
+
   - name: usage-offline
     act: window
     topic: "usage offline"

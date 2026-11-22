@@ -1,6 +1,7 @@
 """The portal's navigation of Material 3 (#1838), in headless Chromium under the portal's exact policy: the real
 index.html, app.js, app.css, screens.js and icons.js, signed in through a stand-in of oidc-client-ts, with the reefs'
-screens of a stand-in GET /v1/screens. "Me" and one destination per reef; a reef with several screens shows them as
+screens of a stand-in GET /v1/screens. The home screen (#740, the instance's status from a stand-in GET /v1/status) and
+one destination per reef; a reef with several screens shows them as
 primary tabs; a navigation bar at the bottom on a phone, a rail at the side from 600 px, a modal drawer above five
 destinations; a screen's nereus-focus hides it all. Set NEREUS_SHOTS to a folder to keep the screenshots (the PR's).
 Skips when there is no browser."""
@@ -61,20 +62,54 @@ TIDE = {"reef": "ideas", "tab": "Tide", "element": "nereus-tide", "module": "tid
 USAGE = {"reef": "usage", "tab": "Usage", "element": "nereus-usage", "module": "usage.js", "icon": "gauge"}
 MORE = [{"reef": f"extra-{n}", "tab": f"Extra {n}", "element": f"nereus-extra-{n}", "module": "x.js", "icon": "nowhere"} for n in range(3)]
 
+# GET /v1/status as the API answers it (#739): the core, a reef that needs attention, one that waits, the good ones.
+def row(reef, nereid, status="Ready", reason=None, version="1.0.0", created="2026-11-20T00:00:00Z"):
+  return {"reef": reef, "nereid": nereid, "version": version, "status": status, "reason": reason, "createdAt": created}
+
+
+CORE_ROW = row("core", "built-in", version="0.1.0")
+INSTALLATION = {"name": "nereus", "alias": "nereus-local", "url": "https://nereus.example.com"}
+STATUS = {
+  "installation": INSTALLATION,
+  "registry": None,
+  "items": [
+    CORE_ROW,
+    row("presentations", "leagore"),
+    row("release", "flux", "NotReady", "the HelmRelease podinfo failed: install retries exhausted"),
+    row("secrets", "openbao"),
+    row("tenancy", "-", "Waiting", version="-"),
+    row("usage", "reference-usage"),
+  ],
+}
+EMPTY = {"installation": INSTALLATION, "registry": None, "items": [CORE_ROW]}
+GOOD = {"installation": INSTALLATION, "registry": None, "items": [CORE_ROW, row("secrets", "openbao"), row("usage", "reference-usage")]}
+DOWN = (503, {"error": {"code": 503, "message": "cannot read the cluster from the Kubernetes API"}})
+
 LISTENER = """
 window.__csp = [];
 document.addEventListener('securitypolicyviolation', e => window.__csp.push(e.effectiveDirective + ' ' + e.blockedURI), true);
 """
 
 
+ANA = {"sub": "u1", "name": "Ana Example", "email": "ana@example.com", "identityProvider": "google", "groups": ["nereus-admins", "nereus-users"]}
+BRUNO = {"sub": "u2", "name": "Bruno Example", "email": "bruno@example.com", "groups": ["nereus-users"]}
+
+
 class Stand:
-  def __init__(self, items):
+  def __init__(self, items, status=None, person=None):
     files = portal.files()
+    stand = self
+    answers = [status or (200, STATUS)]
+    self.answers = answers
+    self.asked = []
     by_module = {f"/reefs/{item['reef']}/ui/{item['module']}": item for item in items}
 
     class Handler(http.server.BaseHTTPRequestHandler):
       def log_message(self, *args):
         pass
+
+      def asked_status(self):
+        stand.asked.append("status")
 
       def secure(self, code, kind, data):
         self.send_response(code)
@@ -94,7 +129,11 @@ class Stand:
           body = {"issuer": "https://auth.example.com/realms/nereus", "clientId": "nereus-portal", "publicUrl": "https://portal.example.com"}
           self.secure(200, "application/json", json.dumps(body).encode())
         elif path == "/v1/me":
-          self.secure(200, "application/json", json.dumps({"sub": "u1", "name": "Ana Example", "email": "ana@example.com"}).encode())
+          self.secure(200, "application/json", json.dumps(person or ANA).encode())
+        elif path == "/v1/status":
+          code, body = answers[0]
+          self.asked_status()
+          self.secure(code, "application/json", json.dumps(body).encode())
         elif path == "/v1/screens":
           self.secure(200, "application/json", json.dumps({"items": items}).encode())
         elif path in by_module:
@@ -135,10 +174,14 @@ def portal_page():
   with sync_api.sync_playwright() as playwright:
     browser = chromium(playwright)
 
-    def opened(items, width=390, height=844, scheme="dark", locale="en-US"):
-      stand = Stand(items)
+    def opened(items, width=390, height=844, scheme="dark", locale="en-US", status=None, touch=False, clock=False, person=None):
+      stand = Stand(items, status, person)
       stands.append(stand)
-      page = browser.new_context(viewport={"width": width, "height": height}, color_scheme=scheme, locale=locale).new_page()
+      context = browser.new_context(viewport={"width": width, "height": height}, color_scheme=scheme, locale=locale, has_touch=touch)
+      page = context.new_page()
+      page.stand = stand
+      if clock:
+        page.clock.install()
       errors, outside = [], []
       page.add_init_script(LISTENER)
       page.on("pageerror", lambda error: errors.append(str(error)))
@@ -178,6 +221,24 @@ def settled(page, wanted, timeout_ms=3000):
   raise AssertionError(f"#tabs never settled: {box}")
 
 
+def open_sheet(page):
+  """Opens the account sheet and waits for its entrance to end, so its box is where it stays."""
+  page.locator("#avatar").click()
+  page.locator("#account").wait_for()
+  for _ in range(60):
+    if page.evaluate("document.getElementById('account').getAnimations().every((a) => a.playState === 'finished')"):
+      return
+    page.wait_for_timeout(50)
+  raise AssertionError("the sheet's entrance never ended")
+
+
+def choose_language(page, wanted):
+  """Signed in, the language switch is in the account sheet (#2024): open it, choose, close it."""
+  page.locator("#avatar").click()
+  page.locator(f'#account [data-language="{wanted}"]').click()
+  page.keyboard.press("Escape")
+
+
 def labels(page):
   return page.locator("#tabs [data-tab] .label").all_text_contents()
 
@@ -186,13 +247,13 @@ def labels(page):
 def test_a_phone_has_a_bar_at_the_bottom_one_destination_per_reef_and_its_screens_as_tabs(portal_page, scheme):
   opened, expect = portal_page
   page = opened([*PRESENTATIONS, TIDE, USAGE], scheme=scheme)
-  assert labels(page) == ["Me", "Presentations", "Tide", "Usage"]
+  assert labels(page) == ["Status", "Presentations", "Tide", "Usage"]
   bar = page.locator("#tabs").bounding_box()
   assert bar["y"] + bar["height"] == pytest.approx(844, abs=1) and bar["width"] == pytest.approx(390, abs=1)
   for button in page.locator("#tabs [data-tab]").all():
     box = button.bounding_box()
     assert box["width"] >= 48 and box["height"] >= 48
-  shot(page, f"nav-phone-me-{scheme}")
+  shot(page, f"nav-phone-status-{scheme}")
 
   page.locator('#tabs [data-tab="presentations"]').click()
   expect(page.locator('#tabs [data-tab="presentations"]')).to_have_attribute("aria-current", "page")
@@ -258,9 +319,9 @@ def test_more_than_five_destinations_go_to_a_modal_drawer(portal_page):
 def test_the_reef_s_name_follows_the_language(portal_page):
   opened, expect = portal_page
   page = opened([*PRESENTATIONS, TIDE], locale="pt-BR")
-  assert labels(page) == ["Eu", "Apresentações", "Tide"]
-  page.locator('[data-language="en"]').click()
-  assert labels(page) == ["Me", "Presentations", "Tide"]
+  assert labels(page) == ["Status", "Apresentações", "Tide"]
+  choose_language(page, "en")
+  assert labels(page) == ["Status", "Presentations", "Tide"]
   expect(page.locator("#tabs")).to_have_attribute("aria-label", "Main")
 
 
@@ -272,7 +333,7 @@ def test_a_reef_s_screen_fills_the_portal_under_a_top_app_bar_with_no_card(porta
   opened, expect = portal_page
   page = opened([*PRESENTATIONS, TIDE, USAGE], width=width, height=height, scheme=scheme)
   expect(page.locator("#app-bar")).to_be_visible()
-  expect(page.locator("#app-title")).to_have_text("Me")
+  expect(page.locator("#app-title")).to_have_text("Nereus")
   expect(page.locator(".mark")).to_be_hidden()
   page.locator('#tabs [data-tab="presentations"]').click()
   expect(page.locator("#app-title")).to_have_text("Presentations")
@@ -292,11 +353,11 @@ def test_a_reef_s_screen_fills_the_portal_under_a_top_app_bar_with_no_card(porta
 def test_the_app_bar_follows_the_language_and_steps_aside_on_focus(portal_page):
   opened, expect = portal_page
   page = opened([*PRESENTATIONS], locale="pt-BR")
-  expect(page.locator("#app-title")).to_have_text("Eu")
+  expect(page.locator("#app-title")).to_have_text("Nereus")
   page.locator('#tabs [data-tab="presentations"]').click()
   expect(page.locator("#app-title")).to_have_text("Apresentações")
   expect(page.locator("#reef-tabs [role=tab]:visible")).to_have_text(["Sessões", "Decks"])
-  page.locator('[data-language="en"]').click()
+  choose_language(page, "en")
   expect(page.locator("#app-title")).to_have_text("Presentations")
   expect(page.locator("#reef-tabs [role=tab]:visible")).to_have_text(["Sessions", "Decks"])
   page.locator("nereus-presentations-drive .focus").click()
@@ -319,3 +380,345 @@ def test_no_label_is_cut_on_a_phone_in_either_language(portal_page, width, local
       .map((e) => e.textContent),
   })""")
   assert found == {"scroll": False, "cut": []}
+
+
+# The home screen (#740, Material 3): the instance's status after signing in.
+def rgb(hex_colour):
+  value = hex_colour.lstrip("#")
+  return "rgb({}, {}, {})".format(*(int(value[i:i + 2], 16) for i in (0, 2, 4)))
+
+
+SUCCESS = {"dark": rgb("#5cc27e"), "light": rgb("#1f7a3a")}
+WARNING = {"dark": rgb("#e09a3a"), "light": rgb("#b06a0f")}
+
+
+def home(page):
+  page.locator("#status-rows:not([hidden]), #status-empty:not([hidden]), #status-error:not([hidden])").wait_for()
+  return page
+
+
+@pytest.mark.parametrize("scheme", ["dark", "light"])
+def test_the_home_screen_shows_the_worst_state_and_the_rows_that_need_attention_first(portal_page, scheme):
+  opened, expect = portal_page
+  page = home(opened([*PRESENTATIONS, USAGE], scheme=scheme))
+  expect(page.locator('#tabs [data-tab="status"]')).to_have_attribute("aria-current", "page")
+  expect(page.locator("#app-title")).to_have_text("Nereus")
+  expect(page.locator("#app-subtitle")).to_have_text("nereus-local · portal.example.com")
+  expect(page.locator("#avatar")).to_have_text("AE")
+  expect(page.locator("#summary-title")).to_have_text("1 reef needs attention")
+  expect(page.locator("#summary-counts")).to_have_text("5 reefs · 4 Nereids")
+  expect(page.locator("#summary-checked")).to_contain_text("checked at")
+  expect(page.locator("#attention .headline")).to_have_text(["release", "tenancy"])
+  expect(page.locator("#attention .supporting").first).to_have_text("flux · the HelmRelease podinfo failed: install retries exhausted")
+  expect(page.locator("#attention .chip")).to_have_text(["NotReady", "Waiting"])
+  assert page.locator("#attention .chip").first.evaluate("e => getComputedStyle(e).color") == WARNING[scheme]
+  # On a phone the good rows fold while some need attention.
+  expect(page.locator("#good-title")).to_have_text("All good · 4")
+  expect(page.locator("#good")).to_be_hidden()
+  shot(page, f"home-phone-attention-{scheme}")
+  page.locator("#see-all").click()
+  expect(page.locator("#good .headline")).to_have_text(["core", "presentations", "secrets", "usage"])
+  assert page.locator("#good .chip").first.evaluate("e => getComputedStyle(e).color") == SUCCESS[scheme]
+  # The same rows as nereus status, one per reef and Nereid pair.
+  assert page.locator("#status .row").count() == len(STATUS["items"])
+  for button in page.locator("#status .row-head, #refresh, #avatar, #see-all:visible").all():
+    box = button.bounding_box()
+    assert box["height"] >= 40 and box["width"] >= 40
+
+
+def test_a_row_opens_its_detail_in_place(portal_page):
+  opened, expect = portal_page
+  page = home(opened([]))
+  head = page.locator("#attention .row-head").first
+  detail = page.locator("#attention .row-detail").first
+  expect(detail).to_be_hidden()
+  head.click()
+  expect(head).to_have_attribute("aria-expanded", "true")
+  expect(detail).to_be_visible()
+  expect(detail.locator("dt")).to_have_text(["Nereid", "Version", "Reason", "Age"])
+  expect(detail.locator("dd")).to_have_text(["flux", "1.0.0", "the HelmRelease podinfo failed: install retries exhausted", re_age()])
+  shot(page, "home-phone-detail-dark")
+  head.click()
+  expect(detail).to_be_hidden()
+
+
+def re_age():
+  import re
+  return re.compile(r"^\d+[smhd]$")
+
+
+def test_all_good_shows_every_row_and_no_attention_group(portal_page):
+  opened, expect = portal_page
+  page = home(opened([], status=(200, GOOD)))
+  expect(page.locator("#summary-title")).to_have_text("All good")
+  expect(page.locator("#attention-title")).to_be_hidden()
+  expect(page.locator("#see-all")).to_be_hidden()
+  expect(page.locator("#good .headline")).to_have_text(["core", "secrets", "usage"])
+  assert page.locator("#summary-icon svg").evaluate("e => getComputedStyle(e).fill") == SUCCESS["dark"]
+
+
+@pytest.mark.parametrize("scheme", ["dark", "light"])
+def test_an_instance_with_only_the_core_invites_to_install_the_first_reef(portal_page, scheme):
+  opened, expect = portal_page
+  page = home(opened([], status=(200, EMPTY), scheme=scheme))
+  expect(page.locator("#summary-title")).to_have_text("Instance ready")
+  expect(page.locator("#summary-counts")).to_have_text("only the core · no reef")
+  expect(page.locator("#status-rows")).to_be_hidden()
+  expect(page.locator("#status-empty h2")).to_have_text("Install your first reef")
+  expect(page.locator("#status-empty code")).to_have_text("$ nereus reef apply <reef>")
+  expect(page.locator("#copy")).to_have_attribute("aria-label", "Copy the command")
+  expect(page.locator("#see-reefs")).to_have_attribute("href", "https://docs.getnereus.dev/reference/reefs-and-nereids/")
+  shot(page, f"home-phone-empty-{scheme}")
+
+
+def test_the_copy_button_copies_the_command(portal_page):
+  opened, expect = portal_page
+  page = home(opened([], status=(200, EMPTY)))
+  page.context.grant_permissions(["clipboard-read", "clipboard-write"])
+  page.locator("#copy").click()
+  expect(page.locator("#copy")).to_have_attribute("aria-label", "Copied")
+  assert page.evaluate("navigator.clipboard.readText()") == "nereus reef apply <reef>"
+
+
+def test_the_api_s_error_shows_with_a_retry(portal_page):
+  opened, expect = portal_page
+  page = home(opened([], status=DOWN))
+  expect(page.locator("#summary-title")).to_have_text("The status did not load")
+  expect(page.locator("#status-reason")).to_have_text("cannot read the cluster from the Kubernetes API")
+  expect(page.locator("#status-rows")).to_be_hidden()
+  shot(page, "home-phone-error-dark")
+  page.stand.answers[0] = (200, STATUS)
+  page.locator("#status-retry").click()
+  expect(page.locator("#status-error")).to_be_hidden()
+  expect(page.locator("#attention .headline")).to_have_text(["release", "tenancy"])
+
+
+def test_the_home_screen_follows_the_language(portal_page):
+  opened, expect = portal_page
+  page = home(opened([], locale="pt-BR"))
+  expect(page.locator("#summary-title")).to_have_text("1 reef precisa de atenção")
+  expect(page.locator("#attention-title")).to_have_text("Precisa de atenção")
+  expect(page.locator("#see-all")).to_have_text("Ver todos os 4")
+  choose_language(page, "en")
+  expect(page.locator("#summary-title")).to_have_text("1 reef needs attention")
+  expect(page.locator("#see-all")).to_have_text("See all 4")
+
+
+@pytest.mark.parametrize("scheme", ["dark", "light"])
+def test_a_wide_screen_shows_count_chips_and_the_rows_in_two_columns(portal_page, scheme):
+  opened, expect = portal_page
+  page = home(opened([*PRESENTATIONS, USAGE], width=1280, height=800, scheme=scheme))
+  expect(page.locator("#summary-counts")).to_be_hidden()
+  expect(page.locator("#count-chips .chip")).to_have_text(["4 ready", "1 waiting", "1 need attention"])
+  expect(page.locator("#see-all")).to_be_hidden()
+  expect(page.locator("#good")).to_be_visible()
+  first, second = (page.locator("#good .row").nth(n).bounding_box() for n in (0, 1))
+  assert first["y"] == pytest.approx(second["y"], abs=1) and second["x"] > first["x"] + first["width"]
+  shot(page, f"home-wide-{scheme}")
+
+
+def test_a_pull_from_the_top_reloads_the_status_and_the_browser_s_own_pull_is_off(portal_page):
+  opened, expect = portal_page
+  page = home(opened([], touch=True))
+  assert page.evaluate("getComputedStyle(document.documentElement).overscrollBehaviorY") == "contain"
+  asked = len(page.stand.asked)
+  cdp = page.context.new_cdp_session(page)
+  cdp.send("Input.dispatchTouchEvent", {"type": "touchStart", "touchPoints": [{"x": 195, "y": 200}]})
+  for y in range(220, 420, 20):
+    cdp.send("Input.dispatchTouchEvent", {"type": "touchMove", "touchPoints": [{"x": 195, "y": y}]})
+  expect(page.locator("#pull")).to_have_attribute("data-ready", "")
+  cdp.send("Input.dispatchTouchEvent", {"type": "touchEnd", "touchPoints": []})
+  expect(page.locator("#pull")).not_to_have_attribute("data-pulling", "")
+  for _ in range(40):
+    if len(page.stand.asked) > asked:
+      break
+    page.wait_for_timeout(50)
+  assert len(page.stand.asked) == asked + 1
+  # A short pull does not reload.
+  cdp.send("Input.dispatchTouchEvent", {"type": "touchStart", "touchPoints": [{"x": 195, "y": 200}]})
+  cdp.send("Input.dispatchTouchEvent", {"type": "touchMove", "touchPoints": [{"x": 195, "y": 260}]})
+  cdp.send("Input.dispatchTouchEvent", {"type": "touchEnd", "touchPoints": []})
+  page.wait_for_timeout(300)
+  assert len(page.stand.asked) == asked + 1
+
+
+def test_the_status_reloads_every_30_seconds_while_visible(portal_page):
+  opened, expect = portal_page
+  page = home(opened([], clock=True))
+  asked = len(page.stand.asked)
+  page.clock.run_for(31000)
+  for _ in range(40):
+    if len(page.stand.asked) > asked:
+      break
+    page.wait_for_timeout(50)
+  assert len(page.stand.asked) == asked + 1
+
+
+@pytest.mark.parametrize("width", [340, 390])
+@pytest.mark.parametrize("locale", ["pt-BR", "en-US"])
+def test_nothing_on_the_home_screen_passes_the_phone_s_edge(portal_page, width, locale):
+  opened, expect = portal_page
+  page = home(opened([*PRESENTATIONS, USAGE], width=width, locale=locale))
+  page.locator("#see-all").click()
+  found = page.evaluate("""() => ({
+    scroll: document.documentElement.scrollWidth > innerWidth,
+    out: [...document.querySelectorAll('#status *, #app-bar *')].filter((e) => e.getBoundingClientRect().right > innerWidth + 0.5)
+      .map((e) => e.id || e.className || e.tagName),
+  })""")
+  assert found == {"scroll": False, "out": []}
+
+
+# The account sheet (#2024, Material 3): the avatar opens it; a bottom sheet on a phone, a side sheet from 600 px.
+@pytest.mark.parametrize("scheme", ["dark", "light"])
+def test_on_a_phone_the_avatar_opens_a_bottom_sheet_with_the_account(portal_page, scheme):
+  opened, expect = portal_page
+  page = home(opened([*PRESENTATIONS], scheme=scheme))
+  expect(page.locator(".lang")).to_be_hidden()
+  expect(page.locator("#avatar-face")).to_have_text("AE")
+  face = page.locator("#avatar-face").bounding_box()
+  target = page.locator("#avatar").bounding_box()
+  assert face["width"] == pytest.approx(32, abs=1) and target["width"] >= 48 and target["height"] >= 48
+  open_sheet(page)
+  sheet = page.locator("#account")
+  expect(sheet).to_be_visible()
+  expect(page.locator("#sheet-scrim")).to_be_visible()
+  expect(page.locator("#avatar")).to_have_attribute("aria-expanded", "true")
+  box = sheet.bounding_box()
+  assert box["x"] == 0 and box["width"] == pytest.approx(390, abs=1) and box["y"] + box["height"] == pytest.approx(844, abs=1)
+  expect(page.locator(".sheet-handle")).to_be_visible()
+  expect(page.locator("#sheet-close")).to_be_hidden()
+  expect(page.locator("#account-name")).to_have_text("Ana Example")
+  expect(page.locator("#account-email")).to_have_text("ana@example.com")
+  expect(page.locator("#role-chip")).to_have_text("Platform administrator")
+  expect(page.locator("#account-groups .chip")).to_have_text(["nereus-admins", "nereus-users"])
+  expect(page.locator("#via-provider")).to_have_text("Google")
+  expect(page.locator("#via-host")).to_have_text("auth.example.com")
+  expect(page.locator("#instance-name")).to_have_text("nereus-local")
+  # #2045: the API's host, not the portal's, and the line that signs the CLI in.
+  expect(page.locator("#instance-host")).to_have_text("nereus.example.com")
+  expect(page.locator("#instance-terminal dt")).to_have_text("In the terminal")
+  expect(page.locator("#instance-terminal code")).to_have_text("$ nereus login https://nereus.example.com")
+  expect(page.locator('#account [data-action="signout"]')).to_be_visible()
+  # The status screen stays where it was, behind the scrim.
+  expect(page.locator("#status")).to_be_visible()
+  shot(page, f"account-phone-{scheme}")
+  page.keyboard.press("Escape")
+  expect(sheet).to_be_hidden()
+  expect(page.locator("#sheet-scrim")).to_be_hidden()
+  expect(page.locator("#avatar")).to_be_focused()
+  page.locator("#avatar").click()
+  page.locator("#sheet-scrim").click(position={"x": 195, "y": 20})
+  expect(sheet).to_be_hidden()
+
+
+
+def test_the_sheet_s_copy_button_copies_the_nereus_login_line(portal_page):
+  """#2045: a person signed in on the portal signs the CLI in with the line the sheet copies."""
+  opened, expect = portal_page
+  page = home(opened([]))
+  page.context.grant_permissions(["clipboard-read", "clipboard-write"])
+  open_sheet(page)
+  expect(page.locator("#copy-login")).to_have_attribute("aria-label", "Copy the login command")
+  page.locator("#copy-login").click()
+  expect(page.locator("#copy-login")).to_have_attribute("aria-label", "Copied")
+  assert page.evaluate("navigator.clipboard.readText()") == "nereus login https://nereus.example.com"
+
+
+def test_an_instance_with_no_address_hides_its_host_and_the_terminal_block(portal_page):
+  """#2045: no Gateway, only port-forward: the Installation has no url, so the sheet names the instance only."""
+  opened, expect = portal_page
+  bare = {**STATUS, "installation": {"name": "nereus", "alias": "nereus-local", "url": None}}
+  page = home(opened([], locale="pt-BR", status=(200, bare)))
+  open_sheet(page)
+  expect(page.locator("#instance-name")).to_have_text("nereus-local")
+  expect(page.locator("#instance-host")).to_be_hidden()
+  expect(page.locator("#instance-terminal")).to_be_hidden()
+
+
+def test_the_terminal_block_speaks_portuguese(portal_page):
+  opened, expect = portal_page
+  page = home(opened([], locale="pt-BR"))
+  open_sheet(page)
+  expect(page.locator("#instance-terminal dt")).to_have_text("No terminal")
+  expect(page.locator("#copy-login")).to_have_attribute("aria-label", "Copiar o comando de login")
+
+@pytest.mark.parametrize("width", [700, 1280])
+@pytest.mark.parametrize("scheme", ["dark", "light"])
+def test_from_600_px_the_avatar_opens_a_440_px_side_sheet_with_a_close_button(portal_page, width, scheme):
+  opened, expect = portal_page
+  page = home(opened([*PRESENTATIONS], width=width, height=800, scheme=scheme))
+  open_sheet(page)
+  box = page.locator("#account").bounding_box()
+  assert box["width"] == pytest.approx(440, abs=1) and box["x"] + box["width"] == pytest.approx(width, abs=1)
+  assert box["y"] == 0 and box["height"] == pytest.approx(800, abs=1)
+  expect(page.locator(".sheet-handle")).to_be_hidden()
+  expect(page.locator("#sheet-close")).to_be_focused()
+  expect(page.locator("#sheet-close")).to_have_attribute("aria-label", "Close")
+  shot(page, f"account-wide-{width}-{scheme}")
+  page.locator("#sheet-close").click()
+  expect(page.locator("#account")).to_be_hidden()
+
+
+def test_without_nereus_admins_there_is_no_role_and_the_login_names_the_instance_s_issuer(portal_page):
+  opened, expect = portal_page
+  page = home(opened([], person=BRUNO))
+  page.locator("#avatar").click()
+  expect(page.locator("#role-row")).to_be_hidden()
+  expect(page.locator("#account-groups .chip")).to_have_text(["nereus-users"])
+  expect(page.locator("#via-provider")).to_have_text("The instance's login")
+
+
+def test_the_language_switch_lives_in_the_sheet(portal_page):
+  opened, expect = portal_page
+  page = home(opened([*PRESENTATIONS], locale="pt-BR"))
+  page.locator("#avatar").click()
+  expect(page.locator('#account [data-language="pt-BR"]')).to_have_attribute("aria-pressed", "true")
+  expect(page.locator("#role-chip")).to_have_text("Administrador da plataforma")
+  expect(page.locator('#account [data-action="signout"]')).to_have_text("Sair")
+  page.locator('#account [data-language="en"]').click()
+  expect(page.locator("#account")).to_be_visible()
+  expect(page.locator("#role-chip")).to_have_text("Platform administrator")
+  expect(page.locator('#account [data-action="signout"]')).to_have_text("Sign out")
+  expect(page.locator("#summary-title")).to_have_text("1 reef needs attention")
+
+
+def test_the_focus_stays_in_the_sheet_while_it_is_open(portal_page):
+  opened, expect = portal_page
+  page = home(opened([], width=1280, height=800))
+  page.locator("#avatar").click()
+  expect(page.locator("#sheet-close")).to_be_focused()
+  for _ in range(6):
+    page.keyboard.press("Tab")
+    assert page.evaluate("document.getElementById('account').contains(document.activeElement)")
+  page.keyboard.press("Shift+Tab")
+  assert page.evaluate("document.getElementById('account').contains(document.activeElement)")
+
+
+def test_a_drag_down_closes_the_bottom_sheet_and_a_short_one_puts_it_back(portal_page):
+  opened, expect = portal_page
+  page = home(opened([], touch=True))
+  open_sheet(page)
+  cdp = page.context.new_cdp_session(page)
+
+  def drag(to):
+    top = page.locator("#account").bounding_box()["y"]
+    cdp.send("Input.dispatchTouchEvent", {"type": "touchStart", "touchPoints": [{"x": 195, "y": top + 10}]})
+    cdp.send("Input.dispatchTouchEvent", {"type": "touchMove", "touchPoints": [{"x": 195, "y": top + to}]})
+    cdp.send("Input.dispatchTouchEvent", {"type": "touchEnd", "touchPoints": []})
+
+  drag(40)
+  expect(page.locator("#account")).to_be_visible()
+  drag(200)
+  expect(page.locator("#account")).to_be_hidden()
+
+
+@pytest.mark.parametrize("width", [340, 390])
+@pytest.mark.parametrize("locale", ["pt-BR", "en-US"])
+def test_nothing_in_the_bottom_sheet_passes_the_phone_s_edge(portal_page, width, locale):
+  opened, expect = portal_page
+  page = home(opened([], width=width, locale=locale))
+  open_sheet(page)
+  found = page.evaluate("""() => [...document.querySelectorAll('#account *')]
+    .filter((e) => e.offsetParent !== null && e.getBoundingClientRect().right > innerWidth + 0.5)
+    .map((e) => e.id || e.className || e.tagName)""")
+  assert found == []

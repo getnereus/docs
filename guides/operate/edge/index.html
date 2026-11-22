@@ -1995,6 +1995,8 @@
       
         
       
+        
+      
     
     
     
@@ -2438,6 +2440,41 @@
     
   
     Use the MCP server
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reefs/usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Follow your agent's quota
   
 
     
@@ -3095,6 +3132,8 @@
       
         
       
+        
+      
     
     
     
@@ -3618,6 +3657,41 @@
   
   
     <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/reefs/rooms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    rooms
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--planned"></span>
   
 
   
@@ -5336,14 +5410,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../adr/0030-triton-messaging-nereid/" class="md-nav__link">
+      <a href="../../../adr/0030-triton-rooms-nereid/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Triton, the messaging Nereid
+    Triton, the rooms Nereid
   
 
     
@@ -5845,6 +5919,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -6078,6 +6156,62 @@
     
   
     Nereid SDK metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../research/platform-in-an-era-of-ai-agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform in an era of AI agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../research/infrastructure-governance-agentic-era/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Infrastructure governance in the agentic era
   
 
     
@@ -7080,7 +7214,10 @@
   nameservers: ada.ns.cloudflare.com, bob.ns.cloudflare.com
   point the registrar of getnereus.dev at them; the zone turns Active once Cloudflare sees it
 </code></pre></div>
-<p>Changing the registrar from Nereus waits for the Nereid godaddy <span class="chip planned">planned</span> (#475).</p>
+<p>When the domain is registered at GoDaddy, the Nereid godaddy points it there for you (#475): <a href="../../../specs/cli/reefs/edge.html#apply-godaddy"><code>nereus nereid apply godaddy</code></a>, its Mandate with GoDaddy's key and secret in the vault <code>edge</code>, then <a href="../../../specs/cli/reefs/edge.html#domain-apply"><code>nereus edge domain apply</code></a>.</p>
+<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>edge<span class="w"> </span>domain<span class="w"> </span>apply<span class="w"> </span>getnereus.dev<span class="w"> </span>--nameservers-from<span class="w"> </span>zone/getnereus.dev<span class="w"> </span>--wait
+</code></pre></div>
+<p>GoDaddy answers 403 to an account that may not use its production Domains API; the Domain then says <code>RegistrarRefused</code>, and the registrar is changed by hand.</p>
 <h3 id="5-carry-the-hostname-through-the-tunnel">5. Carry the hostname through the tunnel<a class="headerlink" href="#5-carry-the-hostname-through-the-tunnel" title="Permanent link">&para;</a></h3>
 <p><a href="../../../specs/cli/reefs/edge.html#route-hostname"><code>nereus edge route create</code></a> carries a hostname to the ingress gateway. Create the routes right after the Mandate: until one exists, the tunnel answers 404 for every hostname.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>edge<span class="w"> </span>route<span class="w"> </span>create<span class="w"> </span>triton<span class="w"> </span>--hostname<span class="w"> </span>triton.getnereus.dev
@@ -7093,6 +7230,8 @@ nereus<span class="w"> </span>nereid<span class="w"> </span>apply<span class="w"
 nereus<span class="w"> </span>edge<span class="w"> </span>route<span class="w"> </span>create<span class="w"> </span>triton<span class="w"> </span>--hostname<span class="w"> </span>triton.getnereus.dev<span class="w"> </span>--endpoint<span class="w"> </span>messaging/mcp
 </code></pre></div>
 <p>The tunnel carries the hostname only when the endpoint is publishable, granted and served on that hostname; otherwise the route says why (<code>NotPublished</code>, <code>NotServed</code>, <code>NoEndpoint</code>, or <code>Exposes</code> when the hostname also serves an endpoint that may not leave the cluster: the tunnel carries the whole hostname). The kept cluster's routes move to endpoints with #2011.</p>
+<p>Only a Nereid with an HTTPRoute of its own on the hostname counts for <code>Exposes</code>: what a Nereid says in its status alone never takes another Nereid's route off the air.</p>
+<p>Any other HTTPRoute the entrance's Gateway admits on the hostname makes the route <code>Exposes</code> too, naming it as <code>&lt;namespace&gt;/&lt;name&gt;</code>: one with no Nereid label (the chart's <code>nereus-api</code>, one a Release made), one of another namespace, or one whose Nereid publishes no granted endpoint there. Give such a host its own hostname, or publish its endpoint.</p>
 <h2 id="check-it-worked">Check it worked<a class="headerlink" href="#check-it-worked" title="Permanent link">&para;</a></h2>
 <p><code>nereus edge zone list</code> shows the zone Active once the delegation arrives, and <code>nereus edge route list</code> shows every hostname the platform answers; then <code>https://triton.getnereus.dev</code> answers.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>edge<span class="w"> </span>route<span class="w"> </span>list

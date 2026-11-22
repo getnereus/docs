@@ -50,7 +50,7 @@ slides:
     topic: "reef"
     status: built
     issue: 1949
-    message: "One command applies the {reef:edge} reef, with its first kind, Route"
+    message: "One command applies the {reef:edge} reef, with its kinds Route, Zone and Domain"
     accent: "One command"
     terminal:
       steps:
@@ -64,13 +64,13 @@ slides:
               nereus edge --help
               nereus nereid apply <nereid> --reef edge
     notes: |-
-      **The reef comes first, with no tool behind it.** Its first kind is `Route` (a hostname that reaches the platform, #1949); `Zone` (who answers for the domain's names, #1960), `Domain` (where the registrar sends the domain, #475) and `Record` (a CNAME or an A entry) come later.
+      **The reef comes first, with no tool behind it.** Its kinds are `Route` (a hostname that reaches the platform, #1949), `Zone` (who answers for the domain's names, #1960) and `Domain` (where the registrar sends the domain, #475); `Record` (a CNAME or an A entry) comes later.
     pt:
       topic: "reef"
-      message: "Um comando aplica o reef {reef:edge}, com o seu primeiro kind, Route"
+      message: "Um comando aplica o reef {reef:edge}, com os seus kinds Route, Zone e Domain"
       accent: "Um comando"
       notes: |-
-        **O reef vem primeiro, sem ferramenta por trás.** O seu primeiro kind é `Route` (um hostname que chega à plataforma, #1949); `Zone` (quem responde pelos nomes do domínio, #1960), `Domain` (para onde a registradora manda o domínio, #475) e `Record` (uma entrada CNAME ou A) vêm depois.
+        **O reef vem primeiro, sem ferramenta por trás.** Os seus kinds são `Route` (um hostname que chega à plataforma, #1949), `Zone` (quem responde pelos nomes do domínio, #1960) e `Domain` (para onde a registradora manda o domínio, #475); `Record` (uma entrada CNAME ou A) vem depois.
 
   - name: apply-cloudflare
     act: setup
@@ -109,7 +109,7 @@ slides:
   - name: apply-godaddy
     act: setup
     topic: "registrar"
-    status: planned
+    status: built
     issue: 475
     message: "The {nereid:godaddy} Nereid talks to the registrar, through its Mandate"
     accent: "registrar"
@@ -123,25 +123,33 @@ slides:
 
             Next steps:
 
-              nereus mandate create godaddy --reef edge --nereid godaddy
-        - comment: "Bind it to the reef"
-          run: "nereus mandate create godaddy"
-          options: ["--reef edge", "--nereid godaddy"]
+              nereus secrets create edge/godaddy --from-env key=GODADDY_KEY --from-env secret=GODADDY_SECRET
+              nereus mandate create godaddy --reef edge --nereid godaddy --param credentialsSecret=edge/godaddy
+              nereus edge domain list --at-registrar
+        - comment: "GoDaddy's key and secret, in the vault edge"
+          run: "nereus secrets create edge/godaddy"
+          options: ["--from-env key=GODADDY_KEY", "--from-env secret=GODADDY_SECRET"]
           output: |-
-            ✓ core/mandates/godaddy created
-
-            Next steps:
-
-              nereus edge domain list --at-registrar --mandate godaddy
+            ✓ secrets/vaults/edge/secrets/godaddy created (key SHA256:GQ8TrJ9h6ZrNYHItBycWK+tXkURjowfJWcjEyabRIKI)
+            Stored encrypted; a Kubernetes Secret is made only when a binding asks for it (#532).
+        - comment: "Bind it to the reef, with that secret"
+          run: "nereus mandate create godaddy"
+          options: ["--reef edge", "--nereid godaddy", "--param credentialsSecret=edge/godaddy"]
+          output: |-
+            ✓ core/mandates/godaddy created (reef: edge, nereid: godaddy)
     dependsOn: [apply-reef]
     notes: |-
       **The API never names the registrar** (ADR 0002): a `Domain` says which nameservers it delegates to, and the Mandate picks `godaddy`. Another registrar's Nereid takes its place by swapping the Mandate.
+
+      **The key and secret live in the vault `edge`**, bound into the Nereid's own namespace; its admission policy refuses another vault (#1967). The Mandate is not the reef's default: cloudflare's stays, and a new `Domain` goes to the Mandate whose Nereid serves Domains.
     pt:
       topic: "registradora"
       message: "A Nereid {nereid:godaddy} fala com a registradora, pelo seu Mandate"
       accent: "registradora"
       notes: |-
         **A API nunca nomeia a registradora** (ADR 0002): um `Domain` diz para quais nameservers delega, e o Mandate escolhe `godaddy`. A Nereid de outra registradora toma o seu lugar trocando o Mandate.
+
+        **A chave e o segredo ficam no vault `edge`**, vinculados ao namespace da própria Nereid; a sua admission policy recusa outro vault (#1967). O Mandate não é o padrão do reef: o da cloudflare continua, e um novo `Domain` vai para o Mandate cuja Nereid serve Domains.
 
   - name: zone-create
     act: zone
@@ -185,7 +193,7 @@ slides:
   - name: domain-list-registrar
     act: domain
     topic: "list at the registrar"
-    status: planned
+    status: built
     issue: 475
     message: "The registrar shows its domains, with the credentials asked for now and never stored"
     accent: "never stored"
@@ -193,24 +201,24 @@ slides:
       steps:
         - comment: "What the registrar holds"
           run: "nereus edge domain list"
-          options: ["--at-registrar", "--mandate godaddy"]
+          options: ["--at-registrar"]
           output: |-
-            GoDaddy API key: ****
-            GoDaddy API secret: ****
-            NAME            NAMESERVERS                  EXPIRES      MANAGED
-            getnereus.dev   ns01.domaincontrol.com (+1)  2029-10-25   no
-            example.com     ns01.domaincontrol.com (+1)  2029-10-25   no
-            example.org     ns01.domaincontrol.com (+1)  2028-06-11   no
+            GoDaddy API key:
+            GoDaddy API secret:
+            NAME           NAMESERVERS                  EXPIRES     MANAGED
+            example.com    ns01.domaincontrol.com (+1)  2029-10-25  no
+            example.org    ns01.domaincontrol.com (+1)  2028-06-11  no
+            getnereus.dev  ns01.domaincontrol.com (+1)  2029-10-25  no
 
             Next steps:
 
-              nereus edge domain get <name> --at-registrar --mandate godaddy
-              nereus edge domain apply <name> --mandate godaddy
+              nereus edge domain get <name>
+              nereus edge domain apply <name> --nameservers-from zone/<name>     # Nereus starts looking after it
     dependsOn: [apply-godaddy]
     notes: |-
       **A list shows one nameserver and `(+N)` for the others**; `get` shows them all (the owner, 2026-10-29). `MANAGED` says whether Nereus already looks after the domain.
 
-      **The credentials are asked for at the time of use** (the owner, 2026-10-29); keeping them in the secrets reef is decided in #475. The GoDaddy Domains API may be closed to small accounts: #475 checks it first.
+      **The key and secret are asked for with hidden prompts and never stored**: the CLI calls GoDaddy's API itself. GoDaddy answers 403 to an account that may not use its production Domains API, and the CLI says so.
     pt:
       topic: "lista na registradora"
       message: "A registradora mostra os seus domínios, com as credenciais pedidas na hora e nunca guardadas"
@@ -218,12 +226,12 @@ slides:
       notes: |-
         **Uma lista mostra um nameserver e `(+N)` para os outros**; `get` mostra todos (o dono, 2026-10-29). `MANAGED` diz se o Nereus já cuida do domínio.
 
-        **As credenciais são pedidas na hora do uso** (o dono, 2026-10-29); guardá-las no reef secrets é decidido no #475. A API de domínios da GoDaddy pode estar fechada para contas pequenas: o #475 verifica isso primeiro.
+        **A chave e o segredo são pedidos sem eco e nunca guardados**: o CLI chama a própria API da GoDaddy. A GoDaddy responde 403 a uma conta que não pode usar a sua API de domínios de produção, e o CLI diz isso.
 
   - name: domain-apply
     act: domain
     topic: "apply"
-    status: planned
+    status: built
     issue: 475
     message: "Nereus takes the domain and sends it to the zone's nameservers"
     accent: "takes the domain"
@@ -231,27 +239,31 @@ slides:
       steps:
         - comment: "Delegate getnereus.dev to the zone"
           run: "nereus edge domain apply getnereus.dev"
-          options: ["--nameservers-from zone/getnereus.dev", "--mandate godaddy"]
+          options: ["--nameservers-from zone/getnereus.dev"]
           output: |-
-            ✓ domain/getnereus.dev created
+            ✓ edge/domains/getnereus.dev created
 
             Next steps:
 
               nereus edge domain get getnereus.dev --watch
     dependsOn: [zone-create, domain-list-registrar]
     notes: |-
-      **`--nameservers-from zone/<name>` takes the nameservers the zone publishes**; `--nameservers <ns1>,<ns2>` writes them by hand, for a zone outside Nereus.
+      **`--nameservers-from zone/<name>` takes the nameservers the zone publishes**; `--nameservers <ns1>,<ns2>` writes them by hand, for a zone outside Nereus. `apply` again changes them; the Mandate, chosen at creation, never changes.
+
+      **`--wait` follows it until GoDaddy holds them** (`Delegated`); `delete` forgets the Domain and never touches the nameservers at the registrar.
     pt:
       topic: "apply"
       message: "O Nereus assume o domínio e o manda para os nameservers da zona"
       accent: "assume o domínio"
       notes: |-
-        **`--nameservers-from zone/<nome>` usa os nameservers que a zona publica**; `--nameservers <ns1>,<ns2>` os escreve à mão, para uma zona fora do Nereus.
+        **`--nameservers-from zone/<nome>` usa os nameservers que a zona publica**; `--nameservers <ns1>,<ns2>` os escreve à mão, para uma zona fora do Nereus. Um novo `apply` os muda; o Mandate, escolhido na criação, nunca muda.
+
+        **`--wait` acompanha até a GoDaddy tê-los** (`Delegated`); `delete` esquece o Domain e nunca mexe nos nameservers na registradora.
 
   - name: domain-list
     act: domain
     topic: "list"
-    status: planned
+    status: built
     issue: 475
     message: "The list shows the domains Nereus looks after"
     accent: "Nereus looks after"
@@ -260,12 +272,8 @@ slides:
         - comment: "What Nereus looks after"
           run: "nereus edge domain list"
           output: |-
-            NAME            MANDATE  NAMESERVERS                 DELEGATED
-            getnereus.dev   godaddy  ada.ns.cloudflare.com (+1)  True
-
-            Next steps:
-
-              nereus edge domain get getnereus.dev
+            NAME           MANDATE  NAMESERVERS                 DELEGATED
+            getnereus.dev  godaddy  ada.ns.cloudflare.com (+1)  True
     dependsOn: [domain-apply]
     notes: |-
       **Without `--at-registrar`, the list shows the `Domain` objects**, the ones Nereus looks after. The nameservers are examples; Cloudflare assigns the real ones.
@@ -279,7 +287,7 @@ slides:
   - name: domain-get
     act: domain
     topic: "get"
-    status: planned
+    status: built
     issue: 475
     message: "One domain shows every detail, its nameservers one per line"
     accent: "one per line"
@@ -296,19 +304,15 @@ slides:
               ada.ns.cloudflare.com
               bob.ns.cloudflare.com
               (from zone/getnereus.dev)
-
-            Next steps:
-
-              nereus edge domain get getnereus.dev --watch
     dependsOn: [domain-list]
     notes: |-
-      **Nameservers are always a list, one per line** (the owner, 2026-10-29), and the line under them says where they came from.
+      **Nameservers are always a list, one per line** (the owner, 2026-10-29), and the line under them says where they came from. While not delegated, `get` also shows what the registrar holds and why, and `get --watch` follows it.
     pt:
       topic: "get"
       message: "Um domínio mostra todos os detalhes, os nameservers um por linha"
       accent: "um por linha"
       notes: |-
-        **Os nameservers são sempre uma lista, um por linha** (o dono, 2026-10-29), e a linha embaixo deles diz de onde vieram.
+        **Os nameservers são sempre uma lista, um por linha** (o dono, 2026-10-29), e a linha embaixo deles diz de onde vieram. Enquanto não delegado, o `get` mostra também o que a registradora tem e por quê, e o `get --watch` acompanha.
 
   - name: route-hostname
     act: route
@@ -409,3 +413,85 @@ slides:
       accent: "num endereço fixo"
       notes: |-
         **O servidor MCP do Tritão é o primeiro uso** (o roadmap do Tritão, passo 1). A Nereid cloudflare só leva o hostname quando o endpoint é publicável, concedido pelo `spec.publish` da sua Nereid e servido naquele hostname; senão o Ready da Route diz o porquê: `NoEndpoint`, `NotPublishable`, `NotPublished`, `NotServed` ou `Ambiguous` (#1951). O endpoint fica fixo depois de criado, como o Mandate.
+
+  - name: apply-file
+    act: route
+    topic: "apply"
+    status: built
+    issue: 2006
+    message: "One file applies every Route and Zone, each checked before any is written"
+    accent: "checked before any is written"
+    terminal:
+      steps:
+        - comment: "Apply a file: a Zone and a Route, in the file's order"
+          run: "nereus edge apply"
+          options: ["--from-file edge.yaml"]
+          output: |-
+            ✓ edge/zones/example.com created
+            ✓ edge/routes/triton created
+
+            Next steps:
+
+              nereus edge route list
+              nereus edge zone list
+        - comment: "Only what it would change, with nothing written"
+          run: "nereus edge apply"
+          options: ["--from-file edge.yaml", "--dry-run"]
+          output: |-
+            edge/zones/example.com would be created
+            edge/routes/triton would be created
+            Nothing changed (--dry-run).
+    dependsOn: [route-create]
+    notes: |-
+      **`apply --from-file` takes a file or a folder of Routes and Zones** (ADR 0013, apply takes files), the way the conformance check creates a reef's objects (#2006). Every object goes through a dry run before any is written, so a bad one changes nothing; an object already as written says `unchanged`, without the mark. `nereus edge route create <name> --hostname <hostname> --dry-run --output yaml` writes one to start from.
+    pt:
+      topic: "apply"
+      message: "Um arquivo aplica todas as Routes e Zones, cada uma conferida antes de qualquer gravação"
+      accent: "conferida antes de qualquer gravação"
+      notes: |-
+        **`apply --from-file` recebe um arquivo ou uma pasta de Routes e Zones** (ADR 0013, apply recebe arquivos), do jeito que o conformance check cria os objetos de um reef (#2006). Todo objeto passa por um dry run antes de qualquer gravação, então um objeto ruim não muda nada; um objeto que já está como escrito diz `unchanged`, sem a marca. `nereus edge route create <nome> --hostname <hostname> --dry-run --output yaml` escreve um para começar.
+
+  - name: route-delete
+    act: route
+    topic: "delete"
+    status: built
+    issue: 2006
+    message: "A delete waits until its Nereid takes away what it made, unless told not to"
+    accent: "unless told not to"
+    terminal:
+      steps:
+        - comment: "Delete the Route: it waits until the hostname left the tunnel"
+          run: "nereus edge route delete triton"
+          output: |-
+            ✓ edge/routes/triton deleted (its Nereid took the hostname out of the tunnel)
+
+            Next steps:
+
+              nereus edge route list
+        - comment: "Return at once, while its Nereid is still at work"
+          run: "nereus edge route delete triton"
+          options: ["--wait false"]
+          output: |-
+            edge/routes/triton is Terminating: cloudflare removes what it made.
+
+            Next steps:
+
+              nereus edge route get triton
+        - comment: "A Zone the same way: Nereus forgets it, the zone stays at its provider"
+          run: "nereus edge zone delete example.com"
+          options: ["--wait false"]
+          output: |-
+            edge/zones/example.com is Terminating: cloudflare lets it go; the zone stays at its provider.
+
+            Next steps:
+
+              nereus edge zone get example.com
+    dependsOn: [route-create, zone-create]
+    notes: |-
+      **`delete` waits as `kubectl delete` does** (#2006): its Nereid takes the hostname out of the tunnel, and its DNS record when the Mandate names an API token, then drops its finalizer; `--timeout` bounds the wait. `--wait false` returns at once and says the object is `Terminating`; `list` shows it so until it is gone. A Zone's delete takes the same flags.
+    pt:
+      topic: "delete"
+      message: "Um delete espera a sua Nereid tirar o que fez, a menos que se diga para não esperar"
+      accent: "a menos que se diga para não esperar"
+      notes: |-
+        **`delete` espera como o `kubectl delete`** (#2006): a sua Nereid tira o hostname do túnel, e o seu registro DNS quando o Mandate nomeia um token de API, depois solta o finalizer; `--timeout` limita a espera. `--wait false` volta na hora e diz que o objeto está `Terminating`; o `list` o mostra assim até ele sumir. O delete de uma Zone aceita as mesmas flags.

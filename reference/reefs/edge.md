@@ -4,17 +4,19 @@ Every command of the edge reef: domains, zones and routes, in the order a person
 
 ## Commands
 
-- [`nereus reef apply edge`](../../specs/cli/reefs/edge.html#apply-reef) One command applies the edge reef, with its first kind, Route
+- [`nereus reef apply edge`](../../specs/cli/reefs/edge.html#apply-reef) One command applies the edge reef, with its kinds Route, Zone and Domain
 - [`nereus nereid apply cloudflare`](../../specs/cli/reefs/edge.html#apply-cloudflare) The cloudflare Nereid runs the tunnel its Mandate names
-- [`nereus nereid apply godaddy`](../../specs/cli/reefs/edge.html#apply-godaddy) [planned #475] The godaddy Nereid talks to the registrar, through its Mandate
+- [`nereus nereid apply godaddy`](../../specs/cli/reefs/edge.html#apply-godaddy) The godaddy Nereid talks to the registrar, through its Mandate
 - [`nereus edge zone create getnereus.dev`](../../specs/cli/reefs/edge.html#zone-create) A zone gives the domain the nameservers that will answer for it
-- [`nereus edge domain list`](../../specs/cli/reefs/edge.html#domain-list-registrar) [planned #475] The registrar shows its domains, with the credentials asked for now and never stored
-- [`nereus edge domain apply getnereus.dev`](../../specs/cli/reefs/edge.html#domain-apply) [planned #475] Nereus takes the domain and sends it to the zone's nameservers
-- [`nereus edge domain list`](../../specs/cli/reefs/edge.html#domain-list) [planned #475] The list shows the domains Nereus looks after
-- [`nereus edge domain get getnereus.dev`](../../specs/cli/reefs/edge.html#domain-get) [planned #475] One domain shows every detail, its nameservers one per line
+- [`nereus edge domain list`](../../specs/cli/reefs/edge.html#domain-list-registrar) The registrar shows its domains, with the credentials asked for now and never stored
+- [`nereus edge domain apply getnereus.dev`](../../specs/cli/reefs/edge.html#domain-apply) Nereus takes the domain and sends it to the zone's nameservers
+- [`nereus edge domain list`](../../specs/cli/reefs/edge.html#domain-list) The list shows the domains Nereus looks after
+- [`nereus edge domain get getnereus.dev`](../../specs/cli/reefs/edge.html#domain-get) One domain shows every detail, its nameservers one per line
 - [`nereus edge route create triton`](../../specs/cli/reefs/edge.html#route-hostname) A route makes a hostname reach the platform
 - [`nereus edge endpoint list`](../../specs/cli/reefs/edge.html#endpoint-list) The Nereids say what they serve, never where it runs
 - [`nereus edge route create triton`](../../specs/cli/reefs/edge.html#route-create) A route publishes a reef's endpoint at a fixed address
+- [`nereus edge apply`](../../specs/cli/reefs/edge.html#apply-file) One file applies every Route and Zone, each checked before any is written
+- [`nereus edge route delete triton`](../../specs/cli/reefs/edge.html#route-delete) A delete waits until its Nereid takes away what it made, unless told not to
 
 ## Examples
 
@@ -67,7 +69,9 @@ nereus nereid apply godaddy \
 
 Next steps:
 
-  nereus mandate create godaddy --reef edge --nereid godaddy
+  nereus secrets create edge/godaddy --from-env key=GODADDY_KEY --from-env secret=GODADDY_SECRET
+  nereus mandate create godaddy --reef edge --nereid godaddy --param credentialsSecret=edge/godaddy
+  nereus edge domain list --at-registrar
 ```
 
 ### zone-create
@@ -95,22 +99,21 @@ What the registrar holds.
 
 ```bash
 nereus edge domain list \
-  --at-registrar \
-  --mandate godaddy
+  --at-registrar
 ```
 
 ``` { .text .output title="output" }
-GoDaddy API key: ****
-GoDaddy API secret: ****
-NAME            NAMESERVERS                  EXPIRES      MANAGED
-getnereus.dev   ns01.domaincontrol.com (+1)  2029-10-25   no
-example.com     ns01.domaincontrol.com (+1)  2029-10-25   no
-example.org     ns01.domaincontrol.com (+1)  2028-06-11   no
+GoDaddy API key:
+GoDaddy API secret:
+NAME           NAMESERVERS                  EXPIRES     MANAGED
+example.com    ns01.domaincontrol.com (+1)  2029-10-25  no
+example.org    ns01.domaincontrol.com (+1)  2028-06-11  no
+getnereus.dev  ns01.domaincontrol.com (+1)  2029-10-25  no
 
 Next steps:
 
-  nereus edge domain get <name> --at-registrar --mandate godaddy
-  nereus edge domain apply <name> --mandate godaddy
+  nereus edge domain get <name>
+  nereus edge domain apply <name> --nameservers-from zone/<name>     # Nereus starts looking after it
 ```
 
 ### domain-apply
@@ -119,12 +122,11 @@ Delegate getnereus.dev to the zone.
 
 ```bash
 nereus edge domain apply getnereus.dev \
-  --nameservers-from zone/getnereus.dev \
-  --mandate godaddy
+  --nameservers-from zone/getnereus.dev
 ```
 
 ``` { .text .output title="output" }
-✓ domain/getnereus.dev created
+✓ edge/domains/getnereus.dev created
 
 Next steps:
 
@@ -140,12 +142,8 @@ nereus edge domain list
 ```
 
 ``` { .text .output title="output" }
-NAME            MANDATE  NAMESERVERS                 DELEGATED
-getnereus.dev   godaddy  ada.ns.cloudflare.com (+1)  True
-
-Next steps:
-
-  nereus edge domain get getnereus.dev
+NAME           MANDATE  NAMESERVERS                 DELEGATED
+getnereus.dev  godaddy  ada.ns.cloudflare.com (+1)  True
 ```
 
 ### domain-get
@@ -165,10 +163,6 @@ Nameservers:
   ada.ns.cloudflare.com
   bob.ns.cloudflare.com
   (from zone/getnereus.dev)
-
-Next steps:
-
-  nereus edge domain get getnereus.dev --watch
 ```
 
 ### route-hostname
@@ -219,4 +213,39 @@ nereus edge route create triton \
 Next steps:
 
   nereus edge route get triton
+```
+
+### apply-file
+
+Apply a file: a Zone and a Route, in the file's order.
+
+```bash
+nereus edge apply \
+  --from-file edge.yaml
+```
+
+``` { .text .output title="output" }
+✓ edge/zones/example.com created
+✓ edge/routes/triton created
+
+Next steps:
+
+  nereus edge route list
+  nereus edge zone list
+```
+
+### route-delete
+
+Delete the Route: it waits until the hostname left the tunnel.
+
+```bash
+nereus edge route delete triton
+```
+
+``` { .text .output title="output" }
+✓ edge/routes/triton deleted (its Nereid took the hostname out of the tunnel)
+
+Next steps:
+
+  nereus edge route list
 ```

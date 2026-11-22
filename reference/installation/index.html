@@ -1816,6 +1816,8 @@
       
         
       
+        
+      
     
     
     
@@ -2259,6 +2261,41 @@
     
   
     Use the MCP server
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/reefs/usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Follow your agent's quota
   
 
     
@@ -2921,6 +2958,8 @@
       
         
       
+        
+      
     
     
     
@@ -3461,6 +3500,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../reefs/rooms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    rooms
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--planned"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../reefs/scm/" class="md-nav__link">
         
   
@@ -3779,6 +3853,17 @@
     <span class="md-ellipsis">
       
         Alias
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#address" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Address
       
     </span>
   </a>
@@ -5282,14 +5367,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adr/0030-triton-messaging-nereid/" class="md-nav__link">
+      <a href="../../adr/0030-triton-rooms-nereid/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Triton, the messaging Nereid
+    Triton, the rooms Nereid
   
 
     
@@ -5791,6 +5876,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -6024,6 +6113,62 @@
     
   
     Nereid SDK metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/platform-in-an-era-of-ai-agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform in an era of AI agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/infrastructure-governance-agentic-era/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Infrastructure governance in the agentic era
   
 
     
@@ -6885,6 +7030,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#address" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Address
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#naming-overrides" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -6956,6 +7112,9 @@
 <p>The <a href="../settings/">settings file</a> also holds the id, so a cluster recreated from it is the same installation. A cluster recreated without it is a new installation with a new id.</p>
 <h2 id="alias">Alias<a class="headerlink" href="#alias" title="Permanent link">&para;</a></h2>
 <p>What listings show; free text, at most 63 characters, no control characters. It may change; the name and id stay, and the settings file follows: <a href="../../specs/cli/core.html#installation-set"><code>nereus config installation set --alias "Acme Prod"</code></a>.</p>
+<h2 id="address">Address<a class="headerlink" href="#address" title="Permanent link">&para;</a></h2>
+<p><code>spec.url</code> is the address the API is published at: the chart's <code>ingress.address</code>, rewritten on every release, so it is not a setting. An instance with none (no Gateway, only port-forward) has no <code>url</code>.</p>
+<p><code>nereus status --output json</code> and <code>GET /v1/status</code> answer it as <code>installation.url</code>, <code>null</code> when absent. The portal's account sheet shows it with the <code>nereus login &lt;url&gt;</code> line.</p>
 <h2 id="naming-overrides">Naming overrides<a class="headerlink" href="#naming-overrides" title="Permanent link">&para;</a></h2>
 <p>When a generated cloud name is taken, a naming override sets it: <code>issuer.storage</code>, <code>state.storage</code> or <code>secrets.vault</code>, each checked against its resource's rules, with <code>nereus config installation set --naming-override issuer.storage=acmeissuers01</code>. See <a href="../../guides/troubleshoot/name-taken/">A name is taken</a>.</p>
 <h2 id="with-helm">With Helm<a class="headerlink" href="#with-helm" title="Permanent link">&para;</a></h2>

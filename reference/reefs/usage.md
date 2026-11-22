@@ -5,6 +5,7 @@ Every command that reports a coding agent's quota window and shows where it is h
 ## Commands
 
 - [`nereus usage report weekly`](../../specs/cli/reefs/usage.html#usage-report) report sends a reading, read now
+- [`nereus usage report weekly`](../../specs/cli/reefs/usage.html#usage-replace) --replace says the share really went down
 - [`nereus usage report weekly`](../../specs/cli/reefs/usage.html#usage-offline) offline, report keeps the reading locally and get answers from it
 - [`nereus usage apply`](../../specs/cli/reefs/usage.html#usage-apply) apply writes the windows of a file, under the same rules
 - [`nereus usage get weekly`](../../specs/cli/reefs/usage.html#usage-get) get shows the forecast at the reset, today's goal and the week day by day
@@ -24,6 +25,25 @@ nereus usage report weekly \
 
 ``` { .text .output title="output" }
 ✓ usage/windows/weekly reported (75% used, resets Mon 16/11 01:00)
+
+Next steps:
+
+  nereus usage get weekly
+```
+
+### usage-replace
+
+The usage was reset mid-week: 98% kept, 91% now.
+
+```bash
+nereus usage report weekly \
+  --used 91 \
+  --resets-at 2026-11-16T01:00:00-03:00 \
+  --replace
+```
+
+``` { .text .output title="output" }
+✓ usage/windows/weekly replaced 98% (91% used, resets Mon 16/11 01:00), forecast 110.7% slow
 
 Next steps:
 
