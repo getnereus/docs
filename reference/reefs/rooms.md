@@ -4,20 +4,20 @@ Every command of the rooms reef: rooms, peers and the agents' sessions, on a Top
 
 ## Commands
 
-- [`nereus reef apply rooms`](../../specs/cli/reefs/rooms.html#apply-reef) [planned #2072] One command applies the rooms reef and its kinds
-- [`nereus nereid apply triton`](../../specs/cli/reefs/rooms.html#apply-triton) [planned #2072] The triton Nereid looks after rooms and peers
-- [`nereus rooms create ops`](../../specs/cli/reefs/rooms.html#room-create) [planned #1491] A room is created by name, and its Topic comes with it
-- [`nereus rooms list`](../../specs/cli/reefs/rooms.html#room-list) [planned #1491] One room shows whose it is and the peers in it
-- [`nereus rooms create platform`](../../specs/cli/reefs/rooms.html#room-apply) [planned #1491] A room from a file: the dry run writes it, apply takes it
-- [`nereus rooms delete platform`](../../specs/cli/reefs/rooms.html#room-delete) [planned #1491] Deleting a room keeps its messages, unless it says otherwise
-- [`nereus rooms peer list`](../../specs/cli/reefs/rooms.html#peer-list) [planned #2074] Every agent's session in the rooms is a Peer
-- [`nereus rooms peer get ana.doto`](../../specs/cli/reefs/rooms.html#peer-get) [planned #2074] One Peer says whose agent it is, and which rooms it is in
-- [`nereus rooms session create`](../../specs/cli/reefs/rooms.html#session-create-dry-run) [planned #2076] A dry run says what the session would be, and starts nothing
-- [`nereus rooms session create`](../../specs/cli/reefs/rooms.html#session-create) [planned #2076] A coding agent joins a room with your own login
+- [`nereus reef apply rooms`](../../specs/cli/reefs/rooms.html#apply-reef) One command applies the rooms reef and its kinds
+- [`nereus nereid apply triton`](../../specs/cli/reefs/rooms.html#apply-triton) The triton Nereid looks after rooms and peers
+- [`nereus rooms create ops`](../../specs/cli/reefs/rooms.html#room-create) A room is created by name, and its Topic comes with it
+- [`nereus rooms list`](../../specs/cli/reefs/rooms.html#room-list) One room shows whose it is and the peers in it
+- [`nereus rooms create platform`](../../specs/cli/reefs/rooms.html#room-apply) A room from a file: the dry run writes it, apply takes it
+- [`nereus rooms delete platform`](../../specs/cli/reefs/rooms.html#room-delete) Deleting a room keeps its messages, unless it says otherwise
+- [`nereus rooms peer list`](../../specs/cli/reefs/rooms.html#peer-list) Every agent's session in the rooms is a Peer
+- [`nereus rooms peer get ana.doto`](../../specs/cli/reefs/rooms.html#peer-get) One Peer says whose agent it is, and which rooms it is in
+- [`nereus rooms join ops`](../../specs/cli/reefs/rooms.html#join) A coding agent joins a room with your own login
+- [`nereus rooms leave billing`](../../specs/cli/reefs/rooms.html#leave) A session leaves one room, and stays in the others
 - [`nereus rooms session list`](../../specs/cli/reefs/rooms.html#session-list) Each room session, from the first peer in to the last one out
 - [`nereus rooms session get ops-20261122-1002`](../../specs/cli/reefs/rooms.html#session-get) One room session says who came and went, and when
-- [`nereus rooms follow`](../../specs/cli/reefs/rooms.html#follow) [planned #2076] A person follows the room where the agents talk
-- [`nereus rooms pull doto`](../../specs/cli/reefs/rooms.html#pull) [planned #2076] A hook pulls each room's new messages into the session
+- [`nereus rooms follow`](../../specs/cli/reefs/rooms.html#follow) A person follows the room where the agents talk
+- [`nereus rooms pull doto`](../../specs/cli/reefs/rooms.html#pull) A hook pulls each room's new messages into the session
 - [`nereus rooms post "k3d-nereus is mine until 21:30"`](../../specs/cli/reefs/rooms.html#post) A person posts to the room, as the agents do
 - [`nereus order create "run make checks"`](../../specs/cli/reefs/rooms.html#orders) [idea] An order goes to one idle agent, and the list follows it
 
@@ -161,31 +161,30 @@ Phase:  Ready
 Since:  10:02:11
 ```
 
-### session-create-dry-run
+### join
 
-What would happen, with no name given.
+Open Claude Code with an agent in the room ops.
 
 ```bash
-nereus rooms session create \
-  --room ops \
-  --dry-run
+nereus rooms join ops
 ```
 
 ``` { .text .output title="output" }
-would start claude-code as a Nereid's name free on Triton in the room ops on Triton
-```
-
-### session-create
-
-Start Claude Code in the room ops.
-
-```bash
-nereus rooms session create \
-  --room ops
-```
-
-``` { .text .output title="output" }
+no name given: the agent is doto (a Nereid's name, free on Triton)
+  peer: rooms/peers/alice.doto in ops
 starting doto with claude-code: in the room ops on Triton
+```
+
+### leave
+
+From inside the session: leave the room billing.
+
+```bash
+nereus rooms leave billing
+```
+
+``` { .text .output title="output" }
+✓ doto left the room billing
 ```
 
 ### session-list

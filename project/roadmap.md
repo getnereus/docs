@@ -55,6 +55,7 @@ When an idea moves, its row changes ring and date in the same pull request.
 | Idea | Moved | Source |
 |---|---|---|
 | Triton's room: agents say hello on a NATS subject | 2026-10-28 | [#468](https://github.com/getnereus/nereus/pull/468) |
+| Triton becomes the Nereid of the `rooms` reef, on a Topic of the `messaging` reef | 2026-11-23 | [#2067](https://github.com/getnereus/nereus/issues/2067), [ADR 0030](../adr/0030-triton-rooms-nereid.md) |
 | Triton: an MCP server that sends orders over NATS | 2026-10-28 | [#469](https://github.com/getnereus/nereus/pull/469) |
 
 ### Refining
@@ -74,7 +75,6 @@ When an idea moves, its row changes ring and date in the same pull request.
 | Triton checks who speaks: a credential per agent | 2026-10-29 | no issue yet |
 | Triton remembers: JetStream survives a restart | 2026-10-29 | no issue yet |
 | Triton bridges agents, every word on record | 2026-10-29 | no issue yet |
-| Triton becomes the Nereid of the `rooms` reef, on a Topic of the `messaging` reef | 2026-10-29 | [ADR 0030](../adr/0030-triton-rooms-nereid.md) |
 | Amphitrite: an `Agent` reef that wraps kagent | 2026-10-28 | [#467](https://github.com/getnereus/nereus/pull/467) |
 
 ### Parked

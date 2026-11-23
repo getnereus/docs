@@ -54,7 +54,7 @@ doto left the room ops
 
 **An agent leaves a room two ways** (owner, 2026-11-22): `nereus rooms leave <room>` takes the room off its Peer at once, inside or outside Claude Code as `join` does, so an agent changes rooms with its session open; and its session ending takes it out of every room (the heartbeats stop, the Peer goes `Away`).
 
-**A room session is kept in two places** (owner, 2026-11-22). A `RoomSession` in the cluster, beside its Room and written by Triton, says who came and went, when, and how many messages were posted; when the session ends, its messages go in one file to Drive, beside Pontos's raw sessions, where the analysis already happens. The Topic's own retention (`maxAge`) stays short.
+**A room session is a `RoomSession` in the cluster** (owner, 2026-11-22, narrowed 2026-11-23 in #2100). Beside its Room and written by Triton, it says who came and went, when, and how many messages were posted. Its messages stay on the Topic while the Topic's own retention (`maxAge`, short) keeps them: no file, no Drive and no automatic delete. Keeping the history goes with #1269 (history out of etcd) and #2099 (the observability reef, VictoriaLogs first, Drive as an export).
 
 **The CLI is the agent's MCP server, with groups of tools** (owner, 2026-11-22: "the Nereus MCP server with different tools that can be turned on or not by calling the CLI"). Today `session create` passes the bridge (`--mcp-config`) and the pull hooks (`--settings`) to each Claude Code it opens, so a session already open cannot join. Instead:
 
@@ -107,7 +107,7 @@ This server is local and serves an agent on its machine; the API's `/mcp` below 
 | A Topic's new fields | `spec.maxAge`, `spec.maxBytes`, `spec.access` (`shared`, the default, or `owner`) |
 | CLI | `nereus rooms create`, `apply`, `list`, `get`, `delete`, `join`, `leave`; `nereus rooms peer list`, `get`; `nereus rooms follow`, `pull`, `post`; `nereus rooms session list`, `get`; `nereus mcp local add`, `serve`, `list`, `enable`, `disable` |
 | The agent's MCP server | `nereus mcp local serve`, its groups of tools, `rooms` the first |
-| A room's activity | a room session, from the first agent in to the last one out: kind `RoomSession`, written by Triton; its messages in a file on Drive beside Pontos's raw sessions |
+| A room's activity | a room session, from the first agent in to the last one out: kind `RoomSession`, written by Triton; its messages on the Topic while its retention keeps them (#1269, #2099 keep the history) |
 | Routes | `/v1/rooms/...` |
 | MCP tools | `rooms_peers`, `rooms_read`, `rooms_post` |
 
@@ -172,7 +172,7 @@ The journey #2067 carries the change, all at once, in steps that each fit one ag
 - #2074: Triton reconciles `Peer`, and the bucket `agents` goes.
 - #2075: a Peer's rooms: `nereus rooms join`, outside and inside Claude Code, and the bridge and the pull hook over several rooms (rewritten 2026-11-22: no `--room`, no `.nereus/room` file).
 - #2101: `nereus mcp local`, the CLI as the agent's MCP server, its tools in groups, `rooms` the first.
-- #2100: the room sessions, `RoomSession` and the file on Drive, read with `nereus rooms session list` and `get`.
+- #2100: the room sessions, `RoomSession`, read with `nereus rooms session list` and `get` (narrowed on 2026-11-23: no file on Drive).
 - #1491 also carries who may create a Room (a team member, their team's Rooms); the hard and soft gates are #2102, outside the journey.
 - #2076: the CLI's surface moves to `nereus rooms`; #1889: a person posts with `nereus rooms post`.
 - #2077: the orders' code leaves Triton.
@@ -188,12 +188,12 @@ Under #1812, with the names above: #1895 (the internal door, the API's `/v1/room
 
 ## Origin
 
-Decided by the owner on 2026-11-18, refining #1812 (Triton's tools served by the Nereus API's `/mcp`) one question at a time: the door, the bridge, the tools. Decided again on 2026-11-21, evaluating the messaging reef one question at a time: the two reefs, the name `rooms`, Triton on the reef's contract, the `Peer` kind, the orders' code, and one journey for all of it (#2067). Decided again on 2026-11-22, the flow as a person lives it, one question at a time: the measure of the feature, who may create a Room, `nereus rooms join` and `leave`, the room sessions and what they keep, and the CLI's MCP server.
+Decided by the owner on 2026-11-18, refining #1812 (Triton's tools served by the Nereus API's `/mcp`) one question at a time: the door, the bridge, the tools. Decided again on 2026-11-21, evaluating the messaging reef one question at a time: the two reefs, the name `rooms`, Triton on the reef's contract, the `Peer` kind, the orders' code, and one journey for all of it (#2067). Decided again on 2026-11-22, the flow as a person lives it, one question at a time: the measure of the feature, who may create a Room, `nereus rooms join` and `leave`, the room sessions and what they keep, and the CLI's MCP server. Narrowed on 2026-11-23 (#2100, #2079, the owner's word): a room session keeps no file on Drive.
 
 ## Open questions
 
-- A `RoomSession`'s fields, its retention in the cluster, and the file's name and format on Drive.
-- Later, most likely, a room session's logs and metrics go to the observability reef, today VictoriaMetrics and VictoriaLogs (owner, 2026-11-22); the `RoomSession` and the file on Drive stay until then. The file itself may already go as logs, through a Drive Nereid of that reef, so the switch is a Mandate's: #2099, outside this journey.
+- A `RoomSession`'s retention in the cluster, and where a room's history is kept: #1269 (history out of etcd).
+- Later, most likely, a room session's logs and metrics go to the observability reef, VictoriaLogs first and Drive as an export (owner, 2026-11-22): #2099, outside this journey.
 - Whether Claude Code applies `notifications/tools/list_changed` in an open session: checked before the CLI's MCP server is built.
 - The hard and soft gates on creating a Room: the pending phase's name, and what is OpenFGA's and what a policy's (#2102).
 

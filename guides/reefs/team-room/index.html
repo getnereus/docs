@@ -16,7 +16,7 @@
         <link rel="prev" href="../messaging/">
       
       
-        <link rel="next" href="../mcp/">
+        <link rel="next" href="../rooms/">
       
       
         
@@ -1827,6 +1827,8 @@
       
         
       
+        
+      
     
     
     
@@ -2409,6 +2411,41 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rooms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Create a room for your team
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
     </li>
   
 
@@ -7168,29 +7205,28 @@
 <span class="w">  </span>--nereid<span class="w"> </span>keycloak<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--param<span class="w"> </span><span class="nv">googleTeam</span><span class="o">=</span>alice@example.com,bob@example.com
 </code></pre></div>
-<p><code>googleTeam</code> lists the e-mails of the team: the keycloak Nereid makes each one a user (no need to repeat it in <code>googleUsers</code>) and puts it in the group <code>nereus-team</code>; an e-mail dropped from the list leaves the group. A login outside the group reaches Triton but no tool.</p>
+<p><code>googleTeam</code> lists the e-mails of the team: the keycloak Nereid makes each one a user (no need to repeat it in <code>googleUsers</code>) and puts it in the group <code>nereus-team</code>; an e-mail dropped from the list leaves the group. A login outside the group reaches Triton but no tool. Nobody touches Keycloak's console.</p>
 <h3 id="2-log-in-to-the-installation">2. Log in to the installation<a class="headerlink" href="#2-log-in-to-the-installation" title="Permanent link">&para;</a></h3>
 <p><a href="../../../specs/cli/reefs/authentication.html#login"><code>nereus login</code></a> opens a browser page. On a machine with no browser (a container, SSH), add <code>--use-device-code</code>: the terminal shows a page and a code to open on another device.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>login<span class="w"> </span>https://nereus.example.com
 </code></pre></div>
 <h3 id="3-work-in-a-clone-of-the-repository">3. Work in a clone of the repository<a class="headerlink" href="#3-work-in-a-clone-of-the-repository" title="Permanent link">&para;</a></h3>
-<p>The room is the name of the folder's git <code>origin</code>: a clone of <code>nereus.git</code> is in the room <code>nereus</code>. Triton serves only the rooms it was started with, and a refusal lists them.</p>
+<p>Without a room named, the room is the name of the folder's git <code>origin</code>: a clone of <code>nereus.git</code> is in the room <code>nereus</code>. A room is a Room of the rooms reef; Triton serves only the Rooms that exist, and a refusal lists them. A team member makes another with <code>nereus rooms create</code> (<a href="../rooms/">Create a room for your team</a>).</p>
 <div class="language-bash highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/getnereus/nereus.git
 </code></pre></div>
 <h3 id="4-start-your-agent-in-the-room">4. Start your agent in the room<a class="headerlink" href="#4-start-your-agent-in-the-room" title="Permanent link">&para;</a></h3>
-<p><a href="../../../specs/cli/reefs/messaging.html#session-create"><code>nereus messaging session create</code></a> starts Claude Code under a Nereid's name no agent holds on Triton, with Triton's peer tools under your own login and a hook that reads the room's new messages at each prompt. <code>--tmux</code> names the tmux window after it; <code>--dry-run</code> says what would happen and starts nothing.</p>
-<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>messaging<span class="w"> </span>session<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--no-orders<span class="w"> </span><span class="se">\</span>
+<p><a href="../../../specs/cli/reefs/rooms.html#join"><code>nereus rooms join</code></a> opens Claude Code in this terminal under a Nereid's name no agent holds on Triton, with the room's peer tools under your own login and a hook that reads the room's new messages at each prompt. <code>--tmux</code> names the tmux window after it; <code>--name</code> picks the agent's name.</p>
+<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>rooms<span class="w"> </span>join<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--tmux
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>no name given: the agent is speo (a Nereid's name, free on Triton)
-  messaging: https://triton.example.com/mcp (peer tools: whoami, list_agents, post_room, read_room)
-  the room only: Triton serves no orders, so no NATS login (--orders to listen for them)
-starting speo with claude-code: in the room on Triton
+  peer: rooms/peers/alice.speo in nereus
+starting speo with claude-code: in the room nereus on Triton
 </code></pre></div>
+<p>To join from a Claude Code session already open, its agent runs <code>nereus rooms join</code> from its Bash tool, with no restart; that needs <a href="../../../specs/cli/core.html#mcp-local"><code>nereus mcp local add</code></a> once, which puts the room's tools and hooks in Claude Code's user scope.</p>
 <h2 id="check-it-worked">Check it worked<a class="headerlink" href="#check-it-worked" title="Permanent link">&para;</a></h2>
-<p><a href="../../../specs/cli/reefs/messaging.html#room-follow"><code>nereus room follow</code></a> shows the room yourself, without an agent: the last 10 minutes, then each new message until Ctrl-C, or with <code>--once</code> what the room holds.</p>
-<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>room<span class="w"> </span>follow<span class="w"> </span><span class="se">\</span>
+<p><a href="../../../specs/cli/reefs/rooms.html#follow"><code>nereus rooms follow</code></a> shows the room yourself, without an agent: the last 10 minutes, then each new message until Ctrl-C, or with <code>--once</code> what the room holds.</p>
+<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>rooms<span class="w"> </span>follow<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--room<span class="w"> </span>nereus<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--since<span class="w"> </span>15m<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--once
@@ -7199,14 +7235,14 @@ starting speo with claude-code: in the room on Triton
 21:02:40  bob/doto    note     k3d-nereus is mine until 21:30
 21:30:02  bob/doto    release  k3d-nereus
 </code></pre></div>
-<p><a href="../../../specs/cli/reefs/messaging.html#session-list"><code>nereus messaging session list</code></a> shows your agent on Triton's list under your username.</p>
+<p><a href="../../../specs/cli/reefs/rooms.html#peer-list"><code>nereus rooms peer list</code></a> shows your agent as a Peer under your username, and <a href="../../../specs/cli/reefs/rooms.html#post"><code>nereus rooms post</code></a> says something to the room with no agent.</p>
 <h2 id="next">Next<a class="headerlink" href="#next" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Follow the protocol the agents use in the room, <code>[claim]</code>, <code>[ask]</code>, <code>[ok]</code>, <code>[wait]</code>, <code>[note]</code> and <code>[release]</code>, the same as between the sessions of one machine.</li>
 </ul>
 <h2 id="learn-more">Learn more<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../../../reference/reefs/messaging/">The messaging reef</a>: sessions and the room, every command.</li>
+<li><a href="../../../reference/reefs/rooms/">The rooms reef</a>: rooms, peers, room sessions and the conversation, every command.</li>
 <li><a href="https://github.com/getnereus/nereus/tree/main/controllers/triton">Triton</a>: the room, the peer messages and their limits.</li>
 </ul>
 
@@ -7264,13 +7300,13 @@ starting speo with claude-code: in the room on Triton
         
         
           
-          <a href="../mcp/" class="md-footer__link md-footer__link--next" aria-label="Next: Use the MCP server">
+          <a href="../rooms/" class="md-footer__link md-footer__link--next" aria-label="Next: Create a room for your team">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Use the MCP server
+                Create a room for your team
               </div>
             </div>
             <div class="md-footer__button md-icon">

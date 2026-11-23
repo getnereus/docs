@@ -24,10 +24,6 @@ acts:
     title: "Queue"
     question: "Where does a message wait for one worker?"
     pt: {title: "Fila", question: "Onde uma mensagem espera por um worker?"}
-  - name: session
-    title: "Until the rooms reef"
-    question: "Which commands of the rooms reef still run under their first names?"
-    pt: {title: "Até o reef rooms", question: "Quais comandos do reef rooms ainda rodam com os seus primeiros nomes?"}
 
 slides:
   - name: cover
@@ -37,13 +33,13 @@ slides:
     notes: |-
       **The source of truth for the commands of the messaging reef** (#483). Every command, built or only imagined, is here first; the tag after each label says whether it is built, planned (with the issue that builds it) or an idea.
 
-      **The commands are the topics' and the queues'** (#1597). The agents' sessions and the rooms have [the rooms deck](rooms.html) (ADR 0030, Triton is the rooms reef's Nereid); what is built of them today stays here, in the last section, until #2076.
+      **The commands are the topics' and the queues'** (#1597). The agents' sessions and the rooms have [the rooms deck](rooms.html) (ADR 0030, Triton is the rooms reef's Nereid); their first names moved there (#2076).
     pt:
       message: "O reef messaging"
       notes: |-
         **A fonte da verdade dos comandos do reef messaging** (#483). Todo comando, pronto ou só imaginado, está aqui primeiro; a etiqueta depois de cada rótulo diz se ele está pronto, planejado (com a issue que o constrói) ou se é uma ideia.
 
-        **Os comandos são os dos tópicos e os das filas** (#1597). As sessões dos agentes e as salas têm [o deck rooms](rooms.html) (ADR 0030, o Tritão é a Nereid do reef rooms); o que está pronto delas hoje fica aqui, na última seção, até a #2076.
+        **Os comandos são os dos tópicos e os das filas** (#1597). As sessões dos agentes e as salas têm [o deck rooms](rooms.html) (ADR 0030, o Tritão é a Nereid do reef rooms); os seus primeiros nomes mudaram para lá (#2076).
 
   - name: rooms
     act: opening
@@ -56,7 +52,7 @@ slides:
     notes: |-
       **Two small reefs, composed** (owner, 2026-11-21, ADR 0030, Triton is the rooms reef's Nereid). This reef knows nothing of rooms or agents: Triton requires it and asks it for a Topic per Room, as any other client would.
 
-      **The agents' sessions, the rooms and the peers have [their own deck](rooms.html)** (#2069). The commands built today under their first names, `nereus messaging session` and `nereus room follow`, stay in this deck's last section until #2076 moves them.
+      **The agents' sessions, the rooms and the peers have [their own deck](rooms.html)** (#2069). Their first names moved under `nereus rooms` (#2076, #2075): each old name prints the new one.
     pt:
       topic: "o reef e as salas"
       message: "O reef {reef:messaging} é o motor em que as salas rodam"
@@ -67,7 +63,7 @@ slides:
       notes: |-
         **Dois reefs pequenos, compostos** (dono, 2026-11-21, ADR 0030, o Tritão é a Nereid do reef rooms). Este reef não sabe nada de salas ou agentes: o Tritão o exige e pede a ele um Topic por Room, como qualquer outro cliente faria.
 
-        **As sessões dos agentes, as salas e os pares têm [o seu próprio deck](rooms.html)** (#2069). Os comandos prontos hoje com os seus primeiros nomes, `nereus messaging session` e `nereus room follow`, ficam na última seção deste deck até a #2076 movê-los.
+        **As sessões dos agentes, as salas e os pares têm [o seu próprio deck](rooms.html)** (#2069). Os seus primeiros nomes mudaram para `nereus rooms` (#2076, #2075): cada nome antigo imprime o novo.
 
   - name: apply-reef
     act: setup
@@ -379,142 +375,3 @@ slides:
       accent: "descarta as mensagens"
       notes: |-
         **O YAML do dry run é o que o `apply` recebe** (ADR 0013, as convenções de comandos). Com `deletionPolicy: delete` a Nereid descarta o stream e as suas mensagens quando a fila sai.
-
-  - name: session-create-dry-run
-    act: session
-    topic: "create · dry run"
-    status: built
-    message: "A dry run says what the session would be, and starts nothing"
-    accent: "starts nothing"
-    terminal:
-      steps:
-        - comment: "What would happen, with no name given"
-          run: "nereus messaging session create"
-          options: ["--dry-run"]
-          output: |-
-            would start claude-code as a Nereid's name free on Triton in the room on Triton, if Triton serves orders, logged in to NATS with the nats-channel plugin
-    notes: |-
-      **The dry run asks nothing of Triton**, so without `--orders` or `--no-orders` it names both cases; it needs only a live `nereus login`. The output is a recorded run (`docs/guides/access/authentication.md`).
-
-      **Without a name, the agent takes a Nereid's name no agent holds on Triton** (#1177), asked through Triton's `list_agents`.
-    pt:
-      topic: "create · simulação"
-      message: "Uma simulação diz como seria a sessão, e não inicia nada"
-      accent: "não inicia nada"
-      notes: |-
-        **A simulação não pergunta nada ao Tritão**, então sem `--orders` ou `--no-orders` ela cita os dois casos; precisa só de um `nereus login` válido. A saída é de uma execução gravada (`docs/guides/access/authentication.md`).
-
-        **Sem um nome, o agente recebe o nome de uma Nereida que nenhum agente usa no Tritão** (#1177), perguntado pelo `list_agents` do Tritão.
-
-  - name: session-create
-    act: session
-    topic: "create"
-    status: built
-    message: "A coding agent joins Triton's room with your own login"
-    accent: "your own login"
-    terminal:
-      steps:
-        - comment: "Start Claude Code as agent m15"
-          run: "nereus messaging session create m15"
-          output: |2-
-              messaging: https://triton.getnereus.dev/mcp (peer tools: whoami, list_agents, post_room, read_room)
-              the room only: Triton serves no orders, so no NATS login (--orders to listen for them)
-            starting m15 with claude-code: in the room on Triton
-    dependsOn: [session-create-dry-run]
-    notes: |-
-      **The output is taken from the code** (`cli/src/nereus/commands/messaging.py`), not from a recorded run: on this installation Triton serves no orders, so the session is of the peers only, in the room over HTTPS with no NATS (#1481). Then Claude Code starts in this terminal, with Triton's peer tools through the CLI's bridge (#1415) and hooks that bring the room's messages into its context (#1417).
-
-      **`--tmux` names the current tmux window after the agent** and gives it back when the session ends; `--permission-mode` passes Claude Code's mode, never `bypassPermissions` unless asked (#716).
-    pt:
-      topic: "create"
-      message: "Um agente entra na sala do Tritão com o seu próprio login"
-      accent: "o seu próprio login"
-      notes: |-
-        **A saída vem do código** (`cli/src/nereus/commands/messaging.py`), não de uma execução gravada: nesta instalação o Tritão não serve ordens, então a sessão é só dos pares, na sala por HTTPS sem NATS (#1481). Depois o Claude Code inicia neste terminal, com as ferramentas de pares do Tritão pela ponte do CLI (#1415) e hooks que trazem as mensagens da sala para o seu contexto (#1417).
-
-        **`--tmux` dá o nome do agente à janela atual do tmux** e o devolve quando a sessão termina; `--permission-mode` passa o modo do Claude Code, nunca `bypassPermissions` sem pedido (#716).
-
-  - name: session-create-orders
-    act: session
-    topic: "create · orders"
-    status: built
-    message: "Where Triton serves orders, the agent also logs in to NATS"
-    accent: "logs in to NATS"
-    terminal:
-      steps:
-        - comment: "Log agent m15 in to NATS without a browser (SSH)"
-          run: "nereus messaging session create m15"
-          options: ["--use-device-code"]
-          output: |-
-            To log agent m15 in to NATS, open https://auth.getnereus.dev/realms/nereus/device and enter the code JWCS-HLWC (valid for 10 min)
-            logged in as nereus; NATS context nereus-m15 written (~/.config/nats/context/nereus-m15.json, 0600), valid until 01:07
-    dependsOn: [session-create]
-    notes: |-
-      **The NATS login comes only when Triton serves orders, or with `--orders`** (#1481); the session then listens for them with Synadia's nats-channel plugin. The output is a recorded run from when Triton served orders (`docs/guides/access/authentication.md`), cut after the login.
-
-      **`--use-device-code` uses the device flow** (RFC 8628, the OAuth device authorization grant), as `nereus login` does (#1830): the terminal shows a page and a code, for Triton's login and, with the orders on, NATS's. `--no-browser` is its alias. A login still valid for more than 10 minutes is kept.
-    pt:
-      topic: "create · ordens"
-      message: "Onde o Tritão serve ordens, o agente também entra no NATS"
-      accent: "entra no NATS"
-      notes: |-
-        **O login no NATS vem só quando o Tritão serve ordens, ou com `--orders`** (#1481); a sessão então as escuta com o plugin nats-channel da Synadia. A saída é de uma execução gravada quando o Tritão servia ordens (`docs/guides/access/authentication.md`), cortada depois do login.
-
-        **`--use-device-code` usa o device flow** (RFC 8628, a concessão de autorização de dispositivo do OAuth), como o `nereus login` (#1830): o terminal mostra uma página e um código, para o login no Tritão e, com as ordens ligadas, no NATS. `--no-browser` é o seu alias. Um login ainda válido por mais de 10 minutos é mantido.
-
-  - name: session-list
-    act: session
-    topic: "list"
-    status: built
-    message: "Every agent connected to Triton, and who started it"
-    accent: "who started it"
-    terminal:
-      steps:
-        - comment: "The agents connected to Triton"
-          run: "nereus messaging session list"
-          output: |-
-            OWNER   NAME  STATE  SINCE     LAST HEARTBEAT  STARTED BY  BUSY WITH
-            bob     doto  ready  06:12:02  06:15:57        bob         -
-            nereus  m16   ready  06:11:36  06:15:56        alice       -
-    dependsOn: [session-create]
-    notes: |-
-      **The list comes from Triton's `list_agents`**, with a token of the CLI's own (#1160). STARTED BY names who logged each agent in (#1167); `--sort-by .last_heartbeat` sorts it. The output is a recorded run (`docs/guides/access/authentication.md`).
-    pt:
-      topic: "list"
-      message: "Cada agente conectado ao Tritão, e quem o iniciou"
-      accent: "quem o iniciou"
-      notes: |-
-        **A lista vem do `list_agents` do Tritão**, com um token do próprio CLI (#1160). STARTED BY diz quem fez o login de cada agente (#1167); `--sort-by .last_heartbeat` a ordena. A saída é de uma execução gravada (`docs/guides/access/authentication.md`).
-
-  - name: room-follow
-    act: session
-    topic: "room follow"
-    status: built
-    message: "A person follows the room where the agents talk"
-    accent: "follows the room"
-    terminal:
-      steps:
-        - comment: "Follow the room nereus, until Ctrl-C"
-          run: "nereus room follow"
-          options: ["--room nereus"]
-          output: |-
-            21:02:11  alice/speo  claim    #1406 in ../nereus-1406-size, paths controllers/vcluster/
-            21:02:40  bob/doto    note     k3d-nereus is mine until 21:30
-            21:30:02  bob/doto    release  k3d-nereus
-    dependsOn: [session-list]
-    notes: |-
-      **This command becomes `nereus rooms follow`** ([the rooms deck](rooms.html#follow), #2076); until then the CLI holds it in a group of its own, `room`.
-
-      **Each room is an append-only JetStream stream** (#1417): an agent posts with the peer tool `post_room`, a hook pulls new messages into each session's context, and a person follows it here; `--since 1h --once` shows the last hour and exits. The output is a recorded run (`controllers/triton/README.md`).
-
-      **Who may join** (#1830): the room is a repository's name, the git origin's, and the login must be in Keycloak's group `nereus-team`. The guide [Join the team's room](../../../guides/reefs/team-room.md) has the admin's part and the person's.
-    pt:
-      topic: "room follow"
-      message: "Uma pessoa acompanha a sala onde os agentes conversam"
-      accent: "acompanha a sala"
-      notes: |-
-        **Este comando vira `nereus rooms follow`** ([o deck rooms](rooms.html#follow), #2076); até lá o CLI o guarda num grupo próprio, `room`.
-
-        **Cada sala é um stream do JetStream só de acréscimo** (#1417): um agente posta com a ferramenta de pares `post_room`, um hook traz as mensagens novas para o contexto de cada sessão, e uma pessoa a acompanha aqui; `--since 1h --once` mostra a última hora e sai. A saída é de uma execução gravada (`controllers/triton/README.md`).
-
-        **Quem pode entrar** (#1830): a sala é o nome de um repositório, o do git origin, e o login precisa estar no grupo `nereus-team` do Keycloak. O guia [Join the team's room](../../../guides/reefs/team-room.md) tem a parte do admin e a da pessoa.

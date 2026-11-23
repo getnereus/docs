@@ -1818,6 +1818,8 @@
       
         
       
+        
+      
     
     
     
@@ -2226,6 +2228,41 @@
     
   
     Join the team's room
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/reefs/rooms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Create a room for your team
   
 
     
@@ -7129,10 +7166,6 @@
 <tr>
 <td>The named tunnel <code>nereus</code> (renamed from <code>triton</code>, <a href="https://github.com/getnereus/nereus/issues/1931">#1931</a>), cloudflared a plain Deployment of <code>nereus-system</code> with its credential in the secrets reef, with its hostnames (<code>triton.getnereus.dev</code>, <code>auth.getnereus.dev</code> for the keycloak Nereid's realm, <a href="https://github.com/getnereus/nereus/issues/495">#495</a>, and <code>portal.getnereus.dev</code> for the portal, its DNS record made once with <code>cloudflared tunnel route dns</code>, <a href="https://github.com/getnereus/nereus/issues/732">#732</a>) set up by hand with <code>cloudflared</code> (the shared token retired by #495: Triton takes Keycloak logins)</td>
 <td>m15 as an Agent of the <code>ai</code> reef, and the <code>edge</code> reef with a <code>cloudflare</code> Nereid publishing each hostname as a Route (<a href="https://github.com/getnereus/nereus/issues/470">#470</a>) (<a href="https://github.com/getnereus/nereus/blob/main/deploy/edge/README.md">deploy/edge</a>)</td>
-</tr>
-<tr>
-<td>The m15 channel session started in tmux by <code>nereus messaging session create m15</code> (<a href="https://github.com/getnereus/nereus/issues/1160">#1160</a>; <code>scripts/triton/listen-orders</code> and <code>agent-login</code> retired), with Synadia's <code>nats-channel</code> plugin loaded through <code>--dangerously-load-development-channels</code> and NATS reached on the host's loopback with a 10-hour login of the client <code>nereus-nats</code> (order 20261028-1749, <a href="https://github.com/getnereus/nereus/issues/497">#497</a>)</td>
-<td>A channel on the approved list (or the organisation's), with a login renewed without a restart and NATS over TLS</td>
 </tr>
 <tr>
 <td><code>test/conformance &lt;reef&gt; --nereid &lt;nereid&gt;</code>, a script on the throwaway cluster of <code>make scene-release</code>, checks a Nereid's answers kind by kind (<a href="https://github.com/getnereus/nereus/issues/528">#528</a>)</td>

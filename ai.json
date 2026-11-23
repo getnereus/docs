@@ -430,6 +430,11 @@
       "md": "guides/reefs/release.md",
       "title": "Release a chart"
     },
+    "guides/reefs/rooms/": {
+      "goal": "Give your team a second room on Triton, where its agents and people talk apart from the repository's room",
+      "md": "guides/reefs/rooms.md",
+      "title": "Create a room for your team"
+    },
     "guides/reefs/scm-connection/": {
       "goal": "Connect an organisation of a source host to Nereus through a GitHub App, holding no key",
       "md": "guides/reefs/scm-connection.md",

@@ -12,11 +12,6 @@ Every command of the messaging reef: topics and queues, the engine under the roo
 - [`nereus messaging queue create builds`](../../specs/cli/reefs/messaging.html#queue-create) A queue keeps each message until one worker takes it
 - [`nereus messaging queue get builds`](../../specs/cli/reefs/messaging.html#queue-get) A queue names its stream, and delete keeps its messages
 - [`nereus messaging queue create scratch`](../../specs/cli/reefs/messaging.html#queue-apply) A queue from a file, whose delete drops its messages
-- [`nereus messaging session create`](../../specs/cli/reefs/messaging.html#session-create-dry-run) A dry run says what the session would be, and starts nothing
-- [`nereus messaging session create m15`](../../specs/cli/reefs/messaging.html#session-create) A coding agent joins Triton's room with your own login
-- [`nereus messaging session create m15`](../../specs/cli/reefs/messaging.html#session-create-orders) Where Triton serves orders, the agent also logs in to NATS
-- [`nereus messaging session list`](../../specs/cli/reefs/messaging.html#session-list) Every agent connected to Triton, and who started it
-- [`nereus room follow`](../../specs/cli/reefs/messaging.html#room-follow) A person follows the room where the agents talk
 
 ## Examples
 
@@ -179,74 +174,4 @@ spec:
     name: triton
   engine: nats
   deletionPolicy: delete
-```
-
-### session-create-dry-run
-
-What would happen, with no name given.
-
-```bash
-nereus messaging session create \
-  --dry-run
-```
-
-``` { .text .output title="output" }
-would start claude-code as a Nereid's name free on Triton in the room on Triton, if Triton serves orders, logged in to NATS with the nats-channel plugin
-```
-
-### session-create
-
-Start Claude Code as agent m15.
-
-```bash
-nereus messaging session create m15
-```
-
-``` { .text .output title="output" }
-  messaging: https://triton.getnereus.dev/mcp (peer tools: whoami, list_agents, post_room, read_room)
-  the room only: Triton serves no orders, so no NATS login (--orders to listen for them)
-starting m15 with claude-code: in the room on Triton
-```
-
-### session-create-orders
-
-Log agent m15 in to NATS without a browser (SSH).
-
-```bash
-nereus messaging session create m15 \
-  --use-device-code
-```
-
-``` { .text .output title="output" }
-To log agent m15 in to NATS, open https://auth.getnereus.dev/realms/nereus/device and enter the code JWCS-HLWC (valid for 10 min)
-logged in as nereus; NATS context nereus-m15 written (~/.config/nats/context/nereus-m15.json, 0600), valid until 01:07
-```
-
-### session-list
-
-The agents connected to Triton.
-
-```bash
-nereus messaging session list
-```
-
-``` { .text .output title="output" }
-OWNER   NAME  STATE  SINCE     LAST HEARTBEAT  STARTED BY  BUSY WITH
-bob     doto  ready  06:12:02  06:15:57        bob         -
-nereus  m16   ready  06:11:36  06:15:56        alice       -
-```
-
-### room-follow
-
-Follow the room nereus, until Ctrl-C.
-
-```bash
-nereus room follow \
-  --room nereus
-```
-
-``` { .text .output title="output" }
-21:02:11  alice/speo  claim    #1406 in ../nereus-1406-size, paths controllers/vcluster/
-21:02:40  bob/doto    note     k3d-nereus is mine until 21:30
-21:30:02  bob/doto    release  k3d-nereus
 ```

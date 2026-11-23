@@ -1818,6 +1818,8 @@
       
         
       
+        
+      
     
     
     
@@ -2226,6 +2228,41 @@
     
   
     Join the team's room
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/reefs/rooms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Create a room for your team
   
 
     
@@ -3505,61 +3542,6 @@
     <span class="md-ellipsis">
       
         queue-apply
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#session-create-dry-run" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        session-create-dry-run
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#session-create" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        session-create
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#session-create-orders" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        session-create-orders
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#session-list" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        session-list
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#room-follow" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        room-follow
       
     </span>
   </a>
@@ -7203,61 +7185,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#session-create-dry-run" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        session-create-dry-run
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#session-create" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        session-create
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#session-create-orders" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        session-create-orders
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#session-list" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        session-list
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#room-follow" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        room-follow
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -7305,16 +7232,6 @@
   A queue names its stream, and delete keeps its messages</li>
 <li><a href="../../../specs/cli/reefs/messaging.html#queue-apply"><code>nereus messaging queue create scratch</code></a><br>
   A queue from a file, whose delete drops its messages</li>
-<li><a href="../../../specs/cli/reefs/messaging.html#session-create-dry-run"><code>nereus messaging session create</code></a><br>
-  A dry run says what the session would be, and starts nothing</li>
-<li><a href="../../../specs/cli/reefs/messaging.html#session-create"><code>nereus messaging session create m15</code></a><br>
-  A coding agent joins Triton's room with your own login</li>
-<li><a href="../../../specs/cli/reefs/messaging.html#session-create-orders"><code>nereus messaging session create m15</code></a><br>
-  Where Triton serves orders, the agent also logs in to NATS</li>
-<li><a href="../../../specs/cli/reefs/messaging.html#session-list"><code>nereus messaging session list</code></a><br>
-  Every agent connected to Triton, and who started it</li>
-<li><a href="../../../specs/cli/reefs/messaging.html#room-follow"><code>nereus room follow</code></a><br>
-  A person follows the room where the agents talk</li>
 </ul>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <h3 id="apply-reef">apply-reef<a class="headerlink" href="#apply-reef" title="Permanent link">&para;</a></h3>
@@ -7429,46 +7346,6 @@ spec:
     name: triton
   engine: nats
   deletionPolicy: delete
-</code></pre></div>
-<h3 id="session-create-dry-run">session-create-dry-run<a class="headerlink" href="#session-create-dry-run" title="Permanent link">&para;</a></h3>
-<p>What would happen, with no name given.</p>
-<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>messaging<span class="w"> </span>session<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--dry-run
-</code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>would start claude-code as a Nereid's name free on Triton in the room on Triton, if Triton serves orders, logged in to NATS with the nats-channel plugin
-</code></pre></div>
-<h3 id="session-create">session-create<a class="headerlink" href="#session-create" title="Permanent link">&para;</a></h3>
-<p>Start Claude Code as agent m15.</p>
-<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>messaging<span class="w"> </span>session<span class="w"> </span>create<span class="w"> </span>m15
-</code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>  messaging: https://triton.getnereus.dev/mcp (peer tools: whoami, list_agents, post_room, read_room)
-  the room only: Triton serves no orders, so no NATS login (--orders to listen for them)
-starting m15 with claude-code: in the room on Triton
-</code></pre></div>
-<h3 id="session-create-orders">session-create-orders<a class="headerlink" href="#session-create-orders" title="Permanent link">&para;</a></h3>
-<p>Log agent m15 in to NATS without a browser (SSH).</p>
-<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>messaging<span class="w"> </span>session<span class="w"> </span>create<span class="w"> </span>m15<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--use-device-code
-</code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>To log agent m15 in to NATS, open https://auth.getnereus.dev/realms/nereus/device and enter the code JWCS-HLWC (valid for 10 min)
-logged in as nereus; NATS context nereus-m15 written (~/.config/nats/context/nereus-m15.json, 0600), valid until 01:07
-</code></pre></div>
-<h3 id="session-list">session-list<a class="headerlink" href="#session-list" title="Permanent link">&para;</a></h3>
-<p>The agents connected to Triton.</p>
-<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>messaging<span class="w"> </span>session<span class="w"> </span>list
-</code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>OWNER   NAME  STATE  SINCE     LAST HEARTBEAT  STARTED BY  BUSY WITH
-bob     doto  ready  06:12:02  06:15:57        bob         -
-nereus  m16   ready  06:11:36  06:15:56        alice       -
-</code></pre></div>
-<h3 id="room-follow">room-follow<a class="headerlink" href="#room-follow" title="Permanent link">&para;</a></h3>
-<p>Follow the room nereus, until Ctrl-C.</p>
-<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>room<span class="w"> </span>follow<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--room<span class="w"> </span>nereus
-</code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>21:02:11  alice/speo  claim    #1406 in ../nereus-1406-size, paths controllers/vcluster/
-21:02:40  bob/doto    note     k3d-nereus is mine until 21:30
-21:30:02  bob/doto    release  k3d-nereus
 </code></pre></div>
 
 

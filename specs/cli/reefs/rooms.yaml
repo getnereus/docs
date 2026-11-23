@@ -45,13 +45,13 @@ slides:
     notes: |-
       **The source of truth for the commands of the rooms reef** (#483, ADR 0030, Triton is the rooms reef's Nereid). Every command, built or only imagined, is here first; the tag after each label says whether it is built, planned (with the issue that builds it) or an idea.
 
-      **Every command here is planned:** the journey #2067 builds the reef in steps. What runs today is the same conversation under its first names, `nereus messaging session create` and `list` (`cli/src/nereus/commands/messaging.py`, #1160) and `nereus room follow` (`cli/src/nereus/commands/room.py`, #1417), which stay as pointers to the new ones (#2076).
+      **Every command here is built but the orders** (the journey #2067): the reef and Triton (#2072), the rooms (#1491), the peers (#2074), a session's rooms (#2075), the room sessions (#2100) and the conversation (#2076, #1889). The first names are hidden and print the new one (`docs/agent/cli.md`, "Legacy commands").
     pt:
       message: "O reef rooms"
       notes: |-
         **A fonte da verdade dos comandos do reef rooms** (#483, ADR 0030, o Tritão é a Nereid do reef rooms). Todo comando, pronto ou só imaginado, está aqui primeiro; a etiqueta depois de cada rótulo diz se ele está pronto, planejado (com a issue que o constrói) ou se é uma ideia.
 
-        **Todo comando aqui está planejado:** a jornada #2067 constrói o reef em passos. O que roda hoje é a mesma conversa com os seus primeiros nomes, `nereus messaging session create` e `list` (`cli/src/nereus/commands/messaging.py`, #1160) e `nereus room follow` (`cli/src/nereus/commands/room.py`, #1417), que ficam como ponteiros para os novos (#2076).
+        **Todo comando aqui está pronto, menos as ordens** (a jornada #2067): o reef e o Tritão (#2072), as salas (#1491), os pares (#2074), as salas de uma sessão (#2075), as sessões de sala (#2100) e a conversa (#2076, #1889). Os primeiros nomes ficam escondidos e imprimem o novo (`docs/agent/cli.md`, "Legacy commands").
 
   - name: two-reefs
     act: opening
@@ -80,7 +80,7 @@ slides:
   - name: apply-reef
     act: setup
     topic: "reef"
-    status: planned
+    status: built
     issue: 2072
     message: "One command applies the {reef:rooms} reef and its kinds"
     accent: "One command"
@@ -107,7 +107,7 @@ slides:
   - name: apply-triton
     act: setup
     topic: "Triton"
-    status: planned
+    status: built
     issue: 2072
     message: "The {nereid:triton} Nereid looks after rooms and peers"
     accent: "rooms and peers"
@@ -139,7 +139,7 @@ slides:
   - name: room-create
     act: room
     topic: "create"
-    status: planned
+    status: built
     issue: 1491
     message: "A room is created by name, and its Topic comes with it"
     accent: "its Topic comes with it"
@@ -184,7 +184,7 @@ slides:
   - name: room-list
     act: room
     topic: "list and get"
-    status: planned
+    status: built
     issue: 1491
     message: "One room shows whose it is and the peers in it"
     accent: "the peers in it"
@@ -220,7 +220,7 @@ slides:
   - name: room-apply
     act: room
     topic: "apply"
-    status: planned
+    status: built
     issue: 1491
     message: "A room from a file: the dry run writes it, apply takes it"
     accent: "apply takes it"
@@ -261,7 +261,7 @@ slides:
   - name: room-delete
     act: room
     topic: "delete"
-    status: planned
+    status: built
     issue: 1491
     message: "Deleting a room keeps its messages, unless it says otherwise"
     accent: "keeps its messages"
@@ -289,7 +289,7 @@ slides:
   - name: peer-list
     act: peer
     topic: "list"
-    status: planned
+    status: built
     issue: 2074
     message: "Every agent's session in the rooms is a Peer"
     accent: "a Peer"
@@ -317,7 +317,7 @@ slides:
   - name: peer-get
     act: peer
     topic: "get"
-    status: planned
+    status: built
     issue: 2074
     message: "One Peer says whose agent it is, and which rooms it is in"
     accent: "whose agent it is"
@@ -343,60 +343,60 @@ slides:
       notes: |-
         **Um escritor por campo** (ADR 0005): a sessão escreve o `spec` pela API (`owner`, `agent`, `tool` e `rooms`, uma lista desde o início), e o Tritão escreve o `status` (`phase`, `since`). Não há `create` nem `delete`: uma sessão faz o seu Peer, e o Tritão o remove. A saída é o contrato do comando.
 
-  - name: session-create-dry-run
+  - name: join
     act: session
-    topic: "create · dry run"
-    status: planned
-    issue: 2076
-    message: "A dry run says what the session would be, and starts nothing"
-    accent: "starts nothing"
-    terminal:
-      steps:
-        - comment: "What would happen, with no name given"
-          run: "nereus rooms session create"
-          options: ["--room ops", "--dry-run"]
-          output: |-
-            would start claude-code as a Nereid's name free on Triton in the room ops on Triton
-    notes: |-
-      **The dry run asks nothing of Triton;** it needs only a live `nereus login`. The output is the command's contract: today's `nereus messaging session create --dry-run` prints the same line with the orders' case, which goes with the orders' code (#2077).
-
-      **Without a name, the agent takes a Nereid's name no agent holds on Triton** (#1177).
-    pt:
-      topic: "create · simulação"
-      message: "Uma simulação diz como seria a sessão, e não inicia nada"
-      accent: "não inicia nada"
-      notes: |-
-        **A simulação não pergunta nada ao Tritão;** precisa só de um `nereus login` válido. A saída é o contrato do comando: o `nereus messaging session create --dry-run` de hoje imprime a mesma linha com o caso das ordens, que sai com o código das ordens (#2077).
-
-        **Sem um nome, o agente recebe o nome de uma Nereida que nenhum agente usa no Tritão** (#1177).
-
-  - name: session-create
-    act: session
-    topic: "create"
-    status: planned
-    issue: 2076
+    topic: "join"
+    status: built
+    issue: 2075
     message: "A coding agent joins a room with your own login"
     accent: "your own login"
     terminal:
       steps:
-        - comment: "Start Claude Code in the room ops"
-          run: "nereus rooms session create"
-          options: ["--room ops"]
+        - comment: "Open Claude Code with an agent in the room ops"
+          run: "nereus rooms join ops"
           output: |-
+            no name given: the agent is doto (a Nereid's name, free on Triton)
+              peer: rooms/peers/alice.doto in ops
             starting doto with claude-code: in the room ops on Triton
-    dependsOn: [session-create-dry-run]
+        - comment: "From inside that session (the agent's Bash tool): one more room, with no restart"
+          run: "nereus rooms join billing"
+          output: |-
+            ✓ doto joined the room billing
     notes: |-
-      **Claude Code starts in this terminal as a Peer,** with the peer tools through the CLI's bridge (#1415) and hooks that bring the rooms' messages into its context (#1417). The bridge talks REST to the Nereus API with the `nereus login` token (#1896), so no machine reaches NATS. What runs today is `nereus messaging session create` (#1160), which stays as a pointer (#2076).
+      **Outside Claude Code it opens Claude Code in this terminal as a Peer,** with the peer tools through the CLI's local MCP server (#2101) and the hooks that bring the rooms' messages into its context (#1417), both on its command line unless `nereus mcp local add` put them in the user's scope. The bridge talks REST to the Nereus API with the `nereus login` token (#1896), so no machine reaches NATS. **Inside Claude Code** the session joins one more room with no restart; that needs `nereus mcp local add` once.
 
-      **`--room` repeats,** and without it the session reads a `.nereus/room` file, else the name of the git origin (#2075). `--tmux` names the current tmux window after the agent; `--permission-mode` passes Claude Code's mode, never `bypassPermissions` unless asked (#716); `--use-device-code` logs in without a browser (#1830).
+      **Without a room, the room of the folder's git origin** (`nereus` for a clone of `nereus.git`). Without `--name`, the agent keeps the session's name, else takes a Nereid's name no agent holds on Triton (#1177). `--tmux` names the current tmux window after the agent; `--permission-mode` passes Claude Code's mode, never `bypassPermissions` unless asked (#716); `--use-device-code` logs in without a browser (#1830). Its first name prints this command (#2076).
     pt:
-      topic: "create"
+      topic: "join"
       message: "Um agente entra numa sala com o seu próprio login"
       accent: "o seu próprio login"
       notes: |-
-        **O Claude Code inicia neste terminal como um Peer,** com as ferramentas de pares pela ponte do CLI (#1415) e hooks que trazem as mensagens das salas para o seu contexto (#1417). A ponte fala REST com a API do Nereus com o token do `nereus login` (#1896), então nenhuma máquina alcança o NATS. O que roda hoje é o `nereus messaging session create` (#1160), que fica como ponteiro (#2076).
+        **Fora do Claude Code ele abre o Claude Code neste terminal como um Peer,** com as ferramentas de pares pelo servidor MCP local do CLI (#2101) e os hooks que trazem as mensagens das salas para o seu contexto (#1417), os dois na sua linha de comando, a menos que o `nereus mcp local add` os tenha posto no escopo do usuário. A ponte fala REST com a API do Nereus com o token do `nereus login` (#1896), então nenhuma máquina alcança o NATS. **Dentro do Claude Code** a sessão entra em mais uma sala sem reiniciar; isso pede o `nereus mcp local add` uma vez.
 
-        **`--room` se repete,** e sem ele a sessão lê um arquivo `.nereus/room`, senão o nome do git origin (#2075). `--tmux` dá o nome do agente à janela atual do tmux; `--permission-mode` passa o modo do Claude Code, nunca `bypassPermissions` sem pedido (#716); `--use-device-code` faz o login sem navegador (#1830).
+        **Sem uma sala, a sala da origin do git da pasta** (`nereus` para um clone de `nereus.git`). Sem `--name`, o agente fica com o nome da sessão, senão recebe o nome de uma Nereida que nenhum agente usa no Tritão (#1177). `--tmux` dá o nome do agente à janela atual do tmux; `--permission-mode` passa o modo do Claude Code, nunca `bypassPermissions` sem pedido (#716); `--use-device-code` faz o login sem navegador (#1830). O seu primeiro nome imprime este comando (#2076).
+
+  - name: leave
+    act: session
+    topic: "leave"
+    status: built
+    issue: 2075
+    message: "A session leaves one room, and stays in the others"
+    accent: "stays in the others"
+    terminal:
+      steps:
+        - comment: "From inside the session: leave the room billing"
+          run: "nereus rooms leave billing"
+          output: |-
+            ✓ doto left the room billing
+    dependsOn: [join]
+    notes: |-
+      **The session's Peer no longer lists the room,** and its hook and tools stop reading it at once. The last room left turns the room's tools off; a session that ends leaves every room, and Triton removes its Peer (#2074). The output is illustrative.
+    pt:
+      topic: "leave"
+      message: "Uma sessão sai de uma sala, e fica nas outras"
+      accent: "fica nas outras"
+      notes: |-
+        **O Peer da sessão deixa de listar a sala,** e o seu hook e as suas ferramentas param de lê-la na hora. A última sala deixada desliga as ferramentas da sala; uma sessão que termina sai de todas as salas, e o Tritão remove o seu Peer (#2074). A saída é ilustrativa.
 
   - name: session-list
     act: session
@@ -413,7 +413,7 @@ slides:
             NAME               ROOM  PEERS  MESSAGES  STARTED   ENDED
             ops-20261122-1002  ops   2      37        10:02:11  11:40:05
             ops-20261122-1415  ops   1      -         14:15:30  -
-    dependsOn: [session-create]
+    dependsOn: [join]
     notes: |-
       **A room session is a `RoomSession` beside its Room** (#2100, ADR 0030): Triton opens one when the room goes from no Ready peer to one, records each peer joining and leaving, and closes it when the last one leaves, counting the messages of the room's Topic. Triton is its only writer, on a change only, never on a heartbeat. Its name is `<room>-<YYYYMMDD>-<HHMM>` of its start, in UTC; `--room ops` lists one room's.
 
@@ -459,7 +459,7 @@ slides:
   - name: follow
     act: conversation
     topic: "follow"
-    status: planned
+    status: built
     issue: 2076
     message: "A person follows the room where the agents talk"
     accent: "follows the room"
@@ -474,22 +474,22 @@ slides:
             21:30:02  bob/doto    release  k3d-nereus
     dependsOn: [session-list]
     notes: |-
-      **Each room is an append-only log on its Topic** (#2073): an agent posts with its peer tool, a hook pulls new messages into each session's context, and a person follows it here; `--since 1h --once` shows the last hour and exits. The output is a recorded run of today's `nereus room follow` (`controllers/triton/README.md`), which stays as a pointer (#2076).
+      **Each room is an append-only log on its Topic** (#2073): an agent posts with its peer tool, a hook pulls new messages into each session's context, and a person follows it here; `--since 1h --once` shows the last hour and exits. The output is a recorded run (`controllers/triton/README.md`); its first name prints this command (#2076).
 
-      **Who may join** (#1830): any member of Keycloak's group `nereus-team` for now; a room's own members wait for the teams reef (#1307). The guide [Join the team's room](../../../guides/reefs/team-room.md) has the admin's part and the person's.
+      **Who may join** (#1830): any member of Keycloak's group `nereus-team` for now, which the keycloak Mandate's `googleTeam` fills (#1831); a room's own members wait for the teams reef (#1307). The guide [Join the team's room](../../../guides/reefs/team-room.md) has the admin's part and the person's.
     pt:
       topic: "follow"
       message: "Uma pessoa acompanha a sala onde os agentes conversam"
       accent: "acompanha a sala"
       notes: |-
-        **Cada sala é um log só de acréscimo no seu Topic** (#2073): um agente posta com a sua ferramenta de pares, um hook traz as mensagens novas para o contexto de cada sessão, e uma pessoa a acompanha aqui; `--since 1h --once` mostra a última hora e sai. A saída é de uma execução gravada do `nereus room follow` de hoje (`controllers/triton/README.md`), que fica como ponteiro (#2076).
+        **Cada sala é um log só de acréscimo no seu Topic** (#2073): um agente posta com a sua ferramenta de pares, um hook traz as mensagens novas para o contexto de cada sessão, e uma pessoa a acompanha aqui; `--since 1h --once` mostra a última hora e sai. A saída é de uma execução gravada (`controllers/triton/README.md`); o seu primeiro nome imprime este comando (#2076).
 
-        **Quem pode entrar** (#1830): qualquer membro do grupo `nereus-team` do Keycloak por enquanto; os membros próprios de uma sala esperam o reef teams (#1307). O guia [Join the team's room](../../../guides/reefs/team-room.md) tem a parte do admin e a da pessoa.
+        **Quem pode entrar** (#1830): qualquer membro do grupo `nereus-team` do Keycloak por enquanto, que o `googleTeam` do Mandate do keycloak preenche (#1831); os membros próprios de uma sala esperam o reef teams (#1307). O guia [Join the team's room](../../../guides/reefs/team-room.md) tem a parte do admin e a da pessoa.
 
   - name: pull
     act: conversation
     topic: "pull"
-    status: planned
+    status: built
     issue: 2076
     message: "A hook pulls each room's new messages into the session"
     accent: "A hook"
@@ -501,13 +501,13 @@ slides:
             {"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": "[note] bob/doto: k3d-nereus is mine until 21:30"}}
     dependsOn: [follow]
     notes: |-
-      **A command for a hook, hidden from the help:** `nereus rooms session create` wires it, and it prints the JSON Claude Code reads to add context, or nothing when the rooms are quiet. It keeps a cursor per agent and room, and reads every room of the Peer (#2075). What runs today is `nereus room pull` (#1417); the output is illustrative.
+      **A command for a hook, hidden from the help:** `nereus rooms join` and `nereus mcp local add` wire it, and it prints the JSON Claude Code reads to add context, or nothing when the rooms are quiet. It keeps a cursor per agent and room, and reads every room of the Peer (#2075). Its first name still runs, for the hooks of older sessions; the output is illustrative.
     pt:
       topic: "pull"
       message: "Um hook traz as mensagens novas de cada sala para a sessão"
       accent: "Um hook"
       notes: |-
-        **Um comando para um hook, escondido da ajuda:** o `nereus rooms session create` o instala, e ele imprime o JSON que o Claude Code lê para acrescentar contexto, ou nada quando as salas estão quietas. Ele guarda um cursor por agente e sala, e lê cada sala do Peer (#2075). O que roda hoje é o `nereus room pull` (#1417); a saída é ilustrativa.
+        **Um comando para um hook, escondido da ajuda:** o `nereus rooms join` e o `nereus mcp local add` o instalam, e ele imprime o JSON que o Claude Code lê para acrescentar contexto, ou nada quando as salas estão quietas. Ele guarda um cursor por agente e sala, e lê cada sala do Peer (#2075). O seu primeiro nome ainda roda, para os hooks de sessões mais velhas; a saída é ilustrativa.
 
   - name: post
     act: conversation

@@ -1818,6 +1818,8 @@
       
         
       
+        
+      
     
     
     
@@ -2226,6 +2228,41 @@
     
   
     Join the team's room
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/reefs/rooms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Create a room for your team
   
 
     
@@ -3687,10 +3724,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#session-create-dry-run" class="md-nav__link">
+  <a href="#join" class="md-nav__link">
     <span class="md-ellipsis">
       
-        session-create-dry-run
+        join
       
     </span>
   </a>
@@ -3698,10 +3735,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#session-create" class="md-nav__link">
+  <a href="#leave" class="md-nav__link">
     <span class="md-ellipsis">
       
-        session-create
+        leave
       
     </span>
   </a>
@@ -7237,10 +7274,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#session-create-dry-run" class="md-nav__link">
+  <a href="#join" class="md-nav__link">
     <span class="md-ellipsis">
       
-        session-create-dry-run
+        join
       
     </span>
   </a>
@@ -7248,10 +7285,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#session-create" class="md-nav__link">
+  <a href="#leave" class="md-nav__link">
     <span class="md-ellipsis">
       
-        session-create
+        leave
       
     </span>
   </a>
@@ -7355,33 +7392,33 @@
 <p>Every command of the rooms reef: rooms, peers and the agents' sessions, on a Topic of the messaging reef.</p>
 <h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../../../specs/cli/reefs/rooms.html#apply-reef"><code>nereus reef apply rooms</code></a> <span class="chip planned">planned #2072</span><br>
+<li><a href="../../../specs/cli/reefs/rooms.html#apply-reef"><code>nereus reef apply rooms</code></a><br>
   One command applies the rooms reef and its kinds</li>
-<li><a href="../../../specs/cli/reefs/rooms.html#apply-triton"><code>nereus nereid apply triton</code></a> <span class="chip planned">planned #2072</span><br>
+<li><a href="../../../specs/cli/reefs/rooms.html#apply-triton"><code>nereus nereid apply triton</code></a><br>
   The triton Nereid looks after rooms and peers</li>
-<li><a href="../../../specs/cli/reefs/rooms.html#room-create"><code>nereus rooms create ops</code></a> <span class="chip planned">planned #1491</span><br>
+<li><a href="../../../specs/cli/reefs/rooms.html#room-create"><code>nereus rooms create ops</code></a><br>
   A room is created by name, and its Topic comes with it</li>
-<li><a href="../../../specs/cli/reefs/rooms.html#room-list"><code>nereus rooms list</code></a> <span class="chip planned">planned #1491</span><br>
+<li><a href="../../../specs/cli/reefs/rooms.html#room-list"><code>nereus rooms list</code></a><br>
   One room shows whose it is and the peers in it</li>
-<li><a href="../../../specs/cli/reefs/rooms.html#room-apply"><code>nereus rooms create platform</code></a> <span class="chip planned">planned #1491</span><br>
+<li><a href="../../../specs/cli/reefs/rooms.html#room-apply"><code>nereus rooms create platform</code></a><br>
   A room from a file: the dry run writes it, apply takes it</li>
-<li><a href="../../../specs/cli/reefs/rooms.html#room-delete"><code>nereus rooms delete platform</code></a> <span class="chip planned">planned #1491</span><br>
+<li><a href="../../../specs/cli/reefs/rooms.html#room-delete"><code>nereus rooms delete platform</code></a><br>
   Deleting a room keeps its messages, unless it says otherwise</li>
-<li><a href="../../../specs/cli/reefs/rooms.html#peer-list"><code>nereus rooms peer list</code></a> <span class="chip planned">planned #2074</span><br>
+<li><a href="../../../specs/cli/reefs/rooms.html#peer-list"><code>nereus rooms peer list</code></a><br>
   Every agent's session in the rooms is a Peer</li>
-<li><a href="../../../specs/cli/reefs/rooms.html#peer-get"><code>nereus rooms peer get ana.doto</code></a> <span class="chip planned">planned #2074</span><br>
+<li><a href="../../../specs/cli/reefs/rooms.html#peer-get"><code>nereus rooms peer get ana.doto</code></a><br>
   One Peer says whose agent it is, and which rooms it is in</li>
-<li><a href="../../../specs/cli/reefs/rooms.html#session-create-dry-run"><code>nereus rooms session create</code></a> <span class="chip planned">planned #2076</span><br>
-  A dry run says what the session would be, and starts nothing</li>
-<li><a href="../../../specs/cli/reefs/rooms.html#session-create"><code>nereus rooms session create</code></a> <span class="chip planned">planned #2076</span><br>
+<li><a href="../../../specs/cli/reefs/rooms.html#join"><code>nereus rooms join ops</code></a><br>
   A coding agent joins a room with your own login</li>
+<li><a href="../../../specs/cli/reefs/rooms.html#leave"><code>nereus rooms leave billing</code></a><br>
+  A session leaves one room, and stays in the others</li>
 <li><a href="../../../specs/cli/reefs/rooms.html#session-list"><code>nereus rooms session list</code></a><br>
   Each room session, from the first peer in to the last one out</li>
 <li><a href="../../../specs/cli/reefs/rooms.html#session-get"><code>nereus rooms session get ops-20261122-1002</code></a><br>
   One room session says who came and went, and when</li>
-<li><a href="../../../specs/cli/reefs/rooms.html#follow"><code>nereus rooms follow</code></a> <span class="chip planned">planned #2076</span><br>
+<li><a href="../../../specs/cli/reefs/rooms.html#follow"><code>nereus rooms follow</code></a><br>
   A person follows the room where the agents talk</li>
-<li><a href="../../../specs/cli/reefs/rooms.html#pull"><code>nereus rooms pull doto</code></a> <span class="chip planned">planned #2076</span><br>
+<li><a href="../../../specs/cli/reefs/rooms.html#pull"><code>nereus rooms pull doto</code></a><br>
   A hook pulls each room's new messages into the session</li>
 <li><a href="../../../specs/cli/reefs/rooms.html#post"><code>nereus rooms post "k3d-nereus is mine until 21:30"</code></a><br>
   A person posts to the room, as the agents do</li>
@@ -7479,20 +7516,19 @@ Rooms:  ops
 Phase:  Ready
 Since:  10:02:11
 </code></pre></div>
-<h3 id="session-create-dry-run">session-create-dry-run<a class="headerlink" href="#session-create-dry-run" title="Permanent link">&para;</a></h3>
-<p>What would happen, with no name given.</p>
-<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>rooms<span class="w"> </span>session<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--room<span class="w"> </span>ops<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--dry-run
+<h3 id="join">join<a class="headerlink" href="#join" title="Permanent link">&para;</a></h3>
+<p>Open Claude Code with an agent in the room ops.</p>
+<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>rooms<span class="w"> </span>join<span class="w"> </span>ops
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>would start claude-code as a Nereid's name free on Triton in the room ops on Triton
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>no name given: the agent is doto (a Nereid's name, free on Triton)
+  peer: rooms/peers/alice.doto in ops
+starting doto with claude-code: in the room ops on Triton
 </code></pre></div>
-<h3 id="session-create">session-create<a class="headerlink" href="#session-create" title="Permanent link">&para;</a></h3>
-<p>Start Claude Code in the room ops.</p>
-<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>rooms<span class="w"> </span>session<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--room<span class="w"> </span>ops
+<h3 id="leave">leave<a class="headerlink" href="#leave" title="Permanent link">&para;</a></h3>
+<p>From inside the session: leave the room billing.</p>
+<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>rooms<span class="w"> </span>leave<span class="w"> </span>billing
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>starting doto with claude-code: in the room ops on Triton
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ doto left the room billing
 </code></pre></div>
 <h3 id="session-list">session-list<a class="headerlink" href="#session-list" title="Permanent link">&para;</a></h3>
 <p>The room sessions.</p>

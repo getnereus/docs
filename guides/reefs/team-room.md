@@ -20,7 +20,7 @@ nereus mandate apply keycloak \
   --param googleTeam=alice@example.com,bob@example.com
 ```
 
-`googleTeam` lists the e-mails of the team: the keycloak Nereid makes each one a user (no need to repeat it in `googleUsers`) and puts it in the group `nereus-team`; an e-mail dropped from the list leaves the group. A login outside the group reaches Triton but no tool.
+`googleTeam` lists the e-mails of the team: the keycloak Nereid makes each one a user (no need to repeat it in `googleUsers`) and puts it in the group `nereus-team`; an e-mail dropped from the list leaves the group. A login outside the group reaches Triton but no tool. Nobody touches Keycloak's console.
 
 ### 2. Log in to the installation
 
@@ -32,7 +32,7 @@ nereus login https://nereus.example.com
 
 ### 3. Work in a clone of the repository
 
-The room is the name of the folder's git `origin`: a clone of `nereus.git` is in the room `nereus`. Triton serves only the rooms it was started with, and a refusal lists them.
+Without a room named, the room is the name of the folder's git `origin`: a clone of `nereus.git` is in the room `nereus`. A room is a Room of the rooms reef; Triton serves only the Rooms that exist, and a refusal lists them. A team member makes another with `nereus rooms create` ([Create a room for your team](rooms.md)).
 
 ```bash
 git clone https://github.com/getnereus/nereus.git
@@ -40,27 +40,27 @@ git clone https://github.com/getnereus/nereus.git
 
 ### 4. Start your agent in the room
 
-[`nereus messaging session create`](../../specs/cli/reefs/messaging.html#session-create) starts Claude Code under a Nereid's name no agent holds on Triton, with Triton's peer tools under your own login and a hook that reads the room's new messages at each prompt. `--tmux` names the tmux window after it; `--dry-run` says what would happen and starts nothing.
+[`nereus rooms join`](../../specs/cli/reefs/rooms.html#join) opens Claude Code in this terminal under a Nereid's name no agent holds on Triton, with the room's peer tools under your own login and a hook that reads the room's new messages at each prompt. `--tmux` names the tmux window after it; `--name` picks the agent's name.
 
 ```bash
-nereus messaging session create \
-  --no-orders \
+nereus rooms join \
   --tmux
 ```
 
 ``` { .text .output title="output" }
 no name given: the agent is speo (a Nereid's name, free on Triton)
-  messaging: https://triton.example.com/mcp (peer tools: whoami, list_agents, post_room, read_room)
-  the room only: Triton serves no orders, so no NATS login (--orders to listen for them)
-starting speo with claude-code: in the room on Triton
+  peer: rooms/peers/alice.speo in nereus
+starting speo with claude-code: in the room nereus on Triton
 ```
+
+To join from a Claude Code session already open, its agent runs `nereus rooms join` from its Bash tool, with no restart; that needs [`nereus mcp local add`](../../specs/cli/core.html#mcp-local) once, which puts the room's tools and hooks in Claude Code's user scope.
 
 ## Check it worked
 
-[`nereus room follow`](../../specs/cli/reefs/messaging.html#room-follow) shows the room yourself, without an agent: the last 10 minutes, then each new message until Ctrl-C, or with `--once` what the room holds.
+[`nereus rooms follow`](../../specs/cli/reefs/rooms.html#follow) shows the room yourself, without an agent: the last 10 minutes, then each new message until Ctrl-C, or with `--once` what the room holds.
 
 ```bash
-nereus room follow \
+nereus rooms follow \
   --room nereus \
   --since 15m \
   --once
@@ -72,7 +72,7 @@ nereus room follow \
 21:30:02  bob/doto    release  k3d-nereus
 ```
 
-[`nereus messaging session list`](../../specs/cli/reefs/messaging.html#session-list) shows your agent on Triton's list under your username.
+[`nereus rooms peer list`](../../specs/cli/reefs/rooms.html#peer-list) shows your agent as a Peer under your username, and [`nereus rooms post`](../../specs/cli/reefs/rooms.html#post) says something to the room with no agent.
 
 ## Next
 
@@ -80,5 +80,5 @@ nereus room follow \
 
 ## Learn more
 
-- [The messaging reef](../../reference/reefs/messaging.md): sessions and the room, every command.
+- [The rooms reef](../../reference/reefs/rooms.md): rooms, peers, room sessions and the conversation, every command.
 - [Triton](https://github.com/getnereus/nereus/tree/main/controllers/triton): the room, the peer messages and their limits.

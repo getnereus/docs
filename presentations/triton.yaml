@@ -488,23 +488,23 @@ slides:
   - name: step-5-nereid
     act: roadmap
     topic: "Step 5 · A Nereid"
-    message: "Triton becomes the {nereid:triton} Nereid of the {reef:messaging} reef"
+    message: "Triton becomes the {nereid:triton} Nereid of the {reef:rooms} reef"
     accent: "Nereid"
-    screen: ["**The reef:** kinds such as Room and Message, proposed and then an ADR (Architecture Decision Record)", "**NATS:** installed by a Nereid of its own, no YAML by hand"]
+    screen: ["**The reef:** `rooms`, its kinds `Room`, `Peer` and `RoomSession` (ADR 0030)", "**NATS:** a Topic of the {reef:messaging} reef per Room, run by the {nereid:nats} Nereid"]
     dependsOn: [step-4-bridge]
     notes: |-
-      What we want to say: **from a program in a pod to a part of the platform**. Triton reads `spec`, writes `status`, and publishes commands such as `nereus messaging room list`, a contract not built yet.
+      What we want to say: **from a program in a pod to a part of the platform**. Triton reads `spec`, writes `status`, and the CLI has the reef's commands: `nereus rooms create`, `join`, `follow`, `post`, `peer list` and `session list`. Built by the journey #2067 (the rooms reef: Room and Peer reconciled by triton, on the messaging reef's Topic by contract).
 
       It meets Amphitrite there: #225 (AI agents on behalf of the platform) and #66 (AI agents as Controllers inside the platform). Triton becomes a declared Agent.
 
       Source: controllers/triton/README.md, section "What is missing to make it a Nereid".
     pt:
-      message: "O Tritão vira a Nereida {nereid:triton} do reef {reef:messaging}"
+      message: "O Tritão vira a Nereida {nereid:triton} do reef {reef:rooms}"
       topic: "Etapa 5 · Uma Nereida"
       accent: "Nereida"
-      screen: ["**O reef:** kinds como Room e Message, propostos e depois um ADR (Architecture Decision Record)", "**NATS:** instalado por uma Nereida própria, sem YAML na mão"]
+      screen: ["**O reef:** `rooms`, os seus kinds `Room`, `Peer` e `RoomSession` (ADR 0030)", "**NATS:** um Topic do reef {reef:messaging} por Room, rodado pela Nereida {nereid:nats}"]
       notes: |-
-        O que queremos dizer: **de um programa num pod a uma parte da plataforma**. O Tritão lê o `spec`, escreve o `status` e publica comandos como `nereus messaging room list`, um contrato ainda não construído.
+        O que queremos dizer: **de um programa num pod a uma parte da plataforma**. O Tritão lê o `spec`, escreve o `status`, e o CLI tem os comandos do reef: `nereus rooms create`, `join`, `follow`, `post`, `peer list` e `session list`. Construído pela jornada #2067 (o reef rooms: Room e Peer reconciliados pelo triton, sobre o Topic do reef messaging por contrato).
 
         Ele encontra a Anfitrite aí: #225 (agentes de IA a serviço da plataforma) e #66 (agentes de IA como Controllers dentro da plataforma). O Tritão vira um Agent declarado.
 

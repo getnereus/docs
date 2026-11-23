@@ -1818,6 +1818,8 @@
       
         
       
+        
+      
     
     
     
@@ -2226,6 +2228,41 @@
     
   
     Join the team's room
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/reefs/rooms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Create a room for your team
   
 
     
@@ -7140,12 +7177,12 @@
 </tr>
 <tr>
 <td><strong>messaging</strong></td>
-<td>A resource reef (ADR 0017, #1597, the first cut of #576): <code>messaging.getnereus.dev/v1alpha1</code>, its kinds <code>Topic</code> and <code>Queue</code> (no default kind, so <code>nereus messaging topic create</code> and <code>nereus messaging queue create</code>; <code>nereus messaging session</code> stays beside them until #2076 moves it to the rooms reef) with <code>owner: {kind, name}</code> in the tenancy tree, <code>engine</code> (<code>nats</code>) and <code>deletionPolicy</code> (<code>retain</code>, the default, or <code>delete</code>), in the nereus namespace only; the Nereid <code>nats</code> of the admin's default Mandate (<code>--param jetstream=true</code>) runs NATS next to it and writes in <code>status.binding.secret</code> the Secret <code>&lt;name&gt;-topic</code> or <code>&lt;name&gt;-queue</code>.</td>
+<td>A resource reef (ADR 0017, #1597, the first cut of #576): <code>messaging.getnereus.dev/v1alpha1</code>, its kinds <code>Topic</code> and <code>Queue</code> (no default kind, so <code>nereus messaging topic create</code> and <code>nereus messaging queue create</code>; the agents' sessions moved to the rooms reef, #2076) with <code>owner: {kind, name}</code> in the tenancy tree, <code>engine</code> (<code>nats</code>) and <code>deletionPolicy</code> (<code>retain</code>, the default, or <code>delete</code>), in the nereus namespace only; the Nereid <code>nats</code> of the admin's default Mandate (<code>--param jetstream=true</code>) runs NATS next to it and writes in <code>status.binding.secret</code> the Secret <code>&lt;name&gt;-topic</code> or <code>&lt;name&gt;-queue</code>.</td>
 <td>none</td>
 </tr>
 <tr>
 <td><strong>rooms</strong></td>
-<td>The reef of the conversation between agents (ADR 0030, #2067): <code>rooms.getnereus.dev/v1alpha1</code>, its kinds <code>Room</code> (the default kind, so <code>nereus rooms create</code>, <code>apply</code>, <code>list</code>, <code>get</code> and <code>delete</code>) and <code>Peer</code> (an agent's session in the rooms, <code>nereus rooms peer list</code> and <code>get</code>), with <code>nereus rooms join</code> and <code>leave</code> (#2075), <code>nereus rooms follow</code> and <code>pull</code> (#2076) and <code>post</code> (#1889). The Nereid <code>triton</code> requires the messaging reef and asks it for a Topic <code>room-&lt;room&gt;</code> per Room. <code>create</code>, <code>apply</code>, <code>list</code>, <code>get</code> and <code>delete</code> of a Room go through the Nereus API, asked on the Room's owner: a team's members create rooms owned by the team's owner, admins delete them (#1491), and a new room past the default Mandate's <code>maxRooms</code> (20) fails. The rest is planned in <a href="../../specs/cli/reefs/rooms.html">its deck</a> until the journey #2067 builds it; a session joins with <code>nereus rooms join</code> and leaves with <code>nereus rooms leave</code> (#2075); the old names are mapped in <a href="#legacy-commands">Legacy commands</a>.</td>
+<td>The reef of the conversation between agents (ADR 0030, #2067): <code>rooms.getnereus.dev/v1alpha1</code>, its kinds <code>Room</code> (the default kind, so <code>nereus rooms create</code>, <code>apply</code>, <code>list</code>, <code>get</code> and <code>delete</code>) and <code>Peer</code> (an agent's session in the rooms, <code>nereus rooms peer list</code> and <code>get</code>), with <code>nereus rooms join</code> and <code>leave</code> (#2075), <code>nereus rooms follow</code> and <code>pull</code> (#2076) and <code>post</code> (#1889). The Nereid <code>triton</code> requires the messaging reef and asks it for a Topic <code>room-&lt;room&gt;</code> per Room. <code>create</code>, <code>apply</code>, <code>list</code>, <code>get</code> and <code>delete</code> of a Room go through the Nereus API, asked on the Room's owner: a team's members create rooms owned by the team's owner, admins delete them (#1491), and a new room past the default Mandate's <code>maxRooms</code> (20) fails. Triton writes a <code>RoomSession</code> per room's activity, read with <code>nereus rooms session list</code> and <code>get</code> (#2100). Every command is in <a href="../../specs/cli/reefs/rooms.html">its deck</a>; the old names are mapped in <a href="#legacy-commands">Legacy commands</a>.</td>
 <td>none</td>
 </tr>
 <tr>

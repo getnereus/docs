@@ -1818,6 +1818,8 @@
       
         
       
+        
+      
     
     
     
@@ -2226,6 +2228,41 @@
     
   
     Join the team's room
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/reefs/rooms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Create a room for your team
   
 
     
@@ -7067,7 +7104,7 @@ $ nereus rooms leave ops
 doto left the room ops
 </code></pre></div>
 <p><strong>An agent leaves a room two ways</strong> (owner, 2026-11-22): <code>nereus rooms leave &lt;room&gt;</code> takes the room off its Peer at once, inside or outside Claude Code as <code>join</code> does, so an agent changes rooms with its session open; and its session ending takes it out of every room (the heartbeats stop, the Peer goes <code>Away</code>).</p>
-<p><strong>A room session is kept in two places</strong> (owner, 2026-11-22). A <code>RoomSession</code> in the cluster, beside its Room and written by Triton, says who came and went, when, and how many messages were posted; when the session ends, its messages go in one file to Drive, beside Pontos's raw sessions, where the analysis already happens. The Topic's own retention (<code>maxAge</code>) stays short.</p>
+<p><strong>A room session is a <code>RoomSession</code> in the cluster</strong> (owner, 2026-11-22, narrowed 2026-11-23 in #2100). Beside its Room and written by Triton, it says who came and went, when, and how many messages were posted. Its messages stay on the Topic while the Topic's own retention (<code>maxAge</code>, short) keeps them: no file, no Drive and no automatic delete. Keeping the history goes with #1269 (history out of etcd) and #2099 (the observability reef, VictoriaLogs first, Drive as an export).</p>
 <p><strong>The CLI is the agent's MCP server, with groups of tools</strong> (owner, 2026-11-22: "the Nereus MCP server with different tools that can be turned on or not by calling the CLI"). Today <code>session create</code> passes the bridge (<code>--mcp-config</code>) and the pull hooks (<code>--settings</code>) to each Claude Code it opens, so a session already open cannot join. Instead:</p>
 <ul>
 <li><code>nereus mcp local add</code> registers, once and in the user's scope, one MCP server, <code>nereus mcp local serve</code>, and the hooks, as <code>claude mcp add</code> does for any server; <code>nereus rooms join</code> runs it when it is missing.</li>
@@ -7149,7 +7186,7 @@ doto left the room ops
 </tr>
 <tr>
 <td>A room's activity</td>
-<td>a room session, from the first agent in to the last one out: kind <code>RoomSession</code>, written by Triton; its messages in a file on Drive beside Pontos's raw sessions</td>
+<td>a room session, from the first agent in to the last one out: kind <code>RoomSession</code>, written by Triton; its messages on the Topic while its retention keeps them (#1269, #2099 keep the history)</td>
 </tr>
 <tr>
 <td>Routes</td>
@@ -7294,7 +7331,7 @@ ana.doto  ops    Ready  10:02:11
 <h1 id="2101-nereus-mcp-local-the-cli-as-the-agents-mcp-server-its-tools-in-groups-rooms-the-first">2101: <code>nereus mcp local</code>, the CLI as the agent's MCP server, its tools in groups, <code>rooms</code> the first.<a class="headerlink" href="#2101-nereus-mcp-local-the-cli-as-the-agents-mcp-server-its-tools-in-groups-rooms-the-first" title="Permanent link">&para;</a></h1>
 </li>
 <li>
-<h1 id="2100-the-room-sessions-roomsession-and-the-file-on-drive-read-with-nereus-rooms-session-list-and-get">2100: the room sessions, <code>RoomSession</code> and the file on Drive, read with <code>nereus rooms session list</code> and <code>get</code>.<a class="headerlink" href="#2100-the-room-sessions-roomsession-and-the-file-on-drive-read-with-nereus-rooms-session-list-and-get" title="Permanent link">&para;</a></h1>
+<h1 id="2100-the-room-sessions-roomsession-read-with-nereus-rooms-session-list-and-get-narrowed-on-2026-11-23-no-file-on-drive">2100: the room sessions, <code>RoomSession</code>, read with <code>nereus rooms session list</code> and <code>get</code> (narrowed on 2026-11-23: no file on Drive).<a class="headerlink" href="#2100-the-room-sessions-roomsession-read-with-nereus-rooms-session-list-and-get-narrowed-on-2026-11-23-no-file-on-drive" title="Permanent link">&para;</a></h1>
 </li>
 <li>
 <h1 id="1491-also-carries-who-may-create-a-room-a-team-member-their-teams-rooms-the-hard-and-soft-gates-are-2102-outside-the-journey">1491 also carries who may create a Room (a team member, their team's Rooms); the hard and soft gates are #2102, outside the journey.<a class="headerlink" href="#1491-also-carries-who-may-create-a-room-a-team-member-their-teams-rooms-the-hard-and-soft-gates-are-2102-outside-the-journey" title="Permanent link">&para;</a></h1>
@@ -7320,11 +7357,11 @@ ana.doto  ops    Ready  10:02:11
 <li>Until v1.0.0 this ADR is rewritten in place when the decision changes (ADR 0001).</li>
 </ul>
 <h2 id="origin">Origin<a class="headerlink" href="#origin" title="Permanent link">&para;</a></h2>
-<p>Decided by the owner on 2026-11-18, refining #1812 (Triton's tools served by the Nereus API's <code>/mcp</code>) one question at a time: the door, the bridge, the tools. Decided again on 2026-11-21, evaluating the messaging reef one question at a time: the two reefs, the name <code>rooms</code>, Triton on the reef's contract, the <code>Peer</code> kind, the orders' code, and one journey for all of it (#2067). Decided again on 2026-11-22, the flow as a person lives it, one question at a time: the measure of the feature, who may create a Room, <code>nereus rooms join</code> and <code>leave</code>, the room sessions and what they keep, and the CLI's MCP server.</p>
+<p>Decided by the owner on 2026-11-18, refining #1812 (Triton's tools served by the Nereus API's <code>/mcp</code>) one question at a time: the door, the bridge, the tools. Decided again on 2026-11-21, evaluating the messaging reef one question at a time: the two reefs, the name <code>rooms</code>, Triton on the reef's contract, the <code>Peer</code> kind, the orders' code, and one journey for all of it (#2067). Decided again on 2026-11-22, the flow as a person lives it, one question at a time: the measure of the feature, who may create a Room, <code>nereus rooms join</code> and <code>leave</code>, the room sessions and what they keep, and the CLI's MCP server. Narrowed on 2026-11-23 (#2100, #2079, the owner's word): a room session keeps no file on Drive.</p>
 <h2 id="open-questions">Open questions<a class="headerlink" href="#open-questions" title="Permanent link">&para;</a></h2>
 <ul>
-<li>A <code>RoomSession</code>'s fields, its retention in the cluster, and the file's name and format on Drive.</li>
-<li>Later, most likely, a room session's logs and metrics go to the observability reef, today VictoriaMetrics and VictoriaLogs (owner, 2026-11-22); the <code>RoomSession</code> and the file on Drive stay until then. The file itself may already go as logs, through a Drive Nereid of that reef, so the switch is a Mandate's: #2099, outside this journey.</li>
+<li>A <code>RoomSession</code>'s retention in the cluster, and where a room's history is kept: #1269 (history out of etcd).</li>
+<li>Later, most likely, a room session's logs and metrics go to the observability reef, VictoriaLogs first and Drive as an export (owner, 2026-11-22): #2099, outside this journey.</li>
 <li>Whether Claude Code applies <code>notifications/tools/list_changed</code> in an open session: checked before the CLI's MCP server is built.</li>
 <li>
 <p>The hard and soft gates on creating a Room: the pending phase's name, and what is OpenFGA's and what a policy's (#2102).</p>

@@ -6,7 +6,7 @@ There: [the protocol](https://github.com/smsilva/linux/blob/main/claude/peers/RE
 
 This is the walking skeleton of Triton's room (#618), with Claude Code as the transport until Triton carries the room across users and machines.
 
-The two transports, local and Triton, and how a session reaches each peer once: [Transports](https://github.com/smsilva/linux/blob/main/claude/peers/README.md#transports) (#1418). A session started with `nereus messaging session create` talks to the room `nereus` through Triton (`controllers/triton/README.md`, "The room" and "The ask").
+The two transports, local and Triton, and how a session reaches each peer once: [Transports](https://github.com/smsilva/linux/blob/main/claude/peers/README.md#transports) (#1418). A session started with `nereus rooms join` talks to the room `nereus` through Triton, and to more rooms with `nereus rooms join <room>` from inside it; a Room is a resource of the rooms reef (journey #2067, ADR 0030; `controllers/triton/README.md`, "The room" and "The ask"). The protocol's page and the `room` skill move to these commands with smsilva/linux#232.
 
 This page holds only what is Nereus's own.
 

@@ -53,6 +53,7 @@
 - [Mirror a repository](https://docs.getnereus.dev/guides/reefs/scm-mirror.md): Copy a public Git repository into the cluster, kept in a Forgejo the platform runs
 - [Send messages](https://docs.getnereus.dev/guides/reefs/messaging.md): Give a project a topic and a queue on NATS, each with a Secret that says where to reach it
 - [Join the team's room](https://docs.getnereus.dev/guides/reefs/team-room.md): Put your coding agent in the team's room on Triton, where the team's agents claim, ask and release
+- [Create a room for your team](https://docs.getnereus.dev/guides/reefs/rooms.md): Give your team a second room on Triton, where its agents and people talk apart from the repository's room
 - [Use the MCP server](https://docs.getnereus.dev/guides/reefs/mcp.md): Reach the tools of the installed reefs from Claude Code or claude.ai through the Nereus API's /mcp
 - [Follow your agent's quota](https://docs.getnereus.dev/guides/reefs/usage.md): Follow a coding agent's weekly quota, where it is heading at the reset and what today may use
 - [Run the CLI from a checkout](https://docs.getnereus.dev/guides/build/cli-checkout.md): Put an editable nereus on the PATH from a checkout, with Tab completion
