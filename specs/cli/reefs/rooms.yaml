@@ -89,7 +89,7 @@ slides:
         - comment: "Apply the rooms reef"
           run: "nereus reef apply rooms"
           output: |-
-            ✓ core/reefs/rooms 0.1.0 created (rooms.getnereus.dev/v1alpha1: peers, rooms)
+            ✓ core/reefs/rooms 0.1.0 created (rooms.getnereus.dev/v1alpha1: peers, rooms, roomsessions)
 
             Next steps:
 
@@ -401,31 +401,60 @@ slides:
   - name: session-list
     act: session
     topic: "list"
-    status: planned
-    issue: 2076
-    message: "Every agent connected to Triton, and who started it"
-    accent: "who started it"
+    status: built
+    issue: 2100
+    message: "Each room session, from the first peer in to the last one out"
+    accent: "the first peer in"
     terminal:
       steps:
-        - comment: "The agents connected to Triton"
+        - comment: "The room sessions"
           run: "nereus rooms session list"
           output: |-
-            OWNER   NAME  STATE  SINCE     LAST HEARTBEAT  STARTED BY
-            bob     doto  ready  06:12:02  06:15:57        bob
-            nereus  m16   ready  06:11:36  06:15:56        alice
+            NAME               ROOM  PEERS  MESSAGES  STARTED   ENDED
+            ops-20261122-1002  ops   2      37        10:02:11  11:40:05
+            ops-20261122-1415  ops   1      -         14:15:30  -
     dependsOn: [session-create]
     notes: |-
-      **The list is Triton's live view,** with the last heartbeat it keeps in memory, where `nereus rooms peer list` shows the objects. STARTED BY names who logged each agent in (#1167); `--sort-by .last_heartbeat` sorts it.
+      **A room session is a `RoomSession` beside its Room** (#2100, ADR 0030): Triton opens one when the room goes from no Ready peer to one, records each peer joining and leaving, and closes it when the last one leaves, counting the messages of the room's Topic. Triton is its only writer, on a change only, never on a heartbeat. Its name is `<room>-<YYYYMMDD>-<HHMM>` of its start, in UTC; `--room ops` lists one room's.
 
-      **The output is a recorded run of today's `nereus messaging session list`** (`docs/guides/access/authentication.md`), without its BUSY WITH column, which goes with the orders' code (#2077).
+      **No file yet:** the messages stay on the Topic, read only while its retention keeps them; archiving goes with #1269 and #2099.
     pt:
       topic: "list"
-      message: "Cada agente conectado ao Tritão, e quem o iniciou"
-      accent: "quem o iniciou"
+      message: "Cada sessão de sala, do primeiro par que entra ao último que sai"
+      accent: "o primeiro par que entra"
       notes: |-
-        **A lista é a visão ao vivo do Tritão,** com o último heartbeat que ele guarda em memória, enquanto o `nereus rooms peer list` mostra os objetos. STARTED BY diz quem fez o login de cada agente (#1167); `--sort-by .last_heartbeat` a ordena.
+        **Uma sessão de sala é um `RoomSession` ao lado da sua Room** (#2100, ADR 0030): o Tritão abre uma quando a sala passa de nenhum par Ready para um, registra cada par que entra e sai, e a fecha quando o último sai, contando as mensagens do Topic da sala. O Tritão é o seu único escritor, só numa mudança, nunca num heartbeat. O nome é `<room>-<YYYYMMDD>-<HHMM>` do seu início, em UTC; `--room ops` lista as de uma sala.
 
-        **A saída é de uma execução gravada do `nereus messaging session list` de hoje** (`docs/guides/access/authentication.md`), sem a coluna BUSY WITH, que sai com o código das ordens (#2077).
+        **Ainda sem arquivo:** as mensagens ficam no Topic, legíveis só enquanto a sua retenção as guarda; o arquivamento vai com a #1269 e a #2099.
+
+  - name: session-get
+    act: session
+    topic: "get"
+    status: built
+    issue: 2100
+    message: "One room session says who came and went, and when"
+    accent: "who came and went"
+    terminal:
+      steps:
+        - comment: "One room session"
+          run: "nereus rooms session get ops-20261122-1002"
+          output: |-
+            room: ops
+            started: 2026-11-22T10:02:11Z
+            ended: 2026-11-22T11:40:05Z
+            peers:
+              ana.doto    joined 10:02:11  left 11:40:05
+              bruno.eione joined 10:05:43  left 11:31:12
+            messages: 37 (sequences 1204..1240)
+    dependsOn: [session-list]
+    notes: |-
+      **Each stay of a peer is one line,** so a peer that leaves and comes back shows twice. The messages are counted when the session ends, from the Topic's first sequence of the session to its last; an open session shows `ended: -` and `messages: -`.
+    pt:
+      topic: "get"
+      message: "Uma sessão de sala diz quem entrou e saiu, e quando"
+      accent: "quem entrou e saiu"
+      notes: |-
+        **Cada estadia de um par é uma linha,** então um par que sai e volta aparece duas vezes. As mensagens são contadas quando a sessão termina, da primeira sequência do Topic na sessão à última; uma sessão aberta mostra `ended: -` e `messages: -`.
 
   - name: follow
     act: conversation

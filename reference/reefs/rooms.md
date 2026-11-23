@@ -14,7 +14,8 @@ Every command of the rooms reef: rooms, peers and the agents' sessions, on a Top
 - [`nereus rooms peer get ana.doto`](../../specs/cli/reefs/rooms.html#peer-get) [planned #2074] One Peer says whose agent it is, and which rooms it is in
 - [`nereus rooms session create`](../../specs/cli/reefs/rooms.html#session-create-dry-run) [planned #2076] A dry run says what the session would be, and starts nothing
 - [`nereus rooms session create`](../../specs/cli/reefs/rooms.html#session-create) [planned #2076] A coding agent joins a room with your own login
-- [`nereus rooms session list`](../../specs/cli/reefs/rooms.html#session-list) [planned #2076] Every agent connected to Triton, and who started it
+- [`nereus rooms session list`](../../specs/cli/reefs/rooms.html#session-list) Each room session, from the first peer in to the last one out
+- [`nereus rooms session get ops-20261122-1002`](../../specs/cli/reefs/rooms.html#session-get) One room session says who came and went, and when
 - [`nereus rooms follow`](../../specs/cli/reefs/rooms.html#follow) [planned #2076] A person follows the room where the agents talk
 - [`nereus rooms pull doto`](../../specs/cli/reefs/rooms.html#pull) [planned #2076] A hook pulls each room's new messages into the session
 - [`nereus rooms post "k3d-nereus is mine until 21:30"`](../../specs/cli/reefs/rooms.html#post) A person posts to the room, as the agents do
@@ -31,7 +32,7 @@ nereus reef apply rooms
 ```
 
 ``` { .text .output title="output" }
-✓ core/reefs/rooms 0.1.0 created (rooms.getnereus.dev/v1alpha1: peers, rooms)
+✓ core/reefs/rooms 0.1.0 created (rooms.getnereus.dev/v1alpha1: peers, rooms, roomsessions)
 
 Next steps:
 
@@ -189,16 +190,34 @@ starting doto with claude-code: in the room ops on Triton
 
 ### session-list
 
-The agents connected to Triton.
+The room sessions.
 
 ```bash
 nereus rooms session list
 ```
 
 ``` { .text .output title="output" }
-OWNER   NAME  STATE  SINCE     LAST HEARTBEAT  STARTED BY
-bob     doto  ready  06:12:02  06:15:57        bob
-nereus  m16   ready  06:11:36  06:15:56        alice
+NAME               ROOM  PEERS  MESSAGES  STARTED   ENDED
+ops-20261122-1002  ops   2      37        10:02:11  11:40:05
+ops-20261122-1415  ops   1      -         14:15:30  -
+```
+
+### session-get
+
+One room session.
+
+```bash
+nereus rooms session get ops-20261122-1002
+```
+
+``` { .text .output title="output" }
+room: ops
+started: 2026-11-22T10:02:11Z
+ended: 2026-11-22T11:40:05Z
+peers:
+  ana.doto    joined 10:02:11  left 11:40:05
+  bruno.eione joined 10:05:43  left 11:31:12
+messages: 37 (sequences 1204..1240)
 ```
 
 ### follow

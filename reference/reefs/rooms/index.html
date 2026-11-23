@@ -3720,6 +3720,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#session-get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        session-get
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#follow" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -7259,6 +7270,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#session-get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        session-get
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#follow" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -7353,8 +7375,10 @@
   A dry run says what the session would be, and starts nothing</li>
 <li><a href="../../../specs/cli/reefs/rooms.html#session-create"><code>nereus rooms session create</code></a> <span class="chip planned">planned #2076</span><br>
   A coding agent joins a room with your own login</li>
-<li><a href="../../../specs/cli/reefs/rooms.html#session-list"><code>nereus rooms session list</code></a> <span class="chip planned">planned #2076</span><br>
-  Every agent connected to Triton, and who started it</li>
+<li><a href="../../../specs/cli/reefs/rooms.html#session-list"><code>nereus rooms session list</code></a><br>
+  Each room session, from the first peer in to the last one out</li>
+<li><a href="../../../specs/cli/reefs/rooms.html#session-get"><code>nereus rooms session get ops-20261122-1002</code></a><br>
+  One room session says who came and went, and when</li>
 <li><a href="../../../specs/cli/reefs/rooms.html#follow"><code>nereus rooms follow</code></a> <span class="chip planned">planned #2076</span><br>
   A person follows the room where the agents talk</li>
 <li><a href="../../../specs/cli/reefs/rooms.html#pull"><code>nereus rooms pull doto</code></a> <span class="chip planned">planned #2076</span><br>
@@ -7369,7 +7393,7 @@
 <p>Apply the rooms reef.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>reef<span class="w"> </span>apply<span class="w"> </span>rooms
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ core/reefs/rooms 0.1.0 created (rooms.getnereus.dev/v1alpha1: peers, rooms)
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ core/reefs/rooms 0.1.0 created (rooms.getnereus.dev/v1alpha1: peers, rooms, roomsessions)
 
 Next steps:
 
@@ -7471,12 +7495,24 @@ Since:  10:02:11
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>starting doto with claude-code: in the room ops on Triton
 </code></pre></div>
 <h3 id="session-list">session-list<a class="headerlink" href="#session-list" title="Permanent link">&para;</a></h3>
-<p>The agents connected to Triton.</p>
+<p>The room sessions.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>rooms<span class="w"> </span>session<span class="w"> </span>list
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>OWNER   NAME  STATE  SINCE     LAST HEARTBEAT  STARTED BY
-bob     doto  ready  06:12:02  06:15:57        bob
-nereus  m16   ready  06:11:36  06:15:56        alice
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>NAME               ROOM  PEERS  MESSAGES  STARTED   ENDED
+ops-20261122-1002  ops   2      37        10:02:11  11:40:05
+ops-20261122-1415  ops   1      -         14:15:30  -
+</code></pre></div>
+<h3 id="session-get">session-get<a class="headerlink" href="#session-get" title="Permanent link">&para;</a></h3>
+<p>One room session.</p>
+<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>rooms<span class="w"> </span>session<span class="w"> </span>get<span class="w"> </span>ops-20261122-1002
+</code></pre></div>
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>room: ops
+started: 2026-11-22T10:02:11Z
+ended: 2026-11-22T11:40:05Z
+peers:
+  ana.doto    joined 10:02:11  left 11:40:05
+  bruno.eione joined 10:05:43  left 11:31:12
+messages: 37 (sequences 1204..1240)
 </code></pre></div>
 <h3 id="follow">follow<a class="headerlink" href="#follow" title="Permanent link">&para;</a></h3>
 <p>Follow the room nereus, until Ctrl-C.</p>
