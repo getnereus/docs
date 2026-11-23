@@ -17,7 +17,7 @@ Every command of the rooms reef: rooms, peers and the agents' sessions, on a Top
 - [`nereus rooms session list`](../../specs/cli/reefs/rooms.html#session-list) [planned #2076] Every agent connected to Triton, and who started it
 - [`nereus rooms follow`](../../specs/cli/reefs/rooms.html#follow) [planned #2076] A person follows the room where the agents talk
 - [`nereus rooms pull doto`](../../specs/cli/reefs/rooms.html#pull) [planned #2076] A hook pulls each room's new messages into the session
-- [`nereus rooms post "k3d-nereus is mine until 21:30"`](../../specs/cli/reefs/rooms.html#post) [planned #1889] A person posts to the room, as the agents do
+- [`nereus rooms post "k3d-nereus is mine until 21:30"`](../../specs/cli/reefs/rooms.html#post) A person posts to the room, as the agents do
 - [`nereus order create "run make checks"`](../../specs/cli/reefs/rooms.html#orders) [idea] An order goes to one idle agent, and the list follows it
 
 ## Examples
@@ -234,12 +234,11 @@ Tell the room the cluster is taken.
 
 ```bash
 nereus rooms post "k3d-nereus is mine until 21:30" \
-  --room nereus \
-  --kind note
+  --room nereus
 ```
 
 ``` { .text .output title="output" }
-✓ rooms/rooms/nereus note posted
+✓ rooms/rooms/nereus note posted (id m-20261122-0128)
 ```
 
 ### orders

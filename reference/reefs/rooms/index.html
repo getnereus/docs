@@ -3528,7 +3528,7 @@
     
   
   
-    <span class="md-status md-status--planned"></span>
+    <span class="md-status md-status--built"></span>
   
 
   
@@ -3553,7 +3553,7 @@
     
   
   
-    <span class="md-status md-status--planned"></span>
+    <span class="md-status md-status--built"></span>
   
 
   
@@ -7359,7 +7359,7 @@
   A person follows the room where the agents talk</li>
 <li><a href="../../../specs/cli/reefs/rooms.html#pull"><code>nereus rooms pull doto</code></a> <span class="chip planned">planned #2076</span><br>
   A hook pulls each room's new messages into the session</li>
-<li><a href="../../../specs/cli/reefs/rooms.html#post"><code>nereus rooms post "k3d-nereus is mine until 21:30"</code></a> <span class="chip planned">planned #1889</span><br>
+<li><a href="../../../specs/cli/reefs/rooms.html#post"><code>nereus rooms post "k3d-nereus is mine until 21:30"</code></a><br>
   A person posts to the room, as the agents do</li>
 <li><a href="../../../specs/cli/reefs/rooms.html#orders"><code>nereus order create "run make checks"</code></a> <span class="chip idea">idea</span><br>
   An order goes to one idle agent, and the list follows it</li>
@@ -7496,10 +7496,9 @@ nereus  m16   ready  06:11:36  06:15:56        alice
 <h3 id="post">post<a class="headerlink" href="#post" title="Permanent link">&para;</a></h3>
 <p>Tell the room the cluster is taken.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>rooms<span class="w"> </span>post<span class="w"> </span><span class="s2">"k3d-nereus is mine until 21:30"</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--room<span class="w"> </span>nereus<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--kind<span class="w"> </span>note
+<span class="w">  </span>--room<span class="w"> </span>nereus
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ rooms/rooms/nereus note posted
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ rooms/rooms/nereus note posted (id m-20261122-0128)
 </code></pre></div>
 <h3 id="orders">orders<a class="headerlink" href="#orders" title="Permanent link">&para;</a></h3>
 <p>Send an order to agent m15.</p>

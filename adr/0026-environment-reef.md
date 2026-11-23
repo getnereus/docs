@@ -1,7 +1,7 @@
-# 0026. The environment reef: an Environment is only the request, and the kept cluster is naxos
+# 0026. The environment reef: an Environment is only the request, and the kept cluster is nereus
 
 !!! note "In short"
-    The `environment` reef has one kind, `Environment`, which is only the request; the cluster kept for it is `naxos`. Status: Proposed (2026-11-14).
+    The `environment` reef has one kind, `Environment`, which is only the request; the cluster kept for it is `nereus`. Status: Proposed (2026-11-14).
 
 **Status:** Proposed (2026-11-14)
 
@@ -29,15 +29,15 @@ The kept k3d cluster, `k3d-nereus`, runs Triton and serves as production, but no
 
 **The Mandate is the one named, else the reef's default** (ADR 0017's order, steps 3 and 4: no `match` key fits an environment's request today). The `vcluster` Nereid's Mandate is the reef's default, so every environment a person asks for, a PR's included, is a vcluster unless it names another Mandate. The kept cluster is the only environment that names one: `nereus init` creates it with `--mandate local`. `match` gets no `expires` key: ADR 0017 compares values, and "has an expiry" is a presence test (owner, 2026-11-14). Each Nereid acts only on the Environments whose Mandate names it, so the `vcluster` and `k3d` Nereids share the reef without touching each other's objects, as the `vcluster` Nereid already does.
 
-**The kept k3d cluster is the Environment `naxos`**, an Aegean island (owner, 2026-10-30). The name is a disposable label like any other environment's, never `prod`: migrating data, restoring a backup, or swapping the cluster under a Workload changes the environment, not the Workload, all through the platform. It replaces `production` in #556 and `live` in #159 and #160 with one name.
+**The kept k3d cluster is the Environment `nereus`**, the name of the k3d cluster itself (owner, 2026-11-23, #2150). The name is a disposable label like any other environment's, never `prod`: migrating data, restoring a backup, or swapping the cluster under a Workload changes the environment, not the Workload, all through the platform. It replaces `production` in #556 and `live` in #159 and #160 with one name.
 
-**A `k3d` Nereid registers `naxos` (a stand-in).** It runs in the `local-nereids` image and knows only the cluster it runs in: it adopts that cluster for an Environment whose Mandate names it, writes `status.kubernetes`, refuses to make a second one, and never deletes the cluster; deleting `naxos` removes only the record. Only a Nereid writes its reef's `status` (ADR 0002), so `nereus init` asks for `naxos` like a person would and does not write its `status`, and the release reef reads `naxos` like any other environment (owner, 2026-11-14). It retires when a real environment Nereid makes clusters. #575 (the reef's first slice) builds it.
+**A `k3d` Nereid registers `nereus` (a stand-in).** It runs in the `local-nereids` image and knows only the cluster it runs in: it adopts that cluster for an Environment whose Mandate names it, writes `status.kubernetes`, refuses to make a second one, and never deletes the cluster; deleting `nereus` removes only the record. Only a Nereid writes its reef's `status` (ADR 0002), so `nereus init` asks for `nereus` like a person would and does not write its `status`, and the release reef reads `nereus` like any other environment (owner, 2026-11-14). It retires when a real environment Nereid makes clusters. #575 (the reef's first slice) builds it.
 
-**At `expires`, the Nereid that made the environment removes it**, writes `Expired` in `status.phase`, and leaves the `Environment` until `nereus environment delete`, so the history stays visible. The `vcluster` Nereid already does it; `naxos` takes no `expires`.
+**At `expires`, the Nereid that made the environment removes it**, writes `Expired` in `status.phase`, and leaves the `Environment` until `nereus environment delete`, so the history stays visible. The `vcluster` Nereid already does it; `nereus` takes no `expires`.
 
-**The release reef finds its target in the Environment's `status`.** A release Mandate's `match` on `environment` (ADR 0017) picks the Nereid that knows how to deliver there: `flux` for a Kubernetes environment, another Nereid for Cloud Run, with the same `nereus release create`. A `Target` with no `environmentRef` keeps meaning the cluster Nereus runs in, which is `naxos` on k3d; whether a `Target` may name a cluster directly stays ADR 0010's open question.
+**The release reef finds its target in the Environment's `status`.** A release Mandate's `match` on `environment` (ADR 0017) picks the Nereid that knows how to deliver there: `flux` for a Kubernetes environment, another Nereid for Cloud Run, with the same `nereus release create`. A `Target` with no `environmentRef` keeps meaning the cluster Nereus runs in, which is `nereus` on k3d; whether a `Target` may name a cluster directly stays ADR 0010's open question.
 
-**Hostnames per environment belong to the edge reef.** Internal hostnames `<workload>.<environment>.getnereus.dev` (`triton.naxos.getnereus.dev`) behind the public `<workload>.getnereus.dev` are #470's (the edge reef), not this reef's.
+**Hostnames per environment belong to the edge reef.** Internal hostnames `<workload>.<environment>.getnereus.dev` (`triton.nereus.getnereus.dev`) behind the public `<workload>.getnereus.dev` are #470's (the edge reef), not this reef's.
 
 ```text
 # The admin, once (nereus init does it on k3d)
@@ -53,10 +53,10 @@ $ nereus mandate create local \
 ✓ core/mandates/local created (reef: environment, nereid: k3d)
 
 # The kept cluster, registered by nereus init
-$ nereus environment create naxos \
+$ nereus environment create nereus \
     --owner project/nereus \
     --mandate local
-✓ environment/environments/naxos created (mandate: local, nereid: k3d)
+✓ environment/environments/nereus created (mandate: local, nereid: k3d)
 
 # A PR environment: the default Mandate
 $ nereus environment create pr-123 \
@@ -66,13 +66,13 @@ $ nereus environment create pr-123 \
 
 $ nereus environment list
 ENVIRONMENT  OWNER           NEREID    STATUS  EXPIRES
-naxos        Project/nereus  k3d       Ready   -
+nereus        Project/nereus  k3d       Ready   -
 pr-123       Project/nereus  vcluster  Ready   2d
 
-# A release into naxos: the release reef reads its status
+# A release into nereus: the release reef reads its status
 $ nereus release create triton \
     --source triton \
-    --target naxos
+    --target nereus
 ✓ release/releases/triton created (mandate: flux)
 ```
 
@@ -90,9 +90,9 @@ $ nereus release create triton \
 ## Consequences
 
 - One shape for every environment, whatever makes it: the release reef, the delivery reef (ADR 0020) and the catalog read `status`, never a technology.
-- `nereus init` gets one more step: the `local` Mandate and the Environment `naxos`, through the `k3d` Nereid (#575).
+- `nereus init` gets one more step: the `local` Mandate and the Environment `nereus`, through the `k3d` Nereid (#575).
 - The reef has two Nereids at once, which ADR 0017 allows; neither acts on the other's Environments.
-- #159, #160 and #556 use the one name `naxos`.
+- #159, #160 and #556 use the one name `nereus`.
 - A new provider (Cloud Run, Fargate) is a Nereid and a Mandate, with no change to `spec` or to a person's command.
 
 ## Open questions
@@ -101,4 +101,4 @@ $ nereus release create triton \
 - What `status` a non-Kubernetes environment publishes (Cloud Run, Fargate): decided with its first Nereid.
 - Whether `region` takes part in `match` (ADR 0017 lists only `engine`, `environment` and `owner`).
 
-*Origin: the owner's decisions of 2026-10-30 in the design session on the catalog, tenancy and resource reefs (#568), and of 2026-11-14 on its visual summary (the default Mandate and the stand-in for naxos). Raw data in Drive `dump-mental-prompts/opinions/2026-10-30/` and `#pontos/raw/2026-11-14/`.*
+*Origin: the owner's decisions of 2026-10-30 in the design session on the catalog, tenancy and resource reefs (#568), and of 2026-11-14 on its visual summary (the default Mandate and the stand-in for nereus). Raw data in Drive `dump-mental-prompts/opinions/2026-10-30/` and `#pontos/raw/2026-11-14/`.*

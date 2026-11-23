@@ -95,17 +95,17 @@ spec:
   nereid: cloudnative-pg
   default: true
 
-# Postgres on naxos, the kept cluster, goes to RDS: the most specific match wins
+# Postgres on nereus, the kept cluster, goes to RDS: the most specific match wins
 apiVersion: core.getnereus.dev/v1alpha1
 kind: Mandate
 metadata:
-  name: database-postgres-naxos
+  name: database-postgres-nereus
 spec:
   reef: database
   nereid: aws-rds
   match:
     engine: postgres
-    environment: naxos
+    environment: nereus
   params:
     accountId: "123456789012"
     region: us-east-1
@@ -119,12 +119,12 @@ $ nereus messaging topic create triton-orders \
     --engine nats
 messaging/topics/triton-orders created (mandate: messaging-nats, nereid: nats)
 
-# The same request in two environments: naxos resolves the specific Mandate, pr-123 the default
+# The same request in two environments: nereus resolves the specific Mandate, pr-123 the default
 $ nereus database create orders \
     --owner project/triton \
     --engine postgres \
-    --environment naxos
-database/databases/orders created (mandate: database-postgres-naxos, nereid: aws-rds)
+    --environment nereus
+database/databases/orders created (mandate: database-postgres-nereus, nereid: aws-rds)
 
 $ nereus database create orders \
     --owner project/triton \
@@ -138,13 +138,13 @@ $ nereus mandate create database-postgres-eu \
     --nereid aws-rds \
     --match engine=postgres \
     --match region=eu
-✗ core/mandates/database-postgres-eu overlaps database-postgres-naxos (engine=postgres) and neither contains the other. To fix it, run:
+✗ core/mandates/database-postgres-eu overlaps database-postgres-nereus (engine=postgres) and neither contains the other. To fix it, run:
   # name the environment too, so one match contains the other
-  nereus mandate create database-postgres-eu --reef database --nereid aws-rds --match engine=postgres --match environment=naxos --match region=eu
+  nereus mandate create database-postgres-eu --reef database --nereid aws-rds --match engine=postgres --match environment=nereus --match region=eu
   Nothing was changed.
 ```
 
-**The same `match` picks who delivers into an environment.** An `Environment` (the environment reef) is only the request, with no technology in its `spec`, and its name is a disposable label (`naxos` for the kept k3d cluster today, an Aegean island; never `prod`, owner 2026-10-30), so that migrating data, restoring a backup or swapping the cluster under a Workload changes the environment, not the Workload; the Nereid of its Mandate materializes it (a kept cluster, a vcluster, a managed container service) and writes what it made in `status`. A Mandate of the release reef with a `match` on the environment picks the Nereid that knows how to deliver there, so `nereus release create` is the same command whatever the environment is made of.
+**The same `match` picks who delivers into an environment.** An `Environment` (the environment reef) is only the request, with no technology in its `spec`, and its name is a disposable label (`nereus` for the kept k3d cluster today, the name of the k3d cluster itself; never `prod`, owner 2026-10-30 and 2026-11-23), so that migrating data, restoring a backup or swapping the cluster under a Workload changes the environment, not the Workload; the Nereid of its Mandate materializes it (a kept cluster, a vcluster, a managed container service) and writes what it made in `status`. A Mandate of the release reef with a `match` on the environment picks the Nereid that knows how to deliver there, so `nereus release create` is the same command whatever the environment is made of.
 
 **A `cache` reef of its own, Valkey by default.** The in-memory contract is small (get and set with a time to live; the data may be lost) and differs from a database's, so a cache is not a `Database` with another engine. Valkey, Redis and Memcached are engines and params of the `Cache` kind; the reef's default Nereid runs Valkey. A durable, no-eviction Redis is a key-value database (`database`, `engine: redis`); CDN and HTTP caches belong to the edge reef.
 

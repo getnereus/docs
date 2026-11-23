@@ -764,12 +764,14 @@ anonymous:
 
 ### 5. Create the cluster
 
-No Traefik, since the profile brings Istio's Gateway; the Gateway on port 8080 of the loopback; the CA on every node and the configuration on the server. Docker mounts absolute paths.
+No load balancer, since k3d's is nginx, and the API on the loopback only (#2152); no Traefik, since the profile brings Istio's Gateway; the Gateway on port 8080 of the loopback; the CA on every node and the configuration on the server. Docker mounts absolute paths.
 
 ```bash
 k3d cluster create nereus \
+  --no-lb \
+  --api-port "127.0.0.1:random" \
   --k3s-arg "--disable=traefik@server:*" \
-  --port "127.0.0.1:8080:80@loadbalancer" \
+  --port "127.0.0.1:8080:80@server:0:direct" \
   --registry-config nereus/registries.yaml \
   --volume "${PWD}/nereus/registry:/etc/nereus/registry@all" \
   --volume "${PWD}/nereus/authentication-config.yaml:/etc/rancher/nereus/authentication-config.yaml@server:*" \
@@ -1020,7 +1022,7 @@ paused   no   (<main clone>/.deploy-paused)
 ## Learn more
 
 - `scripts/deploy/live --help`: the settings, all options or environment variables (`NEREUS_CHART_REF`, `NEREUS_CHART_VERSION`, `NEREUS_LIVE_INGRESS_ADDRESS`), so the repository holds no address or token.
-- The line is a stand-in: on the platform, naxos mirrors `main` and builds it (#159, #1613).
+- The line is a stand-in: on the platform, k3d-nereus mirrors `main` and builds it (#159, #1613).
 
 # Rebuild the kept cluster
 
@@ -1064,7 +1066,7 @@ The realm answers at `http://auth.localhost:8080` from the start. [`nereus login
 nereus login --initial-admin
 ```
 
-### 4. Bring up the tunnel
+### 4. Bring up the tunnel and trust it at the ingress gateway
 
 Apply the edge reef and its Nereid `cloudflare` ([Publish at a hostname](edge.md)), keep the credentials file as the secret `edge/cloudflare-tunnel`, then create the Mandate with `--param tunnel=nereus --param credentialsSecret=edge/cloudflare-tunnel --default`. Create the three routes at once: until a Route exists, the tunnel answers 404.
 
@@ -1074,11 +1076,9 @@ nereus edge route create triton --hostname triton.getnereus.dev
 
 Repeat for `auth` and `portal`.
 
-### 5. Trust the tunnel at the ingress gateway
-
 `numTrustedProxies: 1` keeps cloudflared's `X-Forwarded-Proto: https`, so Keycloak's issuer stays `https://`. Write the Release `istio-gateway` with `--values-file deploy/ingress/istio-gateway-values.yaml --dry-run --output yaml`, [`nereus release apply`](../../specs/cli/reefs/release.html#release-apply) it, then `kubectl apply --filename deploy/ingress/gateway.yaml`.
 
-### 6. Put Google in the realm
+### 5. Put Google in the realm
 
 Only once the tunnel answers. Source the env file, keep the pair as the secret `google-oauth-keycloak`, then apply the Mandate; `mandate apply` replaces every param, so all go together. Then `nereus logout` and `nereus login` at the public realm.
 
@@ -1092,15 +1092,46 @@ nereus mandate apply keycloak \
   --param googleAdmins=owner@example.com
 ```
 
-### 7. Set the portal's address and bring up Triton
+### 6. Set the portal's address and bring up Triton
 
 [`nereus mandate apply`](../../specs/cli/core.html#mandate-apply) `nereus-portal` with `--param publicUrl=https://portal.getnereus.dev`.
 
-Then the Mandate `messaging-nats` with `--param agents=true` holds Triton's account. It is the messaging reef's default with no match (`--default`, no `--match`), so it holds the Rooms' Topics, which name no engine (ADR 0030).
+Then the Mandate `messaging-nats` is the messaging reef's default with no match (`--default`, no `--match`), so it holds the Rooms' Topics, which name no engine (ADR 0030).
 
-`nereus nereid apply nats --reef messaging` writes it into NATS, `nereus reef apply rooms` installs the rooms reef, and `nereus nereid apply triton --reef rooms` sets `TRITON_ISSUER`, `TRITON_JWKS_URL` and `TRITON_RESOURCE_URL`.
+A cluster that had `--param agents=true` there keeps the old streams of the account `AGENTS` on the claim, unread, and the Secret `nats-triton` of `nereus-system`: drop the parameter, run `nereus nereid apply nats --reef messaging` again, and delete the Secret by hand.
+
+The rooms reef needs no parameter of it and no NATS account of its own (#2078): `nereus reef apply rooms` installs the rooms reef. Triton's issuer is the public realm of step 5, given with `--set` (#2157); without it Triton stops with `--issuer is required`.
+
+```bash
+nereus reef apply rooms
+nereus nereid apply triton \
+  --reef rooms \
+  --set TRITON_ISSUER=https://auth.getnereus.dev/realms/nereus \
+  --set TRITON_JWKS_URL=http://keycloak-server-http.nereus-system.svc:8180/realms/nereus/protocol/openid-connect/certs \
+  --set TRITON_RESOURCE_URL=https://triton.getnereus.dev/mcp
+```
+
+`POST https://triton.getnereus.dev/mcp` with no token answers 401.
 
 Every other login is gone with the old realm: the claude.ai connector `Triton` signs in again, and a token saved from the old realm no longer works.
+
+### 7. Make yourself an administrator User
+
+A new instance has no User or binding, so your every call passes through the `nereus-admins` emergency exit (ADR 0027, teams, roles and Users) and `nereus doctor` warns `emergency-exit`. [`nereus user create`](../../specs/cli/reefs/authorization.html#user-create) takes the e-mail of step 5; [`nereus authorization binding create`](../../specs/cli/reefs/authorization.html#binding-create) gives it `administrator` (#2159).
+
+```bash
+nereus user create owner --email owner@example.com
+nereus authorization binding create owner-admin --role administrator --user owner
+nereus authorization can-i create core/users
+```
+
+``` { .text .output title="output" }
+✓ core/users/owner created
+✓ authorization/bindings/owner-admin created
+yes: authorization/bindings/owner-admin gives administrator to user/owner at the whole instance
+```
+
+From then on your calls take the normal check, and the doctor's count of emergency-exit passes stops growing; its warning goes when the API restarts. You stay in `nereus-admins`, so the exit is still there for an emergency.
 
 ## Check it worked
 
@@ -5937,7 +5968,7 @@ Every command of the environment reef: an environment per agent, made by a Nerei
 - [`nereus environment kubeconfig a > a.kubeconfig`](../../specs/cli/reefs/environment.html#kubeconfig) Its kubeconfig, read with your own credentials
 - [`nereus environment delete a`](../../specs/cli/reefs/environment.html#delete) Deleting it removes the vcluster, then its namespace
 - [`nereus environment create c`](../../specs/cli/reefs/environment.html#expires) At its expiry, its Nereid removes it by itself
-- [`nereus environment create naxos`](../../specs/cli/reefs/environment.html#naxos) The kept cluster is the environment naxos, made through its own Mandate
+- [`nereus environment create nereus`](../../specs/cli/reefs/environment.html#nereus) The kept cluster is the environment nereus, made through its own Mandate
 
 ## Examples
 
@@ -6064,22 +6095,22 @@ Next steps:
   nereus environment kubeconfig c
 ```
 
-### naxos
+### nereus
 
 The CLI's first setup registers the kept k3d cluster; vcluster stays the default.
 
 ```bash
-nereus environment create naxos \
+nereus environment create nereus \
   --owner project/nereus \
   --mandate local
 ```
 
 ``` { .text .output title="output" }
-✓ environment/environments/naxos created (mandate: local, nereid: k3d)
+✓ environment/environments/nereus created (mandate: local, nereid: k3d)
 
 Next steps:
 
-  nereus environment get naxos --watch
+  nereus environment get nereus --watch
 ```
 
 # ideas
@@ -7442,7 +7473,7 @@ Every command of the rooms reef: rooms, peers and the agents' sessions, on a Top
 - [`nereus rooms session list`](../../specs/cli/reefs/rooms.html#session-list) [planned #2076] Every agent connected to Triton, and who started it
 - [`nereus rooms follow`](../../specs/cli/reefs/rooms.html#follow) [planned #2076] A person follows the room where the agents talk
 - [`nereus rooms pull doto`](../../specs/cli/reefs/rooms.html#pull) [planned #2076] A hook pulls each room's new messages into the session
-- [`nereus rooms post "k3d-nereus is mine until 21:30"`](../../specs/cli/reefs/rooms.html#post) [planned #1889] A person posts to the room, as the agents do
+- [`nereus rooms post "k3d-nereus is mine until 21:30"`](../../specs/cli/reefs/rooms.html#post) A person posts to the room, as the agents do
 - [`nereus order create "run make checks"`](../../specs/cli/reefs/rooms.html#orders) [idea] An order goes to one idle agent, and the list follows it
 
 ## Examples
@@ -7659,12 +7690,11 @@ Tell the room the cluster is taken.
 
 ```bash
 nereus rooms post "k3d-nereus is mine until 21:30" \
-  --room nereus \
-  --kind note
+  --room nereus
 ```
 
 ``` { .text .output title="output" }
-✓ rooms/rooms/nereus note posted
+✓ rooms/rooms/nereus note posted (id m-20261122-0128)
 ```
 
 ### orders
@@ -9197,7 +9227,7 @@ A chip says how far a feature is: `built` is code on `main`, `planned` has an is
 |---|---|---|
 | secrets | Vault and Secret, encrypted on the client. [#530](https://github.com/getnereus/nereus/issues/530) | [built] |
 | release | Repository, Source, Target and Release. [ADR 0010](../adr/0010-reefs-at-runtime.md) | [built] |
-| environment | An Environment per agent, with an expiry; the kept cluster `naxos`. [ADR 0026](../adr/0026-environment-reef.md) | [built] |
+| environment | An Environment per agent, with an expiry; the kept cluster `nereus`. [ADR 0026](../adr/0026-environment-reef.md) | [built] |
 | catalog | `Workload`, `Package`, `WorkloadType` and `PackageType`. [ADR 0016](../adr/0016-catalog-reef.md) | [built] |
 | database | A PostgreSQL per Database. [ADR 0017](../adr/0017-resource-reefs.md) | [built] |
 | messaging | Topics and queues on NATS. [ADR 0019](../adr/0019-messaging-reef.md) | [built] |

@@ -58,10 +58,10 @@ references:
     author: "The MCP project"
     url: "https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http"
     about: "MCP (Model Context Protocol) lets an AI app call tools of a server; Streamable HTTP is how a remote server is reached."
-    forUs: "Triton is an MCP server with **two tools**, `send_order` and `list_orders`, added in claude.ai as a custom connector."
+    forUs: "Triton is an MCP server added in claude.ai as a custom connector; its order tools left with #2077, and it serves the peers and the rooms."
     pt:
       about: "O MCP (Model Context Protocol) deixa um app de IA chamar ferramentas de um servidor; o Streamable HTTP é como um servidor remoto é alcançado."
-      forUs: "A porta do Tritão é um servidor MCP com **duas ferramentas**, `send_order` e `list_orders`, adicionado no claude.ai como conector."
+      forUs: "A porta do Tritão é um servidor MCP adicionado no claude.ai como conector; as ferramentas de ordens saíram com o #2077, e ele serve os peers e as salas."
   - name: cloudflare-tunnel-dns
     title: "Cloudflare Tunnel: DNS records"
     author: "Cloudflare"
@@ -175,7 +175,7 @@ slides:
     notes: |-
       What we want to say: **you speak on the phone and the order reaches the open session on your machine**, and you can ask how it is going.
 
-      Triton's MCP server is a second container of Triton's pod; the session listens through Synadia's nats-channel plugin. Merged in #469 (an MCP server that sends orders to agents over NATS).
+      Triton's MCP server is a second container of Triton's pod; the session listens through Synadia's nats-channel plugin. Merged in #469 (an MCP server that sends orders to agents over NATS). The orders left Triton with #2077 (the orders' code leaves Triton, 2026-11-22): a peer message is information, never an order.
 
       Source: controllers/triton/README.md, section "Triton".
     pt:
@@ -186,7 +186,7 @@ slides:
       notes: |-
         O que queremos dizer: **você fala no celular e a ordem chega à sessão aberta na sua máquina**, e dá para perguntar em que pé está.
 
-        O servidor MCP é um segundo container do pod do Tritão; a sessão escuta pelo plugin nats-channel da Synadia. Mergeado em #469 (um servidor MCP que manda ordens aos agentes pelo NATS).
+        O servidor MCP é um segundo container do pod do Tritão; a sessão escuta pelo plugin nats-channel da Synadia. Mergeado em #469 (um servidor MCP que manda ordens aos agentes pelo NATS). As ordens saíram do Tritão com o #2077 (o código das ordens sai do Tritão, 2026-11-22): uma mensagem de peer é informação, nunca uma ordem.
 
         Fonte: controllers/triton/README.md, seção "Triton".
 

@@ -38,7 +38,7 @@ The realm answers at `http://auth.localhost:8080` from the start. [`nereus login
 nereus login --initial-admin
 ```
 
-### 4. Bring up the tunnel
+### 4. Bring up the tunnel and trust it at the ingress gateway
 
 Apply the edge reef and its Nereid `cloudflare` ([Publish at a hostname](edge.md)), keep the credentials file as the secret `edge/cloudflare-tunnel`, then create the Mandate with `--param tunnel=nereus --param credentialsSecret=edge/cloudflare-tunnel --default`. Create the three routes at once: until a Route exists, the tunnel answers 404.
 
@@ -48,11 +48,9 @@ nereus edge route create triton --hostname triton.getnereus.dev
 
 Repeat for `auth` and `portal`.
 
-### 5. Trust the tunnel at the ingress gateway
-
 `numTrustedProxies: 1` keeps cloudflared's `X-Forwarded-Proto: https`, so Keycloak's issuer stays `https://`. Write the Release `istio-gateway` with `--values-file deploy/ingress/istio-gateway-values.yaml --dry-run --output yaml`, [`nereus release apply`](../../specs/cli/reefs/release.html#release-apply) it, then `kubectl apply --filename deploy/ingress/gateway.yaml`.
 
-### 6. Put Google in the realm
+### 5. Put Google in the realm
 
 Only once the tunnel answers. Source the env file, keep the pair as the secret `google-oauth-keycloak`, then apply the Mandate; `mandate apply` replaces every param, so all go together. Then `nereus logout` and `nereus login` at the public realm.
 
@@ -66,15 +64,46 @@ nereus mandate apply keycloak \
   --param googleAdmins=owner@example.com
 ```
 
-### 7. Set the portal's address and bring up Triton
+### 6. Set the portal's address and bring up Triton
 
 [`nereus mandate apply`](../../specs/cli/core.html#mandate-apply) `nereus-portal` with `--param publicUrl=https://portal.getnereus.dev`.
 
-Then the Mandate `messaging-nats` with `--param agents=true` holds Triton's account. It is the messaging reef's default with no match (`--default`, no `--match`), so it holds the Rooms' Topics, which name no engine (ADR 0030).
+Then the Mandate `messaging-nats` is the messaging reef's default with no match (`--default`, no `--match`), so it holds the Rooms' Topics, which name no engine (ADR 0030).
 
-`nereus nereid apply nats --reef messaging` writes it into NATS, `nereus reef apply rooms` installs the rooms reef, and `nereus nereid apply triton --reef rooms` sets `TRITON_ISSUER`, `TRITON_JWKS_URL` and `TRITON_RESOURCE_URL`.
+A cluster that had `--param agents=true` there keeps the old streams of the account `AGENTS` on the claim, unread, and the Secret `nats-triton` of `nereus-system`: drop the parameter, run `nereus nereid apply nats --reef messaging` again, and delete the Secret by hand.
+
+The rooms reef needs no parameter of it and no NATS account of its own (#2078): `nereus reef apply rooms` installs the rooms reef. Triton's issuer is the public realm of step 5, given with `--set` (#2157); without it Triton stops with `--issuer is required`.
+
+```bash
+nereus reef apply rooms
+nereus nereid apply triton \
+  --reef rooms \
+  --set TRITON_ISSUER=https://auth.getnereus.dev/realms/nereus \
+  --set TRITON_JWKS_URL=http://keycloak-server-http.nereus-system.svc:8180/realms/nereus/protocol/openid-connect/certs \
+  --set TRITON_RESOURCE_URL=https://triton.getnereus.dev/mcp
+```
+
+`POST https://triton.getnereus.dev/mcp` with no token answers 401.
 
 Every other login is gone with the old realm: the claude.ai connector `Triton` signs in again, and a token saved from the old realm no longer works.
+
+### 7. Make yourself an administrator User
+
+A new instance has no User or binding, so your every call passes through the `nereus-admins` emergency exit (ADR 0027, teams, roles and Users) and `nereus doctor` warns `emergency-exit`. [`nereus user create`](../../specs/cli/reefs/authorization.html#user-create) takes the e-mail of step 5; [`nereus authorization binding create`](../../specs/cli/reefs/authorization.html#binding-create) gives it `administrator` (#2159).
+
+```bash
+nereus user create owner --email owner@example.com
+nereus authorization binding create owner-admin --role administrator --user owner
+nereus authorization can-i create core/users
+```
+
+``` { .text .output title="output" }
+✓ core/users/owner created
+✓ authorization/bindings/owner-admin created
+yes: authorization/bindings/owner-admin gives administrator to user/owner at the whole instance
+```
+
+From then on your calls take the normal check, and the doctor's count of emergency-exit passes stops growing; its warning goes when the API restarts. You stay in `nereus-admins`, so the exit is still there for an emergency.
 
 ## Check it worked
 

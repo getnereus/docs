@@ -11,7 +11,7 @@ Every command of the environment reef: an environment per agent, made by a Nerei
 - [`nereus environment kubeconfig a > a.kubeconfig`](../../specs/cli/reefs/environment.html#kubeconfig) Its kubeconfig, read with your own credentials
 - [`nereus environment delete a`](../../specs/cli/reefs/environment.html#delete) Deleting it removes the vcluster, then its namespace
 - [`nereus environment create c`](../../specs/cli/reefs/environment.html#expires) At its expiry, its Nereid removes it by itself
-- [`nereus environment create naxos`](../../specs/cli/reefs/environment.html#naxos) The kept cluster is the environment naxos, made through its own Mandate
+- [`nereus environment create nereus`](../../specs/cli/reefs/environment.html#nereus) The kept cluster is the environment nereus, made through its own Mandate
 
 ## Examples
 
@@ -138,20 +138,20 @@ Next steps:
   nereus environment kubeconfig c
 ```
 
-### naxos
+### nereus
 
 The CLI's first setup registers the kept k3d cluster; vcluster stays the default.
 
 ```bash
-nereus environment create naxos \
+nereus environment create nereus \
   --owner project/nereus \
   --mandate local
 ```
 
 ``` { .text .output title="output" }
-✓ environment/environments/naxos created (mandate: local, nereid: k3d)
+✓ environment/environments/nereus created (mandate: local, nereid: k3d)
 
 Next steps:
 
-  nereus environment get naxos --watch
+  nereus environment get nereus --watch
 ```

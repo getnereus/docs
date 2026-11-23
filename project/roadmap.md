@@ -17,8 +17,8 @@ Open issues only; each carries its context, dependencies and "Done when".
 | Azure Nereid of the cost reef | [#156](https://github.com/getnereus/nereus/issues/156) | [planned #156] |
 | Azure Key Vault Nereid that creates or adopts vaults | [#81](https://github.com/getnereus/nereus/issues/81) | [planned #81] |
 | A real Azure test in CI | [#170](https://github.com/getnereus/nereus/issues/170) | [planned #170] |
-| Messaging: a `nats` Nereid applied by `nereus` on naxos | [#576](https://github.com/getnereus/nereus/issues/576) | [planned #576] |
-| Edge: the `cloudflare` Nereid publishes naxos's endpoints | [#577](https://github.com/getnereus/nereus/issues/577) | [planned #577] |
+| Messaging: a `nats` Nereid applied by `nereus` on k3d-nereus | [#576](https://github.com/getnereus/nereus/issues/576) | [planned #576] |
+| Edge: the `cloudflare` Nereid publishes k3d-nereus's endpoints | [#577](https://github.com/getnereus/nereus/issues/577) | [planned #577] |
 | Build: Dockerfile with named contexts and build arguments | [#1614](https://github.com/getnereus/nereus/issues/1614) | [planned #1614] |
 | Every published image is a catalog Workload with a Trigger | [#1615](https://github.com/getnereus/nereus/issues/1615) | [planned #1615] |
 | Publish a release from the Builds of main | [#1616](https://github.com/getnereus/nereus/issues/1616) | [planned #1616] |

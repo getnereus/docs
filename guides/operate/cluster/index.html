@@ -3702,7 +3702,7 @@
     
   
   
-    <span class="md-status md-status--planned"></span>
+    <span class="md-status md-status--built"></span>
   
 
   
@@ -7292,10 +7292,12 @@ chmod<span class="w"> </span><span class="m">0644</span><span class="w"> </span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/openid/v1/jwks</span>
 </code></pre></div>
 <h3 id="5-create-the-cluster">5. Create the cluster<a class="headerlink" href="#5-create-the-cluster" title="Permanent link">&para;</a></h3>
-<p>No Traefik, since the profile brings Istio's Gateway; the Gateway on port 8080 of the loopback; the CA on every node and the configuration on the server. Docker mounts absolute paths.</p>
+<p>No load balancer, since k3d's is nginx, and the API on the loopback only (#2152); no Traefik, since the profile brings Istio's Gateway; the Gateway on port 8080 of the loopback; the CA on every node and the configuration on the server. Docker mounts absolute paths.</p>
 <div class="language-bash highlight"><pre><span></span><code>k3d<span class="w"> </span>cluster<span class="w"> </span>create<span class="w"> </span>nereus<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--no-lb<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--api-port<span class="w"> </span><span class="s2">"127.0.0.1:random"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--k3s-arg<span class="w"> </span><span class="s2">"--disable=traefik@server:*"</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--port<span class="w"> </span><span class="s2">"127.0.0.1:8080:80@loadbalancer"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--port<span class="w"> </span><span class="s2">"127.0.0.1:8080:80@server:0:direct"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--registry-config<span class="w"> </span>nereus/registries.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--volume<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span><span class="s2">/nereus/registry:/etc/nereus/registry@all"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--volume<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span><span class="s2">/nereus/authentication-config.yaml:/etc/rancher/nereus/authentication-config.yaml@server:*"</span><span class="w"> </span><span class="se">\</span>

@@ -81,4 +81,4 @@ paused   no   (<main clone>/.deploy-paused)
 ## Learn more
 
 - `scripts/deploy/live --help`: the settings, all options or environment variables (`NEREUS_CHART_REF`, `NEREUS_CHART_VERSION`, `NEREUS_LIVE_INGRESS_ADDRESS`), so the repository holds no address or token.
-- The line is a stand-in: on the platform, naxos mirrors `main` and builds it (#159, #1613).
+- The line is a stand-in: on the platform, k3d-nereus mirrors `main` and builds it (#159, #1613).

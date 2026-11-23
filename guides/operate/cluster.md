@@ -76,12 +76,14 @@ anonymous:
 
 ### 5. Create the cluster
 
-No Traefik, since the profile brings Istio's Gateway; the Gateway on port 8080 of the loopback; the CA on every node and the configuration on the server. Docker mounts absolute paths.
+No load balancer, since k3d's is nginx, and the API on the loopback only (#2152); no Traefik, since the profile brings Istio's Gateway; the Gateway on port 8080 of the loopback; the CA on every node and the configuration on the server. Docker mounts absolute paths.
 
 ```bash
 k3d cluster create nereus \
+  --no-lb \
+  --api-port "127.0.0.1:random" \
   --k3s-arg "--disable=traefik@server:*" \
-  --port "127.0.0.1:8080:80@loadbalancer" \
+  --port "127.0.0.1:8080:80@server:0:direct" \
   --registry-config nereus/registries.yaml \
   --volume "${PWD}/nereus/registry:/etc/nereus/registry@all" \
   --volume "${PWD}/nereus/authentication-config.yaml:/etc/rancher/nereus/authentication-config.yaml@server:*" \

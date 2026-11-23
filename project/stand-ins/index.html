@@ -3512,7 +3512,7 @@
     
   
   
-    <span class="md-status md-status--planned"></span>
+    <span class="md-status md-status--built"></span>
   
 
   
@@ -6916,7 +6916,7 @@
 </tr>
 <tr>
 <td><code>scripts/deploy/line run</code> verifies a <code>main</code> by hand with <code>make scene-core</code>, and <code>make release</code> publishes it from the owner's machine (<a href="https://github.com/getnereus/nereus/issues/1611">#1611</a>, <a href="../../guides/operate/deploy-live/">walkthrough</a>)</td>
-<td>The line on the platform: naxos mirrors <code>main</code> and builds it (<a href="https://github.com/getnereus/nereus/issues/1613">#1613</a>, <a href="https://github.com/getnereus/nereus/issues/1614">#1614</a>, <a href="https://github.com/getnereus/nereus/issues/1615">#1615</a>), publishes the release (<a href="https://github.com/getnereus/nereus/issues/1616">#1616</a>) and upgrades itself (<a href="https://github.com/getnereus/nereus/issues/1531">#1531</a>)</td>
+<td>The line on the platform: k3d-nereus mirrors <code>main</code> and builds it (<a href="https://github.com/getnereus/nereus/issues/1613">#1613</a>, <a href="https://github.com/getnereus/nereus/issues/1614">#1614</a>, <a href="https://github.com/getnereus/nereus/issues/1615">#1615</a>), publishes the release (<a href="https://github.com/getnereus/nereus/issues/1616">#1616</a>) and upgrades itself (<a href="https://github.com/getnereus/nereus/issues/1531">#1531</a>)</td>
 </tr>
 <tr>
 <td>The notes of the <code>ideas</code> reef reach the cluster as a host folder that <code>rclone sync</code> fills every hour from the owner's machine, mounted on the k3d nodes (<code>NEREUS_K3D_NOTES</code>) and read by <code>doris</code> (<a href="https://github.com/getnereus/nereus/issues/1106">#1106</a>, <a href="https://github.com/getnereus/nereus/tree/main/controllers/doris#stand-in">controllers/doris</a>)</td>
@@ -7107,7 +7107,7 @@
 <td>Commands built from any reef's schema (ADR 0010, open questions; <a href="https://github.com/getnereus/nereus/issues/18">#18</a>)</td>
 </tr>
 <tr>
-<td>The <code>k3d</code> Nereid knows only the cluster it runs in and adopts it as <code>naxos</code> (<a href="https://github.com/getnereus/nereus/issues/575">#575</a>, ADR 0026)</td>
+<td>The <code>k3d</code> Nereid knows only the cluster it runs in and adopts it as <code>nereus</code> (<a href="https://github.com/getnereus/nereus/issues/575">#575</a>, ADR 0026)</td>
 <td>A Nereid that makes clusters, behind its own Mandate</td>
 </tr>
 <tr>
@@ -7127,10 +7127,6 @@
 <td>Triton as a Nereid of the <code>messaging</code> reef (<a href="https://github.com/getnereus/nereus/tree/main/controllers/triton">controllers/triton</a>)</td>
 </tr>
 <tr>
-<td>Triton reads its NATS password from the Secret <code>nats-triton</code> of <code>nereus-system</code>; its account <code>AGENTS</code> is written by the <code>nats</code> Nereid into its own config when the Mandate says <code>agents=true</code> (<a href="https://github.com/getnereus/nereus/issues/1954">#1954</a>)</td>
-<td>A binding of the <code>messaging</code> reef that carries its own credential, one per owner</td>
-</tr>
-<tr>
 <td>The named tunnel <code>nereus</code> (renamed from <code>triton</code>, <a href="https://github.com/getnereus/nereus/issues/1931">#1931</a>), cloudflared a plain Deployment of <code>nereus-system</code> with its credential in the secrets reef, with its hostnames (<code>triton.getnereus.dev</code>, <code>auth.getnereus.dev</code> for the keycloak Nereid's realm, <a href="https://github.com/getnereus/nereus/issues/495">#495</a>, and <code>portal.getnereus.dev</code> for the portal, its DNS record made once with <code>cloudflared tunnel route dns</code>, <a href="https://github.com/getnereus/nereus/issues/732">#732</a>) set up by hand with <code>cloudflared</code> (the shared token retired by #495: Triton takes Keycloak logins)</td>
 <td>m15 as an Agent of the <code>ai</code> reef, and the <code>edge</code> reef with a <code>cloudflare</code> Nereid publishing each hostname as a Route (<a href="https://github.com/getnereus/nereus/issues/470">#470</a>) (<a href="https://github.com/getnereus/nereus/blob/main/deploy/edge/README.md">deploy/edge</a>)</td>
 </tr>
@@ -7141,10 +7137,6 @@
 <tr>
 <td><code>test/conformance &lt;reef&gt; --nereid &lt;nereid&gt;</code>, a script on the throwaway cluster of <code>make scene-release</code>, checks a Nereid's answers kind by kind (<a href="https://github.com/getnereus/nereus/issues/528">#528</a>)</td>
 <td><code>nereus nereid conformance &lt;reef&gt; --image &lt;ref&gt;</code>, the suite of layer 3 with a report per digest, gating the Nereid registry (<a href="https://github.com/getnereus/nereus/issues/109">#109</a>)</td>
-</tr>
-<tr>
-<td><code>scripts/triton/orders-follow</code>: follows Triton's orders live from the terminal, calling Triton's <code>follow_orders</code> in a loop with <code>test/mcp-call</code> (<a href="https://github.com/getnereus/nereus/issues/516">#516</a>)</td>
-<td>A <code>nereus</code> command of the <code>messaging</code> reef that follows its orders (<a href="https://github.com/getnereus/nereus/tree/main/controllers/triton#follow-the-orders">controllers/triton</a>)</td>
 </tr>
 <tr>
 <td>Sessions on one machine coordinate through Claude Code's cross-session messaging, by the protocol and the <code>room</code> skill of the owner's <code>linux</code> repository, with this repository's shared resources in <a href="../../agent/peers/">Peers</a> (<a href="https://github.com/getnereus/nereus/issues/621">#621</a>)</td>

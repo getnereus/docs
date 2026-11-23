@@ -531,7 +531,7 @@
               "result": "pass"
             },
             {
-              "name": "environment naxos",
+              "name": "environment nereus",
               "ms": 31,
               "result": "pass"
             }
@@ -615,7 +615,7 @@
               "result": "pass"
             },
             {
-              "name": "environment naxos",
+              "name": "environment nereus",
               "ms": 6,
               "result": "pass"
             }

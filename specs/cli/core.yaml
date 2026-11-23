@@ -393,14 +393,15 @@ slides:
             registry    skipped  needs api
             cli         pass     nereus and nrs on PATH
             completion  pass     nereus and nrs in ~/.bash_completions
+            k3d         pass     no load balancer, every port on the loopback
 
-            ✗ 1 of 10 checks failed, 7 skipped
+            ✗ 1 of 11 checks failed, 7 skipped
 
             Next steps:
 
               nereus login https://<the instance's address>
     notes: |-
-      **The Nereus API is the one door, and it cannot lie** (#799, ADR 0018): the cluster's checks run in the API, whose ServiceAccount only reads (`GET /v1/doctor`); the command adds only what the API cannot see, this machine's CLI and its completion. Only `pass` counts as passing, and no secret's value is read. `--skip <check>` leaves one out.
+      **The Nereus API is the one door, and it cannot lie** (#799, ADR 0018): the cluster's checks run in the API, whose ServiceAccount only reads (`GET /v1/doctor`); the command adds only what the API cannot see, this machine's CLI, its completion and its k3d clusters, which warn on a load balancer (nginx) or a port off the loopback (#2152). Only `pass` counts as passing, and no secret's value is read. `--skip <check>` leaves one out.
 
       **The output is from an offline run with no instance** (a throwaway config and no kubeconfig), since no walkthrough page records it: on a running instance every check runs, and a person outside `nereus-admins` sees the rest without detail.
     pt:
@@ -408,7 +409,7 @@ slides:
       message: "Um pass ou fail por verificação, com o comando que ajuda"
       accent: "o comando que ajuda"
       notes: |-
-        **A API do Nereus é a única porta, e ela não mente** (#799, ADR 0018): as verificações do cluster rodam na API, cuja ServiceAccount só lê (`GET /v1/doctor`); o comando acrescenta só o que a API não vê, o CLI desta máquina e o seu completion. Só `pass` conta como aprovado, e nenhum valor de secret é lido. O `--skip <check>` deixa uma de fora.
+        **A API do Nereus é a única porta, e ela não mente** (#799, ADR 0018): as verificações do cluster rodam na API, cuja ServiceAccount só lê (`GET /v1/doctor`); o comando acrescenta só o que a API não vê, o CLI desta máquina, o seu completion e os seus clusters k3d, que avisam quando há um load balancer (nginx) ou uma porta fora do loopback (#2152). Só `pass` conta como aprovado, e nenhum valor de secret é lido. O `--skip <check>` deixa uma de fora.
 
         **A saída é de uma execução offline sem instância** (uma config descartável e sem kubeconfig), já que nenhuma página do walkthrough a grava: numa instância rodando, toda verificação roda, e uma pessoa fora de `nereus-admins` vê o resto sem detalhe.
 

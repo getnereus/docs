@@ -3512,7 +3512,7 @@
     
   
   
-    <span class="md-status md-status--planned"></span>
+    <span class="md-status md-status--built"></span>
   
 
   
@@ -7145,7 +7145,7 @@
 </tr>
 <tr>
 <td><strong>rooms</strong></td>
-<td>The reef of the conversation between agents (ADR 0030, #2067): <code>rooms.getnereus.dev/v1alpha1</code>, its kinds <code>Room</code> (the default kind, so <code>nereus rooms create</code>, <code>apply</code>, <code>list</code>, <code>get</code> and <code>delete</code>) and <code>Peer</code> (an agent's session in the rooms, <code>nereus rooms peer list</code> and <code>get</code>), with <code>nereus rooms session create</code> and <code>list</code> and <code>nereus rooms follow</code>, <code>pull</code> and <code>post</code>. The Nereid <code>triton</code> requires the messaging reef and asks it for a Topic <code>room-&lt;room&gt;</code> per Room. <code>create</code>, <code>apply</code>, <code>list</code>, <code>get</code> and <code>delete</code> of a Room go through the Nereus API, asked on the Room's owner: a team's members create rooms owned by the team's owner, admins delete them (#1491), and a new room past the default Mandate's <code>maxRooms</code> (20) fails. The rest is planned in <a href="../../specs/cli/reefs/rooms.html">its deck</a> until the journey #2067 builds it; until #2076 the sessions run as <code>nereus messaging session</code> and the room as <code>nereus room</code>.</td>
+<td>The reef of the conversation between agents (ADR 0030, #2067): <code>rooms.getnereus.dev/v1alpha1</code>, its kinds <code>Room</code> (the default kind, so <code>nereus rooms create</code>, <code>apply</code>, <code>list</code>, <code>get</code> and <code>delete</code>) and <code>Peer</code> (an agent's session in the rooms, <code>nereus rooms peer list</code> and <code>get</code>), with <code>nereus rooms join</code> and <code>leave</code> (#2075), <code>nereus rooms follow</code> and <code>pull</code> (#2076) and <code>post</code> (#1889). The Nereid <code>triton</code> requires the messaging reef and asks it for a Topic <code>room-&lt;room&gt;</code> per Room. <code>create</code>, <code>apply</code>, <code>list</code>, <code>get</code> and <code>delete</code> of a Room go through the Nereus API, asked on the Room's owner: a team's members create rooms owned by the team's owner, admins delete them (#1491), and a new room past the default Mandate's <code>maxRooms</code> (20) fails. The rest is planned in <a href="../../specs/cli/reefs/rooms.html">its deck</a> until the journey #2067 builds it; a session joins with <code>nereus rooms join</code> and leaves with <code>nereus rooms leave</code> (#2075); the old names are mapped in <a href="#legacy-commands">Legacy commands</a>.</td>
 <td>none</td>
 </tr>
 <tr>
@@ -7452,6 +7452,33 @@ azure-key-vault  secrets  ghcr.io/getnereus/nereus/secrets-azure-key-vault-contr
 <tr>
 <td>none</td>
 <td><code>nereus status</code>, <code>nereus doctor</code>, <code>nereus nereid suggest</code>, <code>nereus mandate create</code> (new)</td>
+</tr>
+</tbody>
+</table>
+<p>The commands of the room moved under the rooms reef (#2076, #2075). Each old name is hidden from the help and prints one line, <code>&lt;old&gt; moved: run \</code><new>`<code>, exiting 2;</code>nereus room pull<code>stays a silent alias, since the hooks of sessions started before #2076 run it, and</code>nereus mcp local add` rewrites those hooks.</p>
+<table>
+<thead>
+<tr>
+<th>Old name</th>
+<th>New form</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nereus room follow</code></td>
+<td><code>nereus rooms follow</code></td>
+</tr>
+<tr>
+<td><code>nereus room pull</code> (a hook's command)</td>
+<td><code>nereus rooms pull</code>, the old name still runs</td>
+</tr>
+<tr>
+<td><code>nereus messaging session list</code></td>
+<td><code>nereus rooms peer list</code></td>
+</tr>
+<tr>
+<td><code>nereus messaging session create</code></td>
+<td><code>nereus rooms join</code> (#2075)</td>
 </tr>
 </tbody>
 </table>

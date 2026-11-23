@@ -1466,10 +1466,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#4-bring-up-the-tunnel" class="md-nav__link">
+  <a href="#4-bring-up-the-tunnel-and-trust-it-at-the-ingress-gateway" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Bring up the tunnel
+        4. Bring up the tunnel and trust it at the ingress gateway
       
     </span>
   </a>
@@ -1477,10 +1477,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#5-trust-the-tunnel-at-the-ingress-gateway" class="md-nav__link">
+  <a href="#5-put-google-in-the-realm" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. Trust the tunnel at the ingress gateway
+        5. Put Google in the realm
       
     </span>
   </a>
@@ -1488,10 +1488,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#6-put-google-in-the-realm" class="md-nav__link">
+  <a href="#6-set-the-portals-address-and-bring-up-triton" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. Put Google in the realm
+        6. Set the portal's address and bring up Triton
       
     </span>
   </a>
@@ -1499,10 +1499,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#7-set-the-portals-address-and-bring-up-triton" class="md-nav__link">
+  <a href="#7-make-yourself-an-administrator-user" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7. Set the portal's address and bring up Triton
+        7. Make yourself an administrator User
       
     </span>
   </a>
@@ -3702,7 +3702,7 @@
     
   
   
-    <span class="md-status md-status--planned"></span>
+    <span class="md-status md-status--built"></span>
   
 
   
@@ -7107,10 +7107,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#4-bring-up-the-tunnel" class="md-nav__link">
+  <a href="#4-bring-up-the-tunnel-and-trust-it-at-the-ingress-gateway" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Bring up the tunnel
+        4. Bring up the tunnel and trust it at the ingress gateway
       
     </span>
   </a>
@@ -7118,10 +7118,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#5-trust-the-tunnel-at-the-ingress-gateway" class="md-nav__link">
+  <a href="#5-put-google-in-the-realm" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. Trust the tunnel at the ingress gateway
+        5. Put Google in the realm
       
     </span>
   </a>
@@ -7129,10 +7129,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#6-put-google-in-the-realm" class="md-nav__link">
+  <a href="#6-set-the-portals-address-and-bring-up-triton" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. Put Google in the realm
+        6. Set the portal's address and bring up Triton
       
     </span>
   </a>
@@ -7140,10 +7140,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#7-set-the-portals-address-and-bring-up-triton" class="md-nav__link">
+  <a href="#7-make-yourself-an-administrator-user" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7. Set the portal's address and bring up Triton
+        7. Make yourself an administrator User
       
     </span>
   </a>
@@ -7225,14 +7225,13 @@
 <p>The realm answers at <code>http://auth.localhost:8080</code> from the start. <a href="../../../specs/cli/reefs/authentication.html#login-initial-admin"><code>nereus login --initial-admin</code></a> reads the admin's password with your kubeconfig.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>login<span class="w"> </span>--initial-admin
 </code></pre></div>
-<h3 id="4-bring-up-the-tunnel">4. Bring up the tunnel<a class="headerlink" href="#4-bring-up-the-tunnel" title="Permanent link">&para;</a></h3>
+<h3 id="4-bring-up-the-tunnel-and-trust-it-at-the-ingress-gateway">4. Bring up the tunnel and trust it at the ingress gateway<a class="headerlink" href="#4-bring-up-the-tunnel-and-trust-it-at-the-ingress-gateway" title="Permanent link">&para;</a></h3>
 <p>Apply the edge reef and its Nereid <code>cloudflare</code> (<a href="../edge/">Publish at a hostname</a>), keep the credentials file as the secret <code>edge/cloudflare-tunnel</code>, then create the Mandate with <code>--param tunnel=nereus --param credentialsSecret=edge/cloudflare-tunnel --default</code>. Create the three routes at once: until a Route exists, the tunnel answers 404.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>edge<span class="w"> </span>route<span class="w"> </span>create<span class="w"> </span>triton<span class="w"> </span>--hostname<span class="w"> </span>triton.getnereus.dev
 </code></pre></div>
 <p>Repeat for <code>auth</code> and <code>portal</code>.</p>
-<h3 id="5-trust-the-tunnel-at-the-ingress-gateway">5. Trust the tunnel at the ingress gateway<a class="headerlink" href="#5-trust-the-tunnel-at-the-ingress-gateway" title="Permanent link">&para;</a></h3>
 <p><code>numTrustedProxies: 1</code> keeps cloudflared's <code>X-Forwarded-Proto: https</code>, so Keycloak's issuer stays <code>https://</code>. Write the Release <code>istio-gateway</code> with <code>--values-file deploy/ingress/istio-gateway-values.yaml --dry-run --output yaml</code>, <a href="../../../specs/cli/reefs/release.html#release-apply"><code>nereus release apply</code></a> it, then <code>kubectl apply --filename deploy/ingress/gateway.yaml</code>.</p>
-<h3 id="6-put-google-in-the-realm">6. Put Google in the realm<a class="headerlink" href="#6-put-google-in-the-realm" title="Permanent link">&para;</a></h3>
+<h3 id="5-put-google-in-the-realm">5. Put Google in the realm<a class="headerlink" href="#5-put-google-in-the-realm" title="Permanent link">&para;</a></h3>
 <p>Only once the tunnel answers. Source the env file, keep the pair as the secret <code>google-oauth-keycloak</code>, then apply the Mandate; <code>mandate apply</code> replaces every param, so all go together. Then <code>nereus logout</code> and <code>nereus login</code> at the public realm.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>mandate<span class="w"> </span>apply<span class="w"> </span>keycloak<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--reef<span class="w"> </span>authentication<span class="w"> </span><span class="se">\</span>
@@ -7242,11 +7241,31 @@
 <span class="w">  </span>--param<span class="w"> </span><span class="nv">googleUsers</span><span class="o">=</span>owner@example.com<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--param<span class="w"> </span><span class="nv">googleAdmins</span><span class="o">=</span>owner@example.com
 </code></pre></div>
-<h3 id="7-set-the-portals-address-and-bring-up-triton">7. Set the portal's address and bring up Triton<a class="headerlink" href="#7-set-the-portals-address-and-bring-up-triton" title="Permanent link">&para;</a></h3>
+<h3 id="6-set-the-portals-address-and-bring-up-triton">6. Set the portal's address and bring up Triton<a class="headerlink" href="#6-set-the-portals-address-and-bring-up-triton" title="Permanent link">&para;</a></h3>
 <p><a href="../../../specs/cli/core.html#mandate-apply"><code>nereus mandate apply</code></a> <code>nereus-portal</code> with <code>--param publicUrl=https://portal.getnereus.dev</code>.</p>
-<p>Then the Mandate <code>messaging-nats</code> with <code>--param agents=true</code> holds Triton's account. It is the messaging reef's default with no match (<code>--default</code>, no <code>--match</code>), so it holds the Rooms' Topics, which name no engine (ADR 0030).</p>
-<p><code>nereus nereid apply nats --reef messaging</code> writes it into NATS, <code>nereus reef apply rooms</code> installs the rooms reef, and <code>nereus nereid apply triton --reef rooms</code> sets <code>TRITON_ISSUER</code>, <code>TRITON_JWKS_URL</code> and <code>TRITON_RESOURCE_URL</code>.</p>
+<p>Then the Mandate <code>messaging-nats</code> is the messaging reef's default with no match (<code>--default</code>, no <code>--match</code>), so it holds the Rooms' Topics, which name no engine (ADR 0030).</p>
+<p>A cluster that had <code>--param agents=true</code> there keeps the old streams of the account <code>AGENTS</code> on the claim, unread, and the Secret <code>nats-triton</code> of <code>nereus-system</code>: drop the parameter, run <code>nereus nereid apply nats --reef messaging</code> again, and delete the Secret by hand.</p>
+<p>The rooms reef needs no parameter of it and no NATS account of its own (#2078): <code>nereus reef apply rooms</code> installs the rooms reef. Triton's issuer is the public realm of step 5, given with <code>--set</code> (#2157); without it Triton stops with <code>--issuer is required</code>.</p>
+<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>reef<span class="w"> </span>apply<span class="w"> </span>rooms
+nereus<span class="w"> </span>nereid<span class="w"> </span>apply<span class="w"> </span>triton<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--reef<span class="w"> </span>rooms<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="nv">TRITON_ISSUER</span><span class="o">=</span>https://auth.getnereus.dev/realms/nereus<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="nv">TRITON_JWKS_URL</span><span class="o">=</span>http://keycloak-server-http.nereus-system.svc:8180/realms/nereus/protocol/openid-connect/certs<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="nv">TRITON_RESOURCE_URL</span><span class="o">=</span>https://triton.getnereus.dev/mcp
+</code></pre></div>
+<p><code>POST https://triton.getnereus.dev/mcp</code> with no token answers 401.</p>
 <p>Every other login is gone with the old realm: the claude.ai connector <code>Triton</code> signs in again, and a token saved from the old realm no longer works.</p>
+<h3 id="7-make-yourself-an-administrator-user">7. Make yourself an administrator User<a class="headerlink" href="#7-make-yourself-an-administrator-user" title="Permanent link">&para;</a></h3>
+<p>A new instance has no User or binding, so your every call passes through the <code>nereus-admins</code> emergency exit (ADR 0027, teams, roles and Users) and <code>nereus doctor</code> warns <code>emergency-exit</code>. <a href="../../../specs/cli/reefs/authorization.html#user-create"><code>nereus user create</code></a> takes the e-mail of step 5; <a href="../../../specs/cli/reefs/authorization.html#binding-create"><code>nereus authorization binding create</code></a> gives it <code>administrator</code> (#2159).</p>
+<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>user<span class="w"> </span>create<span class="w"> </span>owner<span class="w"> </span>--email<span class="w"> </span>owner@example.com
+nereus<span class="w"> </span>authorization<span class="w"> </span>binding<span class="w"> </span>create<span class="w"> </span>owner-admin<span class="w"> </span>--role<span class="w"> </span>administrator<span class="w"> </span>--user<span class="w"> </span>owner
+nereus<span class="w"> </span>authorization<span class="w"> </span>can-i<span class="w"> </span>create<span class="w"> </span>core/users
+</code></pre></div>
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ core/users/owner created
+✓ authorization/bindings/owner-admin created
+yes: authorization/bindings/owner-admin gives administrator to user/owner at the whole instance
+</code></pre></div>
+<p>From then on your calls take the normal check, and the doctor's count of emergency-exit passes stops growing; its warning goes when the API restarts. You stay in <code>nereus-admins</code>, so the exit is still there for an emergency.</p>
 <h2 id="check-it-worked">Check it worked<a class="headerlink" href="#check-it-worked" title="Permanent link">&para;</a></h2>
 <p><a href="../../../specs/cli/core.html#status"><code>nereus status</code></a> shows every reef Ready; <code>curl</code> on <code>https://triton.getnereus.dev/healthz</code> and <code>https://portal.getnereus.dev/</code> answers 200, and the realm <code>master</code> answers 404 from outside.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>status

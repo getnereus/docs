@@ -3431,10 +3431,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#naxos" class="md-nav__link">
+  <a href="#nereus" class="md-nav__link">
     <span class="md-ellipsis">
       
-        naxos
+        nereus
       
     </span>
   </a>
@@ -3689,7 +3689,7 @@
     
   
   
-    <span class="md-status md-status--planned"></span>
+    <span class="md-status md-status--built"></span>
   
 
   
@@ -7138,10 +7138,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#naxos" class="md-nav__link">
+  <a href="#nereus" class="md-nav__link">
     <span class="md-ellipsis">
       
-        naxos
+        nereus
       
     </span>
   </a>
@@ -7193,8 +7193,8 @@
   Deleting it removes the vcluster, then its namespace</li>
 <li><a href="../../../specs/cli/reefs/environment.html#expires"><code>nereus environment create c</code></a><br>
   At its expiry, its Nereid removes it by itself</li>
-<li><a href="../../../specs/cli/reefs/environment.html#naxos"><code>nereus environment create naxos</code></a><br>
-  The kept cluster is the environment naxos, made through its own Mandate</li>
+<li><a href="../../../specs/cli/reefs/environment.html#nereus"><code>nereus environment create nereus</code></a><br>
+  The kept cluster is the environment nereus, made through its own Mandate</li>
 </ul>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <h3 id="setup">setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h3>
@@ -7279,17 +7279,17 @@ Next steps:
   nereus environment get c --watch
   nereus environment kubeconfig c
 </code></pre></div>
-<h3 id="naxos">naxos<a class="headerlink" href="#naxos" title="Permanent link">&para;</a></h3>
+<h3 id="nereus">nereus<a class="headerlink" href="#nereus" title="Permanent link">&para;</a></h3>
 <p>The CLI's first setup registers the kept k3d cluster; vcluster stays the default.</p>
-<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>environment<span class="w"> </span>create<span class="w"> </span>naxos<span class="w"> </span><span class="se">\</span>
+<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>environment<span class="w"> </span>create<span class="w"> </span>nereus<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--owner<span class="w"> </span>project/nereus<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--mandate<span class="w"> </span><span class="nb">local</span>
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ environment/environments/naxos created (mandate: local, nereid: k3d)
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ environment/environments/nereus created (mandate: local, nereid: k3d)
 
 Next steps:
 
-  nereus environment get naxos --watch
+  nereus environment get nereus --watch
 </code></pre></div>
 
 

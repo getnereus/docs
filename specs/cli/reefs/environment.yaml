@@ -33,7 +33,7 @@ slides:
     pt:
       message: "O reef environment"
       notes: |-
-        **A fonte da verdade dos comandos do reef environment** (#477). Todo comando aqui está pronto menos `naxos` (planejado, #575): o próprio CLI os constrói a partir do contrato que ele fixa (`cli/src/nereus/commands/environment.py`, #620 (a Nereid vcluster do reef environment)), e as saídas são o que eles imprimem, gravadas no cluster descartável pelo `make scene-environment`.
+        **A fonte da verdade dos comandos do reef environment** (#477). Todo comando aqui está pronto menos `nereus` (planejado, #575): o próprio CLI os constrói a partir do contrato que ele fixa (`cli/src/nereus/commands/environment.py`, #620 (a Nereid vcluster do reef environment)), e as saídas são o que eles imprimem, gravadas no cluster descartável pelo `make scene-environment`.
 
         **Agentes em paralelo ganham cada um o seu ambiente** em vez de fazer fila pelo único cluster descartável: um Environment pedido com uma expiração vira um vcluster dentro do cluster atual, com a Nereid vcluster, e some sozinho.
 
@@ -309,39 +309,39 @@ slides:
       notes: |-
         **Um Environment expirado fica, `Expired`, sem nada por trás**: o vcluster e o seu namespace se foram, e o registro mostra o que aconteceu até alguém apagá-lo.
 
-  - name: naxos
+  - name: nereus
     act: environment
-    topic: "naxos"
+    topic: "nereus"
     status: built
     issue: 575
-    message: "The kept cluster is the environment naxos, made through its own Mandate"
-    accent: "naxos"
+    message: "The kept cluster is the environment nereus, made through its own Mandate"
+    accent: "nereus"
     terminal:
       steps:
         - comment: "The CLI's first setup registers the kept k3d cluster; vcluster stays the default"
-          run: "nereus environment create naxos"
+          run: "nereus environment create nereus"
           options: ["--owner project/nereus", "--mandate local"]
           output: |-
-            ✓ environment/environments/naxos created (mandate: local, nereid: k3d)
+            ✓ environment/environments/nereus created (mandate: local, nereid: k3d)
 
             Next steps:
 
-              nereus environment get naxos --watch
+              nereus environment get nereus --watch
         - run: "nereus environment list"
           output: |-
             ENVIRONMENT  OWNER           NEREID    STATUS  SIZE   EXPIRES
-            naxos        Project/nereus  k3d       Ready   -      -
+            nereus        Project/nereus  k3d       Ready   -      -
             pr-123       Project/nereus  vcluster  Ready   small  2d
     dependsOn: [create]
     notes: |-
-      **The kept k3d cluster is the Environment `naxos`** (ADR 0026, the environment reef), a disposable label like any environment's, never `prod`: swapping the cluster changes the environment, not the Workload. The `k3d` Nereid knows only the cluster it runs in: it adopts it, writes `status.kubernetes`, refuses a second one and never deletes the cluster, a stand-in until a Nereid makes clusters.
+      **The kept k3d cluster is the Environment `nereus`** (ADR 0026, the environment reef), a disposable label like any environment's, never `prod`: swapping the cluster changes the environment, not the Workload. The `k3d` Nereid knows only the cluster it runs in: it adopts it, writes `status.kubernetes`, refuses a second one and never deletes the cluster, a stand-in until a Nereid makes clusters.
 
-      **The Mandate is the one named, else the reef's default**: the vcluster Mandate stays the default, so `naxos` is the only environment that names one (`--mandate local`). A release with `--target naxos` reads its `status` like any environment's.
+      **The Mandate is the one named, else the reef's default**: the vcluster Mandate stays the default, so `nereus` is the only environment that names one (`--mandate local`). A release with `--target nereus` reads its `status` like any environment's.
     pt:
-      topic: "naxos"
-      message: "O cluster mantido é o ambiente naxos, feito pelo seu próprio Mandate"
-      accent: "naxos"
+      topic: "nereus"
+      message: "O cluster mantido é o ambiente nereus, feito pelo seu próprio Mandate"
+      accent: "nereus"
       notes: |-
-        **O cluster k3d mantido é o Environment `naxos`** (ADR 0026, o reef environment), um rótulo descartável como o de qualquer ambiente, nunca `prod`: trocar o cluster muda o ambiente, não o Workload. A Nereid `k3d` só conhece o cluster onde roda: ela o adota, escreve `status.kubernetes`, recusa um segundo e nunca apaga o cluster, um stand-in até uma Nereid criar clusters.
+        **O cluster k3d mantido é o Environment `nereus`** (ADR 0026, o reef environment), um rótulo descartável como o de qualquer ambiente, nunca `prod`: trocar o cluster muda o ambiente, não o Workload. A Nereid `k3d` só conhece o cluster onde roda: ela o adota, escreve `status.kubernetes`, recusa um segundo e nunca apaga o cluster, um stand-in até uma Nereid criar clusters.
 
-        **O Mandate é o nomeado, senão o padrão do reef**: o Mandate do vcluster continua o padrão, então `naxos` é o único ambiente que nomeia um (`--mandate local`). Um release com `--target naxos` lê o seu `status` como o de qualquer ambiente.
+        **O Mandate é o nomeado, senão o padrão do reef**: o Mandate do vcluster continua o padrão, então `nereus` é o único ambiente que nomeia um (`--mandate local`). Um release com `--target nereus` lê o seu `status` como o de qualquer ambiente.

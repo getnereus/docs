@@ -51,7 +51,7 @@ A chip says how far a feature is: `built` is code on `main`, `planned` has an is
 |---|---|---|
 | secrets | Vault and Secret, encrypted on the client. [#530](https://github.com/getnereus/nereus/issues/530) | [built] |
 | release | Repository, Source, Target and Release. [ADR 0010](../adr/0010-reefs-at-runtime.md) | [built] |
-| environment | An Environment per agent, with an expiry; the kept cluster `naxos`. [ADR 0026](../adr/0026-environment-reef.md) | [built] |
+| environment | An Environment per agent, with an expiry; the kept cluster `nereus`. [ADR 0026](../adr/0026-environment-reef.md) | [built] |
 | catalog | `Workload`, `Package`, `WorkloadType` and `PackageType`. [ADR 0016](../adr/0016-catalog-reef.md) | [built] |
 | database | A PostgreSQL per Database. [ADR 0017](../adr/0017-resource-reefs.md) | [built] |
 | messaging | Topics and queues on NATS. [ADR 0019](../adr/0019-messaging-reef.md) | [built] |

@@ -483,7 +483,7 @@ slides:
   - name: post
     act: conversation
     topic: "post"
-    status: planned
+    status: built
     issue: 1889
     message: "A person posts to the room, as the agents do"
     accent: "as the agents do"
@@ -491,12 +491,17 @@ slides:
       steps:
         - comment: "Tell the room the cluster is taken"
           run: "nereus rooms post \"k3d-nereus is mine until 21:30\""
-          options: ["--room nereus", "--kind note"]
+          options: ["--room nereus"]
           output: |-
-            ✓ rooms/rooms/nereus note posted
+            ✓ rooms/rooms/nereus note posted (id m-20261122-0128)
+        - comment: "Ask the room before a shared resource"
+          run: "nereus rooms post \"may I run make checks?\""
+          options: ["--kind ask"]
+          output: |-
+            ✓ rooms/rooms/nereus ask posted (id m-20261122-0129, decided at 21:04:12)
     dependsOn: [follow]
     notes: |-
-      **The output is the command's contract** (#1889). Today only an agent's session posts, through its peer tool; the kinds are the peers' (claim, ask, ok, wait, note, release), and a peer message is information, never an order.
+      **The output is the command's contract** (#1889). A person posts with no agent's session, under the owner alone (`alice`, never `alice/speo`), from a login of the team; without `--room`, the room of the folder's git origin. A person's ask is decided by the room's connected agents, a person's ok or wait counts as a peer's, and no ask waits for a person. The kinds are the peers' (claim, ask, ok, wait, note, release), and a message is information, never an order.
 
       **In claude.ai a person has the same three verbs as MCP tools** of the Nereus API: `rooms_peers` and `rooms_read`, on by default, and `rooms_post`, off until an admin turns it on (ADR 0029, #1897).
     pt:
@@ -504,7 +509,7 @@ slides:
       message: "Uma pessoa posta na sala, como os agentes fazem"
       accent: "como os agentes"
       notes: |-
-        **A saída é o contrato do comando** (#1889). Hoje só a sessão de um agente posta, pela sua ferramenta de pares; os tipos são os dos pares (claim, ask, ok, wait, note, release), e uma mensagem de par é informação, nunca uma ordem.
+        **A saída é o contrato do comando** (#1889). Uma pessoa posta sem a sessão de um agente, só com o dono (`alice`, nunca `alice/speo`), de um login do time; sem `--room`, a sala da origin do git da pasta. O ask de uma pessoa é decidido pelos agentes conectados da sala, o ok ou wait de uma pessoa conta como o de um par, e nenhum ask espera por uma pessoa. Os tipos são os dos pares (claim, ask, ok, wait, note, release), e uma mensagem é informação, nunca uma ordem.
 
         **No claude.ai uma pessoa tem os mesmos três verbos como ferramentas MCP** da API do Nereus: `rooms_peers` e `rooms_read`, ligadas por padrão, e `rooms_post`, desligada até um admin ligá-la (ADR 0029, #1897).
 
