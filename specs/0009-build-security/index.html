@@ -8134,7 +8134,7 @@ kubectl<span class="w"> </span>logs<span class="w"> </span>probe<span class="w">
 </tr>
 <tr>
 <td>The node and the owner's machine on k3d's network on Docker</td>
-<td>Stopped (#1009): 6443, 10250 and the NodePort at every address of the /24 of k3d's registry, which a <code>RUN</code> learns by name and which holds the node; the owner's machine (<code>host.k3d.internal</code>) on 5111, where k3d's registry is published. The scene checks from outside <code>builds</code> that the node is in that range and answers on the three ports, and that the machine answers on 5111</td>
+<td>Stopped (#1009): 6443, 10250 and the NodePort at every address of the /24 of k3d's registry, which a <code>RUN</code> learns by name and which holds the node; the owner's machine (<code>host.k3d.internal</code>) on 5111, where k3d's registry was published before #654 and now publishes on the loopback only. The scene checks from outside <code>builds</code> that the node is in that range and answers on the three ports, and that the machine does not answer on 5111 there</td>
 </tr>
 <tr>
 <td>k3d's registry on Docker's network</td>

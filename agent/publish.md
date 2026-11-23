@@ -83,6 +83,7 @@ $ make docs-publish PUBLISH=1
 pushed 879cc0e to getnereus/docs: https://docs.getnereus.dev/
 ```
 
+- **When:** after every merge, by itself (owner, 2026-11-23, #2161). The hook `.claude/hooks/docs-publish-after-merge` runs after a `gh pr merge` and starts `scripts/docs/publish-main` in the background, which checks out `origin/main` in a throwaway worktree and runs `scripts/docs/publish --if-changed --publish` there: it publishes only when `docs/`, `mkdocs.yml` or `scripts/docs/` changed since the commit the last publish names. Its log is `~/.local/state/nereus/docs-publish.log`; a session whose merge failed to publish reads it and fixes the cause. By hand: `scripts/docs/publish-main`, or `--dry-run`.
 - **The build** is `make docs-build`'s (mkdocs `--strict`, so a warning fails it) into a temporary folder, never `site/` in the checkout; `CNAME` and `.nojekyll` are written into it.
 - **It refuses** a working tree with changes on `PUBLISH=1`: each publish is one commit `docs: <commit>` naming the source commit, and the history is kept (a few MB per publish; revisit if the repository passes 1 GB). A page the docs drop leaves the repository too.
 - **Once, first:** `make docs-publish SETUP=1` says how it would create `getnereus/docs` public, push the site, turn on GitHub Pages from `main`'s root with the custom domain and enforce HTTPS; `SETUP=1 PUBLISH=1` does it. HTTPS is enforced only once GitHub has issued the domain's certificate, minutes after the DNS record answers: run it again then.

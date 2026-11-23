@@ -3567,10 +3567,10 @@ The admin adds your e-mail to the keycloak Mandate's `googleUsers`: the list is 
 nereus mandate apply keycloak \
   --reef authentication \
   --nereid keycloak \
-  --param googleUsers=alice@example.com,bob@example.com
+  --param googleTeam=alice@example.com,bob@example.com
 ```
 
-After your first login, the admin adds your user to the group `nereus-team` in Keycloak's admin console (Users, the person, Groups, Join group); [#1831](https://github.com/getnereus/nereus/issues/1831) fills that group from a list. A login outside the group reaches Triton but no tool.
+`googleTeam` lists the e-mails of the team: the keycloak Nereid makes each one a user (no need to repeat it in `googleUsers`) and puts it in the group `nereus-team`; an e-mail dropped from the list leaves the group. A login outside the group reaches Triton but no tool.
 
 ### 2. Log in to the installation
 
