@@ -363,7 +363,7 @@ slides:
           output: |-
             REEF            ENDPOINT  NEREID         PROTOCOL  PATHS                      HOSTS               PUBLISHABLE  PUBLISHED  ROUTES
             authentication  realm     keycloak       http      /realms/nereus,/resources  auth.example.com    yes          no         -
-            messaging       mcp       triton         http      /                          triton.example.com  yes          no         -
+            rooms           mcp       triton         http      /                          triton.example.com  yes          no         -
             portal          web       nereus-portal  http      /                          portal.example.com  yes          no         -
         - comment: "Grant it: only an endpoint its Nereid's spec.publish names is ever published"
           run: "nereus nereid apply triton"
@@ -392,7 +392,7 @@ slides:
       steps:
         - comment: "Publish Triton's MCP endpoint"
           run: "nereus edge route create triton"
-          options: ["--hostname triton.example.com", "--endpoint messaging/mcp"]
+          options: ["--hostname triton.example.com", "--endpoint rooms/mcp"]
           output: |-
             ✓ edge/routes/triton created, Ready: https://triton.example.com
 

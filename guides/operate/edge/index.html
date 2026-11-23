@@ -7263,8 +7263,8 @@
 </code></pre></div>
 <p>A route may also name the endpoint a reef publishes, never a cluster, a namespace, a Service or a port (#1951). <a href="../../../specs/cli/reefs/edge.html#endpoint-list"><code>nereus edge endpoint list</code></a> shows every endpoint the Nereids publish, with the hostnames each one serves; none is published by default. The Nereid's own apply grants one, then the route names it:</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>edge<span class="w"> </span>endpoint<span class="w"> </span>list
-nereus<span class="w"> </span>nereid<span class="w"> </span>apply<span class="w"> </span>triton<span class="w"> </span>--reef<span class="w"> </span>messaging<span class="w"> </span>--publish<span class="w"> </span>mcp
-nereus<span class="w"> </span>edge<span class="w"> </span>route<span class="w"> </span>create<span class="w"> </span>triton<span class="w"> </span>--hostname<span class="w"> </span>triton.getnereus.dev<span class="w"> </span>--endpoint<span class="w"> </span>messaging/mcp
+nereus<span class="w"> </span>nereid<span class="w"> </span>apply<span class="w"> </span>triton<span class="w"> </span>--reef<span class="w"> </span>rooms<span class="w"> </span>--publish<span class="w"> </span>mcp
+nereus<span class="w"> </span>edge<span class="w"> </span>route<span class="w"> </span>create<span class="w"> </span>triton<span class="w"> </span>--hostname<span class="w"> </span>triton.getnereus.dev<span class="w"> </span>--endpoint<span class="w"> </span>rooms/mcp
 </code></pre></div>
 <p>The tunnel carries the hostname only when the endpoint is publishable, granted and served on that hostname; otherwise the route says why (<code>NotPublished</code>, <code>NotServed</code>, <code>NoEndpoint</code>, or <code>Exposes</code> when the hostname also serves an endpoint that may not leave the cluster: the tunnel carries the whole hostname). The kept cluster's routes move to endpoints with #2011.</p>
 <p>Only a Nereid with an HTTPRoute of its own on the hostname counts for <code>Exposes</code>: what a Nereid says in its status alone never takes another Nereid's route off the air.</p>

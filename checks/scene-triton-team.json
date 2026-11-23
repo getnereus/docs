@@ -3,10 +3,10 @@
   "command": "test/scene-triton-team",
   "result": "pass",
   "exit": 0,
-  "seconds": 325,
+  "seconds": 330,
   "passed": 119,
   "failed": 0,
   "failure": null,
-  "commit": "1df68af7",
-  "started": "2026-11-22T23:54:01Z"
+  "commit": "0731638f+",
+  "started": "2026-11-23T18:30:27Z"
 }

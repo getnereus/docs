@@ -7468,14 +7468,14 @@ Next steps:
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>REEF            ENDPOINT  NEREID         PROTOCOL  PATHS                      HOSTS               PUBLISHABLE  PUBLISHED  ROUTES
 authentication  realm     keycloak       http      /realms/nereus,/resources  auth.example.com    yes          no         -
-messaging       mcp       triton         http      /                          triton.example.com  yes          no         -
+rooms           mcp       triton         http      /                          triton.example.com  yes          no         -
 portal          web       nereus-portal  http      /                          portal.example.com  yes          no         -
 </code></pre></div>
 <h3 id="route-create">route-create<a class="headerlink" href="#route-create" title="Permanent link">&para;</a></h3>
 <p>Publish Triton's MCP endpoint.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>edge<span class="w"> </span>route<span class="w"> </span>create<span class="w"> </span>triton<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--hostname<span class="w"> </span>triton.example.com<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--endpoint<span class="w"> </span>messaging/mcp
+<span class="w">  </span>--endpoint<span class="w"> </span>rooms/mcp
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ edge/routes/triton created, Ready: https://triton.example.com
 

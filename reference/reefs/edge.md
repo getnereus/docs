@@ -193,7 +193,7 @@ nereus edge endpoint list
 ``` { .text .output title="output" }
 REEF            ENDPOINT  NEREID         PROTOCOL  PATHS                      HOSTS               PUBLISHABLE  PUBLISHED  ROUTES
 authentication  realm     keycloak       http      /realms/nereus,/resources  auth.example.com    yes          no         -
-messaging       mcp       triton         http      /                          triton.example.com  yes          no         -
+rooms           mcp       triton         http      /                          triton.example.com  yes          no         -
 portal          web       nereus-portal  http      /                          portal.example.com  yes          no         -
 ```
 
@@ -204,7 +204,7 @@ Publish Triton's MCP endpoint.
 ```bash
 nereus edge route create triton \
   --hostname triton.example.com \
-  --endpoint messaging/mcp
+  --endpoint rooms/mcp
 ```
 
 ``` { .text .output title="output" }

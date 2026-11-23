@@ -88,8 +88,8 @@ A route may also name the endpoint a reef publishes, never a cluster, a namespac
 
 ```bash
 nereus edge endpoint list
-nereus nereid apply triton --reef messaging --publish mcp
-nereus edge route create triton --hostname triton.getnereus.dev --endpoint messaging/mcp
+nereus nereid apply triton --reef rooms --publish mcp
+nereus edge route create triton --hostname triton.getnereus.dev --endpoint rooms/mcp
 ```
 
 The tunnel carries the hostname only when the endpoint is publishable, granted and served on that hostname; otherwise the route says why (`NotPublished`, `NotServed`, `NoEndpoint`, or `Exposes` when the hostname also serves an endpoint that may not leave the cluster: the tunnel carries the whole hostname). The kept cluster's routes move to endpoints with #2011.

@@ -113,7 +113,7 @@ slides:
       - "**7 · See what the reefs can publish:** an endpoint by its reef and name, none published by default · [`nereus edge endpoint list`](../../specs/cli/reefs/edge.html#endpoint-list) · #1951"
       - "**8 · Grant it, then publish it at a hostname:** `--publish mcp` on Triton's Nereid, then the route opens the tunnel to it · [`nereus edge route create`](../../specs/cli/reefs/edge.html#route-create) · #1951"
     notes: |-
-      **The route names `messaging/mcp`**, an endpoint the messaging reef publishes, never a cluster, a namespace, a Service or a port (owner, 2026-10-29).
+      **The route names `rooms/mcp`**, an endpoint the rooms reef publishes, never a cluster, a namespace, a Service or a port (owner, 2026-10-29).
     pt:
       topic: "a rota"
       message: "O endpoint de um reef ganha um nome, nunca onde roda"
@@ -122,7 +122,7 @@ slides:
         - "**7 · Ver o que os reefs podem publicar:** um endpoint pelo seu reef e nome, nenhum publicado por padrão · [`nereus edge endpoint list`](../../specs/cli/reefs/edge.html#endpoint-list) · #1951"
         - "**8 · Autorizar e publicar num hostname:** `--publish mcp` na Nereid do Triton, depois a rota abre o túnel até ele · [`nereus edge route create`](../../specs/cli/reefs/edge.html#route-create) · #1951"
       notes: |-
-        **A rota nomeia `messaging/mcp`**, um endpoint que o reef messaging publica, nunca um cluster, um namespace, um Service ou uma porta (o dono, 2026-10-29).
+        **A rota nomeia `rooms/mcp`**, um endpoint que o reef rooms publica, nunca um cluster, um namespace, um Service ou uma porta (o dono, 2026-10-29).
 
   - name: check
     act: check

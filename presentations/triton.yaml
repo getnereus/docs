@@ -369,17 +369,17 @@ slides:
           run: "nereus edge endpoint list"
           output: |-
             REEF        ENDPOINT   PROTOCOL   PUBLISHED
-            messaging   mcp        mcp        no
+            rooms       mcp        mcp        no
         - comment: "Publish Triton at a fixed address"
           run: "nereus edge route create triton"
-          options: ["--hostname triton.getnereus.dev", "--endpoint messaging/mcp"]
+          options: ["--hostname triton.getnereus.dev", "--endpoint rooms/mcp"]
           output: |-
             ✓ route/triton created, Ready: https://triton.getnereus.dev
     dependsOn: [step-1-zone]
     notes: |-
       What we want to say: **the person names a reef's endpoint, never a cluster, a namespace or a port**. Each Nereid publishes its endpoints in its status (ADR 0005, one writer per field: reading status is how the API and the CLI learn what a Nereid offers), and the API reads them without naming the Nereid (ADR 0002, the conceptual model).
 
-      So the {reef:messaging} reef offers `mcp`, and the {nereid:cloudflare} Nereid resolves `messaging/mcp` to whatever runs behind it. If Triton moves, or Kubernetes gives way to something else, the route does not change.
+      So the {reef:rooms} reef offers `mcp`, and the {nereid:cloudflare} Nereid resolves `rooms/mcp` to whatever runs behind it. If Triton moves, or Kubernetes gives way to something else, the route does not change.
 
       Done when you send an order from the phone in the morning and it arrives without you touching anything; the session that listens stays open in tmux.
     pt:
@@ -389,7 +389,7 @@ slides:
       notes: |-
         O que queremos dizer: **a pessoa nomeia o endpoint de um reef, nunca um cluster, um namespace ou uma porta**. Cada Nereida publica os seus endpoints no status (ADR 0005, um escritor por campo: é lendo o status que a API e a CLI sabem o que uma Nereida oferece), e a API os lê sem nomear a Nereida (ADR 0002, o modelo conceitual).
 
-        Então o reef {reef:messaging} oferece `mcp`, e a Nereida {nereid:cloudflare} resolve `messaging/mcp` para o que estiver rodando por trás. Se o Tritão mudar de lugar, ou o Kubernetes der lugar a outra coisa, a rota não muda.
+        Então o reef {reef:rooms} oferece `mcp`, e a Nereida {nereid:cloudflare} resolve `rooms/mcp` para o que estiver rodando por trás. Se o Tritão mudar de lugar, ou o Kubernetes der lugar a outra coisa, a rota não muda.
 
         Pronto quando você manda uma ordem do celular de manhã e ela chega sem você mexer em nada; a sessão que escuta fica aberta no tmux.
 
