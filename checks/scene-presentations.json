@@ -3,10 +3,10 @@
   "command": "test/scene-presentations",
   "result": "pass",
   "exit": 0,
-  "seconds": 819,
+  "seconds": 836,
   "passed": 140,
   "failed": 0,
   "failure": null,
-  "commit": "1ea23165",
-  "started": "2026-11-24T12:57:16Z"
+  "commit": "e4279303",
+  "started": "2026-11-24T15:02:41Z"
 }

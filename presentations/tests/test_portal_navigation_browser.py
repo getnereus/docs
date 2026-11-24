@@ -957,6 +957,10 @@ def test_a_row_with_a_nereid_opens_its_screen_and_back_returns_home(portal_page,
   expect(cards.locator(".detail-value")).to_have_text(["0.26/s", "15%", "652ms", "31%"])
   assert cards.nth(1).locator(".detail-value").evaluate("e => getComputedStyle(e).color") == ERROR[scheme]
   expect(page.locator("#detail-signals .detail-chart")).to_have_count(4)
+  # A chart takes the Nereid's state colour, as the home's sparklines; the errors' chart is red above zero.
+  assert page.locator('#detail-signals [data-key="rate"] .chart-line').evaluate("e => getComputedStyle(e).stroke") == WARNING[scheme]
+  assert page.locator('#detail-resources [data-key="cpu"] .chart-line').evaluate("e => getComputedStyle(e).stroke") == WARNING[scheme]
+  assert page.locator('#detail-signals [data-key="errors"] .chart-line').evaluate("e => getComputedStyle(e).stroke") == ERROR[scheme]
   # A null in the series breaks the errors' line in two.
   assert page.locator('#detail-signals [data-key="errors"] .chart-line').get_attribute("d").count("M") == 2
   expect(page.locator("#detail-resources .detail-value")).to_have_text(["162m", "200Mi"])
@@ -1022,12 +1026,16 @@ def test_cores_two_cards_the_api_and_thetis_open_their_screens(portal_page):
   expect(page.locator("#detail-reef")).to_have_text("core")
   expect(page.locator("#detail-nereid")).to_have_text("Nereid nereus-api · 0.1.0")
   expect(page.locator("#detail-signals .detail-value")).to_have_text(["0.26/s", "15%", "652ms", "31%"])
+  # The API answers requests, not passes; its Ready state colours the charts green.
+  expect(page.locator("#detail-signals .detail-hint")).to_have_text(["requests", "5xx of requests", "p95", "busy"])
+  assert page.locator('#detail-signals [data-key="rate"] .chart-line').evaluate("e => getComputedStyle(e).stroke") == SUCCESS["dark"]
   expect(page.locator("#detail-facts dt")).to_have_text(["Restarts · 24h", "Requests, ready"])
   page.go_back()
   home(page)
   page.locator("#status-grid .signal-card").nth(1).click()
   detail(page)
   expect(page.locator("#detail-nereid")).to_have_text("Nereid thetis · 0.1.0")
+  expect(page.locator("#detail-signals .detail-hint")).to_have_text(["passes", "of passes", "p95", "busy"])
   expect(page.locator("#detail-facts dt")).to_have_text(["Restarts · 24h", "Queue depth", "Requests, ready"])
 
 
