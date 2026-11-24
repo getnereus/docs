@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nereids screens: mockups</title>
+<style>
+  :root {
+    --page: #000; --card: #0c0c0c; --c1: #141414; --c2: #1c1c1c; --c3: #242424;
+    --line: #262626; --text: #f5f5f5; --muted: #a3a3a3;
+    --ok: #4ade80; --ok-bg: rgba(74,222,128,.12); --warn: #fbbf24; --warn-bg: rgba(251,191,36,.12);
+    --bad: #f87171; --bad-bg: rgba(248,113,113,.14); --nereid: #9d97ea;
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "Roboto Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #111; color: var(--text); font: 400 14px/20px var(--font); }
+  .chooser { position: sticky; top: 0; z-index: 5; display: flex; gap: 8px; justify-content: center; padding: 10px 8px; background: #111; border-bottom: 1px solid #222; }
+  .chooser button { flex: 0 1 auto; min-width: 0; font: 500 13px/18px var(--font); color: var(--text); background: transparent; border: 1px solid #444; border-radius: 8px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+  .chooser button[aria-pressed="true"] { background: #e8def8; color: #1d192b; border-color: #e8def8; }
+  .note { max-width: 412px; margin: 10px auto 0; padding: 0 12px; color: var(--muted); font-size: 13px; line-height: 18px; }
+  .phone { position: relative; width: 100%; max-width: 412px; height: min(860px, calc(100dvh - 110px)); min-height: 640px; margin: 10px auto 24px; background: var(--page); border: 1px solid #2a2a2a; border-radius: 24px; overflow: hidden; display: flex; flex-direction: column; }
+  @media (max-width: 440px) { .phone { border-radius: 0; border: 0; margin: 6px 0 0; height: calc(100dvh - 120px); } }
+  .scroll { flex: 1; overflow-y: auto; padding: 20px 16px 16px; }
+  .appbar h1 { margin: 0; font: 400 28px/36px var(--font); }
+  .appbar p { margin: 2px 0 0; color: var(--muted); font-size: 15px; }
+  .summary { display: flex; align-items: center; gap: 14px; margin: 18px 0 14px; padding: 14px 16px; background: var(--c1); border-radius: 20px; }
+  .summary .big { font: 400 22px/28px var(--font); }
+  .summary .sub { color: var(--muted); font-size: 13px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+  .ok { color: var(--ok); } .warn { color: var(--warn); } .bad { color: var(--bad); }
+  .bg-ok { background: var(--ok); } .bg-warn { background: var(--warn); } .bg-bad { background: var(--bad); }
+  .chips { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 14px; scrollbar-width: none; }
+  .chip-f { flex: none; font: 500 13px/18px var(--font); color: var(--text); background: transparent; border: 1px solid #444; border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+  .chip-f[aria-pressed="true"] { background: #4a4458; border-color: #4a4458; }
+  .section-label { margin: 16px 4px 8px; color: var(--muted); font: 500 13px/18px var(--font); letter-spacing: .02em; }
+  svg.i { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .spark { display: block; width: 100%; height: 28px; }
+  .spark polyline { fill: none; stroke-width: 1.6; vector-effect: non-scaling-stroke; }
+  .spark path { stroke: none; opacity: .14; }
+
+  /* A: enriched list */
+  .row { display: flex; gap: 12px; align-items: center; padding: 12px 8px; border-radius: 16px; cursor: pointer; }
+  .row:active { background: var(--c1); }
+  .row .ic { width: 44px; height: 44px; border-radius: 12px; background: var(--c2); display: grid; place-items: center; flex: none; }
+  .row .tx { flex: 1; min-width: 0; }
+  .row .t1 { display: flex; justify-content: space-between; gap: 8px; font: 400 16px/22px var(--font); }
+  .row .t2 { color: var(--muted); font-size: 13px; display: flex; gap: 10px; font-family: var(--mono); white-space: nowrap; overflow: hidden; }
+  .row .spark { height: 22px; margin-top: 2px; }
+  .row .nm { color: var(--muted); font: 400 13px/18px var(--font); }
+  .badge { font: 500 12px/16px var(--font); padding: 2px 8px; border-radius: 6px; }
+  .badge.ok { background: var(--ok-bg); } .badge.warn { background: var(--warn-bg); } .badge.bad { background: var(--bad-bg); }
+
+  /* B: grid of cards */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tile { background: var(--c1); border-radius: 16px; padding: 12px; cursor: pointer; border: 1px solid transparent; min-width: 0; }
+  .tile:active { background: var(--c2); }
+  .tile.attn { border-color: currentColor; }
+  .tile .top { display: flex; align-items: center; justify-content: space-between; }
+  .tile .ic { width: 32px; height: 32px; border-radius: 10px; background: var(--c3); display: grid; place-items: center; color: var(--text); }
+  .tile .ic svg.i { width: 18px; height: 18px; }
+  .tile .name { margin-top: 10px; font: 500 15px/20px var(--font); color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tile .nm { color: var(--muted); font-size: 12px; line-height: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tile .num { margin-top: 8px; display: flex; justify-content: space-between; align-items: baseline; color: var(--text); }
+  .tile .num b { font: 400 20px/24px var(--font); }
+  .tile .num span { color: var(--muted); font-size: 12px; font-family: var(--mono); }
+  .tile .reason { margin-top: 6px; font-size: 12px; line-height: 16px; }
+
+  /* toolbar: filter chips + view toggle (M3 icon segmented button) */
+  .toolbar { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+  .toolbar .chips { flex: 1 1 auto; min-width: 0; margin: 0; }
+  .viewseg { flex: none; display: flex; border: 1px solid #444; border-radius: 20px; overflow: hidden; }
+  .viewseg button { width: 48px; height: 36px; display: grid; place-items: center; background: transparent; color: var(--text); border: 0; cursor: pointer; }
+  .viewseg button + button { border-left: 1px solid #444; }
+  .viewseg button[aria-pressed="true"] { background: #4a4458; }
+  .viewseg svg.i { width: 18px; height: 18px; }
+  .meter { height: 6px; border-radius: 3px; background: var(--c3); position: relative; margin: 6px 0 2px; }
+  .meter i { position: absolute; inset: 0 auto 0 0; border-radius: 3px; }
+  .meter b { position: absolute; top: -3px; width: 2px; height: 12px; background: var(--muted); }
+  .meter-legend { display: flex; justify-content: space-between; color: var(--muted); font-size: 11px; font-family: var(--mono); }
+  .pod { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .pod:last-child { border-bottom: 0; }
+  .pod .p1 { display: flex; justify-content: space-between; gap: 8px; font-family: var(--mono); font-size: 13px; }
+  .pod .p1 span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  .pod .p2 { color: var(--muted); font-size: 12px; margin-top: 2px; }
+
+  /* Detail */
+  .topbar { display: flex; align-items: center; gap: 8px; padding: 10px 8px 6px; }
+  .iconbtn { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: transparent; border: 0; color: var(--text); cursor: pointer; }
+  .iconbtn:active { background: var(--c2); }
+  .hero { display: flex; align-items: center; gap: 14px; padding: 4px 8px 12px; }
+  .hero .ic { width: 52px; height: 52px; border-radius: 16px; background: var(--c2); display: grid; place-items: center; }
+  .hero .ic svg.i { width: 26px; height: 26px; }
+  .hero h2 { margin: 0; font: 400 24px/30px var(--font); }
+  .hero .nm { color: var(--muted); font-size: 14px; }
+  .hero .nm b { color: var(--nereid); font-weight: 500; }
+  .seg { display: flex; border: 1px solid #444; border-radius: 20px; overflow: hidden; margin: 4px 0 12px; }
+  .seg button { flex: 1 1 0; min-width: 0; padding: 8px 4px; background: transparent; color: var(--text); border: 0; border-right: 1px solid #444; font: 500 13px/18px var(--font); cursor: pointer; }
+  .seg button:last-child { border-right: 0; }
+  .seg button[aria-pressed="true"] { background: #4a4458; }
+  .signals { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .sig { background: var(--c1); border-radius: 16px; padding: 12px; min-width: 0; }
+  .sig .lbl { color: var(--muted); font: 500 12px/16px var(--font); display: flex; justify-content: space-between; }
+  .sig .val { font: 400 26px/32px var(--font); margin: 4px 0 6px; font-variant-numeric: tabular-nums; }
+  .sig .val small { font-size: 14px; color: var(--muted); margin-left: 2px; }
+  .sig .spark { height: 40px; }
+  .sig.wide { grid-column: span 2; }
+  .card { background: var(--c1); border-radius: 16px; padding: 4px 14px; margin-top: 8px; }
+  .kv { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .kv:last-child { border-bottom: 0; }
+  .kv span:first-child { color: var(--muted); }
+  .kv span:last-child { text-align: right; font-family: var(--mono); font-size: 13px; }
+  .events .kv span:last-child { font-family: var(--font); font-size: 13px; color: var(--text); }
+  .events .kv span:first-child { font-family: var(--mono); font-size: 12px; flex: none; }
+  .actions { display: flex; gap: 8px; margin-top: 12px; }
+  .actions button { flex: 1 1 0; min-width: 0; padding: 10px; border-radius: 20px; font: 500 14px/20px var(--font); cursor: pointer; }
+  .tonal { background: #4a4458; color: #e8def8; border: 0; }
+  .outlined { background: transparent; color: var(--text); border: 1px solid #555; }
+  .livebar { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 16px; background: var(--c1); border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+  .livebar .live { display: flex; align-items: center; gap: 6px; color: var(--text); }
+  .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); animation: p 1.4s infinite; }
+  @keyframes p { 50% { opacity: .25; } }
+
+  /* bottom navigation (M3) */
+  nav.bottom { display: flex; background: var(--c1); border-top: 1px solid var(--line); padding: 10px 0 14px; }
+  nav.bottom div { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; font: 500 12px/16px var(--font); color: var(--muted); }
+  nav.bottom .pill { width: 60px; height: 30px; border-radius: 15px; display: grid; place-items: center; }
+  nav.bottom .on { color: var(--text); }
+  nav.bottom .on .pill { background: #4a4458; }
+</style>
+</head>
+<body>
+<p class="note" id="note"></p>
+<div class="phone" id="phone"></div>
+
+<script>
+// Mockup only: invented data, simulated live updates. Icons drawn after Lucide (ISC).
+const ICON = {
+  key: '<circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 21 2M16 7l3 3M19 4l2 2"/>',
+  shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',
+  hammer: '<path d="m15 12-8.4 8.4a2.1 2.1 0 0 1-3-3L12 9"/><path d="M17.6 15 22 10.6 13.4 2 9 6.4z"/>',
+  book: '<path d="M4 19.5V4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>',
+  rocket: '<path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2.1-.1-2.9a2.2 2.2 0 0 0-2.9-.1z"/><path d="M12 15l-3-3a22 22 0 0 1 2-4A13 13 0 0 1 22 2c0 2.7-.8 7.5-6 11a22 22 0 0 1-4 2z"/>',
+  globe: '<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20"/>',
+  present: '<path d="M2 3h20M3 3v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3M7 21l5-5 5 5"/>',
+  box: '<path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/>',
+  branch: '<circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="8" r="2.5"/><path d="M6 8.5v7M18 10.5a6 6 0 0 1-6 6H8.5"/>',
+  users: '<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M16 3.1a4 4 0 0 1 0 7.8M22 21a7 7 0 0 0-4-6.3"/>',
+  building: '<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/>',
+  chart: '<path d="M3 3v18h18"/><path d="M8 17V9M13 17V5M18 17v-6"/>',
+  activity: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
+  refresh: '<path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/>',
+  bulb: '<path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/>',
+  message: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+  lock: '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  database: '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/>',
+  file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>',
+  list: '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
+  grid: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+  back: '<path d="M19 12H5M12 19l-7-7 7-7"/>',
+  status: '<rect x="3" y="3" width="8" height="10" rx="1"/><rect x="13" y="3" width="8" height="6" rx="1"/><rect x="13" y="11" width="8" height="10" rx="1"/><rect x="3" y="15" width="8" height="6" rx="1"/>',
+  play: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="m10 8 6 4-6 4z"/>',
+  more: '<circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/>',
+};
+const svg = (n) => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${ICON[n]}</svg>`;
+
+// reef, nereid, icon, status, rate (passes/s), error ratio, p95 seconds, saturation, reason
+const N = [
+  ["release", "flux", "refresh", "Degraded", 0.31, 0.12, 0.84, 0.41, "ReconcileFailed: helm upgrade timed out"],
+  ["edge", "envoy-gateway", "globe", "Progressing", 0.08, 0.0, 0.21, 0.07, "Rolling out 0.4.2"],
+  ["authentication", "keycloak", "key", "Ready", 0.05, 0, 0.06, 0.01],
+  ["authorization", "openfga", "shield", "Ready", 0.12, 0, 0.03, 0.02],
+  ["build", "buildkit", "hammer", "Ready", 0.02, 0, 0.11, 0.01],
+  ["catalog", "catalog", "book", "Ready", 0.04, 0, 0.02, 0.01],
+  ["delivery", "argo", "rocket", "Ready", 0.22, 0.004, 0.19, 0.05],
+  ["metrics", "victoriametrics", "activity", "Ready", 0.07, 0, 0.04, 0.01],
+  ["presentations", "drive", "present", "Ready", 0.03, 0, 0.35, 0.02],
+  ["registry", "zot", "box", "Ready", 0.06, 0, 0.05, 0.01],
+  ["scm", "forgejo", "branch", "Ready", 0.09, 0, 0.08, 0.02],
+  ["teams", "teams", "users", "Ready", 0.02, 0, 0.02, 0.0],
+  ["tenancy", "tenancy", "building", "Ready", 0.15, 0, 0.04, 0.03],
+  ["usage", "usage", "chart", "Ready", 0.01, 0, 0.09, 0.0],
+  ["ideas", "ideas", "bulb", "Ready", 0.01, 0, 0.03, 0.0],
+  ["messaging", "triton", "message", "Ready", 0.18, 0, 0.02, 0.02],
+  ["secrets", "openbao", "lock", "Ready", 0.04, 0, 0.07, 0.01],
+  ["database", "cnpg", "database", "Ready", 0.05, 0, 0.12, 0.02],
+  ["docs", "docs", "file", "Ready", 0.01, 0, 0.05, 0.0],
+].map(([reef, nereid, icon, status, rate, err, p95, sat, reason]) => ({ reef, nereid, icon, status, rate, err, p95, sat, reason,
+  series: walk(60, rate), errs: walk(60, err, true), lat: walk(60, p95), sats: walk(60, sat),
+  pods: pods(nereid, status), cpuReq: 50, cpuLim: 500, memReq: 128, memLim: 256, cpuS: walk(60, status === 'Degraded' ? 180 : 4 + Math.random() * 20), memS: walk(60, status === 'Degraded' ? 205 : 40 + Math.random() * 80), version: `0.1.${30 + Math.floor(Math.random() * 15)}`, age: `${1 + Math.floor(Math.random() * 20)}h` }));
+
+function pods(nereid, status) {
+  const id = () => Math.random().toString(36).slice(2, 7);
+  const rs = `nereus-${nereid}-${Math.random().toString(36).slice(2, 12)}`;
+  if (status === "Degraded") return [{ name: `${rs}-${id()}`, phase: "Running", ready: true, restarts: 3, last: "OOMKilled · 20:18", node: "k3d-nereus-agent-0", age: "11m" }];
+  if (status === "Progressing") return [
+    { name: `${rs}-${id()}`, phase: "Running", ready: true, restarts: 0, node: "k3d-nereus-agent-1", age: "3m" },
+    { name: `${rs}-${id()}`, phase: "ContainerCreating", ready: false, restarts: 0, node: "k3d-nereus-agent-0", age: "40s" }];
+  return [{ name: `${rs}-${id()}`, phase: "Running", ready: true, restarts: 0, node: "k3d-nereus-server-0", age: `${1 + Math.floor(Math.random() * 20)}h` }];
+}
+function walk(n, base, spiky) {
+  const out = []; let v = base;
+  for (let i = 0; i < n; i++) {
+    v = Math.max(0, base + (v - base) * 0.7 + (Math.random() - 0.5) * base * 0.5);
+    out.push(spiky && base === 0 ? (Math.random() < 0.03 ? 0.01 : 0) : v);
+  }
+  return out;
+}
+const level = (s) => s === "Ready" ? "ok" : s === "Degraded" ? "bad" : "warn";
+const color = (l) => ({ ok: "#4ade80", warn: "#fbbf24", bad: "#f87171" })[l];
+const fmtRate = (r) => r < 0.1 ? `${(r * 60).toFixed(1)}/min` : `${r.toFixed(2)}/s`;
+const fmtErr = (e) => `${(e * 100).toFixed(e && e < 0.01 ? 1 : 0)}%`;
+const fmtLat = (s) => s < 1 ? `${Math.round(s * 1000)}ms` : `${s.toFixed(1)}s`;
+
+function spark(values, stroke) {
+  const max = Math.max(...values, 1e-9), w = 100, h = 28;
+  const pts = values.map((v, i) => `${(i / (values.length - 1) * w).toFixed(1)},${(h - 2 - v / max * (h - 4)).toFixed(1)}`).join(" ");
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true"><path d="M0,${h} L${pts.replaceAll(" ", " L")} L${w},${h}Z" fill="${stroke}"/><polyline points="${pts}" stroke="${stroke}"/></svg>`;
+}
+
+const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
+let variant = store.get("nereids-view") || "a", filter = "all", open = null, range = "1h", timer = null;
+const NOTES = {
+  a: "List view (the toggle beside the filters switches, and the choice is kept):  the screen of today, problems first, each row with its RED line (rate · errors · p95) and a sparkline of the last hour. About 7 Nereids on screen. Tap a row.",
+  b: "Grid view (the toggle beside the filters switches, and the choice is kept):  two columns of M3 cards with filter chips, the attention cards outlined in their colour, one big number and a sparkline each. About 12 Nereids on screen. Tap a card.",
+  d: "Detail: the Nereid's four signals live (simulated, one point every 2 s), the range as a segmented button, the pods (CPU and memory against request and limit, restarts, each pod with its node and last restart reason), the recent events and two actions. The live mark sits in the bottom bar, away from the front camera.",
+};
+
+function summary() {
+  const bad = N.filter((n) => n.status !== "Ready").length;
+  return `<div class="summary"><span class="dot ${bad ? "bg-bad" : "bg-ok"}" style="width:14px;height:14px"></span>
+    <div style="flex:1"><div class="big">${bad ? `${bad} need attention` : "All good"}</div><div class="sub">20 reefs · 19 Nereids · checked 20:29</div></div>
+    <button class="iconbtn" aria-label="Refresh">${svg("refresh")}</button></div>`;
+}
+function bottomNav() {
+  return `<nav class="bottom"><div class="on"><span class="pill">${svg("status")}</span>Status</div><div><span class="pill">${svg("play")}</span>Presentations</div><div><span class="pill">${svg("chart")}</span>Usage</div></nav>`;
+}
+function toolbar() {
+  const chip = (id, label) => `<button class="chip-f" data-filter="${id}" aria-pressed="${filter === id}">${label}</button>`;
+  const seg = (v, icon, label) => `<button data-v="${v}" aria-pressed="${variant === v}" aria-label="${label}" title="${label}">${svg(icon)}</button>`;
+  return `<div class="toolbar"><div class="chips">${chip("all", "All")}${chip("attn", "Attention")}${chip("ok", "Ready")}</div>
+    <div class="viewseg" role="group" aria-label="View">${seg("a", "list", "List view")}${seg("b", "grid", "Grid view")}</div></div>`;
+}
+const filtered = () => N.filter((n) => filter === "all" || (filter === "attn" ? n.status !== "Ready" : n.status === "Ready"));
+function homeA() {
+  const row = (n) => { const l = level(n.status); return `<div class="row" data-open="${n.nereid}">
+    <span class="ic">${svg(n.icon)}</span>
+    <span class="tx"><span class="t1"><span>${n.reef} <span class="nm">· ${n.nereid}</span></span><span class="badge ${l} ${l}">${n.status}</span></span>
+    ${l !== "ok" ? `<span class="t2 ${l}" style="font-family:var(--font)">${n.reason}</span>` : ""}
+    <span class="t2"><span>${fmtRate(n.rate)}</span><span class="${n.err ? "bad" : ""}">${fmtErr(n.err)} err</span><span>p95 ${fmtLat(n.p95)}</span></span>
+    ${spark(n.series, color(l))}</span></div>`; };
+  const attn = filtered().filter((n) => n.status !== "Ready"), good = filtered().filter((n) => n.status === "Ready");
+  return `<div class="scroll"><div class="appbar"><h1>Nereus</h1><p>nereus · portal.getnereus.dev</p></div>${summary()}${toolbar()}
+    ${attn.length ? "" : "<!--"}<div class="section-label">Needs attention · ${attn.length}</div>${attn.map(row).join("")}${attn.length ? "" : "-->"}
+    ${good.length ? `<div class="section-label">All good · ${good.length}</div>${good.map(row).join("")}` : ""}</div>${bottomNav()}`;
+}
+function homeB() {
+  const shown = filtered();
+  const tile = (n) => { const l = level(n.status); return `<div class="tile ${l !== "ok" ? "attn" : ""} ${l}" data-open="${n.nereid}">
+    <div class="top"><span class="ic">${svg(n.icon)}</span><span class="dot bg-${l}" title="${n.status}"></span></div>
+    <div class="name">${n.reef}</div><div class="nm">${n.nereid}</div>
+    ${l !== "ok" ? `<div class="reason ${l}">${n.status}</div>` : ""}
+    <div class="num"><b>${fmtRate(n.rate)}</b><span class="${n.err ? "bad" : ""}">${fmtErr(n.err)}</span></div>
+    ${spark(n.series, color(l))}</div>`; };
+  return `<div class="scroll"><div class="appbar"><h1>Nereus</h1><p>nereus · portal.getnereus.dev</p></div>${summary()}${toolbar()}
+    <div class="grid">${shown.map(tile).join("")}</div></div>${bottomNav()}`;
+}
+function detail(n) {
+  const l = level(n.status);
+  const sig = (label, val, unit, series, c, hint) => `<div class="sig"><div class="lbl"><span>${label}</span><span>${hint}</span></div><div class="val">${val}<small>${unit}</small></div>${spark(series, c)}</div>`;
+  const restarts = n.pods.reduce((a, p) => a + p.restarts, 0);
+  const meter = (label, v, req, lim, u) => { const pct = Math.min(100, v / lim * 100), c = pct > 80 ? "#f87171" : pct > 60 ? "#fbbf24" : "#4ade80";
+    return `<div class="meter-legend"><span style="color:var(--text);font-family:var(--font);font-size:12px">${label}</span><span>${Math.round(v)}${u} of ${lim}${u} limit</span></div>
+    <div class="meter" title="request ${req}${u}, limit ${lim}${u}"><i style="width:${pct}%;background:${c}"></i><b style="left:${req / lim * 100}%"></b></div>
+    <div class="meter-legend"><span>0</span><span>▲ request ${req}${u}</span><span>${lim}${u}</span></div>`; };
+  const rateV = n.series.at(-1), errV = n.errs.at(-1), latV = n.lat.at(-1), satV = n.sats.at(-1);
+  const rate = fmtRate(rateV).match(/([\d.]+)(.*)/);
+  const lat = fmtLat(latV).match(/([\d.]+)(.*)/);
+  const events = l === "bad"
+    ? [["20:27", "ReconcileFailed: helm upgrade timed out (podinfo)"], ["20:21", "ReconcileFailed: helm upgrade timed out (podinfo)"], ["19:58", "Reconciled 14 HelmReleases"]]
+    : l === "warn" ? [["20:25", "Rolling out 0.4.2: 1 of 2 pods ready"], ["20:24", "Image pulled"]] : [["20:12", "Reconciled"], ["18:40", "Started, version " + n.version]];
+  return `<div class="topbar"><button class="iconbtn" data-back aria-label="Back">${svg("back")}</button><span style="flex:1"></span><button class="iconbtn" aria-label="More">${svg("more")}</button></div>
+  <div class="scroll" style="padding-top:0">
+    <div class="hero"><span class="ic">${svg(n.icon)}</span><div style="flex:1;min-width:0"><h2>${n.reef}</h2><div class="nm">Nereid <b>${n.nereid}</b> · ${n.version}</div></div><span class="badge ${l} ${l}">${n.status}</span></div>
+    ${l !== "ok" ? `<div class="card ${l}" style="padding:10px 14px;margin:0 0 10px;background:var(--${l}-bg)">${n.reason}</div>` : ""}
+    <div class="seg" role="group" aria-label="Range">${["5m", "1h", "24h", "7d"].map((r) => `<button data-range="${r}" aria-pressed="${range === r}">${r}</button>`).join("")}</div>
+    <div class="signals">
+      ${sig("Rate", rate[1], rate[2], n.series, "#9d97ea", "passes")}
+      ${sig("Errors", (errV * 100).toFixed(errV && errV < 0.01 ? 1 : 0), "%", n.errs, errV ? "#f87171" : "#4ade80", "of passes")}
+      ${sig("Duration", lat[1], lat[2], n.lat, "#7cc4ff", "p95")}
+      ${sig("Saturation", Math.round(satV * 100), "%", n.sats, satV > 0.3 ? "#fbbf24" : "#4ade80", "busy")}
+    </div>
+    <div class="section-label">Pods · ${n.pods.filter((p) => p.ready).length}/${n.pods.length} ready</div>
+    <div class="signals">
+      ${sig("CPU", Math.round(n.cpuS.at(-1)), "m", n.cpuS, n.cpuS.at(-1) > n.cpuLim * 0.8 ? "#fbbf24" : "#7cc4ff", `req ${n.cpuReq}m`)}
+      ${sig("Memory", Math.round(n.memS.at(-1)), "MiB", n.memS, n.memS.at(-1) > n.memLim * 0.8 ? "#f87171" : "#7cc4ff", `lim ${n.memLim}Mi`)}
+    </div>
+    <div class="card" style="padding:12px 14px">
+      ${meter("CPU", n.cpuS.at(-1), n.cpuReq, n.cpuLim, "m")}
+      <div style="height:10px"></div>
+      ${meter("Memory", n.memS.at(-1), n.memReq, n.memLim, "Mi")}
+    </div>
+    <div class="card">
+      <div class="kv"><span>Restarts · 24h</span><span class="${restarts ? "bad" : ""}">${restarts}</span></div>
+      <div class="kv"><span>Queue depth</span><span>${l === "bad" ? 3 : 0}</span></div>
+      <div class="kv"><span>Leader</span><span>${n.pods[0].name.slice(-5)}</span></div>
+    </div>
+    <div class="card">${n.pods.map((p) => `<div class="pod"><div class="p1"><span>${p.name}</span><span class="${p.ready ? "ok" : "warn"}">${p.ready ? "Ready" : p.phase}</span></div>
+      <div class="p2">${p.node} · ${p.age} · ${p.restarts} restarts${p.last ? ` · <span class="bad">last ${p.last}</span>` : ""}</div></div>`).join("")}</div>
+    <div class="section-label">Recent events</div>
+    <div class="card events">${events.map(([t, e]) => `<div class="kv"><span>${t}</span><span>${e}</span></div>`).join("")}</div>
+    <div class="actions"><button class="tonal">Reconcile now</button><button class="outlined">Open in vmui</button></div>
+  </div>
+  <div class="livebar"><span class="live"><span class="pulse"></span>Live · every 2 s</span><span id="tick">updated 20:29:00</span></div>`;
+}
+
+function render() {
+  clearInterval(timer);
+  const phone = document.getElementById("phone");
+  if (open) {
+    const n = N.find((x) => x.nereid === open);
+    phone.innerHTML = detail(n);
+    document.getElementById("note").textContent = NOTES.d;
+    let s = 0;
+    timer = setInterval(() => {
+      for (const [k, base] of [["series", n.rate], ["errs", n.err], ["lat", n.p95], ["sats", n.sat], ["cpuS", n.cpuS[0]], ["memS", n.memS[0]]]) {
+        n[k].shift(); n[k].push(walk(3, base, k === "errs").at(-1));
+      }
+      const top = phone.querySelector(".scroll").scrollTop;
+      phone.innerHTML = detail(n);
+      phone.querySelector(".scroll").scrollTop = top;
+      s += 2; document.getElementById("tick").textContent = `updated 20:29:${String(s % 60).padStart(2, "0")}`;
+    }, 2000);
+  } else {
+    phone.innerHTML = variant === "a" ? homeA() : homeB();
+    document.getElementById("note").textContent = NOTES[variant];
+  }
+}
+document.addEventListener("click", (e) => {
+  const t = e.target.closest("[data-v],[data-open],[data-back],[data-filter],[data-range]");
+  if (!t) return;
+  if (t.dataset.v) { variant = t.dataset.v; store.set("nereids-view", variant); }
+  if (t.dataset.open) open = t.dataset.open;
+  if (t.hasAttribute("data-back")) open = null;
+  if (t.dataset.filter) filter = t.dataset.filter;
+  if (t.dataset.range) range = t.dataset.range;
+  render();
+});
+const h = new URLSearchParams(location.hash.slice(1)); if (h.get("v")) variant = h.get("v"); if (h.get("open")) open = h.get("open");
+render();
+</script>
+</body>
+</html>

@@ -775,6 +775,11 @@
       "md": "specs/0012-presentations-first-slice.md",
       "title": "Presentations first slice"
     },
+    "specs/0013-nereids-screens/": {
+      "goal": "Status: Proposed (2026-11-23)",
+      "md": "specs/0013-nereids-screens.md",
+      "title": "Nereids screens"
+    },
     "start/clean-up/": {
       "goal": "Delete the Nereid and the cluster",
       "md": "start/clean-up.md",

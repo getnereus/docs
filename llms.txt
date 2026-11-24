@@ -151,6 +151,7 @@
 - [Build trigger](https://docs.getnereus.dev/specs/0010-build-trigger.md): Status: Proposed (2026-11-11)
 - [Authorization first slice](https://docs.getnereus.dev/specs/0011-authorization-first-slice.md): Status: Proposed (2026-11-15)
 - [Presentations first slice](https://docs.getnereus.dev/specs/0012-presentations-first-slice.md): The walking skeleton of the presentations reef (ADR 0028, journey #1688): a phone drives a Session's step, another phone
+- [Nereids screens](https://docs.getnereus.dev/specs/0013-nereids-screens.md): Status: Proposed (2026-11-23)
 - [Research](https://docs.getnereus.dev/project/research.md): Find the research note behind a choice of tool or design
 - [Platform orchestrators](https://docs.getnereus.dev/research/platform-orchestrators.md): Historical page (2026-10-19): it uses the model's words of that time (Interface, Implementation, platform); today's are
 - [kagent for Amphitrite](https://docs.getnereus.dev/research/kagent.md): Amphitrite is the Nereid that will give the platform its AI agents: a reef whose kind is Agent (plural agents), used by
