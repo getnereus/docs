@@ -7303,22 +7303,20 @@
 <td>not needed: the nodes pull from a container registry such as ACR or <code>ghcr.io</code>, with credentials</td>
 </tr>
 <tr>
+<td>The <a href="../../reefs/registry/">registry reef</a>: a registry in the cluster</td>
+<td>its CA is the one of step 2, which every node trusts</td>
+<td><span class="chip planned">planned</span>: the nodes would have to trust its CA</td>
+</tr>
+<tr>
 <td>API server: anonymous reads of the issuer's discovery only</td>
 <td>an <code>AuthenticationConfiguration</code> on the server</td>
 <td><code>--enable-oidc-issuer</code>; the anonymous read is still to check</td>
 </tr>
-<tr>
-<td>Storage: a default StorageClass</td>
-<td><code>local-path</code></td>
-<td><code>managed-csi</code></td>
-</tr>
-<tr>
-<td>Network: NetworkPolicy enforced</td>
-<td>k3s enforces it</td>
-<td><code>--network-policy azure</code>, <code>calico</code> or <code>cilium</code></td>
-</tr>
 </tbody>
 </table>
+<p>On a machine that already has a k3d cluster named <code>nereus</code>, such as one kept for daily work, pick another name and port: replace <code>nereus</code> in the commands of step 5 and Clean up, and <code>8080</code> in <code>--port</code>.
+| Storage: a default StorageClass | <code>local-path</code> | <code>managed-csi</code> |
+| Network: NetworkPolicy enforced | k3s enforces it | <code>--network-policy azure</code>, <code>calico</code> or <code>cilium</code> |</p>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
 <p>The steps make a k3d cluster; the registry CA of steps 2 and 3 is for its local registry. AKS follows after step 5.</p>
 <h3 id="1-raise-the-hosts-inotify-limit">1. Raise the host's inotify limit<a class="headerlink" href="#1-raise-the-hosts-inotify-limit" title="Permanent link">&para;</a></h3>

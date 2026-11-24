@@ -8,6 +8,7 @@ Run a [zot](https://zotregistry.dev) registry of your own in the cluster, publis
 - `nereus login` done: publishing pushes through the Nereus API, for a person in `nereus-admins`.
 - The namespace `builds`, which `nereus nereid apply buildkit --reef build` makes: each repository's push identity lives there.
 - An image built locally with a tag, such as `docker build --tag hello:v1 .`.
+- A k3d cluster: on AKS the registry reef is [planned], since the nodes pull only from registries whose certificate they trust, and they do not trust the CA of a registry in the cluster ([Prepare a cluster for Nereus](../operate/cluster.md)).
 
 ## Steps
 

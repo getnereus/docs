@@ -13,7 +13,10 @@ What any cluster must offer, and how k3d and AKS meet it. AKS is there to compar
 | Entrance: Gateway API kinds, a way to the Gateway | no Traefik; `127.0.0.1:8080` to the load balancer's port 80 | a `LoadBalancer` Service with a public IP, DNS and TLS in front |
 | Images | the local registry, or `ghcr.io/getnereus/nereus` | `ghcr.io`, or a copy in an Azure Container Registry |
 | Registry trust: every node trusts the local registry's CA | the CA's certificate mounted on every node | not needed: the nodes pull from a container registry such as ACR or `ghcr.io`, with credentials |
+| The [registry reef](../reefs/registry.md): a registry in the cluster | its CA is the one of step 2, which every node trusts | [planned]: the nodes would have to trust its CA |
 | API server: anonymous reads of the issuer's discovery only | an `AuthenticationConfiguration` on the server | `--enable-oidc-issuer`; the anonymous read is still to check |
+
+On a machine that already has a k3d cluster named `nereus`, such as one kept for daily work, pick another name and port: replace `nereus` in the commands of step 5 and Clean up, and `8080` in `--port`.
 | Storage: a default StorageClass | `local-path` | `managed-csi` |
 | Network: NetworkPolicy enforced | k3s enforces it | `--network-policy azure`, `calico` or `cilium` |
 

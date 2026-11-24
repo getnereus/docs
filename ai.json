@@ -16,7 +16,7 @@
       "title": "Conceptual model"
     },
     "adr/0003-init-and-nereids-at-runtime/": {
-      "goal": "Status: Proposed (2026-10-17, rewritten 2026-10-25)",
+      "goal": "Status: Accepted (2026-11-24, by the owner; proposed 2026-10-17, rewritten 2026-10-25)",
       "md": "adr/0003-init-and-nereids-at-runtime.md",
       "title": "Reefs and Nereids added at runtime"
     },

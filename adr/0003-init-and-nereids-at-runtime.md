@@ -1,9 +1,9 @@
 # 0003. `nereus init` prepares the platform; reefs and Nereids are added at runtime
 
 !!! note "In short"
-    `nereus init` prepares a cluster with the built-in `core` reef and a profile's reefs; every other capability arrives later as a reef, with Nereids added at runtime. Status: Proposed (2026-10-17, rewritten 2026-10-25). What init installs is revised by ADR 0014.
+    `nereus init` prepares a cluster with the built-in `core` reef, the `tenancy` reef and a profile's reefs; every other capability arrives later as a reef, with Nereids added at runtime. Status: Accepted (2026-11-24, by the owner; proposed 2026-10-17, rewritten 2026-10-25). What init installs is revised by ADR 0014.
 
-**Status:** Proposed (2026-10-17, rewritten 2026-10-25)
+**Status:** Accepted (2026-11-24, by the owner; proposed 2026-10-17, rewritten 2026-10-25)
 
 ## Context
 

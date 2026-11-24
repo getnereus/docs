@@ -110,7 +110,7 @@
 - [Decisions](https://docs.getnereus.dev/project/decisions.md): Find the architecture decision that settles a question, with its status
 - [Record architecture decisions](https://docs.getnereus.dev/adr/0001-record-architecture-decisions.md): Status: Accepted (2026-10-17, rewritten 2026-10-25)
 - [Conceptual model](https://docs.getnereus.dev/adr/0002-conceptual-model.md): Status: Proposed (2026-10-17, rewritten 2026-10-25)
-- [Reefs and Nereids added at runtime](https://docs.getnereus.dev/adr/0003-init-and-nereids-at-runtime.md): Status: Proposed (2026-10-17, rewritten 2026-10-25)
+- [Reefs and Nereids added at runtime](https://docs.getnereus.dev/adr/0003-init-and-nereids-at-runtime.md): Status: Accepted (2026-11-24, by the owner; proposed 2026-10-17, rewritten 2026-10-25)
 - [Reefs extend the CLI](https://docs.getnereus.dev/adr/0004-reefs-extend-the-cli.md): Status: Proposed (2026-10-17, rewritten 2026-10-25)
 - [One writer per field](https://docs.getnereus.dev/adr/0005-one-writer-per-field.md): Status: Proposed (2026-10-17)
 - [Authentication reef](https://docs.getnereus.dev/adr/0006-authentication-reef.md): Status: Proposed (2026-10-17, rewritten 2026-10-25, 2026-11-09 and 2026-11-12, amended 2026-11-15)

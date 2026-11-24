@@ -7228,6 +7228,7 @@
 <li><code>nereus login</code> done: publishing pushes through the Nereus API, for a person in <code>nereus-admins</code>.</li>
 <li>The namespace <code>builds</code>, which <code>nereus nereid apply buildkit --reef build</code> makes: each repository's push identity lives there.</li>
 <li>An image built locally with a tag, such as <code>docker build --tag hello:v1 .</code>.</li>
+<li>A k3d cluster: on AKS the registry reef is <span class="chip planned">planned</span>, since the nodes pull only from registries whose certificate they trust, and they do not trust the CA of a registry in the cluster (<a href="../../operate/cluster/">Prepare a cluster for Nereus</a>).</li>
 </ul>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
 <h3 id="1-create-a-registry">1. Create a registry<a class="headerlink" href="#1-create-a-registry" title="Permanent link">&para;</a></h3>

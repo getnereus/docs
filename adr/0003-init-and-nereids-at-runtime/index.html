@@ -7148,9 +7148,9 @@
 <h1 id="0003-nereus-init-prepares-the-platform-reefs-and-nereids-are-added-at-runtime">0003. <code>nereus init</code> prepares the platform; reefs and Nereids are added at runtime<a class="headerlink" href="#0003-nereus-init-prepares-the-platform-reefs-and-nereids-are-added-at-runtime" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
 <p class="admonition-title">In short</p>
-<p><code>nereus init</code> prepares a cluster with the built-in <code>core</code> reef and a profile's reefs; every other capability arrives later as a reef, with Nereids added at runtime. Status: Proposed (2026-10-17, rewritten 2026-10-25). What init installs is revised by ADR 0014.</p>
+<p><code>nereus init</code> prepares a cluster with the built-in <code>core</code> reef, the <code>tenancy</code> reef and a profile's reefs; every other capability arrives later as a reef, with Nereids added at runtime. Status: Accepted (2026-11-24, by the owner; proposed 2026-10-17, rewritten 2026-10-25). What init installs is revised by ADR 0014.</p>
 </div>
-<p><strong>Status:</strong> Proposed (2026-10-17, rewritten 2026-10-25)</p>
+<p><strong>Status:</strong> Accepted (2026-11-24, by the owner; proposed 2026-10-17, rewritten 2026-10-25)</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
 <p>In the project this one grew from, <code>platform init</code> installs the whole platform: identity, API, every controller, ingress, observability. Adding or swapping a capability means changing init, and there is no way to run the platform with less, or with something else.</p>
 <p>There is one exception to "less": secrets. Every other reef needs a place for credentials, and the first Nereid that keeps secrets needs something to exist outside the cluster before any Nereid runs (in Azure: a Key Vault, a Managed Identity federated with the cluster's issuer). That chicken-and-egg can only be solved by the person's own login, once.</p>
