@@ -41,7 +41,7 @@ The Nereid's contract today is `GET /` on its controller port (8080, inside the 
 }
 ```
 
-- `tab`: the label of the tab. `element`: the custom element's tag name, which must start with `nereus-` and contain a hyphen. `module`: a file name of the Nereid's `ui/` folder, no slash and no dot segment, ending in `.js`. `icon`: the name of an icon the portal already has, else a default.
+- `tab`: the label of the tab. `element`: the custom element's tag name, which must start with `nereus-` and contain a hyphen. `module`: a file name of the Nereid's `ui/` folder, no slash and no dot segment, ending in `.js`. `icon`: the name of an icon the portal already has, else the reef's own icon (below), else a default.
 - The portal's Nereid reads the screens from each Nereid's `status.screens` (the SDK copies the contract's list there, so the cluster holds one list and the API reads what Nereids publish, ADR 0018), and the portal asks the API for them (`GET /v1/screens`, built in #1105). A tab shows only while its reef is installed.
 
 **The portal's Nereid forwards `/reefs/<reef>/ui/<file>`, not the API** (the open point of #1103, decided as recommended). The forward serves static files only, from an allow-list built from the contracts: `GET` only, a file that some `screens` entry names (`module`) or that sits in the Nereid's `ui/` folder and is listed by the same contract in `assets` (an optional list of file names, such as a stylesheet or an icon), no query, no dot segment, backslash or percent-encoded slash (the check `/v1` already has). It forwards to the reef's Nereid on its controller port, `GET /ui/<file>`, which answers only files it listed in the contract; anything else is 404. A Nereid may serve `ui/` on a port of its own instead, named by the contract's optional `uiPort` (an integer from 1024 to 65535, copied to its status like `screens`; #1108), so a NetworkPolicy opens that port to the portal's pods without opening the Nereid's data, since it holds a port, not a path; the forward then targets that port. Same origin, so the CSP stays `'self'` and no header is relaxed. The API does not carry code: it carries data.
@@ -56,6 +56,8 @@ The Nereid's contract today is `GET /` on its controller port (8080, inside the 
 - It dispatches `nereus-error` (a `CustomEvent` whose `detail` has the ADR 0012 fields `message`, `cause`, `check` and `fix`) when it cannot work, and the portal shows that line in the tab. It sets no title, route or history of its own.
 - It may dispatch `nereus-focus` (a `CustomEvent` whose `detail.focused` is `true` or `false`) when it shows one item and when it goes back to its list (#1761): while focused, the portal hides its mark, its language switch and its tab bar, and the screen takes the whole view, as a phone app hides its tabs inside a detail.
 - It may dispatch `nereus-signin` (a `CustomEvent` whose `detail.resume` is a small JSON value, at most 1 KB) when a call still answers 401 after the portal's renewal, the sign-in having ended (#1910): the portal signs in again by a full redirect and, back, opens that screen at once and sets its `resume` property to that value before `api`, so the screen reopens where it was.
+
+**Each reef has its own icon** (#1773, amended 2026-11-24): its Nereid's image declares it in the label `<API_GROUP>/icon`, next to `/reef`, `/requires` and `/nereid`, as the name of an icon of the portal's set (Material Symbols, filled, an underscore written as a hyphen: `inventory-2`), checked as a screen's `icon` is. A label, not a field of the contract: every Nereid's image has labels, while only some publish a contract, and a reef with no screen (`metrics`, `release`) still needs an icon for its status rows. `nereus nereid apply` copies the label to the Nereid's `spec.icon`, leaving a bad name out; `GET /v1/status` gives each row its reef's icon (the first Nereid by name whose first reef it is, then one that serves it next to its own), and core and the reefs the API keeps (`tenancy`, `teams`) get theirs from the CLI, having no image; `GET /v1/screens` gives a screen with no `icon` of its own its reef's; `nereus reef get` prints it. The portal draws a row's icon, else its reef's screen's (an older API), else the default; a name it does not have draws the default too. A reef's own SVG, served by its Nereid, is a later decision (#2206).
 
 **When a module fails to load** (a 404, a syntax error, a `customElements.define` that throws, the element never defined within 10 seconds, or a `nereus-error`), the tab shows the error line of ADR 0012, with the reef and the file named, and the rest of the portal keeps working. The portal never retries on its own; the person reloads the tab.
 
@@ -82,7 +84,7 @@ The Nereid's contract today is `GET /` on its controller port (8080, inside the 
 
 ## Origin
 
-Decided as a recommendation on 2026-11-06 and 2026-11-08 in #1102 and #1103, from the owner's question about microfrontends; raw data in `#pontos/raw/2026-11-06/` (Drive) for the voice session of that day.
+Decided as a recommendation on 2026-11-06 and 2026-11-08 in #1102 and #1103, from the owner's question about microfrontends; raw data in `#pontos/raw/2026-11-06/` (Drive) for the voice session of that day. The reef's own icon was approved by the owner on 2026-11-24 in #1773, after #1838 gave the portal its icon set.
 
 ## Open questions
 

@@ -362,7 +362,7 @@ slides:
     notes: |-
       **`Registry` is where images are pushed**, as the cluster declares it in the ConfigMap `kube-public/local-registry-hosting` (#855). `NotConformant` is computed by the CLI (spec 0003): a reef that exposes no kind has no `Ready` Nereid, unless it has none by design; the tenancy reef needs no Nereid and reads `Ready`.
 
-      **`--output json` (or `yaml`) is the stable contract** of the Nereus API's `GET /v1/status` and of its `/mcp` `status` tool: `{"installation", "registry", "items": [{"reef", "nereid", "version", "status", "reason", "createdAt"}]}`. With sign-in on, it needs `nereus login`.
+      **`--output json` (or `yaml`) is the stable contract** of the Nereus API's `GET /v1/status` and of its `/mcp` `status` tool: `{"installation", "registry", "items": [{"reef", "nereid", "version", "status", "reason", "createdAt", "icon"}]}` (`icon`: the reef's icon in the portal, or null, #1773). With sign-in on, it needs `nereus login`.
     pt:
       topic: "status"
       message: "Uma linha por reef e Nereid, o core primeiro"
@@ -370,7 +370,7 @@ slides:
       notes: |-
         **O `Registry` é para onde as imagens são enviadas**, como o cluster o declara no ConfigMap `kube-public/local-registry-hosting` (#855). O `NotConformant` é calculado pelo CLI (spec 0003): um reef que não expõe kind não tem Nereid `Ready`, a não ser que não tenha nenhuma por design; o reef tenancy não precisa de Nereid e aparece `Ready`.
 
-        **O `--output json` (ou `yaml`) é o contrato estável** do `GET /v1/status` da API do Nereus e da ferramenta `status` do seu `/mcp`: `{"installation", "registry", "items": [{"reef", "nereid", "version", "status", "reason", "createdAt"}]}`. Com login ligado, ele precisa do `nereus login`.
+        **O `--output json` (ou `yaml`) é o contrato estável** do `GET /v1/status` da API do Nereus e da ferramenta `status` do seu `/mcp`: `{"installation", "registry", "items": [{"reef", "nereid", "version", "status", "reason", "createdAt", "icon"}]}` (`icon`: o ícone do reef no portal, ou null, #1773). Com login ligado, ele precisa do `nereus login`.
 
   - name: doctor
     act: doctor

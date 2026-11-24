@@ -177,7 +177,7 @@ slides:
     topic: "Vocabulary and rules"
     message: "The {nereid:Nereid} kind"
     subtitle: "The CLI writes spec, the {nereid:Nereid} status"
-    code: {file: ../../cli/src/nereus/crds/nereid.yaml, lines: "34-37,39-40,43-44,78-82,98-99", focus: 34-44}
+    code: {file: ../../cli/src/nereus/crds/nereid.yaml, lines: "34-37,39-40,43-44,82-86,102-103", focus: 34-44}
     dependsOn: [one-writer]
     notes: |-
       What we want to say: **the rule is visible in the schema**. `spec` (the image, pinned by digest, and the Reefs it looks after) is written by the CLI; `status.conditions` and `status.commands` belong to the Nereid.
