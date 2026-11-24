@@ -1,7 +1,7 @@
 # 0031. Gates and approvals native to Nereus: a hard gate refuses, a soft gate holds the object Pending until an approver decides
 
 !!! note "In short"
-    Any resource created through the Nereus API can be refused (a hard gate, 403 as today) or held: under a soft gate, a person with the right to ask creates the object, which stands visibly `Pending` until an approver approves or rejects it through the API. Two kinds in the `authorization` reef, `Gate` and `Approval`, one hold annotation, one admission policy, and no flow written per kind. Status: Accepted (2026-11-24).
+    Any resource created through the Nereus API can be refused (a hard gate, 403 as today) or held: under a soft gate, a person with the right to ask creates the object, which stands visibly `Pending` until an approver approves or rejects it through the API; with no list of approvers, whoever may create that kind there approves. Two kinds in the `authorization` reef, `Gate` and `Approval`, one hold annotation, one admission policy, and no flow written per kind. Status: Accepted (2026-11-24).
 
 **Status:** Accepted (2026-11-24, by the owner)
 
@@ -31,7 +31,7 @@ person ── nereus <reef> <kind> create ──▶ Nereus API (the route wrappe
   │    no ─▶ 403, as today (a hard gate)
   │    yes ─▶ the object is written WITH the hold, and an Approval beside it
   │         ├─ the gate Nereid writes the object's status: Pending, Ready=False WaitingApproval
-  │         ├─ the messaging reef tells the approvers and the requester
+  │         ├─ the notifications reef tells the approvers and the requester
   │         └─ approver ── nereus authorization approval approve|reject ──▶ the API records the decision
   │              ├─ approved: the API lifts the hold ─▶ the kind's own Nereid reconciles as usual
   │              │     └─ the gate Nereid follows Ready until it is provisioned or fails ─▶ notified
@@ -58,10 +58,12 @@ spec:
   reef: environment
   kinds: [environments]
   verbs: [create]                       # create only, for now
-  approvers:                            # the subjects a Binding takes (ADR 0027)
+  approvers:                            # optional: the subjects a Binding takes (ADR 0027)
     - team/payments/tech-lead
   expires: 7d                           # optional; default from the authorization Mandate's approvalExpires
 ```
+
+**Who approves** (owner, 2026-11-24). Whoever may `create` the held kind at the target's node, or at a node above it (every right of ADR 0027 is inherited), may approve, always: they could have created the object themselves. `spec.approvers` is optional: it adds subjects who may approve without holding `create` (a FinOps or a security team) and names who is told, so no request waits on an empty position. A Gate with no list is approved by the holders of `create` alone, the administrators included. Nobody approves their own request by default, since whoever holds `create` is never held. Creating or changing a Gate whose list names approvers requires `create` on its kinds at its node, so nobody grants through a Gate what they could not do themselves; `nereus authorization gate create` warns when the instance's root is the only possible approver.
 
 **`Approval`: one per held request.** Its `spec` is written only by the Nereus API, its `status` only by the gate Nereid (ADR 0005). It carries an `ownerReference` to the held object, so it goes away with it.
 
@@ -95,7 +97,7 @@ status:
 | the held object's `status`, once the hold is lifted | the kind's own Nereid, as usual |
 | an `Approval`'s `status` | the gate Nereid |
 
-**The gate Nereid** is the Nereid of the `authorization` reef's default Mandate (the `openfga` Nereid in an install, the reference Nereid in `make scene-core`). While the hold is on it writes the held object's `status.phase: Pending` and the condition `Ready=False`, reason `WaitingApproval`, with a message that names the Approval and who may approve. After a rejection it writes `phase: Rejected`, `Ready=False`, reason `Rejected`; at expiry `phase: Expired`, reason `Expired`. Once the hold is lifted it stops writing the object and follows its `Ready` into the Approval's `Provisioned` condition, which the notifications read.
+**The gate Nereid** is the Nereid of the `authorization` reef's default Mandate (the `openfga` Nereid in an install, the reference Nereid in `make scene-core`). While the hold is on it writes the held object's `status.phase: Pending` and the condition `Ready=False`, reason `WaitingApproval`, with a message that names the Approval and who may approve (with no list: `whoever may create environment/environments at project/payments`). After a rejection it writes `phase: Rejected`, `Ready=False`, reason `Rejected`; at expiry `phase: Expired`, reason `Expired`. Once the hold is lifted it stops writing the object and follows its `Ready` into the Approval's `Provisioned` condition, which the notifications read.
 
 **A Nereid never acts on a held object.** The Nereid SDK skips any object that carries the hold, every Nereid adopts it, and a conformance test proves it (step 3 of #2117).
 
@@ -110,7 +112,7 @@ The route wrappers of `api/server.py`, right after the Authorizer of `api/author
 ### The verbs (an amendment to ADR 0013)
 
 - **`request` is a right, not a command.** It appears in a Role's rules (`environment:environments:request`) and in `can-i` (`nereus authorization can-i request environment/environments`). A person who may `request` but not `create` runs the ordinary `create` and gets a held object.
-- **`approve` and `reject` are commands of the `approval` kind:** `nereus authorization approval approve <name> --reason <text>` and `reject`, each recording one decision. The API asks `approve` on `authorization/approvals` at the Gate's node, and the answer holds for the Gate's approvers; the `openfga` Nereid's model answers it (step 7 of #2117).
+- **`approve` and `reject` are commands of the `approval` kind:** `nereus authorization approval approve <name> --reason <text>` and `reject`, each recording one decision. The API asks, for the approver, the same check as for a creation: `create` on the target's reef and kind at the target's node; a Gate's listed approvers are answered by the `openfga` Nereid's model (step 7 of #2117).
 - **`can-i` says when a person may ask:** `no, but may ask: authorization/gates/<name> holds create for <approvers>'s approval`, with exit code 1, since the answer to `create` is still no.
 
 ### The CLI
@@ -155,7 +157,9 @@ One ValidatingAdmissionPolicy for every reef kind (the groups `*.getnereus.dev`)
 
 ### Notifications
 
-From the conditions, through the messaging reef (ADR 0019, #254): "waiting for approval" to the approvers and the requester when the Approval is written; "approved" or "rejected" on the decision; "provisioned" or "failed" from the Approval's `Provisioned` condition. The first channels are the portal's web push and `--watch` on the CLI; voice and phone come later, with #278.
+**The lists come first, read from the API:** the portal's Approvals screen (#2126) shows a requester all of their requests with their phase until the outcome, and an approver the pending requests they may decide, with a count, refreshed while the screen is open; no push is needed to see them.
+
+**The pushes come from the conditions, through the notifications reef** (#2147: a `Notification` for a person, a `Subscription` per device): the gate Nereid writes one `Notification` per transition of an Approval: "waiting for approval" to the approvers and the requester, "approved", "rejected" or "expired" on the decision, "provisioned" or "failed" from the `Provisioned` condition. The webpush Nereid delivers them (#2148) to the portal's PWA (#2149), whose service worker has no push yet; Android first, the permission asked in context after the first request, the payload only the name and the phase, opening the decision. `--watch` on the CLI reads the object's status. Voice and phone come later, with #278; the messaging reef (ADR 0019, #254) may carry the same events later.
 
 ## Prior art
 
@@ -177,7 +181,7 @@ From the conditions, through the messaging reef (ADR 0019, #254): "waiting for a
 
 ## Out of scope
 
-A quorum of several approvers (later: `decisions[]` already fits it), change classes by blast radius or cost (#2044, a later extension of `Gate`), the policy reef with kyverno (#898), segregation of duties and an audit log nobody can rewrite (#241), cloud access approvals (#259), contextual conditions by IP or time of day, e-mail or chat pushes, gates on `apply` and `delete`.
+A quorum of several approvers (later: `decisions[]` already fits it), change classes by blast radius or cost (#2044, a later extension of `Gate`), the policy reef with kyverno (#898), segregation of duties and an audit log nobody can rewrite (#241), cloud access approvals (#259), contextual conditions by IP or time of day, e-mail or chat pushes, gates on `apply` and `delete`, a count in the portal's navigation before the Approvals screen opens (an amendment to ADR 0022).
 
 ## Origin
 
@@ -185,5 +189,7 @@ The owner's proposal of 2026-11-22 (*Hard Gates, Soft Gates and protected approv
 
 ## Open questions
 
-- **A requester who is also an approver:** may they approve their own request? Today nothing refuses it; segregation of duties belongs to #241.
+- **A requester among a Gate's listed approvers:** may they approve their own request? Nothing refuses it today; segregation of duties belongs to #241. The default approvers never include the requester.
 - **A hold whose Approval is missing** (the API wrote the object and failed before the Approval): the gate Nereid's reason for it, and whether the API retries or removes the object; step 1 decides.
+
+*Rewritten 2026-11-24 from the owner's decisions after a second opinion (#2117): with no list, whoever may create the kind at the target's node approves; listed approvers add to them; a Gate's list needs `create` on its kinds; the lists come before the pushes, which go through the notifications reef (#2147). Raw data in `#pontos/raw/2026-11-24/`.*
