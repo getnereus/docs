@@ -96,12 +96,15 @@ BRUNO = {"sub": "u2", "name": "Bruno Example", "email": "bruno@example.com", "gr
 
 
 class Stand:
-  def __init__(self, items, status=None, person=None):
+  def __init__(self, items, status=None, person=None, detail=None):
     files = portal.files()
     stand = self
     answers = [status or (200, STATUS)]
     self.answers = answers
     self.asked = []
+    # A Nereid's screen (#2176): GET /v1/status/<reef>/<nereid>?range=<range>, by "<reef>/<nereid>"; 404 for any other.
+    self.details = dict(detail or {})
+    self.detail_asked = []
     by_module = {f"/reefs/{item['reef']}/ui/{item['module']}": item for item in items}
 
     class Handler(http.server.BaseHTTPRequestHandler):
@@ -110,6 +113,13 @@ class Stand:
 
       def asked_status(self):
         stand.asked.append("status")
+
+      def detail(self, path):
+        stand.detail_asked.append(self.path)
+        code, body = stand.details.get(path[len("/v1/status/"):], (404, {"error": {"code": 404, "message": "no such Nereid"}}))
+        if code == 200:
+          body = {**body, "range": self.path.partition("range=")[2]}
+        self.secure(code, "application/json", json.dumps(body).encode())
 
       def secure(self, code, kind, data):
         self.send_response(code)
@@ -134,6 +144,8 @@ class Stand:
           code, body = answers[0]
           self.asked_status()
           self.secure(code, "application/json", json.dumps(body).encode())
+        elif path.startswith("/v1/status/"):
+          self.detail(path)
         elif path == "/v1/screens":
           self.secure(200, "application/json", json.dumps({"items": items}).encode())
         elif path in by_module:
@@ -174,8 +186,9 @@ def portal_page():
   with sync_api.sync_playwright() as playwright:
     browser = chromium(playwright)
 
-    def opened(items, width=390, height=844, scheme="dark", locale="en-US", status=None, touch=False, clock=False, person=None, script=None):
-      stand = Stand(items, status, person)
+    def opened(items, width=390, height=844, scheme="dark", locale="en-US", status=None, touch=False, clock=False, person=None, script=None,
+               detail=None, start=""):
+      stand = Stand(items, status, person, detail)
       stands.append(stand)
       context = browser.new_context(viewport={"width": width, "height": height}, color_scheme=scheme, locale=locale, has_touch=touch)
       page = context.new_page()
@@ -188,9 +201,12 @@ def portal_page():
         page.add_init_script(script)
       page.on("pageerror", lambda error: errors.append(str(error)))
       page.on("request", lambda request: None if request.url.startswith(stand.url) else outside.append(request.url))
-      page.goto(stand.url + "/")
-      page.locator("#tabs:not([hidden])").wait_for()
-      page.wait_for_function(f"document.querySelectorAll('#tabs [data-tab]').length > {1 if items else 0}")
+      page.goto(stand.url + "/" + start)
+      if start:
+        page.locator("#nereid:not([hidden])").wait_for()
+      else:
+        page.locator("#tabs:not([hidden])").wait_for()
+        page.wait_for_function(f"document.querySelectorAll('#tabs [data-tab]').length > {1 if items else 0}")
       checks.append((page, errors, outside))
       return page
 
@@ -203,12 +219,12 @@ def portal_page():
     stand.close()
 
 
-def shot(page, name):
+def shot(page, name, full=False):
   folder = os.environ.get("NEREUS_SHOTS")
   if folder:
     pathlib.Path(folder).mkdir(parents=True, exist_ok=True)
     page.wait_for_timeout(300)
-    page.screenshot(path=str(pathlib.Path(folder) / f"{name}.png"))
+    page.screenshot(path=str(pathlib.Path(folder) / f"{name}.png"), full_page=full)
 
 
 def settled(page, wanted, timeout_ms=3000):
@@ -426,22 +442,6 @@ def test_the_home_screen_shows_the_worst_state_and_the_rows_that_need_attention_
   for button in page.locator("#status .row-head, #refresh, #avatar, #see-all:visible").all():
     box = button.bounding_box()
     assert box["height"] >= 40 and box["width"] >= 40
-
-
-def test_a_row_opens_its_detail_in_place(portal_page):
-  opened, expect = portal_page
-  page = home(opened([]))
-  head = page.locator("#attention .row-head").first
-  detail = page.locator("#attention .row-detail").first
-  expect(detail).to_be_hidden()
-  head.click()
-  expect(head).to_have_attribute("aria-expanded", "true")
-  expect(detail).to_be_visible()
-  expect(detail.locator("dt")).to_have_text(["Nereid", "Version", "Reason", "Age"])
-  expect(detail.locator("dd")).to_have_text(["flux", "1.0.0", "the HelmRelease podinfo failed: install retries exhausted", re_age()])
-  shot(page, "home-phone-detail-dark")
-  head.click()
-  expect(detail).to_be_hidden()
 
 
 def re_age():
@@ -883,3 +883,231 @@ def test_neither_view_nor_the_chips_pass_the_phone_s_edge(portal_page, width, lo
   if width == 390 and locale == "en-US":
     shot(page, "signals-list-then-grid-390-en")
 
+
+
+# A Nereid's own screen (#2176, spec 0013's Detail): a row or a card with a Nereid opens it at
+# #/nereids/<reef>/<nereid>/<range>, from GET /v1/status/<reef>/<nereid>?range=<range>.
+def series(base, points=120, step=30, gap=None):
+  start = 1_795_983_340
+  return [[start + n * step, None if gap and gap[0] <= n < gap[1] else round(base * (1 + 0.4 * ((n * 7) % 11) / 11), 4)] for n in range(points)]
+
+
+DETAIL = {
+  "reef": "release", "nereid": "flux", "range": "1h", "step": 30, "at": "2026-11-24T20:29:00Z",
+  "signals": {
+    "rate": 0.26, "errorRatio": 0.15, "p95Seconds": 0.652, "saturation": 0.31,
+    "series": {"rate": series(0.26), "errorRatio": series(0.15, gap=(40, 50)), "p95Seconds": series(0.65), "saturation": series(0.31)},
+  },
+  "pods": {
+    "cpu": {"cores": 0.162, "limitCores": 0.5, "series": series(0.16)},
+    "memory": {"bytes": 2.1e8, "limitBytes": 2.7e8, "series": series(2.0e8)},
+    "restarts24h": 3,
+    "items": [
+      {"pod": "nereus-flux-7d9f8c6b59-reference-qdmup", "node": "k3d-nereus-agent-0", "startedAt": "2026-11-24T20:18:00Z", "restarts": 3, "lastReason": "OOMKilled"},
+      {"pod": "nereus-flux-7d9f8c6b59-x2k9p", "node": "k3d-nereus-agent-1", "startedAt": "2026-11-24T08:00:00.5Z", "restarts": 0, "lastReason": None},
+    ],
+  },
+  "missing": {"queueDepth": "#1814", "requests": "#2177", "ready": "#2177"},
+}
+NULLS = {
+  **DETAIL,
+  "signals": {"rate": None, "errorRatio": 0.0, "p95Seconds": None, "saturation": None, "series": {"rate": None, "errorRatio": series(0.0), "p95Seconds": None, "saturation": None}},
+  "pods": {"cpu": {"cores": 0.162, "limitCores": None, "series": series(0.16)}, "memory": None, "restarts24h": None, "items": []},
+}
+FLUX = {"release/flux": (200, DETAIL)}
+ROUTE = "#/nereids/release/flux"
+
+
+def detail(page):
+  page.locator("#detail-body:not([hidden]), #detail-no-metrics:not([hidden]), #detail-error:not([hidden])").wait_for()
+  return page
+
+
+def at_hash(page):
+  return page.evaluate("location.hash")
+
+
+def ranges_asked(page):
+  return [path.partition("range=")[2] for path in page.stand.detail_asked]
+
+
+@pytest.mark.parametrize("scheme", ["dark", "light"])
+def test_a_row_with_a_nereid_opens_its_screen_and_back_returns_home(portal_page, scheme):
+  opened, expect = portal_page
+  page = home(opened([], scheme=scheme, status=(200, SIGNALLED), detail=FLUX))
+  # A row with a Nereid is a link; a reef with no Nereid opens nothing.
+  expect(page.locator("#attention .row-head").first).to_have_attribute("href", f"{ROUTE}/1h")
+  assert page.locator("#attention .row-head").nth(1).evaluate("e => e.tagName") == "DIV"
+  page.locator("#attention .row-head").first.click()
+  detail(page)
+  assert at_hash(page) == f"{ROUTE}/1h"
+  expect(page.locator("#status")).to_be_hidden()
+  expect(page.locator("#tabs")).to_be_hidden()
+  expect(page.locator("#detail-reef")).to_have_text("release")
+  expect(page.locator("#detail-nereid")).to_have_text("Nereid flux · 1.0.0")
+  expect(page.locator("#detail-chip")).to_have_text("NotReady")
+  assert page.locator("#detail-chip").evaluate("e => getComputedStyle(e).color") == WARNING[scheme]
+  expect(page.locator("#detail-reason")).to_have_text("the HelmRelease podinfo failed: install retries exhausted")
+  expect(page.locator('#nereid [data-range="1h"]')).to_have_attribute("aria-pressed", "true")
+  cards = page.locator("#detail-signals .detail-card")
+  expect(cards.locator(".detail-label")).to_have_text(["Rate", "Errors", "Duration", "Saturation"])
+  expect(cards.locator(".detail-value")).to_have_text(["0.26/s", "15%", "652ms", "31%"])
+  assert cards.nth(1).locator(".detail-value").evaluate("e => getComputedStyle(e).color") == ERROR[scheme]
+  expect(page.locator("#detail-signals .detail-chart")).to_have_count(4)
+  # A null in the series breaks the errors' line in two.
+  assert page.locator('#detail-signals [data-key="errors"] .chart-line').get_attribute("d").count("M") == 2
+  expect(page.locator("#detail-resources .detail-value")).to_have_text(["162m", "200Mi"])
+  expect(page.locator("#detail-meters .meter-text")).to_have_text(["162m of 500m limit", "200Mi of 257Mi limit"])
+  expect(page.locator("#detail-meters .meter").first).to_have_attribute("aria-valuenow", "32")
+  assert page.locator("#detail-meters .meter").nth(1).get_attribute("data-level") == "warning"
+  expect(page.locator("#detail-facts dt")).to_have_text(["Restarts · 24h", "Queue depth", "Requests, ready"])
+  expect(page.locator("#detail-facts dd")).to_have_text(["3", "waits for #1814", "wait for #2177"])
+  pods = page.locator("#detail-pods .pod")
+  expect(pods.locator(".pod-name")).to_have_text(["nereus-flux-7d…ference-qdmup", "nereus-flux-7d9f8c6b59-x2k9p"])
+  expect(pods.nth(0).locator(".pod-name")).to_have_attribute("title", "nereus-flux-7d9f8c6b59-reference-qdmup")
+  expect(pods.nth(0).locator(".pod-meta")).to_contain_text("k3d-nereus-agent-0 · ")
+  expect(pods.nth(0).locator(".pod-meta")).to_contain_text("3 restarts · OOMKilled")
+  assert pods.nth(0).locator(".pod-reason").evaluate("e => getComputedStyle(e).color") == ERROR[scheme]
+  expect(pods.nth(1).locator(".pod-meta")).to_contain_text("0 restarts")
+  # Live and the time of the answer in the bottom bar, at the screen's bottom edge, never at the top.
+  import re
+  expect(page.locator("#detail-live .live")).to_have_text("Live")
+  expect(page.locator("#detail-updated")).to_have_text(re.compile(r"^updated \d\d:\d\d"))
+  box = page.locator("#detail-live").bounding_box()
+  assert box["y"] + box["height"] == pytest.approx(844, abs=1)
+  assert ranges_asked(page) == ["1h"]
+  shot(page, f"detail-phone-{scheme}", full=True)
+  page.locator("#detail-back").click()
+  home(page)
+  expect(page.locator("#status")).to_be_visible()
+  expect(page.locator("#nereid")).to_be_hidden()
+  assert at_hash(page) == ""
+
+
+def test_a_card_with_a_nereid_opens_its_screen(portal_page):
+  opened, expect = portal_page
+  page = home(opened([], status=(200, SIGNALLED), detail=FLUX))
+  to_grid(page, expect)
+  cards = page.locator("#status-grid .signal-card")
+  assert cards.nth(1).evaluate("e => e.tagName") == "DIV"
+  assert cards.nth(2).evaluate("e => e.tagName") == "DIV"
+  expect(cards.nth(3)).to_have_attribute("href", "#/nereids/presentations/leagore/1h")
+  cards.nth(0).click()
+  detail(page)
+  expect(page.locator("#detail-reef")).to_have_text("release")
+  page.go_back()
+  home(page)
+  expect(page.locator("#status-grid")).to_be_visible()
+
+
+def test_the_route_reopens_on_reload_and_the_range_switch_updates_it(portal_page):
+  opened, expect = portal_page
+  page = detail(opened([], status=(200, SIGNALLED), detail=FLUX, start=f"{ROUTE}/24h"))
+  expect(page.locator('#nereid [data-range="24h"]')).to_have_attribute("aria-pressed", "true")
+  page.locator('#nereid [data-range="7d"]').click()
+  expect(page.locator('#nereid [data-range="7d"]')).to_have_attribute("aria-pressed", "true")
+  expect(page.locator('#nereid [data-range="24h"]')).to_have_attribute("aria-pressed", "false")
+  assert at_hash(page) == f"{ROUTE}/7d"
+  for _ in range(40):
+    if ranges_asked(page)[-1:] == ["7d"]:
+      break
+    page.wait_for_timeout(50)
+  assert ranges_asked(page) == ["24h", "7d"]
+  page.reload()
+  detail(page)
+  expect(page.locator('#nereid [data-range="7d"]')).to_have_attribute("aria-pressed", "true")
+  assert ranges_asked(page)[-1] == "7d"
+  # Opened by a link, not from the home: back puts the home in place of the screen.
+  page.locator("#detail-back").click()
+  home(page)
+  assert at_hash(page) == ""
+  # A hash of no Nereid opens nothing.
+  page.evaluate("location.hash = '#/nereids/tenancy/-/1h'")
+  page.wait_for_timeout(200)
+  expect(page.locator("#status")).to_be_visible()
+
+
+def test_without_the_metrics_reef_the_screen_says_so_in_one_line(portal_page):
+  opened, expect = portal_page
+  page = detail(opened([], locale="pt-BR", status=(200, SIGNALLED), detail={"release/flux": (200, {**DETAIL, "signals": None, "pods": None})}, start=f"{ROUTE}/1h"))
+  expect(page.locator("#detail-no-metrics")).to_have_text("sem métricas: instale o reef de métricas")
+  expect(page.locator("#detail-body")).to_be_hidden()
+  expect(page.locator("#nereid [data-range]")).to_have_text(["5m", "1h", "24h", "7d"])
+  expect(page.locator("#detail-back")).to_have_attribute("aria-label", "Voltar")
+
+
+def test_a_failed_field_says_no_data_never_zero(portal_page):
+  opened, expect = portal_page
+  page = detail(opened([], status=(200, SIGNALLED), detail={"release/flux": (200, NULLS)}, start=f"{ROUTE}/1h"))
+  values = page.locator("#detail-signals .detail-value")
+  expect(values).to_have_text(["no data", "0%", "no data", "no data"])
+  expect(page.locator("#detail-signals .detail-chart")).to_have_count(1)
+  assert values.nth(1).get_attribute("data-failing") is None
+  expect(page.locator("#detail-resources .detail-value")).to_have_text(["162m", "no data"])
+  expect(page.locator("#detail-meters .meter-text")).to_have_text(["no limit", "no data"])
+  expect(page.locator("#detail-meters .meter")).to_have_count(0)
+  expect(page.locator("#detail-facts dd").first).to_have_text("no data")
+  expect(page.locator("#detail-pods")).to_have_text("no pod in this range")
+
+
+def test_a_nereid_not_installed_says_so_and_an_error_offers_a_retry(portal_page):
+  opened, expect = portal_page
+  page = detail(opened([], status=(200, SIGNALLED), start="#/nereids/release/argo/1h"))
+  expect(page.locator("#detail-error-title")).to_have_text("this Nereid is not installed")
+  expect(page.locator("#detail-retry")).to_be_hidden()
+  expect(page.locator("#detail-live")).to_be_hidden()
+  page.stand.details["release/flux"] = DOWN
+  page.evaluate(f"location.hash = '{ROUTE}/1h'")
+  expect(page.locator("#detail-error-title")).to_have_text("The Nereid's numbers did not load")
+  expect(page.locator("#detail-error-reason")).to_have_text("cannot read the cluster from the Kubernetes API")
+  page.stand.details["release/flux"] = (200, DETAIL)
+  page.locator("#detail-retry").click()
+  expect(page.locator("#detail-body")).to_be_visible()
+  expect(page.locator("#detail-error")).to_be_hidden()
+
+
+def test_the_screen_asks_again_every_step_while_visible_and_stops_once_left(portal_page):
+  opened, expect = portal_page
+  page = home(opened([], clock=True, status=(200, SIGNALLED), detail=FLUX))
+  page.locator("#attention .row-head").first.click()
+  detail(page)
+
+  def asked_after(milliseconds):
+    before = len(page.stand.detail_asked)
+    page.clock.run_for(milliseconds)
+    page.wait_for_timeout(300)
+    return len(page.stand.detail_asked) - before
+
+  assert asked_after(31000) == 1
+  page.locator('#nereid [data-range="24h"]').click()
+  page.wait_for_timeout(300)
+  assert ranges_asked(page)[-1] == "24h"
+  assert asked_after(31000) == 0
+  assert asked_after(270000) == 1
+  page.locator("#detail-back").click()
+  home(page)
+  assert asked_after(901000) == 0
+
+
+@pytest.mark.parametrize("width", [340, 360, 390, 412])
+@pytest.mark.parametrize("locale", ["pt-BR", "en-US"])
+def test_nothing_on_the_nereid_s_screen_passes_the_phone_s_edge(portal_page, width, locale):
+  """docs/agent/decks.md, Screens on a phone: the screen measured in both languages at 340 to 412 px: nothing past the
+  screen's edge, no horizontal scroll, no range or value cut, the four ranges on one row."""
+  opened, expect = portal_page
+  page = home(opened([], width=width, locale=locale, status=(200, SIGNALLED), detail=FLUX))
+  page.locator("#attention .row-head").first.click()
+  detail(page)
+  measure = """() => ({
+    scroll: document.documentElement.scrollWidth > innerWidth,
+    out: [...document.querySelectorAll('#nereid *')].filter((e) => e.getBoundingClientRect().right > innerWidth + 0.5)
+      .map((e) => e.id || e.getAttribute('class') || e.tagName),
+    cut: [...document.querySelectorAll('#nereid [data-range], .detail-value, .detail-label, .detail-hint, .meter-text, .detail-fact dd')]
+      .filter((e) => e.scrollWidth > e.clientWidth + 1).map((e) => e.textContent),
+    rows: new Set([...document.querySelectorAll('#nereid [data-range]')].map((e) => Math.round(e.getBoundingClientRect().top))).size,
+  })"""
+  assert page.evaluate(measure) == {"scroll": False, "out": [], "cut": [], "rows": 1}
+  if width in (360, 412):
+    name = f"detail-{width}-{'pt' if locale == 'pt-BR' else 'en'}"
+    shot(page, name)
+    shot(page, f"{name}-full", full=True)
