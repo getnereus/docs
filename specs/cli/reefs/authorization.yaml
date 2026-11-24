@@ -36,6 +36,10 @@ acts:
     title: "Enforcement"
     question: "What happens when the answer is no?"
     pt: {title: "Na prática", question: "O que acontece quando a resposta é não?"}
+  - name: gates
+    title: "Gates"
+    question: "May I ask?"
+    pt: {title: "Gates", question: "Posso pedir?"}
   - name: closing
     title: "Closing"
     pt: {title: "Fechamento"}
@@ -796,6 +800,192 @@ slides:
         **Fecha tudo, leituras inclusive:** sem resposta, a Nereus API recusa, então uma queda nunca é um jeito de ler o que não se podia. `nereus whoami`, `nereus status` e `nereus doctor` continuam abertos, para a pessoa ver o que caiu.
 
         **O grupo `nereus-admins` é a saída de emergência:** não depende da Nereid, é a mesma regra que vale antes de a autorização ser instalada, e o `nereus doctor` avisa quando ela é usada. O User root da instância (#1306, How teams, roles and Users relate) toma o seu lugar em uma fatia posterior.
+
+  - name: gate-create
+    act: gates
+    topic: "gate create"
+    status: planned
+    issue: 2119
+    message: "A Gate says which requests wait, and for whom"
+    accent: "wait, and for whom"
+    terminal:
+      steps:
+        - comment: "Requests to create an Environment in payments wait for the tech lead"
+          run: "nereus authorization gate create payments-environments"
+          options:
+            - "--reef environment"
+            - "--kinds environments"
+            - "--verbs create"
+            - "--approvers team/payments/tech-lead"
+            - "--owner project/payments"
+          output: |-
+            ✓ authorization/gates/payments-environments created
+    dependsOn: [fail-closed]
+    notes: |-
+      **A hard gate refuses, a soft gate holds** (ADR 0031): without a right to the verb the answer is a 403, as today; a person who may only `request` it creates the object, and it waits for an approver.
+
+      **A Gate belongs to a node of the tenancy tree,** as a Binding does, and holds for that node and the nodes under it. It names a reef, its kinds and the verbs (`create` only, for now); the approvers are the subjects a Binding takes. A `request` with no Gate to match is refused, since nobody would decide it.
+
+      **A new kind gets approvals by a Gate alone:** no reef writes its own flow.
+    pt:
+      topic: "gate create"
+      message: "Um Gate diz quais pedidos esperam, e por quem"
+      accent: "esperam, e por quem"
+      notes: |-
+        **Um hard gate recusa, um soft gate segura** (ADR 0031): sem o direito ao verbo a resposta é um 403, como hoje; quem só pode fazer `request` cria o objeto, e ele espera por um aprovador.
+
+        **Um Gate pertence a um nó da árvore de tenancy,** como um Binding, e vale para esse nó e os nós abaixo dele. Ele nomeia um reef, os seus kinds e os verbos (só `create`, por enquanto); os aprovadores são os sujeitos que um Binding aceita. Um `request` sem Gate que o cubra é recusado, já que ninguém o decidiria.
+
+        **Um kind novo ganha aprovações só com um Gate:** nenhum reef escreve o seu próprio fluxo.
+
+  - name: create-held
+    act: gates
+    topic: "create, held"
+    status: planned
+    issue: 2119
+    message: "The object exists at once, and stands Pending"
+    accent: "stands Pending"
+    terminal:
+      steps:
+        - comment: "Bruno may ask, not create"
+          run: "nereus environment create staging"
+          options: ["--owner project/payments"]
+          output: |-
+            ✓ environment/environments/staging created, waiting for approval (authorization/approvals/staging-create-7f3a; approvers: team/payments/tech-lead)
+
+            Next steps:
+
+              nereus environment get staging --watch
+        - comment: "And he can see it wait"
+          run: "nereus environment get staging"
+          output: |-
+            NAME      PHASE     READY   REASON            AGE
+            staging   Pending   False   WaitingApproval   2m
+    dependsOn: [gate-create]
+    notes: |-
+      **The hold is one annotation** on the object, set by the Nereus API when it writes it and lifted only by the API when the Approval is approved. While it is on, a Nereid never acts on the object and an `apply` is refused (409); a `delete` by the requester withdraws the request.
+
+      **Who writes what (ADR 0005):** the API writes the object's `spec` and the hold; the gate Nereid writes its `status` (`Pending`, `Ready=False`, reason `WaitingApproval`); once the hold is lifted, the kind's own Nereid takes the `status` back.
+    pt:
+      topic: "create, retido"
+      message: "O objeto existe de imediato, e fica Pending"
+      accent: "fica Pending"
+      notes: |-
+        **O hold é uma anotação** no objeto, posta pela Nereus API ao escrevê-lo e retirada só pela API quando a Approval é aprovada. Enquanto ela está lá, uma Nereid nunca age sobre o objeto e um `apply` é recusado (409); um `delete` de quem pediu retira o pedido.
+
+        **Quem escreve o quê (ADR 0005):** a API escreve o `spec` do objeto e o hold; a Nereid do gate escreve o seu `status` (`Pending`, `Ready=False`, motivo `WaitingApproval`); com o hold retirado, a Nereid do próprio kind retoma o `status`.
+
+  - name: approval-list
+    act: gates
+    topic: "approval list"
+    status: planned
+    issue: 2119
+    message: "The approver sees what waits for a decision"
+    accent: "waits for a decision"
+    terminal:
+      steps:
+        - comment: "Every held request has one Approval"
+          run: "nereus authorization approval list"
+          output: |-
+            NAME                  TARGET                             VERB     REQUESTED BY   PHASE     AGE
+            staging-create-7f3a   environment/environments/staging   create   bruno          Pending   2m
+    dependsOn: [create-held]
+    notes: |-
+      **One Approval per held request,** named `<target>-<verb>-<4 hex>`. Its `spec` is written only by the Nereus API and its `status` only by the gate Nereid; it goes away with the held object.
+
+      **The requester is a User id, never an e-mail.** The phase is `Pending`, `Approved`, `Rejected` or `Expired`; an Approval expires at the Gate's `expires` (7 days by default).
+    pt:
+      topic: "approval list"
+      message: "Quem aprova vê o que espera uma decisão"
+      accent: "espera uma decisão"
+      notes: |-
+        **Uma Approval por pedido retido,** com o nome `<alvo>-<verbo>-<4 hex>`. O seu `spec` é escrito só pela Nereus API e o seu `status` só pela Nereid do gate; ela some com o objeto retido.
+
+        **Quem pediu é um id de User, nunca um e-mail.** A fase é `Pending`, `Approved`, `Rejected` ou `Expired`; uma Approval expira no `expires` do Gate (7 dias por padrão).
+
+  - name: approval-approve
+    act: gates
+    topic: "approval approve"
+    status: planned
+    issue: 2119
+    message: "Approving lifts the hold, and the Nereid provisions"
+    accent: "lifts the hold"
+    terminal:
+      steps:
+        - comment: "Ana, of the tech lead team, decides"
+          run: "nereus authorization approval approve staging-create-7f3a"
+          options: ["--reason \"sprint demo\""]
+          output: |-
+            ✓ authorization/approvals/staging-create-7f3a approved; environment/environments/staging released
+    dependsOn: [approval-list]
+    notes: |-
+      **`approve` is a command of the `approval` kind,** an amendment to ADR 0013: it records one decision in `decisions[]` (a list, so a quorum fits later). The API asks `approve` on `authorization/approvals` at the Gate's node, and the answer holds for the Gate's approvers.
+
+      **After the decision** the API lifts the hold, the kind's own Nereid reconciles as usual, and the gate Nereid follows `Ready` into the Approval's `Provisioned` condition, which the notifications read.
+    pt:
+      topic: "approval approve"
+      message: "Aprovar retira o hold, e a Nereid provisiona"
+      accent: "retira o hold"
+      notes: |-
+        **`approve` é um comando do kind `approval`,** uma emenda à ADR 0013: grava uma decisão em `decisions[]` (uma lista, para caber um quórum depois). A API pergunta `approve` em `authorization/approvals` no nó do Gate, e a resposta vale para os aprovadores do Gate.
+
+        **Depois da decisão** a API retira o hold, a Nereid do próprio kind reconcilia como de costume, e a Nereid do gate acompanha o `Ready` até a condição `Provisioned` da Approval, que as notificações leem.
+
+  - name: approval-reject
+    act: gates
+    topic: "approval reject"
+    status: planned
+    issue: 2122
+    message: "Rejecting keeps the history, and provisions nothing"
+    accent: "provisions nothing"
+    terminal:
+      steps:
+        - comment: "Or the approver says no, with the reason"
+          run: "nereus authorization approval reject staging-create-7f3a"
+          options: ["--reason \"use the shared staging\""]
+          output: |-
+            ✓ authorization/approvals/staging-create-7f3a rejected; environment/environments/staging will not be provisioned
+    dependsOn: [approval-approve]
+    notes: |-
+      **The object stays, marked `Rejected`:** the gate Nereid writes `phase: Rejected`, `Ready=False`, reason `Rejected`, and the phase stays until `delete` (ADR 0026). The hold is never lifted, so nothing is provisioned. An expired request ends the same way, with the reason `Expired`.
+
+      **The requester is told** through the messaging reef, with the reason the approver gave.
+    pt:
+      topic: "approval reject"
+      message: "Rejeitar guarda o histórico, e não provisiona nada"
+      accent: "não provisiona nada"
+      notes: |-
+        **O objeto fica, marcado `Rejected`:** a Nereid do gate escreve `phase: Rejected`, `Ready=False`, motivo `Rejected`, e a fase fica até o `delete` (ADR 0026). O hold nunca é retirado, então nada é provisionado. Um pedido expirado termina igual, com o motivo `Expired`.
+
+        **Quem pediu é avisado** pelo reef de mensagens, com o motivo que o aprovador deu.
+
+  - name: can-i-may-ask
+    act: gates
+    topic: "can-i, may ask"
+    status: planned
+    issue: 2124
+    message: "No, but Bruno may ask"
+    accent: "may ask"
+    terminal:
+      steps:
+        - comment: "The answer to create is still no, and says who decides"
+          run: "nereus authorization can-i create environment/environments"
+          options: ["--owner project/payments", "--user bruno"]
+          output: |-
+            no, but may ask: authorization/gates/payments-environments holds create for team/payments/tech-lead's approval
+    dependsOn: [can-i-no, approval-approve]
+    notes: |-
+      **`request` is a right, not a command:** it appears in a Role's rules (`environment:environments:request`) and in `can-i` (`nereus authorization can-i request environment/environments`).
+
+      **The exit code stays 1,** since the answer to `create` is still no; the Gate named in the line is the one that would hold the request.
+    pt:
+      topic: "can-i, pode pedir"
+      message: "Não, mas o Bruno pode pedir"
+      accent: "pode pedir"
+      notes: |-
+        **`request` é um direito, não um comando:** aparece nas regras de um Role (`environment:environments:request`) e no `can-i` (`nereus authorization can-i request environment/environments`).
+
+        **O código de saída continua 1,** já que a resposta para `create` ainda é não; o Gate citado na linha é o que seguraria o pedido.
 
   - name: later
     act: closing

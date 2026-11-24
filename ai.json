@@ -155,6 +155,11 @@
       "md": "adr/0030-triton-rooms-nereid.md",
       "title": "Triton, the rooms Nereid"
     },
+    "adr/0031-gates-and-approvals/": {
+      "goal": "Status: Accepted (2026-11-24, by the owner)",
+      "md": "adr/0031-gates-and-approvals.md",
+      "title": "Gates and approvals"
+    },
     "agent/": {
       "goal": "One page per topic, read on demand.",
       "md": "agent/index.md",

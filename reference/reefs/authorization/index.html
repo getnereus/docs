@@ -3400,6 +3400,72 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#gate-create" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gate-create
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-held" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create-held
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#approval-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        approval-list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#approval-approve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        approval-approve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#approval-reject" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        approval-reject
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#can-i-may-ask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        can-i-may-ask
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4680,6 +4746,8 @@
       
         
       
+        
+      
     
     
     
@@ -5585,6 +5653,34 @@
     
   
     Triton, the rooms Nereid
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../adr/0031-gates-and-approvals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gates and approvals
   
 
     
@@ -7479,6 +7575,72 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#gate-create" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gate-create
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-held" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create-held
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#approval-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        approval-list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#approval-approve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        approval-approve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#approval-reject" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        approval-reject
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#can-i-may-ask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        can-i-may-ask
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -7550,6 +7712,18 @@
   Leaving the team removes the access</li>
 <li><a href="../../../specs/cli/reefs/authorization.html#fail-closed"><code>nereus environment list</code></a><br>
   Without openfga, everything closes</li>
+<li><a href="../../../specs/cli/reefs/authorization.html#gate-create"><code>nereus authorization gate create payments-environments</code></a> <span class="chip planned">planned #2119</span><br>
+  A Gate says which requests wait, and for whom</li>
+<li><a href="../../../specs/cli/reefs/authorization.html#create-held"><code>nereus environment create staging</code></a> <span class="chip planned">planned #2119</span><br>
+  The object exists at once, and stands Pending</li>
+<li><a href="../../../specs/cli/reefs/authorization.html#approval-list"><code>nereus authorization approval list</code></a> <span class="chip planned">planned #2119</span><br>
+  The approver sees what waits for a decision</li>
+<li><a href="../../../specs/cli/reefs/authorization.html#approval-approve"><code>nereus authorization approval approve staging-create-7f3a</code></a> <span class="chip planned">planned #2119</span><br>
+  Approving lifts the hold, and the Nereid provisions</li>
+<li><a href="../../../specs/cli/reefs/authorization.html#approval-reject"><code>nereus authorization approval reject staging-create-7f3a</code></a> <span class="chip planned">planned #2122</span><br>
+  Rejecting keeps the history, and provisions nothing</li>
+<li><a href="../../../specs/cli/reefs/authorization.html#can-i-may-ask"><code>nereus authorization can-i create environment/environments</code></a> <span class="chip planned">planned #2124</span><br>
+  No, but Bruno may ask</li>
 </ul>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <h3 id="reef-apply">reef-apply<a class="headerlink" href="#reef-apply" title="Permanent link">&para;</a></h3>
@@ -7737,6 +7911,57 @@ Next steps:
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✗ authorization does not answer (nereid: openfga): nothing is allowed until it is back. To see what is down, run:
   nereus doctor
   Nothing was changed.
+</code></pre></div>
+<h3 id="gate-create">gate-create<a class="headerlink" href="#gate-create" title="Permanent link">&para;</a></h3>
+<p>Requests to create an Environment in payments wait for the tech lead.</p>
+<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>authorization<span class="w"> </span>gate<span class="w"> </span>create<span class="w"> </span>payments-environments<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--reef<span class="w"> </span>environment<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--kinds<span class="w"> </span>environments<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--verbs<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--approvers<span class="w"> </span>team/payments/tech-lead<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--owner<span class="w"> </span>project/payments
+</code></pre></div>
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ authorization/gates/payments-environments created
+</code></pre></div>
+<h3 id="create-held">create-held<a class="headerlink" href="#create-held" title="Permanent link">&para;</a></h3>
+<p>Bruno may ask, not create.</p>
+<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>environment<span class="w"> </span>create<span class="w"> </span>staging<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--owner<span class="w"> </span>project/payments
+</code></pre></div>
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ environment/environments/staging created, waiting for approval (authorization/approvals/staging-create-7f3a; approvers: team/payments/tech-lead)
+
+Next steps:
+
+  nereus environment get staging --watch
+</code></pre></div>
+<h3 id="approval-list">approval-list<a class="headerlink" href="#approval-list" title="Permanent link">&para;</a></h3>
+<p>Every held request has one Approval.</p>
+<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>authorization<span class="w"> </span>approval<span class="w"> </span>list
+</code></pre></div>
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>NAME                  TARGET                             VERB     REQUESTED BY   PHASE     AGE
+staging-create-7f3a   environment/environments/staging   create   bruno          Pending   2m
+</code></pre></div>
+<h3 id="approval-approve">approval-approve<a class="headerlink" href="#approval-approve" title="Permanent link">&para;</a></h3>
+<p>Ana, of the tech lead team, decides.</p>
+<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>authorization<span class="w"> </span>approval<span class="w"> </span>approve<span class="w"> </span>staging-create-7f3a<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--reason<span class="w"> </span><span class="s2">"sprint demo"</span>
+</code></pre></div>
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ authorization/approvals/staging-create-7f3a approved; environment/environments/staging released
+</code></pre></div>
+<h3 id="approval-reject">approval-reject<a class="headerlink" href="#approval-reject" title="Permanent link">&para;</a></h3>
+<p>Or the approver says no, with the reason.</p>
+<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>authorization<span class="w"> </span>approval<span class="w"> </span>reject<span class="w"> </span>staging-create-7f3a<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--reason<span class="w"> </span><span class="s2">"use the shared staging"</span>
+</code></pre></div>
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ authorization/approvals/staging-create-7f3a rejected; environment/environments/staging will not be provisioned
+</code></pre></div>
+<h3 id="can-i-may-ask">can-i-may-ask<a class="headerlink" href="#can-i-may-ask" title="Permanent link">&para;</a></h3>
+<p>The answer to create is still no, and says who decides.</p>
+<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>authorization<span class="w"> </span>can-i<span class="w"> </span>create<span class="w"> </span>environment/environments<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--owner<span class="w"> </span>project/payments<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--user<span class="w"> </span>bruno
+</code></pre></div>
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>no, but may ask: authorization/gates/payments-environments holds create for team/payments/tech-lead's approval
 </code></pre></div>
 
 

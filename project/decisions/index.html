@@ -4378,6 +4378,8 @@
       
         
       
+        
+      
     
     
     
@@ -5293,6 +5295,34 @@
     
   
     Triton, the rooms Nereid
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/0031-gates-and-approvals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gates and approvals
   
 
     
@@ -7116,6 +7146,11 @@
 <td><a href="../../adr/0030-triton-rooms-nereid/">0030. Triton is the rooms reef's Nereid: Room and Peer, on a Topic of the messaging reef</a></td>
 <td>Accepted</td>
 <td>The conversation between agents is a reef of its own, <code>rooms</code> (<code>Room</code>, <code>Peer</code>), looked after by Triton, which requires the <code>messaging</code> reef and asks it for a Topic per Room.</td>
+</tr>
+<tr>
+<td><a href="../../adr/0031-gates-and-approvals/">0031. Gates and approvals native to Nereus</a></td>
+<td>Accepted</td>
+<td>A hard gate refuses; under a soft gate the object is written held <code>Pending</code> until an approver approves or rejects it through the API: <code>Gate</code> and <code>Approval</code> in the <code>authorization</code> reef, one hold, one admission policy, no flow per kind.</td>
 </tr>
 </tbody>
 </table>

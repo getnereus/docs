@@ -4378,6 +4378,8 @@
       
         
       
+        
+      
     
     
     
@@ -5374,6 +5376,34 @@
     
   
     Triton, the rooms Nereid
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0031-gates-and-approvals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gates and approvals
   
 
     
@@ -7112,6 +7142,7 @@
 <ul>
 <li>Every new field is designed with its writer. A field that needs two writers is split.</li>
 <li>Reading <code>status</code> is how the API and the CLI learn what a Nereid offers: endpoints, commands (ADR 0004), readiness.</li>
+<li><strong>One handover, for held objects</strong> (ADR 0031): while an object carries the hold of a soft gate, the <code>authorization</code> reef's gate Nereid is the one writer of its <code>status</code>; the kind's own Nereid writes it from the moment the API lifts the hold.</li>
 </ul>
 <p><em>Aligned in wording 2026-10-25 from voice session (reef, Nereid, Mandate, <code>nereus</code>); raw data in Drive #pontos/raw/2026-10-25.</em></p>
 

@@ -24,5 +24,6 @@ With Nereids swapped and added at runtime, several processes touch the same obje
 
 - Every new field is designed with its writer. A field that needs two writers is split.
 - Reading `status` is how the API and the CLI learn what a Nereid offers: endpoints, commands (ADR 0004), readiness.
+- **One handover, for held objects** (ADR 0031): while an object carries the hold of a soft gate, the `authorization` reef's gate Nereid is the one writer of its `status`; the kind's own Nereid writes it from the moment the API lifts the hold.
 
 *Aligned in wording 2026-10-25 from voice session (reef, Nereid, Mandate, `nereus`); raw data in Drive #pontos/raw/2026-10-25.*

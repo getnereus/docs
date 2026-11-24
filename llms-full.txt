@@ -4783,6 +4783,12 @@ Every command of the first slice: Users, teams, roles and bindings, and who may 
 - [`nereus environment create staging`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#enforce-allowed) Ana's environment is created
 - [`nereus teams member delete ana`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#leave-team) [planned #1307] Leaving the team removes the access
 - [`nereus environment list`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#fail-closed) Without openfga, everything closes
+- [`nereus authorization gate create payments-environments`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#gate-create) [planned #2119] A Gate says which requests wait, and for whom
+- [`nereus environment create staging`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#create-held) [planned #2119] The object exists at once, and stands Pending
+- [`nereus authorization approval list`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#approval-list) [planned #2119] The approver sees what waits for a decision
+- [`nereus authorization approval approve staging-create-7f3a`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#approval-approve) [planned #2119] Approving lifts the hold, and the Nereid provisions
+- [`nereus authorization approval reject staging-create-7f3a`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#approval-reject) [planned #2122] Rejecting keeps the history, and provisions nothing
+- [`nereus authorization can-i create environment/environments`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#can-i-may-ask) [planned #2124] No, but Bruno may ask
 
 ## Examples
 
@@ -5090,6 +5096,93 @@ nereus environment list
 ✗ authorization does not answer (nereid: openfga): nothing is allowed until it is back. To see what is down, run:
   nereus doctor
   Nothing was changed.
+```
+
+### gate-create
+
+Requests to create an Environment in payments wait for the tech lead.
+
+```bash
+nereus authorization gate create payments-environments \
+  --reef environment \
+  --kinds environments \
+  --verbs create \
+  --approvers team/payments/tech-lead \
+  --owner project/payments
+```
+
+``` { .text .output title="output" }
+✓ authorization/gates/payments-environments created
+```
+
+### create-held
+
+Bruno may ask, not create.
+
+```bash
+nereus environment create staging \
+  --owner project/payments
+```
+
+``` { .text .output title="output" }
+✓ environment/environments/staging created, waiting for approval (authorization/approvals/staging-create-7f3a; approvers: team/payments/tech-lead)
+
+Next steps:
+
+  nereus environment get staging --watch
+```
+
+### approval-list
+
+Every held request has one Approval.
+
+```bash
+nereus authorization approval list
+```
+
+``` { .text .output title="output" }
+NAME                  TARGET                             VERB     REQUESTED BY   PHASE     AGE
+staging-create-7f3a   environment/environments/staging   create   bruno          Pending   2m
+```
+
+### approval-approve
+
+Ana, of the tech lead team, decides.
+
+```bash
+nereus authorization approval approve staging-create-7f3a \
+  --reason "sprint demo"
+```
+
+``` { .text .output title="output" }
+✓ authorization/approvals/staging-create-7f3a approved; environment/environments/staging released
+```
+
+### approval-reject
+
+Or the approver says no, with the reason.
+
+```bash
+nereus authorization approval reject staging-create-7f3a \
+  --reason "use the shared staging"
+```
+
+``` { .text .output title="output" }
+✓ authorization/approvals/staging-create-7f3a rejected; environment/environments/staging will not be provisioned
+```
+
+### can-i-may-ask
+
+The answer to create is still no, and says who decides.
+
+```bash
+nereus authorization can-i create environment/environments \
+  --owner project/payments \
+  --user bruno
+```
+
+``` { .text .output title="output" }
+no, but may ask: authorization/gates/payments-environments holds create for team/payments/tech-lead's approval
 ```
 
 # build
