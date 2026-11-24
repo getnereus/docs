@@ -174,7 +174,7 @@ def portal_page():
   with sync_api.sync_playwright() as playwright:
     browser = chromium(playwright)
 
-    def opened(items, width=390, height=844, scheme="dark", locale="en-US", status=None, touch=False, clock=False, person=None):
+    def opened(items, width=390, height=844, scheme="dark", locale="en-US", status=None, touch=False, clock=False, person=None, script=None):
       stand = Stand(items, status, person)
       stands.append(stand)
       context = browser.new_context(viewport={"width": width, "height": height}, color_scheme=scheme, locale=locale, has_touch=touch)
@@ -184,6 +184,8 @@ def portal_page():
         page.clock.install()
       errors, outside = [], []
       page.add_init_script(LISTENER)
+      if script:
+        page.add_init_script(script)
       page.on("pageerror", lambda error: errors.append(str(error)))
       page.on("request", lambda request: None if request.url.startswith(stand.url) else outside.append(request.url))
       page.goto(stand.url + "/")
@@ -722,3 +724,162 @@ def test_nothing_in_the_bottom_sheet_passes_the_phone_s_edge(portal_page, width,
     .filter((e) => e.offsetParent !== null && e.getBoundingClientRect().right > innerWidth + 0.5)
     .map((e) => e.id || e.className || e.tagName)""")
   assert found == []
+
+
+# Each Nereid's signals (#744): GET /v1/status's rows with a Nereid carry signals (null without the metrics reef); the
+# home shows them in a list or a grid, under filter chips, the view kept in the browser.
+def wave(base, points=60):
+  return [round(base * (1 + 0.5 * ((n * 7) % 11) / 11), 4) for n in range(points)]
+
+
+def signals(rate, errors, p95):
+  return {"rate": rate, "errorRatio": errors, "p95Seconds": p95, "saturation": 0.05, "stuckSeconds": 0.0, "series": {"rate": wave(rate or 0.01)}}
+
+
+SIGNALLED = {
+  "installation": INSTALLATION,
+  "registry": None,
+  "items": [
+    CORE_ROW,
+    {**row("presentations", "leagore"), "signals": signals(0.08, 0.0, 0.12)},
+    {**row("release", "flux", "NotReady", "the HelmRelease podinfo failed: install retries exhausted"), "signals": signals(0.31, 0.12, 0.84)},
+    {**row("secrets", "openbao"), "signals": signals(1.5, None, 1.25)},
+    row("tenancy", "-", "Waiting", version="-"),
+    {**row("usage", "reference-usage"), "signals": signals(None, 0.0, None)},
+  ],
+}
+ERROR = {"dark": rgb("#f2b8b5"), "light": rgb("#b3261e")}
+BLOCKED = "Object.defineProperty(window, 'localStorage', { get() { throw new DOMException('blocked', 'SecurityError'); } });"
+
+
+def to_grid(page, expect):
+  page.locator('#status-rows [data-view="grid"]').click()
+  expect(page.locator("#status-grid")).to_be_visible()
+
+
+@pytest.mark.parametrize("scheme", ["dark", "light"])
+def test_the_list_shows_each_nereid_s_red_line_and_sparkline(portal_page, scheme):
+  opened, expect = portal_page
+  page = home(opened([], scheme=scheme, status=(200, SIGNALLED)))
+  expect(page.locator('#status-rows [data-filter="all"]')).to_have_attribute("aria-pressed", "true")
+  expect(page.locator('#status-rows [data-view="list"]')).to_have_attribute("aria-pressed", "true")
+  expect(page.locator("#status-list")).to_be_visible()
+  expect(page.locator("#status-grid")).to_be_hidden()
+  expect(page.locator("#no-metrics")).to_be_hidden()
+  release = page.locator("#attention .row").first
+  expect(release.locator(".red-line span")).to_have_text(["0.31/s", "12% err", "p95 840ms"])
+  assert release.locator(".red-errors").evaluate("e => getComputedStyle(e).color") == ERROR[scheme]
+  assert release.locator(".spark-line").evaluate("e => getComputedStyle(e).stroke") == WARNING[scheme]
+  # The Nereid-less row keeps its state and shows no numbers.
+  tenancy = page.locator("#attention .row").nth(1)
+  expect(tenancy.locator(".chip")).to_have_text("Waiting")
+  expect(tenancy.locator(".red-line, .spark")).to_have_count(0)
+  shot(page, f"signals-list-phone-{scheme}")
+  page.locator("#see-all").click()
+  good = page.locator("#good .row")
+  expect(good.nth(0).locator(".red-line")).to_have_count(0)
+  expect(good.nth(1).locator(".red-line span")).to_have_text(["4.8/min", "0% err", "p95 120ms"])
+  assert good.nth(1).locator(".red-errors").evaluate("e => getComputedStyle(e).color") != ERROR[scheme]
+  assert good.nth(1).locator(".spark-line").evaluate("e => getComputedStyle(e).stroke") == SUCCESS[scheme]
+  # A failed query nulls only its field: a dash, never 0.
+  expect(good.nth(2).locator(".red-line span")).to_have_text(["1.50/s", "– err", "p95 1.3s"])
+  expect(good.nth(3).locator(".red-line span")).to_have_text(["–", "0% err", "p95 –"])
+
+
+@pytest.mark.parametrize("scheme", ["dark", "light"])
+def test_the_grid_shows_two_columns_of_cards_attention_first_and_the_choice_is_kept(portal_page, scheme):
+  opened, expect = portal_page
+  page = home(opened([], scheme=scheme, status=(200, SIGNALLED)))
+  to_grid(page, expect)
+  expect(page.locator('#status-rows [data-view="grid"]')).to_have_attribute("aria-pressed", "true")
+  expect(page.locator("#status-list")).to_be_hidden()
+  cards = page.locator("#status-grid .signal-card")
+  expect(cards.locator(".card-reef")).to_have_text(["release", "tenancy", "core", "presentations", "secrets", "usage"])
+  first, second, third = (cards.nth(n).bounding_box() for n in (0, 1, 2))
+  assert first["y"] == pytest.approx(second["y"], abs=1) and second["x"] > first["x"] + first["width"]
+  assert third["y"] > first["y"] + first["height"] - 1
+  assert cards.nth(0).evaluate("e => getComputedStyle(e).borderTopColor") == WARNING[scheme]
+  assert cards.nth(2).evaluate("e => getComputedStyle(e).borderTopColor") == "rgba(0, 0, 0, 0)"
+  expect(cards.nth(0).locator(".card-nereid")).to_have_text("flux")
+  expect(cards.nth(0).locator(".card-state")).to_have_text("NotReady")
+  expect(cards.nth(0).locator(".card-rate")).to_have_text("0.31/s")
+  expect(cards.nth(0).locator(".red-errors")).to_have_text("12%")
+  assert cards.nth(0).locator(".red-errors").evaluate("e => getComputedStyle(e).color") == ERROR[scheme]
+  expect(cards.nth(0).locator(".spark")).to_have_count(1)
+  expect(cards.nth(1).locator(".card-numbers, .spark")).to_have_count(0)
+  expect(cards.nth(3).locator(".card-rate")).to_have_text("4.8/min")
+  shot(page, f"signals-grid-phone-{scheme}")
+  page.reload()
+  home(page)
+  expect(page.locator("#status-grid")).to_be_visible()
+  page.locator('#status-rows [data-view="list"]').click()
+  page.reload()
+  home(page)
+  expect(page.locator("#status-list")).to_be_visible()
+
+
+def test_the_chips_filter_both_views(portal_page):
+  opened, expect = portal_page
+  page = home(opened([], status=(200, SIGNALLED)))
+  page.locator('#status-rows [data-filter="attention"]').click()
+  expect(page.locator('#status-rows [data-filter="attention"]')).to_have_attribute("aria-pressed", "true")
+  expect(page.locator('#status-rows [data-filter="all"]')).to_have_attribute("aria-pressed", "false")
+  expect(page.locator("#attention .headline")).to_have_text(["release", "tenancy"])
+  expect(page.locator("#good-title")).to_be_hidden()
+  expect(page.locator("#see-all")).to_be_hidden()
+  to_grid(page, expect)
+  expect(page.locator("#status-grid .card-reef")).to_have_text(["release", "tenancy"])
+  page.locator('#status-rows [data-filter="ready"]').click()
+  expect(page.locator("#status-grid .card-reef")).to_have_text(["core", "presentations", "secrets", "usage"])
+  page.locator('#status-rows [data-view="list"]').click()
+  expect(page.locator("#attention-title")).to_be_hidden()
+  expect(page.locator("#good .headline")).to_have_text(["core", "presentations", "secrets", "usage"])
+  expect(page.locator("#good")).to_be_visible()
+  expect(page.locator("#filter-empty")).to_be_hidden()
+
+
+def test_without_the_metrics_reef_the_rows_keep_today_s_form_and_one_line_says_so(portal_page):
+  opened, expect = portal_page
+  page = home(opened([], locale="pt-BR"))
+  expect(page.locator("#no-metrics")).to_have_text("sem métricas: instale o reef de métricas")
+  expect(page.locator("#status .red-line, #status .spark")).to_have_count(0)
+  expect(page.locator("#status-rows [data-filter]")).to_have_text(["Todos", "Atenção", "Prontos"])
+  expect(page.locator('#status-rows [data-view="grid"]')).to_have_attribute("aria-label", "Grade")
+  choose_language(page, "en")
+  expect(page.locator("#no-metrics")).to_have_text("no metrics: install the metrics reef")
+  to_grid(page, expect)
+  expect(page.locator("#status-grid .card-numbers, #status-grid .spark")).to_have_count(0)
+
+
+def test_blocked_storage_opens_the_list_and_the_toggle_still_works(portal_page):
+  opened, expect = portal_page
+  page = home(opened([], status=(200, SIGNALLED), script=BLOCKED))
+  expect(page.locator("#status-list")).to_be_visible()
+  to_grid(page, expect)
+  page.reload()
+  home(page)
+  expect(page.locator("#status-list")).to_be_visible()
+
+
+@pytest.mark.parametrize("width", [340, 360, 390, 412])
+@pytest.mark.parametrize("locale", ["pt-BR", "en-US"])
+def test_neither_view_nor_the_chips_pass_the_phone_s_edge(portal_page, width, locale):
+  """docs/agent/decks.md, Screens on a phone: the chips and the toggle on one row, both views, measured in both
+  languages at 340 to 412 px: nothing past the screen's edge, no horizontal scroll, no label cut."""
+  opened, expect = portal_page
+  page = home(opened([], width=width, locale=locale, status=(200, SIGNALLED)))
+  page.locator("#see-all").click()
+  measure = """() => ({
+    scroll: document.documentElement.scrollWidth > innerWidth,
+    out: [...document.querySelectorAll('#status *')].filter((e) => e.getBoundingClientRect().right > innerWidth + 0.5)
+      .map((e) => e.id || e.getAttribute('class') || e.tagName),
+    cut: [...document.querySelectorAll('.filter-chip, .card-rate, .red-line')]
+      .filter((e) => e.scrollWidth > e.clientWidth + 1).map((e) => e.textContent),
+    rows: new Set([...document.querySelectorAll('.toolbar > *')].map((e) => { const r = e.getBoundingClientRect(); return Math.round(r.top + r.height / 2); })).size,
+  })"""
+  assert page.evaluate(measure) == {"scroll": False, "out": [], "cut": [], "rows": 1}
+  to_grid(page, expect)
+  assert page.evaluate(measure) == {"scroll": False, "out": [], "cut": [], "rows": 1}
+  if width == 390 and locale == "en-US":
+    shot(page, "signals-list-then-grid-390-en")
+
