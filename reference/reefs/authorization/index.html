@@ -7681,7 +7681,7 @@
 <li><a href="../../../specs/cli/reefs/authorization.html#user-list"><code>nereus user list</code></a><br>
   Every User, and how many identities each has</li>
 <li><a href="../../../specs/cli/reefs/authorization.html#role-list"><code>nereus authorization role list</code></a><br>
-  One built-in role, three examples to edit</li>
+  One built-in role, four examples to edit</li>
 <li><a href="../../../specs/cli/reefs/authorization.html#role-get"><code>nereus authorization role get team-lead</code></a><br>
   A role is a list of rules: reef, kinds, verbs</li>
 <li><a href="../../../specs/cli/reefs/authorization.html#role-create"><code>nereus authorization role create release-manager</code></a><br>
@@ -7712,7 +7712,7 @@
   Leaving the team removes the access</li>
 <li><a href="../../../specs/cli/reefs/authorization.html#fail-closed"><code>nereus environment list</code></a><br>
   Without openfga, everything closes</li>
-<li><a href="../../../specs/cli/reefs/authorization.html#gate-create"><code>nereus authorization gate create payments-environments</code></a> <span class="chip planned">planned #2119</span><br>
+<li><a href="../../../specs/cli/reefs/authorization.html#gate-create"><code>nereus authorization gate create payments-environments</code></a><br>
   A Gate says which requests wait, and for whom</li>
 <li><a href="../../../specs/cli/reefs/authorization.html#create-held"><code>nereus environment create staging</code></a> <span class="chip planned">planned #2119</span><br>
   The object exists at once, and stands Pending</li>
@@ -7766,6 +7766,7 @@ bruno  bruno@example.com  0           1m
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>NAME           RULES                    BUILT IN
 administrator  *:*:*                    yes
 developer      *:*:list,get and 3 more  -
+requester      *:*:list,get and 1 more  -
 team-lead      *:*:list,get and 5 more  -
 viewer         *:*:list,get             -
 </code></pre></div>
@@ -7913,15 +7914,18 @@ Next steps:
   Nothing was changed.
 </code></pre></div>
 <h3 id="gate-create">gate-create<a class="headerlink" href="#gate-create" title="Permanent link">&para;</a></h3>
-<p>Requests to create an Environment in payments wait for the tech lead.</p>
+<p>Requests to create an Environment in payments wait for an approver.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>authorization<span class="w"> </span>gate<span class="w"> </span>create<span class="w"> </span>payments-environments<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--reef<span class="w"> </span>environment<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--kinds<span class="w"> </span>environments<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--verbs<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--approvers<span class="w"> </span>team/payments/tech-lead<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--owner<span class="w"> </span>project/payments
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ authorization/gates/payments-environments created
+
+Next steps:
+
+  nereus authorization gate list
 </code></pre></div>
 <h3 id="create-held">create-held<a class="headerlink" href="#create-held" title="Permanent link">&para;</a></h3>
 <p>Bruno may ask, not create.</p>

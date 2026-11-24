@@ -8,7 +8,7 @@ Every command of the first slice: Users, teams, roles and bindings, and who may 
 - [`nereus profile apply internal-developer-platform`](../../specs/cli/reefs/authorization.html#nereid-apply) openfga answers who may do what
 - [`nereus user create ana`](../../specs/cli/reefs/authorization.html#user-create) A person is one User, whatever the login
 - [`nereus user list`](../../specs/cli/reefs/authorization.html#user-list) Every User, and how many identities each has
-- [`nereus authorization role list`](../../specs/cli/reefs/authorization.html#role-list) One built-in role, three examples to edit
+- [`nereus authorization role list`](../../specs/cli/reefs/authorization.html#role-list) One built-in role, four examples to edit
 - [`nereus authorization role get team-lead`](../../specs/cli/reefs/authorization.html#role-get) A role is a list of rules: reef, kinds, verbs
 - [`nereus authorization role create release-manager`](../../specs/cli/reefs/authorization.html#role-create) A new role takes the words the CLI already uses
 - [`nereus authorization role delete administrator`](../../specs/cli/reefs/authorization.html#role-delete) The administrator role cannot be deleted
@@ -24,7 +24,7 @@ Every command of the first slice: Users, teams, roles and bindings, and who may 
 - [`nereus environment create staging`](../../specs/cli/reefs/authorization.html#enforce-allowed) Ana's environment is created
 - [`nereus teams member delete ana`](../../specs/cli/reefs/authorization.html#leave-team) [planned #1307] Leaving the team removes the access
 - [`nereus environment list`](../../specs/cli/reefs/authorization.html#fail-closed) Without openfga, everything closes
-- [`nereus authorization gate create payments-environments`](../../specs/cli/reefs/authorization.html#gate-create) [planned #2119] A Gate says which requests wait, and for whom
+- [`nereus authorization gate create payments-environments`](../../specs/cli/reefs/authorization.html#gate-create) A Gate says which requests wait, and for whom
 - [`nereus environment create staging`](../../specs/cli/reefs/authorization.html#create-held) [planned #2119] The object exists at once, and stands Pending
 - [`nereus authorization approval list`](../../specs/cli/reefs/authorization.html#approval-list) [planned #2119] The approver sees what waits for a decision
 - [`nereus authorization approval approve staging-create-7f3a`](../../specs/cli/reefs/authorization.html#approval-approve) [planned #2119] Approving lifts the hold, and the Nereid provisions
@@ -102,6 +102,7 @@ nereus authorization role list
 NAME           RULES                    BUILT IN
 administrator  *:*:*                    yes
 developer      *:*:list,get and 3 more  -
+requester      *:*:list,get and 1 more  -
 team-lead      *:*:list,get and 5 more  -
 viewer         *:*:list,get             -
 ```
@@ -341,19 +342,22 @@ nereus environment list
 
 ### gate-create
 
-Requests to create an Environment in payments wait for the tech lead.
+Requests to create an Environment in payments wait for an approver.
 
 ```bash
 nereus authorization gate create payments-environments \
   --reef environment \
   --kinds environments \
   --verbs create \
-  --approvers team/payments/tech-lead \
   --owner project/payments
 ```
 
 ``` { .text .output title="output" }
 ✓ authorization/gates/payments-environments created
+
+Next steps:
+
+  nereus authorization gate list
 ```
 
 ### create-held

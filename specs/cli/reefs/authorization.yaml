@@ -301,8 +301,8 @@ slides:
     topic: "role list"
     status: built
     issue: 897
-    message: "One built-in role, three examples to edit"
-    accent: "three examples"
+    message: "One built-in role, four examples to edit"
+    accent: "four examples"
     terminal:
       steps:
         - comment: "The roles of this instance"
@@ -311,21 +311,22 @@ slides:
             NAME           RULES                    BUILT IN
             administrator  *:*:*                    yes
             developer      *:*:list,get and 3 more  -
+            requester      *:*:list,get and 1 more  -
             team-lead      *:*:list,get and 5 more  -
             viewer         *:*:list,get             -
     dependsOn: [nereid-apply]
     notes: |-
       **`administrator` is the only built-in role**, applied with the reef (`nereus reef apply authorization`), with every verb on every kind of every reef, present and future (#1306, How teams, roles and Users relate).
 
-      **`viewer`, `developer` and `team-lead` are examples in `reefs/authorization/samples/`,** applied with `nereus authorization role apply --path`, each a YAML file to edit or to copy: a viewer reads everything, a developer also writes builds, deliveries and releases, a team lead also creates environments and manages the team's members.
+      **`viewer`, `developer`, `requester` and `team-lead` are examples in `reefs/authorization/samples/`,** applied with `nereus authorization role apply --path`, each a YAML file to edit or to copy: a viewer reads everything, a developer also writes builds, deliveries and releases, a team lead also creates environments and manages the team's members. A requester reads everything and only asks for environments (`request`), which a Gate holds.
     pt:
       topic: "role list"
-      message: "Um papel embutido, três exemplos para editar"
-      accent: "três exemplos"
+      message: "Um papel embutido, quatro exemplos para editar"
+      accent: "quatro exemplos"
       notes: |-
         **`administrator` é o único papel embutido**, aplicado com o reef (`nereus reef apply authorization`), com todo verbo em todo kind de todo reef, presente e futuro (#1306, How teams, roles and Users relate).
 
-        **`viewer`, `developer` e `team-lead` são exemplos em `reefs/authorization/samples/`,** aplicados com `nereus authorization role apply --path`, cada um um arquivo YAML para editar ou copiar: um viewer lê tudo, um developer também escreve builds, deliveries e releases, um team lead também cria ambientes e gerencia os membros do time.
+        **`viewer`, `developer`, `requester` e `team-lead` são exemplos em `reefs/authorization/samples/`,** aplicados com `nereus authorization role apply --path`, cada um um arquivo YAML para editar ou copiar: um viewer lê tudo, um developer também escreve builds, deliveries e releases, um team lead também cria ambientes e gerencia os membros do time, um requester lê tudo e só pede ambientes (`request`), que um Gate segura.
 
   - name: role-get
     act: roles
@@ -804,27 +805,35 @@ slides:
   - name: gate-create
     act: gates
     topic: "gate create"
-    status: planned
-    issue: 2119
+    status: built
+    issue: 2210
     message: "A Gate says which requests wait, and for whom"
     accent: "wait, and for whom"
     terminal:
       steps:
-        - comment: "Requests to create an Environment in payments wait for the tech lead"
+        - comment: "Requests to create an Environment in payments wait for an approver"
           run: "nereus authorization gate create payments-environments"
           options:
             - "--reef environment"
             - "--kinds environments"
             - "--verbs create"
-            - "--approvers team/payments/tech-lead"
             - "--owner project/payments"
           output: |-
             ✓ authorization/gates/payments-environments created
+
+            Next steps:
+
+              nereus authorization gate list
+        - comment: "And the gates in force"
+          run: "nereus authorization gate list"
+          output: |-
+            NAME                   REEF         KINDS         VERBS   OWNER             APPROVERS  EXPIRES
+            payments-environments  environment  environments  create  project/payments  -          7d
     dependsOn: [fail-closed]
     notes: |-
       **A hard gate refuses, a soft gate holds** (ADR 0031): without a right to the verb the answer is a 403, as today; a person who may only `request` it creates the object, and it waits for an approver.
 
-      **A Gate belongs to a node of the tenancy tree,** as a Binding does, and holds for that node and the nodes under it. It names a reef, its kinds and the verbs (`create` only, for now); the approvers are the subjects a Binding takes. A `request` with no Gate to match is refused, since nobody would decide it.
+      **A Gate belongs to a node of the tenancy tree,** as a Binding does, and holds for that node and the nodes under it. It names a reef, its kinds and the verbs (`create` only, for now); the approvers, once #2220 serves them, are the subjects a Binding takes (until then whoever may `create` the kind at the node approves). A `request` with no Gate to match is refused, since nobody would decide it.
 
       **A new kind gets approvals by a Gate alone:** no reef writes its own flow.
     pt:
@@ -834,7 +843,7 @@ slides:
       notes: |-
         **Um hard gate recusa, um soft gate segura** (ADR 0031): sem o direito ao verbo a resposta é um 403, como hoje; quem só pode fazer `request` cria o objeto, e ele espera por um aprovador.
 
-        **Um Gate pertence a um nó da árvore de tenancy,** como um Binding, e vale para esse nó e os nós abaixo dele. Ele nomeia um reef, os seus kinds e os verbos (só `create`, por enquanto); os aprovadores são os sujeitos que um Binding aceita. Um `request` sem Gate que o cubra é recusado, já que ninguém o decidiria.
+        **Um Gate pertence a um nó da árvore de tenancy,** como um Binding, e vale para esse nó e os nós abaixo dele. Ele nomeia um reef, os seus kinds e os verbos (só `create`, por enquanto); os aprovadores, quando a #2220 os servir, são os sujeitos que um Binding aceita (até lá, aprova quem pode `create` o kind no nó). Um `request` sem Gate que o cubra é recusado, já que ninguém o decidiria.
 
         **Um kind novo ganha aprovações só com um Gate:** nenhum reef escreve o seu próprio fluxo.
 
