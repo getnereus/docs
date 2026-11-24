@@ -1080,6 +1080,16 @@ def test_without_the_metrics_reef_the_screen_says_so_in_one_line(portal_page):
   expect(page.locator("#detail-back")).to_have_attribute("aria-label", "Voltar")
 
 
+def test_one_limit_keeps_the_bars_card(portal_page):
+  # Only the memory has a limit: the card stays, with CPU's "no limit" next to memory's bar (#2225).
+  opened, expect = portal_page
+  pods = {**DETAIL["pods"], "cpu": {**DETAIL["pods"]["cpu"], "limitCores": None}}
+  page = detail(opened([], status=(200, SIGNALLED), detail={"release/flux": (200, {**DETAIL, "pods": pods})}, start=f"{ROUTE}/1h"))
+  expect(page.locator("#detail-meters")).to_be_visible()
+  expect(page.locator("#detail-meters .meter-text")).to_have_text(["no limit", "200Mi of 257Mi limit"])
+  expect(page.locator("#detail-meters .meter")).to_have_count(1)
+
+
 def test_a_failed_field_says_no_data_never_zero(portal_page):
   opened, expect = portal_page
   page = detail(opened([], status=(200, SIGNALLED), detail={"release/flux": (200, NULLS)}, start=f"{ROUTE}/1h"))
@@ -1088,8 +1098,8 @@ def test_a_failed_field_says_no_data_never_zero(portal_page):
   expect(page.locator("#detail-signals .detail-chart")).to_have_count(1)
   assert values.nth(1).get_attribute("data-failing") is None
   expect(page.locator("#detail-resources .detail-value")).to_have_text(["162m", "no data"])
-  expect(page.locator("#detail-meters .meter-text")).to_have_text(["no limit", "no data"])
-  expect(page.locator("#detail-meters .meter")).to_have_count(0)
+  # With neither limit, the bars card is hidden: it would only repeat "no limit" (#2225).
+  expect(page.locator("#detail-meters")).to_be_hidden()
   expect(page.locator("#detail-facts dd").first).to_have_text("no data")
   # No request, no limit and no ready replicas each read as missing (#2177); a missing key with no text of its own
   # reads as words, never as raw camelCase.
