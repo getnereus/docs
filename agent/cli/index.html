@@ -7431,9 +7431,9 @@ Next steps:
 <p>A reef's own objects key their entries by reef, never by Nereid: a <code>Cloud</code> access entry is <code>{reef: secrets, ...}</code>. Today's code uses <code>reef:</code> in those entries and <code>spec.reefs</code> (a list) on <code>Nereid</code>.</p>
 <h2 id="listing">Listing<a class="headerlink" href="#listing" title="Permanent link">&para;</a></h2>
 <div class="language-text highlight"><pre><span></span><code>$ nereus status
-REEF            NEREID           VERSION  STATUS  AGE
-core            built-in         0.1.0    Ready   38m
-secrets         azure-key-vault  0.1.0    Ready   8m
+REEF     NEREID           VERSION  STATUS  AGE
+core     nereus-api       0.1.0    Ready   38m
+secrets  azure-key-vault  0.1.0    Ready   8m
 
 $ nereus nereid list
 NEREID           REEFS    IMAGE                                                              STATUS  AGE

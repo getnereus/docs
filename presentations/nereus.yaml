@@ -243,10 +243,10 @@ slides:
         - comment: "See every Reef and the Nereid that looks after it"
           run: "nereus status"
           output: |-
-            REEF            NEREID    VERSION  STATUS  AGE
-            core            built-in  0.1.0    Ready   5m
-            environment     vcluster  0.1.0    Ready   20s
-            secrets         openbao   0.1.0    Ready   5m
+            REEF         NEREID      VERSION  STATUS  AGE
+            core         nereus-api  0.1.0    Ready   5m
+            environment  vcluster    0.1.0    Ready   20s
+            secrets      openbao     0.1.0    Ready   5m
     dependsOn: [apply-reef]
     notes: |-
       What we want to say: **the Reef stays, the Nereid is interchangeable**. `vcluster` today on k3d; `azure-aks` may come later, behind the same Reef and the same commands.

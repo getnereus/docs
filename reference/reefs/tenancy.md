@@ -44,9 +44,9 @@ nereus status
 ```
 
 ``` { .text .output title="output" }
-REEF     NEREID    VERSION  STATUS  AGE
-core     built-in  0.1.0    Ready   2m
-tenancy  -         -        Ready   2m
+REEF     NEREID      VERSION  STATUS  AGE
+core     nereus-api  0.1.0    Ready   2m
+tenancy  -           -        Ready   2m
 ```
 
 ### organization-create

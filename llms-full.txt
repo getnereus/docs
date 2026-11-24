@@ -1145,7 +1145,8 @@ nereus status
 REEF            NEREID           VERSION  STATUS  AGE
 authentication  keycloak         0.1.0    Ready   7m
 catalog         catalog          0.1.0    Ready   1m
-core            built-in         0.1.0    Ready   9m
+core            nereus-api       0.1.0    Ready   9m
+                thetis           0.1.0    Ready   9m
 database        cloudnative-pg   0.1.0    Ready   7m
 delivery        kubernetes       0.1.0    Ready   1m
 environment     vcluster         0.1.0    Ready   1m
@@ -1772,12 +1773,13 @@ nereus status
 ```
 
 ``` { .text .output title="output" }
-REEF            NEREID    VERSION  STATUS         AGE
-authentication  keycloak  0.1.0    Ready          2m
-core            built-in  0.1.0    Ready          4m
-release         flux      0.1.0    Ready          3m
-secrets         openbao   0.1.0    Ready          4m
-tenancy         -         -        Ready          4m
+REEF            NEREID      VERSION  STATUS  AGE
+authentication  keycloak    0.1.0    Ready   2m
+core            nereus-api  0.1.0    Ready   4m
+                thetis      0.1.0    Ready   4m
+release         flux        0.1.0    Ready   3m
+secrets         openbao     0.1.0    Ready   4m
+tenancy         -           -        Ready   4m
 
 Registry  localhost:5111
 ```
@@ -4449,12 +4451,13 @@ nereus status
 ```
 
 ``` { .text .output title="output" }
-REEF            NEREID    VERSION  STATUS         AGE
-authentication  keycloak  0.1.0    Ready          2m
-core            built-in  0.1.0    Ready          4m
-release         flux      0.1.0    Ready          3m
-secrets         openbao   0.1.0    Ready          4m
-tenancy         -         -        Ready          4m
+REEF            NEREID      VERSION  STATUS  AGE
+authentication  keycloak    0.1.0    Ready   2m
+core            nereus-api  0.1.0    Ready   4m
+                thetis      0.1.0    Ready   4m
+release         flux        0.1.0    Ready   3m
+secrets         openbao     0.1.0    Ready   4m
+tenancy         -           -        Ready   4m
 
 Registry  localhost:5111
 ```
@@ -8474,9 +8477,9 @@ nereus status
 ```
 
 ``` { .text .output title="output" }
-REEF     NEREID    VERSION  STATUS  AGE
-core     built-in  0.1.0    Ready   2m
-tenancy  -         -        Ready   2m
+REEF     NEREID      VERSION  STATUS  AGE
+core     nereus-api  0.1.0    Ready   2m
+tenancy  -           -        Ready   2m
 ```
 
 ### organization-create

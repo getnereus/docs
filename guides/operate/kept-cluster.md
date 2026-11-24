@@ -117,7 +117,8 @@ nereus status
 REEF            NEREID           VERSION  STATUS  AGE
 authentication  keycloak         0.1.0    Ready   7m
 catalog         catalog          0.1.0    Ready   1m
-core            built-in         0.1.0    Ready   9m
+core            nereus-api       0.1.0    Ready   9m
+                thetis           0.1.0    Ready   9m
 database        cloudnative-pg   0.1.0    Ready   7m
 delivery        kubernetes       0.1.0    Ready   1m
 environment     vcluster         0.1.0    Ready   1m

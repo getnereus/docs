@@ -7289,12 +7289,13 @@ logged in as ana-silva (nereus-users), issuer https://auth.example.com/realms/ne
 <p><a href="../../../specs/cli/core.html#status"><code>nereus status</code></a> now reads through the API with your token, and lists the reef:</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>status
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>REEF            NEREID    VERSION  STATUS         AGE
-authentication  keycloak  0.1.0    Ready          2m
-core            built-in  0.1.0    Ready          4m
-release         flux      0.1.0    Ready          3m
-secrets         openbao   0.1.0    Ready          4m
-tenancy         -         -        Ready          4m
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>REEF            NEREID      VERSION  STATUS  AGE
+authentication  keycloak    0.1.0    Ready   2m
+core            nereus-api  0.1.0    Ready   4m
+                thetis      0.1.0    Ready   4m
+release         flux        0.1.0    Ready   3m
+secrets         openbao     0.1.0    Ready   4m
+tenancy         -           -        Ready   4m
 
 Registry  localhost:5111
 </code></pre></div>

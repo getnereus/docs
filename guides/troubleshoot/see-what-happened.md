@@ -17,12 +17,13 @@ nereus status
 ```
 
 ``` { .text .output title="output" }
-REEF            NEREID    VERSION  STATUS         AGE
-authentication  keycloak  0.1.0    Ready          2m
-core            built-in  0.1.0    Ready          4m
-release         flux      0.1.0    Ready          3m
-secrets         openbao   0.1.0    Ready          4m
-tenancy         -         -        Ready          4m
+REEF            NEREID      VERSION  STATUS  AGE
+authentication  keycloak    0.1.0    Ready   2m
+core            nereus-api  0.1.0    Ready   4m
+                thetis      0.1.0    Ready   4m
+release         flux        0.1.0    Ready   3m
+secrets         openbao     0.1.0    Ready   4m
+tenancy         -           -        Ready   4m
 
 Registry  localhost:5111
 ```

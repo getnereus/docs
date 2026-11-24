@@ -67,7 +67,9 @@ def row(reef, nereid, status="Ready", reason=None, version="1.0.0", created="202
   return {"reef": reef, "nereid": nereid, "version": version, "status": status, "reason": reason, "createdAt": created}
 
 
-CORE_ROW = row("core", "built-in", version="0.1.0")
+# core's two rows (#2195): the Nereus API and thetis, each a Nereid with its signals and its screen.
+CORE_ROW = row("core", "nereus-api", version="0.1.0")
+THETIS_ROW = row("core", "thetis", version="0.1.0")
 INSTALLATION = {"name": "nereus", "alias": "nereus-local", "url": "https://nereus.example.com"}
 STATUS = {
   "installation": INSTALLATION,
@@ -81,7 +83,7 @@ STATUS = {
     row("usage", "reference-usage"),
   ],
 }
-EMPTY = {"installation": INSTALLATION, "registry": None, "items": [CORE_ROW]}
+EMPTY = {"installation": INSTALLATION, "registry": None, "items": [CORE_ROW, THETIS_ROW]}
 GOOD = {"installation": INSTALLATION, "registry": None, "items": [CORE_ROW, row("secrets", "openbao"), row("usage", "reference-usage")]}
 DOWN = (503, {"error": {"code": 503, "message": "cannot read the cluster from the Kubernetes API"}})
 
@@ -740,7 +742,7 @@ SIGNALLED = {
   "installation": INSTALLATION,
   "registry": None,
   "items": [
-    CORE_ROW,
+    {**CORE_ROW, "signals": signals(2.4, 0.0, 0.02)},
     {**row("presentations", "leagore"), "signals": signals(0.08, 0.0, 0.12)},
     {**row("release", "flux", "NotReady", "the HelmRelease podinfo failed: install retries exhausted"), "signals": signals(0.31, 0.12, 0.84)},
     {**row("secrets", "openbao"), "signals": signals(1.5, None, 1.25)},
@@ -777,7 +779,8 @@ def test_the_list_shows_each_nereid_s_red_line_and_sparkline(portal_page, scheme
   shot(page, f"signals-list-phone-{scheme}")
   page.locator("#see-all").click()
   good = page.locator("#good .row")
-  expect(good.nth(0).locator(".red-line")).to_have_count(0)
+  # core's nereus-api is a Nereid with its own RED line (#2195).
+  expect(good.nth(0).locator(".red-line span")).to_have_text(["2.40/s", "0% err", "p95 20ms"])
   expect(good.nth(1).locator(".red-line span")).to_have_text(["4.8/min", "0% err", "p95 120ms"])
   assert good.nth(1).locator(".red-errors").evaluate("e => getComputedStyle(e).color") != ERROR[scheme]
   assert good.nth(1).locator(".spark-line").evaluate("e => getComputedStyle(e).stroke") == SUCCESS[scheme]
@@ -990,7 +993,8 @@ def test_a_card_with_a_nereid_opens_its_screen(portal_page):
   to_grid(page, expect)
   cards = page.locator("#status-grid .signal-card")
   assert cards.nth(1).evaluate("e => e.tagName") == "DIV"
-  assert cards.nth(2).evaluate("e => e.tagName") == "DIV"
+  # core's nereus-api card opens its screen like any Nereid's (#2195).
+  expect(cards.nth(2)).to_have_attribute("href", "#/nereids/core/nereus-api/1h")
   expect(cards.nth(3)).to_have_attribute("href", "#/nereids/presentations/leagore/1h")
   cards.nth(0).click()
   detail(page)
@@ -998,6 +1002,33 @@ def test_a_card_with_a_nereid_opens_its_screen(portal_page):
   page.go_back()
   home(page)
   expect(page.locator("#status-grid")).to_be_visible()
+
+
+def test_cores_two_cards_the_api_and_thetis_open_their_screens(portal_page):
+  """#2195: core has two rows, the Nereus API's HTTP RED and thetis' reconcile RED, each a card that opens its screen;
+  the API's screen has no queue depth to wait for."""
+  opened, expect = portal_page
+  core = {**SIGNALLED, "items": [{**CORE_ROW, "signals": signals(2.4, 0.0, 0.02)}, {**THETIS_ROW, "signals": signals(0.03, 0.0, 0.4)}, row("secrets", "openbao")]}
+  api = {**DETAIL, "reef": "core", "nereid": "nereus-api", "missing": {"requests": "#2177", "ready": "#2177"}}
+  thetis = {**DETAIL, "reef": "core", "nereid": "thetis"}
+  page = home(opened([], status=(200, core), detail={"core/nereus-api": (200, api), "core/thetis": (200, thetis)}))
+  to_grid(page, expect)
+  cards = page.locator("#status-grid .signal-card")
+  expect(cards).to_have_count(3)
+  expect(cards.nth(0)).to_have_attribute("href", "#/nereids/core/nereus-api/1h")
+  expect(cards.nth(1)).to_have_attribute("href", "#/nereids/core/thetis/1h")
+  cards.nth(0).click()
+  detail(page)
+  expect(page.locator("#detail-reef")).to_have_text("core")
+  expect(page.locator("#detail-nereid")).to_have_text("Nereid nereus-api · 0.1.0")
+  expect(page.locator("#detail-signals .detail-value")).to_have_text(["0.26/s", "15%", "652ms", "31%"])
+  expect(page.locator("#detail-facts dt")).to_have_text(["Restarts · 24h", "Requests, ready"])
+  page.go_back()
+  home(page)
+  page.locator("#status-grid .signal-card").nth(1).click()
+  detail(page)
+  expect(page.locator("#detail-nereid")).to_have_text("Nereid thetis · 0.1.0")
+  expect(page.locator("#detail-facts dt")).to_have_text(["Restarts · 24h", "Queue depth", "Requests, ready"])
 
 
 def test_the_route_reopens_on_reload_and_the_range_switch_updates_it(portal_page):

@@ -3,10 +3,10 @@
   "command": "test/scene-metrics",
   "result": "pass",
   "exit": 0,
-  "seconds": 292,
-  "passed": 46,
+  "seconds": 360,
+  "passed": 48,
   "failed": 0,
   "failure": null,
-  "commit": "4fc7227c+",
-  "started": "2026-11-24T10:25:20Z"
+  "commit": "1ea23165",
+  "started": "2026-11-24T12:36:31Z"
 }

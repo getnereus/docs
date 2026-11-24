@@ -192,9 +192,9 @@ A reef's own objects key their entries by reef, never by Nereid: a `Cloud` acces
 
 ```text
 $ nereus status
-REEF            NEREID           VERSION  STATUS  AGE
-core            built-in         0.1.0    Ready   38m
-secrets         azure-key-vault  0.1.0    Ready   8m
+REEF     NEREID           VERSION  STATUS  AGE
+core     nereus-api       0.1.0    Ready   38m
+secrets  azure-key-vault  0.1.0    Ready   8m
 
 $ nereus nereid list
 NEREID           REEFS    IMAGE                                                              STATUS  AGE
