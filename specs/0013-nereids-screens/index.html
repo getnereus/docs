@@ -7383,7 +7383,7 @@
 <ul>
 <li>The exact MetricsQL queries and the step per range (🟠 in #1816's envelope: reported in a batch).</li>
 <li>The detail route's path and payload, following the API's conventions.</li>
-<li>The refresh interval of the detail screen, no faster than the metrics reef's scrape interval.</li>
+<li>The refresh interval of the detail screen, no faster than the metrics reef's scrape interval, 30s, set as the VMAgent's <code>scrapeInterval</code> (<code>controllers/victoriametrics</code>) and read by the API from <code>NEREUS_METRICS_SCRAPE_INTERVAL</code> (seconds, default 30), which must match it (#2187).</li>
 <li>The M3 tokens of the new components (segmented button, cards, meters), from the portal's <code>app.css</code>.</li>
 </ul>
 
