@@ -26,6 +26,12 @@ The label `nereid` of each series comes from the pod's `app.kubernetes.io/name`,
 
 The VMNodeScrape `kubelet-cadvisor` reads each node's kubelet at `/metrics/cadvisor`: CPU and memory per container. A target that fails shows as down, and nothing else stops.
 
+The VMPodScrape `kube-state-metrics` reads [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics) ([#2177](https://github.com/getnereus/nereus/issues/2177)), which the Nereid also asks the release reef for: chart 9.1.0, v2.20.0 pinned by digest, in `metrics-system`. The Nereid does not wait for it: it logs a Release not Ready.
+
+It reads only the pods and Deployments of `nereus-system`, through a Role there: no ClusterRole, no Secret, no ConfigMap. It exposes five series: the containers' requests, last termination reason and restarts, and the Deployments' ready and desired replicas.
+
+Its series keep their own `namespace` and `pod` (`honorLabels: true`): those of the pods they describe.
+
 ## The contract
 
 The Mandate `victoriametrics` publishes `status.query.url`, the in-cluster address of the query API, and its Ready condition; `nereus mandate get victoriametrics` shows both. It names no backend: another Nereid of the metrics reef would publish the same field.

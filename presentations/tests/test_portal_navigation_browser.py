@@ -902,20 +902,21 @@ DETAIL = {
     "series": {"rate": series(0.26), "errorRatio": series(0.15, gap=(40, 50)), "p95Seconds": series(0.65), "saturation": series(0.31)},
   },
   "pods": {
-    "cpu": {"cores": 0.162, "limitCores": 0.5, "series": series(0.16)},
-    "memory": {"bytes": 2.1e8, "limitBytes": 2.7e8, "series": series(2.0e8)},
+    "cpu": {"cores": 0.162, "requestCores": 0.1, "limitCores": 0.5, "series": series(0.16)},
+    "memory": {"bytes": 2.1e8, "requestBytes": 1.28e8, "limitBytes": 2.7e8, "series": series(2.0e8)},
+    "ready": {"ready": 1, "desired": 2},
     "restarts24h": 3,
     "items": [
       {"pod": "nereus-flux-7d9f8c6b59-reference-qdmup", "node": "k3d-nereus-agent-0", "startedAt": "2026-11-24T20:18:00Z", "restarts": 3, "lastReason": "OOMKilled"},
       {"pod": "nereus-flux-7d9f8c6b59-x2k9p", "node": "k3d-nereus-agent-1", "startedAt": "2026-11-24T08:00:00.5Z", "restarts": 0, "lastReason": None},
     ],
   },
-  "missing": {"queueDepth": "#1814", "requests": "#2177", "ready": "#2177"},
+  "missing": {"queueDepth": "#1814"},
 }
 NULLS = {
   **DETAIL,
   "signals": {"rate": None, "errorRatio": 0.0, "p95Seconds": None, "saturation": None, "series": {"rate": None, "errorRatio": series(0.0), "p95Seconds": None, "saturation": None}},
-  "pods": {"cpu": {"cores": 0.162, "limitCores": None, "series": series(0.16)}, "memory": None, "restarts24h": None, "items": []},
+  "pods": {"cpu": {"cores": 0.162, "requestCores": None, "limitCores": None, "series": series(0.16)}, "memory": None, "ready": None, "restarts24h": None, "items": []},
 }
 FLUX = {"release/flux": (200, DETAIL)}
 ROUTE = "#/nereids/release/flux"
@@ -964,11 +965,15 @@ def test_a_row_with_a_nereid_opens_its_screen_and_back_returns_home(portal_page,
   # A null in the series breaks the errors' line in two.
   assert page.locator('#detail-signals [data-key="errors"] .chart-line').get_attribute("d").count("M") == 2
   expect(page.locator("#detail-resources .detail-value")).to_have_text(["162m", "200Mi"])
+  # The request and the limit under each value, one line each (#2177).
+  expect(page.locator("#detail-resources .detail-note")).to_have_text(["request 100m", "limit 500m", "request 122Mi", "limit 257Mi"])
   expect(page.locator("#detail-meters .meter-text")).to_have_text(["162m of 500m limit", "200Mi of 257Mi limit"])
   expect(page.locator("#detail-meters .meter").first).to_have_attribute("aria-valuenow", "32")
   assert page.locator("#detail-meters .meter").nth(1).get_attribute("data-level") == "warning"
-  expect(page.locator("#detail-facts dt")).to_have_text(["Restarts · 24h", "Queue depth", "Requests, ready"])
-  expect(page.locator("#detail-facts dd")).to_have_text(["3", "waits for #1814", "wait for #2177"])
+  expect(page.locator("#detail-facts dt")).to_have_text(["Restarts · 24h", "Ready", "Queue depth"])
+  expect(page.locator("#detail-facts dd")).to_have_text(["3", "1/2", "waits for #1814"])
+  # Fewer ready than desired reads as bad.
+  assert page.locator("#detail-facts dd").nth(1).get_attribute("class") == "detail-bad"
   pods = page.locator("#detail-pods .pod")
   expect(pods.locator(".pod-name")).to_have_text(["nereus-flux-7d…ference-qdmup", "nereus-flux-7d9f8c6b59-x2k9p"])
   expect(pods.nth(0).locator(".pod-name")).to_have_attribute("title", "nereus-flux-7d9f8c6b59-reference-qdmup")
@@ -1013,7 +1018,7 @@ def test_cores_two_cards_the_api_and_thetis_open_their_screens(portal_page):
   the API's screen has no queue depth to wait for."""
   opened, expect = portal_page
   core = {**SIGNALLED, "items": [{**CORE_ROW, "signals": signals(2.4, 0.0, 0.02)}, {**THETIS_ROW, "signals": signals(0.03, 0.0, 0.4)}, row("secrets", "openbao")]}
-  api = {**DETAIL, "reef": "core", "nereid": "nereus-api", "missing": {"requests": "#2177", "ready": "#2177"}}
+  api = {**DETAIL, "reef": "core", "nereid": "nereus-api", "missing": {}}
   thetis = {**DETAIL, "reef": "core", "nereid": "thetis"}
   page = home(opened([], status=(200, core), detail={"core/nereus-api": (200, api), "core/thetis": (200, thetis)}))
   to_grid(page, expect)
@@ -1029,14 +1034,14 @@ def test_cores_two_cards_the_api_and_thetis_open_their_screens(portal_page):
   # The API answers requests, not passes; its Ready state colours the charts green.
   expect(page.locator("#detail-signals .detail-hint")).to_have_text(["requests", "5xx of requests", "p95", "busy"])
   assert page.locator('#detail-signals [data-key="rate"] .chart-line').evaluate("e => getComputedStyle(e).stroke") == SUCCESS["dark"]
-  expect(page.locator("#detail-facts dt")).to_have_text(["Restarts · 24h", "Requests, ready"])
+  expect(page.locator("#detail-facts dt")).to_have_text(["Restarts · 24h", "Ready"])
   page.go_back()
   home(page)
   page.locator("#status-grid .signal-card").nth(1).click()
   detail(page)
   expect(page.locator("#detail-nereid")).to_have_text("Nereid thetis · 0.1.0")
   expect(page.locator("#detail-signals .detail-hint")).to_have_text(["passes", "of passes", "p95", "busy"])
-  expect(page.locator("#detail-facts dt")).to_have_text(["Restarts · 24h", "Queue depth", "Requests, ready"])
+  expect(page.locator("#detail-facts dt")).to_have_text(["Restarts · 24h", "Ready", "Queue depth"])
 
 
 def test_the_route_reopens_on_reload_and_the_range_switch_updates_it(portal_page):
@@ -1086,7 +1091,20 @@ def test_a_failed_field_says_no_data_never_zero(portal_page):
   expect(page.locator("#detail-meters .meter-text")).to_have_text(["no limit", "no data"])
   expect(page.locator("#detail-meters .meter")).to_have_count(0)
   expect(page.locator("#detail-facts dd").first).to_have_text("no data")
+  # No request, no limit and no ready replicas each read as missing (#2177); a missing key with no text of its own
+  # reads as words, never as raw camelCase.
+  expect(page.locator("#detail-resources .detail-note")).to_have_text(["no request", "no limit", "no request", "no limit"])
+  assert page.locator("#detail-resources .detail-note").first.get_attribute("data-missing") == ""
+  expect(page.locator("#detail-facts dd").nth(1)).to_have_text("no data")
+  expect(page.locator("#detail-facts dt")).to_have_text(["Restarts · 24h", "Ready", "Queue depth"])
   expect(page.locator("#detail-pods")).to_have_text("no pod in this range")
+
+
+def test_a_missing_key_with_no_text_reads_as_words(portal_page):
+  opened, expect = portal_page
+  stale = {**DETAIL, "missing": {"queueDepth": "#1814", "requestBytes": "#9999"}}
+  page = detail(opened([], status=(200, SIGNALLED), detail={"release/flux": (200, stale)}, start=f"{ROUTE}/1h"))
+  expect(page.locator("#detail-facts dt")).to_have_text(["Restarts · 24h", "Ready", "Queue depth", "Request bytes"])
 
 
 def test_a_nereid_not_installed_says_so_and_an_error_offers_a_retry(portal_page):
