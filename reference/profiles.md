@@ -20,6 +20,8 @@ No `--profile`, or `--profile core`, installs core alone with the tenancy reef (
 
 `--profile reference` ([#1421](https://github.com/getnereus/nereus/issues/1421)) installs the reference Nereid of each reef that has one, such as `reference-secrets` ([#486](https://github.com/getnereus/nereus/issues/486)), in place of the tools: the reefs' kinds answer end to end and no tool image is pulled. `make scene-core` runs it.
 
+The authorization reef's, `reference-authorization`, is the gate Nereid of [ADR 0031](../adr/0031-gates-and-approvals.md) there: a held object stays `Pending` until its Approval is decided ([#2213](https://github.com/getnereus/nereus/issues/2213)).
+
 ## internal-developer-platform
 
 Each Nereid comes after the Nereids of the reefs it requires. With this profile the instance offers sign-in, so `nereus status`, `reef` and `nereid` read through the Nereus API with your token.

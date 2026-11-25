@@ -7304,6 +7304,7 @@
 <p>No <code>--profile</code>, or <code>--profile core</code>, installs core alone with the tenancy reef (<a href="../../adr/0015-tenancy/">ADR 0015</a>, <a href="https://github.com/getnereus/nereus/issues/646">#646</a>): no other reef, no Nereid.</p>
 <h2 id="reference">reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h2>
 <p><code>--profile reference</code> (<a href="https://github.com/getnereus/nereus/issues/1421">#1421</a>) installs the reference Nereid of each reef that has one, such as <code>reference-secrets</code> (<a href="https://github.com/getnereus/nereus/issues/486">#486</a>), in place of the tools: the reefs' kinds answer end to end and no tool image is pulled. <code>make scene-core</code> runs it.</p>
+<p>The authorization reef's, <code>reference-authorization</code>, is the gate Nereid of <a href="../../adr/0031-gates-and-approvals/">ADR 0031</a> there: a held object stays <code>Pending</code> until its Approval is decided (<a href="https://github.com/getnereus/nereus/issues/2213">#2213</a>).</p>
 <h2 id="internal-developer-platform">internal-developer-platform<a class="headerlink" href="#internal-developer-platform" title="Permanent link">&para;</a></h2>
 <p>Each Nereid comes after the Nereids of the reefs it requires. With this profile the instance offers sign-in, so <code>nereus status</code>, <code>reef</code> and <code>nereid</code> read through the Nereus API with your token.</p>
 <ul>

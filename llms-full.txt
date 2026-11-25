@@ -4034,7 +4034,7 @@ scripts/nereid/new --reef edge --tool caddy
 ✓ controllers/caddy/ created from templates/nereid (copier 9.19.1)
   server.py            the reconcile loop on nereid-sdk, Ready, status.kinds, GET /metrics, the commands' HTTP server
   kube.py              the Kubernetes API, standard library
-  requirements.txt     nereid-sdk==0.3.0 (#754), pinned
+  requirements.txt     nereid-sdk==0.4.0 (#754), pinned
   Dockerfile           edge-caddy-controller, nereid-sdk from the build context (#741)
   README.md            what the Nereid does, and what every Nereid must do
   test_server.py       the loop's tests, a failing pass counted with its reason
@@ -9201,6 +9201,8 @@ No `--profile`, or `--profile core`, installs core alone with the tenancy reef (
 ## reference
 
 `--profile reference` ([#1421](https://github.com/getnereus/nereus/issues/1421)) installs the reference Nereid of each reef that has one, such as `reference-secrets` ([#486](https://github.com/getnereus/nereus/issues/486)), in place of the tools: the reefs' kinds answer end to end and no tool image is pulled. `make scene-core` runs it.
+
+The authorization reef's, `reference-authorization`, is the gate Nereid of [ADR 0031](https://docs.getnereus.dev/adr/0031-gates-and-approvals/) there: a held object stays `Pending` until its Approval is decided ([#2213](https://github.com/getnereus/nereus/issues/2213)).
 
 ## internal-developer-platform
 
