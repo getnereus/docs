@@ -56,6 +56,7 @@ slides:
       - "**[{reef:messaging}](reefs/messaging.html):** topic, queue · session and room until the rooms reef"
       - "**[{reef:rooms}](reefs/rooms.html):** room, peer, session, follow, post · planned"
       - "**[{reef:usage}](reefs/usage.html):** window: a coding agent's quota and its forecast"
+      - "**[{reef:notifications}](reefs/notifications.html):** notification, subscription: tell a person something, on their devices"
       - "**[{reef:teams}](reefs/teams.html):** team, member: who works with whom, on the tenancy tree"
       - "**[{reef:authorization}](reefs/authorization.html):** user, team, role, binding, can-i · planned"
     notes: |-
@@ -82,6 +83,7 @@ slides:
         - "**[{reef:messaging}](reefs/messaging.html):** topic, queue · session e room até o reef rooms"
         - "**[{reef:rooms}](reefs/rooms.html):** room, peer, session, follow, post · planejado"
         - "**[{reef:usage}](reefs/usage.html):** window: a cota de um agente de código e a sua previsão"
+        - "**[{reef:notifications}](reefs/notifications.html):** notification, subscription: contar algo a uma pessoa, nos dispositivos dela"
         - "**[{reef:teams}](reefs/teams.html):** team, member: quem trabalha com quem, na árvore de tenancy"
         - "**[{reef:authorization}](reefs/authorization.html):** user, team, role, binding, can-i · planejado"
       notes: |-

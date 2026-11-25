@@ -1,0 +1,186 @@
+deck:
+  name: notifications
+  title: "The notifications reef"
+  subtitle: "Every command that tells a person something and the devices that receive it"
+  accent: "tells a person something"
+  pt:
+    title: "O reef notifications"
+    subtitle: "Todos os comandos que contam algo a uma pessoa e os dispositivos que o recebem"
+    accent: "contam algo a uma pessoa"
+
+acts:
+  - name: opening
+    title: "Opening"
+    pt: {title: "Abertura"}
+  - name: notification
+    title: "Notification"
+    pt: {title: "Notification"}
+  - name: subscription
+    title: "Subscription"
+    pt: {title: "Subscription"}
+
+slides:
+  - name: cover
+    act: opening
+    cover: true
+    message: "The notifications reef"
+    notes: |-
+      **The source of truth for the commands of the notifications reef** (#278, spoken summaries as notifications). #2147 builds its first slice: the kinds `Notification` and `Subscription`, the Nereus API's routes `/v1/notifications/notifications` and `/v1/notifications/subscriptions`, `nereus notify`, `nereus notifications notification ...`, `nereus notifications subscription ...` and the reference Nereid `reference-notifications`. The group is `notifications.getnereus.dev/v1alpha1`, cluster-scoped. Delivery to the devices is #2148's.
+    pt:
+      message: "O reef notifications"
+      notes: |-
+        **A fonte da verdade dos comandos do reef notifications** (#278, resumos falados como notificações). A #2147 constrói a primeira fatia: os kinds `Notification` e `Subscription`, as rotas `/v1/notifications/notifications` e `/v1/notifications/subscriptions` da Nereus API, `nereus notify`, `nereus notifications notification ...`, `nereus notifications subscription ...` e o Nereid de referência `reference-notifications`. O grupo é `notifications.getnereus.dev/v1alpha1`, com escopo de cluster. A entrega aos dispositivos é da #2148.
+
+  - name: kinds
+    act: opening
+    topic: "the kinds"
+    message: "A Notification is for a person, a Subscription is one of their devices"
+    accent: "one of their devices"
+    screen:
+      - "**`Notification`:** `spec` has `to` (user/alice, never an e-mail), `title`, `text`, `url` and `kind` (`note`, `decision`, `ask`, `done`); `status.deliveries` has one entry per Subscription"
+      - "**`Subscription`:** `spec` has `user`, `agent` and `secret`; the Web Push endpoint and keys live in a Secret, never in `spec` or an output"
+      - "**Through the Nereus API only:** an admin notifies any User, a person only themselves, and each person reads only their own devices"
+    notes: |-
+      **Whoever has news creates a Notification without knowing how it reaches the person** (an agent, Triton, a Nereid). **The endpoint is a capability URL:** whoever holds it can push to the device, so the API writes it, with `p256dh` and `auth`, to a Secret `subscription-<name>` of the namespace `nereus-notifications` and never reads it back; the Nereid that delivers reads it (#2148). **A Notification that is not yours answers `NotFound`**, as one that does not exist. A Nereid that notifies writes the object with its own rights, as the catalog Nereid does a `Token`.
+    pt:
+      topic: "os kinds"
+      message: "Uma Notification é para uma pessoa, uma Subscription é um dispositivo dela"
+      accent: "um dispositivo dela"
+      screen:
+        - "**`Notification`:** o `spec` tem `to` (user/alice, nunca um e-mail), `title`, `text`, `url` e `kind` (`note`, `decision`, `ask`, `done`); o `status.deliveries` tem uma entrada por Subscription"
+        - "**`Subscription`:** o `spec` tem `user`, `agent` e `secret`; o endpoint e as chaves do Web Push ficam num Secret, nunca no `spec` nem numa saída"
+        - "**Só pela Nereus API:** um admin notifica qualquer User, uma pessoa só a si mesma, e cada pessoa lê só os seus dispositivos"
+      notes: |-
+        **Quem tem uma notícia cria uma Notification sem saber como ela chega à pessoa** (um agente, o Triton, um Nereid). **O endpoint é uma URL de capacidade:** quem a tem pode empurrar para o dispositivo, então a API a escreve, com `p256dh` e `auth`, num Secret `subscription-<name>` do namespace `nereus-notifications` e nunca a lê de volta; quem a lê é o Nereid que entrega (#2148). **Uma Notification que não é sua responde `NotFound`**, como uma que não existe. Um Nereid que notifica escreve o objeto com os seus próprios direitos, como o Nereid catalog faz com um `Token`.
+
+  - name: notify
+    act: notification
+    topic: "notify"
+    status: built
+    issue: 2147
+    message: "notify is the short form agents use"
+    accent: "the short form"
+    terminal:
+      steps:
+        - comment: "Tell alice, in one line"
+          run: "nereus notify \"Deploy k3d-nereus?\""
+          options: ["--to user/alice"]
+          output: |-
+            ✓ notification n-20261122-0001 created for user/alice (kind note)
+
+            Next steps:
+
+              nereus notifications notification get n-20261122-0001
+    notes: |-
+      **The API names it:** `n-<yyyymmdd>-<number>`, the number counting the day's Notifications. `--title`, `--kind` (`note` by default) and `--url` (https only) are optional; `--dry-run` shows the name it would take and creates nothing. `--to` takes `user/<name>`, never an e-mail address.
+    pt:
+      topic: "notify"
+      message: "O notify é a forma curta que os agentes usam"
+      accent: "a forma curta"
+      notes: |-
+        **A API dá o nome:** `n-<yyyymmdd>-<número>`, o número contando as Notifications do dia. `--title`, `--kind` (`note` por padrão) e `--url` (só https) são opcionais; `--dry-run` mostra o nome que ela teria e não cria nada. O `--to` aceita `user/<name>`, nunca um endereço de e-mail.
+
+  - name: notification-create
+    act: notification
+    topic: "notifications notification create"
+    status: built
+    issue: 2147
+    message: "create builds a Notification from flags"
+    accent: "from flags"
+    terminal:
+      steps:
+        - comment: "A decision, with a title and the page it leads to"
+          run: "nereus notifications notification create"
+          options: ["--to user/alice", "--title \"#2078 merged\"", "--text \"Deploy k3d-nereus?\"", "--kind decision", "--url https://portal.example.com/"]
+          output: |-
+            ✓ notification n-20261122-0002 created for user/alice (kind decision)
+
+            Next steps:
+
+              nereus notifications notification get n-20261122-0002
+    dependsOn: [notify]
+    notes: |-
+      **An admin notifies any User; a person only themselves** (403 `Forbidden` otherwise, with the fix), until gates and approvals (#2117) need more. An unknown User, a `kind` outside the four, a `url` that is not https and an empty `text` are refused with ADR 0012's lines, and nothing is created.
+    pt:
+      topic: "notifications notification create"
+      message: "O create monta uma Notification a partir de flags"
+      accent: "a partir de flags"
+      notes: |-
+        **Um admin notifica qualquer User; uma pessoa só a si mesma** (403 `Forbidden` do contrário, com a correção), até gates e approvals (#2117) pedirem mais. Um User que não existe, um `kind` fora dos quatro, uma `url` que não é https e um `text` vazio são recusados com as linhas da ADR 0012, e nada é criado.
+
+  - name: notification-list
+    act: notification
+    topic: "notifications notification list"
+    status: built
+    issue: 2147
+    message: "list shows what was delivered of what was asked"
+    accent: "what was delivered"
+    terminal:
+      steps:
+        - comment: "alice's notifications: delivered over the devices it went to"
+          run: "nereus notifications notification list"
+          options: ["--to user/alice"]
+          output: |-
+            NAME             KIND      TITLE         DELIVERED  AGE
+            n-20261122-0001  note      -             0/1        5s
+            n-20261122-0002  decision  #2078 merged  1/1        1m
+    dependsOn: [notification-create]
+    notes: |-
+      **DELIVERED is the deliveries made over the Subscriptions the Notification went to**, from `status.deliveries`, which the Nereid of the reef's Mandate writes. The reference Nereid delivers nothing: each entry is `Skipped` and the column reads `0/1`. `get`, `delete` and `apply --from-file` follow ADR 0013.
+    pt:
+      topic: "notifications notification list"
+      message: "O list mostra o que foi entregue do que foi pedido"
+      accent: "o que foi entregue"
+      notes: |-
+        **DELIVERED são as entregas feitas sobre as Subscriptions para onde a Notification foi**, do `status.deliveries`, que o Nereid do Mandate do reef escreve. O Nereid de referência não entrega nada: cada entrada é `Skipped` e a coluna mostra `0/1`. `get`, `delete` e `apply --from-file` seguem a ADR 0013.
+
+  - name: subscription-create
+    act: subscription
+    topic: "notifications subscription create"
+    status: built
+    issue: 2147
+    message: "create subscribes one of your devices from the file its browser gave"
+    accent: "the file its browser gave"
+    terminal:
+      steps:
+        - comment: "The PushSubscription JSON, read from a file: the endpoint is never on a command line"
+          run: "nereus notifications subscription create"
+          options: ["--from-file push.json", "--agent \"Chrome on Android\""]
+          output: |-
+            ✓ subscription s-3f2a9c created
+
+            Next steps:
+
+              nereus notifications subscription list
+    notes: |-
+      **The body is the browser's `PushSubscription`:** `endpoint` (https) and `keys.p256dh` and `keys.auth`. The API writes the Secret first, then the Subscription, and removes the Secret when the object is refused. The user is the caller's, whatever the body says; a login with no Nereus user name has no devices.
+    pt:
+      topic: "notifications subscription create"
+      message: "O create inscreve um dispositivo seu a partir do arquivo que o navegador deu"
+      accent: "o arquivo que o navegador deu"
+      notes: |-
+        **O corpo é o `PushSubscription` do navegador:** `endpoint` (https) e `keys.p256dh` e `keys.auth`. A API escreve o Secret primeiro, depois a Subscription, e remove o Secret quando o objeto é recusado. O usuário é o de quem chama, seja o que o corpo disser; um login sem nome de usuário do Nereus não tem dispositivos.
+
+  - name: subscription-list
+    act: subscription
+    topic: "notifications subscription list"
+    status: built
+    issue: 2147
+    message: "list shows your own devices, never their endpoints"
+    accent: "never their endpoints"
+    terminal:
+      steps:
+        - comment: "The caller's own devices"
+          run: "nereus notifications subscription list"
+          output: |-
+            NAME       USER        AGENT              AGE
+            s-3f2a9c   user/alice  Chrome on Android  2d
+    dependsOn: [subscription-create]
+    notes: |-
+      **Everyone, admins too, reads, creates and deletes only their own Subscriptions**; one that is not yours answers `NotFound`. `delete` removes the object and its Secret. `get` shows one device.
+    pt:
+      topic: "notifications subscription list"
+      message: "O list mostra os seus dispositivos, nunca os seus endpoints"
+      accent: "nunca os seus endpoints"
+      notes: |-
+        **Todos, admins também, leem, criam e apagam só as suas Subscriptions**; uma que não é sua responde `NotFound`. O `delete` remove o objeto e o seu Secret. O `get` mostra um dispositivo.

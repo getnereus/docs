@@ -615,6 +615,11 @@
       "md": "reference/reefs/messaging.md",
       "title": "messaging"
     },
+    "reference/reefs/notifications/": {
+      "goal": "Every command of the notifications reef",
+      "md": "reference/reefs/notifications.md",
+      "title": "notifications"
+    },
     "reference/reefs/portal/": {
       "goal": "Every command of the portal reef",
       "md": "reference/reefs/portal.md",

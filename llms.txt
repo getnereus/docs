@@ -80,6 +80,7 @@
 - [environment](https://docs.getnereus.dev/reference/reefs/environment.md): Every command of the environment reef
 - [ideas](https://docs.getnereus.dev/reference/reefs/ideas.md): Every command of the ideas reef
 - [messaging](https://docs.getnereus.dev/reference/reefs/messaging.md): Every command of the messaging reef
+- [notifications](https://docs.getnereus.dev/reference/reefs/notifications.md): Every command of the notifications reef
 - [portal](https://docs.getnereus.dev/reference/reefs/portal.md): Every command of the portal reef
 - [presentations](https://docs.getnereus.dev/reference/reefs/presentations.md): Every command of the presentations reef
 - [registry](https://docs.getnereus.dev/reference/reefs/registry.md): Every command of the registry reef

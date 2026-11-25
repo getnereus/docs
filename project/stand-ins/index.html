@@ -2992,6 +2992,8 @@
       
         
       
+        
+      
     
     
     
@@ -3365,6 +3367,41 @@
     
   
     messaging
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/reefs/notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    notifications
   
 
     
@@ -7266,6 +7303,14 @@
 <tr>
 <td>A change to what is published goes out as the next patch from <code>main</code>'s HEAD with <code>scripts/registry/release publish</code> (<code>make release</code>) on the owner's machine, which tags that commit <code>v0.1.N</code> and pushes the tag, with no version-bump commit (<a href="https://github.com/getnereus/nereus/issues/1350">#1350</a>, <a href="https://github.com/getnereus/nereus/issues/1337">#1337</a>); no file in git holds the version, the CLI (<code>nereus --version</code>) and the images read it from the tag (<a href="https://github.com/getnereus/nereus/issues/186">#186</a>)</td>
 <td>Each image named by the hash of its inputs, so a release restarts only the Nereids that changed (<a href="https://github.com/getnereus/nereus/issues/1574">#1574</a>)</td>
+</tr>
+<tr>
+<td>Who may notify whom is a rule in the Nereus API, not a check of the authorization reef: an admin notifies any User, a person only themselves (<a href="https://github.com/getnereus/nereus/issues/2147">#2147</a>)</td>
+<td>The authorization reef deciding it, once gates and approvals (<a href="https://github.com/getnereus/nereus/issues/2117">#2117</a>) need more than that</td>
+</tr>
+<tr>
+<td>The reference Nereid of the notifications reef delivers nothing: each delivery is <code>Skipped</code> (<a href="https://github.com/getnereus/nereus/issues/2147">#2147</a>)</td>
+<td>The webpush Nereid, which sends Web Push to each Subscription (<a href="https://github.com/getnereus/nereus/issues/2148">#2148</a>)</td>
 </tr>
 </tbody>
 </table>
