@@ -3,10 +3,10 @@
   "command": "make --no-print-directory deck-test",
   "result": "pass",
   "exit": 0,
-  "seconds": 260,
+  "seconds": 263,
   "passed": 477,
   "failed": 0,
   "failure": null,
-  "commit": "9d9f99b5",
-  "started": "2026-11-25T00:29:00Z"
+  "commit": "d0d5acc5",
+  "started": "2026-11-25T01:34:57Z"
 }
