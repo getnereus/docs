@@ -7237,6 +7237,9 @@
 <h2 id="vmagent">VMAgent<a class="headerlink" href="#vmagent" title="Permanent link">&para;</a></h2>
 <p>The scraper, <code>vmagent-nereus</code>, reads the targets the Nereid's scrape objects name and writes the samples to the VMSingle with the Prometheus remote write protocol.</p>
 <p>It reads only the scrape objects labelled with the Nereid's name, so another tool's objects never change what it collects.</p>
+<p>It scrapes every 30s by default. The chart's <code>metrics.scrapeInterval</code> sets it: thetis writes it into the Mandate <code>victoriametrics</code> as the param <code>scrapeInterval</code> (<a href="https://github.com/getnereus/nereus/issues/2199">#2199</a>).</p>
+<p>The value is whole seconds from 10s to 60s, one value across the Nereid's Mandates. Any other value is refused by <code>nereus nereid apply</code>; the Nereid writes nothing and reports <code>InvalidScrapeInterval</code>.</p>
+<p>The admission policy pins the VMAgent at the interval read at <code>nereus nereid apply</code>: after changing the param, apply the Nereid again.</p>
 <h2 id="what-it-scrapes">What it scrapes<a class="headerlink" href="#what-it-scrapes" title="Permanent link">&para;</a></h2>
 <p>The VMPodScrape <code>nereids</code> selects every pod labelled <code>core.getnereus.dev/metrics: "true"</code> in <code>nereus-system</code>, on its port <code>http</code> and path <code>/metrics</code>. Each Nereid built on nereid-sdk carries that label (<a href="https://github.com/getnereus/nereus/issues/741">#741</a>), so no Nereid is ever named.</p>
 <p>The label <code>nereid</code> of each series comes from the pod's <code>app.kubernetes.io/name</code>, never from what the pod serves, so no pod can pose as a Nereid.</p>
@@ -7249,7 +7252,8 @@
 <p>The recommender keeps the history in the VPA's checkpoints in <code>nereus-system</code>: a recommendation takes about 24 h after it starts and survives its restarts.</p>
 <p>Its series keep their own <code>namespace</code> and <code>pod</code> (<code>honorLabels: true</code>): those of the pods they describe.</p>
 <h2 id="the-contract">The contract<a class="headerlink" href="#the-contract" title="Permanent link">&para;</a></h2>
-<p>The Mandate <code>victoriametrics</code> publishes <code>status.query.url</code>, the in-cluster address of the query API, and its Ready condition; <code>nereus mandate get victoriametrics</code> shows both. It names no backend: another Nereid of the metrics reef would publish the same field.</p>
+<p>The Mandate <code>victoriametrics</code> publishes <code>status.query.url</code>, the in-cluster address of the query API, <code>status.query.scrapeInterval</code> (<code>30s</code>) and its Ready condition; <code>nereus mandate get victoriametrics</code> shows them. It names no backend: another Nereid of the metrics reef would publish the same fields.</p>
+<p>The Nereus API keeps the status signals one scrape interval and steps the detail's 5m and 1h ranges by it.</p>
 <h2 id="who-reaches-it">Who reaches it<a class="headerlink" href="#who-reaches-it" title="Permanent link">&para;</a></h2>
 <p>The query API has no credentials yet. A NetworkPolicy, applied by <code>nereus nereid apply</code>, lets only the VMAgent and the Nereus API reach port 8428; a port-forward is not subject to it.</p>
 <p>Deleting series takes a random key nobody is given (<code>-deleteAuthKey</code>, from the Secret <code>victoriametrics-delete-key</code>). An admission policy holds every object the Nereid writes to its name and its whole spec.</p>

@@ -71,6 +71,8 @@ DESCRIPTION: Install complete
 
 The profile is the file `profiles/<profile>.yaml` of the chart; a name with no file fails before anything is installed, listing the profiles there are.
 
+The metrics reef scrapes every 30s; `--set metrics.scrapeInterval=15s` changes it, whole seconds from 10s to 60s, before thetis creates the metrics reef's Mandate ([#2199](https://github.com/getnereus/nereus/issues/2199)). Any other value fails the chart.
+
 ### 4. Remove the CA key
 
 The key now lives in the Secret, kept on uninstall, and in Helm's release history in `nereus-system`. Delete the file with `rm nereus/ca.key`.

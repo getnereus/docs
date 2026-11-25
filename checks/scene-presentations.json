@@ -1,12 +1,12 @@
 {
   "name": "scene-presentations",
   "command": "make --no-print-directory scene-presentations",
-  "result": "pass",
-  "exit": 0,
-  "seconds": 862,
-  "passed": 140,
-  "failed": 0,
-  "failure": null,
-  "commit": "6b9b6488",
-  "started": "2026-11-25T12:33:26Z"
+  "result": "fail",
+  "exit": 2,
+  "seconds": 737,
+  "passed": 46,
+  "failed": 1,
+  "failure": "FAIL: live-projector past the poll's seconds shows {'votes': ['', '', ''], 'clock': '00:00', 'count': '2 answers'}, expected 'Open' and no votes: its seconds close nothing",
+  "commit": "f3ae3430+",
+  "started": "2026-11-25T17:38:08Z"
 }

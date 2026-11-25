@@ -18,6 +18,12 @@ The scraper, `vmagent-nereus`, reads the targets the Nereid's scrape objects nam
 
 It reads only the scrape objects labelled with the Nereid's name, so another tool's objects never change what it collects.
 
+It scrapes every 30s by default. The chart's `metrics.scrapeInterval` sets it: thetis writes it into the Mandate `victoriametrics` as the param `scrapeInterval` ([#2199](https://github.com/getnereus/nereus/issues/2199)).
+
+The value is whole seconds from 10s to 60s, one value across the Nereid's Mandates. Any other value is refused by `nereus nereid apply`; the Nereid writes nothing and reports `InvalidScrapeInterval`.
+
+The admission policy pins the VMAgent at the interval read at `nereus nereid apply`: after changing the param, apply the Nereid again.
+
 ## What it scrapes
 
 The VMPodScrape `nereids` selects every pod labelled `core.getnereus.dev/metrics: "true"` in `nereus-system`, on its port `http` and path `/metrics`. Each Nereid built on nereid-sdk carries that label ([#741](https://github.com/getnereus/nereus/issues/741)), so no Nereid is ever named.
@@ -42,7 +48,9 @@ Its series keep their own `namespace` and `pod` (`honorLabels: true`): those of 
 
 ## The contract
 
-The Mandate `victoriametrics` publishes `status.query.url`, the in-cluster address of the query API, and its Ready condition; `nereus mandate get victoriametrics` shows both. It names no backend: another Nereid of the metrics reef would publish the same field.
+The Mandate `victoriametrics` publishes `status.query.url`, the in-cluster address of the query API, `status.query.scrapeInterval` (`30s`) and its Ready condition; `nereus mandate get victoriametrics` shows them. It names no backend: another Nereid of the metrics reef would publish the same fields.
+
+The Nereus API keeps the status signals one scrape interval and steps the detail's 5m and 1h ranges by it.
 
 ## Who reaches it
 
