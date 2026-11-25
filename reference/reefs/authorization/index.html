@@ -7759,7 +7759,7 @@
   Approving lifts the hold, and the Nereid provisions</li>
 <li><a href="../../../specs/cli/reefs/authorization.html#approval-reject"><code>nereus authorization approval reject staging-create-7f3a</code></a><br>
   Rejecting keeps the history, and provisions nothing</li>
-<li><a href="../../../specs/cli/reefs/authorization.html#can-i-may-ask"><code>nereus authorization can-i create environment/environments</code></a> <span class="chip planned">planned #2124</span><br>
+<li><a href="../../../specs/cli/reefs/authorization.html#can-i-may-ask"><code>nereus authorization can-i create environment/environments</code></a><br>
   No, but Bruno may ask</li>
 </ul>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
@@ -7965,15 +7965,14 @@ Next steps:
   nereus authorization gate list
 </code></pre></div>
 <h3 id="create-held">create-held<a class="headerlink" href="#create-held" title="Permanent link">&para;</a></h3>
-<p>Bruno may ask, not create.</p>
+<p>A dry run says whose approval it would wait for, and writes nothing.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>environment<span class="w"> </span>create<span class="w"> </span>staging<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/payments
+<span class="w">  </span>--owner<span class="w"> </span>project/payments<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--dry-run
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ environment/environments/staging created, waiting for approval (authorization/approvals/staging-create-7f3a; approvers: team/payments/tech-lead)
-
-Next steps:
-
-  nereus environment get staging --watch
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>would wait for approval: authorization/gates/payments-environments, approvers team/payments/tech-lead
+environment/environments/staging would be created (mandate: vcluster, nereid: vcluster).
+Nothing changed (--dry-run).
 </code></pre></div>
 <h3 id="approval-list">approval-list<a class="headerlink" href="#approval-list" title="Permanent link">&para;</a></h3>
 <p>Every held request has one Approval.</p>

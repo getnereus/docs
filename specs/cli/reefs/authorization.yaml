@@ -856,6 +856,13 @@ slides:
     accent: "stands Pending"
     terminal:
       steps:
+        - comment: "A dry run says whose approval it would wait for, and writes nothing"
+          run: "nereus environment create staging"
+          options: ["--owner project/payments", "--dry-run"]
+          output: |-
+            would wait for approval: authorization/gates/payments-environments, approvers team/payments/tech-lead
+            environment/environments/staging would be created (mandate: vcluster, nereid: vcluster).
+            Nothing changed (--dry-run).
         - comment: "Bruno may ask, not create"
           run: "nereus environment create staging"
           options: ["--owner project/payments"]
@@ -971,7 +978,7 @@ slides:
   - name: can-i-may-ask
     act: gates
     topic: "can-i, may ask"
-    status: planned
+    status: built
     issue: 2124
     message: "No, but Bruno may ask"
     accent: "may ask"

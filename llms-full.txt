@@ -4790,7 +4790,7 @@ Every command of the first slice: Users, teams, roles and bindings, and who may 
 - [`nereus authorization approval list`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#approval-list) The approver sees what waits for a decision
 - [`nereus authorization approval approve staging-create-7f3a`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#approval-approve) Approving lifts the hold, and the Nereid provisions
 - [`nereus authorization approval reject staging-create-7f3a`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#approval-reject) Rejecting keeps the history, and provisions nothing
-- [`nereus authorization can-i create environment/environments`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#can-i-may-ask) [planned #2124] No, but Bruno may ask
+- [`nereus authorization can-i create environment/environments`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#can-i-may-ask) No, but Bruno may ask
 
 ## Examples
 
@@ -5123,19 +5123,18 @@ Next steps:
 
 ### create-held
 
-Bruno may ask, not create.
+A dry run says whose approval it would wait for, and writes nothing.
 
 ```bash
 nereus environment create staging \
-  --owner project/payments
+  --owner project/payments \
+  --dry-run
 ```
 
 ``` { .text .output title="output" }
-✓ environment/environments/staging created, waiting for approval (authorization/approvals/staging-create-7f3a; approvers: team/payments/tech-lead)
-
-Next steps:
-
-  nereus environment get staging --watch
+would wait for approval: authorization/gates/payments-environments, approvers team/payments/tech-lead
+environment/environments/staging would be created (mandate: vcluster, nereid: vcluster).
+Nothing changed (--dry-run).
 ```
 
 ### approval-list
