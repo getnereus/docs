@@ -4075,11 +4075,13 @@ uv run --project cli --with lib/nereid pytest -q controllers/caddy
 ```
 
 ``` { .text .output title="output" }
-.............                                                            [100%]
-13 passed in 0.18s
+..............                                                           [100%]
+14 passed in 0.18s
 ```
 
-`make nereid-check`, part of `make test`, fails when a Nereid does not pin `nereid-sdk` at the version of `lib/nereid/pyproject.toml`, in `requirements.txt` and in its `Dockerfile`.
+`make nereid-check`, part of `make test`, fails when a Nereid does not pin `nereid-sdk` at the version of `lib/nereid/pyproject.toml`, in `requirements.txt` and in its `Dockerfile`, or does not import `nereid.held`.
+
+A Nereid lists its objects through `held.actionable(items)`, so it never acts on a held object (ADR 0031: no status, no finalizer while the Nereus API's hold is on, #2214). The skeleton does already; `scripts/nereid/held-allowlist` names the Nereids not adopted yet, a list that only shrinks.
 
 ## Next
 
