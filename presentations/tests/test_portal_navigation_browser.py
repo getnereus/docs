@@ -907,8 +907,8 @@ DETAIL = {
     "series": {"rate": series(0.26), "errorRatio": series(0.15, gap=(40, 50)), "p95Seconds": series(0.65), "saturation": series(0.31)},
   },
   "pods": {
-    "cpu": {"cores": 0.162, "requestCores": 0.1, "limitCores": 0.5, "series": series(0.16)},
-    "memory": {"bytes": 2.1e8, "requestBytes": 1.28e8, "limitBytes": 2.7e8, "series": series(2.0e8)},
+    "cpu": {"cores": 0.162, "requestCores": 0.1, "recommendedCores": 0.025, "limitCores": 0.5, "series": series(0.16)},
+    "memory": {"bytes": 2.1e8, "requestBytes": 1.28e8, "recommendedBytes": 2.62e8, "limitBytes": 2.7e8, "series": series(2.0e8)},
     "ready": {"ready": 1, "desired": 2},
     "restarts24h": 3,
     "items": [
@@ -971,7 +971,10 @@ def test_a_row_with_a_nereid_opens_its_screen_and_back_returns_home(portal_page,
   assert page.locator('#detail-signals [data-key="errors"] .chart-line').get_attribute("d").count("M") == 2
   expect(page.locator("#detail-resources .detail-value")).to_have_text(["162m", "200Mi"])
   # The request and the limit under each value, one line each (#2177).
-  expect(page.locator("#detail-resources .detail-note")).to_have_text(["request 100m", "limit 500m", "request 122Mi", "limit 257Mi"])
+  # The VPA's recommendation between the request and the limit (#2205).
+  expect(page.locator("#detail-resources .detail-note")).to_have_text([
+    "request 100m", "recommended 25m", "limit 500m", "request 122Mi", "recommended 250Mi", "limit 257Mi",
+  ])
   expect(page.locator("#detail-meters .meter-text")).to_have_text(["162m of 500m limit", "200Mi of 257Mi limit"])
   expect(page.locator("#detail-meters .meter").first).to_have_attribute("aria-valuenow", "32")
   assert page.locator("#detail-meters .meter").nth(1).get_attribute("data-level") == "warning"
@@ -1108,7 +1111,9 @@ def test_a_failed_field_says_no_data_never_zero(portal_page):
   expect(page.locator("#detail-facts dd").first).to_have_text("no data")
   # No request, no limit and no ready replicas each read as missing (#2177); a missing key with no text of its own
   # reads as words, never as raw camelCase.
-  expect(page.locator("#detail-resources .detail-note")).to_have_text(["no request", "no limit", "no request", "no limit"])
+  # While neither resource has a recommendation, how long the VPA recommender takes (#2205).
+  soon = "recommended after ~24 h of metrics"
+  expect(page.locator("#detail-resources .detail-note")).to_have_text(["no request", soon, "no limit", "no request", soon, "no limit"])
   assert page.locator("#detail-resources .detail-note").first.get_attribute("data-missing") == ""
   expect(page.locator("#detail-facts dd").nth(1)).to_have_text("no data")
   expect(page.locator("#detail-facts dt")).to_have_text(["Restarts · 24h", "Ready", "Queue depth"])

@@ -3,10 +3,10 @@
   "command": "make --no-print-directory scene-presentations",
   "result": "pass",
   "exit": 0,
-  "seconds": 869,
+  "seconds": 862,
   "passed": 140,
   "failed": 0,
   "failure": null,
-  "commit": "4286f2b3",
-  "started": "2026-11-25T02:27:26Z"
+  "commit": "6b9b6488",
+  "started": "2026-11-25T12:33:26Z"
 }

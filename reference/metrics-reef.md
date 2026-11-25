@@ -28,7 +28,15 @@ The VMNodeScrape `kubelet-cadvisor` reads each node's kubelet at `/metrics/cadvi
 
 The VMPodScrape `kube-state-metrics` reads [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics) ([#2177](https://github.com/getnereus/nereus/issues/2177)), which the Nereid also asks the release reef for: chart 9.1.0, v2.20.0 pinned by digest, in `metrics-system`. The Nereid does not wait for it: it logs a Release not Ready.
 
-It reads only the pods and Deployments of `nereus-system`, through a Role there: no ClusterRole, no Secret, no ConfigMap. It exposes five series: the containers' requests, last termination reason and restarts, and the Deployments' ready and desired replicas.
+It reads only the pods, Deployments and VerticalPodAutoscalers of `nereus-system`, through a Role there, and no Secret. It exposes six series, among them the requests, the ready replicas and each VPA's recommendation.
+
+Its one ClusterRole lists and watches the CustomResourceDefinitions, cluster-scoped: its Custom Resource State needs them to find the VPA's kind.
+
+The Nereid also releases the [Vertical Pod Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler)'s recommender ([#2205](https://github.com/getnereus/nereus/issues/2205)): chart 0.17.0, VPA 1.8.1 pinned by digest, in `metrics-system`, with no updater and no webhook.
+
+It writes one VerticalPodAutoscaler per Nereid Deployment, `updateMode: "Off"`: a CPU and a memory request are recommended, never applied. The recommender has a Role in `nereus-system` and no ClusterRole.
+
+The recommender keeps the history in the VPA's checkpoints in `nereus-system`: a recommendation takes about 24 h after it starts and survives its restarts.
 
 Its series keep their own `namespace` and `pod` (`honorLabels: true`): those of the pods they describe.
 
@@ -38,7 +46,7 @@ The Mandate `victoriametrics` publishes `status.query.url`, the in-cluster addre
 
 ## Who reaches it
 
-The query API has no credentials yet. A NetworkPolicy, applied by `nereus nereid apply` and not by the Nereid, lets only the VMAgent and the Nereus API reach port 8428; a `kubectl port-forward` is not subject to it.
+The query API has no credentials yet. A NetworkPolicy, applied by `nereus nereid apply`, lets only the VMAgent and the Nereus API reach port 8428; a port-forward is not subject to it.
 
 Deleting series takes a random key nobody is given (`-deleteAuthKey`, from the Secret `victoriametrics-delete-key`). An admission policy holds every object the Nereid writes to its name and its whole spec.
 

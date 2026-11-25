@@ -1,12 +1,12 @@
 {
   "name": "scene-metrics",
-  "command": "test/scene-metrics",
+  "command": "make --no-print-directory scene-metrics",
   "result": "pass",
   "exit": 0,
-  "seconds": 453,
-  "passed": 48,
+  "seconds": 658,
+  "passed": 51,
   "failed": 0,
   "failure": null,
-  "commit": "4613f720",
-  "started": "2026-11-24T18:09:07Z"
+  "commit": "6b9b6488",
+  "started": "2026-11-25T12:10:05Z"
 }
