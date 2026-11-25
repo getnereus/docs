@@ -11,6 +11,7 @@ import importlib.util
 import json
 import os
 import pathlib
+import re
 import threading
 
 import pytest
@@ -98,9 +99,11 @@ BRUNO = {"sub": "u2", "name": "Bruno Example", "email": "bruno@example.com", "gr
 
 
 class Stand:
-  def __init__(self, items, status=None, person=None, detail=None):
+  def __init__(self, items, status=None, person=None, detail=None, missing=()):
     files = portal.files()
     stand = self
+    # Every path asked for, and the portal's files answered 404 as if they failed to load (#1815).
+    self.served = []
     answers = [status or (200, STATUS)]
     self.answers = answers
     self.asked = []
@@ -134,6 +137,7 @@ class Stand:
 
       def do_GET(self):
         path = self.path.split("?")[0]
+        stand.served.append(path)
         js = "text/javascript; charset=utf-8"
         if path == "/vendor/oidc-client-ts-3.5.0.min.js":
           self.secure(200, js, OIDC.encode())
@@ -155,7 +159,7 @@ class Stand:
           self.secure(200, js, (MODULE % (item["element"], item["tab"])).encode())
         elif path == "/sw.js":
           self.secure(404, "text/plain", b"no worker on the stand\n")
-        elif path in files:
+        elif path in files and path not in missing:
           self.secure(200, portal.content_type(files[path]), files[path].read_bytes())
         else:
           self.secure(404, "application/json", b"{}")
@@ -189,8 +193,8 @@ def portal_page():
     browser = chromium(playwright)
 
     def opened(items, width=390, height=844, scheme="dark", locale="en-US", status=None, touch=False, clock=False, person=None, script=None,
-               detail=None, start=""):
-      stand = Stand(items, status, person, detail)
+               detail=None, start="", missing=()):
+      stand = Stand(items, status, person, detail, missing)
       stands.append(stand)
       context = browser.new_context(viewport={"width": width, "height": height}, color_scheme=scheme, locale=locale, has_touch=touch)
       page = context.new_page()
@@ -1178,3 +1182,114 @@ def test_nothing_on_the_nereid_s_screen_passes_the_phone_s_edge(portal_page, wid
     name = f"detail-{width}-{'pt' if locale == 'pt-BR' else 'en'}"
     shot(page, name)
     shot(page, f"{name}-full", full=True)
+
+
+# The desktop's charts (#1815, slice 1): from 1280 px the detail's cards draw Apache ECharts charts (the vendored simple
+# build, loaded only there as a script of the portal's own origin), in a grid of three columns; a phone keeps the SVG.
+ECHARTS = "/vendor/echarts-6.1.0.simple.min.js"
+CARDS = ["rate", "errors", "duration", "saturation", "cpu", "memory"]
+
+
+def poll(page, script, wanted, timeout_ms=5000):
+  """Evaluates a script until it gives what is wanted, from Python: the portal's CSP refuses wait_for_function's string."""
+  found = None
+  for _ in range(timeout_ms // 50):
+    found = page.evaluate(script)
+    if found == wanted:
+      return found
+    page.wait_for_timeout(50)
+  raise AssertionError(f"{script}: {found!r}, not {wanted!r}")
+
+
+def option(page, key):
+  """The ECharts option of a card's chart: its line's colour and its number of points."""
+  return page.evaluate(f"""() => {{
+    const chart = echarts.getInstanceByDom(document.querySelector('[data-key="{key}"] .detail-echart'));
+    const series = chart.getOption().series[0];
+    return {{ colour: series.lineStyle.color, points: series.data.length }};
+  }}""")
+
+
+def echarts_loaded(page):
+  return page.evaluate(f"[...document.scripts].some((s) => s.src.includes('{ECHARTS}')) || typeof window.echarts !== 'undefined'")
+
+
+@pytest.mark.parametrize("scheme", ["dark", "light"])
+def test_a_desktop_draws_the_detail_s_charts_with_echarts_in_three_columns(portal_page, scheme):
+  opened, expect = portal_page
+  page = home(opened([], width=1440, height=900, scheme=scheme, status=(200, SIGNALLED), detail=FLUX))
+  page.locator("#attention .row-head").first.click()
+  detail(page)
+  # Each card's chart is a canvas of ECharts, none an SVG chart.
+  expect(page.locator(".detail-card .detail-echart canvas")).to_have_count(6)
+  expect(page.locator(".detail-chart")).to_have_count(0)
+  assert page.locator(".detail-card").evaluate_all("cards => cards.map((c) => c.dataset.key)") == CARDS
+  # Three columns: rate, errors, duration on the first row; saturation, CPU, memory under them.
+  boxes = [page.locator(f'.detail-card[data-key="{key}"]').bounding_box() for key in CARDS]
+  assert len({round(box["y"]) for box in boxes[:3]}) == 1 and len({round(box["y"]) for box in boxes[3:]}) == 1
+  assert boxes[3]["y"] > boxes[0]["y"]
+  assert [round(box["x"]) for box in boxes[:3]] == [round(box["x"]) for box in boxes[3:]]
+  # The Nereid's state colour, as the SVG charts; the errors' chart is red above zero.
+  poll(page, f"""getComputedStyle(document.querySelector('[data-key="rate"]')).getPropertyValue('--chart').trim() !== ''""", True)
+  for key in ("rate", "duration", "saturation", "cpu", "memory"):
+    assert rgb(option(page, key)["colour"]) == WARNING[scheme], key
+  assert rgb(option(page, "errors")["colour"]) == ERROR[scheme]
+  assert option(page, "rate")["points"] == 120
+  # The tooltip: the time and the value under the pointer, in the card's format.
+  page.locator('[data-key="rate"] .detail-echart').hover()
+  tip = page.locator('[data-key="rate"] .detail-tip')
+  expect(tip).to_be_visible()
+  expect(tip.locator(".detail-tip-value")).to_have_text(re.compile(r"^\d+(\.\d+)?/(s|min)$"))
+  expect(tip.locator(".detail-tip-time")).to_have_text(re.compile(r"\d\d:\d\d"))
+  page.mouse.move(5, 5)
+  expect(tip).to_be_hidden()
+  assert page.evaluate("window.__csp") == []
+  shot(page, f"detail-1440-{scheme}")
+
+
+def test_a_range_change_moves_the_desktop_charts_in_place(portal_page):
+  opened, expect = portal_page
+  page = detail(opened([], width=1440, height=900, status=(200, SIGNALLED), detail=FLUX, start=f"{ROUTE}/1h"))
+  expect(page.locator('[data-key="rate"] canvas')).to_have_count(1)
+  page.evaluate("""document.querySelector('[data-key="rate"] canvas').dataset.first = 'yes'""")
+  # The next range answers 48 points: the same chart takes them (its update animates), never a new one.
+  wider = {**DETAIL, "signals": {**DETAIL["signals"], "series": {key: series(0.3, points=48, step=1800) for key in DETAIL["signals"]["series"]}}}
+  page.stand.details["release/flux"] = (200, wider)
+  page.locator('#nereid [data-range="24h"]').click()
+  poll(page, """echarts.getInstanceByDom(document.querySelector('[data-key="rate"] .detail-echart')).getOption().series[0].data.length""", 48)
+  assert page.locator('[data-key="rate"] canvas').get_attribute("data-first") == "yes"
+  assert ranges_asked(page) == ["1h", "24h"]
+
+
+def test_across_1280_px_the_charts_change_kind_both_ways(portal_page):
+  opened, expect = portal_page
+  page = detail(opened([], width=1440, height=900, status=(200, SIGNALLED), detail=FLUX, start=f"{ROUTE}/1h"))
+  expect(page.locator(".detail-echart canvas")).to_have_count(6)
+  page.set_viewport_size({"width": 1024, "height": 900})
+  expect(page.locator("#detail-signals .detail-chart")).to_have_count(4)
+  expect(page.locator(".detail-echart")).to_have_count(0)
+  page.set_viewport_size({"width": 1366, "height": 900})
+  expect(page.locator(".detail-echart canvas")).to_have_count(6)
+  expect(page.locator(".detail-chart")).to_have_count(0)
+
+
+def test_a_phone_keeps_the_svg_charts_and_never_loads_echarts(portal_page):
+  opened, expect = portal_page
+  page = detail(opened([], width=412, height=915, status=(200, SIGNALLED), detail=FLUX, start=f"{ROUTE}/1h"))
+  expect(page.locator("#detail-signals .detail-chart")).to_have_count(4)
+  expect(page.locator("#detail-resources .detail-chart")).to_have_count(2)
+  expect(page.locator(".detail-echart, .detail-card canvas")).to_have_count(0)
+  page.wait_for_timeout(300)
+  assert not echarts_loaded(page)
+  assert ECHARTS not in " ".join(page.stand.served)
+  shot(page, "detail-412")
+
+
+def test_without_echarts_a_desktop_keeps_the_svg_charts(portal_page):
+  opened, expect = portal_page
+  page = detail(opened([], width=1440, height=900, status=(200, SIGNALLED), detail=FLUX, start=f"{ROUTE}/1h", missing=[ECHARTS]))
+  expect(page.locator("#detail-signals .detail-chart")).to_have_count(4)
+  page.wait_for_timeout(500)
+  expect(page.locator(".detail-echart")).to_have_count(0)
+  expect(page.locator("#detail-signals .detail-chart")).to_have_count(4)
+  assert ECHARTS in " ".join(page.stand.served)
