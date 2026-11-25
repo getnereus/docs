@@ -3,10 +3,10 @@
   "command": "make --no-print-directory test",
   "result": "pass",
   "exit": 0,
-  "seconds": 701,
-  "passed": 10197,
+  "seconds": 688,
+  "passed": 10278,
   "failed": 0,
   "failure": null,
-  "commit": "6b9b6488",
-  "started": "2026-11-25T11:01:18Z"
+  "commit": "c98b2cce",
+  "started": "2026-11-25T13:07:16Z"
 }

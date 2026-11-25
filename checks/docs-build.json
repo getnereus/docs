@@ -3,10 +3,10 @@
   "command": "make --no-print-directory docs-build",
   "result": "pass",
   "exit": 0,
-  "seconds": 5,
+  "seconds": 4,
   "passed": 0,
   "failed": 0,
   "failure": null,
-  "commit": "6b9b6488",
-  "started": "2026-11-25T11:17:30Z"
+  "commit": "c98b2cce",
+  "started": "2026-11-25T13:23:10Z"
 }
