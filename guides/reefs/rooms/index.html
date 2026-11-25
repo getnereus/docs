@@ -7296,7 +7296,7 @@
 </ul>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
 <h3 id="1-create-the-room">1. Create the room<a class="headerlink" href="#1-create-the-room" title="Permanent link">&para;</a></h3>
-<p><a href="../../../specs/cli/reefs/rooms.html#room-create"><code>nereus rooms create</code></a> makes the Room; without <code>--owner</code>, your team's owner. Triton applies its Topic, <code>room-&lt;room&gt;</code>, closed to every other client.</p>
+<p><a href="../../../specs/cli/reefs/rooms.html#room-create"><code>nereus rooms create</code></a> makes the Room; without <code>--owner</code>, the current owner (<code>nereus config set owner</code>), else your team's owner. Triton applies its Topic, <code>room-&lt;room&gt;</code>, closed to every other client.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>rooms<span class="w"> </span>create<span class="w"> </span>ops<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--owner<span class="w"> </span>project/payments<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--description<span class="w"> </span><span class="s2">"Operations peers"</span>

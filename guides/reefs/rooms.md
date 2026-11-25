@@ -11,7 +11,7 @@ Give your team a room of its own on Triton, beside the repository's: a Room of t
 
 ### 1. Create the room
 
-[`nereus rooms create`](../../specs/cli/reefs/rooms.html#room-create) makes the Room; without `--owner`, your team's owner. Triton applies its Topic, `room-<room>`, closed to every other client.
+[`nereus rooms create`](../../specs/cli/reefs/rooms.html#room-create) makes the Room; without `--owner`, the current owner (`nereus config set owner`), else your team's owner. Triton applies its Topic, `room-<room>`, closed to every other client.
 
 ```bash
 nereus rooms create ops \

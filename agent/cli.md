@@ -78,6 +78,10 @@ nereus release get <release> --watch
 nereus tenancy organization create|list|get|delete <organization>
 nereus tenancy project create|list|get|delete <project> [--parent <kind>/<name>] [--repository <url>] [--cascade]
 nereus tenancy apply --from-file tenancy/ [--dry-run]
+# Each tenancy kind's singular, plural and CRD shortNames are words at the top too (#2249), from the
+# instance's CRDs, kept with the discovery; a name the CLI already has is dropped
+nereus org|organization|organizations <verb> ...      # = nereus tenancy organization <verb> ...
+nereus proj|project|projects <verb> ...               # = nereus tenancy project <verb> ...
 
 # The catalog reef (ADR 0016, built by #902, check an idea until #903): workload is the default kind;
 # apply is the group's, never a kind's; a template writes files before the catalog, so
@@ -107,7 +111,7 @@ nereus registry repository publish <repository> --registry <registry> --image <i
 nereus registry repository list|get|delete <repository>
 
 # The rooms reef (ADR 0030, #1491): Room, its default kind, owned by an organization or a project; without a name the
-# repository's, without --owner the owner of your team; a new room past the default Mandate's maxRooms (20) fails
+# repository's, without --owner the current owner, else the owner of your team (#2249); a new room past the default Mandate's maxRooms (20) fails
 nereus rooms create [<room>] [--owner <kind>/<name>] [--description <text>] [--max-age <duration>] [--max-bytes <size>] [--deletion-policy retain|delete] [--dry-run]
 nereus rooms apply --from-file <path> [--dry-run]
 nereus rooms list|get <room>
