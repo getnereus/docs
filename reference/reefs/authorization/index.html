@@ -7753,11 +7753,11 @@
   A Gate says which requests wait, and for whom</li>
 <li><a href="../../../specs/cli/reefs/authorization.html#create-held"><code>nereus environment create staging</code></a> <span class="chip planned">planned #2119</span><br>
   The object exists at once, and stands Pending</li>
-<li><a href="../../../specs/cli/reefs/authorization.html#approval-list"><code>nereus authorization approval list</code></a> <span class="chip planned">planned #2119</span><br>
+<li><a href="../../../specs/cli/reefs/authorization.html#approval-list"><code>nereus authorization approval list</code></a><br>
   The approver sees what waits for a decision</li>
-<li><a href="../../../specs/cli/reefs/authorization.html#approval-approve"><code>nereus authorization approval approve staging-create-7f3a</code></a> <span class="chip planned">planned #2119</span><br>
+<li><a href="../../../specs/cli/reefs/authorization.html#approval-approve"><code>nereus authorization approval approve staging-create-7f3a</code></a><br>
   Approving lifts the hold, and the Nereid provisions</li>
-<li><a href="../../../specs/cli/reefs/authorization.html#approval-reject"><code>nereus authorization approval reject staging-create-7f3a</code></a> <span class="chip planned">planned #2122</span><br>
+<li><a href="../../../specs/cli/reefs/authorization.html#approval-reject"><code>nereus authorization approval reject staging-create-7f3a</code></a><br>
   Rejecting keeps the history, and provisions nothing</li>
 <li><a href="../../../specs/cli/reefs/authorization.html#can-i-may-ask"><code>nereus authorization can-i create environment/environments</code></a> <span class="chip planned">planned #2124</span><br>
   No, but Bruno may ask</li>
@@ -7979,8 +7979,8 @@ Next steps:
 <p>Every held request has one Approval.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>authorization<span class="w"> </span>approval<span class="w"> </span>list
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>NAME                  TARGET                             VERB     REQUESTED BY   PHASE     AGE
-staging-create-7f3a   environment/environments/staging   create   bruno          Pending   2m
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>NAME                 TARGET                            VERB    REQUESTED BY  PHASE    AGE
+staging-create-7f3a  environment/environments/staging  create  bruno         Pending  2m
 </code></pre></div>
 <h3 id="approval-approve">approval-approve<a class="headerlink" href="#approval-approve" title="Permanent link">&para;</a></h3>
 <p>Ana, of the tech lead team, decides.</p>

@@ -4785,9 +4785,9 @@ Every command of the first slice: Users, teams, roles and bindings, and who may 
 - [`nereus environment list`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#fail-closed) Without openfga, everything closes
 - [`nereus authorization gate create payments-environments`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#gate-create) A Gate says which requests wait, and for whom
 - [`nereus environment create staging`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#create-held) [planned #2119] The object exists at once, and stands Pending
-- [`nereus authorization approval list`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#approval-list) [planned #2119] The approver sees what waits for a decision
-- [`nereus authorization approval approve staging-create-7f3a`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#approval-approve) [planned #2119] Approving lifts the hold, and the Nereid provisions
-- [`nereus authorization approval reject staging-create-7f3a`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#approval-reject) [planned #2122] Rejecting keeps the history, and provisions nothing
+- [`nereus authorization approval list`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#approval-list) The approver sees what waits for a decision
+- [`nereus authorization approval approve staging-create-7f3a`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#approval-approve) Approving lifts the hold, and the Nereid provisions
+- [`nereus authorization approval reject staging-create-7f3a`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#approval-reject) Rejecting keeps the history, and provisions nothing
 - [`nereus authorization can-i create environment/environments`](https://docs.getnereus.dev/specs/cli/reefs/authorization.html#can-i-may-ask) [planned #2124] No, but Bruno may ask
 
 ## Examples
@@ -5145,8 +5145,8 @@ nereus authorization approval list
 ```
 
 ``` { .text .output title="output" }
-NAME                  TARGET                             VERB     REQUESTED BY   PHASE     AGE
-staging-create-7f3a   environment/environments/staging   create   bruno          Pending   2m
+NAME                 TARGET                            VERB    REQUESTED BY  PHASE    AGE
+staging-create-7f3a  environment/environments/staging  create  bruno         Pending  2m
 ```
 
 ### approval-approve

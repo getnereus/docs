@@ -887,8 +887,8 @@ slides:
   - name: approval-list
     act: gates
     topic: "approval list"
-    status: planned
-    issue: 2119
+    status: built
+    issue: 2212
     message: "The approver sees what waits for a decision"
     accent: "waits for a decision"
     terminal:
@@ -896,8 +896,8 @@ slides:
         - comment: "Every held request has one Approval"
           run: "nereus authorization approval list"
           output: |-
-            NAME                  TARGET                             VERB     REQUESTED BY   PHASE     AGE
-            staging-create-7f3a   environment/environments/staging   create   bruno          Pending   2m
+            NAME                 TARGET                            VERB    REQUESTED BY  PHASE    AGE
+            staging-create-7f3a  environment/environments/staging  create  bruno         Pending  2m
     dependsOn: [create-held]
     notes: |-
       **One Approval per held request,** named `<target>-<verb>-<4 hex>`. Its `spec` is written only by the Nereus API and its `status` only by the gate Nereid; it goes away with the held object.
@@ -915,8 +915,8 @@ slides:
   - name: approval-approve
     act: gates
     topic: "approval approve"
-    status: planned
-    issue: 2119
+    status: built
+    issue: 2212
     message: "Approving lifts the hold, and the Nereid provisions"
     accent: "lifts the hold"
     terminal:
@@ -928,7 +928,7 @@ slides:
             ✓ authorization/approvals/staging-create-7f3a approved; environment/environments/staging released
     dependsOn: [approval-list]
     notes: |-
-      **`approve` is a command of the `approval` kind,** an amendment to ADR 0013: it records one decision in `decisions[]` (a list, so a quorum fits later). The API asks `approve` on `authorization/approvals` at the Gate's node, and the answer holds for the Gate's approvers.
+      **`approve` is a command of the `approval` kind,** an amendment to ADR 0013: it records one decision in `decisions[]` (a list, so a quorum fits later). The API asks the approver the check of a creation, `create` on the held kind at the target's node, so whoever may create it there, or at a node above, may approve.
 
       **After the decision** the API lifts the hold, the kind's own Nereid reconciles as usual, and the gate Nereid follows `Ready` into the Approval's `Provisioned` condition, which the notifications read.
     pt:
@@ -936,15 +936,15 @@ slides:
       message: "Aprovar retira o hold, e a Nereid provisiona"
       accent: "retira o hold"
       notes: |-
-        **`approve` é um comando do kind `approval`,** uma emenda à ADR 0013: grava uma decisão em `decisions[]` (uma lista, para caber um quórum depois). A API pergunta `approve` em `authorization/approvals` no nó do Gate, e a resposta vale para os aprovadores do Gate.
+        **`approve` é um comando do kind `approval`,** uma emenda à ADR 0013: grava uma decisão em `decisions[]` (uma lista, para caber um quórum depois). A API pergunta ao aprovador a checagem de uma criação, `create` no kind retido no nó do alvo, então aprova quem pode criá-lo ali, ou num nó acima.
 
         **Depois da decisão** a API retira o hold, a Nereid do próprio kind reconcilia como de costume, e a Nereid do gate acompanha o `Ready` até a condição `Provisioned` da Approval, que as notificações leem.
 
   - name: approval-reject
     act: gates
     topic: "approval reject"
-    status: planned
-    issue: 2122
+    status: built
+    issue: 2212
     message: "Rejecting keeps the history, and provisions nothing"
     accent: "provisions nothing"
     terminal:
