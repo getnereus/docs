@@ -113,6 +113,8 @@ Slice 3's decisions (owner, 2026-11-24): the victoriametrics Nereid releases the
 
 The reefs' icons on the rows and cards are #1773's (each reef has its own icon); until then every row keeps the default icon. The desktop's richer charts are #1815's. Its slice 1 is built: from 1280 px the detail's six cards (the four RED signals, CPU and memory) draw Apache ECharts line charts with axes, a tooltip and an animated change of range, in a grid of three columns; ECharts 6.1.0's official simple build is vendored in the portal and loaded only on a desktop, as a script of the portal's own origin (the CSP is unchanged); below 1280 px, or when it fails to load, the cards keep the SVG charts. The desktop home is its slice 2.
 
+Slice 2 of #1815 is built: from 1280 px the home is a list-detail split, the Nereids' list on the left (420 px, the selected row marked) and slice 1's detail on the right; a row swaps the right pane without leaving the home, and the URL still names the chosen Nereid (`#/nereids/<reef>/<nereid>/<range>`), so back, forward and a shared link open the split with it selected; with none chosen the pane shows the first Nereid needing attention, else the first row, which the URL does not name; below 1280 px the home and the detail's whole screen are as before.
+
 ## Constraints
 
 - The portal reads the series only through the Nereus API (ADR 0018, the API is the one door; ADR 0025, metrics enter only through it); the browser never reaches VictoriaMetrics.

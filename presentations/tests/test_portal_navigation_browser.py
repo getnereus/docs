@@ -515,7 +515,8 @@ def test_the_home_screen_follows_the_language(portal_page):
 @pytest.mark.parametrize("scheme", ["dark", "light"])
 def test_a_wide_screen_shows_count_chips_and_the_rows_in_two_columns(portal_page, scheme):
   opened, expect = portal_page
-  page = home(opened([*PRESENTATIONS, USAGE], width=1280, height=800, scheme=scheme))
+  # Below 1280 px: from there the list is the split's left pane, in one column (#1815, slice 2).
+  page = home(opened([*PRESENTATIONS, USAGE], width=1024, height=800, scheme=scheme))
   expect(page.locator("#summary-counts")).to_be_hidden()
   expect(page.locator("#count-chips .chip")).to_have_text(["4 ready", "1 waiting", "1 need attention"])
   expect(page.locator("#see-all")).to_be_hidden()
@@ -1293,3 +1294,131 @@ def test_without_echarts_a_desktop_keeps_the_svg_charts(portal_page):
   expect(page.locator(".detail-echart")).to_have_count(0)
   expect(page.locator("#detail-signals .detail-chart")).to_have_count(4)
   assert ECHARTS in " ".join(page.stand.served)
+
+
+# The desktop's home (#1815, slice 2): from 1280 px the home is a list-detail split, the list on the left and the
+# selected Nereid's detail on the right; the URL names a chosen Nereid, and with none the first needing attention shows.
+OPENBAO = {**DETAIL, "reef": "secrets", "nereid": "openbao"}
+BOTH = {**FLUX, "secrets/openbao": (200, OPENBAO)}
+OPENBAO_ROUTE = "#/nereids/secrets/openbao"
+
+
+def split(page, expect, reef):
+  """The split shows: the home and the detail side by side, the navigation and the app bar kept, the detail of reef."""
+  detail(page)
+  expect(page.locator("#status")).to_be_visible()
+  expect(page.locator("#nereid")).to_be_visible()
+  expect(page.locator("#tabs")).to_be_visible()
+  expect(page.locator("#app-bar")).to_be_visible()
+  expect(page.locator("#detail-reef")).to_have_text(reef)
+  expect(page.locator("#detail-back")).to_be_hidden()
+  left, right = page.locator("#status").bounding_box(), page.locator("#nereid").bounding_box()
+  assert left["width"] == pytest.approx(420, abs=1)
+  assert right["x"] >= left["x"] + left["width"] and left["y"] == pytest.approx(right["y"], abs=1)
+  return page
+
+
+def marked(page):
+  return page.locator('#status [aria-current="true"]').evaluate_all("links => links.map((a) => a.getAttribute('href'))")
+
+
+@pytest.mark.parametrize("scheme", ["dark", "light"])
+def test_a_desktop_home_is_a_list_detail_split_showing_the_first_nereid_needing_attention(portal_page, scheme):
+  opened, expect = portal_page
+  page = home(opened([], width=1440, height=900, scheme=scheme, status=(200, SIGNALLED), detail=BOTH))
+  split(page, expect, "release")
+  # The first pick is not in the URL: a narrower window shows the home.
+  assert at_hash(page) == ""
+  assert marked(page) == [f"{ROUTE}/1h"]
+  # The list keeps its summary, chips and sections, its rows in one column.
+  expect(page.locator("#count-chips .chip")).to_have_count(3)
+  first, second = (page.locator("#good .row").nth(n).bounding_box() for n in (0, 1))
+  assert second["y"] > first["y"] and second["x"] == pytest.approx(first["x"], abs=1)
+  # Slice 1's charts in the pane, in its three columns, and the live bar at the pane's bottom.
+  expect(page.locator(".detail-card .detail-echart canvas")).to_have_count(6)
+  boxes = [page.locator(f'.detail-card[data-key="{key}"]').bounding_box() for key in CARDS[:3]]
+  assert len({round(box["y"]) for box in boxes}) == 1
+  expect(page.locator("#detail-live")).to_be_visible()
+  assert page.locator("#detail-live").bounding_box()["x"] >= page.locator("#nereid").bounding_box()["x"]
+  assert ranges_asked(page) == ["1h"]
+  page.wait_for_timeout(300)
+  if os.environ.get("NEREUS_SHOTS"):
+    page.screenshot(path=str(pathlib.Path(os.environ["NEREUS_SHOTS"]) / ("home-1440.png" if scheme == "dark" else "home-1440-light.png")))
+
+
+def test_a_row_swaps_the_desktop_detail_names_it_in_the_url_and_back_returns(portal_page):
+  opened, expect = portal_page
+  page = home(opened([], width=1440, height=900, status=(200, SIGNALLED), detail=BOTH))
+  split(page, expect, "release")
+  page.locator(f'#good a.row-head[href="{OPENBAO_ROUTE}/1h"]').click()
+  split(page, expect, "secrets")
+  assert at_hash(page) == f"{OPENBAO_ROUTE}/1h"
+  assert marked(page) == [f"{OPENBAO_ROUTE}/1h"]
+  assert page.stand.detail_asked[-1] == "/v1/status/secrets/openbao?range=1h"
+  page.locator(f'#attention a.row-head[href="{ROUTE}/1h"]').click()
+  split(page, expect, "release")
+  assert at_hash(page) == f"{ROUTE}/1h"
+  page.go_back()
+  split(page, expect, "secrets")
+  assert at_hash(page) == f"{OPENBAO_ROUTE}/1h"
+  assert marked(page) == [f"{OPENBAO_ROUTE}/1h"]
+  page.go_back()
+  split(page, expect, "release")
+  assert at_hash(page) == ""
+  # A range change keeps the split and names the range.
+  page.locator('#nereid [data-range="24h"]').click()
+  split(page, expect, "release")
+  assert at_hash(page) == f"{ROUTE}/24h"
+
+
+def test_a_shared_link_opens_the_desktop_split_with_its_nereid_selected(portal_page):
+  opened, expect = portal_page
+  page = opened([], width=1440, height=900, status=(200, SIGNALLED), detail=BOTH, start=f"{OPENBAO_ROUTE}/24h")
+  split(home(page), expect, "secrets")
+  expect(page.locator('#nereid [data-range="24h"]')).to_have_attribute("aria-pressed", "true")
+  assert marked(page) == [f"{OPENBAO_ROUTE}/1h"]
+  # The detail asks for its own Nereid only, never the first pick too.
+  assert {path.split("?")[0] for path in page.stand.detail_asked} == {"/v1/status/secrets/openbao"}
+
+
+def test_across_1280_px_the_split_turns_into_the_detail_or_the_home_and_back(portal_page):
+  opened, expect = portal_page
+  page = opened([], width=1440, height=900, status=(200, SIGNALLED), detail=BOTH, start=f"{OPENBAO_ROUTE}/1h")
+  split(home(page), expect, "secrets")
+  # A chosen Nereid: its whole screen below 1280 px, the split again above.
+  page.set_viewport_size({"width": 1024, "height": 900})
+  expect(page.locator("#status")).to_be_hidden()
+  expect(page.locator("#tabs")).to_be_hidden()
+  expect(page.locator("#detail-back")).to_be_visible()
+  expect(page.locator("#detail-reef")).to_have_text("secrets")
+  page.set_viewport_size({"width": 1440, "height": 900})
+  split(page, expect, "secrets")
+  # The first pick (no route): the home below 1280 px.
+  page.evaluate("history.replaceState(null, '', location.pathname); dispatchEvent(new HashChangeEvent('hashchange'))")
+  split(page, expect, "release")
+  page.set_viewport_size({"width": 412, "height": 915})
+  expect(page.locator("#status")).to_be_visible()
+  expect(page.locator("#nereid")).to_be_hidden()
+  expect(page.locator("#tabs")).to_be_visible()
+  assert at_hash(page) == ""
+
+
+def test_a_phone_s_home_is_unchanged_by_the_split(portal_page):
+  opened, expect = portal_page
+  page = home(opened([], width=412, height=915, status=(200, SIGNALLED), detail=BOTH))
+  page.wait_for_timeout(300)
+  expect(page.locator("#nereid")).to_be_hidden()
+  assert page.stand.detail_asked == []
+  assert marked(page) == []
+  if os.environ.get("NEREUS_SHOTS"):
+    page.screenshot(path=str(pathlib.Path(os.environ["NEREUS_SHOTS"]) / "home-412.png"))
+  page.locator("#see-all").click()
+  page.locator(f'#good a.row-head[href="{OPENBAO_ROUTE}/1h"]').click()
+  detail(page)
+  expect(page.locator("#status")).to_be_hidden()
+  expect(page.locator("#tabs")).to_be_hidden()
+  expect(page.locator("#detail-back")).to_be_visible()
+  page.locator("#detail-back").click()
+  home(page)
+  expect(page.locator("#nereid")).to_be_hidden()
+  assert at_hash(page) == ""
