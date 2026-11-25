@@ -46,7 +46,11 @@ Apply the edge reef and its Nereid `cloudflare` ([Publish at a hostname](edge.md
 nereus edge route create triton --hostname triton.getnereus.dev
 ```
 
-Repeat for `auth` and `portal`.
+Repeat for `auth`, `portal` and `login` (`dns: external`: a new hostname needs `cloudflared tunnel route dns nereus <hostname>` once). The chart's API route answers only at `localhost`; this one serves the API at `portal` and `login` too (#2248):
+
+```bash
+kubectl apply --filename deploy/ingress/nereus-api-public.yaml
+```
 
 `numTrustedProxies: 1` keeps cloudflared's `X-Forwarded-Proto: https`, so Keycloak's issuer stays `https://`. Write the Release `istio-gateway` with `--values-file deploy/ingress/istio-gateway-values.yaml --dry-run --output yaml`, [`nereus release apply`](../../specs/cli/reefs/release.html#release-apply) it, then `kubectl apply --filename deploy/ingress/gateway.yaml`.
 
@@ -61,8 +65,11 @@ nereus mandate apply keycloak \
   --param publicUrl=https://auth.getnereus.dev \
   --param googleSecret=google-oauth-keycloak \
   --param googleUsers=owner@example.com \
-  --param googleAdmins=owner@example.com
+  --param googleAdmins=owner@example.com \
+  --param googleTeam=teammate@example.com
 ```
+
+`googleTeam` is Triton's team; each person then runs `nereus login https://login.getnereus.dev`.
 
 ### 6. Set the portal's address and bring up Triton
 
@@ -107,7 +114,7 @@ From then on your calls take the normal check, and the doctor's count of emergen
 
 ## Check it worked
 
-[`nereus status`](../../specs/cli/core.html#status) shows every reef Ready; `curl` on `https://triton.getnereus.dev/healthz` and `https://portal.getnereus.dev/` answers 200, and the realm `master` answers 404 from outside.
+[`nereus status`](../../specs/cli/core.html#status) shows every reef Ready; `curl` on `https://triton.getnereus.dev/healthz`, `https://portal.getnereus.dev/` and `https://login.getnereus.dev/.well-known/nereus-configuration` answers 200, and the realm `master` answers 404 from outside.
 
 ```bash
 nereus status

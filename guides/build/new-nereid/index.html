@@ -7331,8 +7331,10 @@ Next steps:
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>..............                                                           [100%]
 14 passed in 0.18s
 </code></pre></div>
-<p><code>make nereid-check</code>, part of <code>make test</code>, fails when a Nereid does not pin <code>nereid-sdk</code> at the version of <code>lib/nereid/pyproject.toml</code>, in <code>requirements.txt</code> and in its <code>Dockerfile</code>, or does not import <code>nereid.held</code>.</p>
+<p><code>make nereid-check</code>, part of <code>make test</code>, fails when a Nereid does not pin <code>nereid-sdk</code> at the version of <code>lib/nereid/pyproject.toml</code>, in <code>requirements.txt</code> and in its <code>Dockerfile</code>, or does not import <code>nereid.held</code>, or rewrites a <code>Ready</code> condition's <code>lastTransitionTime</code> (below).</p>
 <p>A Nereid lists its objects through <code>held.actionable(items)</code>, so it never acts on a held object (ADR 0031: no status, no finalizer while the Nereus API's hold is on, #2214). The skeleton does already; <code>scripts/nereid/held-allowlist</code> names the Nereids not adopted yet, a list that only shrinks.</p>
+<p>A Nereid sets each object's <code>Ready</code> condition through <code>operations.ready(item, status, ready, reason, message, now)</code>, which keeps the stored <code>lastTransitionTime</code> while <code>Ready</code>'s status stays the same, so a pass that changes another field never moves it (#2242).</p>
+<p><code>make nereid-check</code> fails on a Nereid that compares statuses without <code>lastTransitionTime</code> (the mark of a status built with <code>now</code>) and does not import <code>nereid.operations</code>; <code>scripts/nereid/ready-allowlist</code> names the ones not adopted yet, a list that only shrinks.</p>
 <h2 id="next">Next<a class="headerlink" href="#next" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../image/">Build a Nereid's image</a>, with the labels that name its reef, and apply it.</li>

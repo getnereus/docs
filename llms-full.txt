@@ -1077,7 +1077,11 @@ Apply the edge reef and its Nereid `cloudflare` ([Publish at a hostname](https:/
 nereus edge route create triton --hostname triton.getnereus.dev
 ```
 
-Repeat for `auth` and `portal`.
+Repeat for `auth`, `portal` and `login` (`dns: external`: a new hostname needs `cloudflared tunnel route dns nereus <hostname>` once). The chart's API route answers only at `localhost`; this one serves the API at `portal` and `login` too (#2248):
+
+```bash
+kubectl apply --filename deploy/ingress/nereus-api-public.yaml
+```
 
 `numTrustedProxies: 1` keeps cloudflared's `X-Forwarded-Proto: https`, so Keycloak's issuer stays `https://`. Write the Release `istio-gateway` with `--values-file deploy/ingress/istio-gateway-values.yaml --dry-run --output yaml`, [`nereus release apply`](https://docs.getnereus.dev/specs/cli/reefs/release.html#release-apply) it, then `kubectl apply --filename deploy/ingress/gateway.yaml`.
 
@@ -1092,8 +1096,11 @@ nereus mandate apply keycloak \
   --param publicUrl=https://auth.getnereus.dev \
   --param googleSecret=google-oauth-keycloak \
   --param googleUsers=owner@example.com \
-  --param googleAdmins=owner@example.com
+  --param googleAdmins=owner@example.com \
+  --param googleTeam=teammate@example.com
 ```
+
+`googleTeam` is Triton's team; each person then runs `nereus login https://login.getnereus.dev`.
 
 ### 6. Set the portal's address and bring up Triton
 
@@ -1138,7 +1145,7 @@ From then on your calls take the normal check, and the doctor's count of emergen
 
 ## Check it worked
 
-[`nereus status`](https://docs.getnereus.dev/specs/cli/core.html#status) shows every reef Ready; `curl` on `https://triton.getnereus.dev/healthz` and `https://portal.getnereus.dev/` answers 200, and the realm `master` answers 404 from outside.
+[`nereus status`](https://docs.getnereus.dev/specs/cli/core.html#status) shows every reef Ready; `curl` on `https://triton.getnereus.dev/healthz`, `https://portal.getnereus.dev/` and `https://login.getnereus.dev/.well-known/nereus-configuration` answers 200, and the realm `master` answers 404 from outside.
 
 ```bash
 nereus status
@@ -4079,9 +4086,13 @@ uv run --project cli --with lib/nereid pytest -q controllers/caddy
 14 passed in 0.18s
 ```
 
-`make nereid-check`, part of `make test`, fails when a Nereid does not pin `nereid-sdk` at the version of `lib/nereid/pyproject.toml`, in `requirements.txt` and in its `Dockerfile`, or does not import `nereid.held`.
+`make nereid-check`, part of `make test`, fails when a Nereid does not pin `nereid-sdk` at the version of `lib/nereid/pyproject.toml`, in `requirements.txt` and in its `Dockerfile`, or does not import `nereid.held`, or rewrites a `Ready` condition's `lastTransitionTime` (below).
 
 A Nereid lists its objects through `held.actionable(items)`, so it never acts on a held object (ADR 0031: no status, no finalizer while the Nereus API's hold is on, #2214). The skeleton does already; `scripts/nereid/held-allowlist` names the Nereids not adopted yet, a list that only shrinks.
+
+A Nereid sets each object's `Ready` condition through `operations.ready(item, status, ready, reason, message, now)`, which keeps the stored `lastTransitionTime` while `Ready`'s status stays the same, so a pass that changes another field never moves it (#2242).
+
+`make nereid-check` fails on a Nereid that compares statuses without `lastTransitionTime` (the mark of a status built with `now`) and does not import `nereid.operations`; `scripts/nereid/ready-allowlist` names the ones not adopted yet, a list that only shrinks.
 
 ## Next
 

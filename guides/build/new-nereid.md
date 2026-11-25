@@ -66,9 +66,13 @@ uv run --project cli --with lib/nereid pytest -q controllers/caddy
 14 passed in 0.18s
 ```
 
-`make nereid-check`, part of `make test`, fails when a Nereid does not pin `nereid-sdk` at the version of `lib/nereid/pyproject.toml`, in `requirements.txt` and in its `Dockerfile`, or does not import `nereid.held`.
+`make nereid-check`, part of `make test`, fails when a Nereid does not pin `nereid-sdk` at the version of `lib/nereid/pyproject.toml`, in `requirements.txt` and in its `Dockerfile`, or does not import `nereid.held`, or rewrites a `Ready` condition's `lastTransitionTime` (below).
 
 A Nereid lists its objects through `held.actionable(items)`, so it never acts on a held object (ADR 0031: no status, no finalizer while the Nereus API's hold is on, #2214). The skeleton does already; `scripts/nereid/held-allowlist` names the Nereids not adopted yet, a list that only shrinks.
+
+A Nereid sets each object's `Ready` condition through `operations.ready(item, status, ready, reason, message, now)`, which keeps the stored `lastTransitionTime` while `Ready`'s status stays the same, so a pass that changes another field never moves it (#2242).
+
+`make nereid-check` fails on a Nereid that compares statuses without `lastTransitionTime` (the mark of a status built with `now`) and does not import `nereid.operations`; `scripts/nereid/ready-allowlist` names the ones not adopted yet, a list that only shrinks.
 
 ## Next
 
