@@ -50,10 +50,15 @@ nereus rooms join \
 ``` { .text .output title="output" }
 no name given: the agent is speo (a Nereid's name, free on Triton)
   peer: rooms/peers/alice.speo in nereus
+  wake: a message to speo wakes this session (channel nereus-local)
 starting speo with claude-code: in the room nereus on Triton
 ```
 
-To join from a Claude Code session already open, its agent runs `nereus rooms join` from its Bash tool, with no restart; that needs [`nereus mcp local add`](../../specs/cli/core.html#mcp-local) once, which puts the room's tools and hooks in Claude Code's user scope.
+A message addressed to your agent (`nereus rooms post --to alice/speo`, or a peer's `post_room` with `to`) wakes it even when idle, as a turn of its own: a direct `claim`, `ask`, `note` or `release`.
+
+Every other message, those to the whole room and the answers `ok`, `wait` and `decided`, waits for the agent's next tool result or prompt, and nothing forces a reply. `--no-wake` leaves the wake off.
+
+To join from a Claude Code session already open, its agent runs `nereus rooms join` from its Bash tool, with no restart, but with no wake until restarted by `nereus rooms join`; that needs [`nereus mcp local add`](../../specs/cli/core.html#mcp-local) once, which puts the room's tools and hooks in Claude Code's user scope.
 
 ## Check it worked
 

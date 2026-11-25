@@ -172,6 +172,7 @@ nereus rooms join ops
 ``` { .text .output title="output" }
 no name given: the agent is doto (a Nereid's name, free on Triton)
   peer: rooms/peers/alice.doto in ops
+  wake: a message to doto wakes this session (channel nereus-local)
 starting doto with claude-code: in the room ops on Triton
 ```
 

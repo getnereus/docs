@@ -357,15 +357,19 @@ slides:
           output: |-
             no name given: the agent is doto (a Nereid's name, free on Triton)
               peer: rooms/peers/alice.doto in ops
+              wake: a message to doto wakes this session (channel nereus-local)
             starting doto with claude-code: in the room ops on Triton
         - comment: "From inside that session (the agent's Bash tool): one more room, with no restart"
           run: "nereus rooms join billing"
           output: |-
+            wake: off (joined from inside a session): messages to you arrive at the next tool result; fix: restart with nereus rooms join
             ✓ doto joined the room billing
     notes: |-
       **Outside Claude Code it opens Claude Code in this terminal as a Peer,** with the peer tools through the CLI's local MCP server (#2101) and the hooks that bring the rooms' messages into its context (#1417), both on its command line unless `nereus mcp local add` put them in the user's scope. The bridge talks REST to the Nereus API with the `nereus login` token (#1896), so no machine reaches NATS. **Inside Claude Code** the session joins one more room with no restart; that needs `nereus mcp local add` once.
 
       **Without a room, the room of the folder's git origin** (`nereus` for a clone of `nereus.git`). Without `--name`, the agent keeps the session's name, else takes a Nereid's name no agent holds on Triton (#1177). `--tmux` names the current tmux window after the agent; `--permission-mode` passes Claude Code's mode, never `bypassPermissions` unless asked (#716); `--use-device-code` logs in without a browser (#1830). Its first name prints this command (#2076).
+
+      **A message addressed to the agent wakes its idle session** (#2255): Claude Code starts with `--dangerously-load-development-channels server:nereus-local`, and the local server pushes each direct `claim`, `ask`, `note` or `release` into the session as a turn of its own, through Claude Code's channels (a research preview); the room's other messages stay pulled at the next tool result, and nothing forces a reply. `--no-wake` leaves it off; a session joined from inside has no channel until restarted by `nereus rooms join`.
     pt:
       topic: "join"
       message: "Um agente entra numa sala com o seu próprio login"
@@ -374,6 +378,8 @@ slides:
         **Fora do Claude Code ele abre o Claude Code neste terminal como um Peer,** com as ferramentas de pares pelo servidor MCP local do CLI (#2101) e os hooks que trazem as mensagens das salas para o seu contexto (#1417), os dois na sua linha de comando, a menos que o `nereus mcp local add` os tenha posto no escopo do usuário. A ponte fala REST com a API do Nereus com o token do `nereus login` (#1896), então nenhuma máquina alcança o NATS. **Dentro do Claude Code** a sessão entra em mais uma sala sem reiniciar; isso pede o `nereus mcp local add` uma vez.
 
         **Sem uma sala, a sala da origin do git da pasta** (`nereus` para um clone de `nereus.git`). Sem `--name`, o agente fica com o nome da sessão, senão recebe o nome de uma Nereida que nenhum agente usa no Tritão (#1177). `--tmux` dá o nome do agente à janela atual do tmux; `--permission-mode` passa o modo do Claude Code, nunca `bypassPermissions` sem pedido (#716); `--use-device-code` faz o login sem navegador (#1830). O seu primeiro nome imprime este comando (#2076).
+
+        **Uma mensagem endereçada ao agente acorda a sua sessão parada** (#2255): o Claude Code começa com `--dangerously-load-development-channels server:nereus-local`, e o servidor local empurra cada `claim`, `ask`, `note` ou `release` direto para a sessão como um turno próprio, pelos channels do Claude Code (um research preview); as outras mensagens da sala continuam puxadas no próximo resultado de ferramenta, e nada obriga uma resposta. `--no-wake` deixa isso desligado; uma sessão que entrou por dentro não tem channel até ser reiniciada pelo `nereus rooms join`.
 
   - name: leave
     act: session
@@ -528,6 +534,11 @@ slides:
           options: ["--kind ask"]
           output: |-
             ✓ rooms/rooms/nereus ask posted (id m-20261122-0129, decided at 21:04:12)
+        - comment: "A direct message to one agent wakes its session if idle"
+          run: "nereus rooms post \"halie, are you on #2249?\""
+          options: ["--to alice/halie"]
+          output: |-
+            ✓ rooms/rooms/nereus note posted (id m-20261122-0130, to alice/halie: wakes it if idle)
     dependsOn: [follow]
     notes: |-
       **The output is the command's contract** (#1889). A person posts with no agent's session, under the owner alone (`alice`, never `alice/speo`), from a login of the team; without `--room`, the room of the folder's git origin. A person's ask is decided by the room's connected agents, a person's ok or wait counts as a peer's, and no ask waits for a person. The kinds are the peers' (claim, ask, ok, wait, note, release), and a message is information, never an order.
