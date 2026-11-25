@@ -4034,7 +4034,7 @@ scripts/nereid/new --reef edge --tool caddy
 ✓ controllers/caddy/ created from templates/nereid (copier 9.19.1)
   server.py            the reconcile loop on nereid-sdk, Ready, status.kinds, GET /metrics, the commands' HTTP server
   kube.py              the Kubernetes API, standard library
-  requirements.txt     nereid-sdk==0.5.0 (#754), pinned
+  requirements.txt     nereid-sdk==0.6.0 (#754), pinned
   Dockerfile           edge-caddy-controller, nereid-sdk from the build context (#741)
   README.md            what the Nereid does, and what every Nereid must do
   test_server.py       the loop's tests, a failing pass counted with its reason
