@@ -968,8 +968,9 @@ def test_blocked_storage_opens_the_list_and_the_toggle_still_works(portal_page):
 @pytest.mark.parametrize("width", [340, 360, 390, 412])
 @pytest.mark.parametrize("locale", ["pt-BR", "en-US"])
 def test_neither_view_nor_the_chips_pass_the_phone_s_edge(portal_page, width, locale):
-  """docs/agent/decks.md, Screens on a phone: the chips and the toggle on one row, both views, measured in both
-  languages at 340 to 412 px: nothing past the screen's edge, no horizontal scroll, no label cut."""
+  """docs/agent/decks.md, Screens on a phone: the chips, the search and the toggle on one row, both views, measured in
+  both languages at 340 to 412 px: nothing past the screen's edge, no horizontal scroll, no label cut, and at least the
+  row's 6 px between each two of them (#2319: Prontos touched the search at 340 px in pt-BR)."""
   opened, expect = portal_page
   page = home(opened([], width=width, locale=locale, status=(200, SIGNALLED)))
   page.locator("#see-all").click()
@@ -980,10 +981,14 @@ def test_neither_view_nor_the_chips_pass_the_phone_s_edge(portal_page, width, lo
     cut: [...document.querySelectorAll('.filter-chip, .card-rate, .red-line')]
       .filter((e) => e.scrollWidth > e.clientWidth + 1).map((e) => e.textContent),
     rows: new Set([...document.querySelectorAll('#status .toolbar > *')].map((e) => { const r = e.getBoundingClientRect(); return Math.round(r.top + r.height / 2); })).size,
+    tight: [...document.querySelectorAll('#status .toolbar .filter-chip, #status .toolbar .search, #status .toolbar .view-toggle')]
+      .map((e) => [e.dataset.filter || e.id, e.getBoundingClientRect()])
+      .flatMap(([name, box], i, all) => i && box.left - all[i - 1][1].right < 5.5 ? [`${all[i - 1][0]}|${name}`] : []),
   })"""
-  assert page.evaluate(measure) == {"scroll": False, "out": [], "cut": [], "rows": 1}
+  fits = {"scroll": False, "out": [], "cut": [], "rows": 1, "tight": []}
+  assert page.evaluate(measure) == fits
   to_grid(page, expect)
-  assert page.evaluate(measure) == {"scroll": False, "out": [], "cut": [], "rows": 1}
+  assert page.evaluate(measure) == fits
   if width == 390 and locale == "en-US":
     shot(page, "signals-list-then-grid-390-en")
 
