@@ -5,6 +5,7 @@ one destination per reef; a reef with several screens shows them as
 primary tabs; a navigation bar at the bottom on a phone, a rail at the side from 600 px, a modal drawer above five
 destinations; a screen's nereus-focus hides it all. Set NEREUS_SHOTS to a folder to keep the screenshots (the PR's).
 Skips when there is no browser."""
+import datetime
 import http.server
 import importlib.machinery
 import importlib.util
@@ -99,7 +100,7 @@ BRUNO = {"sub": "u2", "name": "Bruno Example", "email": "bruno@example.com", "gr
 
 
 class Stand:
-  def __init__(self, items, status=None, person=None, detail=None, missing=()):
+  def __init__(self, items, status=None, person=None, detail=None, missing=(), api=None):
     files = portal.files()
     stand = self
     # Every path asked for, and the portal's files answered 404 as if they failed to load (#1815).
@@ -109,6 +110,8 @@ class Stand:
     self.asked = []
     # A Nereid's screen (#2176): GET /v1/status/<reef>/<nereid>?range=<range>, by "<reef>/<nereid>"; 404 for any other.
     self.details = dict(detail or {})
+    # The Environments (#2304): GET /v1/environment/environments and /v1/environment/workloads, by path; 404 without.
+    self.api = dict(api or {})
     self.detail_asked = []
     by_module = {f"/reefs/{item['reef']}/ui/{item['module']}": item for item in items}
 
@@ -152,6 +155,10 @@ class Stand:
           self.secure(code, "application/json", json.dumps(body).encode())
         elif path.startswith("/v1/status/"):
           self.detail(path)
+        elif path in stand.api:
+          stand.asked.append(path)
+          code, body = stand.api[path]
+          self.secure(code, "application/json", json.dumps(body).encode())
         elif path == "/v1/screens":
           self.secure(200, "application/json", json.dumps({"items": items}).encode())
         elif path in by_module:
@@ -193,8 +200,8 @@ def portal_page():
     browser = chromium(playwright)
 
     def opened(items, width=390, height=844, scheme="dark", locale="en-US", status=None, touch=False, clock=False, person=None, script=None,
-               detail=None, start="", missing=()):
-      stand = Stand(items, status, person, detail, missing)
+               detail=None, start="", missing=(), api=None):
+      stand = Stand(items, status, person, detail, missing, api)
       stands.append(stand)
       context = browser.new_context(viewport={"width": width, "height": height}, color_scheme=scheme, locale=locale, has_touch=touch)
       page = context.new_page()
@@ -212,7 +219,8 @@ def portal_page():
         page.locator("#nereid:not([hidden])").wait_for()
       else:
         page.locator("#tabs:not([hidden])").wait_for()
-        page.wait_for_function(f"document.querySelectorAll('#tabs [data-tab]').length > {1 if items else 0}")
+        # A locator's wait polls from Python: the portal's CSP refuses wait_for_function's string, an eval (#2309).
+        page.locator("#tabs [data-tab]").nth(1 if items else 0).wait_for(state="attached")
       checks.append((page, errors, outside))
       return page
 
@@ -971,7 +979,7 @@ def test_neither_view_nor_the_chips_pass_the_phone_s_edge(portal_page, width, lo
       .map((e) => e.id || e.getAttribute('class') || e.tagName),
     cut: [...document.querySelectorAll('.filter-chip, .card-rate, .red-line')]
       .filter((e) => e.scrollWidth > e.clientWidth + 1).map((e) => e.textContent),
-    rows: new Set([...document.querySelectorAll('.toolbar > *')].map((e) => { const r = e.getBoundingClientRect(); return Math.round(r.top + r.height / 2); })).size,
+    rows: new Set([...document.querySelectorAll('#status .toolbar > *')].map((e) => { const r = e.getBoundingClientRect(); return Math.round(r.top + r.height / 2); })).size,
   })"""
   assert page.evaluate(measure) == {"scroll": False, "out": [], "cut": [], "rows": 1}
   to_grid(page, expect)
@@ -1515,3 +1523,135 @@ def test_a_phone_s_home_is_unchanged_by_the_split(portal_page):
   home(page)
   expect(page.locator("#nereid")).to_be_hidden()
   assert at_hash(page) == ""
+
+
+# The Environments (#2304, spec 0014): a destination once the API answers for the environment reef; the list, problems
+# first, with the chips and the search; one Environment with its Workloads in a list or a grid, the search and the toggle.
+def environment(name, phase="Ready", owner=("Project", "shop"), **status):
+  conditions = [] if phase == "Ready" else [{"type": "Ready", "status": "False", "reason": "Provisioning", "message": status.pop("message", "")}]
+  return {"metadata": {"name": name}, "spec": {"owner": {"kind": owner[0], "name": owner[1]}},
+          "status": {"phase": phase, "nereid": "vcluster", "conditions": conditions, **status}}
+
+
+def workload(env, name, phase="Ready", message="", version="1.0.0"):
+  return {"environment": env, "name": name, "phase": phase, "attention": phase != "Ready", "reason": "", "message": message,
+          "version": version, "namespace": env, "target": env, "owner": {"kind": "Project", "name": "shop"}}
+
+
+IN_TWO_DAYS = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=2, minutes=5)).strftime("%Y-%m-%dT%H:%M:%SZ")
+ENVIRONMENTS = {
+  "/v1/environment/environments": (200, {"items": [
+    environment("shop-dev"), environment("pr-2291", "Progressing", expiresAt=IN_TWO_DAYS, message="the vcluster starts"),
+    environment("staging"), environment("billing-dev", owner=("Organization", "acme")),
+  ]}),
+  "/v1/environment/workloads": (200, {"items": [
+    workload("shop-dev", "checkout", "Failed", "CrashLoopBackOff: 1 of 2 pods ready", "1.4.2"),
+    workload("pr-2291", "storefront", "Progressing", "1 of 2 pods ready"),
+    workload("shop-dev", "storefront", version="2.0.1"), workload("shop-dev", "cart"), workload("shop-dev", "search-api"),
+    workload("staging", "storefront"),
+  ]}),
+}
+
+
+def environments(page):
+  page.locator('#tabs [data-tab="environments"]:not([hidden])').click()
+  page.locator("#env-rows:not([hidden])").wait_for()
+  return page
+
+
+def test_without_the_environment_reef_there_is_no_environments_destination(portal_page):
+  opened, expect = portal_page
+  page = home(opened([]))
+  expect(page.locator('#tabs [data-tab="environments"]')).to_be_hidden()
+
+
+@pytest.mark.parametrize("scheme", ["dark", "light"])
+def test_the_environments_list_shows_problems_first_and_finds_one_by_name(portal_page, scheme):
+  opened, expect = portal_page
+  page = environments(home(opened([], width=360, scheme=scheme, api=ENVIRONMENTS)))
+  expect(page.locator("#app-title")).to_have_text("Environments")
+  expect(page.locator("#env-summary-title")).to_have_text("2 need attention")
+  expect(page.locator("#env-summary-counts")).to_have_text("4 environments · 6 workloads")
+  expect(page.locator("#env-attention .headline")).to_have_text(["shop-dev", "pr-2291"])
+  expect(page.locator("#env-attention .row-meta")).to_have_text(["4 workloads · 1 needs attention", "1 workload · 1 needs attention · expires in 2d"])
+  expect(page.locator("#env-good .headline")).to_have_text(["staging", "billing-dev"])
+  expect(page.locator("#env-good .supporting")).to_have_text(["project/shop", "organization/acme"])
+  expect(page.locator("#env-rows .view-toggle")).to_have_count(0)
+  shot(page, f"environments-list-{scheme}")
+  page.locator("#env-rows .search-open").click()
+  page.locator("#env-rows .search-text").fill("DEV")
+  expect(page.locator("#env-rows .headline")).to_have_text(["shop-dev", "billing-dev"])
+  expect(page.locator("#env-rows .search-count")).to_have_text("2 of 4 Environments · “DEV”")
+  page.locator("#env-rows .filter-chip[data-filter='ready']").evaluate("(chip) => chip.click()")
+  expect(page.locator("#env-rows .headline")).to_have_text(["billing-dev"])
+  shot(page, f"environments-search-{scheme}")
+  # The text lives in the screen only: the home again empties it; the chip stays, as on the home.
+  page.locator('#tabs [data-tab="status"]').click()
+  environments(page)
+  expect(page.locator("#env-rows .search-text")).to_be_hidden()
+  expect(page.locator("#env-rows .headline")).to_have_text(["staging", "billing-dev"])
+
+
+@pytest.mark.parametrize("scheme", ["dark", "light"])
+def test_one_environment_shows_its_workloads_in_a_list_or_a_grid_kept_apart_from_the_home(portal_page, scheme):
+  opened, expect = portal_page
+  page = environments(home(opened([], width=360, scheme=scheme, api=ENVIRONMENTS)))
+  page.locator("#env-attention a.row-head", has_text="shop-dev").click()
+  expect(page).to_have_url(re.compile(r"#/environments/shop-dev$"))
+  expect(page.locator("#env-name")).to_have_text("shop-dev")
+  expect(page.locator("#env-owner")).to_have_text("project/shop · Nereid vcluster")
+  expect(page.locator("#wl-title")).to_have_text("Workloads · 4")
+  expect(page.locator("#wl-attention .headline")).to_have_text(["checkout"])
+  expect(page.locator("#wl-attention .supporting")).to_have_text(["1.4.2 · CrashLoopBackOff: 1 of 2 pods ready"])
+  expect(page.locator("#wl-good .headline")).to_have_text(["storefront", "cart", "search-api"])
+  shot(page, f"environment-workloads-{scheme}")
+  page.locator("#wl-view-toggle").click()
+  expect(page.locator("#wl-grid .card-reef")).to_have_text(["checkout", "storefront", "cart", "search-api"])
+  expect(page.locator("#wl-view-toggle")).to_have_attribute("data-view", "list")
+  assert page.evaluate("localStorage.getItem('nereus.view.workloads')") == "grid"
+  assert page.evaluate("localStorage.getItem('nereus.view')") is None
+  shot(page, f"environment-grid-{scheme}")
+  page.locator("#wl-body .search-open").click()
+  page.locator("#wl-body .search-text").fill("art")
+  expect(page.locator("#wl-grid .card-reef")).to_have_text(["cart"])
+  expect(page.locator("#wl-body .search-count")).to_have_text("1 of 4 Workloads · “art”")
+  page.locator("#env-back").click()
+  expect(page).to_have_url(re.compile(r"#/environments$"))
+  expect(page.locator("#env-list")).to_be_visible()
+
+
+def test_an_environment_in_progress_says_why_and_when_it_expires_and_one_unknown_says_so(portal_page):
+  opened, expect = portal_page
+  page = environments(home(opened([], api=ENVIRONMENTS)))
+  page.locator("#env-attention a.row-head", has_text="pr-2291").click()
+  expect(page.locator("#env-reason")).to_have_text("the vcluster starts")
+  expect(page.locator("#env-expiry")).to_have_text("Expires in 2d, with its workloads")
+  page.evaluate("location.hash = '#/environments/nobody'")
+  expect(page.locator("#env-missing")).to_have_text("Environment nobody is not among the ones you see.")
+  expect(page.locator("#wl-rows")).to_be_hidden()
+
+
+def test_an_environment_with_nothing_delivered_says_so(portal_page):
+  opened, expect = portal_page
+  page = environments(home(opened([], locale="pt-BR", api=ENVIRONMENTS)))
+  page.locator("#env-good a.row-head", has_text="billing-dev").click()
+  expect(page.locator("#wl-title")).to_have_text("Workloads · 0")
+  expect(page.locator("#wl-empty")).to_be_visible()
+  expect(page.locator("#wl-body")).to_be_hidden()
+
+
+@pytest.mark.parametrize("width", [340, 360, 390, 412])
+@pytest.mark.parametrize("locale", ["pt-BR", "en-US"])
+def test_nothing_on_the_environments_passes_the_phone_s_edge(portal_page, width, locale):
+  opened, expect = portal_page
+  page = environments(home(opened([], width=width, locale=locale, api=ENVIRONMENTS)))
+  edge = """() => ({
+    scroll: document.documentElement.scrollWidth > innerWidth,
+    out: [...document.querySelectorAll('#environments *, #app-bar *')].filter((e) => !e.closest('[hidden]') && e.getBoundingClientRect().right > innerWidth + 0.5)
+      .map((e) => e.id || e.className || e.tagName),
+  })"""
+  assert page.evaluate(edge) == {"scroll": False, "out": []}
+  page.locator("#env-attention a.row-head").first.click()
+  page.locator("#env-one:not([hidden])").wait_for()
+  assert page.evaluate(edge) == {"scroll": False, "out": []}
+  shot(page, f"environment-{width}-{locale}")
