@@ -14,6 +14,7 @@ Run one check alone with `make <name>`. Its record holds the result, the time, h
 | `docs-build` | the docs lint, then a strict build of the site | `docs-build.json` |
 | `shellcheck` | shellcheck on every bash script of the repository | `shellcheck.json` |
 | `kubeconfig-ban` | no kubeconfig access in the CLI outside `nereus init`, against an allowlist that only shrinks | `kubeconfig-ban.json` |
+| `mcp-coverage` | every reef kind readable through the MCP server's generic tools (a list route on the Nereus API), against an allowlist that only shrinks (#2294) | `mcp-coverage.json` |
 
 ## Before a pull request
 

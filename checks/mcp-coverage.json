@@ -1,0 +1,12 @@
+{
+  "name": "mcp-coverage",
+  "command": "make --no-print-directory mcp-coverage",
+  "result": "pass",
+  "exit": 0,
+  "seconds": 2,
+  "passed": 0,
+  "failed": 0,
+  "failure": null,
+  "commit": "87c809c0+",
+  "started": "2026-11-26T05:20:40Z"
+}
