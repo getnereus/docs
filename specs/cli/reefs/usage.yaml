@@ -50,6 +50,30 @@ slides:
       notes: |-
         **A API calcula os números a cada leitura** (`usage_rules.figures`): a previsão no reset (`used × janela / tempo decorrido`, escondida nas primeiras 6 horas da janela), a sua palavra de ritmo (`push` abaixo de 70%, `steady` até 95%, `slow` acima), a meta de hoje e o plano para os dias que faltam, cortados no fuso da janela. **Uma janela depois do seu reset não tem números** até uma leitura nova: ela diz `reset`.
 
+  - name: accounts
+    act: opening
+    topic: "person and account"
+    message: "Each person's Anthropic account keeps its own window"
+    accent: "its own window"
+    screen:
+      - "**The key is the person and the account** (#1630): one person logs in with a personal account and a company one, each with its own reset"
+      - "**Nothing new to type:** the CLI sends the account Claude Code is logged in with, and `get` shows that one"
+      - "**Open to every person:** each token reads and writes only its own windows"
+      - "**The local cache keeps one folder per account:** switching accounts keeps both"
+    notes: |-
+      **The account** is read from Claude Code's own file (`$CLAUDE_CONFIG_DIR/.claude.json`, else `~/.claude.json`, its `oauthAccount`): its id, hashed into a twelve-digit key that names no one, and its e-mail, shown in the person's own `list` (an ACCOUNT column appears once there are two accounts). `NEREUS_USAGE_ACCOUNT` sets the key on a machine with no Claude Code login. **The API** takes the person from the token, never from the body; a read with `?account=<key>` answers that account's window, a read without one the person's window read last (the portal). The object is named `weekly-<hash of person and account>`, its spec saying the window, the person, the account and its e-mail. **A window kept before #1630** is taken over by the first person who reports to it, so its days stay. **The cache:** `~/.local/state/nereus/usage/<key>/weekly.json`, with `usage/weekly.json` a link to the account logged in now, the file the status line reads.
+    pt:
+      topic: "pessoa e conta"
+      message: "Cada conta Anthropic de uma pessoa guarda a sua janela"
+      accent: "a sua janela"
+      screen:
+        - "**A chave é a pessoa e a conta** (#1630): uma pessoa entra com uma conta pessoal e uma da empresa, cada uma com o seu reset"
+        - "**Nada novo para digitar:** a CLI manda a conta com que o Claude Code está logado, e o `get` mostra essa"
+        - "**Aberto a toda pessoa:** cada token lê e escreve só as suas janelas"
+        - "**O cache local guarda uma pasta por conta:** trocar de conta mantém as duas"
+      notes: |-
+        **A conta** vem do arquivo do próprio Claude Code (`$CLAUDE_CONFIG_DIR/.claude.json`, senão `~/.claude.json`, o seu `oauthAccount`): o id, num hash de doze dígitos que não identifica ninguém, e o e-mail, mostrado no `list` da própria pessoa (uma coluna ACCOUNT aparece quando há duas contas). `NEREUS_USAGE_ACCOUNT` define a chave numa máquina sem login do Claude Code. **A API** pega a pessoa do token, nunca do corpo; uma leitura com `?account=<chave>` responde a janela dessa conta, uma sem ela a janela da pessoa lida por último (o portal). O objeto se chama `weekly-<hash da pessoa e da conta>`, e o spec diz a janela, a pessoa, a conta e o e-mail. **Uma janela guardada antes da #1630** fica com a primeira pessoa que reportar nela, para os dias não se perderem. **O cache:** `~/.local/state/nereus/usage/<chave>/weekly.json`, com `usage/weekly.json` um link para a conta logada agora, o arquivo que a status line lê.
+
   - name: usage-report
     act: window
     topic: "usage report"

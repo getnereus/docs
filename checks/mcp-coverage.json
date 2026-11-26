@@ -3,10 +3,10 @@
   "command": "make --no-print-directory mcp-coverage",
   "result": "pass",
   "exit": 0,
-  "seconds": 5,
+  "seconds": 2,
   "passed": 0,
   "failed": 0,
   "failure": null,
-  "commit": "ead365a9",
-  "started": "2026-11-26T07:34:23Z"
+  "commit": "019c6ba3",
+  "started": "2026-11-26T07:16:23Z"
 }
