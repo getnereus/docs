@@ -48,7 +48,7 @@ Twenty-five pillars, in the owner's words:
 - the Nereus API is the one door, and it cannot lie
 - the same quality for fewer tokens
 - simple on the surface, consistent underneath
-- every reef and every command is also an MCP tool
+- whatever the CLI reaches, MCP reaches
 - no single control point
 - an experience that works becomes an exploration of a possible feature
 
@@ -195,11 +195,13 @@ What a person types first is the familiar, welcoming form; what it reaches under
 
 Learn more: "Standardization is a compounding floor, not a ceiling on what is possible" (*Thinking in Platforms*, p. 59; [Thinking in platforms](thinking-in-platforms.md)).
 
-### Every reef and every command is also an MCP tool
+### Whatever the CLI reaches, MCP reaches
 
-A person reaches the platform from the CLI; an agent or a chat client reaches it, as that person, through the MCP server of the Nereus API (`nereus mcp`, ADR 0029). So every new reef and every new CLI command also ships as tools of that server, in the same change: each tool runs the API route its command calls, as the person, under the same authorization, and the instance and the person choose which tools are on (owner, 2026-11-26).
+Everything a person can do from the CLI, an agent can do as that person through the MCP server of the Nereus API (`nereus mcp`, ADR 0029). Parity is of capability, not of commands: a few generic tools read every kind of every reef, and each reef declares the tools for what people come to it to do. A tool is designed for a goal, never generated from a command or a route (owner, 2026-11-26).
 
-Only what means nothing away from the person's machine stays CLI-only: logging in, bootstrapping an instance, the CLI's own settings. Each such command is named in the exceptions of a check, planned with this pillar, that compares the CLI's commands with the tools and fails on a command with neither; today's gaps go to a ratchet that only shrinks.
+Deterministic first: a check, `mcp-coverage` (#2294 for reads, #2295 for writes), proves that every kind is reachable and that every command that changes something is covered by a tool, kept CLI-only with a reason, or listed in a ratchet that only shrinks. It proves someone decided; the tool's design stays a judgement.
+
+Learn more: [Writing effective tools for AI agents](https://www.anthropic.com/engineering/writing-tools-for-agents) (Anthropic, 2025): consolidate into goal-shaped tools instead of wrapping endpoints.
 
 ### An experience that works becomes an exploration of a possible feature
 

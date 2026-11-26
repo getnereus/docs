@@ -4491,10 +4491,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#every-reef-and-every-command-is-also-an-mcp-tool" class="md-nav__link">
+  <a href="#whatever-the-cli-reaches-mcp-reaches" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Every reef and every command is also an MCP tool
+        Whatever the CLI reaches, MCP reaches
       
     </span>
   </a>
@@ -7593,10 +7593,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#every-reef-and-every-command-is-also-an-mcp-tool" class="md-nav__link">
+  <a href="#whatever-the-cli-reaches-mcp-reaches" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Every reef and every command is also an MCP tool
+        Whatever the CLI reaches, MCP reaches
       
     </span>
   </a>
@@ -7712,7 +7712,7 @@
 <li>the Nereus API is the one door, and it cannot lie</li>
 <li>the same quality for fewer tokens</li>
 <li>simple on the surface, consistent underneath</li>
-<li>every reef and every command is also an MCP tool</li>
+<li>whatever the CLI reaches, MCP reaches</li>
 <li>no single control point</li>
 <li>an experience that works becomes an exploration of a possible feature</li>
 </ul>
@@ -7796,9 +7796,10 @@
 <h3 id="simple-on-the-surface-consistent-underneath">Simple on the surface, consistent underneath<a class="headerlink" href="#simple-on-the-surface-consistent-underneath" title="Permanent link">&para;</a></h3>
 <p>What a person types first is the familiar, welcoming form; what it reaches underneath behaves like everything else in the platform. The root form <code>nereus invitation create</code> is the familiar one, and underneath the invitation is a kind of the <code>authentication</code> reef, with the same verbs, output and errors as every other noun (spec 0007, ADR 0013).</p>
 <p>Learn more: "Standardization is a compounding floor, not a ceiling on what is possible" (<em>Thinking in Platforms</em>, p. 59; <a href="../thinking-in-platforms/">Thinking in platforms</a>).</p>
-<h3 id="every-reef-and-every-command-is-also-an-mcp-tool">Every reef and every command is also an MCP tool<a class="headerlink" href="#every-reef-and-every-command-is-also-an-mcp-tool" title="Permanent link">&para;</a></h3>
-<p>A person reaches the platform from the CLI; an agent or a chat client reaches it, as that person, through the MCP server of the Nereus API (<code>nereus mcp</code>, ADR 0029). So every new reef and every new CLI command also ships as tools of that server, in the same change: each tool runs the API route its command calls, as the person, under the same authorization, and the instance and the person choose which tools are on (owner, 2026-11-26).</p>
-<p>Only what means nothing away from the person's machine stays CLI-only: logging in, bootstrapping an instance, the CLI's own settings. Each such command is named in the exceptions of a check, planned with this pillar, that compares the CLI's commands with the tools and fails on a command with neither; today's gaps go to a ratchet that only shrinks.</p>
+<h3 id="whatever-the-cli-reaches-mcp-reaches">Whatever the CLI reaches, MCP reaches<a class="headerlink" href="#whatever-the-cli-reaches-mcp-reaches" title="Permanent link">&para;</a></h3>
+<p>Everything a person can do from the CLI, an agent can do as that person through the MCP server of the Nereus API (<code>nereus mcp</code>, ADR 0029). Parity is of capability, not of commands: a few generic tools read every kind of every reef, and each reef declares the tools for what people come to it to do. A tool is designed for a goal, never generated from a command or a route (owner, 2026-11-26).</p>
+<p>Deterministic first: a check, <code>mcp-coverage</code> (#2294 for reads, #2295 for writes), proves that every kind is reachable and that every command that changes something is covered by a tool, kept CLI-only with a reason, or listed in a ratchet that only shrinks. It proves someone decided; the tool's design stays a judgement.</p>
+<p>Learn more: <a href="https://www.anthropic.com/engineering/writing-tools-for-agents">Writing effective tools for AI agents</a> (Anthropic, 2025): consolidate into goal-shaped tools instead of wrapping endpoints.</p>
 <h3 id="an-experience-that-works-becomes-an-exploration-of-a-possible-feature">An experience that works becomes an exploration of a possible feature<a class="headerlink" href="#an-experience-that-works-becomes-an-exploration-of-a-possible-feature" title="Permanent link">&para;</a></h3>
 <p>When something done by hand works, the project asks whether it could be a Nereus feature, and records the exploration as an issue, with what happened and what it taught. It is an exploration, not a commitment: the owner's triage decides whether it goes on. Coordinating six sessions by hand to bring their work to <code>main</code> became #956 (an agents' merge queue in Triton).</p>
 <h3 id="no-single-control-point">No single control point<a class="headerlink" href="#no-single-control-point" title="Permanent link">&para;</a></h3>
