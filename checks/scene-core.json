@@ -3,10 +3,10 @@
   "command": "test/scene-core",
   "result": "pass",
   "exit": 0,
-  "seconds": 1491,
+  "seconds": 1529,
   "passed": 336,
   "failed": 0,
   "failure": null,
-  "commit": "b1f11d1c",
-  "started": "2026-11-26T06:27:05Z"
+  "commit": "d6f24e6e",
+  "started": "2026-11-26T05:32:52Z"
 }

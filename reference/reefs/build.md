@@ -42,16 +42,17 @@ nereus build get hello-1
 ```
 
 ``` { .text .output title="output" }
-Name:      hello-1
-Workload:  hello
-Commit:    a1b2c3d4e5f60718293a4b5c6d7e8f9012345678
-Owner:     -
-Mandate:   -
-Nereid:    buildkit
-Phase:     Succeeded
-Image:     localhost:31874/hello:hello-1
-Digest:    sha256:3517762d3517762d3517762d3517762d3517762d3517762d3517762d3517762d
-Job:       hello-1
+Name:          hello-1
+Workload:      hello
+Commit:        a1b2c3d4e5f60718293a4b5c6d7e8f9012345678
+Organization:  -
+Project:       -
+Mandate:       -
+Nereid:        buildkit
+Phase:         Succeeded
+Image:         localhost:31874/hello:hello-1
+Digest:        sha256:3517762d3517762d3517762d3517762d3517762d3517762d3517762d3517762d
+Job:           hello-1
 ```
 
 ### build-list
@@ -138,16 +139,17 @@ nereus build trigger get triton
 ```
 
 ``` { .text .output title="output" }
-Name:        triton
-Workload:    triton
-Owner:       project/triton
-Mandate:     -
-Nereid:      buildkit
-Mirror:      nereus
-Branch:      main
-Commit:      a1b2c3d4e5f60718293a4b5c6d7e8f9012345678
-Last Build:  triton-a1b2c3d
-Status:      Ready
+Name:          triton
+Workload:      triton
+Organization:  getnereus
+Project:       nereus/triton
+Mandate:       -
+Nereid:        buildkit
+Mirror:        nereus
+Branch:        main
+Commit:        a1b2c3d4e5f60718293a4b5c6d7e8f9012345678
+Last Build:    triton-a1b2c3d
+Status:        Ready
 ```
 
 ### trigger-delete

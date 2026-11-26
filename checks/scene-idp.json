@@ -3,10 +3,10 @@
   "command": "test/scene-idp",
   "result": "pass",
   "exit": 0,
-  "seconds": 995,
-  "passed": 50,
+  "seconds": 972,
+  "passed": 51,
   "failed": 0,
   "failure": null,
-  "commit": "75ec0dc4",
-  "started": "2026-11-21T16:15:29Z"
+  "commit": "d6f24e6e",
+  "started": "2026-11-26T05:58:21Z"
 }
