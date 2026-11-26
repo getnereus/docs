@@ -40,23 +40,25 @@ nereus login --initial-admin
 
 ### 4. Bring up the tunnel and trust it at the ingress gateway
 
-Apply the edge reef and its Nereid `cloudflare` ([Publish at a hostname](edge.md)), keep the credentials file as the secret `edge/cloudflare-tunnel`, then create the Mandate with `--param tunnel=nereus --param credentialsSecret=edge/cloudflare-tunnel --default`. Create the three routes at once: until a Route exists, the tunnel answers 404.
+Apply the edge reef and its Nereid `cloudflare` ([Publish at a hostname](edge.md)), keep the credentials file as `edge/cloudflare-tunnel` and an API token (DNS Edit on the zone, Tunnel Read) as `edge/cloudflare-token`, then create the Mandate with `--param tunnel=nereus --param credentialsSecret=edge/cloudflare-tunnel --param apiTokenSecret=edge/cloudflare-token --default`. Create the routes at once.
 
 ```bash
 nereus edge route create triton --hostname triton.getnereus.dev
 ```
 
-Repeat for `auth`, `portal` and `login` (`dns: external`: a new hostname needs `cloudflared tunnel route dns nereus <hostname>` once). The chart's API route answers only at `localhost`; this one serves the API at `portal` and `login` too (#2248):
+Repeat for `auth`, `portal` and `api`; the Nereid makes each CNAME. The chart's API route answers only at `localhost`; this one adds `portal` and `api`:
 
 ```bash
 kubectl apply --filename deploy/ingress/nereus-api-public.yaml
 ```
 
-Give the Installation its public address instead of `http://localhost:8080` (#2291):
+Give the Installation its public address (#2291):
 
 ```bash
-nereus config installation set --public-url https://login.getnereus.dev
+nereus config installation set --public-url https://api.getnereus.dev
 ```
+
+The CLI and the MCP then use `api.` (#2248).
 
 `numTrustedProxies: 1` keeps cloudflared's `X-Forwarded-Proto: https`, so Keycloak's issuer stays `https://`. Write the Release `istio-gateway` with `--values-file deploy/ingress/istio-gateway-values.yaml --dry-run --output yaml`, [`nereus release apply`](../../specs/cli/reefs/release.html#release-apply) it, then `kubectl apply --filename deploy/ingress/gateway.yaml`.
 
@@ -75,7 +77,7 @@ nereus mandate apply keycloak \
   --param googleTeam=teammate@example.com
 ```
 
-`googleTeam` is Triton's team; each person then runs `nereus login https://login.getnereus.dev`.
+`googleTeam` is Triton's team; each person then runs `nereus login https://api.getnereus.dev`.
 
 ### 6. Set the portal's address and bring up Triton
 
@@ -120,7 +122,7 @@ From then on your calls take the normal check, and the doctor's count of emergen
 
 ## Check it worked
 
-[`nereus status`](../../specs/cli/core.html#status) shows every reef Ready; `curl` on `https://triton.getnereus.dev/healthz`, `https://portal.getnereus.dev/` and `https://login.getnereus.dev/.well-known/nereus-configuration` answers 200, and the realm `master` answers 404 from outside.
+[`nereus status`](../../specs/cli/core.html#status) shows every reef Ready; `curl` on `https://triton.getnereus.dev/healthz`, `https://portal.getnereus.dev/` and `https://api.getnereus.dev/.well-known/nereus-configuration` answers 200, and the realm `master` answers 404 from outside.
 
 ```bash
 nereus status

@@ -7360,15 +7360,16 @@
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>login<span class="w"> </span>--initial-admin
 </code></pre></div>
 <h3 id="4-bring-up-the-tunnel-and-trust-it-at-the-ingress-gateway">4. Bring up the tunnel and trust it at the ingress gateway<a class="headerlink" href="#4-bring-up-the-tunnel-and-trust-it-at-the-ingress-gateway" title="Permanent link">&para;</a></h3>
-<p>Apply the edge reef and its Nereid <code>cloudflare</code> (<a href="../edge/">Publish at a hostname</a>), keep the credentials file as the secret <code>edge/cloudflare-tunnel</code>, then create the Mandate with <code>--param tunnel=nereus --param credentialsSecret=edge/cloudflare-tunnel --default</code>. Create the three routes at once: until a Route exists, the tunnel answers 404.</p>
+<p>Apply the edge reef and its Nereid <code>cloudflare</code> (<a href="../edge/">Publish at a hostname</a>), keep the credentials file as <code>edge/cloudflare-tunnel</code> and an API token (DNS Edit on the zone, Tunnel Read) as <code>edge/cloudflare-token</code>, then create the Mandate with <code>--param tunnel=nereus --param credentialsSecret=edge/cloudflare-tunnel --param apiTokenSecret=edge/cloudflare-token --default</code>. Create the routes at once.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>edge<span class="w"> </span>route<span class="w"> </span>create<span class="w"> </span>triton<span class="w"> </span>--hostname<span class="w"> </span>triton.getnereus.dev
 </code></pre></div>
-<p>Repeat for <code>auth</code>, <code>portal</code> and <code>login</code> (<code>dns: external</code>: a new hostname needs <code>cloudflared tunnel route dns nereus &lt;hostname&gt;</code> once). The chart's API route answers only at <code>localhost</code>; this one serves the API at <code>portal</code> and <code>login</code> too (#2248):</p>
+<p>Repeat for <code>auth</code>, <code>portal</code> and <code>api</code>; the Nereid makes each CNAME. The chart's API route answers only at <code>localhost</code>; this one adds <code>portal</code> and <code>api</code>:</p>
 <div class="language-bash highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--filename<span class="w"> </span>deploy/ingress/nereus-api-public.yaml
 </code></pre></div>
-<p>Give the Installation its public address instead of <code>http://localhost:8080</code> (#2291):</p>
-<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>config<span class="w"> </span>installation<span class="w"> </span><span class="nb">set</span><span class="w"> </span>--public-url<span class="w"> </span>https://login.getnereus.dev
+<p>Give the Installation its public address (#2291):</p>
+<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>config<span class="w"> </span>installation<span class="w"> </span><span class="nb">set</span><span class="w"> </span>--public-url<span class="w"> </span>https://api.getnereus.dev
 </code></pre></div>
+<p>The CLI and the MCP then use <code>api.</code> (#2248).</p>
 <p><code>numTrustedProxies: 1</code> keeps cloudflared's <code>X-Forwarded-Proto: https</code>, so Keycloak's issuer stays <code>https://</code>. Write the Release <code>istio-gateway</code> with <code>--values-file deploy/ingress/istio-gateway-values.yaml --dry-run --output yaml</code>, <a href="../../../specs/cli/reefs/release.html#release-apply"><code>nereus release apply</code></a> it, then <code>kubectl apply --filename deploy/ingress/gateway.yaml</code>.</p>
 <h3 id="5-put-google-in-the-realm">5. Put Google in the realm<a class="headerlink" href="#5-put-google-in-the-realm" title="Permanent link">&para;</a></h3>
 <p>Only once the tunnel answers. Source the env file, keep the pair as the secret <code>google-oauth-keycloak</code>, then apply the Mandate; <code>mandate apply</code> replaces every param, so all go together. Then <code>nereus logout</code> and <code>nereus login</code> at the public realm.</p>
@@ -7381,7 +7382,7 @@
 <span class="w">  </span>--param<span class="w"> </span><span class="nv">googleAdmins</span><span class="o">=</span>owner@example.com<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--param<span class="w"> </span><span class="nv">googleTeam</span><span class="o">=</span>teammate@example.com
 </code></pre></div>
-<p><code>googleTeam</code> is Triton's team; each person then runs <code>nereus login https://login.getnereus.dev</code>.</p>
+<p><code>googleTeam</code> is Triton's team; each person then runs <code>nereus login https://api.getnereus.dev</code>.</p>
 <h3 id="6-set-the-portals-address-and-bring-up-triton">6. Set the portal's address and bring up Triton<a class="headerlink" href="#6-set-the-portals-address-and-bring-up-triton" title="Permanent link">&para;</a></h3>
 <p><a href="../../../specs/cli/core.html#mandate-apply"><code>nereus mandate apply</code></a> <code>nereus-portal</code> with <code>--param publicUrl=https://portal.getnereus.dev</code>.</p>
 <p>Then the Mandate <code>messaging-nats</code> is the messaging reef's default with no match (<code>--default</code>, no <code>--match</code>), so it holds the Rooms' Topics, which name no engine (ADR 0030).</p>
@@ -7408,7 +7409,7 @@ yes: authorization/bindings/owner-admin gives administrator to user/owner at the
 </code></pre></div>
 <p>From then on your calls take the normal check, and the doctor's count of emergency-exit passes stops growing; its warning goes when the API restarts. You stay in <code>nereus-admins</code>, so the exit is still there for an emergency.</p>
 <h2 id="check-it-worked">Check it worked<a class="headerlink" href="#check-it-worked" title="Permanent link">&para;</a></h2>
-<p><a href="../../../specs/cli/core.html#status"><code>nereus status</code></a> shows every reef Ready; <code>curl</code> on <code>https://triton.getnereus.dev/healthz</code>, <code>https://portal.getnereus.dev/</code> and <code>https://login.getnereus.dev/.well-known/nereus-configuration</code> answers 200, and the realm <code>master</code> answers 404 from outside.</p>
+<p><a href="../../../specs/cli/core.html#status"><code>nereus status</code></a> shows every reef Ready; <code>curl</code> on <code>https://triton.getnereus.dev/healthz</code>, <code>https://portal.getnereus.dev/</code> and <code>https://api.getnereus.dev/.well-known/nereus-configuration</code> answers 200, and the realm <code>master</code> answers 404 from outside.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>status
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>REEF            NEREID           VERSION  STATUS  AGE
