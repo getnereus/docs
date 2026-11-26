@@ -760,7 +760,7 @@ BLOCKED = "Object.defineProperty(window, 'localStorage', { get() { throw new DOM
 
 
 def to_grid(page, expect):
-  page.locator('#status-rows [data-view="grid"]').click()
+  page.locator("#view-toggle").click()
   expect(page.locator("#status-grid")).to_be_visible()
 
 
@@ -769,7 +769,7 @@ def test_the_list_shows_each_nereid_s_red_line_and_sparkline(portal_page, scheme
   opened, expect = portal_page
   page = home(opened([], scheme=scheme, status=(200, SIGNALLED)))
   expect(page.locator('#status-rows [data-filter="all"]')).to_have_attribute("aria-pressed", "true")
-  expect(page.locator('#status-rows [data-view="list"]')).to_have_attribute("aria-pressed", "true")
+  expect(page.locator("#view-toggle")).to_have_attribute("data-view", "grid")
   expect(page.locator("#status-list")).to_be_visible()
   expect(page.locator("#status-grid")).to_be_hidden()
   expect(page.locator("#no-metrics")).to_be_hidden()
@@ -799,7 +799,7 @@ def test_the_grid_shows_two_columns_of_cards_attention_first_and_the_choice_is_k
   opened, expect = portal_page
   page = home(opened([], scheme=scheme, status=(200, SIGNALLED)))
   to_grid(page, expect)
-  expect(page.locator('#status-rows [data-view="grid"]')).to_have_attribute("aria-pressed", "true")
+  expect(page.locator("#view-toggle")).to_have_attribute("data-view", "list")
   expect(page.locator("#status-list")).to_be_hidden()
   cards = page.locator("#status-grid .signal-card")
   expect(cards.locator(".card-reef")).to_have_text(["release", "tenancy", "core", "presentations", "secrets", "usage"])
@@ -820,7 +820,7 @@ def test_the_grid_shows_two_columns_of_cards_attention_first_and_the_choice_is_k
   page.reload()
   home(page)
   expect(page.locator("#status-grid")).to_be_visible()
-  page.locator('#status-rows [data-view="list"]').click()
+  page.locator("#view-toggle").click()
   page.reload()
   home(page)
   expect(page.locator("#status-list")).to_be_visible()
@@ -839,11 +839,97 @@ def test_the_chips_filter_both_views(portal_page):
   expect(page.locator("#status-grid .card-reef")).to_have_text(["release", "tenancy"])
   page.locator('#status-rows [data-filter="ready"]').click()
   expect(page.locator("#status-grid .card-reef")).to_have_text(["core", "presentations", "secrets", "usage"])
-  page.locator('#status-rows [data-view="list"]').click()
+  page.locator("#view-toggle").click()
   expect(page.locator("#attention-title")).to_be_hidden()
   expect(page.locator("#good .headline")).to_have_text(["core", "presentations", "secrets", "usage"])
   expect(page.locator("#good")).to_be_visible()
   expect(page.locator("#filter-empty")).to_be_hidden()
+
+
+def search(page, text):
+  page.locator("#search-open").click()
+  page.locator("#search-text").fill(text)
+
+
+def test_the_search_finds_a_nereid_by_its_reef_or_its_name_together_with_the_chips(portal_page):
+  opened, expect = portal_page
+  page = home(opened([], status=(200, SIGNALLED)))
+  expect(page.locator("#search-text")).to_be_hidden()
+  page.locator("#search-open").click()
+  expect(page.locator("#search-text")).to_be_focused()
+  expect(page.locator("#status-rows .filter-chips")).to_be_hidden()
+  # By the reef's name, case-insensitive, the match underlined.
+  page.locator("#search-text").fill("REL")
+  expect(page.locator("#attention .headline")).to_have_text(["release"])
+  expect(page.locator("#attention .headline mark")).to_have_text(["rel"])
+  expect(page.locator("#search-count")).to_have_text("1 of 6 Nereids · “REL”")
+  # By the Nereid's name: openbao's reef is secrets.
+  page.locator("#search-text").fill("bao")
+  expect(page.locator("#good .headline")).to_have_text(["secrets"])
+  expect(page.locator("#good .supporting mark")).to_have_text(["bao"])
+  expect(page.locator("#good-title")).to_have_text("All good · 1")
+  page.locator("#search-text").fill("e")
+  expect(page.locator("#see-all")).to_be_hidden()
+  expect(page.locator("#good .row").first).to_be_visible()
+  page.locator("#search-text").fill("bao")
+  expect(page.locator("#attention-title")).to_be_hidden()
+  # Together with the chips (closed with text, the field stays open: the chips come back only once it is empty).
+  page.locator("#search-text").fill("e")
+  page.locator("#search-text").press("Enter")
+  expect(page.locator("#search-text")).to_be_visible()
+  page.locator("#search-clear").click()
+  expect(page.locator("#search-text")).to_be_focused()
+  expect(page.locator("#search-text")).to_have_value("")
+  page.locator("#search-text").press("Enter")
+  expect(page.locator("#status-rows .filter-chips")).to_be_visible()
+  page.locator('#status-rows [data-filter="attention"]').click()
+  search(page, "ten")
+  expect(page.locator("#attention .headline")).to_have_text(["tenancy"])
+  expect(page.locator("#good .row")).to_have_count(0)
+  # The grid filters the same way.
+  page.locator("#view-toggle").click()
+  expect(page.locator("#status-grid .card-reef")).to_have_text(["tenancy"])
+  page.locator("#search-reset").click()
+  expect(page.locator("#search-text")).to_be_hidden()
+  expect(page.locator("#status-grid .card-reef")).to_have_text(["release", "tenancy"])
+
+
+def test_the_search_with_nothing_found_offers_to_clear_it_and_escape_contracts_it(portal_page):
+  opened, expect = portal_page
+  page = home(opened([], locale="pt-BR", status=(200, SIGNALLED)))
+  search(page, "nada")
+  expect(page.locator("#search-empty-text")).to_have_text("Nenhuma Nereid corresponde a “nada”.")
+  expect(page.locator("#search-line")).to_be_hidden()
+  expect(page.locator("#filter-empty")).to_be_hidden()
+  page.locator("#search-empty-clear").click()
+  expect(page.locator("#search-empty")).to_be_hidden()
+  expect(page.locator("#search-text")).to_be_hidden()
+  expect(page.locator("#attention .headline")).to_have_text(["release", "tenancy"])
+  search(page, "flux")
+  page.locator("#search-text").press("Escape")
+  expect(page.locator("#search-text")).to_be_hidden()
+  expect(page.locator("#search-line")).to_be_hidden()
+  expect(page.locator("#attention .headline")).to_have_text(["release", "tenancy"])
+  # Left empty, a tap elsewhere contracts it; the text is kept nowhere.
+  page.locator("#search-open").click()
+  page.locator("#attention-title").click()
+  expect(page.locator("#search-text")).to_be_hidden()
+  assert page.evaluate("() => JSON.stringify(localStorage)").find("flux") < 0
+  assert "flux" not in page.url
+
+
+@pytest.mark.parametrize("width", [340, 360, 390, 412])
+@pytest.mark.parametrize("locale", ["en-US", "pt-BR"])
+def test_the_row_of_chips_search_and_toggle_fits_one_line(portal_page, width, locale):
+  opened, expect = portal_page
+  page = home(opened([], width=width, locale=locale, status=(200, SIGNALLED)))
+  boxes = [page.locator(selector).bounding_box() for selector in ('#status-rows [data-filter="all"]', '#status-rows [data-filter="ready"]', "#search", "#view-toggle")]
+  assert len({round(box["y"] + box["height"] / 2) for box in boxes}) == 1
+  assert boxes[-1]["x"] + boxes[-1]["width"] <= width
+  assert boxes[1]["x"] + boxes[1]["width"] <= boxes[2]["x"]
+  shot(page, f"search-row-{width}-{locale}")
+  search(page, "re")
+  shot(page, f"search-open-{width}-{locale}")
 
 
 def test_without_the_metrics_reef_the_rows_keep_today_s_form_and_one_line_says_so(portal_page):
@@ -852,7 +938,9 @@ def test_without_the_metrics_reef_the_rows_keep_today_s_form_and_one_line_says_s
   expect(page.locator("#no-metrics")).to_have_text("sem métricas: instale o reef de métricas")
   expect(page.locator("#status .red-line, #status .spark")).to_have_count(0)
   expect(page.locator("#status-rows [data-filter]")).to_have_text(["Todos", "Atenção", "Prontos"])
-  expect(page.locator('#status-rows [data-view="grid"]')).to_have_attribute("aria-label", "Grade")
+  expect(page.locator("#view-toggle")).to_have_attribute("aria-label", "Grade")
+  expect(page.locator("#search-open")).to_have_attribute("aria-label", "Buscar por nome")
+  expect(page.locator("#search-text")).to_have_attribute("placeholder", "Buscar Nereids")
   choose_language(page, "en")
   expect(page.locator("#no-metrics")).to_have_text("no metrics: install the metrics reef")
   to_grid(page, expect)
@@ -1342,7 +1430,7 @@ def test_a_desktop_home_is_a_list_detail_split_showing_the_first_nereid_needing_
   # Slice 1's charts in the pane, in its three columns, and the live bar at the pane's bottom.
   expect(page.locator(".detail-card .detail-echart canvas")).to_have_count(6)
   boxes = [page.locator(f'.detail-card[data-key="{key}"]').bounding_box() for key in CARDS[:3]]
-  assert len({round(box["y"]) for box in boxes}) == 1
+  assert len({round(box["y"] + box["height"] / 2) for box in boxes}) == 1
   expect(page.locator("#detail-live")).to_be_visible()
   assert page.locator("#detail-live").bounding_box()["x"] >= page.locator("#nereid").bounding_box()["x"]
   assert ranges_asked(page) == ["1h"]
