@@ -63,7 +63,7 @@ A room for the operations peers.
 
 ```bash
 nereus rooms create ops \
-  --owner project/payments \
+  --project payments \
   --description "Operations peers"
 ```
 
@@ -84,9 +84,9 @@ nereus rooms list
 ```
 
 ``` { .text .output title="output" }
-NAME    OWNER                 PEERS  MESSAGES  LAST MESSAGE  AGE
-nereus  organization/example  3      -         -             12d
-ops     project/payments      2      -         -             1m
+NAME    ORGANIZATION  PROJECT   PEERS  MESSAGES  LAST MESSAGE  AGE
+nereus  example       -         3      -         -             12d
+ops     example       payments  2      -         -             1m
 ```
 
 ### room-apply
@@ -95,7 +95,7 @@ The YAML of a room, written by a dry run.
 
 ```bash
 nereus rooms create platform \
-  --owner project/payments \
+  --project payments \
   --description "Platform peers" \
   --dry-run \
   --output yaml

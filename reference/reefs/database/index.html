@@ -7304,12 +7304,12 @@ Next steps:
 
 Next steps:
 
-  nereus database create &lt;name&gt; --owner project/&lt;name&gt; --engine postgres
+  nereus database create &lt;name&gt; --project &lt;name&gt; --engine postgres
 </code></pre></div>
 <h3 id="create">create<a class="headerlink" href="#create" title="Permanent link">&para;</a></h3>
 <p>In nereus-system, for Keycloak.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>database<span class="w"> </span>create<span class="w"> </span>keycloak<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/nereids<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--project<span class="w"> </span>nereids<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--engine<span class="w"> </span>postgres
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ database/databases/keycloak created (mandate: cloudnative-pg, nereid: cloudnative-pg)
@@ -7321,20 +7321,21 @@ Next steps:
 <h3 id="get">get<a class="headerlink" href="#get" title="Permanent link">&para;</a></h3>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>database<span class="w"> </span>get<span class="w"> </span>keycloak
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>Name:        keycloak
-Owner:       Project/nereids
-Engine:      postgres
-Mandate:     cloudnative-pg
-Nereid:      cloudnative-pg
-Ready:       True
-Connection:  secret nereus-system/keycloak-database (host, port, dbname, username, password, uri)
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>Name:          keycloak
+Organization:  getnereus
+Project:       nereus/nereids
+Engine:        postgres
+Mandate:       cloudnative-pg
+Nereid:        cloudnative-pg
+Ready:         True
+Connection:    secret nereus-system/keycloak-database (host, port, dbname, username, password, uri)
 </code></pre></div>
 <h3 id="refused">refused<a class="headerlink" href="#refused" title="Permanent link">&para;</a></h3>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>database<span class="w"> </span>create<span class="w"> </span>orders<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/missing<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--project<span class="w"> </span>missing<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--engine<span class="w"> </span>postgres
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✗ database/databases/orders: owner Project/missing does not exist. To fix it, run:
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✗ database/databases/orders: owner project/missing does not exist. To fix it, run:
   nereus tenancy project list
   Nothing was changed.
 </code></pre></div>

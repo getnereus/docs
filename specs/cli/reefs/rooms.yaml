@@ -147,7 +147,7 @@ slides:
       steps:
         - comment: "A room for the operations peers"
           run: "nereus rooms create ops"
-          options: ["--owner project/payments", "--description \"Operations peers\""]
+          options: ["--project payments", "--description \"Operations peers\""]
           output: |-
             ✓ rooms/rooms/ops created (owner: project/payments)
 
@@ -165,8 +165,8 @@ slides:
         - comment: "The Topic Triton asked the messaging reef for"
           run: "nereus messaging topic list"
           output: |-
-            TOPIC     OWNER             ENGINE  MANDATE  READY
-            room-ops  Project/payments  nats    nats     True
+            TOPIC     ORGANIZATION  PROJECT   ENGINE  MANDATE  READY
+            room-ops  example       payments  nats    nats     True
     dependsOn: [apply-triton]
     notes: |-
       **`Room` is the reef's default kind,** so `nereus rooms create` acts on it (#1491). Without a name it takes the repository's; without `--owner`, the owner of your team. Triton applies the Topic `room-<room>`, owned by the Room and closed to other clients (#2073, #2071).
@@ -193,14 +193,14 @@ slides:
         - comment: "The rooms of the reef"
           run: "nereus rooms list"
           output: |-
-            NAME    OWNER                 PEERS  MESSAGES  LAST MESSAGE  AGE
-            nereus  organization/example  3      -         -             12d
-            ops     project/payments      2      -         -             1m
+            NAME    ORGANIZATION  PROJECT   PEERS  MESSAGES  LAST MESSAGE  AGE
+            nereus  example       -         3      -         -             12d
+            ops     example       payments  2      -         -             1m
         - comment: "One room and the Ready peers in it"
           run: "nereus rooms get ops"
           output: |-
-            NAME  OWNER             DESCRIPTION       PEERS  MESSAGES  READY
-            ops   project/payments  Operations peers  2      -         True
+            NAME  ORGANIZATION  PROJECT   DESCRIPTION       PEERS  MESSAGES  READY
+            ops   example       payments  Operations peers  2      -         True
 
             PEERS: ana.doto (Ready), bia.speo (Ready)
     dependsOn: [room-create]
@@ -228,7 +228,7 @@ slides:
       steps:
         - comment: "The YAML of a room, written by a dry run"
           run: "nereus rooms create platform"
-          options: ["--owner project/payments", "--description \"Platform peers\"", "--dry-run", "--output yaml"]
+          options: ["--project payments", "--description \"Platform peers\"", "--dry-run", "--output yaml"]
           output: |-
             apiVersion: rooms.getnereus.dev/v1alpha1
             kind: Room

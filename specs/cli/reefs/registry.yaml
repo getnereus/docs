@@ -76,7 +76,7 @@ slides:
               nereus registry get main
         - comment: "What it would write, as apply takes it, changing nothing"
           run: "nereus registry create main"
-          options: ["--owner project/shop", "--dry-run", "--output yaml"]
+          options: ["--project shop", "--dry-run", "--output yaml"]
           output: |-
             apiVersion: registry.getnereus.dev/v1alpha1
             kind: Registry

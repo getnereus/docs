@@ -7356,7 +7356,7 @@ Next steps:
 <h3 id="topic-create">topic-create<a class="headerlink" href="#topic-create" title="Permanent link">&para;</a></h3>
 <p>A topic for the orders, owned by a project.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>messaging<span class="w"> </span>topic<span class="w"> </span>create<span class="w"> </span>orders<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/triton<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--project<span class="w"> </span>triton<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--engine<span class="w"> </span>nats
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ messaging/topics/orders created (mandate: messaging-nats, nereid: nats)
@@ -7370,7 +7370,8 @@ Next steps:
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>messaging<span class="w"> </span>topic<span class="w"> </span>get<span class="w"> </span>orders
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>Name:             orders
-Owner:            Project/triton
+Organization:     getnereus
+Project:          nereus/triton
 Engine:           nats
 Mandate:          nats
 Nereid:           nats
@@ -7384,7 +7385,7 @@ Connection:       secret nereus-system/orders-topic (host, port, uri, subject)
 <h3 id="topic-apply">topic-apply<a class="headerlink" href="#topic-apply" title="Permanent link">&para;</a></h3>
 <p>The YAML of a topic, written by a dry run.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>messaging<span class="w"> </span>topic<span class="w"> </span>create<span class="w"> </span>events<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/triton<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--project<span class="w"> </span>triton<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--engine<span class="w"> </span>nats<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--dry-run<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--output<span class="w"> </span>yaml
@@ -7402,7 +7403,7 @@ spec:
 <h3 id="queue-create">queue-create<a class="headerlink" href="#queue-create" title="Permanent link">&para;</a></h3>
 <p>A queue for the builds to run.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>messaging<span class="w"> </span>queue<span class="w"> </span>create<span class="w"> </span>builds<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/triton<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--project<span class="w"> </span>triton<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--engine<span class="w"> </span>nats
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ messaging/queues/builds created (mandate: messaging-nats, nereid: nats)
@@ -7416,7 +7417,8 @@ Next steps:
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>messaging<span class="w"> </span>queue<span class="w"> </span>get<span class="w"> </span>builds
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>Name:             builds
-Owner:            Project/triton
+Organization:     getnereus
+Project:          nereus/triton
 Engine:           nats
 Mandate:          nats
 Nereid:           nats
@@ -7427,7 +7429,7 @@ Connection:       secret nereus-system/builds-queue (host, port, uri, subject, s
 <h3 id="queue-apply">queue-apply<a class="headerlink" href="#queue-apply" title="Permanent link">&para;</a></h3>
 <p>The YAML of a queue, written by a dry run.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>messaging<span class="w"> </span>queue<span class="w"> </span>create<span class="w"> </span>scratch<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/triton<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--project<span class="w"> </span>triton<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--engine<span class="w"> </span>nats<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--deletion-policy<span class="w"> </span>delete<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--dry-run<span class="w"> </span><span class="se">\</span>

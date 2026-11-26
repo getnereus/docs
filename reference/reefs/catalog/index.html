@@ -7340,12 +7340,12 @@
 ✓ catalog/workloadtypes/service created
 ✓ catalog/packagetypes/cli created
 ✓ catalog/packagetypes/image created
-✓ catalog/workloads/flux created (owner: Project/nereids, type: controller)
-✓ catalog/workloads/keycloak created (owner: Project/nereids, type: controller)
-✓ catalog/workloads/openbao created (owner: Project/nereids, type: controller)
-✓ catalog/workloads/triton created (owner: Project/triton, type: service)
-✓ catalog/packages/nereus created (owner: Project/core, type: cli, registry: pypi)
-✓ catalog/packages/openbao-image created (owner: Project/nereids, type: image, registry: oci)
+✓ catalog/workloads/flux created (owner: project/nereids, type: controller)
+✓ catalog/workloads/keycloak created (owner: project/nereids, type: controller)
+✓ catalog/workloads/openbao created (owner: project/nereids, type: controller)
+✓ catalog/workloads/triton created (owner: project/triton, type: service)
+✓ catalog/packages/nereus created (owner: project/core, type: cli, registry: pypi)
+✓ catalog/packages/openbao-image created (owner: project/nereids, type: image, registry: oci)
 
 Next steps:
 
@@ -7361,7 +7361,7 @@ Next steps:
 <span class="w">  </span>--path<span class="w"> </span>controllers/edge-cloudflare/<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--dry-run
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>catalog/workloads/edge-cloudflare would be created (owner: Project/nereids, type: controller)
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>catalog/workloads/edge-cloudflare would be created (owner: project/nereids, type: controller)
 Nothing changed (--dry-run).
 </code></pre></div>
 <h3 id="workload-list">workload-list<a class="headerlink" href="#workload-list" title="Permanent link">&para;</a></h3>
@@ -7369,8 +7369,8 @@ Nothing changed (--dry-run).
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>catalog<span class="w"> </span>list<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--type<span class="w"> </span>service
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>WORKLOAD  OWNER           TYPE     AUDIENCE        STATUS
-triton    Project/triton  service  agents, people  DeploymentNotFound
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>WORKLOAD  ORGANIZATION  PROJECT        TYPE     AUDIENCE        STATUS
+triton    getnereus     nereus/triton  service  agents, people  DeploymentNotFound
 </code></pre></div>
 <h3 id="workload-delete">workload-delete<a class="headerlink" href="#workload-delete" title="Permanent link">&para;</a></h3>
 <p>The entry leaves the catalog; the Deployment, if any, stays.</p>
@@ -7381,7 +7381,7 @@ triton    Project/triton  service  agents, people  DeploymentNotFound
 <h3 id="package-apply">package-apply<a class="headerlink" href="#package-apply" title="Permanent link">&para;</a></h3>
 <p>The same verbs, the kind in the path.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>catalog<span class="w"> </span>package<span class="w"> </span>create<span class="w"> </span>nereus<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/core<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--project<span class="w"> </span>core<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--type<span class="w"> </span>cli<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--registry<span class="w"> </span>pypi<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--name<span class="w"> </span>nereus<span class="w"> </span><span class="se">\</span>
@@ -7391,7 +7391,7 @@ triton    Project/triton  service  agents, people  DeploymentNotFound
 <span class="w">  </span>--path<span class="w"> </span>cli/<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--dry-run
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>catalog/packages/nereus would be created (owner: Project/core, type: cli, registry: pypi)
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>catalog/packages/nereus would be created (owner: project/core, type: cli, registry: pypi)
 Nothing changed (--dry-run).
 </code></pre></div>
 <h3 id="workload-type-list">workload-type-list<a class="headerlink" href="#workload-type-list" title="Permanent link">&para;</a></h3>
@@ -7422,7 +7422,7 @@ worker       always  event           Ready
 <p>An owner that does not exist, a registry the type does not allow, an audience missing.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>catalog<span class="w"> </span>check
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✗ catalog/workloads/api: owner Project/ghost does not exist
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✗ catalog/workloads/api: owner project/ghost does not exist
 ✗ catalog/packages/base-image: type image takes the registries oci, not pypi
 ✗ catalog/workloads/worker: audience is missing
 3 contradictions, 0 gaps

@@ -4919,7 +4919,7 @@ nereus authorization role create release-manager \
 
 Next steps:
 
-  nereus authorization binding create <name> --role release-manager --team <team> --owner project/<project>
+  nereus authorization binding create <name> --role release-manager --team <team> --project <project>
 ```
 
 ### role-delete
@@ -4944,7 +4944,7 @@ Everyone in the team is a developer of the Project.
 nereus authorization binding create payments-developers \
   --role developer \
   --team payments \
-  --owner project/payments
+  --project payments
 ```
 
 ``` { .text .output title="output" }
@@ -4952,7 +4952,7 @@ nereus authorization binding create payments-developers \
 
 Next steps:
 
-  nereus authorization binding list --owner project/payments
+  nereus authorization binding list --project payments
 ```
 
 ### binding-position
@@ -4964,7 +4964,7 @@ nereus authorization binding create payments-leads \
   --role team-lead \
   --team payments \
   --position tech-lead \
-  --owner project/payments
+  --project payments
 ```
 
 ``` { .text .output title="output" }
@@ -4972,7 +4972,7 @@ nereus authorization binding create payments-leads \
 
 Next steps:
 
-  nereus authorization binding list --owner project/payments
+  nereus authorization binding list --project payments
 ```
 
 ### binding-list
@@ -4981,13 +4981,13 @@ Who may do what on the Project.
 
 ```bash
 nereus authorization binding list \
-  --owner project/payments
+  --project payments
 ```
 
 ``` { .text .output title="output" }
-NAME                 SUBJECT                  ROLE       OWNER
-payments-developers  team/payments            developer  project/payments
-payments-leads       team/payments/tech-lead  team-lead  project/payments
+NAME                 SUBJECT                  ROLE       ORGANIZATION  PROJECT
+payments-developers  team/payments            developer  example       payments
+payments-leads       team/payments/tech-lead  team-lead  example       payments
 ```
 
 ### can-i-yes
@@ -4996,7 +4996,7 @@ Signed in as ana: with no --user, the question is about the caller.
 
 ```bash
 nereus authorization can-i create environment/environments \
-  --owner project/payments
+  --project payments
 ```
 
 ``` { .text .output title="output" }
@@ -5009,7 +5009,7 @@ About someone else.
 
 ```bash
 nereus authorization can-i create environment/environments \
-  --owner project/payments \
+  --project payments \
   --user bruno
 ```
 
@@ -5018,7 +5018,7 @@ no: no binding gives bruno create on environment/environments at project/payment
 
 Next steps:
 
-  nereus authorization binding list --owner project/payments
+  nereus authorization binding list --project payments
 ```
 
 ### can-i-shortcut
@@ -5027,7 +5027,7 @@ Signed in as bruno: a developer creates builds.
 
 ```bash
 nereus can-i create build/builds \
-  --owner project/payments
+  --project payments
 ```
 
 ``` { .text .output title="output" }
@@ -5066,12 +5066,12 @@ Signed in as bruno.
 
 ```bash
 nereus environment create staging \
-  --owner project/payments
+  --project payments
 ```
 
 ``` { .text .output title="output" }
 ✗ environment/environments/staging: bruno may not create environment/environments at project/payments. To see who may, run:
-  nereus authorization binding list --owner project/payments
+  nereus authorization binding list --project payments
   Nothing was changed.
 ```
 
@@ -5081,7 +5081,7 @@ Signed in as ana, the tech lead.
 
 ```bash
 nereus environment create staging \
-  --owner project/payments
+  --project payments
 ```
 
 ``` { .text .output title="output" }
@@ -5128,7 +5128,7 @@ nereus authorization gate create payments-environments \
   --reef environment \
   --kinds environments \
   --verbs create \
-  --owner project/payments
+  --project payments
 ```
 
 ``` { .text .output title="output" }
@@ -5145,7 +5145,7 @@ A dry run says whose approval it would wait for, and writes nothing.
 
 ```bash
 nereus environment create staging \
-  --owner project/payments \
+  --project payments \
   --dry-run
 ```
 
@@ -5200,7 +5200,7 @@ The answer to create is still no, and says who decides.
 
 ```bash
 nereus authorization can-i create environment/environments \
-  --owner project/payments \
+  --project payments \
   --user bruno
 ```
 
@@ -5352,7 +5352,7 @@ nereus build trigger get triton
 ``` { .text .output title="output" }
 Name:        triton
 Workload:    triton
-Owner:       Project/triton
+Owner:       project/triton
 Mandate:     -
 Nereid:      buildkit
 Mirror:      nereus
@@ -5411,12 +5411,12 @@ nereus catalog apply \
 ✓ catalog/workloadtypes/service created
 ✓ catalog/packagetypes/cli created
 ✓ catalog/packagetypes/image created
-✓ catalog/workloads/flux created (owner: Project/nereids, type: controller)
-✓ catalog/workloads/keycloak created (owner: Project/nereids, type: controller)
-✓ catalog/workloads/openbao created (owner: Project/nereids, type: controller)
-✓ catalog/workloads/triton created (owner: Project/triton, type: service)
-✓ catalog/packages/nereus created (owner: Project/core, type: cli, registry: pypi)
-✓ catalog/packages/openbao-image created (owner: Project/nereids, type: image, registry: oci)
+✓ catalog/workloads/flux created (owner: project/nereids, type: controller)
+✓ catalog/workloads/keycloak created (owner: project/nereids, type: controller)
+✓ catalog/workloads/openbao created (owner: project/nereids, type: controller)
+✓ catalog/workloads/triton created (owner: project/triton, type: service)
+✓ catalog/packages/nereus created (owner: project/core, type: cli, registry: pypi)
+✓ catalog/packages/openbao-image created (owner: project/nereids, type: image, registry: oci)
 
 Next steps:
 
@@ -5438,7 +5438,7 @@ nereus catalog workload create edge-cloudflare \
 ```
 
 ``` { .text .output title="output" }
-catalog/workloads/edge-cloudflare would be created (owner: Project/nereids, type: controller)
+catalog/workloads/edge-cloudflare would be created (owner: project/nereids, type: controller)
 Nothing changed (--dry-run).
 ```
 
@@ -5452,8 +5452,8 @@ nereus catalog list \
 ```
 
 ``` { .text .output title="output" }
-WORKLOAD  OWNER           TYPE     AUDIENCE        STATUS
-triton    Project/triton  service  agents, people  DeploymentNotFound
+WORKLOAD  ORGANIZATION  PROJECT        TYPE     AUDIENCE        STATUS
+triton    getnereus     nereus/triton  service  agents, people  DeploymentNotFound
 ```
 
 ### workload-delete
@@ -5474,7 +5474,7 @@ The same verbs, the kind in the path.
 
 ```bash
 nereus catalog package create nereus \
-  --owner project/core \
+  --project core \
   --type cli \
   --registry pypi \
   --name nereus \
@@ -5486,7 +5486,7 @@ nereus catalog package create nereus \
 ```
 
 ``` { .text .output title="output" }
-catalog/packages/nereus would be created (owner: Project/core, type: cli, registry: pypi)
+catalog/packages/nereus would be created (owner: project/core, type: cli, registry: pypi)
 Nothing changed (--dry-run).
 ```
 
@@ -5535,7 +5535,7 @@ nereus catalog check
 ```
 
 ``` { .text .output title="output" }
-✗ catalog/workloads/api: owner Project/ghost does not exist
+✗ catalog/workloads/api: owner project/ghost does not exist
 ✗ catalog/packages/base-image: type image takes the registries oci, not pypi
 ✗ catalog/workloads/worker: audience is missing
 3 contradictions, 0 gaps
@@ -5590,7 +5590,7 @@ nereus nereid apply cloudnative-pg \
 
 Next steps:
 
-  nereus database create <name> --owner project/<name> --engine postgres
+  nereus database create <name> --project <name> --engine postgres
 ```
 
 ### create
@@ -5599,7 +5599,7 @@ In nereus-system, for Keycloak.
 
 ```bash
 nereus database create keycloak \
-  --owner project/nereids \
+  --project nereids \
   --engine postgres
 ```
 
@@ -5618,25 +5618,26 @@ nereus database get keycloak
 ```
 
 ``` { .text .output title="output" }
-Name:        keycloak
-Owner:       Project/nereids
-Engine:      postgres
-Mandate:     cloudnative-pg
-Nereid:      cloudnative-pg
-Ready:       True
-Connection:  secret nereus-system/keycloak-database (host, port, dbname, username, password, uri)
+Name:          keycloak
+Organization:  getnereus
+Project:       nereus/nereids
+Engine:        postgres
+Mandate:       cloudnative-pg
+Nereid:        cloudnative-pg
+Ready:         True
+Connection:    secret nereus-system/keycloak-database (host, port, dbname, username, password, uri)
 ```
 
 ### refused
 
 ```bash
 nereus database create orders \
-  --owner project/missing \
+  --project missing \
   --engine postgres
 ```
 
 ``` { .text .output title="output" }
-✗ database/databases/orders: owner Project/missing does not exist. To fix it, run:
+✗ database/databases/orders: owner project/missing does not exist. To fix it, run:
   nereus tenancy project list
   Nothing was changed.
 ```
@@ -5799,9 +5800,9 @@ nereus workload list
 ```
 
 ``` { .text .output title="output" }
-WORKLOAD  OWNER          TYPE     AUDIENCE  DELIVERIES  STATUS
-billing   Project/shop   service  programs  0           Ready
-hello     Project/hello  service  people    2           Ready
+WORKLOAD  ORGANIZATION  PROJECT  TYPE     AUDIENCE  DELIVERIES  STATUS
+billing   example       shop     service  programs  0           Ready
+hello     example       hello    service  people    2           Ready
 
 Next steps:
 
@@ -6202,7 +6203,7 @@ Who it is for, and for how long.
 
 ```bash
 nereus environment create a \
-  --owner project/nereus \
+  --project nereus \
   --expires 1h
 ```
 
@@ -6243,9 +6244,9 @@ nereus environment list
 ```
 
 ``` { .text .output title="output" }
-ENVIRONMENT  OWNER           NEREID    STATUS  SIZE   EXPIRES
-a            Project/nereus  vcluster  Ready   small  58m
-b            Project/nereus  vcluster  Ready   small  58m
+ENVIRONMENT  ORGANIZATION  PROJECT  NEREID    STATUS  SIZE   EXPIRES
+a            getnereus     nereus   vcluster  Ready   small  58m
+b            getnereus     nereus   vcluster  Ready   small  58m
 ```
 
 ### kubeconfig
@@ -6289,7 +6290,7 @@ An environment for one minute.
 
 ```bash
 nereus environment create c \
-  --owner project/nereus \
+  --project nereus \
   --expires 1m
 ```
 
@@ -6308,7 +6309,7 @@ The CLI's first setup registers the kept k3d cluster; vcluster stays the default
 
 ```bash
 nereus environment create nereus \
-  --owner project/nereus \
+  --project nereus \
   --mandate local
 ```
 
@@ -6448,7 +6449,7 @@ A topic for the orders, owned by a project.
 
 ```bash
 nereus messaging topic create orders \
-  --owner project/triton \
+  --project triton \
   --engine nats
 ```
 
@@ -6470,7 +6471,8 @@ nereus messaging topic get orders
 
 ``` { .text .output title="output" }
 Name:             orders
-Owner:            Project/triton
+Organization:     getnereus
+Project:          nereus/triton
 Engine:           nats
 Mandate:          nats
 Nereid:           nats
@@ -6488,7 +6490,7 @@ The YAML of a topic, written by a dry run.
 
 ```bash
 nereus messaging topic create events \
-  --owner project/triton \
+  --project triton \
   --engine nats \
   --dry-run \
   --output yaml
@@ -6512,7 +6514,7 @@ A queue for the builds to run.
 
 ```bash
 nereus messaging queue create builds \
-  --owner project/triton \
+  --project triton \
   --engine nats
 ```
 
@@ -6534,7 +6536,8 @@ nereus messaging queue get builds
 
 ``` { .text .output title="output" }
 Name:             builds
-Owner:            Project/triton
+Organization:     getnereus
+Project:          nereus/triton
 Engine:           nats
 Mandate:          nats
 Nereid:           nats
@@ -6549,7 +6552,7 @@ The YAML of a queue, written by a dry run.
 
 ```bash
 nereus messaging queue create scratch \
-  --owner project/triton \
+  --project triton \
   --engine nats \
   --deletion-policy delete \
   --dry-run \
@@ -7751,7 +7754,7 @@ A room for the operations peers.
 
 ```bash
 nereus rooms create ops \
-  --owner project/payments \
+  --project payments \
   --description "Operations peers"
 ```
 
@@ -7772,9 +7775,9 @@ nereus rooms list
 ```
 
 ``` { .text .output title="output" }
-NAME    OWNER                 PEERS  MESSAGES  LAST MESSAGE  AGE
-nereus  organization/example  3      -         -             12d
-ops     project/payments      2      -         -             1m
+NAME    ORGANIZATION  PROJECT   PEERS  MESSAGES  LAST MESSAGE  AGE
+nereus  example       -         3      -         -             12d
+ops     example       payments  2      -         -             1m
 ```
 
 ### room-apply
@@ -7783,7 +7786,7 @@ The YAML of a room, written by a dry run.
 
 ```bash
 nereus rooms create platform \
-  --owner project/payments \
+  --project payments \
   --description "Platform peers" \
   --dry-run \
   --output yaml
@@ -8509,7 +8512,7 @@ The team of the payments Project.
 
 ```bash
 nereus teams create payments \
-  --owner project/payments
+  --project payments
 ```
 
 ``` { .text .output title="output" }
@@ -8526,7 +8529,7 @@ No Project billing yet.
 
 ```bash
 nereus teams create billing \
-  --owner project/billing
+  --project billing
 ```
 
 ``` { .text .output title="output" }
@@ -8584,7 +8587,7 @@ bruno   -          core/users/bruno
 
 Next steps:
 
-  nereus authorization binding create <name> --role <role> --team payments --owner project/payments
+  nereus authorization binding create <name> --role <role> --team payments --project payments
 ```
 
 ### team-list
@@ -8596,8 +8599,8 @@ nereus teams list
 ```
 
 ``` { .text .output title="output" }
-NAME      OWNER             MEMBERS  AGE
-payments  project/payments  2        5m
+NAME      ORGANIZATION  PROJECT   MEMBERS  AGE
+payments  example       payments  2        5m
 ```
 
 ### team-delete-refused
@@ -8763,14 +8766,14 @@ nereus tenancy project list
 ```
 
 ``` { .text .output title="output" }
-PROJECT   PARENT                  REPOSITORY
-shop      Organization/example    https://github.com/example/shop
-checkout  Project/shop            -
-nereus    Organization/getnereus  https://github.com/getnereus/nereus
-core      Project/nereus          -
-docs      Project/nereus          -
-nereids   Project/nereus          -
-triton    Project/nereus          -
+ORGANIZATION  PROJECT         REPOSITORY
+example       shop            https://github.com/example/shop
+example       shop/checkout   -
+getnereus     nereus          https://github.com/getnereus/nereus
+getnereus     nereus/core     -
+getnereus     nereus/docs     -
+getnereus     nereus/nereids  -
+getnereus     nereus/triton   -
 ```
 
 ### project-get
@@ -8785,8 +8788,8 @@ nereus tenancy project get checkout
 Name:        checkout
 Kind:        Project
 Path:        tenancy/organizations/example/projects/shop/projects/checkout
-Parent:      Project/shop
-Boundary:    Organization/example
+Parent:      project/shop
+Boundary:    organization/example
 Repository:  -
 ```
 
@@ -8850,7 +8853,7 @@ nereus config set owner project/triton
 ```
 
 ``` { .text .output title="output" }
-✓ config: owner = Project/triton
+✓ config: owner = project/triton
 ```
 
 # usage

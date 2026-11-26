@@ -7548,7 +7548,7 @@ Next steps:
 <h3 id="room-create">room-create<a class="headerlink" href="#room-create" title="Permanent link">&para;</a></h3>
 <p>A room for the operations peers.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>rooms<span class="w"> </span>create<span class="w"> </span>ops<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/payments<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--project<span class="w"> </span>payments<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--description<span class="w"> </span><span class="s2">"Operations peers"</span>
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ rooms/rooms/ops created (owner: project/payments)
@@ -7561,14 +7561,14 @@ Next steps:
 <p>The rooms of the reef.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>rooms<span class="w"> </span>list
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>NAME    OWNER                 PEERS  MESSAGES  LAST MESSAGE  AGE
-nereus  organization/example  3      -         -             12d
-ops     project/payments      2      -         -             1m
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>NAME    ORGANIZATION  PROJECT   PEERS  MESSAGES  LAST MESSAGE  AGE
+nereus  example       -         3      -         -             12d
+ops     example       payments  2      -         -             1m
 </code></pre></div>
 <h3 id="room-apply">room-apply<a class="headerlink" href="#room-apply" title="Permanent link">&para;</a></h3>
 <p>The YAML of a room, written by a dry run.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>rooms<span class="w"> </span>create<span class="w"> </span>platform<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/payments<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--project<span class="w"> </span>payments<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--description<span class="w"> </span><span class="s2">"Platform peers"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--dry-run<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--output<span class="w"> </span>yaml

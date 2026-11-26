@@ -249,7 +249,7 @@ slides:
 
             Next steps:
 
-              nereus teams create <team> --owner project/<project>
+              nereus teams create <team> --project <project>
     notes: |-
       **`User` is a kind of core** (ADR 0006, the person is a User of core): the platform gives it its id, and it holds a list of identities, one per identity provider the person signs in with. This command moves to the core deck when it is built.
 
@@ -380,7 +380,7 @@ slides:
 
             Next steps:
 
-              nereus authorization binding create <name> --role release-manager --team <team> --owner project/<project>
+              nereus authorization binding create <name> --role release-manager --team <team> --project <project>
     dependsOn: [role-get]
     notes: |-
       **Roles are registered, never a fixed list** (#1306, How teams, roles and Users relate). `--rule` repeats, one rule each; `apply --from-file` takes the same role as YAML.
@@ -435,13 +435,13 @@ slides:
       steps:
         - comment: "Everyone in the team is a developer of the Project"
           run: "nereus authorization binding create payments-developers"
-          options: ["--role developer", "--team payments", "--owner project/payments"]
+          options: ["--role developer", "--team payments", "--project payments"]
           output: |-
             ✓ authorization/bindings/payments-developers created
 
             Next steps:
 
-              nereus authorization binding list --owner project/payments
+              nereus authorization binding list --project payments
     dependsOn: [role-list]
     notes: |-
       **Three parts: a role, a subject and a node.** The subject is a team, a position of a team, or one User (`--user`, the exception). The node is an Organization or a Project of the tenancy tree, and the permission flows down the tree, never up (ADR 0015, tenancy: Organization and Project).
@@ -467,13 +467,13 @@ slides:
       steps:
         - comment: "Only who holds the position"
           run: "nereus authorization binding create payments-leads"
-          options: ["--role team-lead", "--team payments", "--position tech-lead", "--owner project/payments"]
+          options: ["--role team-lead", "--team payments", "--position tech-lead", "--project payments"]
           output: |-
             ✓ authorization/bindings/payments-leads created
 
             Next steps:
 
-              nereus authorization binding list --owner project/payments
+              nereus authorization binding list --project payments
     dependsOn: [binding-team]
     notes: |-
       **`--position` gives the role only to the members of the team who hold that position.** When another person takes the position, the access moves with it, and no binding changes.
@@ -499,11 +499,11 @@ slides:
       steps:
         - comment: "Who may do what on the Project"
           run: "nereus authorization binding list"
-          options: ["--owner project/payments"]
+          options: ["--project payments"]
           output: |-
-            NAME                 SUBJECT                  ROLE       OWNER
-            payments-developers  team/payments            developer  project/payments
-            payments-leads       team/payments/tech-lead  team-lead  project/payments
+            NAME                 SUBJECT                  ROLE       ORGANIZATION  PROJECT
+            payments-developers  team/payments            developer  example       payments
+            payments-leads       team/payments/tech-lead  team-lead  example       payments
     dependsOn: [binding-position]
     notes: |-
       **The audit question in one command:** who has which role here. `--role` and `--team` filter the same list.
@@ -525,7 +525,7 @@ slides:
       steps:
         - comment: "Signed in as ana: with no --user, the question is about the caller"
           run: "nereus authorization can-i create environment/environments"
-          options: ["--owner project/payments"]
+          options: ["--project payments"]
           output: |-
             yes: authorization/bindings/payments-leads gives team-lead to team/payments/tech-lead at project/payments
     dependsOn: [binding-list]
@@ -553,13 +553,13 @@ slides:
       steps:
         - comment: "About someone else"
           run: "nereus authorization can-i create environment/environments"
-          options: ["--owner project/payments", "--user bruno"]
+          options: ["--project payments", "--user bruno"]
           output: |-
             no: no binding gives bruno create on environment/environments at project/payments
 
             Next steps:
 
-              nereus authorization binding list --owner project/payments
+              nereus authorization binding list --project payments
     dependsOn: [can-i-yes]
     notes: |-
       **Asking about another person is itself a permission:** an administrator, or a role that carries it, may; anyone may ask about themselves.
@@ -585,7 +585,7 @@ slides:
       steps:
         - comment: "Signed in as bruno: a developer creates builds"
           run: "nereus can-i create build/builds"
-          options: ["--owner project/payments"]
+          options: ["--project payments"]
           output: |-
             yes: authorization/bindings/payments-developers gives developer to team/payments at project/payments
     dependsOn: [can-i-no]
@@ -690,10 +690,10 @@ slides:
       steps:
         - comment: "Signed in as bruno"
           run: "nereus environment create staging"
-          options: ["--owner project/payments"]
+          options: ["--project payments"]
           output: |-
             ✗ environment/environments/staging: bruno may not create environment/environments at project/payments. To see who may, run:
-              nereus authorization binding list --owner project/payments
+              nereus authorization binding list --project payments
               Nothing was changed.
     dependsOn: [can-i-no]
     notes: |-
@@ -720,7 +720,7 @@ slides:
       steps:
         - comment: "Signed in as ana, the tech lead"
           run: "nereus environment create staging"
-          options: ["--owner project/payments"]
+          options: ["--project payments"]
           output: |-
             ✓ environment/environments/staging created (mandate: vcluster, nereid: vcluster)
 
@@ -753,7 +753,7 @@ slides:
             ✓ teams/teams/payments/members/ana deleted
         - comment: "And the answer changes with her"
           run: "nereus authorization can-i create environment/environments"
-          options: ["--owner project/payments", "--user ana"]
+          options: ["--project payments", "--user ana"]
           output: |-
             no: no binding gives ana create on environment/environments at project/payments
     dependsOn: [enforce-allowed]
@@ -817,7 +817,7 @@ slides:
             - "--reef environment"
             - "--kinds environments"
             - "--verbs create"
-            - "--owner project/payments"
+            - "--project payments"
           output: |-
             ✓ authorization/gates/payments-environments created
 
@@ -827,8 +827,8 @@ slides:
         - comment: "And the gates in force"
           run: "nereus authorization gate list"
           output: |-
-            NAME                   REEF         KINDS         VERBS   OWNER             APPROVERS  EXPIRES
-            payments-environments  environment  environments  create  project/payments  -          7d
+            NAME                   REEF         KINDS         VERBS   ORGANIZATION  PROJECT   APPROVERS  EXPIRES
+            payments-environments  environment  environments  create  example       payments  -          7d
     dependsOn: [fail-closed]
     notes: |-
       **A hard gate refuses, a soft gate holds** (ADR 0031): without a right to the verb the answer is a 403, as today; a person who may only `request` it creates the object, and it waits for an approver.
@@ -858,14 +858,14 @@ slides:
       steps:
         - comment: "A dry run says whose approval it would wait for, and writes nothing"
           run: "nereus environment create staging"
-          options: ["--owner project/payments", "--dry-run"]
+          options: ["--project payments", "--dry-run"]
           output: |-
             would wait for approval: authorization/gates/payments-environments, approvers team/payments/tech-lead
             environment/environments/staging would be created (mandate: vcluster, nereid: vcluster).
             Nothing changed (--dry-run).
         - comment: "Bruno may ask, not create"
           run: "nereus environment create staging"
-          options: ["--owner project/payments"]
+          options: ["--project payments"]
           output: |-
             ✓ environment/environments/staging created, waiting for approval (authorization/approvals/staging-create-7f3a; approvers: team/payments/tech-lead)
 
@@ -986,7 +986,7 @@ slides:
       steps:
         - comment: "The answer to create is still no, and says who decides"
           run: "nereus authorization can-i create environment/environments"
-          options: ["--owner project/payments", "--user bruno"]
+          options: ["--project payments", "--user bruno"]
           output: |-
             no, but may ask: authorization/gates/payments-environments holds create for team/payments/tech-lead's approval
     dependsOn: [can-i-no, approval-approve]

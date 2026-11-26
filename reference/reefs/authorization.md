@@ -140,7 +140,7 @@ nereus authorization role create release-manager \
 
 Next steps:
 
-  nereus authorization binding create <name> --role release-manager --team <team> --owner project/<project>
+  nereus authorization binding create <name> --role release-manager --team <team> --project <project>
 ```
 
 ### role-delete
@@ -165,7 +165,7 @@ Everyone in the team is a developer of the Project.
 nereus authorization binding create payments-developers \
   --role developer \
   --team payments \
-  --owner project/payments
+  --project payments
 ```
 
 ``` { .text .output title="output" }
@@ -173,7 +173,7 @@ nereus authorization binding create payments-developers \
 
 Next steps:
 
-  nereus authorization binding list --owner project/payments
+  nereus authorization binding list --project payments
 ```
 
 ### binding-position
@@ -185,7 +185,7 @@ nereus authorization binding create payments-leads \
   --role team-lead \
   --team payments \
   --position tech-lead \
-  --owner project/payments
+  --project payments
 ```
 
 ``` { .text .output title="output" }
@@ -193,7 +193,7 @@ nereus authorization binding create payments-leads \
 
 Next steps:
 
-  nereus authorization binding list --owner project/payments
+  nereus authorization binding list --project payments
 ```
 
 ### binding-list
@@ -202,13 +202,13 @@ Who may do what on the Project.
 
 ```bash
 nereus authorization binding list \
-  --owner project/payments
+  --project payments
 ```
 
 ``` { .text .output title="output" }
-NAME                 SUBJECT                  ROLE       OWNER
-payments-developers  team/payments            developer  project/payments
-payments-leads       team/payments/tech-lead  team-lead  project/payments
+NAME                 SUBJECT                  ROLE       ORGANIZATION  PROJECT
+payments-developers  team/payments            developer  example       payments
+payments-leads       team/payments/tech-lead  team-lead  example       payments
 ```
 
 ### can-i-yes
@@ -217,7 +217,7 @@ Signed in as ana: with no --user, the question is about the caller.
 
 ```bash
 nereus authorization can-i create environment/environments \
-  --owner project/payments
+  --project payments
 ```
 
 ``` { .text .output title="output" }
@@ -230,7 +230,7 @@ About someone else.
 
 ```bash
 nereus authorization can-i create environment/environments \
-  --owner project/payments \
+  --project payments \
   --user bruno
 ```
 
@@ -239,7 +239,7 @@ no: no binding gives bruno create on environment/environments at project/payment
 
 Next steps:
 
-  nereus authorization binding list --owner project/payments
+  nereus authorization binding list --project payments
 ```
 
 ### can-i-shortcut
@@ -248,7 +248,7 @@ Signed in as bruno: a developer creates builds.
 
 ```bash
 nereus can-i create build/builds \
-  --owner project/payments
+  --project payments
 ```
 
 ``` { .text .output title="output" }
@@ -287,12 +287,12 @@ Signed in as bruno.
 
 ```bash
 nereus environment create staging \
-  --owner project/payments
+  --project payments
 ```
 
 ``` { .text .output title="output" }
 ✗ environment/environments/staging: bruno may not create environment/environments at project/payments. To see who may, run:
-  nereus authorization binding list --owner project/payments
+  nereus authorization binding list --project payments
   Nothing was changed.
 ```
 
@@ -302,7 +302,7 @@ Signed in as ana, the tech lead.
 
 ```bash
 nereus environment create staging \
-  --owner project/payments
+  --project payments
 ```
 
 ``` { .text .output title="output" }
@@ -349,7 +349,7 @@ nereus authorization gate create payments-environments \
   --reef environment \
   --kinds environments \
   --verbs create \
-  --owner project/payments
+  --project payments
 ```
 
 ``` { .text .output title="output" }
@@ -366,7 +366,7 @@ A dry run says whose approval it would wait for, and writes nothing.
 
 ```bash
 nereus environment create staging \
-  --owner project/payments \
+  --project payments \
   --dry-run
 ```
 
@@ -421,7 +421,7 @@ The answer to create is still no, and says who decides.
 
 ```bash
 nereus authorization can-i create environment/environments \
-  --owner project/payments \
+  --project payments \
   --user bruno
 ```
 

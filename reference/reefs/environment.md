@@ -38,7 +38,7 @@ Who it is for, and for how long.
 
 ```bash
 nereus environment create a \
-  --owner project/nereus \
+  --project nereus \
   --expires 1h
 ```
 
@@ -79,9 +79,9 @@ nereus environment list
 ```
 
 ``` { .text .output title="output" }
-ENVIRONMENT  OWNER           NEREID    STATUS  SIZE   EXPIRES
-a            Project/nereus  vcluster  Ready   small  58m
-b            Project/nereus  vcluster  Ready   small  58m
+ENVIRONMENT  ORGANIZATION  PROJECT  NEREID    STATUS  SIZE   EXPIRES
+a            getnereus     nereus   vcluster  Ready   small  58m
+b            getnereus     nereus   vcluster  Ready   small  58m
 ```
 
 ### kubeconfig
@@ -125,7 +125,7 @@ An environment for one minute.
 
 ```bash
 nereus environment create c \
-  --owner project/nereus \
+  --project nereus \
   --expires 1m
 ```
 
@@ -144,7 +144,7 @@ The CLI's first setup registers the kept k3d cluster; vcluster stays the default
 
 ```bash
 nereus environment create nereus \
-  --owner project/nereus \
+  --project nereus \
   --mandate local
 ```
 

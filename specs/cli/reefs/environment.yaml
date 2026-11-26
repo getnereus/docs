@@ -86,7 +86,7 @@ slides:
 
             Next steps:
 
-              nereus environment create <name> --owner project/<name> --expires 4h
+              nereus environment create <name> --project <name> --expires 4h
     notes: |-
       **`nereus init --profile internal-developer-platform` runs these steps** (#827 (the profile installs the environment reef and the vcluster Nereid)), so `nereus environment create` works right after it.
 
@@ -114,7 +114,7 @@ slides:
       steps:
         - comment: "Who it is for, and for how long"
           run: "nereus environment create a"
-          options: ["--owner project/nereus", "--expires 1h"]
+          options: ["--project nereus", "--expires 1h"]
           output: |-
             ✓ environment/environments/a created (mandate: vcluster, nereid: vcluster)
 
@@ -159,7 +159,7 @@ slides:
               nereus mandate list
         - comment: "An environment through it"
           run: "nereus environment create spike"
-          options: ["--owner project/nereus", "--mandate heavy", "--expires 4h"]
+          options: ["--project nereus", "--mandate heavy", "--expires 4h"]
           output: |-
             ✓ environment/environments/spike created (mandate: heavy, nereid: vcluster)
 
@@ -170,8 +170,8 @@ slides:
         - comment: "Its size, beside its state"
           run: "nereus environment list"
           output: |-
-            ENVIRONMENT  OWNER           NEREID    STATUS  SIZE      EXPIRES
-            spike        Project/nereus  vcluster  Ready   platform  3h58m
+            ENVIRONMENT  ORGANIZATION  PROJECT  NEREID    STATUS  SIZE      EXPIRES
+            spike        getnereus     nereus   vcluster  Ready   platform  3h58m
     dependsOn: [create]
     notes: |-
       **An Environment has a size: the quota and limit range of its namespace, one of a closed set** (#1406 (an Environment has a size)). `small`, the default, is a throwaway environment on a laptop: 20 Pods, a default container limit of 512Mi. `platform` has room for Nereus's own profile, measured in the spike #1389 (Nereus inside a vcluster Environment): 200 Pods, a default container limit of 4Gi and 2 CPU, above istiod's 2Gi request.
@@ -197,9 +197,9 @@ slides:
         - comment: "Its Nereid, its state, and when it goes"
           run: "nereus environment list"
           output: |-
-            ENVIRONMENT  OWNER           NEREID    STATUS  SIZE   EXPIRES
-            a            Project/nereus  vcluster  Ready   small  58m
-            b            Project/nereus  vcluster  Ready   small  58m
+            ENVIRONMENT  ORGANIZATION  PROJECT  NEREID    STATUS  SIZE   EXPIRES
+            a            getnereus     nereus   vcluster  Ready   small  58m
+            b            getnereus     nereus   vcluster  Ready   small  58m
     dependsOn: [create]
     notes: |-
       **EXPIRES is the time left, as kubectl shows an age**, from `status.expiresAt`; `spec.expires` until its Nereid writes it, `-` once it expired.
@@ -285,7 +285,7 @@ slides:
       steps:
         - comment: "An environment for one minute"
           run: "nereus environment create c"
-          options: ["--owner project/nereus", "--expires 1m"]
+          options: ["--project nereus", "--expires 1m"]
           output: |-
             ✓ environment/environments/c created (mandate: vcluster, nereid: vcluster)
 
@@ -296,9 +296,9 @@ slides:
         - comment: "A minute later"
           run: "nereus environment list"
           output: |-
-            ENVIRONMENT  OWNER           NEREID    STATUS   SIZE   EXPIRES
-            b            Project/nereus  vcluster  Ready    small  55m
-            c            Project/nereus  vcluster  Expired  small  -
+            ENVIRONMENT  ORGANIZATION  PROJECT  NEREID    STATUS   SIZE   EXPIRES
+            b            getnereus     nereus   vcluster  Ready    small  55m
+            c            getnereus     nereus   vcluster  Expired  small  -
     dependsOn: [create]
     notes: |-
       **An expired Environment stays, `Expired`, with nothing behind it**: the vcluster and its namespace are gone, and the record shows what happened until someone deletes it.
@@ -320,7 +320,7 @@ slides:
       steps:
         - comment: "The CLI's first setup registers the kept k3d cluster; vcluster stays the default"
           run: "nereus environment create nereus"
-          options: ["--owner project/nereus", "--mandate local"]
+          options: ["--project nereus", "--mandate local"]
           output: |-
             ✓ environment/environments/nereus created (mandate: local, nereid: k3d)
 
@@ -329,9 +329,9 @@ slides:
               nereus environment get nereus --watch
         - run: "nereus environment list"
           output: |-
-            ENVIRONMENT  OWNER           NEREID    STATUS  SIZE   EXPIRES
-            nereus        Project/nereus  k3d       Ready   -      -
-            pr-123       Project/nereus  vcluster  Ready   small  2d
+            ENVIRONMENT  ORGANIZATION  PROJECT  NEREID    STATUS  SIZE   EXPIRES
+            nereus       getnereus     nereus   k3d       Ready   -      -
+            pr-123       getnereus     nereus   vcluster  Ready   small  2d
     dependsOn: [create]
     notes: |-
       **The kept k3d cluster is the Environment `nereus`** (ADR 0026, the environment reef), a disposable label like any environment's, never `prod`: swapping the cluster changes the environment, not the Workload. The `k3d` Nereid knows only the cluster it runs in: it adopts it, writes `status.kubernetes`, refuses a second one and never deletes the cluster, a stand-in until a Nereid makes clusters.

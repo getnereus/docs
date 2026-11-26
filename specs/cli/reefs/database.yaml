@@ -76,7 +76,7 @@ slides:
 
             Next steps:
 
-              nereus database create <name> --owner project/<name> --engine postgres
+              nereus database create <name> --project <name> --engine postgres
     notes: |-
       **An admission policy holds the Nereid to its own objects:** Secrets, Clusters and release objects labelled `core.getnereus.dev/nereid=cloudnative-pg`, and only the chart and values its image declares.
     pt:
@@ -96,7 +96,7 @@ slides:
       steps:
         - comment: "In nereus-system, for Keycloak"
           run: "nereus database create keycloak"
-          options: ["--owner project/nereids", "--engine postgres"]
+          options: ["--project nereids", "--engine postgres"]
           output: |-
             ✓ database/databases/keycloak created (mandate: cloudnative-pg, nereid: cloudnative-pg)
 
@@ -122,17 +122,18 @@ slides:
       steps:
         - run: "nereus database get keycloak"
           output: |-
-            Name:        keycloak
-            Owner:       Project/nereids
-            Engine:      postgres
-            Mandate:     cloudnative-pg
-            Nereid:      cloudnative-pg
-            Ready:       True
-            Connection:  secret nereus-system/keycloak-database (host, port, dbname, username, password, uri)
+            Name:          keycloak
+            Organization:  getnereus
+            Project:       nereus/nereids
+            Engine:        postgres
+            Mandate:       cloudnative-pg
+            Nereid:        cloudnative-pg
+            Ready:         True
+            Connection:    secret nereus-system/keycloak-database (host, port, dbname, username, password, uri)
         - run: "nereus database list"
           output: |-
-            DATABASE  OWNER            ENGINE    MANDATE         READY
-            keycloak  Project/nereids  postgres  cloudnative-pg  True
+            DATABASE  ORGANIZATION  PROJECT         ENGINE    MANDATE         READY
+            keycloak  getnereus     nereus/nereids  postgres  cloudnative-pg  True
     notes: |-
       **`keycloak-database` follows the Service Binding layout** (`type: postgresql`, `provider: cloudnative-pg`). The scene writes a row through its `uri`, deletes the PostgreSQL pod, and reads the row back.
     pt:
@@ -151,9 +152,9 @@ slides:
     terminal:
       steps:
         - run: "nereus database create orders"
-          options: ["--owner project/missing", "--engine postgres"]
+          options: ["--project missing", "--engine postgres"]
           output: |-
-            ✗ database/databases/orders: owner Project/missing does not exist. To fix it, run:
+            ✗ database/databases/orders: owner project/missing does not exist. To fix it, run:
               nereus tenancy project list
               Nothing was changed.
     notes: |-

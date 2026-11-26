@@ -39,7 +39,7 @@ The team of the payments Project.
 
 ```bash
 nereus teams create payments \
-  --owner project/payments
+  --project payments
 ```
 
 ``` { .text .output title="output" }
@@ -56,7 +56,7 @@ No Project billing yet.
 
 ```bash
 nereus teams create billing \
-  --owner project/billing
+  --project billing
 ```
 
 ``` { .text .output title="output" }
@@ -114,7 +114,7 @@ bruno   -          core/users/bruno
 
 Next steps:
 
-  nereus authorization binding create <name> --role <role> --team payments --owner project/payments
+  nereus authorization binding create <name> --role <role> --team payments --project payments
 ```
 
 ### team-list
@@ -126,8 +126,8 @@ nereus teams list
 ```
 
 ``` { .text .output title="output" }
-NAME      OWNER             MEMBERS  AGE
-payments  project/payments  2        5m
+NAME      ORGANIZATION  PROJECT   MEMBERS  AGE
+payments  example       payments  2        5m
 ```
 
 ### team-delete-refused

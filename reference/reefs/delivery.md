@@ -143,9 +143,9 @@ nereus workload list
 ```
 
 ``` { .text .output title="output" }
-WORKLOAD  OWNER          TYPE     AUDIENCE  DELIVERIES  STATUS
-billing   Project/shop   service  programs  0           Ready
-hello     Project/hello  service  people    2           Ready
+WORKLOAD  ORGANIZATION  PROJECT  TYPE     AUDIENCE  DELIVERIES  STATUS
+billing   example       shop     service  programs  0           Ready
+hello     example       hello    service  people    2           Ready
 
 Next steps:
 

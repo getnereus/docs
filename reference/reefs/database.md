@@ -45,7 +45,7 @@ nereus nereid apply cloudnative-pg \
 
 Next steps:
 
-  nereus database create <name> --owner project/<name> --engine postgres
+  nereus database create <name> --project <name> --engine postgres
 ```
 
 ### create
@@ -54,7 +54,7 @@ In nereus-system, for Keycloak.
 
 ```bash
 nereus database create keycloak \
-  --owner project/nereids \
+  --project nereids \
   --engine postgres
 ```
 
@@ -73,25 +73,26 @@ nereus database get keycloak
 ```
 
 ``` { .text .output title="output" }
-Name:        keycloak
-Owner:       Project/nereids
-Engine:      postgres
-Mandate:     cloudnative-pg
-Nereid:      cloudnative-pg
-Ready:       True
-Connection:  secret nereus-system/keycloak-database (host, port, dbname, username, password, uri)
+Name:          keycloak
+Organization:  getnereus
+Project:       nereus/nereids
+Engine:        postgres
+Mandate:       cloudnative-pg
+Nereid:        cloudnative-pg
+Ready:         True
+Connection:    secret nereus-system/keycloak-database (host, port, dbname, username, password, uri)
 ```
 
 ### refused
 
 ```bash
 nereus database create orders \
-  --owner project/missing \
+  --project missing \
   --engine postgres
 ```
 
 ``` { .text .output title="output" }
-✗ database/databases/orders: owner Project/missing does not exist. To fix it, run:
+✗ database/databases/orders: owner project/missing does not exist. To fix it, run:
   nereus tenancy project list
   Nothing was changed.
 ```

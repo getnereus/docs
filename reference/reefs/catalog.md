@@ -29,12 +29,12 @@ nereus catalog apply \
 ✓ catalog/workloadtypes/service created
 ✓ catalog/packagetypes/cli created
 ✓ catalog/packagetypes/image created
-✓ catalog/workloads/flux created (owner: Project/nereids, type: controller)
-✓ catalog/workloads/keycloak created (owner: Project/nereids, type: controller)
-✓ catalog/workloads/openbao created (owner: Project/nereids, type: controller)
-✓ catalog/workloads/triton created (owner: Project/triton, type: service)
-✓ catalog/packages/nereus created (owner: Project/core, type: cli, registry: pypi)
-✓ catalog/packages/openbao-image created (owner: Project/nereids, type: image, registry: oci)
+✓ catalog/workloads/flux created (owner: project/nereids, type: controller)
+✓ catalog/workloads/keycloak created (owner: project/nereids, type: controller)
+✓ catalog/workloads/openbao created (owner: project/nereids, type: controller)
+✓ catalog/workloads/triton created (owner: project/triton, type: service)
+✓ catalog/packages/nereus created (owner: project/core, type: cli, registry: pypi)
+✓ catalog/packages/openbao-image created (owner: project/nereids, type: image, registry: oci)
 
 Next steps:
 
@@ -56,7 +56,7 @@ nereus catalog workload create edge-cloudflare \
 ```
 
 ``` { .text .output title="output" }
-catalog/workloads/edge-cloudflare would be created (owner: Project/nereids, type: controller)
+catalog/workloads/edge-cloudflare would be created (owner: project/nereids, type: controller)
 Nothing changed (--dry-run).
 ```
 
@@ -70,8 +70,8 @@ nereus catalog list \
 ```
 
 ``` { .text .output title="output" }
-WORKLOAD  OWNER           TYPE     AUDIENCE        STATUS
-triton    Project/triton  service  agents, people  DeploymentNotFound
+WORKLOAD  ORGANIZATION  PROJECT        TYPE     AUDIENCE        STATUS
+triton    getnereus     nereus/triton  service  agents, people  DeploymentNotFound
 ```
 
 ### workload-delete
@@ -92,7 +92,7 @@ The same verbs, the kind in the path.
 
 ```bash
 nereus catalog package create nereus \
-  --owner project/core \
+  --project core \
   --type cli \
   --registry pypi \
   --name nereus \
@@ -104,7 +104,7 @@ nereus catalog package create nereus \
 ```
 
 ``` { .text .output title="output" }
-catalog/packages/nereus would be created (owner: Project/core, type: cli, registry: pypi)
+catalog/packages/nereus would be created (owner: project/core, type: cli, registry: pypi)
 Nothing changed (--dry-run).
 ```
 
@@ -153,7 +153,7 @@ nereus catalog check
 ```
 
 ``` { .text .output title="output" }
-✗ catalog/workloads/api: owner Project/ghost does not exist
+✗ catalog/workloads/api: owner project/ghost does not exist
 ✗ catalog/packages/base-image: type image takes the registries oci, not pypi
 ✗ catalog/workloads/worker: audience is missing
 3 contradictions, 0 gaps

@@ -7829,7 +7829,7 @@ teams        members       create,delete
 
 Next steps:
 
-  nereus authorization binding create &lt;name&gt; --role release-manager --team &lt;team&gt; --owner project/&lt;project&gt;
+  nereus authorization binding create &lt;name&gt; --role release-manager --team &lt;team&gt; --project &lt;project&gt;
 </code></pre></div>
 <h3 id="role-delete">role-delete<a class="headerlink" href="#role-delete" title="Permanent link">&para;</a></h3>
 <p>No one locks the instance out.</p>
@@ -7844,13 +7844,13 @@ Next steps:
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>authorization<span class="w"> </span>binding<span class="w"> </span>create<span class="w"> </span>payments-developers<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--role<span class="w"> </span>developer<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--team<span class="w"> </span>payments<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/payments
+<span class="w">  </span>--project<span class="w"> </span>payments
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ authorization/bindings/payments-developers created
 
 Next steps:
 
-  nereus authorization binding list --owner project/payments
+  nereus authorization binding list --project payments
 </code></pre></div>
 <h3 id="binding-position">binding-position<a class="headerlink" href="#binding-position" title="Permanent link">&para;</a></h3>
 <p>Only who holds the position.</p>
@@ -7858,46 +7858,46 @@ Next steps:
 <span class="w">  </span>--role<span class="w"> </span>team-lead<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--team<span class="w"> </span>payments<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--position<span class="w"> </span>tech-lead<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/payments
+<span class="w">  </span>--project<span class="w"> </span>payments
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ authorization/bindings/payments-leads created
 
 Next steps:
 
-  nereus authorization binding list --owner project/payments
+  nereus authorization binding list --project payments
 </code></pre></div>
 <h3 id="binding-list">binding-list<a class="headerlink" href="#binding-list" title="Permanent link">&para;</a></h3>
 <p>Who may do what on the Project.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>authorization<span class="w"> </span>binding<span class="w"> </span>list<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/payments
+<span class="w">  </span>--project<span class="w"> </span>payments
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>NAME                 SUBJECT                  ROLE       OWNER
-payments-developers  team/payments            developer  project/payments
-payments-leads       team/payments/tech-lead  team-lead  project/payments
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>NAME                 SUBJECT                  ROLE       ORGANIZATION  PROJECT
+payments-developers  team/payments            developer  example       payments
+payments-leads       team/payments/tech-lead  team-lead  example       payments
 </code></pre></div>
 <h3 id="can-i-yes">can-i-yes<a class="headerlink" href="#can-i-yes" title="Permanent link">&para;</a></h3>
 <p>Signed in as ana: with no --user, the question is about the caller.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>authorization<span class="w"> </span>can-i<span class="w"> </span>create<span class="w"> </span>environment/environments<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/payments
+<span class="w">  </span>--project<span class="w"> </span>payments
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>yes: authorization/bindings/payments-leads gives team-lead to team/payments/tech-lead at project/payments
 </code></pre></div>
 <h3 id="can-i-no">can-i-no<a class="headerlink" href="#can-i-no" title="Permanent link">&para;</a></h3>
 <p>About someone else.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>authorization<span class="w"> </span>can-i<span class="w"> </span>create<span class="w"> </span>environment/environments<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/payments<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--project<span class="w"> </span>payments<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--user<span class="w"> </span>bruno
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>no: no binding gives bruno create on environment/environments at project/payments
 
 Next steps:
 
-  nereus authorization binding list --owner project/payments
+  nereus authorization binding list --project payments
 </code></pre></div>
 <h3 id="can-i-shortcut">can-i-shortcut<a class="headerlink" href="#can-i-shortcut" title="Permanent link">&para;</a></h3>
 <p>Signed in as bruno: a developer creates builds.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>can-i<span class="w"> </span>create<span class="w"> </span>build/builds<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/payments
+<span class="w">  </span>--project<span class="w"> </span>payments
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>yes: authorization/bindings/payments-developers gives developer to team/payments at project/payments
 </code></pre></div>
@@ -7918,16 +7918,16 @@ Next steps:
 <h3 id="enforce-denied">enforce-denied<a class="headerlink" href="#enforce-denied" title="Permanent link">&para;</a></h3>
 <p>Signed in as bruno.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>environment<span class="w"> </span>create<span class="w"> </span>staging<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/payments
+<span class="w">  </span>--project<span class="w"> </span>payments
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✗ environment/environments/staging: bruno may not create environment/environments at project/payments. To see who may, run:
-  nereus authorization binding list --owner project/payments
+  nereus authorization binding list --project payments
   Nothing was changed.
 </code></pre></div>
 <h3 id="enforce-allowed">enforce-allowed<a class="headerlink" href="#enforce-allowed" title="Permanent link">&para;</a></h3>
 <p>Signed in as ana, the tech lead.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>environment<span class="w"> </span>create<span class="w"> </span>staging<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/payments
+<span class="w">  </span>--project<span class="w"> </span>payments
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ environment/environments/staging created (mandate: vcluster, nereid: vcluster)
 
@@ -7956,7 +7956,7 @@ Next steps:
 <span class="w">  </span>--reef<span class="w"> </span>environment<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--kinds<span class="w"> </span>environments<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--verbs<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/payments
+<span class="w">  </span>--project<span class="w"> </span>payments
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ authorization/gates/payments-environments created
 
@@ -7967,7 +7967,7 @@ Next steps:
 <h3 id="create-held">create-held<a class="headerlink" href="#create-held" title="Permanent link">&para;</a></h3>
 <p>A dry run says whose approval it would wait for, and writes nothing.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>environment<span class="w"> </span>create<span class="w"> </span>staging<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/payments<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--project<span class="w"> </span>payments<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--dry-run
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>would wait for approval: authorization/gates/payments-environments, approvers team/payments/tech-lead
@@ -7998,7 +7998,7 @@ staging-create-7f3a  environment/environments/staging  create  bruno         Pen
 <h3 id="can-i-may-ask">can-i-may-ask<a class="headerlink" href="#can-i-may-ask" title="Permanent link">&para;</a></h3>
 <p>The answer to create is still no, and says who decides.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>authorization<span class="w"> </span>can-i<span class="w"> </span>create<span class="w"> </span>environment/environments<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--owner<span class="w"> </span>project/payments<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--project<span class="w"> </span>payments<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--user<span class="w"> </span>bruno
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>no, but may ask: authorization/gates/payments-environments holds create for team/payments/tech-lead's approval

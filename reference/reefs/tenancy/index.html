@@ -7459,14 +7459,14 @@ Next steps:
 <p>One row per Project, in the tree's order.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>tenancy<span class="w"> </span>project<span class="w"> </span>list
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>PROJECT   PARENT                  REPOSITORY
-shop      Organization/example    https://github.com/example/shop
-checkout  Project/shop            -
-nereus    Organization/getnereus  https://github.com/getnereus/nereus
-core      Project/nereus          -
-docs      Project/nereus          -
-nereids   Project/nereus          -
-triton    Project/nereus          -
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>ORGANIZATION  PROJECT         REPOSITORY
+example       shop            https://github.com/example/shop
+example       shop/checkout   -
+getnereus     nereus          https://github.com/getnereus/nereus
+getnereus     nereus/core     -
+getnereus     nereus/docs     -
+getnereus     nereus/nereids  -
+getnereus     nereus/triton   -
 </code></pre></div>
 <h3 id="project-get">project-get<a class="headerlink" href="#project-get" title="Permanent link">&para;</a></h3>
 <p>The path climbs spec.parent to the root.</p>
@@ -7475,8 +7475,8 @@ triton    Project/nereus          -
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>Name:        checkout
 Kind:        Project
 Path:        tenancy/organizations/example/projects/shop/projects/checkout
-Parent:      Project/shop
-Boundary:    Organization/example
+Parent:      project/shop
+Boundary:    organization/example
 Repository:  -
 </code></pre></div>
 <h3 id="apply">apply<a class="headerlink" href="#apply" title="Permanent link">&para;</a></h3>
@@ -7516,7 +7516,7 @@ tenancy/organizations/example/projects/shop deleted (dry run)
 <p>The node the next commands are for.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>owner<span class="w"> </span>project/triton
 </code></pre></div>
-<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ config: owner = Project/triton
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ config: owner = project/triton
 </code></pre></div>
 
 

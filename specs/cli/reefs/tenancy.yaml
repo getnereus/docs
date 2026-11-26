@@ -208,7 +208,7 @@ slides:
           run: "nereus tenancy project create orphan"
           options: ["--parent project/missing"]
           output: |-
-            ✗ tenancy/projects/orphan: parent Project/missing does not exist. To fix it, run:
+            ✗ tenancy/projects/orphan: parent project/missing does not exist. To fix it, run:
               nereus tenancy project list
               Nothing was changed.
     dependsOn: [project-create]
@@ -236,14 +236,14 @@ slides:
         - comment: "One row per Project, in the tree's order"
           run: "nereus tenancy project list"
           output: |-
-            PROJECT   PARENT                  REPOSITORY
-            shop      Organization/example    https://github.com/example/shop
-            checkout  Project/shop            -
-            nereus    Organization/getnereus  https://github.com/getnereus/nereus
-            core      Project/nereus          -
-            docs      Project/nereus          -
-            nereids   Project/nereus          -
-            triton    Project/nereus          -
+            ORGANIZATION  PROJECT         REPOSITORY
+            example       shop            https://github.com/example/shop
+            example       shop/checkout   -
+            getnereus     nereus          https://github.com/getnereus/nereus
+            getnereus     nereus/core     -
+            getnereus     nereus/docs     -
+            getnereus     nereus/nereids  -
+            getnereus     nereus/triton   -
     dependsOn: [project-nested]
     notes: |-
       **The columns are the Project, its parent as `Kind/name` and the kind's string fields** (#569's recommendation), here its repository: a full path would make the table as wide as the tree is deep. The rows go in the tree's order, parents before children and siblings by name.
@@ -268,8 +268,8 @@ slides:
             Name:        checkout
             Kind:        Project
             Path:        tenancy/organizations/example/projects/shop/projects/checkout
-            Parent:      Project/shop
-            Boundary:    Organization/example
+            Parent:      project/shop
+            Boundary:    organization/example
             Repository:  -
     dependsOn: [project-nested]
     notes: |-
@@ -388,7 +388,7 @@ slides:
       - "**The field:** `owner: {kind, name}`, a kind of the tenancy group, never an apiVersion and never a namespace"
       - "**Who names it:** the catalog's Workloads and Packages, an Environment, a resource Instance, a Mandate's `match`"
     notes: |-
-      **One reference for every reef** (ADR 0015): it replaces the `spec.project` of the first proposal, and a new reef that needs to say whose a thing is reuses it without learning a kind name. On the command line it is `--owner <kind>/<name>`, as `nereus environment create a --owner project/nereus` already takes ([the environment reef](environment.html#create)).
+      **One reference for every reef** (ADR 0015): it replaces the `spec.project` of the first proposal, and a new reef that needs to say whose a thing is reuses it without learning a kind name. On the command line it is `--organization <name>` or `--project <name>` (the ORGANIZATION and PROJECT columns of every list; `--owner <kind>/<name>` still works, hidden), as `nereus environment create a --project nereus` already takes ([the environment reef](environment.html#create)).
     pt:
       topic: "owner"
       message: "Tudo o que aponta para a árvore nomeia o seu owner por kind e nome"
@@ -397,7 +397,7 @@ slides:
         - "**O campo:** `owner: {kind, name}`, um kind do grupo tenancy, nunca uma apiVersion e nunca um namespace"
         - "**Quem o nomeia:** os Workloads e Packages do catálogo, um Environment, uma Instance de recurso, o `match` de um Mandate"
       notes: |-
-        **Uma referência para todo reef** (ADR 0015): ela substitui o `spec.project` da primeira proposta, e um reef novo que precisa dizer de quem é uma coisa a reusa sem aprender um nome de kind. Na linha de comando ela é `--owner <kind>/<name>`, como o `nereus environment create a --owner project/nereus` já aceita ([o reef environment](environment.html#create)).
+        **Uma referência para todo reef** (ADR 0015): ela substitui o `spec.project` da primeira proposta, e um reef novo que precisa dizer de quem é uma coisa a reusa sem aprender um nome de kind. Na linha de comando ela é `--organization <name>` ou `--project <name>` (as colunas ORGANIZATION e PROJECT de toda lista; `--owner <kind>/<name>` ainda funciona, oculto), como o `nereus environment create a --project nereus` já aceita ([o reef environment](environment.html#create)).
 
   - name: config-owner
     act: owner
@@ -411,12 +411,12 @@ slides:
         - comment: "The node the next commands are for"
           run: "nereus config set owner project/triton"
           output: |-
-            ✓ config: owner = Project/triton
+            ✓ config: owner = project/triton
         - comment: "No --owner: the output names the one used"
           run: "nereus catalog workload create api"
           options: ["--type service", "--audience programs"]
           output: |-
-            ✓ catalog/workloads/api created (owner: Project/triton, type: service)
+            ✓ catalog/workloads/api created (owner: project/triton, type: service)
     dependsOn: [project-nested]
     notes: |-
       **The flag wins over the config, and the output line names the owner used** (owner's ask, 2026-10-30, ADR 0016), as `kubectl config set-context --current --namespace` and `gcloud config set project` do.

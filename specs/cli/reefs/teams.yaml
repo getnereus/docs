@@ -82,7 +82,7 @@ slides:
       steps:
         - comment: "The team of the payments Project"
           run: "nereus teams create payments"
-          options: ["--owner project/payments"]
+          options: ["--project payments"]
           output: |-
             ✓ teams/teams/payments created
 
@@ -114,7 +114,7 @@ slides:
       steps:
         - comment: "No Project billing yet"
           run: "nereus teams create billing"
-          options: ["--owner project/billing"]
+          options: ["--project billing"]
           output: |-
             ✗ teams/teams/billing: its owner project/billing does not exist: see 'nereus tenancy project list'
     dependsOn: [team-create]
@@ -210,7 +210,7 @@ slides:
 
             Next steps:
 
-              nereus authorization binding create <name> --role <role> --team payments --owner project/payments
+              nereus authorization binding create <name> --role <role> --team payments --project payments
     dependsOn: [member-developer]
     notes: |-
       **One list of members, and access derives from it.** The next step is a binding of the authorization reef: what this team, or one of its positions, may do.
@@ -233,8 +233,8 @@ slides:
         - comment: "The teams of the platform"
           run: "nereus teams list"
           output: |-
-            NAME      OWNER             MEMBERS  AGE
-            payments  project/payments  2        5m
+            NAME      ORGANIZATION  PROJECT   MEMBERS  AGE
+            payments  example       payments  2        5m
         - comment: "The members of one team"
           run: "nereus teams member list"
           options: ["--team payments"]

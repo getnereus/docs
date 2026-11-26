@@ -1138,7 +1138,7 @@ slides:
         - comment: "The node the next commands are for"
           run: "nereus config set owner project/triton"
           output: |-
-            ✓ config: owner = Project/triton
+            ✓ config: owner = project/triton
     notes: |-
       **The one setting of the person, not of the platform** (ADR 0016, #902): kept in `~/.config/nereus/config.yaml`, never the kubeconfig. The owner must exist in the tenancy tree; a command with no `--owner` uses it, and its output names the owner used ([The tenancy reef](reefs/tenancy.html#config-owner)).
     pt:
@@ -1159,7 +1159,7 @@ slides:
         - comment: "The current owner"
           run: "nereus config get owner"
           output: |-
-            Project/triton
+            project/triton
         - comment: "None set: the line says how"
           run: "nereus config get owner"
           output: |-

@@ -140,7 +140,7 @@ nereus build trigger get triton
 ``` { .text .output title="output" }
 Name:        triton
 Workload:    triton
-Owner:       Project/triton
+Owner:       project/triton
 Mandate:     -
 Nereid:      buildkit
 Mirror:      nereus

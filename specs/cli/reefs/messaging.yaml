@@ -134,7 +134,7 @@ slides:
       steps:
         - comment: "A topic for the orders, owned by a project"
           run: "nereus messaging topic create orders"
-          options: ["--owner project/triton", "--engine nats"]
+          options: ["--project triton", "--engine nats"]
           output: |-
             ✓ messaging/topics/orders created (mandate: messaging-nats, nereid: nats)
 
@@ -143,7 +143,7 @@ slides:
               nereus messaging topic get orders
         - comment: "A topic only its owner's user writes to, keeping its messages for 30 days, up to 16M"
           run: "nereus messaging topic create team-ops"
-          options: ["--owner project/triton", "--engine nats", "--access owner", "--max-age 30d", "--max-bytes 16M"]
+          options: ["--project triton", "--engine nats", "--access owner", "--max-age 30d", "--max-bytes 16M"]
           output: |-
             ✓ messaging/topics/team-ops created (mandate: nats, nereid: nats)
 
@@ -153,9 +153,9 @@ slides:
         - comment: "The topics of the reef"
           run: "nereus messaging topic list"
           output: |-
-            TOPIC     OWNER           ENGINE  MANDATE  MAX AGE  MAX BYTES  READY
-            orders    Project/triton  nats    nats     -        -          True
-            team-ops  Project/triton  nats    nats     30d      16M        True
+            TOPIC     ORGANIZATION  PROJECT        ENGINE  MANDATE  MAX AGE  MAX BYTES  READY
+            orders    getnereus     nereus/triton  nats    nats     -        -          True
+            team-ops  getnereus     nereus/triton  nats    nats     30d      16M        True
     dependsOn: [apply-nats]
     notes: |-
       **A topic is the subject `topics.<name>`:** whoever is not listening when a message is sent misses it, unless the Mandate says `jetstream=true`, and then the stream `topic-<name>` keeps it. The owner is a node of the tenancy tree; the Mandate is the one whose match holds, the most specific (ADR 0017, #1598), else the reef's default, unless `--mandate` names one, and it is pinned in `spec.mandate`: a later Mandate never moves the topic.
@@ -190,7 +190,8 @@ slides:
           run: "nereus messaging topic get orders"
           output: |-
             Name:             orders
-            Owner:            Project/triton
+            Organization:     getnereus
+            Project:          nereus/triton
             Engine:           nats
             Mandate:          nats
             Nereid:           nats
@@ -228,7 +229,7 @@ slides:
       steps:
         - comment: "The YAML of a topic, written by a dry run"
           run: "nereus messaging topic create events"
-          options: ["--owner project/triton", "--engine nats", "--dry-run", "--output yaml"]
+          options: ["--project triton", "--engine nats", "--dry-run", "--output yaml"]
           output: |-
             apiVersion: messaging.getnereus.dev/v1alpha1
             kind: Topic
@@ -268,7 +269,7 @@ slides:
       steps:
         - comment: "A queue for the builds to run"
           run: "nereus messaging queue create builds"
-          options: ["--owner project/triton", "--engine nats"]
+          options: ["--project triton", "--engine nats"]
           output: |-
             ✓ messaging/queues/builds created (mandate: messaging-nats, nereid: nats)
 
@@ -278,8 +279,8 @@ slides:
         - comment: "The queues of the reef"
           run: "nereus messaging queue list"
           output: |-
-            QUEUE   OWNER           ENGINE  MANDATE  READY
-            builds  Project/triton  nats    nats     True
+            QUEUE   ORGANIZATION  PROJECT        ENGINE  MANDATE  READY
+            builds  getnereus     nereus/triton  nats    nats     True
     dependsOn: [apply-nats]
     notes: |-
       **A queue is the JetStream stream `queue-<name>`** on the subject `queues.<name>`, with work-queue retention: each message goes to one worker and stays until one takes it. Its Mandate must say `jetstream=true`; without it the queue fails and its condition names the command that turns it on.
@@ -302,7 +303,8 @@ slides:
           run: "nereus messaging queue get builds"
           output: |-
             Name:             builds
-            Owner:            Project/triton
+            Organization:     getnereus
+            Project:          nereus/triton
             Engine:           nats
             Mandate:          nats
             Nereid:           nats
@@ -337,7 +339,7 @@ slides:
       steps:
         - comment: "The YAML of a queue, written by a dry run"
           run: "nereus messaging queue create scratch"
-          options: ["--owner project/triton", "--engine nats", "--deletion-policy delete", "--dry-run", "--output yaml"]
+          options: ["--project triton", "--engine nats", "--deletion-policy delete", "--dry-run", "--output yaml"]
           output: |-
             apiVersion: messaging.getnereus.dev/v1alpha1
             kind: Queue

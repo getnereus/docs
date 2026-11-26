@@ -109,14 +109,14 @@ nereus tenancy project list
 ```
 
 ``` { .text .output title="output" }
-PROJECT   PARENT                  REPOSITORY
-shop      Organization/example    https://github.com/example/shop
-checkout  Project/shop            -
-nereus    Organization/getnereus  https://github.com/getnereus/nereus
-core      Project/nereus          -
-docs      Project/nereus          -
-nereids   Project/nereus          -
-triton    Project/nereus          -
+ORGANIZATION  PROJECT         REPOSITORY
+example       shop            https://github.com/example/shop
+example       shop/checkout   -
+getnereus     nereus          https://github.com/getnereus/nereus
+getnereus     nereus/core     -
+getnereus     nereus/docs     -
+getnereus     nereus/nereids  -
+getnereus     nereus/triton   -
 ```
 
 ### project-get
@@ -131,8 +131,8 @@ nereus tenancy project get checkout
 Name:        checkout
 Kind:        Project
 Path:        tenancy/organizations/example/projects/shop/projects/checkout
-Parent:      Project/shop
-Boundary:    Organization/example
+Parent:      project/shop
+Boundary:    organization/example
 Repository:  -
 ```
 
@@ -196,5 +196,5 @@ nereus config set owner project/triton
 ```
 
 ``` { .text .output title="output" }
-✓ config: owner = Project/triton
+✓ config: owner = project/triton
 ```

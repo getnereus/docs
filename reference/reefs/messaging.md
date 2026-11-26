@@ -55,7 +55,7 @@ A topic for the orders, owned by a project.
 
 ```bash
 nereus messaging topic create orders \
-  --owner project/triton \
+  --project triton \
   --engine nats
 ```
 
@@ -77,7 +77,8 @@ nereus messaging topic get orders
 
 ``` { .text .output title="output" }
 Name:             orders
-Owner:            Project/triton
+Organization:     getnereus
+Project:          nereus/triton
 Engine:           nats
 Mandate:          nats
 Nereid:           nats
@@ -95,7 +96,7 @@ The YAML of a topic, written by a dry run.
 
 ```bash
 nereus messaging topic create events \
-  --owner project/triton \
+  --project triton \
   --engine nats \
   --dry-run \
   --output yaml
@@ -119,7 +120,7 @@ A queue for the builds to run.
 
 ```bash
 nereus messaging queue create builds \
-  --owner project/triton \
+  --project triton \
   --engine nats
 ```
 
@@ -141,7 +142,8 @@ nereus messaging queue get builds
 
 ``` { .text .output title="output" }
 Name:             builds
-Owner:            Project/triton
+Organization:     getnereus
+Project:          nereus/triton
 Engine:           nats
 Mandate:          nats
 Nereid:           nats
@@ -156,7 +158,7 @@ The YAML of a queue, written by a dry run.
 
 ```bash
 nereus messaging queue create scratch \
-  --owner project/triton \
+  --project triton \
   --engine nats \
   --deletion-policy delete \
   --dry-run \

@@ -65,7 +65,7 @@ slides:
     notes: |-
       **There is no `Component`, no `System` and no `API` kind** (ADR 0016): a leaf Project of the tenancy tree plays the part of the system, and an API is a Workload with an audience. A thing that runs and is published is two entries.
 
-      **`owner` is `{kind, name}` in the tenancy tree** (ADR 0015), and `--owner <kind>/<name>` is optional once [the current owner](tenancy.html#config-owner) is set.
+      **`owner` is `{kind, name}` in the tenancy tree** (ADR 0015), and `--organization <name>` or `--project <name>` is optional once [the current owner](tenancy.html#config-owner) is set.
     pt:
       topic: "os kinds"
       message: "Workload roda, Package é publicado"
@@ -78,7 +78,7 @@ slides:
       notes: |-
         **Não há `Component`, `System` nem kind `API`** (ADR 0016): um Project folha da árvore tenancy faz o papel do sistema, e uma API é um Workload com audience. Uma coisa que roda e é publicada são duas entradas.
 
-        **`owner` é `{kind, name}` na árvore tenancy** (ADR 0015), e `--owner <kind>/<name>` é opcional quando [o owner atual](tenancy.html#config-owner) está definido.
+        **`owner` é `{kind, name}` na árvore tenancy** (ADR 0015), e `--organization <name>` ou `--project <name>` é opcional quando [o owner atual](tenancy.html#config-owner) está definido.
 
   - name: workload-apply
     act: workload
@@ -98,12 +98,12 @@ slides:
             ✓ catalog/workloadtypes/service created
             ✓ catalog/packagetypes/cli created
             ✓ catalog/packagetypes/image created
-            ✓ catalog/workloads/flux created (owner: Project/nereids, type: controller)
-            ✓ catalog/workloads/keycloak created (owner: Project/nereids, type: controller)
-            ✓ catalog/workloads/openbao created (owner: Project/nereids, type: controller)
-            ✓ catalog/workloads/triton created (owner: Project/triton, type: service)
-            ✓ catalog/packages/nereus created (owner: Project/core, type: cli, registry: pypi)
-            ✓ catalog/packages/openbao-image created (owner: Project/nereids, type: image, registry: oci)
+            ✓ catalog/workloads/flux created (owner: project/nereids, type: controller)
+            ✓ catalog/workloads/keycloak created (owner: project/nereids, type: controller)
+            ✓ catalog/workloads/openbao created (owner: project/nereids, type: controller)
+            ✓ catalog/workloads/triton created (owner: project/triton, type: service)
+            ✓ catalog/packages/nereus created (owner: project/core, type: cli, registry: pypi)
+            ✓ catalog/packages/openbao-image created (owner: project/nereids, type: image, registry: oci)
 
             Next steps:
 
@@ -140,7 +140,7 @@ slides:
             - "--path controllers/edge-cloudflare/"
             - "--dry-run"
           output: |-
-            catalog/workloads/edge-cloudflare would be created (owner: Project/nereids, type: controller)
+            catalog/workloads/edge-cloudflare would be created (owner: project/nereids, type: controller)
             Nothing changed (--dry-run).
         - comment: "The file to commit and apply, not the object"
           run: "nereus catalog workload create edge-cloudflare"
@@ -190,8 +190,8 @@ slides:
           run: "nereus catalog list"
           options: ["--type service"]
           output: |-
-            WORKLOAD  OWNER           TYPE     AUDIENCE        STATUS
-            triton    Project/triton  service  agents, people  DeploymentNotFound
+            WORKLOAD  ORGANIZATION  PROJECT        TYPE     AUDIENCE        STATUS
+            triton    getnereus     nereus/triton  service  agents, people  DeploymentNotFound
         - comment: "One entry, as the platform holds it"
           run: "nereus catalog get triton"
           options: ["--output yaml"]
@@ -240,7 +240,7 @@ slides:
         - comment: "The same verbs, the kind in the path"
           run: "nereus catalog package create nereus"
           options:
-            - "--owner project/core"
+            - "--project core"
             - "--type cli"
             - "--registry pypi"
             - "--name nereus"
@@ -250,12 +250,12 @@ slides:
             - "--path cli/"
             - "--dry-run"
           output: |-
-            catalog/packages/nereus would be created (owner: Project/core, type: cli, registry: pypi)
+            catalog/packages/nereus would be created (owner: project/core, type: cli, registry: pypi)
             Nothing changed (--dry-run).
         - comment: "A registry the type does not take is refused before it is written"
           run: "nereus catalog package create base-image"
           options:
-            - "--owner project/core"
+            - "--project core"
             - "--type image"
             - "--registry pypi"
             - "--name base-image"
@@ -368,7 +368,7 @@ slides:
         - comment: "An owner that does not exist, a registry the type does not allow, an audience missing"
           run: "nereus catalog check"
           output: |-
-            ✗ catalog/workloads/api: owner Project/ghost does not exist
+            ✗ catalog/workloads/api: owner project/ghost does not exist
             ✗ catalog/packages/base-image: type image takes the registries oci, not pypi
             ✗ catalog/workloads/worker: audience is missing
             3 contradictions, 0 gaps
