@@ -146,7 +146,7 @@
       "title": "Presentations reef"
     },
     "adr/0029-mcp-tools/": {
-      "goal": "Status: Proposed",
+      "goal": "Status: Accepted",
       "md": "adr/0029-mcp-tools.md",
       "title": "MCP tools"
     },
