@@ -1380,20 +1380,20 @@ slides:
             Next steps:
 
               claude    # then /mcp, and log in to nereus
-        - comment: "The coding agents that have it"
+        - comment: "The coding agents that have it, one row per server"
           run: "nereus mcp client list"
           output: |-
-            CLIENT       SERVER  URL                             SCOPE
-            claude-code  nereus  https://nereus.example.com/mcp  user
+            CLIENT       SERVER  REEFS  URL                             SCOPE
+            claude-code  nereus  all    https://nereus.example.com/mcp  user
     dependsOn: [mcp-tool-list]
     notes: |-
-      **It runs the agent's own CLI** (`claude mcp add | get | remove`), never writes its settings and never copies your token: Claude Code logs in for `aud: nereus-mcp` itself (#1880). The OAuth client `claude-code` and its fixed callback port come from the instance's `/.well-known/nereus-configuration`, since Claude Code listens on `http://localhost:<port>/callback` and the realm accepts only that exact address.
+      **It runs the agent's own CLI** (`claude mcp add | list | get | remove`), never writes its settings and never copies your token: Claude Code logs in for `aud: nereus-mcp` itself (#1880). `--reef edge,catalog` adds a server of its own, `nereus-edge-catalog`, at `/mcp?reefs=edge,catalog`: only those reefs' tools and the core's (#2296). The OAuth client `claude-code` and its fixed callback port come from the instance's `/.well-known/nereus-configuration`, since Claude Code listens on `http://localhost:<port>/callback` and the realm accepts only that exact address.
     pt:
       topic: "mcp client add | list | remove"
       message: "O /mcp da instância no Claude Code, com um comando"
       accent: "no Claude Code"
       notes: |-
-        **Ele roda o CLI do próprio agente** (`claude mcp add | get | remove`), nunca escreve as configurações dele e nunca copia o seu token: o Claude Code faz login para `aud: nereus-mcp` sozinho (#1880). O client OAuth `claude-code` e sua porta fixa de callback vêm do `/.well-known/nereus-configuration` da instância, já que o Claude Code escuta em `http://localhost:<porta>/callback` e o realm aceita só esse endereço exato.
+        **Ele roda o CLI do próprio agente** (`claude mcp add | list | get | remove`), nunca escreve as configurações dele e nunca copia o seu token: o Claude Code faz login para `aud: nereus-mcp` sozinho (#1880). `--reef edge,catalog` adiciona um servidor próprio, `nereus-edge-catalog`, em `/mcp?reefs=edge,catalog`: só as ferramentas desses reefs e as do core (#2296). O client OAuth `claude-code` e sua porta fixa de callback vêm do `/.well-known/nereus-configuration` da instância, já que o Claude Code escuta em `http://localhost:<porta>/callback` e o realm aceita só esse endereço exato.
   - name: mcp-local
     act: mcp
     topic: "mcp local add | list | enable | disable"

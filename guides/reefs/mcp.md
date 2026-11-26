@@ -73,9 +73,24 @@ Next steps:
 
 In Claude Code, `/mcp` opens the realm's login page in the browser.
 
+A chat that needs only some reefs takes a server of its own with `--reef`, named `nereus-<reefs>`: its URL carries `?reefs=`, so it offers only those reefs' tools and the core's, whose generic reads reach only those reefs (#2296). A reef the instance lacks is refused at the connection, naming the installed ones.
+
+```bash
+nereus mcp client add claude-code \
+  --reef edge,catalog
+```
+
+``` { .text .output title="output" }
+✓ claude-code: MCP server nereus-edge-catalog added (https://nereus.example.com/mcp?reefs=edge,catalog, scope user, OAuth client claude-code)
+
+Next steps:
+
+  claude    # then /mcp, and log in to nereus-edge-catalog
+```
+
 ### 4. Add it to claude.ai
 
-In claude.ai, add a custom connector with the URL `https://nereus.example.com/mcp` and the OAuth Client ID `claude`. The client finds the issuer from the protected resource metadata (RFC 9728) and logs in with a token only `/mcp` accepts.
+In claude.ai, add a custom connector with the URL `https://nereus.example.com/mcp` (or `https://nereus.example.com/mcp?reefs=edge,catalog` for a subset, which keeps a chat on the phone light) and the OAuth Client ID `claude`. The client finds the issuer from the protected resource metadata (RFC 9728) and logs in with a token only `/mcp` accepts.
 
 ```bash
 curl --silent https://nereus.example.com/.well-known/oauth-protected-resource/mcp
@@ -87,25 +102,28 @@ curl --silent https://nereus.example.com/.well-known/oauth-protected-resource/mc
 
 ## Check it worked
 
-After the login, the Claude Code session lists the same tools as `nereus mcp tool list`. `/mcp` is stateless: a reef installed or uninstalled shows on the client's next connection. `nereus mcp client list` shows the coding agents that have it.
+After the login, the Claude Code session lists the same tools as `nereus mcp tool list`. `/mcp` is stateless: a reef installed or uninstalled shows on the client's next connection. `nereus mcp client list` shows the coding agents that have it, one row per server.
 
 ```bash
 nereus mcp client list
 ```
 
 ``` { .text .output title="output" }
-CLIENT       SERVER  URL                             SCOPE
-claude-code  nereus  https://nereus.example.com/mcp  user
+CLIENT       SERVER               REEFS          URL                                                SCOPE
+claude-code  nereus               all            https://nereus.example.com/mcp                     user
+claude-code  nereus-edge-catalog  edge, catalog  https://nereus.example.com/mcp?reefs=edge,catalog  user
 ```
 
 ## Clean up
 
 ```bash
 nereus mcp client remove claude-code
+nereus mcp client remove claude-code --reef edge,catalog
 ```
 
 ``` { .text .output title="output" }
 ✓ claude-code: MCP server nereus removed
+✓ claude-code: MCP server nereus-edge-catalog removed
 ```
 
 ## Next
