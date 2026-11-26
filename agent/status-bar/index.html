@@ -6954,10 +6954,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-forecasts-word" class="md-nav__link">
+  <a href="#the-pace" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The forecast's word
+        The pace
       
     </span>
   </a>
@@ -7104,10 +7104,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-forecasts-word" class="md-nav__link">
+  <a href="#the-pace" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The forecast's word
+        The pace
       
     </span>
   </a>
@@ -7159,7 +7159,7 @@
 <h1 id="the-status-bar">The status bar<a class="headerlink" href="#the-status-bar" title="Permanent link">&para;</a></h1>
 <p>The bar under Claude Code's prompt shows, in one line, where the session is working, how full its context is and how much of the plan's quota is left.</p>
 <p><img alt="The status bar of a session" src="../../assets/agent/status-bar.png" /></p>
-<div class="language-text highlight"><pre><span></span><code>nereus  main  ≡ 13%  4h42m 4% ↻ 19:30  5d10h 16% ↻ Mon 01:00  today 69,6% of 23%  forecast 71,1% steady  ◔ 13m  ⇌ 14  ✦ Opus 5.5  ◈ 140k
+<div class="language-text highlight"><pre><span></span><code>nereus  main  ✦ Opus 5.5  40k 13%  4h42m 4% ↻ 17:55  5d10h 16% ↻ Mon 01:00 ▲ 61%
 </code></pre></div>
 <h2 id="each-piece">Each piece<a class="headerlink" href="#each-piece" title="Permanent link">&para;</a></h2>
 <table>
@@ -7177,6 +7177,11 @@
 <td>red</td>
 </tr>
 <tr>
+<td><code>⚠ disk 91%</code></td>
+<td>the disk passed its warning threshold (shown only then)</td>
+<td>amber</td>
+</tr>
+<tr>
 <td><code>nereus</code></td>
 <td>the repository, and the subfolder when there is one</td>
 <td>blue</td>
@@ -7184,86 +7189,79 @@
 <tr>
 <td><code>main</code></td>
 <td>the branch and the git status</td>
-<td></td>
-</tr>
-<tr>
-<td><code>≡ 13%</code></td>
-<td>how full the context window is</td>
-<td>green, yellow from 50%, red from 70%</td>
-</tr>
-<tr>
-<td><code>4h42m 4% ↻ 19:30</code></td>
-<td>the 5-hour limit: time left, usage, reset</td>
-<td>green, amber from 50%, salmon from 80%</td>
-</tr>
-<tr>
-<td><code>5d10h 16% ↻ Mon 01:00</code></td>
-<td>the weekly limit: time left, usage, reset</td>
-<td>same as above</td>
-</tr>
-<tr>
-<td><code>today 69,6% of 23%</code></td>
-<td>23% is where the weekly usage should be by the end of today; 69,6% is how much of that goal it has reached (16 of 23)</td>
-<td>white numbers</td>
-</tr>
-<tr>
-<td><code>forecast 71,1% steady</code></td>
-<td>the weekly usage at the reset if this pace goes on, and what to do about it</td>
-<td>the word, below</td>
-</tr>
-<tr>
-<td><code>◔ 13m</code></td>
-<td>how long the session has been running</td>
-<td>green, amber from 15 minutes, orange from 25, bordeaux from 35</td>
-</tr>
-<tr>
-<td><code>⇌ 14</code></td>
-<td>the owner's messages in this session</td>
-<td></td>
+<td>green when clean, gray when dirty</td>
 </tr>
 <tr>
 <td><code>✦ Opus 5.5</code></td>
 <td>the model</td>
-<td></td>
+<td>gray</td>
 </tr>
 <tr>
-<td><code>◈ 140k</code></td>
-<td>the session's tokens, input and output</td>
-<td></td>
+<td><code>40k 13%</code></td>
+<td>the session's input tokens, and their share of a 300k reference before a save and <code>/clear</code></td>
+<td>green, amber from 60%, salmon from 80%</td>
+</tr>
+<tr>
+<td><code>4h42m 4% ↻ 17:55</code></td>
+<td>the 5-hour limit: time left, usage, reset, then its verdict and the usage at the reset if this pace goes on</td>
+<td>white numbers, the verdict coloured: <code>•</code> ok (green), <code>▼</code> above 95% (salmon)</td>
+</tr>
+<tr>
+<td><code>5d10h 16% ↻ Mon 01:00 ▲ 61%</code></td>
+<td>the weekly limit: time left, usage, reset, then the pace and the forecast</td>
+<td>white numbers, the pace below</td>
 </tr>
 </tbody>
 </table>
 <p><code>/rc</code>, on the right, is Claude Code's own: Remote Control is on.</p>
-<h2 id="the-forecasts-word">The forecast's word<a class="headerlink" href="#the-forecasts-word" title="Permanent link">&para;</a></h2>
+<h2 id="the-pace">The pace<a class="headerlink" href="#the-pace" title="Permanent link">&para;</a></h2>
 <div class="language-text highlight"><pre><span></span><code>forecast = weekly usage × 7 days / time gone in the window
 </code></pre></div>
+<p>The week is meant to be used up, so the pace only says hold back past 99%. The same table colours the status bar and the Usage tab of the portal (spec 0015); <code>controllers/reference/test_usage_palette.py</code> checks the rule (<code>cli/src/nereus/usage_rules.py</code>) and the tab's stylesheet against it.</p>
 <table>
 <thead>
 <tr>
 <th>Forecast</th>
 <th>Word</th>
-<th>What to do</th>
+<th>Icon</th>
+<th>Status bar</th>
+<th>Dark: pace, container, on</th>
+<th>Light: pace, container, on</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>below 70%</td>
-<td><code>push</code> (green)</td>
-<td>speed up: more subagents and parallel sessions</td>
+<td><code>push</code></td>
+<td>▲</td>
+<td>39 (blue)</td>
+<td><code>#5ec4ff</code> <code>#003450</code> <code>#cbe8ff</code></td>
+<td><code>#00639b</code> <code>#cee5ff</code> <code>#001d33</code></td>
 </tr>
 <tr>
-<td>from 70% to 95%</td>
-<td><code>steady</code> (amber)</td>
-<td>keep the pace</td>
+<td>70% to 99%</td>
+<td><code>steady</code></td>
+<td>•</td>
+<td>114 (green)</td>
+<td><code>#87d787</code> <code>#133a1a</code> <code>#c6f1c4</code></td>
+<td><code>#2e6b30</code> <code>#c4efbf</code> <code>#002107</code></td>
 </tr>
 <tr>
-<td>above 95%</td>
-<td><code>slow</code> (salmon)</td>
-<td>hold back: one agent, no subagents, or a day off</td>
+<td>above 99%</td>
+<td><code>slow</code></td>
+<td>▼</td>
+<td>203 (salmon)</td>
+<td><code>#ff8a80</code> <code>#4d1512</code> <code>#ffdad5</code></td>
+<td><code>#b3261e</code> <code>#ffdad6</code> <code>#410002</code></td>
 </tr>
 </tbody>
 </table>
-<p>The segment stays hidden in the first 6 hours of the window, while the forecast is unstable.</p>
+<ul>
+<li><code>push</code>: speed up, more subagents and parallel sessions; <code>steady</code>: keep the pace; <code>slow</code>: hold back, one agent, no subagents, or a day off.</li>
+<li><code>final</code> (no worked time left in the window) is neutral: gray (247) on the status bar, the portal's surface on the tab.</li>
+<li>Nereus computes the word: the status bar reads it from the local cache (<code>figures.pace</code> in <code>~/.local/state/nereus/usage/weekly.json</code>), and its own rule, with the same thresholds, is only the fallback on a machine without the <code>nereus</code> CLI or with a cache of another window.</li>
+<li>The pace stays hidden in the first 6 hours of the window, while the forecast is unstable.</li>
+</ul>
 <h2 id="todays-goal">Today's goal<a class="headerlink" href="#todays-goal" title="Permanent link">&para;</a></h2>
 <p>The goal spreads what was left at the day's first reading evenly up to the reset, so it stays fixed all day. The share passes 100% once the goal is passed. A share above 100% does not mean the week is at risk: the forecast says that.</p>
 <div class="language-console highlight"><pre><span></span><code><span class="gp">$ </span>claude-usage-plan

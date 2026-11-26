@@ -3915,7 +3915,7 @@ Next steps:
 
 ### 2. Read where it is heading
 
-[`nereus usage get`](https://docs.getnereus.dev/specs/cli/reefs/usage.html#usage-get) shows the forecast at the reset and its pace (`push` below 70%, `steady` up to 95%, `slow` above), today's goal, and the week: the days gone (`~` when estimated), today and the plan for the days left.
+[`nereus usage get`](https://docs.getnereus.dev/specs/cli/reefs/usage.html#usage-get) shows the forecast at the reset and its pace (`push` below 70%, `steady` up to 99%, `slow` above), today's goal, and the week: the days gone (`~` when estimated), today and the plan for the days left.
 
 ```bash
 nereus usage get weekly

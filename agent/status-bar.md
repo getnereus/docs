@@ -5,7 +5,7 @@ The bar under Claude Code's prompt shows, in one line, where the session is work
 ![The status bar of a session](../assets/agent/status-bar.png)
 
 ```text
-nereus  main  ≡ 13%  4h42m 4% ↻ 19:30  5d10h 16% ↻ Mon 01:00  today 69,6% of 23%  forecast 71,1% steady  ◔ 13m  ⇌ 14  ✦ Opus 5.5  ◈ 140k
+nereus  main  ✦ Opus 5.5  40k 13%  4h42m 4% ↻ 17:55  5d10h 16% ↻ Mon 01:00 ▲ 61%
 ```
 
 ## Each piece
@@ -13,33 +13,34 @@ nereus  main  ≡ 13%  4h42m 4% ↻ 19:30  5d10h 16% ↻ Mon 01:00  today 69,6% 
 | Piece | What it says | Colors |
 |-------|--------------|--------|
 | `⚠ pontos` | a raw log did not reach Drive (shown only then; run `pontos-save status`) | red |
+| `⚠ disk 91%` | the disk passed its warning threshold (shown only then) | amber |
 | `nereus` | the repository, and the subfolder when there is one | blue |
-| `main` | the branch and the git status | |
-| `≡ 13%` | how full the context window is | green, yellow from 50%, red from 70% |
-| `4h42m 4% ↻ 19:30` | the 5-hour limit: time left, usage, reset | green, amber from 50%, salmon from 80% |
-| `5d10h 16% ↻ Mon 01:00` | the weekly limit: time left, usage, reset | same as above |
-| `today 69,6% of 23%` | 23% is where the weekly usage should be by the end of today; 69,6% is how much of that goal it has reached (16 of 23) | white numbers |
-| `forecast 71,1% steady` | the weekly usage at the reset if this pace goes on, and what to do about it | the word, below |
-| `◔ 13m` | how long the session has been running | green, amber from 15 minutes, orange from 25, bordeaux from 35 |
-| `⇌ 14` | the owner's messages in this session | |
-| `✦ Opus 5.5` | the model | |
-| `◈ 140k` | the session's tokens, input and output | |
+| `main` | the branch and the git status | green when clean, gray when dirty |
+| `✦ Opus 5.5` | the model | gray |
+| `40k 13%` | the session's input tokens, and their share of a 300k reference before a save and `/clear` | green, amber from 60%, salmon from 80% |
+| `4h42m 4% ↻ 17:55` | the 5-hour limit: time left, usage, reset, then its verdict and the usage at the reset if this pace goes on | white numbers, the verdict coloured: `•` ok (green), `▼` above 95% (salmon) |
+| `5d10h 16% ↻ Mon 01:00 ▲ 61%` | the weekly limit: time left, usage, reset, then the pace and the forecast | white numbers, the pace below |
 
 `/rc`, on the right, is Claude Code's own: Remote Control is on.
 
-## The forecast's word
+## The pace
 
 ```text
 forecast = weekly usage × 7 days / time gone in the window
 ```
 
-| Forecast | Word | What to do |
-|----------|------|------------|
-| below 70% | `push` (green) | speed up: more subagents and parallel sessions |
-| from 70% to 95% | `steady` (amber) | keep the pace |
-| above 95% | `slow` (salmon) | hold back: one agent, no subagents, or a day off |
+The week is meant to be used up, so the pace only says hold back past 99%. The same table colours the status bar and the Usage tab of the portal (spec 0015); `controllers/reference/test_usage_palette.py` checks the rule (`cli/src/nereus/usage_rules.py`) and the tab's stylesheet against it.
 
-The segment stays hidden in the first 6 hours of the window, while the forecast is unstable.
+| Forecast | Word | Icon | Status bar | Dark: pace, container, on | Light: pace, container, on |
+|----------|------|------|------------|---------------------------|----------------------------|
+| below 70% | `push` | ▲ | 39 (blue) | `#5ec4ff` `#003450` `#cbe8ff` | `#00639b` `#cee5ff` `#001d33` |
+| 70% to 99% | `steady` | • | 114 (green) | `#87d787` `#133a1a` `#c6f1c4` | `#2e6b30` `#c4efbf` `#002107` |
+| above 99% | `slow` | ▼ | 203 (salmon) | `#ff8a80` `#4d1512` `#ffdad5` | `#b3261e` `#ffdad6` `#410002` |
+
+- `push`: speed up, more subagents and parallel sessions; `steady`: keep the pace; `slow`: hold back, one agent, no subagents, or a day off.
+- `final` (no worked time left in the window) is neutral: gray (247) on the status bar, the portal's surface on the tab.
+- Nereus computes the word: the status bar reads it from the local cache (`figures.pace` in `~/.local/state/nereus/usage/weekly.json`), and its own rule, with the same thresholds, is only the fallback on a machine without the `nereus` CLI or with a cache of another window.
+- The pace stays hidden in the first 6 hours of the window, while the forecast is unstable.
 
 ## Today's goal
 

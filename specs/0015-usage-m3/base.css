@@ -1,0 +1,41 @@
+/* Throwaway mockups for #2326: the portal's M3 roles (dark default, light), the pace as the one hue. */
+:root {
+  --page: #000; --card: #0c0c0c; --c: #141414; --ch: #1f1f1f; --chh: #2a2a2a;
+  --text: #f5f5f5; --muted: #a3a3a3; --line: #262626; --outline: #737373;
+  --primary: #fff; --on-primary: #000;
+  --pace: #f2b84b; --pace-c: #3a2a00; --on-pace-c: #ffdf9e;
+  --push: #5fd38d; --slow: #ff8f7f;
+  --dated: #efb8c8; --dated-c: #4a2532; --on-dated-c: #ffd9e3;
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --page: #fafafa; --card: #fff; --c: #f3f3f3; --ch: #ececec; --chh: #e3e3e3;
+  --text: #0a0a0a; --muted: #525252; --line: #e5e5e5; --outline: #8a8a8a;
+  --primary: #000; --on-primary: #fff;
+  --pace: #8a5300; --pace-c: #ffdea6; --on-pace-c: #2a1800;
+  --push: #137a3c; --slow: #c2453a;
+  --dated: #a8325a; --dated-c: #ffd9e3; --on-dated-c: #3e0018;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--page); color: var(--text); }
+body { font: 400 14px/20px system-ui, Roboto, sans-serif; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; }
+.portal { display: flex; align-items: center; gap: 12px; height: 56px; padding: 0 16px; border-bottom: 1px solid var(--line); }
+.portal b { font: 500 18px/24px system-ui; }
+.portal .tabs { margin-left: auto; display: flex; gap: 4px; }
+.portal .tabs span { padding: 6px 12px; border-radius: 16px; color: var(--muted); font: 500 13px/18px system-ui; }
+.portal .tabs .on { background: var(--chh); color: var(--text); }
+.wrap { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+.chip { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px 0 8px; border-radius: 8px; border: 1px solid var(--outline); font: 500 14px/20px system-ui; color: var(--text); background: none; }
+.chip svg { width: 18px; height: 18px; fill: currentColor; color: var(--dated); }
+.pace-chip { display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 14px; background: var(--pace-c); color: var(--on-pace-c); font: 500 13px/18px system-ui; }
+.muted { color: var(--muted); }
+.lbl { font: 500 12px/16px system-ui; color: var(--muted); }
+.off-dated { color: var(--dated); }
+/* The status bar's pace palette (claude-status-line: push ▲ 39 blue, steady • 114 green, slow ▼ 203 salmon), as M3 roles */
+:root[data-pace="push"]   { --pace: #5ec4ff; --pace-c: #003450; --on-pace-c: #cbe8ff; }
+:root[data-pace="steady"] { --pace: #87d787; --pace-c: #133a1a; --on-pace-c: #c6f1c4; }
+:root[data-pace="slow"]   { --pace: #ff8a80; --pace-c: #4d1512; --on-pace-c: #ffdad5; }
+:root[data-theme="light"][data-pace="push"]   { --pace: #00639b; --pace-c: #cee5ff; --on-pace-c: #001d33; }
+:root[data-theme="light"][data-pace="steady"] { --pace: #2e6b30; --pace-c: #c4efbf; --on-pace-c: #002107; }
+:root[data-theme="light"][data-pace="slow"]   { --pace: #b3261e; --pace-c: #ffdad6; --on-pace-c: #410002; }
