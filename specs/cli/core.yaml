@@ -1294,15 +1294,25 @@ slides:
           output: |-
             ✓ installation nereus-local  naming.overrides.issuer.storage = acmeissuers01
             ✓ file ~/.config/nereus/init.yaml  updated
+        - comment: "The address people log in at, when it is not the ingress's"
+          run: "nereus config installation set"
+          options: ["--public-url https://nereus.example.com"]
+          output: |-
+            ✓ installation nereus-local  publicUrl = https://nereus.example.com
+            ✓ file ~/.config/nereus/init.yaml  updated
     dependsOn: [installation-show]
     notes: |-
       **Each change goes to the `Installation` object and to the settings file it came from.** An alias is free text of at most 63 characters; an override (`issuer.storage`, `state.storage` or `secrets.vault`) is checked against its resource's rules, and names a resource to create, never to rename: once the issuer is published, a new name is refused (spec 0005).
+
+      **The public URL is an http(s) origin** (#2291): the chart writes it as the Installation's `url` on every release instead of the ingress's address (`http://localhost:8080` on k3d), so `nereus status` and the portal show the `nereus login` line that works from another machine; `--public-url ''` clears it.
     pt:
       topic: "config installation set"
       message: "Mude o alias ou um naming override; nome e id ficam"
       accent: "nome e id ficam"
       notes: |-
         **Cada mudança vai para o objeto `Installation` e para o arquivo de configurações de onde ele veio.** Um alias é texto livre de até 63 caracteres; um override (`issuer.storage`, `state.storage` ou `secrets.vault`) é conferido contra as regras do seu recurso, e nomeia um recurso a criar, nunca a renomear: com o issuer publicado, um nome novo é recusado (spec 0005).
+
+        **A URL pública é uma origem http(s)** (#2291): o chart a grava como a `url` da `Installation` a cada release no lugar do endereço do ingress (`http://localhost:8080` no k3d), então o `nereus status` e o portal mostram a linha de `nereus login` que funciona de outra máquina; `--public-url ''` a apaga.
 
   - name: mcp-tool-list
     act: mcp

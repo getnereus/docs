@@ -1085,6 +1085,12 @@ Repeat for `auth`, `portal` and `login` (`dns: external`: a new hostname needs `
 kubectl apply --filename deploy/ingress/nereus-api-public.yaml
 ```
 
+Give the Installation its public address instead of `http://localhost:8080` (#2291):
+
+```bash
+nereus config installation set --public-url https://login.getnereus.dev
+```
+
 `numTrustedProxies: 1` keeps cloudflared's `X-Forwarded-Proto: https`, so Keycloak's issuer stays `https://`. Write the Release `istio-gateway` with `--values-file deploy/ingress/istio-gateway-values.yaml --dry-run --output yaml`, [`nereus release apply`](https://docs.getnereus.dev/specs/cli/reefs/release.html#release-apply) it, then `kubectl apply --filename deploy/ingress/gateway.yaml`.
 
 ### 5. Put Google in the realm
@@ -1112,7 +1118,7 @@ Then the Mandate `messaging-nats` is the messaging reef's default with no match 
 
 A cluster that had `--param agents=true` there keeps the old streams of the account `AGENTS` on the claim, unread, and the Secret `nats-triton` of `nereus-system`: drop the parameter, run `nereus nereid apply nats --reef messaging` again, and delete the Secret by hand.
 
-The rooms reef needs no parameter of it and no NATS account of its own (#2078): `nereus reef apply rooms` installs the rooms reef. Triton's issuer is the public realm of step 5, given with `--set` (#2157); without it Triton stops with `--issuer is required`.
+The rooms reef needs no parameter and no NATS account of its own (#2078). Triton's issuer is the public realm of step 5, given with `--set` (#2157); without it Triton stops with `--issuer is required`.
 
 ```bash
 nereus reef apply rooms
