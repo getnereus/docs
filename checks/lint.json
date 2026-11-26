@@ -3,10 +3,10 @@
   "command": "make --no-print-directory lint",
   "result": "pass",
   "exit": 0,
-  "seconds": 0,
+  "seconds": 1,
   "passed": 0,
   "failed": 0,
   "failure": null,
   "commit": "0e582ff3+",
-  "started": "2026-11-26T10:05:08Z"
+  "started": "2026-11-26T10:05:19Z"
 }
