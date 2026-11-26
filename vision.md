@@ -24,7 +24,7 @@ The project calls these pillars so that it orients itself by them, and so that i
 
 This page holds the one full list; other pages point to it or highlight part of it.
 
-Twenty-four pillars, in the owner's words:
+Twenty-five pillars, in the owner's words:
 
 - the Agile Manifesto
 - Extreme Programming, adjusted to AI agents
@@ -48,6 +48,7 @@ Twenty-four pillars, in the owner's words:
 - the Nereus API is the one door, and it cannot lie
 - the same quality for fewer tokens
 - simple on the surface, consistent underneath
+- every reef and every command is also an MCP tool
 - no single control point
 - an experience that works becomes an exploration of a possible feature
 
@@ -193,6 +194,12 @@ Before an activity, an agent weighs whether the way it plans to do it could reac
 What a person types first is the familiar, welcoming form; what it reaches underneath behaves like everything else in the platform. The root form `nereus invitation create` is the familiar one, and underneath the invitation is a kind of the `authentication` reef, with the same verbs, output and errors as every other noun (spec 0007, ADR 0013).
 
 Learn more: "Standardization is a compounding floor, not a ceiling on what is possible" (*Thinking in Platforms*, p. 59; [Thinking in platforms](thinking-in-platforms.md)).
+
+### Every reef and every command is also an MCP tool
+
+A person reaches the platform from the CLI; an agent or a chat client reaches it, as that person, through the MCP server of the Nereus API (`nereus mcp`, ADR 0029). So every new reef and every new CLI command also ships as tools of that server, in the same change: each tool runs the API route its command calls, as the person, under the same authorization, and the instance and the person choose which tools are on (owner, 2026-11-26).
+
+Only what means nothing away from the person's machine stays CLI-only: logging in, bootstrapping an instance, the CLI's own settings. Each such command is named in the exceptions of a check, planned with this pillar, that compares the CLI's commands with the tools and fails on a command with neither; today's gaps go to a ratchet that only shrinks.
 
 ### An experience that works becomes an exploration of a possible feature
 
