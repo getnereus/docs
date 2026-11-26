@@ -7301,7 +7301,7 @@
 </ul>
 <h2 id="consequences">Consequences<a class="headerlink" href="#consequences" title="Permanent link">&para;</a></h2>
 <ul>
-<li>The same contract carries a reef's MCP tools (ADR 0029, a <code>tools</code> list read with <code>contractVersion</code> <code>2</code>), served by the Nereus API at <code>/mcp</code>.</li>
+<li>The same contract carries a reef's MCP tools (ADR 0029, a <code>tools</code> list read with <code>contractVersion</code> <code>2</code> or <code>3</code>), served by the Nereus API at <code>/mcp</code>.</li>
 <li>A reef adds a screen with no portal release: install the reef and its Nereid, and the tab appears.</li>
 <li>The Nereid SDK and <code>templates/nereid</code> learn the <code>screens</code>, <code>assets</code> and <code>contractVersion</code> fields and serve <code>ui/</code> (#1105 builds the portal's side and the SDK's).</li>
 <li>The portal's Nereid gains a read of the Nereids' status and a forward to another Nereid's controller port; its admission policy and Role change in the same issue. A <code>screens</code> entry cannot make the portal fetch anything outside the allow-list.</li>

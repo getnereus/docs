@@ -74,7 +74,7 @@ The Nereid's contract today is `GET /` on its controller port (8080, inside the 
 
 ## Consequences
 
-- The same contract carries a reef's MCP tools (ADR 0029, a `tools` list read with `contractVersion` `2`), served by the Nereus API at `/mcp`.
+- The same contract carries a reef's MCP tools (ADR 0029, a `tools` list read with `contractVersion` `2` or `3`), served by the Nereus API at `/mcp`.
 - A reef adds a screen with no portal release: install the reef and its Nereid, and the tab appears.
 - The Nereid SDK and `templates/nereid` learn the `screens`, `assets` and `contractVersion` fields and serve `ui/` (#1105 builds the portal's side and the SDK's).
 - The portal's Nereid gains a read of the Nereids' status and a forward to another Nereid's controller port; its admission policy and Role change in the same issue. A `screens` entry cannot make the portal fetch anything outside the allow-list.
