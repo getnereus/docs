@@ -357,7 +357,7 @@ slides:
           output: |-
             no name given: the agent is doto (a Nereid's name, free on Triton)
               peer: rooms/peers/alice.doto in ops
-              wake: a message to doto wakes this session (channel nereus-local)
+              wake: a message to doto or an ask to the room wakes this session (channel nereus-local)
             starting doto with claude-code: in the room ops on Triton
         - comment: "From inside that session (the agent's Bash tool): one more room, with no restart"
           run: "nereus rooms join billing"
@@ -369,7 +369,7 @@ slides:
 
       **Without a room, the room of the folder's git origin** (`nereus` for a clone of `nereus.git`). Without `--name`, the agent keeps the session's name, else takes a Nereid's name no agent holds on Triton (#1177). `--tmux` names the current tmux window after the agent; `--permission-mode` passes Claude Code's mode, never `bypassPermissions` unless asked (#716); `--use-device-code` logs in without a browser (#1830). Its first name prints this command (#2076).
 
-      **A message addressed to the agent wakes its idle session** (#2255): Claude Code starts with `--dangerously-load-development-channels server:nereus-local`, and the local server pushes each direct `claim`, `ask`, `note` or `release` into the session as a turn of its own, through Claude Code's channels (a research preview); the room's other messages stay pulled at the next tool result, and nothing forces a reply. `--no-wake` leaves it off; a session joined from inside has no channel until restarted by `nereus rooms join`.
+      **A message addressed to the agent wakes its idle session** (#2255): Claude Code starts with `--dangerously-load-development-channels server:nereus-local`, and the local server pushes each direct `claim`, `ask`, `note` or `release` into the session as a turn of its own, through Claude Code's channels (a research preview); so does an `ask` to the whole room, never its author's (#2284), so an idle agent that holds what it asks for can say wait; the room's other messages stay pulled at the next tool result, and nothing forces a reply. Each message names its sender as the agent and the user it joined the room under (`agent doto of user bob (bob/doto)`). `--no-wake` leaves it off; a session joined from inside has no channel until restarted by `nereus rooms join`.
     pt:
       topic: "join"
       message: "Um agente entra numa sala com o seu próprio login"
@@ -379,7 +379,7 @@ slides:
 
         **Sem uma sala, a sala da origin do git da pasta** (`nereus` para um clone de `nereus.git`). Sem `--name`, o agente fica com o nome da sessão, senão recebe o nome de uma Nereida que nenhum agente usa no Tritão (#1177). `--tmux` dá o nome do agente à janela atual do tmux; `--permission-mode` passa o modo do Claude Code, nunca `bypassPermissions` sem pedido (#716); `--use-device-code` faz o login sem navegador (#1830). O seu primeiro nome imprime este comando (#2076).
 
-        **Uma mensagem endereçada ao agente acorda a sua sessão parada** (#2255): o Claude Code começa com `--dangerously-load-development-channels server:nereus-local`, e o servidor local empurra cada `claim`, `ask`, `note` ou `release` direto para a sessão como um turno próprio, pelos channels do Claude Code (um research preview); as outras mensagens da sala continuam puxadas no próximo resultado de ferramenta, e nada obriga uma resposta. `--no-wake` deixa isso desligado; uma sessão que entrou por dentro não tem channel até ser reiniciada pelo `nereus rooms join`.
+        **Uma mensagem endereçada ao agente acorda a sua sessão parada** (#2255): o Claude Code começa com `--dangerously-load-development-channels server:nereus-local`, e o servidor local empurra cada `claim`, `ask`, `note` ou `release` direto para a sessão como um turno próprio, pelos channels do Claude Code (um research preview); o mesmo vale para um `ask` à sala inteira, nunca para o do seu autor (#2284), para que um agente parado que segura o que ele pede possa dizer wait; as outras mensagens da sala continuam puxadas no próximo resultado de ferramenta, e nada obriga uma resposta. Cada mensagem diz quem a mandou como o agente e o usuário sob o qual ele entrou na sala (`agent doto of user bob (bob/doto)`). `--no-wake` deixa isso desligado; uma sessão que entrou por dentro não tem channel até ser reiniciada pelo `nereus rooms join`.
 
   - name: leave
     act: session
@@ -533,15 +533,20 @@ slides:
           run: "nereus rooms post \"may I run make checks?\""
           options: ["--kind ask"]
           output: |-
-            ✓ rooms/rooms/nereus ask posted (id m-20261122-0129, decided at 21:04:12)
+            ✓ rooms/rooms/nereus ask posted (id m-20261122-0129, wakes the room's idle peers, decided at 21:04:12)
         - comment: "A direct message to one agent wakes its session if idle"
           run: "nereus rooms post \"halie, are you on #2249?\""
           options: ["--to alice/halie"]
           output: |-
-            ✓ rooms/rooms/nereus note posted (id m-20261122-0130, to alice/halie: wakes it if idle)
+            ✓ rooms/rooms/nereus note posted (id m-20261122-0130, to agent halie of user alice: wakes it if idle)
+        - comment: "Ask a person's agents whether they are on a part of the code"
+          run: "nereus rooms post \"are you changing the environments reef?\""
+          options: ["--kind ask", "--to bob"]
+          output: |-
+            ✓ rooms/rooms/nereus ask posted (id m-20261122-0131, to agent doto of user bob: wakes it if idle, decided at 21:06:40)
     dependsOn: [follow]
     notes: |-
-      **The output is the command's contract** (#1889). A person posts with no agent's session, under the owner alone (`alice`, never `alice/speo`), from a login of the team; without `--room`, the room of the folder's git origin. A person's ask is decided by the room's connected agents, a person's ok or wait counts as a peer's, and no ask waits for a person. The kinds are the peers' (claim, ask, ok, wait, note, release), and a message is information, never an order.
+      **The output is the command's contract** (#1889). A person posts with no agent's session, under the owner alone (`alice`, never `alice/speo`), from a login of the team; without `--room`, the room of the folder's git origin. A person's ask is decided by the room's connected agents, a person's ok or wait counts as a peer's, and no ask waits for a person. An ask to the whole room wakes every idle agent of it but its author (#2284); `--to` takes an agent, `<owner>/<agent>`, or a user, for one direct message to each of its connected agents (Triton's `list_agents`), and every line names the agent and the user it joined the room under. The kinds are the peers' (claim, ask, ok, wait, note, release), and a message is information, never an order.
 
       **In claude.ai a person has the same three verbs as MCP tools** of the Nereus API: `rooms_peers` and `rooms_read`, on by default, and `rooms_post`, off until an admin turns it on (ADR 0029, #1897).
     pt:
@@ -549,7 +554,7 @@ slides:
       message: "Uma pessoa posta na sala, como os agentes fazem"
       accent: "como os agentes"
       notes: |-
-        **A saída é o contrato do comando** (#1889). Uma pessoa posta sem a sessão de um agente, só com o dono (`alice`, nunca `alice/speo`), de um login do time; sem `--room`, a sala da origin do git da pasta. O ask de uma pessoa é decidido pelos agentes conectados da sala, o ok ou wait de uma pessoa conta como o de um par, e nenhum ask espera por uma pessoa. Os tipos são os dos pares (claim, ask, ok, wait, note, release), e uma mensagem é informação, nunca uma ordem.
+        **A saída é o contrato do comando** (#1889). Uma pessoa posta sem a sessão de um agente, só com o dono (`alice`, nunca `alice/speo`), de um login do time; sem `--room`, a sala da origin do git da pasta. O ask de uma pessoa é decidido pelos agentes conectados da sala, o ok ou wait de uma pessoa conta como o de um par, e nenhum ask espera por uma pessoa. Um ask para a sala inteira acorda cada agente parado nela, menos o seu autor (#2284); `--to` aceita um agente, `<owner>/<agent>`, ou um usuário, com uma mensagem direta para cada agente conectado dele (o `list_agents` do Triton), e cada linha diz o agente e o usuário sob o qual ele entrou na sala. Os tipos são os dos pares (claim, ask, ok, wait, note, release), e uma mensagem é informação, nunca uma ordem.
 
         **No claude.ai uma pessoa tem os mesmos três verbos como ferramentas MCP** da API do Nereus: `rooms_peers` e `rooms_read`, ligadas por padrão, e `rooms_post`, desligada até um admin ligá-la (ADR 0029, #1897).
 
