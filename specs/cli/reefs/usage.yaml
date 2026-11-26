@@ -236,6 +236,77 @@ slides:
       notes: |-
         **A semana dia a dia (#1591):** o Nereid de referência guarda o início de cada dia, a menor fatia vista naquele dia, cortado no fuso do Mandate e limpo quando a janela reseta; o total de um dia é a fatia no fim dele, e um dia sem leitura própria é interpolado, marcado com `~`. A meta de hoje fica fixa a partir do início de hoje. **O `--output json` imprime a janela como a API a responde**, com o plano para os dias que faltam: uma linha por dia, a sua fatia e o total a alcançar até o fim dele, a última chegando a 100%. Uma janela que resetou mostra `reset` em FORECAST e PACE.
 
+  - name: usage-dayoff
+    act: window
+    topic: "usage dayoff"
+    status: built
+    issue: 2111
+    message: "A day off leaves a date out of the figures"
+    accent: "out of the figures"
+    terminal:
+      steps:
+        - comment: "A sick day, marked after it passed"
+          run: "nereus usage dayoff create 2026-11-10"
+          options: ["--reason Sick"]
+          output: |-
+            ✓ usage/dayoffs/2026-11-10 created
+        - comment: "The days off of the account logged in"
+          run: "nereus usage dayoff list"
+          output: |-
+            DATE        DAY  REASON
+            2026-11-10  Tue  Sick
+        - comment: "Freed: a worked day again"
+          run: "nereus usage dayoff delete 2026-11-10"
+          output: |-
+            ✓ usage/dayoffs/2026-11-10 deleted
+    dependsOn: [usage-report]
+    notes: |-
+      **A `DayOff` is one date with the short reason there is no work** (1 to 40 characters), each person's for the account their agent is logged in with (#1630), past days included (the owner, 2026-11-26: one day off per date, no repeat). `apply --from-file` takes a file of DayOffs (`spec: {date, reason}`), so the year's holidays go in once, changed with the same file; `create` fails on a date already off, naming `apply`. Every changing command takes `--dry-run`. The API takes the person from the token: nobody reads or frees another's days off.
+    pt:
+      topic: "usage dayoff"
+      message: "Uma folga deixa uma data fora dos números"
+      accent: "fora dos números"
+      notes: |-
+        **Um `DayOff` é uma data com o motivo curto de não haver trabalho** (de 1 a 40 caracteres), de cada pessoa para a conta com que o agente dela está logado (#1630), dias passados incluídos (o dono, 2026-11-26: uma folga por data, sem repetição). O `apply --from-file` recebe um arquivo de DayOffs (`spec: {date, reason}`), para os feriados do ano entrarem de uma vez, alterados com o mesmo arquivo; o `create` falha numa data que já é folga, apontando o `apply`. Todo comando que muda algo aceita `--dry-run`. A API pega a pessoa do token: ninguém lê nem libera as folgas de outra pessoa.
+
+  - name: usage-workweek
+    act: window
+    topic: "usage workweek"
+    status: built
+    issue: 2111
+    message: "The work week leaves the weekdays not worked out, and get marks every day off"
+    accent: "marks every day off"
+    terminal:
+      steps:
+        - comment: "Weekends off"
+          run: "nereus usage workweek create"
+          options: ["--off sat=Weekend", "--off sun=Weekend"]
+          output: |-
+            ✓ usage/workweek created
+        - comment: "A Saturday off: no worked time left before the reset, so the forecast is final"
+          run: "nereus usage get weekly"
+          output: |-
+            WINDOW  USED  RESETS           FORECAST  PACE   TODAY  READ
+            weekly  75%   Mon 16/11 01:00  75%       final  off    Sat 19:06
+
+            DAY        SHARE  TOTAL
+            Mon 09/11  +10%   10%
+            Tue 10/11  ~+11%  ~21%   off: Sick
+            Wed 11/11  +10%   31%
+            Thu 12/11  +10%   41%
+            Fri 13/11  +19%   60%
+            Sat 14/11  +15%   75%    today off: Weekend
+            Sun 15/11  +0%    75%    plan off: Weekend
+    dependsOn: [usage-dayoff]
+    notes: |-
+      **The `WorkWeek`, one per person and account, holds the weekdays not worked and the dates worked anyway** (`--worked 2026-11-28`, a Saturday worked once). A `DayOff` wins over a date worked, which wins over the weekdays (usage_rules.days_off_between). **The figures count only worked time** (#2106): the forecast is `used × worked window / worked time gone`, `final` once no worked time is left; the plan gives a day off a share of 0, so the worked days take its part; use on a day off still counts. `get` marks a day off `off: <reason>` and TODAY says `off`. Offline, the cache keeps the days off the API last answered.
+    pt:
+      topic: "usage workweek"
+      message: "A semana de trabalho tira os dias da semana sem trabalho, e o get marca cada folga"
+      accent: "marca cada folga"
+      notes: |-
+        **O `WorkWeek`, um por pessoa e conta, guarda os dias da semana sem trabalho e as datas trabalhadas mesmo assim** (`--worked 2026-11-28`, um sábado trabalhado uma vez). Um `DayOff` vence uma data trabalhada, que vence os dias da semana (usage_rules.days_off_between). **Os números contam só o tempo trabalhado** (#2106): a previsão é `usado × janela trabalhada / tempo trabalhado decorrido`, `final` quando não resta tempo trabalhado; o plano dá a uma folga uma fatia de 0, e os dias trabalhados ficam com a parte dela; o uso num dia de folga continua contando. O `get` marca uma folga com `off: <motivo>` e o TODAY diz `off`. Offline, o cache guarda as folgas que a API respondeu por último.
+
   - name: usage-list-delete
     act: window
     topic: "usage list and delete"

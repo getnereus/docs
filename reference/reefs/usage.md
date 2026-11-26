@@ -9,6 +9,8 @@ Every command that reports a coding agent's quota window and shows where it is h
 - [`nereus usage report weekly`](../../specs/cli/reefs/usage.html#usage-offline) offline, report keeps the reading locally and get answers from it
 - [`nereus usage apply`](../../specs/cli/reefs/usage.html#usage-apply) apply writes the windows of a file, under the same rules
 - [`nereus usage get weekly`](../../specs/cli/reefs/usage.html#usage-get) get shows the forecast at the reset, today's goal and the week day by day
+- [`nereus usage dayoff create 2026-11-10`](../../specs/cli/reefs/usage.html#usage-dayoff) A day off leaves a date out of the figures
+- [`nereus usage workweek create`](../../specs/cli/reefs/usage.html#usage-workweek) The work week leaves the weekdays not worked out, and get marks every day off
 - [`nereus usage list`](../../specs/cli/reefs/usage.html#usage-list-delete) list shows every window, delete forgets one
 
 ## Examples
@@ -105,6 +107,33 @@ Thu 12/11  +10%   41%
 Fri 13/11  +19%   60%
 Sat 14/11  +15%   75%    today
 Sun 15/11  +25%   100%   plan
+```
+
+### usage-dayoff
+
+A sick day, marked after it passed.
+
+```bash
+nereus usage dayoff create 2026-11-10 \
+  --reason Sick
+```
+
+``` { .text .output title="output" }
+✓ usage/dayoffs/2026-11-10 created
+```
+
+### usage-workweek
+
+Weekends off.
+
+```bash
+nereus usage workweek create \
+  --off sat=Weekend \
+  --off sun=Weekend
+```
+
+``` { .text .output title="output" }
+✓ usage/workweek created
 ```
 
 ### usage-list-delete

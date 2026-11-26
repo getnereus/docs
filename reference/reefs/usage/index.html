@@ -3903,6 +3903,28 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#usage-dayoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        usage-dayoff
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage-workweek" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        usage-workweek
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#usage-list-delete" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -7228,6 +7250,28 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#usage-dayoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        usage-dayoff
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage-workweek" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        usage-workweek
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#usage-list-delete" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -7279,6 +7323,10 @@
   apply writes the windows of a file, under the same rules</li>
 <li><a href="../../../specs/cli/reefs/usage.html#usage-get"><code>nereus usage get weekly</code></a><br>
   get shows the forecast at the reset, today's goal and the week day by day</li>
+<li><a href="../../../specs/cli/reefs/usage.html#usage-dayoff"><code>nereus usage dayoff create 2026-11-10</code></a><br>
+  A day off leaves a date out of the figures</li>
+<li><a href="../../../specs/cli/reefs/usage.html#usage-workweek"><code>nereus usage workweek create</code></a><br>
+  The work week leaves the weekdays not worked out, and get marks every day off</li>
 <li><a href="../../../specs/cli/reefs/usage.html#usage-list-delete"><code>nereus usage list</code></a><br>
   list shows every window, delete forgets one</li>
 </ul>
@@ -7346,6 +7394,21 @@ Thu 12/11  +10%   41%
 Fri 13/11  +19%   60%
 Sat 14/11  +15%   75%    today
 Sun 15/11  +25%   100%   plan
+</code></pre></div>
+<h3 id="usage-dayoff">usage-dayoff<a class="headerlink" href="#usage-dayoff" title="Permanent link">&para;</a></h3>
+<p>A sick day, marked after it passed.</p>
+<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>usage<span class="w"> </span>dayoff<span class="w"> </span>create<span class="w"> </span><span class="m">2026</span>-11-10<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--reason<span class="w"> </span>Sick
+</code></pre></div>
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ usage/dayoffs/2026-11-10 created
+</code></pre></div>
+<h3 id="usage-workweek">usage-workweek<a class="headerlink" href="#usage-workweek" title="Permanent link">&para;</a></h3>
+<p>Weekends off.</p>
+<div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>usage<span class="w"> </span>workweek<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--off<span class="w"> </span><span class="nv">sat</span><span class="o">=</span>Weekend<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--off<span class="w"> </span><span class="nv">sun</span><span class="o">=</span>Weekend
+</code></pre></div>
+<div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ usage/workweek created
 </code></pre></div>
 <h3 id="usage-list-delete">usage-list-delete<a class="headerlink" href="#usage-list-delete" title="Permanent link">&para;</a></h3>
 <p>The same columns as get.</p>
