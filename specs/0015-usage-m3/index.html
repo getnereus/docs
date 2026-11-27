@@ -7011,6 +7011,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#decisions-owner-2026-11-27-the-corridor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decisions (owner, 2026-11-27): the corridor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#approaches-considered" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -7097,6 +7108,18 @@
 <li><strong>The status bar's palette:</strong> speed up in blue, keep the pace in green, hold back in salmon, each with its icon (▲ • ▼). The PWA's green, amber and salmon go away.</li>
 <li><strong><code>slow</code> above 99%,</strong> as the status bar decides, not above 95%: the week is meant to be used up. <code>push</code> stays below 70%.</li>
 <li><strong>One source of truth for the pace, with a local fallback:</strong> Nereus computes the word, and the status bar reads it from the local cache. The status bar's own rule stays only as the fallback for a machine without <code>nereus</code> or a cache from another window. The palette is one table that both renderings follow, checked by a test.</li>
+</ul>
+<h2 id="decisions-owner-2026-11-27-the-corridor">Decisions (owner, 2026-11-27): the corridor<a class="headerlink" href="#decisions-owner-2026-11-27-the-corridor" title="Permanent link">&para;</a></h2>
+<p>On a computer the card left the right half of the page empty, and on both widths the whole card in the pace's colour read as too much green. The owner chose on throwaway mockups again, kept next to this file: <a href="corridor-wide.html"><code>corridor-wide.html</code></a> (option F) and <a href="corridor-phone.html"><code>corridor-phone.html</code></a> (option L, on top of option G). These decisions replace the ruler and the card in the pace's colour below; the palette, the thresholds and the single source of truth stay.</p>
+<ul>
+<li><strong>The card is neutral on every width.</strong> The pace's colour marks only the word's chip, the steady band, today's goal, today's column and today's strip.</li>
+<li><strong>The corridor replaces the ruler.</strong> A chart of the week: the steady band between the paths that end the week at 70% and at 99% (the pace's own thresholds, so the curve is inside it exactly when the word is steady), the push zone under it and the slow zone over it; the ideal path to 100% dotted; the real curve; the projection at the forecast's rate dashed to the reset; today's goal a short bar in the pace's colour. Time runs in worked time, as the forecast does: a day off keeps the band, the ideal and the projection flat.</li>
+<li><strong>The week is a table under the chart (option L).</strong> One column per day, under its stretch of the chart's time axis, its header the button that opens the day's sheet; three rows: Ideal (the even path's total at the day's end; today, now), Week (the total used for the days gone and today, the projection for the days ahead, muted) and Gap (the week's total less the ideal: blue under, green within a point, salmon over). The list of days goes.</li>
+<li><strong>Today's strip:</strong> today's share against its part of the goal ("+6 of +15"), a meter, the share now and what is left until the goal ("9 left until 69%"); today off, its reason.</li>
+<li><strong>The days off move into ⋮</strong> in the card's header, an M3 menu with this week's count and "Add a day off"; a badge on ⋮ counts this week's days off. The chip under the card goes.</li>
+<li><strong>A phone (below 840 px)</strong> stacks the header, the share with Forecast and Read beside it, the chart, the week and today's strip; the whole card fits a phone's screen with the portal's title and bottom bar, checked at 340 px in both languages (<code>docs/presentations/tests/test_usage_browser.py</code>).</li>
+<li><strong>A computer (840 px and up)</strong> spreads the same pieces in two columns: on the left the share, the verdict in words ("Inside the corridor, heading for 94%."), the facts and today's strip; on the right the chart with the week under it.</li>
+<li><strong>Two figures per day come from the API</strong> (<code>cli/src/nereus/usage_rules.py</code>, <code>paths</code>), so every rendering shows the same numbers: <code>ideal</code>, on every day, and <code>projected</code>, on today and the days ahead (absent while the forecast is hidden). Both are whole numbers of the share.</li>
 </ul>
 <h2 id="approaches-considered">Approaches considered<a class="headerlink" href="#approaches-considered" title="Permanent link">&para;</a></h2>
 <p>All three keep the portal neutral black and white (its M3 tokens <code>--nereus-*</code>), with the pace as the only hue.</p>

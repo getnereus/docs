@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Usage gap options</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #000; --panel: #121212; --row: #1a1a1a; --line: #2a2a2a;
+    --fg: #f2f2f2; --muted: #8a8a8a;
+    --push: #5ec4ff; --steady: #87d787; --slow: #ff8a80;
+    --cond: "Barlow Condensed", "Ubuntu Condensed", system-ui, sans-serif;
+    --body: "Barlow", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--body); }
+  nav.pick { position: sticky; top: 0; z-index: 2; display: flex; gap: 8px; padding: 12px 24px; background: #000d; border-bottom: 1px solid var(--line); }
+  nav.pick a { color: var(--fg); text-decoration: none; padding: 8px 16px; border-radius: 20px; background: var(--row); font-size: 14px; }
+  section.opt { padding: 32px 24px 56px; border-bottom: 1px solid var(--line); }
+  .opt > h1 { font: 600 28px/1.1 var(--cond); margin: 0 0 4px; }
+  .opt > p.why { margin: 0 0 20px; color: var(--muted); max-width: 80ch; }
+  .frame { background: var(--panel); border-radius: 24px; padding: 28px 32px; font-variant-numeric: tabular-nums; }
+  .k { color: var(--muted); font-size: 14px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px; border-radius: 14px; background: var(--steady); color: #0d260f; font: 600 14px var(--body); }
+  .ghost { min-height: 40px; padding: 0 16px; border-radius: 8px; border: 1px solid var(--line); background: none; color: var(--fg); font: 14px var(--body); }
+  .chart svg { display: block; width: 100%; }
+  .cond { font-family: var(--cond); }
+
+  /* Shared: the header strip */
+  .strip { display: flex; align-items: flex-end; gap: 40px; flex-wrap: wrap; }
+  .strip .fig b { display: block; font: 600 44px/1 var(--cond); }
+  .strip .fig.hero b { font-size: 96px; line-height: 0.9; }
+  .strip .fig.hero b small { font-size: 28px; color: var(--muted); font-weight: 500; }
+  .strip .gap b { color: var(--push); }
+  .strip .end { margin-left: auto; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+
+  /* D. Gap chart + tower */
+  .d { display: grid; grid-template-columns: 1fr 380px; gap: 32px; margin-top: 24px; align-items: stretch; }
+  .tower { display: flex; flex-direction: column; gap: 3px; }
+  .trow { display: grid; grid-template-columns: 4px 76px 1fr 56px 52px 60px; align-items: center; gap: 10px; min-height: 52px; padding-right: 14px; background: var(--row); border-radius: 4px; font: 20px var(--cond); }
+  .trow .st { align-self: stretch; border-radius: 4px 0 0 4px; }
+  .trow .dd { font-weight: 600; white-space: nowrap; padding-left: 4px; }
+  .trow .tg { color: var(--muted); font-size: 15px; }
+  .trow .s { text-align: right; }
+  .trow .t { text-align: right; color: var(--muted); }
+  .trow .g { text-align: right; font-weight: 600; }
+  .trow.today { background: #222; }
+  .trow.today .st { background: var(--steady); }
+  .trow.plan { background: transparent; border: 1px dashed var(--line); color: var(--muted); }
+  .thead { display: grid; grid-template-columns: 4px 76px 1fr 56px 52px 60px; gap: 10px; padding: 0 14px 6px 0; color: var(--muted); font: 14px var(--cond); }
+  .thead span:nth-child(n+4) { text-align: right; }
+  .neg { color: var(--push); } .pos { color: var(--slow); } .ok { color: var(--steady); }
+
+  /* E. Delta trace */
+  .e .grid { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 20px; }
+  .e .cols { display: grid; gap: 0; margin-left: 48px; margin-right: 16px; border-top: 1px solid var(--line); }
+  .e .col { padding: 12px 10px; border-left: 1px solid var(--line); font-family: var(--cond); }
+  .e .col:first-child { border-left: none; }
+  .e .col .dd { font-weight: 600; font-size: 18px; }
+  .e .col .s { font-size: 26px; font-weight: 600; }
+  .e .col .t { color: var(--muted); font-size: 16px; }
+  .e .col.today { box-shadow: inset 0 3px 0 var(--steady); background: #1a1a1a; }
+  .e .col.plan { color: var(--muted); }
+  .e .col.plan .s { font-weight: 400; }
+
+  /* F. Corridor */
+  .f { display: grid; grid-template-columns: 300px 1fr; gap: 32px; margin-top: 8px; align-items: stretch; }
+  .verdict { display: flex; flex-direction: column; gap: 20px; }
+  .verdict .big { font: 600 120px/0.85 var(--cond); }
+  .verdict .big small { font-size: 32px; color: var(--muted); font-weight: 500; }
+  .verdict .say { font: 500 26px/1.15 var(--cond); }
+  .verdict .say b { color: var(--steady); font-weight: 600; }
+  .legend { display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: var(--muted); }
+  .legend i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; margin-right: 8px; }
+  .minidays { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin-top: 16px; margin-left: 48px; margin-right: 16px; }
+  .md { background: var(--row); padding: 10px 12px; font-family: var(--cond); }
+  .md:first-child { border-radius: 10px 0 0 10px; } .md:last-child { border-radius: 0 10px 10px 0; }
+  .md .dd { font-weight: 600; } .md .s { font-size: 22px; font-weight: 600; } .md .t { color: var(--muted); }
+  .md.today { box-shadow: inset 0 3px 0 var(--steady); background: #222; }
+  .md.plan { background: transparent; outline: 1px dashed var(--line); outline-offset: -1px; color: var(--muted); }
+</style>
+</head>
+<body>
+<nav class="pick"><a href="#d">D · Gap</a><a href="#e">E · Delta trace</a><a href="#f">F · Corridor</a></nav>
+
+<section class="opt" id="d">
+  <h1>D. Gap to the line</h1>
+  <p class="why">The pace line (100% spread evenly over the week) against the real curve, the gap between them shaded: blue below the line, salmon above. The headline is the gap now, like an interval on a timing tower; the tower on the right gives each day's gap at its close.</p>
+  <div class="frame">
+    <div class="strip">
+      <div class="fig hero"><span class="k">Used</span><b>60<small>%</small></b></div>
+      <div class="fig gap"><span class="k">Against the line now</span><b>−2.5</b></div>
+      <div class="fig"><span class="k">Forecast</span><b>95%</b></div>
+      <div class="fig"><span class="k">Today's goal</span><b style="color:var(--steady)">≤69%</b></div>
+      <div class="end"><span class="chip">• steady</span><span class="k">Resets Mon 01:00 · read Fri 10:05</span></div>
+    </div>
+    <div class="d">
+      <div class="chart" id="chartD"></div>
+      <div>
+        <div class="thead"><span></span><span>Day</span><span></span><span>Day</span><span>Week</span><span>Gap</span></div>
+        <div class="tower" id="towerD"></div>
+        <p style="margin-top:16px"><button class="ghost">0 days off this week</button></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="opt" id="e">
+  <h1>E. Delta trace</h1>
+  <p class="why">Two charts on one time axis, as a telemetry overlay: on top the curve against the pace line; under it the delta trace alone, centred on zero, so being above or below reads at once. The days line up as columns under the axis.</p>
+  <div class="frame e">
+    <div class="strip">
+      <div class="fig hero"><span class="k">Used</span><b>60<small>%</small></b></div>
+      <div class="fig gap"><span class="k">Against the line now</span><b>−2.5</b></div>
+      <div class="fig"><span class="k">Forecast</span><b>95%</b></div>
+      <div class="fig"><span class="k">Today's goal</span><b style="color:var(--steady)">≤69%</b></div>
+      <div class="end"><span class="chip">• steady</span><span class="k">Resets Mon 01:00 · read Fri 10:05</span></div>
+    </div>
+    <div class="grid">
+      <div class="chart" id="chartE1"></div>
+      <div class="chart" id="chartE2"></div>
+      <div class="cols" id="colsE"></div>
+    </div>
+    <p style="margin:16px 0 0"><button class="ghost">0 days off this week</button></p>
+  </div>
+</section>
+
+<section class="opt" id="f">
+  <h1>F. Corridor</h1>
+  <p class="why">The pace's own rule drawn as a corridor: the paths that end the week at 70% and at 99%. Inside it is steady, under it push, over it slow; the real curve runs through it and the forecast projects to Sunday. The verdict in words on the left.</p>
+  <div class="frame">
+    <div class="f">
+      <div class="verdict">
+        <div><span class="k">Used</span><div class="big">60<small>%</small></div></div>
+        <div class="say">Inside the corridor, heading for <b>95%</b>.<br>Today up to <b>69%</b>.</div>
+        <span class="chip" style="align-self:flex-start">• steady</span>
+        <div class="legend">
+          <span><i style="background:#87d78733;border:1px solid var(--steady)"></i>Steady: ends between 70% and 99%</span>
+          <span><i style="background:#5ec4ff22"></i>Push: below</span>
+          <span><i style="background:#ff8a8022"></i>Slow: above</span>
+        </div>
+        <span class="k">Resets Mon 01:00 · read Fri 10:05</span>
+        <button class="ghost" style="align-self:flex-start">0 days off this week</button>
+      </div>
+      <div>
+        <div class="chart" id="chartF"></div>
+        <div class="minidays" id="daysF"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+const days = [
+  { d: "Mon", n: 23, s: 6, t: 6 }, { d: "Tue", n: 24, s: 12, t: 18 }, { d: "Wed", n: 25, s: 19, t: 37 },
+  { d: "Thu", n: 26, s: 17, t: 54 }, { d: "Fri", n: 27, s: 6, t: 60, kind: "today" },
+  { d: "Sat", n: 28, s: 14, t: 83, kind: "plan" }, { d: "Sun", n: 29, s: 17, t: 100, kind: "plan" },
+];
+const NOW = 4 + 9 / 24;               // Fri 10:05, in days since Mon 01:00
+const ideal = (x) => 100 * x / 7;     // the pace line
+// The real curve: day closes, then today's reading.
+const real = [[0, 0], ...days.slice(0, 4).map((d, i) => [i + 1, d.t]), [NOW, 60]];
+const gapAt = (x, v) => v - ideal(x);
+const fmt = (g) => (g > 0 ? "+" : g < 0 ? "−" : "") + Math.abs(g).toFixed(1);
+const cls = (g) => (Math.abs(g) < 1 ? "ok" : g < 0 ? "neg" : "pos");
+const C = { fg: "#f2f2f2", muted: "#8a8a8a", line: "#2a2a2a", push: "#5ec4ff", steady: "#87d787", slow: "#ff8a80", font: "Barlow Condensed" };
+
+function frame(el, H, yMin, yMax, opts = {}) {
+  const W = el.clientWidth, L = 48, R = 16, T = 16, B = opts.axis === false ? 8 : 34;
+  const x = (d) => L + d / 7 * (W - L - R);
+  const y = (v) => T + (1 - (v - yMin) / (yMax - yMin)) * (H - T - B);
+  let g = "";
+  for (let i = 0; i <= 7; i++) g += `<line x1="${x(i)}" x2="${x(i)}" y1="${T}" y2="${H - B}" stroke="${C.line}" stroke-width="1"/>`;
+  g += `<rect x="${x(4)}" y="${T}" width="${x(5) - x(4)}" height="${H - T - B}" fill="#87d78710"/>`;
+  if (opts.axis !== false) days.forEach((d, i) => g += `<text x="${(x(i) + x(i + 1)) / 2}" y="${H - 10}" fill="${d.kind === "today" ? C.steady : C.muted}" font-size="15" text-anchor="middle" font-family="${C.font}">${d.d} ${d.n}</text>`);
+  return { W, H, L, R, T, B, x, y, g };
+}
+const path = (pts, f) => pts.map(([a, b], i) => `${i ? "L" : "M"}${f.x(a).toFixed(1)},${f.y(b).toFixed(1)}`).join("");
+const yTicks = (f, ticks) => ticks.map((v) => `<line x1="${f.L}" x2="${f.W - f.R}" y1="${f.y(v)}" y2="${f.y(v)}" stroke="${v === 100 ? "#555" : C.line}" ${v === 100 ? 'stroke-dasharray="2 4"' : ""}/><text x="${f.L - 10}" y="${f.y(v) + 5}" fill="${C.muted}" font-size="14" text-anchor="end" font-family="${C.font}">${v}</text>`).join("");
+
+// The shaded gap between the real curve and the pace line, split into segments coloured by side.
+function gapFill(f) {
+  let g = "";
+  for (let i = 1; i < real.length; i++) {
+    const [x0, v0] = real[i - 1], [x1, v1] = real[i];
+    const poly = [[x0, v0], [x1, v1], [x1, ideal(x1)], [x0, ideal(x0)]];
+    const mid = (v0 + v1) / 2 - ideal((x0 + x1) / 2);
+    g += `<path d="${path(poly, f)}Z" fill="${mid < 0 ? C.push : C.slow}" opacity="0.22"/>`;
+  }
+  return g;
+}
+function nowMarker(f, label = true) {
+  return `<line x1="${f.x(NOW)}" x2="${f.x(NOW)}" y1="${f.y(60)}" y2="${f.y(69)}" stroke="${C.steady}" stroke-width="3"/>
+  <circle cx="${f.x(NOW)}" cy="${f.y(60)}" r="7" fill="${C.fg}"/>` + (label ? `<text x="${f.x(NOW) + 12}" y="${f.y(69) + 5}" fill="${C.steady}" font-size="16" font-family="${C.font}">goal 69</text>` : "");
+}
+function forecastLine(f) {
+  return `<path d="${path([[NOW, 60], [7, 95]], f)}" fill="none" stroke="${C.muted}" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="${f.x(7) - 6}" y="${f.y(95) + 22}" fill="${C.muted}" font-size="15" text-anchor="end" font-family="${C.font}">forecast 95</text>`;
+}
+
+function drawD() {
+  const el = document.getElementById("chartD");
+  const f = frame(el, 460, 0, 100);
+  let g = f.g + yTicks(f, [0, 25, 50, 75, 100]) + gapFill(f);
+  g += `<path d="${path([[0, 0], [7, 100]], f)}" stroke="${C.fg}" stroke-opacity="0.55" stroke-width="1.5" stroke-dasharray="1 5" stroke-linecap="round" fill="none"/>`;
+  g += `<text x="${f.x(6.1)}" y="${f.y(ideal(6.1)) - 12}" fill="${C.muted}" font-size="15" font-family="${C.font}" text-anchor="end">pace line to 100%</text>`;
+  g += forecastLine(f);
+  g += `<path d="${path(real, f)}" fill="none" stroke="${C.fg}" stroke-width="3.5" stroke-linejoin="round"/>` + nowMarker(f);
+  g += `<text x="${f.x(NOW) - 12}" y="${f.y(60) + 26}" fill="${C.push}" font-size="20" font-weight="600" text-anchor="end" font-family="${C.font}">−2.5 to the line</text>`;
+  el.innerHTML = `<svg viewBox="0 0 ${f.W} ${f.H}" role="img" aria-label="Use against the pace line">${g}</svg>`;
+}
+function towerD() {
+  document.getElementById("towerD").innerHTML = days.map((d, i) => {
+    const gap = d.kind === "plan" ? null : d.kind === "today" ? gapAt(NOW, 60) : gapAt(i + 1, d.t);
+    const tag = d.kind === "today" ? "today" : d.kind === "plan" ? "plan" : "";
+    return `<div class="trow ${d.kind || ""}"><span class="st"></span><span class="dd">${d.d} ${d.n}</span><span class="tg">${tag}</span><span class="s">+${d.s}%</span><span class="t">${d.t}%</span><span class="g ${gap === null ? "" : cls(gap)}">${gap === null ? "" : fmt(gap)}</span></div>`;
+  }).join("");
+}
+
+function drawE() {
+  const e1 = document.getElementById("chartE1");
+  const f = frame(e1, 340, 0, 100, { axis: false });
+  let g = f.g + yTicks(f, [0, 50, 100]) + gapFill(f);
+  g += `<path d="${path([[0, 0], [7, 100]], f)}" stroke="${C.fg}" stroke-opacity="0.55" stroke-width="1.5" stroke-dasharray="1 5" stroke-linecap="round" fill="none"/>`;
+  g += forecastLine(f) + `<path d="${path(real, f)}" fill="none" stroke="${C.fg}" stroke-width="3.5"/>` + nowMarker(f);
+  e1.innerHTML = `<svg viewBox="0 0 ${f.W} ${f.H}">${g}</svg>`;
+
+  const e2 = document.getElementById("chartE2");
+  const h = frame(e2, 170, -15, 15, { axis: false });
+  const trace = real.map(([x, v]) => [x, gapAt(x, v)]);
+  let k = h.g;
+  k += `<rect x="${h.L}" y="${h.y(15)}" width="${h.W - h.L - h.R}" height="${h.y(0) - h.y(15)}" fill="${C.slow}" opacity="0.06"/>`;
+  k += `<rect x="${h.L}" y="${h.y(0)}" width="${h.W - h.L - h.R}" height="${h.y(-15) - h.y(0)}" fill="${C.push}" opacity="0.06"/>`;
+  k += `<line x1="${h.L}" x2="${h.W - h.R}" y1="${h.y(0)}" y2="${h.y(0)}" stroke="${C.fg}" stroke-opacity="0.6"/>`;
+  k += `<text x="${h.L - 10}" y="${h.y(0) + 5}" fill="${C.muted}" font-size="14" text-anchor="end" font-family="${C.font}">0</text>`;
+  k += `<text x="${h.L + 8}" y="${h.y(12)}" fill="${C.slow}" font-size="14" font-family="${C.font}">above the line: slow down</text>`;
+  k += `<text x="${h.L + 8}" y="${h.y(-12) + 4}" fill="${C.push}" font-size="14" font-family="${C.font}">below the line: speed up</text>`;
+  k += `<path d="${path([[0, 0], ...trace.slice(1), [NOW, 0]], h)}Z" fill="${C.push}" opacity="0.25"/>`;
+  k += `<path d="${path(trace, h)}" fill="none" stroke="${C.push}" stroke-width="3"/>`;
+  k += `<circle cx="${h.x(NOW)}" cy="${h.y(trace.at(-1)[1])}" r="6" fill="${C.fg}"/><text x="${h.x(NOW) + 12}" y="${h.y(trace.at(-1)[1]) + 6}" fill="${C.push}" font-size="20" font-weight="600" font-family="${C.font}">−2.5</text>`;
+  e2.innerHTML = `<svg viewBox="0 0 ${h.W} ${h.H}">${k}</svg>`;
+
+  const cols = document.getElementById("colsE");
+  cols.style.gridTemplateColumns = "repeat(7, 1fr)";
+  cols.innerHTML = days.map((d, i) => {
+    const gap = d.kind === "plan" ? null : d.kind === "today" ? gapAt(NOW, 60) : gapAt(i + 1, d.t);
+    const tag = d.kind === "today" ? " · today" : d.kind === "plan" ? " · plan" : "";
+    return `<div class="col ${d.kind || ""}"><div class="dd">${d.d} ${d.n}<span class="k">${tag}</span></div><div class="s">+${d.s}%</div><div class="t">${d.t}% ${gap === null ? "" : `<span class="${cls(gap)}">${fmt(gap)}</span>`}</div></div>`;
+  }).join("");
+}
+
+function drawF() {
+  const el = document.getElementById("chartF");
+  const f = frame(el, 480, 0, 100);
+  let g = f.g + yTicks(f, [0, 25, 50, 75, 100]);
+  const lo = (x) => 70 * x / 7, hi = (x) => 99 * x / 7;
+  g += `<path d="${path([[0, 0], [7, 70], [7, 0]], f)}Z" fill="${C.push}" opacity="0.08"/>`;
+  g += `<path d="${path([[0, 0], [7, 99], [7, 100], [0, 100]], f)}Z" fill="${C.slow}" opacity="0.08"/>`;
+  g += `<path d="${path([[0, 0], [7, 99], [7, 70]], f)}Z" fill="${C.steady}" opacity="0.14"/>`;
+  g += `<path d="${path([[0, 0], [7, 70]], f)}" stroke="${C.steady}" stroke-opacity="0.6" fill="none"/><path d="${path([[0, 0], [7, 99]], f)}" stroke="${C.steady}" stroke-opacity="0.6" fill="none"/>`;
+  g += `<text x="${f.x(6.9)}" y="${f.y(99) - 10}" fill="${C.slow}" font-size="15" text-anchor="end" font-family="${C.font}">slow</text>`;
+  g += `<text x="${f.x(6.9)}" y="${f.y(84)}" fill="${C.steady}" font-size="15" text-anchor="end" font-family="${C.font}">steady</text>`;
+  g += `<text x="${f.x(6.9)}" y="${f.y(40)}" fill="${C.push}" font-size="15" text-anchor="end" font-family="${C.font}">push</text>`;
+  g += `<path d="${path([[NOW, 60], [7, 95]], f)}" fill="none" stroke="${C.fg}" stroke-opacity="0.6" stroke-width="2" stroke-dasharray="6 6"/><circle cx="${f.x(7)}" cy="${f.y(95)}" r="5" fill="none" stroke="${C.fg}" stroke-width="2"/>`;
+  g += `<path d="${path(real, f)}" fill="none" stroke="${C.fg}" stroke-width="3.5" stroke-linejoin="round"/>` + nowMarker(f);
+  el.innerHTML = `<svg viewBox="0 0 ${f.W} ${f.H}" role="img" aria-label="Use inside the steady corridor">${g}</svg>`;
+  document.getElementById("daysF").innerHTML = days.map((d) => `<div class="md ${d.kind || ""}"><div class="dd">${d.d} ${d.n}</div><div class="s">+${d.s}%</div><div class="t">${d.t}%${d.kind === "plan" ? " · plan" : d.kind === "today" ? " · today" : ""}</div></div>`).join("");
+}
+
+function all() { drawD(); towerD(); drawE(); drawF(); }
+addEventListener("resize", all);
+document.fonts.ready.then(all);
+all();
+</script>
+</body>
+</html>
