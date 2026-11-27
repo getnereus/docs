@@ -1,12 +1,12 @@
 {
   "name": "scene-metrics",
   "command": "test/scene-metrics",
-  "result": "fail",
-  "exit": 1,
-  "seconds": 657,
-  "passed": 50,
-  "failed": 1,
-  "failure": "FAIL: the detail of flux did not show lastReason OOMKilled for flux-57cb86f98b-4hqbg in time:",
-  "commit": "566af07c",
-  "started": "2026-11-26T23:57:04Z"
+  "result": "pass",
+  "exit": 0,
+  "seconds": 704,
+  "passed": 51,
+  "failed": 0,
+  "failure": null,
+  "commit": "90bb0df6",
+  "started": "2026-11-27T08:52:14Z"
 }
