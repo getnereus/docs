@@ -1,0 +1,201 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The Usage tab's Week | Days, the mockup the owner chose on 2026-11-27 (#2377, spec 0015): the first phone shows Week,
+     the second Days, the third switches for real. Throwaway: the figures are the real week of Nov 23-29 typed in. -->
+<style>
+  :root {
+    --bg: #000; --card: #1a1a1a; --line: #2a2a2a; --surface: #242424;
+    --fg: #f2f2f2; --muted: #9a9a9a; --dim: #6a6a6a;
+    --push: #5ec4ff; --steady: #87d787; --slow: #ff8a80;
+    font-family: system-ui, "Ubuntu", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #2b2b2b; color: var(--fg); }
+  .phones { display: flex; gap: 40px; padding: 28px; justify-content: center; align-items: flex-start; }
+  .phone { width: 390px; flex: none; }
+  .phone h1 { font: 600 20px system-ui; margin: 0 0 10px; color: #fff; }
+  .phone h1 small { display: block; font-weight: 400; font-size: 13px; color: #bbb; margin-top: 4px; min-height: 52px; }
+  .screen { position: relative; background: var(--bg); border-radius: 28px; height: 780px; overflow: hidden; display: flex; flex-direction: column; }
+  .bar { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px 10px; }
+  .bar .title { font-size: 26px; }
+  .bar .avatar { width: 40px; height: 40px; border-radius: 20px; background: #333; display: grid; place-items: center; font-size: 14px; }
+  .content { flex: 1; padding: 0 12px; overflow: hidden; }
+  .nav { height: 80px; border-top: 1px solid var(--line); background: #111; display: grid; grid-template-columns: repeat(4, 1fr); align-items: center; text-align: center; font-size: 12px; color: var(--muted); }
+  .nav b { color: #fff; }
+  .card { background: var(--card); border-radius: 28px; padding: 14px 14px 14px 16px; font-variant-numeric: tabular-nums; }
+  .line { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+  .line .label { flex: 1; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border-radius: 16px; background: var(--steady); color: #0d260f; font-weight: 600; font-size: 13px; }
+  .more { width: 40px; height: 40px; margin-right: -8px; border: none; border-radius: 20px; background: none; color: var(--fg); font-size: 22px; display: grid; place-items: center; }
+  .big { font-size: 52px; line-height: 56px; letter-spacing: -1.5px; }
+  .big small { font-size: 18px; letter-spacing: 0; color: var(--muted); }
+  .headrow { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+  .mini { display: flex; gap: 14px; padding-bottom: 6px; }
+  .mini dt { font-size: 11px; color: var(--muted); }
+  .mini dd { margin: 0; font-size: 17px; font-weight: 500; }
+  .mini .hl dd { color: var(--steady); }
+  svg { display: block; width: 100%; }
+
+  /* The table under the chart: a label column, then one column per day, aligned to the chart's axis. */
+  .tbl { display: grid; grid-template-columns: 62px repeat(7, 1fr); margin-top: 2px; font-size: 13px; text-align: center; }
+  .tbl > div { padding: 5px 0; }
+  .tbl .rl { text-align: left; font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+  .tbl .rl i { flex: none; width: 12px; height: 0; border-top: 2px solid; }
+  .tbl .hd { font-size: 11px; color: var(--muted); line-height: 1.25; }
+  .tbl .hd b { display: block; font-size: 13px; color: var(--fg); font-weight: 500; }
+  .tbl .tc { background: var(--surface); }
+  .tbl .tc.top { border-radius: 8px 8px 0 0; box-shadow: inset 0 3px 0 var(--steady); }
+  .tbl .tc.bot { border-radius: 0 0 8px 8px; }
+  .tbl .ideal { color: var(--muted); }
+  .tbl .used { font-weight: 600; }
+  .tbl .fc { color: var(--muted); font-style: italic; }
+  .tbl .sep { grid-column: 1 / -1; height: 1px; background: var(--line); padding: 0; }
+  .neg { color: var(--push); } .pos { color: var(--slow); } .ok { color: var(--steady); }
+
+  /* K: bars per day */
+
+  /* L: today first */
+  .todaybox { margin-top: 10px; padding: 12px 14px; border-radius: 16px; background: var(--surface);  }
+  .todaybox .t1 { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; color: var(--muted); }
+  .todaybox .t1 b { font-size: 22px; color: var(--fg); font-weight: 600; }
+  .todaybox .meter { position: relative; height: 10px; margin: 10px 0 6px; border-radius: 5px; background: #ffffff14; overflow: hidden; }
+  .todaybox .meter span { position: absolute; left: 0; top: 0; bottom: 0; background: var(--steady); border-radius: 5px; }
+  .todaybox .t2 { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+  .todaybox .t2 .ok { font-weight: 600; }
+  .phones { flex-wrap: wrap; }
+  .seg { display: flex; margin: 10px 0 2px; border: 1px solid #737373; border-radius: 16px; overflow: hidden; height: 32px; }
+  .seg span { flex: 1; display: grid; place-items: center; font-size: 13px; font-weight: 500; color: var(--fg); }
+  .seg span + span { border-left: 1px solid #737373; }
+  .seg .on { background: #3b4a3b; }
+  .rl .pick { display: inline-flex; align-items: center; gap: 2px; padding: 2px 6px 2px 4px; margin-left: -4px; border: 1px solid #737373; border-radius: 8px; color: var(--fg); font-size: 11px; }
+  .rl .pick i { width: 10px; }
+  .tbl .rl { overflow: visible; white-space: nowrap; }
+</style>
+<title>Usage week and days</title>
+</head><body><div class="phones" id="p"></div><script>
+const C = { fg: "#f2f2f2", muted: "#9a9a9a", line: "#2a2a2a", push: "#5ec4ff", steady: "#87d787", slow: "#ff8a80" };
+// Real week of Nov 23-29, read Fri 17:22 (reset Mon 01:00).
+const NOW = (4 + 16.37 / 24) / 7;
+const WEEK = [6, 18, 37, 54, 64, 81, 96];            // used at each close, today now, then projected
+const KIND = ["", "", "", "", "today", "plan", "plan"];
+const DAYS = [["Mon",23],["Tue",24],["Wed",25],["Thu",26],["Fri",27],["Sat",28],["Sun",29]];
+const IDEAL = [14, 28, 42, 57, 67, 85, 100];          // the even path from Monday; today, now
+// The plan: at each day's start, what is left spread over the days left (today's goal 69; today, now).
+const STARTS = [0, 6, 18, 37, 54], GOALS = [14, 21, 34, 52, 69];
+const PLAN = [14, 21, 34, 52, 64, 84, 100];
+const fmt = (g) => (g > 0 ? "+" : g < 0 ? "−" : "±") + Math.abs(g);
+const cls = (g) => (Math.abs(g) <= 1 ? "ok" : g < 0 ? "neg" : "pos");
+
+function chart(mode, W = 358, H = 176, L = 62) {
+  const R = 2, T = 6, B = 4;
+  const x = (f) => L + f * (W - L - R), y = (v) => T + (1 - v / 100) * (H - T - B);
+  const p = (pts) => pts.map(([a, b], i) => `${i ? "L" : "M"}${x(a).toFixed(1)},${y(b).toFixed(1)}`).join("");
+  let g = "";
+  g += `<path d="${p([[0,0],[1,70],[1,0]])}Z" fill="${C.push}" fill-opacity="0.07"/>`;
+  g += `<path d="${p([[0,0],[1,99],[1,100],[0,100]])}Z" fill="${C.slow}" fill-opacity="0.07"/>`;
+  g += `<path d="${p([[0,0],[1,99],[1,70]])}Z" fill="${C.steady}" fill-opacity="0.16"/>`;
+  for (let i = 1; i < 7; i++) g += `<line x1="${x(i/7)}" x2="${x(i/7)}" y1="${T}" y2="${H-B}" stroke="${C.line}"/>`;
+  g += `<rect x="${x(4/7)}" y="${T}" width="${x(1/7)-L}" height="${H-T-B}" fill="#fff" fill-opacity="0.04"/>`;
+  const ideal = `<path d="${p([[0,0],[1,100]])}" fill="none" stroke="${C.fg}" stroke-width="1.5" stroke-dasharray="1 4" stroke-linecap="round"`;
+  let plan = "";
+  STARTS.forEach((s, i) => { plan += `<path d="${p([[i/7, s], [(i+1)/7, GOALS[i]]])}" fill="none" stroke="#ffd36e" stroke-width="2" stroke-dasharray="${i === 4 ? "4 3" : "4 3"}" stroke-linecap="round"/>`; });
+  plan += `<path d="${p([[5/7,69],[6/7,84],[1,100]])}" fill="none" stroke="#ffd36e" stroke-opacity="0.5" stroke-width="2" stroke-dasharray="4 3"/>`;
+  STARTS.forEach((s, i) => { plan += `<circle cx="${x((i+1)/7)}" cy="${y(GOALS[i])}" r="2.5" fill="#ffd36e"/>`; });
+  let marks = "";
+  const AG = [...GOALS, 84, 100];
+  AG.forEach((v, i) => { const a = x(i/7) + 6, b = x((i+1)/7) - 6, op = i > 4 ? 0.45 : 1;
+    marks += `<line x1="${a}" x2="${b}" y1="${y(v)}" y2="${y(v)}" stroke="${C.steady}" stroke-opacity="${op}" stroke-width="3" stroke-linecap="round"/>`; });
+  if (mode === "marks") g += marks;
+  else if (mode === "ideal") g += ideal + ` stroke-opacity="0.6"/>`;
+  else if (mode === "plan") g += plan;
+  else g += ideal + ` stroke-opacity="0.35"/>` + (mode === "both-plan" ? plan : plan.replaceAll('stroke="#ffd36e"', 'stroke="#ffd36e" stroke-opacity="0.35"'));
+  g += `<path d="${p([[NOW,64],[5/7,69],[6/7,81],[1,96]])}" fill="none" stroke="${C.fg}" stroke-opacity="0.6" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+  g += `<path d="${p([[0,0],...WEEK.slice(0,4).map((v,i)=>[(i+1)/7,v]),[NOW,64]])}" fill="none" stroke="${C.fg}" stroke-width="2.5" stroke-linejoin="round"/>`;
+  g += `<line x1="${x(NOW)}" x2="${x(NOW)}" y1="${y(64)}" y2="${y(69)}" stroke="${C.steady}" stroke-width="3" stroke-linecap="round"/>`;
+  g += `<circle cx="${x(NOW)}" cy="${y(64)}" r="5" fill="${C.fg}" stroke="#1a1a1a" stroke-width="2"/>`;
+  for (const v of [0, 50, 100]) g += `<text x="${L-6}" y="${y(v)+4}" fill="${C.muted}" font-size="10" text-anchor="end">${v}</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" height="${H}">${g}</svg>`;
+}
+
+function table(ref, label) {
+  const R = ref === "plan" ? PLAN : IDEAL;
+  const tc = (i) => KIND[i] === "today" ? "tc" : "";
+  const head = DAYS.map(([d, n], i) => `<div class="hd ${KIND[i] === "today" ? "tc top" : ""}">${d}<b>${n}</b></div>`).join("");
+  const mark = ref === "plan" ? "border-top:3px solid #87d787" : "border-top:2px dotted #aaa";
+  const r1 = `<div class="rl">${label || `<i style="${mark}"></i>${ref === "plan" ? "Adjusted" : "Planned"}`}</div>` + R.map((v, i) => `<div class="ideal ${tc(i)}">${v}</div>`).join("");
+  const r2 = `<div class="rl"><i style="border-top-color:#f2f2f2"></i>Week</div>` + WEEK.map((v, i) => `<div class="${KIND[i] === "plan" ? "fc" : "used"} ${tc(i)}">${v}</div>`).join("");
+  const r3 = `<div class="rl"><i style="border-top-color:transparent"></i>Gap</div>` + WEEK.map((v, i) => { const d = v - R[i]; return `<div class="${cls(d)} ${KIND[i] === "plan" ? "fc" : ""} ${KIND[i] === "today" ? "tc bot" : ""}">${fmt(d)}</div>`; }).join("");
+  return `<div class="tbl"><div></div>${head}${r1}${r2}${r3}</div>`;
+}
+
+const TOP = `<div class="line"><span class="label">Week · resets Mon 01:00</span><span class="chip">• steady</span><button class="more">⋮</button></div>
+<div class="headrow"><div class="big">64%<small> used</small></div><dl class="mini"><div><dt>Forecast</dt><dd>96%</dd></div><div><dt>Read</dt><dd>Fri 17:22</dd></div></dl></div>`;
+const TODAY = `<div class="todaybox"><div class="t1"><span>Today, Fri 27</span><span><b>+10</b> of +15</span></div><div class="meter"><span style="width:66%"></span></div><div class="t2"><span>at 64% now</span><span class="ok">5 left until 69%</span></div></div>`;
+const phone = (title, note, body) => `<div class="phone"><h1>${title}<small>${note}</small></h1><div class="screen"><div class="bar"><span class="title">Usage</span><span class="avatar">A</span></div><div class="content"><div class="card">${body}</div></div><div class="nav"><span>Status</span><span>Environments</span><span>Presentations</span><b>Usage</b></div></div></div>`;
+</script><script>
+const seg = (on) => `<div class="seg"><span class="${on === "ideal" ? "on" : ""}">${on === "ideal" ? "✓ " : ""}Planned</span><span class="${on === "plan" ? "on" : ""}">${on === "plan" ? "✓ " : ""}Adjusted</span></div>`;
+
+const QUOTA = [14, 15, 16, 15, 15, 15, 16], SPENT = [6, 12, 19, 17, 10, 12, 15];
+function frame(W, H, L, body) {
+  const R = 2, T = 6, B = 4;
+  const x = (f) => L + f * (W - L - R), y = (v, m = 100) => T + (1 - v / m) * (H - T - B);
+  return { x, y, T, B, R, wrap: (g) => `<svg viewBox="0 0 ${W} ${H}" height="${H}">${g}</svg>` };
+}
+// D: the chart turns into one bar per day, the day's spend inside its allowance (outlined box).
+function bars(W = 358, H = 150, L = 62) {
+  const { x, y, T, B, wrap } = frame(W, H, L), M = 20;
+  let g = "";
+  for (let i = 1; i < 7; i++) g += `<line x1="${x(i/7)}" x2="${x(i/7)}" y1="${T}" y2="${H-B}" stroke="${C.line}"/>`;
+  g += `<rect x="${x(4/7)}" y="${T}" width="${x(1/7)-L}" height="${H-T-B}" fill="#fff" fill-opacity="0.04"/>`;
+  for (const v of [0, 10, 20]) g += `<text x="${L-6}" y="${y(v, M)+4}" fill="${C.muted}" font-size="10" text-anchor="end">${v}</text>`;
+  QUOTA.forEach((q, i) => {
+    const a = x(i/7) + 9, w = x(1/7) - L - 18, fut = i > 4, s = SPENT[i], d = s - q;
+    const col = Math.abs(d) <= 1 ? C.steady : d < 0 ? C.push : C.slow;
+    g += `<rect x="${a}" y="${y(q, M)}" width="${w}" height="${y(0, M) - y(q, M)}" fill="none" stroke="${C.steady}" stroke-opacity="${fut ? 0.4 : 0.9}" stroke-width="1.5" stroke-dasharray="${fut ? "3 3" : ""}" rx="3"/>`;
+    if (fut) g += `<rect x="${a+5}" y="${y(s, M)}" width="${w-10}" height="${y(0, M)-y(s, M)}" fill="url(#hatch)" rx="2"/>`;
+    else g += `<rect x="${a+5}" y="${y(s, M)}" width="${w-10}" height="${y(0, M)-y(s, M)}" fill="${i === 4 ? C.fg : col}" fill-opacity="${i === 4 ? 0.9 : 0.85}" rx="2"/>`;
+  });
+  g = `<defs><pattern id="hatch" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><rect width="2" height="5" fill="#8a8a8a"/></pattern></defs>` + g;
+  return wrap(g);
+}
+function dayTable() {
+  const tc = (i) => KIND[i] === "today" ? "tc" : "";
+  const head = DAYS.map(([d, n], i) => `<div class="hd ${KIND[i] === "today" ? "tc top" : ""}">${d}<b>${n}</b></div>`).join("");
+  const r1 = `<div class="rl"><i style="border:1.5px solid #87d787;height:8px;width:10px;border-radius:2px"></i>Allowed</div>` + QUOTA.map((v, i) => `<div class="ideal ${tc(i)}">+${v}</div>`).join("");
+  const r2 = `<div class="rl"><i style="border-top:6px solid #f2f2f2;width:8px"></i>Spent</div>` + SPENT.map((v, i) => `<div class="${KIND[i] === "plan" ? "fc" : "used"} ${tc(i)}">+${v}</div>`).join("");
+  const r3 = `<div class="rl"><i style="border-top-color:transparent"></i>Gap</div>` + SPENT.map((v, i) => { const d = v - QUOTA[i]; return `<div class="${cls(d)} ${KIND[i] === "plan" ? "fc" : ""} ${KIND[i] === "today" ? "tc bot" : ""}">${fmt(d)}</div>`; }).join("");
+  return `<div class="tbl"><div></div>${head}${r1}${r2}${r3}</div>`;
+}
+// E and F: the corridor with a different overlay.
+function overlay(kind, W = 358, H = 150, L = 62) {
+  const { x, y, T, B, wrap } = frame(W, H, L);
+  const p = (pts) => pts.map(([a, b], i) => `${i ? "L" : "M"}${x(a).toFixed(1)},${y(b).toFixed(1)}`).join("");
+  let g = "";
+  g += `<path d="${p([[0,0],[1,70],[1,0]])}Z" fill="${C.push}" fill-opacity="0.07"/>`;
+  g += `<path d="${p([[0,0],[1,99],[1,100],[0,100]])}Z" fill="${C.slow}" fill-opacity="0.07"/>`;
+  g += `<path d="${p([[0,0],[1,99],[1,70]])}Z" fill="${C.steady}" fill-opacity="0.16"/>`;
+  for (let i = 1; i < 7; i++) g += `<line x1="${x(i/7)}" x2="${x(i/7)}" y1="${T}" y2="${H-B}" stroke="${C.line}"/>`;
+  g += `<rect x="${x(4/7)}" y="${T}" width="${x(1/7)-L}" height="${H-T-B}" fill="#fff" fill-opacity="0.04"/>`;
+  const pts = [[0,0], ...WEEK.slice(0,4).map((v,i)=>[(i+1)/7,v]), [NOW,64]];
+  g += `<path d="${p([[NOW,64],[5/7,69],[6/7,81],[1,96]])}" fill="none" stroke="${C.fg}" stroke-opacity="0.6" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+  if (kind === "line") {
+    g += `<path d="${p([[0,0],[1/7,14],[2/7,21],[3/7,34],[4/7,52],[5/7,69],[6/7,84],[1,100]])}" fill="none" stroke="${C.steady}" stroke-width="2" stroke-dasharray="1 4" stroke-linecap="round"/>`;
+    g += `<path d="${p(pts)}" fill="none" stroke="${C.fg}" stroke-width="2.5" stroke-linejoin="round"/>`;
+  } else {
+    const gaps = [-8, -3, 3, 2, 0];
+    for (let i = 0; i < 5; i++) { const d = gaps[i], col = Math.abs(d) <= 1 ? C.steady : d < 0 ? C.push : C.slow;
+      g += `<path d="${p([pts[i], pts[i+1]])}" fill="none" stroke="${col}" stroke-width="4" stroke-linecap="round"/>`; }
+  }
+  g += `<line x1="${x(NOW)}" x2="${x(NOW)}" y1="${y(64)}" y2="${y(69)}" stroke="${C.steady}" stroke-width="3" stroke-linecap="round"/>`;
+  g += `<circle cx="${x(NOW)}" cy="${y(64)}" r="5" fill="${C.fg}" stroke="#1a1a1a" stroke-width="2"/>`;
+  for (const v of [0, 50, 100]) g += `<text x="${L-6}" y="${y(v)+4}" fill="${C.muted}" font-size="10" text-anchor="end">${v}</text>`;
+  return wrap(g);
+}
+const seg2 = (on) => `<div class="seg"><span class="${on === "week" ? "on" : ""}" onclick="show('week')">${on === "week" ? "✓ " : ""}Week</span><span class="${on === "days" ? "on" : ""}" onclick="show('days')">${on === "days" ? "✓ " : ""}Days</span></div>`;
+const body = (on) => TOP + seg2(on) + `<div style="margin-top:6px">${on === "days" ? bars() : overlay("color")}</div>` + (on === "days" ? dayTable() : table("plan")) + TODAY;
+function show(on) { document.querySelector("#live .card").innerHTML = body(on); }
+p.innerHTML =
+  phone("Week", "The curve coloured by day (F); the table is the week's total.", body("week")) +
+  phone("Days", "A bar per day inside its allowance (D); the table is per day.", body("days")) +
+  `<div id="live">${phone("Try it", "Tap Week or Days.", body("week"))}</div>`;
+document.querySelectorAll(".seg span").forEach((s) => s.style.cursor = "pointer");
+</script></body></html>

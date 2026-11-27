@@ -7022,6 +7022,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#decisions-owner-2026-11-27-week-and-days-2377" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decisions (owner, 2026-11-27): Week and Days (#2377)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#approaches-considered" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -7120,6 +7131,17 @@
 <li><strong>A phone (below 840 px)</strong> stacks the header, the share with Forecast and Read beside it, the chart, the week and today's strip; the whole card fits a phone's screen with the portal's title and bottom bar, checked at 340 px in both languages (<code>docs/presentations/tests/test_usage_browser.py</code>).</li>
 <li><strong>A computer (840 px and up)</strong> spreads the same pieces in two columns: on the left the share, the verdict in words ("Inside the corridor, heading for 94%."), the facts and today's strip; on the right the chart with the week under it.</li>
 <li><strong>Two figures per day come from the API</strong> (<code>cli/src/nereus/usage_rules.py</code>, <code>paths</code>), so every rendering shows the same numbers: <code>ideal</code>, on every day, and <code>projected</code>, on today and the days ahead (absent while the forecast is hidden). Both are whole numbers of the share.</li>
+</ul>
+<h2 id="decisions-owner-2026-11-27-week-and-days-2377">Decisions (owner, 2026-11-27): Week and Days (#2377)<a class="headerlink" href="#decisions-owner-2026-11-27-week-and-days-2377" title="Permanent link">&para;</a></h2>
+<p>Read on the phone, the ideal misled: it is fixed on Monday and never looks at what was really used, while today's goal is computed again each day from the day's start. The owner chose on throwaway mockups to read the week against that adjusted goal instead, in two views: <a href="week-days.html"><code>week-days.html</code></a> (its third phone switches for real). These decisions replace the ideal path and the Ideal row of the corridor's decisions above; the corridor, the steady band and today's strip stay.</p>
+<ul>
+<li><strong>Each day's adjusted goal</strong> is the one <code>today_goal</code> computes, fixed at the day's start: the share then plus what is left to 100% spread over the worked time left, rounded down. A day gone starts at its start in <code>starts</code> (#1591), today at today's, a day ahead at the day before's goal; a day off has no allowance (its goal is its start). The API gives each day <code>adjusted</code> (today: the path to the goal now), <code>allowance</code> (the goal less the day's start) and <code>spent</code> (the day's share, the projection's share for the days ahead); <code>ideal</code> stays one release for compatibility, then goes in a follow-up if nothing reads it.</li>
+<li><strong>A segmented button <code>Week | Days</code></strong> (M3, the check on the chosen one) sits between the share and the chart. Week by default; the last choice is kept on the device (localStorage).</li>
+<li><strong>Week:</strong> the corridor without the ideal path; the real curve coloured per day by that day's gap to its adjusted goal (blue under, green within a point, salmon over, the Gap row's thresholds); the projection dashed and today's goal stay. The table: Adjusted, Week, Gap (Week less Adjusted).</li>
+<li><strong>Days:</strong> one bar per day, an outlined box at the day's allowance (dashed and faded for the days ahead) with the spend inside it, coloured by the gap (today in the text's colour, the days ahead hatched); the y axis runs 0 to 20, or to the week's largest allowance or spend rounded up to a multiple of 5. The table: Allowed, Spent, Gap (Spent less Allowed; today against its whole allowance).</li>
+<li><strong>The planned (even) path is dropped</strong> from the screen: "ideal" read as "the planned ideal", and the owner chose not to keep it as a third view.</li>
+<li><strong>Today's strip loses its left border.</strong> On a phone the row labels drop their marks, so Permitido and Adjusted fit the 52 px column; the card, with the button's row, fits 600 px at 340 px in both languages (<code>docs/presentations/tests/test_usage_browser.py</code>, both views).</li>
+<li><strong><code>nereus usage get</code></strong> prints the same figures, one row per day: DAY, TOTAL (projected for the days ahead, <code>~</code>), ADJUSTED, GAP, ALLOWED, SPENT, today's tag naming its goal.</li>
 </ul>
 <h2 id="approaches-considered">Approaches considered<a class="headerlink" href="#approaches-considered" title="Permanent link">&para;</a></h2>
 <p>All three keep the portal neutral black and white (its M3 tokens <code>--nereus-*</code>), with the pace as the only hue.</p>

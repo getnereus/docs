@@ -2,7 +2,7 @@
 Chromium: <nereus-usage> over a fake api, at the narrowest width and in both languages. The node tests check its
 figures; these check what only a browser can: the chart, the week's table and today's strip stay inside the card, each
 day's column sits under its stretch of the chart, the whole card fits a phone's screen, and a long day-off reason never
-pushes anything out of the card."""
+pushes anything out of the card; the segmented button Week | Days (#2377) switches both."""
 import http.server
 import json
 import pathlib
@@ -31,13 +31,14 @@ def week(today_off=None):
     "timeZone": "America/Sao_Paulo", "ready": True, "reset": False, "forecast": 86.0, "pace": "steady", "todayGoal": 64,
     "todayOff": today_off,
     "days": [
-      {"date": "2026-11-23", "start": "2026-11-23T04:00:00Z", "kind": "gone", "share": 18, "total": 18, "estimate": False, "ideal": 16},
-      {"date": "2026-11-24", "start": "2026-11-24T03:00:00Z", "kind": "gone", "share": 0, "total": 18, "estimate": False, "off": "Doente", "ideal": 16},
-      {"date": "2026-11-25", "start": "2026-11-25T03:00:00Z", "kind": "gone", "share": 20, "total": 38, "estimate": True, "ideal": 33},
-      {"date": "2026-11-26", "start": "2026-11-26T03:00:00Z", "kind": "today", "share": 20, "total": 58, "estimate": False, "ideal": 48, "projected": 61, **({"off": today_off} if today_off else {})},
-      {"date": "2026-11-27", "start": "2026-11-27T03:00:00Z", "kind": "plan", "share": 28, "total": 86, "estimate": False, "ideal": 66, "projected": 78},
-      {"date": "2026-11-28", "start": "2026-11-28T03:00:00Z", "kind": "plan", "share": 7, "total": 93, "estimate": False, "ideal": 83, "projected": 82},
-      {"date": "2026-11-29", "start": "2026-11-29T03:00:00Z", "kind": "plan", "share": 7, "total": 100, "estimate": False, "ideal": 100, "projected": 86},
+      {"date": "2026-11-23", "start": "2026-11-23T04:00:00Z", "kind": "gone", "share": 18, "total": 18, "estimate": False, "ideal": 16, "adjusted": 16, "allowance": 16, "spent": 18},
+      {"date": "2026-11-24", "start": "2026-11-24T03:00:00Z", "kind": "gone", "share": 0, "total": 18, "estimate": False, "off": "Doente", "ideal": 16, "adjusted": 18, "allowance": 0, "spent": 0},
+      {"date": "2026-11-25", "start": "2026-11-25T03:00:00Z", "kind": "gone", "share": 20, "total": 38, "estimate": True, "ideal": 33, "adjusted": 36, "allowance": 18, "spent": 20},
+      {"date": "2026-11-26", "start": "2026-11-26T03:00:00Z", "kind": "today", "share": 20, "total": 58, "estimate": False, "ideal": 48, "adjusted": 54, "allowance": 26, "spent": 20, "projected": 61,
+       **({"off": today_off} if today_off else {})},
+      {"date": "2026-11-27", "start": "2026-11-27T03:00:00Z", "kind": "plan", "share": 28, "total": 86, "estimate": False, "ideal": 66, "adjusted": 78, "allowance": 14, "spent": 17, "projected": 78},
+      {"date": "2026-11-28", "start": "2026-11-28T03:00:00Z", "kind": "plan", "share": 7, "total": 93, "estimate": False, "ideal": 83, "adjusted": 89, "allowance": 11, "spent": 4, "projected": 82},
+      {"date": "2026-11-29", "start": "2026-11-29T03:00:00Z", "kind": "plan", "share": 7, "total": 100, "estimate": False, "ideal": 100, "adjusted": 100, "allowance": 11, "spent": 4, "projected": 86},
     ],
   }
 
@@ -90,12 +91,15 @@ def usage_page():
     if browser is None:
       pytest.skip("no headless browser: run `uvx playwright install chromium-headless-shell` or install Chrome")
 
-    def opened(window, width=340, lang="pt-BR", scheme="dark", timezone_id=None):
+    def opened(window, width=340, lang="pt-BR", scheme="dark", timezone_id=None, view=None):
       server = serve(window)
       servers.append(server)
       page = browser.new_context(viewport={"width": width, "height": 900}, color_scheme=scheme, timezone_id=timezone_id).new_page()
       page.goto(f"http://127.0.0.1:{server.server_port}/?lang={lang}")
       page.wait_for_function("document.querySelector('nereus-usage')?.shadowRoot?.querySelector('.hero .corridor svg')")
+      if view:
+        page.evaluate(f"document.querySelector('nereus-usage').shadowRoot.querySelector('[data-view={view}]').click()")
+        page.wait_for_function(f"document.querySelector('nereus-usage')?.shadowRoot?.querySelector('.hero .corridor.{view} svg')")
       return page
 
     yield opened
@@ -113,17 +117,20 @@ BOXES = """() => {
     week: box(root.querySelector('.week')),
     days: [...root.querySelectorAll('.week thead th')].map(box),
     today: box(root.querySelector('.today')),
+    views: box(root.querySelector('.views')),
     texts: [...root.querySelectorAll('.today b, .today span, .facts dd, .week td, .week th')].map(box),
   };
 }"""
 
 
+@pytest.mark.parametrize("view", [None, "days"])
 @pytest.mark.parametrize("lang", ["pt-BR", "en"])
-def test_the_chart_the_week_and_today_stay_inside_the_card_each_day_under_its_stretch_of_time(usage_page, lang):
-  page = usage_page(week(), lang=lang)
+def test_the_chart_the_week_and_today_stay_inside_the_card_each_day_under_its_stretch_of_time(usage_page, lang, view):
+  """Both views of #2377, Week (the default) and Days (a bar per day), in both languages."""
+  page = usage_page(week(), lang=lang, view=view)
   boxes = page.evaluate(BOXES)
   hero = boxes["hero"]
-  for name in ("chart", "week", "today"):
+  for name in ("chart", "week", "today", "views"):
     assert hero["left"] <= boxes[name]["left"] and boxes[name]["right"] <= hero["right"] + 0.5, (name, boxes)
   assert all(each["right"] <= hero["right"] + 0.5 for each in boxes["texts"]), boxes
   assert page.evaluate("document.documentElement.scrollWidth") <= 340
@@ -132,8 +139,9 @@ def test_the_chart_the_week_and_today_stay_inside_the_card_each_day_under_its_st
   axis = (boxes["chart"]["left"] + 52, boxes["chart"]["right"])
   assert abs(boxes["days"][0]["left"] - axis[0]) <= 1.5 and abs(boxes["days"][-1]["right"] - axis[1]) <= 1.5, boxes
   assert all(abs(each["width"] - (axis[1] - axis[0]) / 7) <= 1.5 for each in boxes["days"]), boxes
-  # the whole card fits a phone's screen of 780 px with the portal's title and its bottom bar
-  assert hero["bottom"] - hero["top"] <= 560, hero
+  # the whole card fits a phone's screen of 780 px with the portal's title and its bottom bar; the segmented button
+  # Week | Days (#2377) adds its 40 px row, measured at the narrowest width, where the share's word wraps
+  assert hero["bottom"] - hero["top"] <= 600, hero
 
 
 def test_a_long_day_off_reason_stays_inside_the_card(usage_page):

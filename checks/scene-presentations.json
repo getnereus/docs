@@ -1,12 +1,12 @@
 {
   "name": "scene-presentations",
-  "command": "make --no-print-directory scene-presentations",
+  "command": "test/scene-presentations",
   "result": "pass",
   "exit": 0,
-  "seconds": 859,
+  "seconds": 875,
   "passed": 141,
   "failed": 0,
   "failure": null,
-  "commit": "1cf5bf12+",
-  "started": "2026-11-27T21:16:45Z"
+  "commit": "5b6414e4",
+  "started": "2026-11-27T22:21:36Z"
 }
