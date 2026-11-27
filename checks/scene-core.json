@@ -3,10 +3,10 @@
   "command": "make --no-print-directory scene-core",
   "result": "pass",
   "exit": 0,
-  "seconds": 1476,
-  "passed": 336,
+  "seconds": 1531,
+  "passed": 337,
   "failed": 0,
   "failure": null,
-  "commit": "4c63c137",
-  "started": "2026-11-27T18:32:11Z"
+  "commit": "1cf5bf12+",
+  "started": "2026-11-27T20:51:00Z"
 }

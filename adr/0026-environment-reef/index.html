@@ -7216,6 +7216,11 @@
 <td>the Nereid</td>
 <td>where its Workloads' pods run in the cluster that hosts them, so the metrics Reef reads them there: a vcluster's host namespace; for <code>nereus</code>, the namespaces of the Targets that deliver into it (amended by the owner, 2026-11-26, #2305)</td>
 </tr>
+<tr>
+<td><code>status.kubernetes.version</code></td>
+<td>the Nereid</td>
+<td>the Kubernetes version the environment runs, read from its cluster's <code>/version</code> (<code>1.31.4</code>, without the distribution's suffix), so the portal shows it and whether an upgrade is available against a table versioned in the repository (amended by the owner, 2026-11-27, #2307)</td>
+</tr>
 </tbody>
 </table>
 <p><code>spec</code> names no technology (ADR 0002, the model): the person never names a cluster type, a provider or a Tool. A kept cluster, a vcluster, Cloud Run, Azure Container Apps or AWS Fargate are each a Nereid behind a Mandate, and each writes what it made in <code>status</code>. Credentials are never inline: <code>secretRef</code> points at a Kubernetes Secret today, and the secrets Reef (#529) takes the kubeconfig over when it exists, without changing the field.</p>
