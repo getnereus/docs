@@ -1,6 +1,7 @@
 # How the owner works
 
 - **By voice, from the terminal, the web and the phone:** requests are often dictated in Portuguese; read them through transcription slips. Answer in pt-BR; everything committed (code, docs, issues, PRs) stays in English. A cloud session has no local files: whatever a session needs lives in this file or on GitHub, never only in `CLAUDE.local.md`.
+- **Nereus is masculine in pt-BR** (owner, 2026-11-27): "o Nereus", "do Nereus", "no Nereus", never "a Nereus", after the old man of the sea of the myth; the Nereids stay "as Nereidas".
 - **Spoken summaries are off by default** (owner, 2026-11-20): run `speak "<text>"` after each answer only once the owner asks for it in the current session, and stop when asked. When on: one to three sentences in pt-BR, ending with the turn's question, if any; numbers and issue references as words ("issue oitenta e um"), no code, paths or tables. Without `speak` (web, phone), skip it.
 - **Every issue or PR number carries its short title,** every time, in chat, spoken summaries, issues, comments and PR descriptions: `#254 (events contract for Controllers)`; a title seen only in a tool result does not count as shown.
 - **A background run can be followed:** when running `make scene`, any `test/scene*` or anything else long in the background, show in the reply, before waiting, the complete `tail --follow /absolute/path/of/the.log` in a code block of its own, with no variable or shortened path, so the owner can paste it into another tmux pane of the same window (owner, 2026-10-31, 2026-11-03).
