@@ -9487,7 +9487,11 @@ The VMNodeScrape `kubelet-cadvisor` reads each node's kubelet at `/metrics/cadvi
 
 The VMPodScrape `kube-state-metrics` reads [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics) ([#2177](https://github.com/getnereus/nereus/issues/2177)), which the Nereid also asks the release Reef for: chart 9.1.0, v2.20.0 pinned by digest, in `metrics-system`. The Nereid does not wait for it: it logs a Release not Ready.
 
-It reads only pods, Deployments and VerticalPodAutoscalers, through a Role in each namespace it reads, and no Secret. It exposes six series, among them the requests, the ready replicas and each VPA's recommendation.
+It reads only pods, Deployments, ResourceQuotas and VerticalPodAutoscalers, through a Role in each namespace it reads, and no Secret. It exposes only the series the portal reads.
+
+An Environment's health in the portal ([#2306](https://github.com/getnereus/nereus/issues/2306)): the nodes that answer, the pods pending, and the CPU and memory requested, of the namespace's ResourceQuota, else of the nodes' capacity.
+
+It is under pressure when a pod is pending, a node does not answer or a meter passes 70%.
 
 It reads `nereus-system` and each namespace a Ready Environment lists in `status.kubernetes.namespaces` ([#2305](https://github.com/getnereus/nereus/issues/2305)), but only one a Nereid made for a tenant ([#2348](https://github.com/getnereus/nereus/issues/2348)).
 

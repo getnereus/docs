@@ -7242,7 +7242,7 @@
 └─────────────────────────────────────────┘
 </code></pre></div>
 <ul>
-<li><strong>The health card</strong> says in one line whether the environment is healthy or under pressure, and why when it is not, then four cells: nodes ready over total, pods pending, CPU requested of capacity and memory requested of capacity, each of the last two with a meter (amber above 70%, red above 85%).</li>
+<li><strong>The health card</strong> says in one line whether the environment is healthy or under pressure, and why when it is not, then four cells: nodes ready over total, pods pending, CPU requested of capacity and memory requested of capacity, each of the last two with a meter (amber above 70%, red above 85%). Two states (owner, 2026-11-27, #2306): under pressure when a pod is pending, a node does not answer or a meter passes 70%, else healthy; missing data shows as no data, never a zero.</li>
 <li><strong>A pending upgrade</strong> shows as a tonal amber line: the version available and until when the current one is supported. It is information for the developer, never an action here; the upgrade itself is #353's.</li>
 <li><strong>The expiry</strong>, for an Environment that has one, as a neutral line: "Expires in 2d, with its workloads".</li>
 <li><strong>The Workloads</strong> in a list or a grid, problems first, the same as the Nereids' home of spec 0013: the list row carries the reason of a problem, the RED line (requests per second, the 5xx ratio, p95) and a sparkline of the last hour; the grid card one big number and a sparkline. A Workload with no route at the edge shows "no route at the edge" in the list and its CPU in the grid, and its sparkline is its CPU.</li>
