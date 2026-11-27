@@ -7350,7 +7350,7 @@ Next steps:
   nereus usage get weekly
 </code></pre></div>
 <h3 id="5-report-from-the-status-line">5. Report from the status line<a class="headerlink" href="#5-report-from-the-status-line" title="Permanent link">&para;</a></h3>
-<p><code>report</code> keeps a local cache, one JSON file per window under <code>~/.local/state/nereus/usage/</code>, and sends at most every 5 minutes, so a status line can run it on every reading and read the figures back with <code>jq</code>. Offline, the cache keeps the reading and <code>get</code> answers from it, marked <code>local</code>.</p>
+<p><code>report</code> keeps a local cache, one JSON file per window under <code>~/.local/state/nereus/usage/</code>, and sends at most every 3 minutes (<code>nereus config set usage_send_interval &lt;interval&gt;</code> changes it, at least <code>1m</code>), so a status line can run it on every reading and read the figures back with <code>jq</code>. Offline, the cache keeps the reading and <code>get</code> answers from it, marked <code>local</code>.</p>
 <div class="language-bash highlight"><pre><span></span><code>jq<span class="w"> </span><span class="s1">'.figures.forecast'</span><span class="w"> </span>~/.local/state/nereus/usage/weekly.json
 </code></pre></div>
 <h2 id="check-it-worked">Check it worked<a class="headerlink" href="#check-it-worked" title="Permanent link">&para;</a></h2>

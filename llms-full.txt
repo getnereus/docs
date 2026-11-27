@@ -3978,7 +3978,7 @@ Next steps:
 
 ### 5. Report from the status line
 
-`report` keeps a local cache, one JSON file per window under `~/.local/state/nereus/usage/`, and sends at most every 5 minutes, so a status line can run it on every reading and read the figures back with `jq`. Offline, the cache keeps the reading and `get` answers from it, marked `local`.
+`report` keeps a local cache, one JSON file per window under `~/.local/state/nereus/usage/`, and sends at most every 3 minutes (`nereus config set usage_send_interval <interval>` changes it, at least `1m`), so a status line can run it on every reading and read the figures back with `jq`. Offline, the cache keeps the reading and `get` answers from it, marked `local`.
 
 ```bash
 jq '.figures.forecast' ~/.local/state/nereus/usage/weekly.json
