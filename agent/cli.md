@@ -151,7 +151,42 @@ nereus config set check_interval 24h
 - **Help:** every command and group takes `-h` as well as `--help`, with the same output and the same precedence over `--version` and `--examples` (#1733); the root sets both in its `context_settings`, and every command inherits them.
 - **Examples:** every command and group takes `--examples`, or `-e` (#674): each example after a `# <what it does>` line, as tldr prints them; a group lists every command under it, each after a `## <path>` line, and `nereus --examples` lists the whole CLI. With `--output`, they come as data for agents: `command` and `description`, plus `path` on a group (#675). In code, `examples()` takes `(description, command)` pairs, and `cli/tests/test_help.py` requires a description for each.
 - **Help:** flat, Click's plain text, no Rich markup or colours (`TYPER_USE_RICH=0`, set in `cli/src/nereus/__init__.py`, #704). `nereus --help` lists its commands in sections `Platform`, `Session`, `Model` and `Reefs`, each sorted by name, one line per command; a new top-level command sets `short_help` (at most 60 characters) and `rich_help_panel` (one of those four), and `cli/tests/test_help.py` requires both.
-- **Flags:** `--param <key>=<value>` for every parameter (never `--set`); `--reef` and `--nereid` everywhere (never `--implements`), never prepositions (`--on-reef`, `--to-nereid`); examples use long-form options, one per line. **Every long option also has a short one** (owner, 2026-11-26): the docs and the examples show the long one, a person typing may use either (`-e` for `--examples`, `-o` for `--output`); `WITHOUT_SHORT` in `cli/tests/test_help.py` lists the long options still without one, a list that only shrinks, and a new long option with no short one fails the test.
+- **Flags:** `--param <key>=<value>` for every parameter (never `--set`); `--reef` and `--nereid` everywhere (never `--implements`), never prepositions (`--on-reef`, `--to-nereid`); examples use long-form options, one per line. **Every long option also has a short one** (owner, 2026-11-26, #2342): the docs and the examples show the long one, a person typing may use either. Each long option has one letter, the same in every command; two options share a letter only when no command has both. `-h` (`--help`), `-e` (`--examples`) and `-o` (`--output`) are fixed. The letters live in `cli/src/nereus/short_options.py`, added to the tree once built, and the table below must match it (`cli/tests/test_help.py`). `WITHOUT_SHORT` there lists the long options still without one, a list that only shrinks.
+
+| Letter | Long options |
+| --- | --- |
+| `-a` | `--agent`, `--alias`, `--all`, `--audience`, `--initial-admin` |
+| `-A` | `--approve-access` |
+| `-b` | `--background`, `--build` |
+| `-c` | `--check`, `--cloud`, `--create-cluster` |
+| `-d` | `--dry-run`, `--use-device-code` |
+| `-D` | `--default` |
+| `-E` | `--environment` |
+| `-f` | `--file`, `--follow`, `--from-file` |
+| `-F` | `--force` |
+| `-g` | `--generate-file` |
+| `-i` | `--image` |
+| `-j` | `--project` |
+| `-k` | `--kind` |
+| `-l` | `--local` |
+| `-m` | `--email`, `--match`, `--messaging-url` |
+| `-n` | `--name`, `--naming-override`, `--nereid` |
+| `-N` | `--display-name`, `--installation-name` |
+| `-O` | `--orange`, `--organization` |
+| `-p` | `--param`, `--profile` |
+| `-P` | `--ingress-port`, `--path`, `--publish` |
+| `-r` | `--red`, `--reef`, `--refresh`, `--repository` |
+| `-R` | `--ref` |
+| `-s` | `--check-slo`, `--scope`, `--skip`, `--sort-by` |
+| `-S` | `--set` |
+| `-t` | `--timeout`, `--title`, `--tolerance` |
+| `-T` | `--target`, `--to`, `--type` |
+| `-u` | `--public-url`, `--url`, `--user` |
+| `-v` | `--show-requests` |
+| `-w` | `--owner`, `--wait` |
+| `-W` | `--without` |
+| `-y` | `--yellow`, `--yes` |
+
 - **Verbs:** kubectl's, ADR 0013 (command conventions): `create` builds from flags and fails when the thing exists, `apply` creates or updates from files or folders of `.yaml` only (every former `add`), `delete` deletes, plus `get` and `list`; every noun takes all five, and every command that changes something takes `--dry-run`. `add` and `remove` are not verbs. Installing a Reef or a Nereid by name (`nereus nereid apply <nereid>`) keeps today's form until #487 (the verb that installs a Reef or a Nereid by name) decides it.
 - **Output lines** name the object by its full path, as Azure's resource ids do: the Reef, then each kind in the plural and its name, parents before children, the platform's kinds under `core`, and end in `created`, `configured`, `unchanged` or `deleted`:
 

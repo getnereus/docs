@@ -7426,7 +7426,143 @@ nereus config set check_interval 24h
 <li><strong>Help:</strong> every command and group takes <code>-h</code> as well as <code>--help</code>, with the same output and the same precedence over <code>--version</code> and <code>--examples</code> (#1733); the root sets both in its <code>context_settings</code>, and every command inherits them.</li>
 <li><strong>Examples:</strong> every command and group takes <code>--examples</code>, or <code>-e</code> (#674): each example after a <code># &lt;what it does&gt;</code> line, as tldr prints them; a group lists every command under it, each after a <code>## &lt;path&gt;</code> line, and <code>nereus --examples</code> lists the whole CLI. With <code>--output</code>, they come as data for agents: <code>command</code> and <code>description</code>, plus <code>path</code> on a group (#675). In code, <code>examples()</code> takes <code>(description, command)</code> pairs, and <code>cli/tests/test_help.py</code> requires a description for each.</li>
 <li><strong>Help:</strong> flat, Click's plain text, no Rich markup or colours (<code>TYPER_USE_RICH=0</code>, set in <code>cli/src/nereus/__init__.py</code>, #704). <code>nereus --help</code> lists its commands in sections <code>Platform</code>, <code>Session</code>, <code>Model</code> and <code>Reefs</code>, each sorted by name, one line per command; a new top-level command sets <code>short_help</code> (at most 60 characters) and <code>rich_help_panel</code> (one of those four), and <code>cli/tests/test_help.py</code> requires both.</li>
-<li><strong>Flags:</strong> <code>--param &lt;key&gt;=&lt;value&gt;</code> for every parameter (never <code>--set</code>); <code>--reef</code> and <code>--nereid</code> everywhere (never <code>--implements</code>), never prepositions (<code>--on-reef</code>, <code>--to-nereid</code>); examples use long-form options, one per line. <strong>Every long option also has a short one</strong> (owner, 2026-11-26): the docs and the examples show the long one, a person typing may use either (<code>-e</code> for <code>--examples</code>, <code>-o</code> for <code>--output</code>); <code>WITHOUT_SHORT</code> in <code>cli/tests/test_help.py</code> lists the long options still without one, a list that only shrinks, and a new long option with no short one fails the test.</li>
+<li><strong>Flags:</strong> <code>--param &lt;key&gt;=&lt;value&gt;</code> for every parameter (never <code>--set</code>); <code>--reef</code> and <code>--nereid</code> everywhere (never <code>--implements</code>), never prepositions (<code>--on-reef</code>, <code>--to-nereid</code>); examples use long-form options, one per line. <strong>Every long option also has a short one</strong> (owner, 2026-11-26, #2342): the docs and the examples show the long one, a person typing may use either. Each long option has one letter, the same in every command; two options share a letter only when no command has both. <code>-h</code> (<code>--help</code>), <code>-e</code> (<code>--examples</code>) and <code>-o</code> (<code>--output</code>) are fixed. The letters live in <code>cli/src/nereus/short_options.py</code>, added to the tree once built, and the table below must match it (<code>cli/tests/test_help.py</code>). <code>WITHOUT_SHORT</code> there lists the long options still without one, a list that only shrinks.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Letter</th>
+<th>Long options</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-a</code></td>
+<td><code>--agent</code>, <code>--alias</code>, <code>--all</code>, <code>--audience</code>, <code>--initial-admin</code></td>
+</tr>
+<tr>
+<td><code>-A</code></td>
+<td><code>--approve-access</code></td>
+</tr>
+<tr>
+<td><code>-b</code></td>
+<td><code>--background</code>, <code>--build</code></td>
+</tr>
+<tr>
+<td><code>-c</code></td>
+<td><code>--check</code>, <code>--cloud</code>, <code>--create-cluster</code></td>
+</tr>
+<tr>
+<td><code>-d</code></td>
+<td><code>--dry-run</code>, <code>--use-device-code</code></td>
+</tr>
+<tr>
+<td><code>-D</code></td>
+<td><code>--default</code></td>
+</tr>
+<tr>
+<td><code>-E</code></td>
+<td><code>--environment</code></td>
+</tr>
+<tr>
+<td><code>-f</code></td>
+<td><code>--file</code>, <code>--follow</code>, <code>--from-file</code></td>
+</tr>
+<tr>
+<td><code>-F</code></td>
+<td><code>--force</code></td>
+</tr>
+<tr>
+<td><code>-g</code></td>
+<td><code>--generate-file</code></td>
+</tr>
+<tr>
+<td><code>-i</code></td>
+<td><code>--image</code></td>
+</tr>
+<tr>
+<td><code>-j</code></td>
+<td><code>--project</code></td>
+</tr>
+<tr>
+<td><code>-k</code></td>
+<td><code>--kind</code></td>
+</tr>
+<tr>
+<td><code>-l</code></td>
+<td><code>--local</code></td>
+</tr>
+<tr>
+<td><code>-m</code></td>
+<td><code>--email</code>, <code>--match</code>, <code>--messaging-url</code></td>
+</tr>
+<tr>
+<td><code>-n</code></td>
+<td><code>--name</code>, <code>--naming-override</code>, <code>--nereid</code></td>
+</tr>
+<tr>
+<td><code>-N</code></td>
+<td><code>--display-name</code>, <code>--installation-name</code></td>
+</tr>
+<tr>
+<td><code>-O</code></td>
+<td><code>--orange</code>, <code>--organization</code></td>
+</tr>
+<tr>
+<td><code>-p</code></td>
+<td><code>--param</code>, <code>--profile</code></td>
+</tr>
+<tr>
+<td><code>-P</code></td>
+<td><code>--ingress-port</code>, <code>--path</code>, <code>--publish</code></td>
+</tr>
+<tr>
+<td><code>-r</code></td>
+<td><code>--red</code>, <code>--reef</code>, <code>--refresh</code>, <code>--repository</code></td>
+</tr>
+<tr>
+<td><code>-R</code></td>
+<td><code>--ref</code></td>
+</tr>
+<tr>
+<td><code>-s</code></td>
+<td><code>--check-slo</code>, <code>--scope</code>, <code>--skip</code>, <code>--sort-by</code></td>
+</tr>
+<tr>
+<td><code>-S</code></td>
+<td><code>--set</code></td>
+</tr>
+<tr>
+<td><code>-t</code></td>
+<td><code>--timeout</code>, <code>--title</code>, <code>--tolerance</code></td>
+</tr>
+<tr>
+<td><code>-T</code></td>
+<td><code>--target</code>, <code>--to</code>, <code>--type</code></td>
+</tr>
+<tr>
+<td><code>-u</code></td>
+<td><code>--public-url</code>, <code>--url</code>, <code>--user</code></td>
+</tr>
+<tr>
+<td><code>-v</code></td>
+<td><code>--show-requests</code></td>
+</tr>
+<tr>
+<td><code>-w</code></td>
+<td><code>--owner</code>, <code>--wait</code></td>
+</tr>
+<tr>
+<td><code>-W</code></td>
+<td><code>--without</code></td>
+</tr>
+<tr>
+<td><code>-y</code></td>
+<td><code>--yellow</code>, <code>--yes</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
 <li><strong>Verbs:</strong> kubectl's, ADR 0013 (command conventions): <code>create</code> builds from flags and fails when the thing exists, <code>apply</code> creates or updates from files or folders of <code>.yaml</code> only (every former <code>add</code>), <code>delete</code> deletes, plus <code>get</code> and <code>list</code>; every noun takes all five, and every command that changes something takes <code>--dry-run</code>. <code>add</code> and <code>remove</code> are not verbs. Installing a Reef or a Nereid by name (<code>nereus nereid apply &lt;nereid&gt;</code>) keeps today's form until #487 (the verb that installs a Reef or a Nereid by name) decides it.</li>
 <li>
 <p><strong>Output lines</strong> name the object by its full path, as Azure's resource ids do: the Reef, then each kind in the plural and its name, parents before children, the platform's kinds under <code>core</code>, and end in <code>created</code>, <code>configured</code>, <code>unchanged</code> or <code>deleted</code>:</p>
