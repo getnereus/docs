@@ -35,11 +35,12 @@ The decks of the repository are rendered by `docs/presentations/render-outline` 
 ## Commands on screen
 
 1. **Always as a terminal** with the fixed palette (`docs/agent/owner.md`), a comment line before each command and a blank line between commands; a Reef, Nereid or Mandate takes its concept colour there too.
-2. **The commands of the CLI design** (`docs/agent/cli.md`, ADR 0013, command conventions): `nereus <group> <verb> <name>`, with the verbs `create`, `apply`, `delete`, `get` and `list`; never `add`. Full names only.
-3. **Long options only, one per line:** the command stays on the first line ending in `\`, each option with its value on its own line, indented 2 spaces from where `nereus` starts (4 with `$ `). A terminal never scrolls sideways: long output lines wrap.
-4. **Output reads `kind/name verb`** in kubectl's words (`core/reefs/environment created`, `configured`, `unchanged`, `deleted`), success in green with `✓`, and the `Next steps:` label with a blank line before and after, then the next commands indented two spaces; not the engine's yellow "next:" hint.
-5. **Examples use today's model:** the Reef `environment`, its `vcluster` Nereid and its Mandate, on the local k3d. A command that does not exist yet is shown as its contract, and the notes say so.
-6. **Messages are polite and actionable:** what happened, who decided and what to do next; never a generic error (ADR 0012, error messages).
+2. **A toolbar folded behind `⋯`** in the terminal's title bar (#2361): a tap shows copy (the whole terminal as shown, its comments, prompts and output), A−/A+ and narrow/widen, as small icons; they fold back on a tap outside, Esc, a slide change or 4 s with no tap. The font and the width are one setting for every terminal of the deck, kept on the device per deck (owner, 2026-11-27); an open toolbar on a narrow terminal hides the window title, then the dots, so it never needs the phone turned sideways.
+3. **The commands of the CLI design** (`docs/agent/cli.md`, ADR 0013, command conventions): `nereus <group> <verb> <name>`, with the verbs `create`, `apply`, `delete`, `get` and `list`; never `add`. Full names only.
+4. **Long options only, one per line:** the command stays on the first line ending in `\`, each option with its value on its own line, indented 2 spaces from where `nereus` starts (4 with `$ `). A terminal never scrolls sideways: long output lines wrap.
+5. **Output reads `kind/name verb`** in kubectl's words (`core/reefs/environment created`, `configured`, `unchanged`, `deleted`), success in green with `✓`, and the `Next steps:` label with a blank line before and after, then the next commands indented two spaces; not the engine's yellow "next:" hint.
+6. **Examples use today's model:** the Reef `environment`, its `vcluster` Nereid and its Mandate, on the local k3d. A command that does not exist yet is shown as its contract, and the notes say so.
+7. **Messages are polite and actionable:** what happened, who decided and what to do next; never a generic error (ADR 0012, error messages).
 
 ## Language and neutrality
 

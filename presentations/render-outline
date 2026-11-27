@@ -23,11 +23,15 @@ WORDS = {
          "forUs": "For this talk", "back": "Back to the deck", "referenceDeck": "Reference deck",
          "noNotes": "No notes on this slide.", "built": "built", "planned": "planned", "idea": "idea",
          "copy": "copy", "copied": "copied", "index": "Index",
+         "termMore": "Terminal options", "termCopy": "Copy the whole terminal", "termSmaller": "Smaller font",
+         "termLarger": "Larger font", "termNarrow": "Narrower terminal", "termWide": "Wider terminal",
          "pollText": "An answer in a few words, from each phone", "pollTime": "{seconds} s to answer"},
   "pt": {"source": "Fonte", "references": "Referências", "sources": "Fontes", "notes": "notas", "about": "Sobre",
          "forUs": "Para esta palestra", "back": "Voltar ao deck", "referenceDeck": "Deck de referências",
          "noNotes": "Sem notas neste slide.", "built": "pronto", "planned": "planejado", "idea": "ideia",
          "copy": "copiar", "copied": "copiado", "index": "Índice",
+         "termMore": "Opções do terminal", "termCopy": "Copiar o terminal inteiro", "termSmaller": "Fonte menor",
+         "termLarger": "Fonte maior", "termNarrow": "Terminal mais estreito", "termWide": "Terminal mais largo",
          "pollText": "Uma resposta em poucas palavras, de cada celular", "pollTime": "{seconds} s para responder"},
 }
 
@@ -193,15 +197,29 @@ html[data-lang="en"] .poll [lang="pt"], html[data-lang="pt"] .poll [lang="en"] {
 .t-c { color: #5b6b7f; }
 .term .cx-reef, .term .cx-nereid, .term .cx-mandate, .term .cx-secret { font-weight: 600; }
 .grp.wait, .ln.wait { visibility: hidden; }
-/* Copy: discreet, in the bottom-right corner, under the last line so it never covers text. */
-.term { position: relative; }
-.term pre { padding-bottom: 34px; }
-.term .cp { position: absolute; right: 10px; bottom: 8px; background: #111827; color: #6b7a8d; border: 1px solid #1f2937; border-radius: 6px; padding: 2px 9px; font: .8em system-ui, sans-serif; cursor: pointer; opacity: .75; }
-.term .cp:hover, .term .cp:focus-visible { opacity: 1; color: #9fb3c8; }
-.term .cp [lang] { display: none; }
-html[data-lang="en"] .term .cp [lang="en"], html[data-lang="pt"] .term .cp [lang="pt"] { display: inline; }
-.term .cp.done [lang] { display: none !important; }
-.term .cp.done::after { content: attr(data-done); }
+/* The toolbar (#2361): a discreet ⋯ in the bar; a tap shows copy, A−/A+ and narrow/widen, which fold back on their own.
+   The font and the width are one setting for every terminal of the deck (--term-scale, --term-extra on :root). */
+:root { --term-scale: 1; --term-extra: 0px; }
+.term { position: relative; left: 50%; transform: translateX(-50%); width: clamp(min(260px, calc(100vw - 32px)), calc(100% + var(--term-extra)), calc(100vw - 32px)); font-size: calc(.82em * var(--term-scale)); container-type: inline-size; }
+.term .bar { min-height: 34px; padding-top: 2px; padding-bottom: 2px; }
+.term .tt { margin-left: auto; display: flex; align-items: center; gap: 4px; font: 12px/1 system-ui, sans-serif; }
+.term .tt > :not(.more) { display: none; }
+.term .tt.open > button { display: inline-flex; }
+.term .tt.open > .sep { display: block; width: 1px; height: 18px; background: #1f2937; margin: 0 4px; }
+.term .tt button { position: relative; min-width: 32px; height: 28px; padding: 0 6px; align-items: center; justify-content: center; background: transparent; color: #9fb3c8; border: 1px solid #2b3647; border-radius: 6px; font: inherit; font-weight: 600; cursor: pointer; }
+.term .tt .more { display: inline-flex; border-color: transparent; color: #6b7a8d; font-size: 16px; letter-spacing: 1px; }
+.term .tt.open .more { color: #ffffff; border-color: #2b3647; }
+/* A touch target of 44px around each button, without growing the bar. */
+.term .tt button::before { content: ""; position: absolute; inset: -8px -2px; }
+.term .tt button:hover, .term .tt button:focus-visible { color: #ffffff; border-color: #4a9ef4; outline: none; }
+.term .tt button[aria-disabled="true"] { opacity: .35; }
+.term .tt button.done { color: #7ee787; border-color: #7ee787; }
+.term .tt svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.term .tt.open > button:not(.more) { animation: tt-in .15s ease-out; }
+@keyframes tt-in { from { opacity: 0; transform: translateX(6px); } }
+/* An open toolbar keeps whole on a narrow terminal: the window title goes first, then the dots. */
+@container (max-width: 560px) { .term .bar:has(.tt.open) .cwd { display: none; } }
+@container (max-width: 300px) { .term .bar:has(.tt.open) .dots { display: none; } .term .tt.open { margin: 0 auto; } }
 .ln.fresh { animation: rowin .3s ease-out both; }
 .caret { color: #9fb3c8; animation: blink 1s steps(1) infinite; }
 .key { display: inline-grid; place-items: center; margin-left: 10px; min-width: 30px; height: 22px; padding: 0 6px; font: 600 14px/1 var(--mono); color: #e6e6e6; background: #1c2433; border: 1px solid #4a5a72; border-bottom-width: 3px; border-radius: 6px; cursor: pointer; vertical-align: middle; animation: popin .25s ease-out both; }
@@ -314,7 +332,7 @@ button:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
 .joy .grip.bl { left: 22px; bottom: 22px; } .joy .grip.br { right: 22px; bottom: 22px; }
 @media (hover: hover) and (pointer: fine) { .joy { display: none; } nav.bar .dt { display: inline-block; } }
 
-@media (prefers-reduced-motion: reduce) { .caret, .key, .ln.fresh { animation: none; } .st, .joy, nav.bar button { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .caret, .key, .ln.fresh, .term .tt.open > button { animation: none; } .st, .joy, nav.bar button { transition: none; } }
 html.still .caret, html.still .key, html.still .ln.fresh { animation: none; }
 html.still .st, html.still .joy, html.still nav.bar button { transition: none; }
 #motionBtn[aria-pressed="false"] { text-decoration: line-through; }
@@ -754,6 +772,82 @@ SCRIPT = """
   }
   function zoomNotes(d) { nfs = Math.max(12, Math.min(32, nfs + d)); $('#np').style.setProperty('--nfs', nfs + 'px'); }
 
+  // The terminal's toolbar (#2361): ⋯ shows copy, A−/A+ and narrow/widen; one toolbar open at a time, folded back on a
+  // tap outside, Esc, a slide change or 4 s with no tap on it. The font and the width are one setting for every terminal
+  // of the deck, kept on this device per deck.
+  const TERM_SCALE = [.7, .8, .9, 1, 1.1, 1.25, 1.4, 1.6], TERM_STEP = 80, TERM_NARROW = -4, TERM_WIDE = 12;
+  const termKey = 'deck.' + deckName + '.term';
+  const term = { s: 3, w: 0 };
+  try {
+    const v = JSON.parse(store.get(termKey));
+    if (v && Number.isInteger(v.s) && Number.isInteger(v.w)) Object.assign(term, v);
+  } catch (e) {}
+  term.s = Math.max(0, Math.min(TERM_SCALE.length - 1, term.s));
+  term.w = Math.max(TERM_NARROW, Math.min(TERM_WIDE, term.w));
+  let termOpen = null, termTimer = 0;
+  function termWidest() {
+    const t = $('.slide.on .term');
+    return !!t && t.getBoundingClientRect().width >= window.innerWidth - 33;
+  }
+  function termApply() {
+    root.style.setProperty('--term-scale', String(TERM_SCALE[term.s]));
+    root.style.setProperty('--term-extra', term.w * TERM_STEP + 'px');
+    $$('.term .tt button').forEach(b => {
+      const a = b.dataset.act, t = W(b.dataset.w);
+      b.title = t; b.setAttribute('aria-label', t);
+      const off = (a === 'smaller' && term.s === 0) || (a === 'larger' && term.s === TERM_SCALE.length - 1)
+        || (a === 'narrow' && term.w === TERM_NARROW) || (a === 'wide' && (term.w === TERM_WIDE || termWidest()));
+      b.setAttribute('aria-disabled', off ? 'true' : 'false');
+    });
+  }
+  function termArm() { clearTimeout(termTimer); if (termOpen) termTimer = setTimeout(() => termFold(null), 4000); }
+  function termFold(tt) {
+    if (termOpen && termOpen !== tt) { termOpen.classList.remove('open'); $('.more', termOpen).setAttribute('aria-expanded', 'false'); }
+    termOpen = tt;
+    if (tt) { tt.classList.add('open'); $('.more', tt).setAttribute('aria-expanded', 'true'); }
+    termArm();
+    requestAnimationFrame(termApply);
+  }
+  function termCopy(text) {
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.append(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    ta.remove();
+    return Promise.resolve();
+  }
+  document.addEventListener('click', e => {
+    const b = e.target.closest('.term .tt button');
+    if (!b) { if (termOpen) termFold(null); return; }
+    e.stopPropagation(); e.preventDefault();
+    const a = b.dataset.act, tt = b.closest('.tt');
+    if (a === 'more') { termFold(termOpen === tt ? null : tt); return; }
+    termArm();
+    if (a === 'copy') {
+      termCopy(b.dataset.copy).then(() => {
+        b.classList.add('done'); b.title = W('copied');
+        setTimeout(() => { b.classList.remove('done'); termApply(); }, 1200);
+      }).catch(() => {});
+      return;
+    }
+    if (b.getAttribute('aria-disabled') === 'true') return;
+    if (a === 'smaller') term.s--; else if (a === 'larger') term.s++;
+    else if (a === 'narrow') term.w--; else if (a === 'wide') term.w++;
+    store.set(termKey, JSON.stringify(term));
+    termApply();
+    requestAnimationFrame(termApply);
+  }, true);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && termOpen) termFold(null); });
+  // A slide change folds an open toolbar; the width check runs once a frame at most (the typing changes classes too).
+  let termQueued = false;
+  new MutationObserver(() => {
+    if (termOpen && !termOpen.closest('.slide.on')) termFold(null);
+    if (!termQueued) { termQueued = true; requestAnimationFrame(() => { termQueued = false; termApply(); }); }
+  }).observe(root, { attributes: true, subtree: true, attributeFilter: ['class', 'data-lang'] });
+  addEventListener('resize', termApply);
+  termApply();
+
   // A−/A+: the whole slide, terminals included (12 to 26 px), kept on this device (#1760: each follower has its own).
   const kept = Number(store.get('deck.fs'));
   let fs = kept >= 12 && kept <= 26 ? kept : matchMedia('(min-width: 900px)').matches ? 19 : 16;
@@ -761,14 +855,6 @@ SCRIPT = """
   if (kept >= 12 && kept <= 26) root.style.setProperty('--fs', fs + 'px');
 
   document.addEventListener('click', e => {
-    const cp = e.target.closest('.term .cp');
-    if (cp) {
-      e.stopPropagation();
-      navigator.clipboard?.writeText(cp.dataset.copy).catch(() => {});
-      cp.dataset.done = W('copied'); cp.classList.add('done');
-      setTimeout(() => cp.classList.remove('done'), 1200);
-      return;
-    }
     // A link inside a part (an issue on the board) stays a link.
     const part = e.target.closest('a') ? null : e.target.closest('g.part-detail');
     if (part) { openDetail(part); return; }
@@ -1394,8 +1480,30 @@ def notes_html(slide, lang, references, base):
 
 # ── Content blocks ──────────────────────────────────────
 
-def term_bar(title):
-  return f"<div class='bar'><span class='dots'><i></i><i></i><i></i></span><span>{html.escape(title)}</span></div>"
+def term_bar(title, tools=""):
+  return f"<div class='bar'><span class='dots'><i></i><i></i><i></i></span><span class='cwd'>{html.escape(title)}</span>{tools}</div>"
+
+
+COPY_ICON = ("<svg viewBox='0 0 24 24' aria-hidden='true'><rect x='9' y='9' width='12' height='12' rx='2'/>"
+             "<path d='M5 15V5a2 2 0 0 1 2-2h10'/></svg>")
+# Narrow: two arrows meeting in the middle; widen: one double-headed arrow, the size of the copy icon (owner, 2026-11-27).
+NARROW_ICON = "<svg viewBox='0 0 24 24' aria-hidden='true'><path d='M2 12h7M6 9l3 3-3 3M22 12h-7M18 9l-3 3 3 3'/></svg>"
+WIDE_ICON = "<svg viewBox='0 0 24 24' aria-hidden='true'><path d='M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4'/></svg>"
+# The terminal's toolbar (#2361): folded behind ⋯; copy, A−/A+ and narrow/widen, one setting for every terminal of the deck.
+TERM_TOOLS = (("copy", "termCopy", COPY_ICON), ("smaller", "termSmaller", "A−"), ("larger", "termLarger", "A+"),
+              None, ("narrow", "termNarrow", NARROW_ICON), ("wide", "termWide", WIDE_ICON))
+TERM_TOOLS_WORDS = ("termMore", *(tool[1] for tool in TERM_TOOLS if tool))
+
+
+def term_tools(steps):
+  def button(act, word, face):
+    copy = f" data-copy='{html.escape(terminal_text(steps))}'" if act == "copy" else ""
+    return (f"<button type='button' data-act='{act}' data-w='{word}' aria-label='{WORDS['en'][word]}'"
+            f" title='{WORDS['en'][word]}'{copy}>{face}</button>")
+  tools = "".join("<i class='sep'></i>" if tool is None else button(*tool) for tool in TERM_TOOLS)
+  more = (f"<button type='button' class='more' data-act='more' data-w='termMore' aria-expanded='false'"
+          f" aria-label='{WORDS['en']['termMore']}' title='{WORDS['en']['termMore']}'>⋯</button>")
+  return f"<span class='tt'>{tools}{more}</span>"
 
 
 def command_lines(run, options):
@@ -1438,6 +1546,11 @@ def output_markup(line, marks=True):
   return out
 
 
+def plain_output(line):
+  """An output line as the terminal shows it, with no markup: `{dim:x}` and `{nereid:x}` become `x`."""
+  return CONCEPT.sub(r"\2", DIM.sub(r"\1", line))
+
+
 def output_line(line):
   """One output line: a line that starts with ✓ or ✗, or `Next steps:`, takes its colour whole; any other, its inline marks."""
   text = output_markup(line, marks=False)
@@ -1462,21 +1575,21 @@ def render_terminal(terminal):
     if lines:
       stepwise = " data-stepwise='1'" if step.get("stepwise") else ""
       groups.append(f"<span class='grp out'{stepwise}>{''.join(output_line(line) for line in lines)}</span>")
-  return f"<div class='term'>{term_bar(terminal.get('cwd', '~/example'))}<pre>{''.join(groups)}</pre>{copy_button(steps)}</div>"
+  return f"<div class='term'>{term_bar(terminal.get('cwd', '~/example'), term_tools(steps))}<pre>{''.join(groups)}</pre></div>"
 
 
-def copy_text(steps):
-  """What the copy button copies: the commands as typed, one long option per line, never the prompt or the output."""
-  commands = []
+def terminal_text(steps):
+  """What the toolbar's copy copies: the whole terminal as shown, each comment, each command with its prompt and one
+  long option per line, and its output, a blank line between the steps (#2361)."""
+  parts = []
   for step in steps:
+    lines = [f"# {step['comment']}"] if step.get("comment") else []
     options = [str(option) for option in step.get("options") or []]
-    commands.append(" \\\n    ".join([step["run"], *options]))
-  return "\n".join(commands)
-
-
-def copy_button(steps):
-  label = "".join(f"<span lang='{lang}'>{WORDS[lang]['copy']}</span>" for lang in LANGS)
-  return f"<button type='button' class='cp' aria-label='Copy' data-copy='{html.escape(copy_text(steps))}'>{label}</button>"
+    lines.append(" \\\n    ".join([f"$ {step['run']}", *options]))
+    if step.get("output"):
+      lines += [plain_output(line).rstrip() for line in step["output"].rstrip("\n").split("\n")]
+    parts.append("\n".join(lines))
+  return "\n\n".join(parts)
 
 
 def line_set(spec, default):
@@ -1871,7 +1984,7 @@ def render_html(outline, base, split=False):
   deck = outline["deck"]
   style = f'<link rel="stylesheet" href="{STYLE_FILE}">' if split else f"<style>{CSS}</style>"
   script = f'<script src="{SCRIPT_FILE}"></script>' if split else f"<script>{SCRIPT}</script>"
-  words = {lang: {key: WORDS[lang][key] for key in ("notes", "references", "back", "referenceDeck", "noNotes", "copied", "index")} for lang in LANGS}
+  words = {lang: {key: WORDS[lang][key] for key in ("notes", "references", "back", "referenceDeck", "noNotes", "copied", "index", *TERM_TOOLS_WORDS)} for lang in LANGS}
   main_index, refs_index = [], []
   main_slides, refs_slides = render_slides(outline, base, main_index), render_references(outline, refs_index)
   for lang in LANGS:

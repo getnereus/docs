@@ -2,6 +2,7 @@ import copy
 import importlib.machinery
 import importlib.util
 import pathlib
+import html
 import re
 
 import pytest
@@ -251,11 +252,11 @@ def test_dim_markup_lives_only_in_a_terminal_output():
   assert not errors(changed)
 
 
-def test_the_copy_button_never_carries_the_output_markup():
+def test_the_copy_button_carries_the_output_as_shown_never_its_markup():
   changed = outline()["slides"][2]["terminal"]
   changed["steps"][0]["output"] = "{dim:scope} {nereid:auth0} ✓"
-  copy = re.search(r"data-copy='([^']*)'", ro.render_terminal(changed)).group(1)
-  assert "dim" not in copy and "auth0" not in copy
+  copy = html.unescape(re.search(r"data-copy='([^']*)'", ro.render_terminal(changed)).group(1))
+  assert "\nscope auth0 ✓\n" in copy and "{" not in copy
 
 
 def test_a_stepwise_output_is_revealed_one_line_per_step():
@@ -286,17 +287,32 @@ def test_commands_are_typed_and_outputs_shown_with_a_blank_line_between():
   first_output = markup.split("<span class='grp out'>")[1].split("<span class='grp cmd'>")[0]
   assert first_output.endswith("<span class='ln wrap'> </span></span>")
   assert "<span class='t-c'># Apply the reef</span>" in markup
-  assert "<div class='bar'><span class='dots'><i></i><i></i><i></i></span><span>~/example</span></div>" in markup
+  assert "<div class='bar'><span class='dots'><i></i><i></i><i></i></span><span class='cwd'>~/example</span><span class='tt'>" in markup
 
 
 
-def test_every_terminal_has_a_copy_button_with_the_commands_only():
+def test_every_terminal_has_a_folded_toolbar_whose_copy_takes_the_whole_terminal():
   markup = ro.render_terminal(outline()["slides"][2]["terminal"])
-  button = re.search(r"<button type='button' class='cp' aria-label='Copy' data-copy='([^']*)'>(.*?)</button>", markup, re.S)
-  assert button.group(1) == ("nereus reef apply environment\n"
-                             "nereus nereid apply vcluster \\\n    --reef environment \\\n    --image example.com/vcluster:0.1.0")
-  assert button.group(2) == "<span lang='en'>copy</span><span lang='pt'>copiar</span>"
-  assert markup.endswith("</pre>" + button.group(0) + "</div>")
+  bar = re.search(r"<div class='bar'>(.*?)</div>", markup, re.S).group(1)
+  tools = re.search(r"<span class='tt'>(.*)</span>$", bar, re.S).group(1)
+  acts = re.findall(r"data-act='(\w+)'", tools)
+  assert acts == ["copy", "smaller", "larger", "narrow", "wide", "more"]
+  assert "<button type='button' class='more' data-act='more' data-w='termMore' aria-expanded='false'" in tools
+  copy = html.unescape(re.search(r"data-act='copy'[^>]*data-copy='([^']*)'", tools).group(1))
+  steps = outline()["slides"][2]["terminal"]["steps"]
+  assert copy == ro.terminal_text(steps)
+  assert copy.startswith("# Apply the reef\n$ nereus reef apply environment\n")
+  assert "$ nereus nereid apply vcluster \\\n    --reef environment \\\n    --image example.com/vcluster:0.1.0" in copy
+  assert "class='cp'" not in markup
+  assert all(word in ro.WORDS[lang] for word in ro.TERM_TOOLS_WORDS for lang in ro.LANGS)
+
+
+def test_the_whole_terminal_text_has_comments_prompts_options_and_output_a_blank_line_between_steps():
+  steps = [{"comment": "First", "run": "nereus core reefs list", "output": "NAME  \ncore\n"},
+           {"run": "nereus environment environments create demo", "options": ["--mandate vcluster"]}]
+  assert ro.terminal_text(steps) == ("# First\n$ nereus core reefs list\nNAME\ncore\n\n"
+                                     "$ nereus environment environments create demo \\\n    --mandate vcluster")
+
 
 # ── Slides ──────────────────────────────────────────────
 
@@ -551,7 +567,7 @@ def test_the_previous_step_dims_and_a_click_outside_closes_the_notes():
 
 
 def test_reduced_motion_turns_off_the_animations():
-  assert "@media (prefers-reduced-motion: reduce) { .caret, .key, .ln.fresh { animation: none; } .st, .joy, nav.bar button { transition: none; } }" in ro.CSS
+  assert "@media (prefers-reduced-motion: reduce) { .caret, .key, .ln.fresh, .term .tt.open > button { animation: none; } .st, .joy, nav.bar button { transition: none; } }" in ro.CSS
 
 
 # ── The committed decks match their outlines (#340) ─────
