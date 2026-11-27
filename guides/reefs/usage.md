@@ -52,7 +52,15 @@ Sun 15/11  +25%   100%   plan
 
 ### 3. Cut the days where you live
 
-The days and the times are cut in the time zone of the Reef's Mandate, UTC until you set one. [`nereus mandate apply`](../../specs/cli/core.html#mandate-apply) replaces every param, so name them all.
+The days and the times are cut in the time zone of the Reef's Mandate. [`nereus init`](../../specs/cli/core.html#init-profile) sets it on install: the `spec.timeZone` of the `Installation` in `~/.config/nereus/init.yaml` when you set one, else the machine's (`TZ`, then `/etc/localtime`, then `timedatectl`), which it writes back to the file.
+
+It prints the zone and where it came from, and warns when it found none: the days are then cut in UTC.
+
+```text
+✓ time zone America/Sao_Paulo (discovered from /etc/localtime; set spec.timeZone of the Installation in ~/.config/nereus/init.yaml to choose it)
+```
+
+A Mandate that exists keeps its params, so on an older install set the zone on it by hand. [`nereus mandate apply`](../../specs/cli/core.html#mandate-apply) replaces every param, so name them all.
 
 ```bash
 nereus mandate apply reference-usage \

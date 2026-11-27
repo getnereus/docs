@@ -7347,7 +7347,7 @@
 <h3 id="1-build-the-cli-and-every-nereid-from-the-checkout">1. Build the CLI and every Nereid from the checkout<a class="headerlink" href="#1-build-the-cli-and-every-nereid-from-the-checkout" title="Permanent link">&para;</a></h3>
 <p><code>nereus init</code> installs the images at the version of the <code>nereus</code> on the PATH, and <code>make nereids</code> tags them with the checkout's version, so build both from the same commit: <code>make cli</code>, then <code>make nereids</code>.</p>
 <h3 id="2-delete-and-create-the-cluster">2. Delete and create the cluster<a class="headerlink" href="#2-delete-and-create-the-cluster" title="Permanent link">&para;</a></h3>
-<p>In the owner's terminal (in Claude Code, <code>!</code> first): <code>k3d cluster delete nereus</code>, then <a href="../../../specs/cli/core.html#init-profile"><code>nereus init</code></a>. About 9 minutes; the tenancy tree comes with it.</p>
+<p>In the owner's terminal (in Claude Code, <code>!</code> first): <code>k3d cluster delete nereus</code>, then <a href="../../../specs/cli/core.html#init-profile"><code>nereus init</code></a>, which sets the <a href="../../reefs/usage/#3-cut-the-days-where-you-live">time zone</a>. About 9 minutes; the tenancy tree comes with it.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--target<span class="w"> </span>k3d<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-cluster<span class="w"> </span><span class="se">\</span>

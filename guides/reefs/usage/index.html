@@ -7325,7 +7325,11 @@ Sat 14/11  +15%   75%    today
 Sun 15/11  +25%   100%   plan
 </code></pre></div>
 <h3 id="3-cut-the-days-where-you-live">3. Cut the days where you live<a class="headerlink" href="#3-cut-the-days-where-you-live" title="Permanent link">&para;</a></h3>
-<p>The days and the times are cut in the time zone of the Reef's Mandate, UTC until you set one. <a href="../../../specs/cli/core.html#mandate-apply"><code>nereus mandate apply</code></a> replaces every param, so name them all.</p>
+<p>The days and the times are cut in the time zone of the Reef's Mandate. <a href="../../../specs/cli/core.html#init-profile"><code>nereus init</code></a> sets it on install: the <code>spec.timeZone</code> of the <code>Installation</code> in <code>~/.config/nereus/init.yaml</code> when you set one, else the machine's (<code>TZ</code>, then <code>/etc/localtime</code>, then <code>timedatectl</code>), which it writes back to the file.</p>
+<p>It prints the zone and where it came from, and warns when it found none: the days are then cut in UTC.</p>
+<div class="language-text highlight"><pre><span></span><code>✓ time zone America/Sao_Paulo (discovered from /etc/localtime; set spec.timeZone of the Installation in ~/.config/nereus/init.yaml to choose it)
+</code></pre></div>
+<p>A Mandate that exists keeps its params, so on an older install set the zone on it by hand. <a href="../../../specs/cli/core.html#mandate-apply"><code>nereus mandate apply</code></a> replaces every param, so name them all.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>mandate<span class="w"> </span>apply<span class="w"> </span>reference-usage<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--reef<span class="w"> </span>usage<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--nereid<span class="w"> </span>reference-usage<span class="w"> </span><span class="se">\</span>

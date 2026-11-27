@@ -19,7 +19,7 @@ Rebuild `k3d-nereus`, the kept cluster used as production, from nothing: the pro
 
 ### 2. Delete and create the cluster
 
-In the owner's terminal (in Claude Code, `!` first): `k3d cluster delete nereus`, then [`nereus init`](../../specs/cli/core.html#init-profile). About 9 minutes; the tenancy tree comes with it.
+In the owner's terminal (in Claude Code, `!` first): `k3d cluster delete nereus`, then [`nereus init`](../../specs/cli/core.html#init-profile), which sets the [time zone](../reefs/usage.md#3-cut-the-days-where-you-live). About 9 minutes; the tenancy tree comes with it.
 
 ```bash
 nereus init \
