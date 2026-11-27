@@ -113,7 +113,7 @@ Next steps:
 
 **Lists come in alphabetical order, and `--sort-by` changes it** (owner, 2026-11-02, #808): `status` and every `list` by name; `--sort-by` takes kubectl's path into each object (`--sort-by .metadata.creationTimestamp`), in every form of `--output`, and refuses a field no row has. A table whose order means something keeps it: the steps of a plan, the checks of `doctor`, what a profile installs.
 
-**`--examples` on every command and group** (#243), next to `--help`: each example is a line saying what it does, then the command; `-o json` prints them for agents. In every code block of the docs and the deck, a comment line comes before each command and a blank line between commands.
+**`--examples` (`-e`) on every command and group** (#243), next to `--help`: each example is a line saying what it does, then the command; `-o json` prints them for agents. In every code block of the docs and the deck, a comment line comes before each command and a blank line between commands.
 
 **Commands a reef or a Nereid adds** follow the same conventions, and the CLI checks them as untrusted input before rendering them (spec 0003).
 
