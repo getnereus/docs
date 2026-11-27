@@ -34,7 +34,19 @@ The VMNodeScrape `kubelet-cadvisor` reads each node's kubelet at `/metrics/cadvi
 
 The VMPodScrape `kube-state-metrics` reads [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics) ([#2177](https://github.com/getnereus/nereus/issues/2177)), which the Nereid also asks the release Reef for: chart 9.1.0, v2.20.0 pinned by digest, in `metrics-system`. The Nereid does not wait for it: it logs a Release not Ready.
 
-It reads only the pods, Deployments and VerticalPodAutoscalers of `nereus-system`, through a Role there, and no Secret. It exposes six series, among them the requests, the ready replicas and each VPA's recommendation.
+It reads only pods, Deployments and VerticalPodAutoscalers, through a Role in each namespace it reads, and no Secret. It exposes six series, among them the requests, the ready replicas and each VPA's recommendation.
+
+It reads `nereus-system` and each namespace a Ready Environment lists in `status.kubernetes.namespaces` ([#2305](https://github.com/getnereus/nereus/issues/2305)), but only one a Nereid made for a tenant ([#2348](https://github.com/getnereus/nereus/issues/2348)).
+
+That is a Target's namespace, which the Nereid `flux` makes before its HelmRelease with the label `release.getnereus.dev/target`, or an Environment's `env-*`. A platform namespace such as `builds` never carries the label.
+
+Kubernetes' own and the platform's namespaces are also refused by name, at the Nereid and at admission.
+
+Only the Nereid serving the release Reef, or a cluster admin, may set, change or remove that label. A Target's namespace made before #2348, by Helm, has no label: a cluster admin adopts it once.
+
+```bash
+kubectl label namespace shop release.getnereus.dev/target=shop
+```
 
 Its one ClusterRole lists and watches the CustomResourceDefinitions, cluster-scoped: its Custom Resource State needs them to find the VPA's kind.
 
