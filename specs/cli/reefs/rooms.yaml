@@ -1,12 +1,12 @@
 deck:
   name: rooms
-  title: "The rooms reef"
-  subtitle: "Every command of the rooms reef: rooms, peers and the agents' sessions, on a Topic of the messaging reef"
-  accent: "on a Topic of the messaging reef"
+  title: "The rooms Reef"
+  subtitle: "Every command of the rooms Reef: rooms, peers and the agents' sessions, on a Topic of the messaging Reef"
+  accent: "on a Topic of the messaging Reef"
   pt:
-    title: "O reef rooms"
-    subtitle: "Todos os comandos do reef rooms: salas, pares e as sessões dos agentes, sobre um Topic do reef messaging"
-    accent: "sobre um Topic do reef messaging"
+    title: "O Reef rooms"
+    subtitle: "Todos os comandos do Reef rooms: salas, pares e as sessões dos agentes, sobre um Topic do Reef messaging"
+    accent: "sobre um Topic do Reef messaging"
 
 acts:
   - name: opening
@@ -41,52 +41,52 @@ slides:
   - name: cover
     act: opening
     cover: true
-    message: "The rooms reef"
+    message: "The rooms Reef"
     notes: |-
-      **The source of truth for the commands of the rooms reef** (#483, ADR 0030, Triton is the rooms reef's Nereid). Every command, built or only imagined, is here first; the tag after each label says whether it is built, planned (with the issue that builds it) or an idea.
+      **The source of truth for the commands of the rooms Reef** (#483, ADR 0030, Triton is the rooms Reef's Nereid). Every command, built or only imagined, is here first; the tag after each label says whether it is built, planned (with the issue that builds it) or an idea.
 
-      **Every command here is built but the orders** (the journey #2067): the reef and Triton (#2072), the rooms (#1491), the peers (#2074), a session's rooms (#2075), the room sessions (#2100) and the conversation (#2076, #1889). The first names are hidden and print the new one (`docs/agent/cli.md`, "Legacy commands").
+      **Every command here is built but the orders** (the journey #2067): the Reef and Triton (#2072), the rooms (#1491), the peers (#2074), a session's rooms (#2075), the room sessions (#2100) and the conversation (#2076, #1889). The first names are hidden and print the new one (`docs/agent/cli.md`, "Legacy commands").
     pt:
-      message: "O reef rooms"
+      message: "O Reef rooms"
       notes: |-
-        **A fonte da verdade dos comandos do reef rooms** (#483, ADR 0030, o Tritão é a Nereid do reef rooms). Todo comando, pronto ou só imaginado, está aqui primeiro; a etiqueta depois de cada rótulo diz se ele está pronto, planejado (com a issue que o constrói) ou se é uma ideia.
+        **A fonte da verdade dos comandos do Reef rooms** (#483, ADR 0030, o Tritão é a Nereid do Reef rooms). Todo comando, pronto ou só imaginado, está aqui primeiro; a etiqueta depois de cada rótulo diz se ele está pronto, planejado (com a issue que o constrói) ou se é uma ideia.
 
-        **Todo comando aqui está pronto, menos as ordens** (a jornada #2067): o reef e o Tritão (#2072), as salas (#1491), os pares (#2074), as salas de uma sessão (#2075), as sessões de sala (#2100) e a conversa (#2076, #1889). Os primeiros nomes ficam escondidos e imprimem o novo (`docs/agent/cli.md`, "Legacy commands").
+        **Todo comando aqui está pronto, menos as ordens** (a jornada #2067): o Reef e o Tritão (#2072), as salas (#1491), os pares (#2074), as salas de uma sessão (#2075), as sessões de sala (#2100) e a conversa (#2076, #1889). Os primeiros nomes ficam escondidos e imprimem o novo (`docs/agent/cli.md`, "Legacy commands").
 
   - name: two-reefs
     act: opening
-    topic: "two reefs"
-    message: "Each Room asks the {reef:messaging} reef for a Topic"
+    topic: "two Reefs"
+    message: "Each Room asks the {reef:messaging} Reef for a Topic"
     accent: "asks"
     screen:
-      - "**The conversation:** the {reef:rooms} reef, Room and Peer, looked after by the {nereid:triton} Nereid"
-      - "**The engine:** the {reef:messaging} reef, Topic and Queue, looked after by the {nereid:nats} Nereid"
+      - "**The conversation:** the {reef:rooms} Reef, Room and Peer, looked after by the {nereid:triton} Nereid"
+      - "**The engine:** the {reef:messaging} Reef, Topic and Queue, looked after by the {nereid:nats} Nereid"
     notes: |-
-      **Two small reefs, composed** (owner, 2026-11-21, ADR 0030). Triton's image declares `requires=messaging`, so a profile installs the engine first; for each Room, Triton applies a Topic named `room-<room>` and reads the binding the reef gives back.
+      **Two small Reefs, composed** (owner, 2026-11-21, ADR 0030). Triton's image declares `requires=messaging`, so a profile installs the engine first; for each Room, Triton applies a Topic named `room-<room>` and reads the binding the Reef gives back.
 
       **Triton knows the contract, not the engine:** an adapter chosen by the binding's `provider` does the reading and the writing. One adapter exists, for NATS; the engine's commands are in [the messaging deck](messaging.html).
     pt:
-      topic: "dois reefs"
-      message: "Cada Room pede um Topic ao reef {reef:messaging}"
+      topic: "dois Reefs"
+      message: "Cada Room pede um Topic ao Reef {reef:messaging}"
       accent: "pede"
       screen:
-        - "**A conversa:** o reef {reef:rooms}, Room e Peer, cuidado pela Nereid {nereid:triton}"
-        - "**O motor:** o reef {reef:messaging}, Topic e Queue, cuidado pela Nereid {nereid:nats}"
+        - "**A conversa:** o Reef {reef:rooms}, Room e Peer, cuidado pela Nereid {nereid:triton}"
+        - "**O motor:** o Reef {reef:messaging}, Topic e Queue, cuidado pela Nereid {nereid:nats}"
       notes: |-
-        **Dois reefs pequenos, compostos** (dono, 2026-11-21, ADR 0030). A imagem do Tritão declara `requires=messaging`, então um profile instala o motor primeiro; para cada Room, o Tritão aplica um Topic chamado `room-<room>` e lê o binding que o reef devolve.
+        **Dois Reefs pequenos, compostos** (dono, 2026-11-21, ADR 0030). A imagem do Tritão declara `requires=messaging`, então um profile instala o motor primeiro; para cada Room, o Tritão aplica um Topic chamado `room-<room>` e lê o binding que o Reef devolve.
 
         **O Tritão conhece o contrato, não o motor:** um adaptador escolhido pelo `provider` do binding faz a leitura e a escrita. Existe um adaptador, para o NATS; os comandos do motor estão [no deck messaging](messaging.html).
 
   - name: apply-reef
     act: setup
-    topic: "reef"
+    topic: "Reef"
     status: built
     issue: 2072
-    message: "One command applies the {reef:rooms} reef and its kinds"
+    message: "One command applies the {reef:rooms} Reef and its kinds"
     accent: "One command"
     terminal:
       steps:
-        - comment: "Apply the rooms reef"
+        - comment: "Apply the rooms Reef"
           run: "nereus reef apply rooms"
           output: |-
             ✓ core/reefs/rooms 0.1.0 created (rooms.getnereus.dev/v1alpha1: peers, rooms, roomsessions)
@@ -96,13 +96,13 @@ slides:
               nereus rooms --help
               nereus nereid apply <nereid> --reef rooms
     notes: |-
-      **The reef comes first, with no tool behind it** (#2072). Its kinds: `Room` (where the agents of a team talk, the reef's default kind) and `Peer` (an agent's session in the rooms). The output is the command's contract, not a recorded run.
+      **The Reef comes first, with no tool behind it** (#2072). Its kinds: `Room` (where the agents of a team talk, the Reef's default kind) and `Peer` (an agent's session in the rooms). The output is the command's contract, not a recorded run.
     pt:
-      topic: "reef"
-      message: "Um comando aplica o reef {reef:rooms} e os seus kinds"
+      topic: "Reef"
+      message: "Um comando aplica o Reef {reef:rooms} e os seus kinds"
       accent: "Um comando"
       notes: |-
-        **O reef vem primeiro, sem ferramenta por trás** (#2072). Os seus kinds: `Room` (onde os agentes de um time conversam, o kind padrão do reef) e `Peer` (a sessão de um agente nas salas). A saída é o contrato do comando, não uma execução gravada.
+        **O Reef vem primeiro, sem ferramenta por trás** (#2072). Os seus kinds: `Room` (onde os agentes de um time conversam, o kind padrão do Reef) e `Peer` (a sessão de um agente nas salas). A saída é o contrato do comando, não uma execução gravada.
 
   - name: apply-triton
     act: setup
@@ -113,7 +113,7 @@ slides:
     accent: "rooms and peers"
     terminal:
       steps:
-        - comment: "Apply the triton Nereid to the rooms reef"
+        - comment: "Apply the triton Nereid to the rooms Reef"
           run: "nereus nereid apply triton"
           options: ["--reef rooms"]
           output: |-
@@ -124,17 +124,17 @@ slides:
               nereus rooms create <name>
     dependsOn: [apply-reef]
     notes: |-
-      **Triton requires the messaging reef** (#2072): its image declares `requires=messaging`, as keycloak's declares `secrets`, so the command refuses a cluster without it and names the command that applies it. Triton looks after `rooms` only, and never answers for `Topic` or `Queue`.
+      **Triton requires the messaging Reef** (#2072): its image declares `requires=messaging`, as keycloak's declares `secrets`, so the command refuses a cluster without it and names the command that applies it. Triton looks after `rooms` only, and never answers for `Topic` or `Queue`.
 
-      **The reef's default Mandate carries the bound on rooms** per installation, `maxRooms`, 20 by default (#1491). The output is the command's contract: the digest comes from the image the build gives.
+      **The Reef's default Mandate carries the bound on rooms** per installation, `maxRooms`, 20 by default (#1491). The output is the command's contract: the digest comes from the image the build gives.
     pt:
       topic: "Tritão"
       message: "A Nereid {nereid:triton} cuida de salas e pares"
       accent: "salas e pares"
       notes: |-
-        **O Tritão exige o reef messaging** (#2072): a sua imagem declara `requires=messaging`, como a do keycloak declara `secrets`, então o comando recusa um cluster sem ele e nomeia o comando que o aplica. O Tritão cuida só de `rooms`, e nunca responde por `Topic` ou `Queue`.
+        **O Tritão exige o Reef messaging** (#2072): a sua imagem declara `requires=messaging`, como a do keycloak declara `secrets`, então o comando recusa um cluster sem ele e nomeia o comando que o aplica. O Tritão cuida só de `rooms`, e nunca responde por `Topic` ou `Queue`.
 
-        **O Mandate padrão do reef leva o limite de salas** por instalação, `maxRooms`, 20 por padrão (#1491). A saída é o contrato do comando: o digest vem da imagem que o build entrega.
+        **O Mandate padrão do Reef leva o limite de salas** por instalação, `maxRooms`, 20 por padrão (#1491). A saída é o contrato do comando: o digest vem da imagem que o build entrega.
 
   - name: room-create
     act: room
@@ -162,14 +162,14 @@ slides:
             Next steps:
 
               nereus rooms get billing
-        - comment: "The Topic Triton asked the messaging reef for"
+        - comment: "The Topic Triton asked the messaging Reef for"
           run: "nereus messaging topic list"
           output: |-
             TOPIC     ORGANIZATION  PROJECT   ENGINE  MANDATE  READY
             room-ops  example       payments  nats    nats     True
     dependsOn: [apply-triton]
     notes: |-
-      **`Room` is the reef's default kind,** so `nereus rooms create` acts on it (#1491). Without a name it takes the repository's; without `--owner`, the owner of your team. Triton applies the Topic `room-<room>`, owned by the Room and closed to other clients (#2073, #2071).
+      **`Room` is the Reef's default kind,** so `nereus rooms create` acts on it (#1491). Without a name it takes the repository's; without `--owner`, the owner of your team. Triton applies the Topic `room-<room>`, owned by the Room and closed to other clients (#2073, #2071).
 
       **A member of a team creates rooms owned by the team's owner,** with no admin (ADR 0030). Past the default Mandate's `maxRooms`, 20 by default, the command refuses and names the command an admin runs to raise it. The outputs are the commands' contract.
     pt:
@@ -177,7 +177,7 @@ slides:
       message: "Uma sala é criada pelo nome, e o seu Topic vem junto"
       accent: "o seu Topic vem junto"
       notes: |-
-        **`Room` é o kind padrão do reef,** então `nereus rooms create` age sobre ele (#1491). Sem nome, toma o do repositório; sem `--owner`, o dono do seu time. O Tritão aplica o Topic `room-<room>`, que pertence à Room e é fechado a outros clientes (#2073, #2071).
+        **`Room` é o kind padrão do Reef,** então `nereus rooms create` age sobre ele (#1491). Sem nome, toma o do repositório; sem `--owner`, o dono do seu time. O Tritão aplica o Topic `room-<room>`, que pertence à Room e é fechado a outros clientes (#2073, #2071).
 
         **Um membro de um time cria salas do dono do time,** sem admin (ADR 0030). Além do `maxRooms` do Mandate padrão, 20 por padrão, o comando recusa e nomeia o comando que um admin roda para aumentar o limite. As saídas são o contrato dos comandos.
 
@@ -190,7 +190,7 @@ slides:
     accent: "the peers in it"
     terminal:
       steps:
-        - comment: "The rooms of the reef"
+        - comment: "The rooms of the Reef"
           run: "nereus rooms list"
           output: |-
             NAME    ORGANIZATION  PROJECT   PEERS  MESSAGES  LAST MESSAGE  AGE
@@ -295,7 +295,7 @@ slides:
     accent: "a Peer"
     terminal:
       steps:
-        - comment: "The peers of the reef"
+        - comment: "The peers of the Reef"
           run: "nereus rooms peer list"
           output: |-
             NAME      ROOMS  PHASE  SINCE
@@ -482,7 +482,7 @@ slides:
     notes: |-
       **Each room is an append-only log on its Topic** (#2073): an agent posts with its peer tool, a hook pulls new messages into each session's context, and a person follows it here; `--since 1h --once` shows the last hour and exits. The output is a recorded run (`controllers/triton/README.md`); its first name prints this command (#2076).
 
-      **Who may join** (#1830): any member of Keycloak's group `nereus-team` for now, which the keycloak Mandate's `googleTeam` fills (#1831); a room's own members wait for the teams reef (#1307). The guide [Join the team's room](../../../guides/reefs/team-room.md) has the admin's part and the person's.
+      **Who may join** (#1830): any member of Keycloak's group `nereus-team` for now, which the keycloak Mandate's `googleTeam` fills (#1831); a room's own members wait for the teams Reef (#1307). The guide [Join the team's room](../../../guides/reefs/team-room.md) has the admin's part and the person's.
     pt:
       topic: "follow"
       message: "Uma pessoa acompanha a sala onde os agentes conversam"
@@ -490,7 +490,7 @@ slides:
       notes: |-
         **Cada sala é um log só de acréscimo no seu Topic** (#2073): um agente posta com a sua ferramenta de pares, um hook traz as mensagens novas para o contexto de cada sessão, e uma pessoa a acompanha aqui; `--since 1h --once` mostra a última hora e sai. A saída é de uma execução gravada (`controllers/triton/README.md`); o seu primeiro nome imprime este comando (#2076).
 
-        **Quem pode entrar** (#1830): qualquer membro do grupo `nereus-team` do Keycloak por enquanto, que o `googleTeam` do Mandate do keycloak preenche (#1831); os membros próprios de uma sala esperam o reef teams (#1307). O guia [Join the team's room](../../../guides/reefs/team-room.md) tem a parte do admin e a da pessoa.
+        **Quem pode entrar** (#1830): qualquer membro do grupo `nereus-team` do Keycloak por enquanto, que o `googleTeam` do Mandate do keycloak preenche (#1831); os membros próprios de uma sala esperam o Reef teams (#1307). O guia [Join the team's room](../../../guides/reefs/team-room.md) tem a parte do admin e a da pessoa.
 
   - name: pull
     act: conversation
@@ -578,7 +578,7 @@ slides:
             20261030-142549-4dae  m15    in_progress  run make checks
     dependsOn: [follow]
     notes: |-
-      **Orders are not of the rooms reef:** they have been off since #1440, and their code leaves Triton (#2077, ADR 0030). The commands are an idea, shown as their contract; the outputs are illustrative.
+      **Orders are not of the rooms Reef:** they have been off since #1440, and their code leaves Triton (#2077, ADR 0030). The commands are an idea, shown as their contract; the outputs are illustrative.
 
       **How an order reaches an agent if orders come back** is #2068: through the Nereus API, with no NATS on any machine. An order was accepted only for a `ready`, idle agent and went `sent`, `received`, `in_progress`, `done`, `failed` or `cancelled` (#592).
     pt:
@@ -586,6 +586,6 @@ slides:
       message: "Uma ordem vai a um agente livre, e a lista a acompanha"
       accent: "um agente livre"
       notes: |-
-        **As ordens não são do reef rooms:** estão desligadas desde a #1440, e o seu código sai do Tritão (#2077, ADR 0030). Os comandos são uma ideia, mostrada como o seu contrato; as saídas são ilustrativas.
+        **As ordens não são do Reef rooms:** estão desligadas desde a #1440, e o seu código sai do Tritão (#2077, ADR 0030). Os comandos são uma ideia, mostrada como o seu contrato; as saídas são ilustrativas.
 
         **Como uma ordem chega a um agente, se as ordens voltarem,** é a #2068: pela API do Nereus, sem NATS em nenhuma máquina. Uma ordem só era aceita para um agente `ready` e livre, e passava por `sent`, `received`, `in_progress`, `done`, `failed` ou `cancelled` (#592).

@@ -7218,7 +7218,7 @@
 <tbody>
 <tr>
 <td>Nereus</td>
-<td>The project: a composable API platform, with an API and a CLI: reefs add the APIs, Nereids look after them, installed at runtime. An Internal Developer Platform is one profile of it. Organisation <code>getnereus</code>, domains <code>getnereus.dev</code> (development) and <code>getnereus.app</code> (production). After <a href="https://en.wikipedia.org/wiki/Nereus">Nereus</a>, the old man of the sea.</td>
+<td>The project: a composable API platform, with an API and a CLI: Reefs add the APIs, Nereids look after them, installed at runtime. An Internal Developer Platform is one profile of it. Organisation <code>getnereus</code>, domains <code>getnereus.dev</code> (development) and <code>getnereus.app</code> (production). After <a href="https://en.wikipedia.org/wiki/Nereus">Nereus</a>, the old man of the sea.</td>
 </tr>
 <tr>
 <td>Nereus API</td>
@@ -7227,7 +7227,7 @@
 </tbody>
 </table>
 <h2 id="the-model">The model<a class="headerlink" href="#the-model" title="Permanent link">&para;</a></h2>
-<p>Words of ADR 0002 (Conceptual model) and ADR 0011 (reefs, Nereids and Mandates; <code>nereus reef</code>, <code>nereus nereid</code>, <code>nereus mandate</code>), used exactly.</p>
+<p>Words of ADR 0002 (Conceptual model) and ADR 0011 (Reefs, Nereids and Mandates; <code>nereus reef</code>, <code>nereus nereid</code>, <code>nereus mandate</code>), used exactly.</p>
 <table>
 <thead>
 <tr>
@@ -7237,52 +7237,52 @@
 </thead>
 <tbody>
 <tr>
-<td>reef</td>
+<td>Reef</td>
 <td>A capability of the platform (<code>auth</code>, <code>secrets</code>, <code>release</code>), an API group. Added with <code>nereus reef apply</code>; a <code>Reef</code> object of <code>core.getnereus.dev/v1alpha1</code>; its own kinds live in <code>&lt;reef&gt;.getnereus.dev/v1alpha1</code> (ADR 0009). Legacy: Interface.</td>
 </tr>
 <tr>
 <td>Nereid</td>
-<td>What looks after a reef (<code>keycloak</code>, <code>auth0</code>, <code>reference-release</code>): a controller installed in the platform with <code>nereus nereid apply</code>; a <code>Nereid</code> object of <code>core.getnereus.dev/v1alpha1</code>. Legacy: Implementation.</td>
+<td>What looks after a Reef (<code>keycloak</code>, <code>auth0</code>, <code>reference-release</code>): a controller installed in the platform with <code>nereus nereid apply</code>; a <code>Nereid</code> object of <code>core.getnereus.dev/v1alpha1</code>. Legacy: Implementation.</td>
 </tr>
 <tr>
 <td>Mandate</td>
-<td>Binds one reef to one Nereid and may make it the default; <code>nereus mandate create</code>, after Gateway API's <a href="https://gateway-api.sigs.k8s.io/reference/api-types/gatewayclass/"><code>GatewayClass</code></a>. A <code>Mandate</code> object of <code>core.getnereus.dev/v1alpha1</code> (<code>azure</code> binds the <code>cloud</code> reef to the <code>azure</code> Nereid). Legacy: Class.</td>
+<td>Binds one Reef to one Nereid and may make it the default; <code>nereus mandate create</code>, after Gateway API's <a href="https://gateway-api.sigs.k8s.io/reference/api-types/gatewayclass/"><code>GatewayClass</code></a>. A <code>Mandate</code> object of <code>core.getnereus.dev/v1alpha1</code> (<code>azure</code> binds the <code>cloud</code> Reef to the <code>azure</code> Nereid). Legacy: Class.</td>
 </tr>
 <tr>
 <td>Profile</td>
-<td>A named list of reefs, Nereids and Mandates applied on top of core (<code>core</code>, <code>internal-developer-platform</code>, <code>reference</code>, <code>secrets</code>); <code>nereus init --profile</code>, <code>nereus profile apply</code> (ADR 0014).</td>
+<td>A named list of Reefs, Nereids and Mandates applied on top of core (<code>core</code>, <code>internal-developer-platform</code>, <code>reference</code>, <code>secrets</code>); <code>nereus init --profile</code>, <code>nereus profile apply</code> (ADR 0014).</td>
 </tr>
 <tr>
 <td>thetis</td>
-<td>The installer Nereid: run by the chart <code>nereus</code> when a profile is set, it installs the profile's reefs, Nereids and Mandates in order.</td>
+<td>The installer Nereid: run by the chart <code>nereus</code> when a profile is set, it installs the profile's Reefs, Nereids and Mandates in order.</td>
 </tr>
 <tr>
 <td>Instance</td>
-<td>One occurrence of a reef: a login for a team, a database for an app in an environment.</td>
+<td>One occurrence of a Reef: a login for a team, a database for an app in an environment.</td>
 </tr>
 <tr>
-<td>Repository (release reef)</td>
-<td>Where a chart comes from: a Helm repository (<code>http</code>), an OCI registry (<code>oci</code>) or Git (<code>git</code>), with an optional secret of the secrets reef; a kind of <code>release.getnereus.dev/v1alpha1</code> (ADR 0010). <code>flux</code> writes it as a Flux <a href="https://fluxcd.io/flux/components/source/helmrepositories/"><code>HelmRepository</code></a>.</td>
+<td>Repository (release Reef)</td>
+<td>Where a chart comes from: a Helm repository (<code>http</code>), an OCI registry (<code>oci</code>) or Git (<code>git</code>), with an optional secret of the secrets Reef; a kind of <code>release.getnereus.dev/v1alpha1</code> (ADR 0010). <code>flux</code> writes it as a Flux <a href="https://fluxcd.io/flux/components/source/helmrepositories/"><code>HelmRepository</code></a>.</td>
 </tr>
 <tr>
-<td>Source (release reef)</td>
+<td>Source (release Reef)</td>
 <td>What is released: a chart of a Repository at a version (later Kustomize or plain manifests); a kind of <code>release.getnereus.dev/v1alpha1</code> (ADR 0010).</td>
 </tr>
 <tr>
-<td>Target (release reef)</td>
+<td>Target (release Reef)</td>
 <td>Where a release goes: a namespace of an environment (<code>environmentRef</code>) or, with none, of the cluster Nereus runs in; a kind of <code>release.getnereus.dev/v1alpha1</code> (ADR 0010).</td>
 </tr>
 <tr>
-<td>Connection (scm reef)</td>
+<td>Connection (scm Reef)</td>
 <td>One organisation of a source host, reached through the App its scm Mandate names (<code>--param identity=&lt;authentication mandate&gt;</code>); its status says whether the App is installed there, on every repository, with the permissions it needs (ADR 0024, #1281). <code>nereus scm connection create</code>.</td>
 </tr>
 <tr>
-<td>Registry (registry reef)</td>
+<td>Registry (registry Reef)</td>
 <td>A registry of images that runs in the cluster, a kind of <code>registry.getnereus.dev/v1alpha1</code> (ADR 0021). Not the Nereid registry (#22), the public site listing Nereids.</td>
 </tr>
 <tr>
-<td>Release (release reef)</td>
-<td>A Source running in a Target, with its values, made by the Nereid of its Mandate; a kind of <code>release.getnereus.dev/v1alpha1</code> (ADR 0010). <code>flux</code> writes it as a Flux <a href="https://fluxcd.io/flux/components/helm/helmreleases/"><code>HelmRelease</code></a>. <code>nereus release &lt;verb&gt;</code> is <code>nereus release release &lt;verb&gt;</code>: a kind named after its reef takes the reef's verbs.</td>
+<td>Release (release Reef)</td>
+<td>A Source running in a Target, with its values, made by the Nereid of its Mandate; a kind of <code>release.getnereus.dev/v1alpha1</code> (ADR 0010). <code>flux</code> writes it as a Flux <a href="https://fluxcd.io/flux/components/helm/helmreleases/"><code>HelmRelease</code></a>. <code>nereus release &lt;verb&gt;</code> is <code>nereus release release &lt;verb&gt;</code>: a kind named after its Reef takes the Reef's verbs.</td>
 </tr>
 <tr>
 <td>Controller</td>
@@ -7298,11 +7298,11 @@
 </tr>
 <tr>
 <td>Concept</td>
-<td>Former word for reef (then Interface), before ADR 0011.</td>
+<td>Former word for Reef (then Interface), before ADR 0011.</td>
 </tr>
 <tr>
 <td>Default Mandate</td>
-<td>The one a reef's commands go to when several Nereids look after it (#72); formerly the active Implementation.</td>
+<td>The one a Reef's commands go to when several Nereids look after it (#72); formerly the active Implementation.</td>
 </tr>
 <tr>
 <td>Good Citizen</td>
@@ -7310,7 +7310,7 @@
 </tr>
 <tr>
 <td>Conformance</td>
-<td>Whether a Nereid honours its reef's contract: labels at add, the contract call at start, a suite before the catalog (spec 0003).</td>
+<td>Whether a Nereid honours its Reef's contract: labels at add, the contract call at start, a suite before the catalog (spec 0003).</td>
 </tr>
 </tbody>
 </table>
@@ -7397,18 +7397,18 @@
 </tr>
 <tr>
 <td>Pinned version</td>
-<td>The version of a reef's kinds a CLI ships and <code>nereus reef apply</code> applies (<code>cloud</code> 0.1.0, in <code>cli/src/nereus/interfaces/</code>); <code>apply --path</code> or <code>--image</code> apply another (#264).</td>
+<td>The version of a Reef's kinds a CLI ships and <code>nereus reef apply</code> applies (<code>cloud</code> 0.1.0, in <code>cli/src/nereus/interfaces/</code>); <code>apply --path</code> or <code>--image</code> apply another (#264).</td>
 </tr>
 <tr>
 <td>Reef package</td>
-<td>An OCI artifact whose layers are a reef's CRDs as YAML (<code>application/yaml</code>), which <code>nereus reef apply --image</code> reads (#264).</td>
+<td>An OCI artifact whose layers are a Reef's CRDs as YAML (<code>application/yaml</code>), which <code>nereus reef apply --image</code> reads (#264).</td>
 </tr>
 <tr>
 <td>Pinned by digest</td>
 <td>An image recorded as <code>&lt;repository&gt;@sha256:...</code>, the digest of the manifest its labels were read from, not a tag that can be pushed again (#126, spec 0003 rule 3).</td>
 </tr>
 <tr>
-<td><code>cloud</code> reef</td>
+<td><code>cloud</code> Reef</td>
 <td>The connection to a cloud: an account, optionally the organization above it, and the identity the platform presents; <code>azure</code> is its first Nereid (spec 0005).</td>
 </tr>
 <tr>
@@ -7441,7 +7441,7 @@
 </tr>
 <tr>
 <td>Access entry</td>
-<td>What a reef needs from the cloud, its identity and optionally a role on a scope, kept in the <code>Cloud</code> Instance's <code>spec.access</code> once a person approves it (spec 0005).</td>
+<td>What a Reef needs from the cloud, its identity and optionally a role on a scope, kept in the <code>Cloud</code> Instance's <code>spec.access</code> once a person approves it (spec 0005).</td>
 </tr>
 <tr>
 <td>Location</td>
@@ -7461,7 +7461,7 @@
 </tr>
 <tr>
 <td>Invitation</td>
-<td>A link and QR code that let one person into a Nereus, a kind of the <code>authentication</code> reef (<code>nereus authentication invitation create</code>, alias <code>nereus invitation create</code>); the link and the access expire separately (<code>--invitation-expires</code>, <code>--access-expires</code>), and accepting creates a core <code>User</code> (<a href="../../specs/0007-invitation/">spec 0007</a>).</td>
+<td>A link and QR code that let one person into a Nereus, a kind of the <code>authentication</code> Reef (<code>nereus authentication invitation create</code>, alias <code>nereus invitation create</code>); the link and the access expire separately (<code>--invitation-expires</code>, <code>--access-expires</code>), and accepting creates a core <code>User</code> (<a href="../../specs/0007-invitation/">spec 0007</a>).</td>
 </tr>
 <tr>
 <td>Naming override</td>
@@ -7493,7 +7493,7 @@
 </tr>
 <tr>
 <td>Managed identity (user-assigned)</td>
-<td>An Azure identity created as a resource, with no secret to keep; one per reef and per installation, <code>&lt;installation&gt;-&lt;reef&gt;-&lt;role&gt;</code> (<code>tailwind-secrets-reader</code>), the same across the pivot (#82, spec 0005).</td>
+<td>An Azure identity created as a resource, with no secret to keep; one per Reef and per installation, <code>&lt;installation&gt;-&lt;reef&gt;-&lt;role&gt;</code> (<code>tailwind-secrets-reader</code>), the same across the pivot (#82, spec 0005).</td>
 </tr>
 <tr>
 <td>Federated credential</td>
@@ -7521,11 +7521,11 @@
 </tr>
 <tr>
 <td>Team</td>
-<td>A group of people who work together; a <code>Team</code> of the <code>teams</code> reef. Joining it grants its access, leaving removes it.</td>
+<td>A group of people who work together; a <code>Team</code> of the <code>teams</code> Reef. Joining it grants its access, leaving removes it.</td>
 </tr>
 <tr>
 <td>Member</td>
-<td>One person in a Team, pointing to their User; a <code>Member</code> of the <code>teams</code> reef.</td>
+<td>One person in a Team, pointing to their User; a <code>Member</code> of the <code>teams</code> Reef.</td>
 </tr>
 <tr>
 <td>Position</td>
@@ -7533,7 +7533,7 @@
 </tr>
 <tr>
 <td>Role</td>
-<td>A list of rules, <code>&lt;reef&gt;:&lt;kinds&gt;:&lt;verbs&gt;</code>; a <code>Role</code> of the <code>authorization</code> reef.</td>
+<td>A list of rules, <code>&lt;reef&gt;:&lt;kinds&gt;:&lt;verbs&gt;</code>; a <code>Role</code> of the <code>authorization</code> Reef.</td>
 </tr>
 <tr>
 <td>Binding</td>
@@ -7775,7 +7775,7 @@
 </tr>
 <tr>
 <td>XRD</td>
-<td>CompositeResourceDefinition: <a href="https://docs.crossplane.io/latest/composition/composite-resource-definitions/">Crossplane's contract</a>, a precedent for reefs.</td>
+<td>CompositeResourceDefinition: <a href="https://docs.crossplane.io/latest/composition/composite-resource-definitions/">Crossplane's contract</a>, a precedent for Reefs.</td>
 </tr>
 </tbody>
 </table>

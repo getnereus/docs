@@ -1,11 +1,11 @@
 deck:
   name: database
-  title: "The database reef"
-  subtitle: "Every command of the database reef: a PostgreSQL per Database, owned by a node of the tenancy tree"
+  title: "The database Reef"
+  subtitle: "Every command of the database Reef: a PostgreSQL per Database, owned by a node of the tenancy tree"
   accent: "a PostgreSQL per Database"
   pt:
-    title: "O reef database"
-    subtitle: "Todos os comandos do reef database: um PostgreSQL por Database, de um nó da árvore de tenancy"
+    title: "O Reef database"
+    subtitle: "Todos os comandos do Reef database: um PostgreSQL por Database, de um nó da árvore de tenancy"
     accent: "um PostgreSQL por Database"
 
 acts:
@@ -25,23 +25,23 @@ slides:
   - name: cover
     act: opening
     cover: true
-    message: "The database reef"
+    message: "The database Reef"
     notes: |-
-      **`nereus database create keycloak` gives Keycloak a PostgreSQL that keeps its data** (#653, for #498 (a persistent Keycloak)). The contract is small (owner, engine); the provider is the Mandate's (ADR 0017: resource reefs, a small contract kind per family, the provider in the Mandate).
+      **`nereus database create keycloak` gives Keycloak a PostgreSQL that keeps its data** (#653, for #498 (a persistent Keycloak)). The contract is small (owner, engine); the provider is the Mandate's (ADR 0017: resource Reefs, a small contract kind per family, the provider in the Mandate).
     pt:
-      message: "O reef database"
+      message: "O Reef database"
       notes: |-
-        **O `nereus database create keycloak` dá ao Keycloak um PostgreSQL que guarda os dados** (#653, para o #498 (um Keycloak persistente)). O contrato é pequeno (owner, engine); o provedor é do Mandate (ADR 0017: resource reefs, um kind de contrato pequeno por família, o provedor no Mandate).
+        **O `nereus database create keycloak` dá ao Keycloak um PostgreSQL que guarda os dados** (#653, para o #498 (um Keycloak persistente)). O contrato é pequeno (owner, engine); o provedor é do Mandate (ADR 0017: resource Reefs, um kind de contrato pequeno por família, o provedor no Mandate).
 
   - name: reef-apply
     act: setup
     topic: "reef apply"
     status: built
-    message: "The {reef:database} reef: one kind, Database"
+    message: "The {reef:database} Reef: one kind, Database"
     accent: "one kind"
     terminal:
       steps:
-        - comment: "The release reef with flux comes first: the Nereid releases the operator through it"
+        - comment: "The release Reef with flux comes first: the Nereid releases the operator through it"
           run: "nereus reef apply database"
           output: |-
             ✓ core/reefs/database 0.1.0 created (database.getnereus.dev/v1alpha1: databases)
@@ -54,7 +54,7 @@ slides:
       **`nereus init --profile internal-developer-platform` runs this, the Nereid and its Mandate**, a line each.
     pt:
       topic: "reef apply"
-      message: "O reef {reef:database}: um kind, Database"
+      message: "O Reef {reef:database}: um kind, Database"
       accent: "um kind"
       notes: |-
         **O `nereus init --profile internal-developer-platform` roda isto, a Nereid e o seu Mandate**, uma linha cada.
@@ -63,7 +63,7 @@ slides:
     act: setup
     topic: "nereid apply"
     status: built
-    message: "The cloudnative-pg Nereid makes the reef's default Mandate"
+    message: "The cloudnative-pg Nereid makes the Reef's default Mandate"
     accent: "default Mandate"
     terminal:
       steps:
@@ -81,7 +81,7 @@ slides:
       **An admission policy holds the Nereid to its own objects:** Secrets, Clusters and release objects labelled `core.getnereus.dev/nereid=cloudnative-pg`, and only the chart and values its image declares.
     pt:
       topic: "nereid apply"
-      message: "A Nereid cloudnative-pg cria o Mandate default do reef"
+      message: "A Nereid cloudnative-pg cria o Mandate default do Reef"
       accent: "Mandate default"
       notes: |-
         **Uma admission policy segura a Nereid nos próprios objetos:** Secrets, Clusters e objetos do release com o label `core.getnereus.dev/nereid=cloudnative-pg`, e só o chart e os values que a sua imagem declara.

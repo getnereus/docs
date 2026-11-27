@@ -1,6 +1,6 @@
 # See what happened
 
-Find why a reef, a Nereid or an object is not `Ready`, starting from the CLI and going down to the object's events and the Nereid's log.
+Find why a Reef, a Nereid or an object is not `Ready`, starting from the CLI and going down to the object's events and the Nereid's log.
 
 ## Before you start
 
@@ -8,9 +8,9 @@ Find why a reef, a Nereid or an object is not `Ready`, starting from the CLI and
 
 ## Steps
 
-### 1. See which reef has a problem
+### 1. See which Reef has a problem
 
-[`nereus status`](../../specs/cli/core.html#status) gives one row per reef and its Nereid:
+[`nereus status`](../../specs/cli/core.html#status) gives one row per Reef and its Nereid:
 
 ```bash
 nereus status

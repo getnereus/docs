@@ -1,12 +1,12 @@
 deck:
   name: messaging
-  title: "The messaging reef"
-  subtitle: "Every command of the messaging reef: topics and queues, the engine under the rooms reef"
-  accent: "the engine under the rooms reef"
+  title: "The messaging Reef"
+  subtitle: "Every command of the messaging Reef: topics and queues, the engine under the rooms Reef"
+  accent: "the engine under the rooms Reef"
   pt:
-    title: "O reef messaging"
-    subtitle: "Todos os comandos do reef messaging: tópicos e filas, o motor sob o reef rooms"
-    accent: "o motor sob o reef rooms"
+    title: "O Reef messaging"
+    subtitle: "Todos os comandos do Reef messaging: tópicos e filas, o motor sob o Reef rooms"
+    accent: "o motor sob o Reef rooms"
 
 acts:
   - name: opening
@@ -29,51 +29,51 @@ slides:
   - name: cover
     act: opening
     cover: true
-    message: "The messaging reef"
+    message: "The messaging Reef"
     notes: |-
-      **The source of truth for the commands of the messaging reef** (#483). Every command, built or only imagined, is here first; the tag after each label says whether it is built, planned (with the issue that builds it) or an idea.
+      **The source of truth for the commands of the messaging Reef** (#483). Every command, built or only imagined, is here first; the tag after each label says whether it is built, planned (with the issue that builds it) or an idea.
 
-      **The commands are the topics' and the queues'** (#1597). The agents' sessions and the rooms have [the rooms deck](rooms.html) (ADR 0030, Triton is the rooms reef's Nereid); their first names moved there (#2076).
+      **The commands are the topics' and the queues'** (#1597). The agents' sessions and the rooms have [the rooms deck](rooms.html) (ADR 0030, Triton is the rooms Reef's Nereid); their first names moved there (#2076).
     pt:
-      message: "O reef messaging"
+      message: "O Reef messaging"
       notes: |-
-        **A fonte da verdade dos comandos do reef messaging** (#483). Todo comando, pronto ou só imaginado, está aqui primeiro; a etiqueta depois de cada rótulo diz se ele está pronto, planejado (com a issue que o constrói) ou se é uma ideia.
+        **A fonte da verdade dos comandos do Reef messaging** (#483). Todo comando, pronto ou só imaginado, está aqui primeiro; a etiqueta depois de cada rótulo diz se ele está pronto, planejado (com a issue que o constrói) ou se é uma ideia.
 
-        **Os comandos são os dos tópicos e os das filas** (#1597). As sessões dos agentes e as salas têm [o deck rooms](rooms.html) (ADR 0030, o Tritão é a Nereid do reef rooms); os seus primeiros nomes mudaram para lá (#2076).
+        **Os comandos são os dos tópicos e os das filas** (#1597). As sessões dos agentes e as salas têm [o deck rooms](rooms.html) (ADR 0030, o Tritão é a Nereid do Reef rooms); os seus primeiros nomes mudaram para lá (#2076).
 
   - name: rooms
     act: opening
-    topic: "the reef and the rooms"
-    message: "The {reef:messaging} reef is the engine the rooms run on"
+    topic: "the Reef and the rooms"
+    message: "The {reef:messaging} Reef is the engine the rooms run on"
     accent: "the engine"
     screen:
       - "**The engine:** Topic and Queue, looked after by the {nereid:nats} Nereid (#576)"
-      - "**The conversation:** the {reef:rooms} reef, whose {nereid:triton} Nereid asks for a Topic per Room"
+      - "**The conversation:** the {reef:rooms} Reef, whose {nereid:triton} Nereid asks for a Topic per Room"
     notes: |-
-      **Two small reefs, composed** (owner, 2026-11-21, ADR 0030, Triton is the rooms reef's Nereid). This reef knows nothing of rooms or agents: Triton requires it and asks it for a Topic per Room, as any other client would.
+      **Two small Reefs, composed** (owner, 2026-11-21, ADR 0030, Triton is the rooms Reef's Nereid). This Reef knows nothing of rooms or agents: Triton requires it and asks it for a Topic per Room, as any other client would.
 
       **The agents' sessions, the rooms and the peers have [their own deck](rooms.html)** (#2069). Their first names moved under `nereus rooms` (#2076, #2075): each old name prints the new one.
     pt:
-      topic: "o reef e as salas"
-      message: "O reef {reef:messaging} é o motor em que as salas rodam"
+      topic: "o Reef e as salas"
+      message: "O Reef {reef:messaging} é o motor em que as salas rodam"
       accent: "o motor"
       screen:
         - "**O motor:** Topic e Queue, cuidados pela Nereid {nereid:nats} (#576)"
-        - "**A conversa:** o reef {reef:rooms}, cuja Nereid {nereid:triton} pede um Topic por Room"
+        - "**A conversa:** o Reef {reef:rooms}, cuja Nereid {nereid:triton} pede um Topic por Room"
       notes: |-
-        **Dois reefs pequenos, compostos** (dono, 2026-11-21, ADR 0030, o Tritão é a Nereid do reef rooms). Este reef não sabe nada de salas ou agentes: o Tritão o exige e pede a ele um Topic por Room, como qualquer outro cliente faria.
+        **Dois Reefs pequenos, compostos** (dono, 2026-11-21, ADR 0030, o Tritão é a Nereid do Reef rooms). Este Reef não sabe nada de salas ou agentes: o Tritão o exige e pede a ele um Topic por Room, como qualquer outro cliente faria.
 
         **As sessões dos agentes, as salas e os pares têm [o seu próprio deck](rooms.html)** (#2069). Os seus primeiros nomes mudaram para `nereus rooms` (#2076, #2075): cada nome antigo imprime o novo.
 
   - name: apply-reef
     act: setup
-    topic: "reef"
+    topic: "Reef"
     status: built
-    message: "One command applies the {reef:messaging} reef and its kinds"
+    message: "One command applies the {reef:messaging} Reef and its kinds"
     accent: "One command"
     terminal:
       steps:
-        - comment: "Apply the messaging reef"
+        - comment: "Apply the messaging Reef"
           run: "nereus reef apply messaging"
           output: |-
             ✓ core/reefs/messaging 0.1.0 created (messaging.getnereus.dev/v1alpha1: queues, topics)
@@ -83,13 +83,13 @@ slides:
               nereus messaging --help
               nereus nereid apply <nereid> --reef messaging
     notes: |-
-      **The reef comes first, with no tool behind it** (#1597). Its kinds: `Topic` (a message to everyone who listens) and `Queue` (a message to one worker). The CLI pins its contract, so it needs no `--from-file`.
+      **The Reef comes first, with no tool behind it** (#1597). Its kinds: `Topic` (a message to everyone who listens) and `Queue` (a message to one worker). The CLI pins its contract, so it needs no `--from-file`.
     pt:
-      topic: "reef"
-      message: "Um comando aplica o reef {reef:messaging} e os seus kinds"
+      topic: "Reef"
+      message: "Um comando aplica o Reef {reef:messaging} e os seus kinds"
       accent: "Um comando"
       notes: |-
-        **O reef vem primeiro, sem ferramenta por trás** (#1597). Os seus kinds: `Topic` (uma mensagem a todos que escutam) e `Queue` (uma mensagem a um worker). O CLI fixa o seu contrato, então ele não precisa de `--from-file`.
+        **O Reef vem primeiro, sem ferramenta por trás** (#1597). Os seus kinds: `Topic` (uma mensagem a todos que escutam) e `Queue` (uma mensagem a um worker). O CLI fixa o seu contrato, então ele não precisa de `--from-file`.
 
   - name: apply-nats
     act: setup
@@ -100,7 +100,7 @@ slides:
     accent: "topics and queues"
     terminal:
       steps:
-        - comment: "Apply the nats Nereid to the messaging reef"
+        - comment: "Apply the nats Nereid to the messaging Reef"
           run: "nereus nereid apply nats"
           options: ["--reef messaging"]
           output: |-
@@ -150,7 +150,7 @@ slides:
             Next steps:
 
               nereus messaging topic get team-ops
-        - comment: "The topics of the reef"
+        - comment: "The topics of the Reef"
           run: "nereus messaging topic list"
           output: |-
             TOPIC     ORGANIZATION  PROJECT        ENGINE  MANDATE  MAX AGE  MAX BYTES  READY
@@ -158,7 +158,7 @@ slides:
             team-ops  getnereus     nereus/triton  nats    nats     30d      16M        True
     dependsOn: [apply-nats]
     notes: |-
-      **A topic is the subject `topics.<name>`:** whoever is not listening when a message is sent misses it, unless the Mandate says `jetstream=true`, and then the stream `topic-<name>` keeps it. The owner is a node of the tenancy tree; the Mandate is the one whose match holds, the most specific (ADR 0017, #1598), else the reef's default, unless `--mandate` names one, and it is pinned in `spec.mandate`: a later Mandate never moves the topic.
+      **A topic is the subject `topics.<name>`:** whoever is not listening when a message is sent misses it, unless the Mandate says `jetstream=true`, and then the stream `topic-<name>` keeps it. The owner is a node of the tenancy tree; the Mandate is the one whose match holds, the most specific (ADR 0017, #1598), else the Reef's default, unless `--mandate` names one, and it is pinned in `spec.mandate`: a later Mandate never moves the topic.
 
       **`--max-age` and `--max-bytes` set what its stream keeps** (#2070): `spec.maxAge` is a duration (`30d`, `12h`, `90m`, `45s`) and `spec.maxBytes` a decimal size as NATS says it (`512K`, `16M`, `1G`); both are optional, absent means no limit, and changing either updates the stream. Either needs `jetstream=true` in the Mandate: without it the topic fails, and its condition names the command that turns it on. **What a topic with a stream guarantees:** its messages are kept in order, each has a sequence, and a reader may start after a sequence.
 
@@ -170,7 +170,7 @@ slides:
       message: "Um tópico leva cada mensagem a todos que escutam"
       accent: "todos"
       notes: |-
-        **Um tópico é o subject `topics.<name>`:** quem não está escutando quando uma mensagem é enviada a perde, a não ser que o Mandate diga `jetstream=true`, e então o stream `topic-<name>` a guarda. O dono é um nó da árvore de tenancy; o Mandate é aquele cujo match vale, o mais específico (ADR 0017, #1598), senão o padrão do reef, a não ser que `--mandate` nomeie outro, e ele fica fixado em `spec.mandate`: um Mandate posterior nunca move o tópico.
+        **Um tópico é o subject `topics.<name>`:** quem não está escutando quando uma mensagem é enviada a perde, a não ser que o Mandate diga `jetstream=true`, e então o stream `topic-<name>` a guarda. O dono é um nó da árvore de tenancy; o Mandate é aquele cujo match vale, o mais específico (ADR 0017, #1598), senão o padrão do Reef, a não ser que `--mandate` nomeie outro, e ele fica fixado em `spec.mandate`: um Mandate posterior nunca move o tópico.
 
         **`--max-age` e `--max-bytes` definem o que o stream guarda** (#2070): `spec.maxAge` é uma duração (`30d`, `12h`, `90m`, `45s`) e `spec.maxBytes` um tamanho decimal como o NATS o escreve (`512K`, `16M`, `1G`); ambos são opcionais, ausente significa sem limite, e mudar um deles atualiza o stream. Qualquer um exige `jetstream=true` no Mandate: sem ele o tópico falha, e a condição nomeia o comando que o liga. **O que um tópico com stream garante:** as mensagens são guardadas em ordem, cada uma tem uma sequência, e um leitor pode começar depois de uma sequência.
 
@@ -276,7 +276,7 @@ slides:
             Next steps:
 
               nereus messaging queue get builds
-        - comment: "The queues of the reef"
+        - comment: "The queues of the Reef"
           run: "nereus messaging queue list"
           output: |-
             QUEUE   ORGANIZATION  PROJECT        ENGINE  MANDATE  READY

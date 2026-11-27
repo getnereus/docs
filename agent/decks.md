@@ -2,7 +2,7 @@
 
 The rules for an agent that makes a deck or an HTML page for Nereus. They come from the deck engine of the first proof of concept (beach order 20261026-0030, its section 4), with the owner's decisions of 2026-10-26 (order 20261026-0035) where they differ.
 
-The decks of the repository are rendered by `docs/presentations/render-outline` from an outline YAML (`docs/presentations/README.md`); a one-off page or companion screen follows the same rules. The CLI's specs are decks too, one per reef in `docs/specs/cli/` ([The CLI design](cli.md), #477).
+The decks of the repository are rendered by `docs/presentations/render-outline` from an outline YAML (`docs/presentations/README.md`); a one-off page or companion screen follows the same rules. The CLI's specs are decks too, one per Reef in `docs/specs/cli/` ([The CLI design](cli.md), #477).
 
 ## Before writing
 
@@ -26,7 +26,7 @@ The decks of the repository are rendered by `docs/presentations/render-outline` 
 2. **A list stays on one slide while it fits.** A list that does not fit continues on the next slide, repeats the message, and numbers the parts in the label (`The model · Vocabulary · 1/2`); `render-outline` splits a `screen` this way, estimating the height on a phone, the tightest screen. A diagram is measured by its `viewBox`, drawn on the last part, with the items that fit beside it (#1458); a slide with a terminal or a code frame keeps at most two items, since its height is not known from the text.
 3. **Each slide has** a label ("Part · topic"), a message of one sentence, **at most 60 characters** and with **no full stop** (`?` and `!` stay) and at most one accent in amber (`accent` in the outline), an optional subtitle, which appears after the title as its own step and never with it, and the content. On a slide, Reef, Nereid and Mandate are capitalized and carry their color (`{reef:Reef}`); a command, a path and a terminal's output keep them literal. The subtitle and the items add to the message, never repeat it. A message with two parts splits: the second part becomes the subtitle, or goes when the items already say it; `;` or `:` in a message with no subtitle is the sign.
 4. **Every acronym carries its meaning** the first time it appears. URLs and values are written in full, never cut with "…".
-5. **One discreet colour per concept,** kept from the first slide to the last, in the slide text, the terminals and the cards, only on the concept's own name: reef `#1D9E75` (teal), Nereid `#7F77DD` (purple), Mandate `#D85A30` (coral), secret `#BA7517` (amber). In an outline: `{reef:environment}`, `{nereid:vcluster}`, `{mandate:vcluster}`, `{secret:...}`. The roles of the work have theirs too: order `#BA7517`, PR `#1D9E75`, agent `#7F77DD`, raw data `#9aa0a6` (`#6b7280` in light), human `#D85A30`, handoff `#4FA3D9`: `{order:...}`, `{pr:...}`, `{agent:...}`, `{raw:...}`, `{human:...}`, `{handoff:...}` (#1458).
+5. **One discreet colour per concept,** kept from the first slide to the last, in the slide text, the terminals and the cards, only on the concept's own name: Reef `#1D9E75` (teal), Nereid `#7F77DD` (purple), Mandate `#D85A30` (coral), secret `#BA7517` (amber). In an outline: `{reef:environment}`, `{nereid:vcluster}`, `{mandate:vcluster}`, `{secret:...}`. The roles of the work have theirs too: order `#BA7517`, PR `#1D9E75`, agent `#7F77DD`, raw data `#9aa0a6` (`#6b7280` in light), human `#D85A30`, handoff `#4FA3D9`: `{order:...}`, `{pr:...}`, `{agent:...}`, `{raw:...}`, `{human:...}`, `{handoff:...}` (#1458).
 6. **Notes say what to speak,** with the first sentence of each paragraph in bold; external references go as links.
 7. **Credit the sources:** a deck ends with the references its ideas came from (the talk, book or tool, and who created it). The deck style follows "How to avoid death by PowerPoint" by David JP Phillips.
 8. **Show, don't fill:** fewer colours, fewer words, consistent sizes. Less is more.
@@ -34,11 +34,11 @@ The decks of the repository are rendered by `docs/presentations/render-outline` 
 
 ## Commands on screen
 
-1. **Always as a terminal** with the fixed palette (`docs/agent/owner.md`), a comment line before each command and a blank line between commands; a reef, Nereid or Mandate takes its concept colour there too.
+1. **Always as a terminal** with the fixed palette (`docs/agent/owner.md`), a comment line before each command and a blank line between commands; a Reef, Nereid or Mandate takes its concept colour there too.
 2. **The commands of the CLI design** (`docs/agent/cli.md`, ADR 0013, command conventions): `nereus <group> <verb> <name>`, with the verbs `create`, `apply`, `delete`, `get` and `list`; never `add`. Full names only.
 3. **Long options only, one per line:** the command stays on the first line ending in `\`, each option with its value on its own line, indented 2 spaces from where `nereus` starts (4 with `$ `). A terminal never scrolls sideways: long output lines wrap.
 4. **Output reads `kind/name verb`** in kubectl's words (`core/reefs/environment created`, `configured`, `unchanged`, `deleted`), success in green with `✓`, and the `Next steps:` label with a blank line before and after, then the next commands indented two spaces; not the engine's yellow "next:" hint.
-5. **Examples use today's model:** the reef `environment`, its `vcluster` Nereid and its Mandate, on the local k3d. A command that does not exist yet is shown as its contract, and the notes say so.
+5. **Examples use today's model:** the Reef `environment`, its `vcluster` Nereid and its Mandate, on the local k3d. A command that does not exist yet is shown as its contract, and the notes say so.
 6. **Messages are polite and actionable:** what happened, who decided and what to do next; never a generic error (ADR 0012, error messages).
 
 ## Language and neutrality
@@ -68,7 +68,7 @@ The owner's feedback on Tide v4 (2026-10-30), read on a phone: a page that lets 
 
 ## Screens on a phone
 
-The owner's feedback on the speaker's screen of the presentations reef (#1712, 2026-11-18, a Galaxy S23 Ultra): every screen a person uses from a phone (a deck, the portal's screens, a companion page) follows these rules.
+The owner's feedback on the speaker's screen of the presentations Reef (#1712, 2026-11-18, a Galaxy S23 Ultra): every screen a person uses from a phone (a deck, the portal's screens, a companion page) follows these rules.
 
 1. **The top center is under the front camera:** a phone's punch-hole hides what sits there, so live information (a clock, a pace, a status) goes to the bottom bar, beside the controls, never to the top center. The speaker's clock line lost its tail, the pace, until it moved to the deck engine's bottom bar.
 2. **Check both languages, measured:** English words are longer than Portuguese ones (Audience, Projector, Presentation against Plateia, Projetor, Apresentação), and a row that fit in one language ran past the screen's edge in the other. Check every row of controls in both languages at 340, 360, 390 and 412 px, and measure it (each control's right edge inside its bar, no horizontal scroll, no text cut), not only by eye in one screenshot.

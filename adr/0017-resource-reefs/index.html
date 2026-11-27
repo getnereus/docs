@@ -7178,19 +7178,19 @@
   
 
 
-<h1 id="0017-resource-reefs-a-small-contract-kind-per-family-the-provider-in-the-mandate-and-a-mandates-match">0017. Resource reefs: a small contract kind per family, the provider in the Mandate, and a Mandate's match<a class="headerlink" href="#0017-resource-reefs-a-small-contract-kind-per-family-the-provider-in-the-mandate-and-a-mandates-match" title="Permanent link">&para;</a></h1>
+<h1 id="0017-resource-reefs-a-small-contract-kind-per-family-the-provider-in-the-mandate-and-a-mandates-match">0017. Resource Reefs: a small contract kind per family, the provider in the Mandate, and a Mandate's match<a class="headerlink" href="#0017-resource-reefs-a-small-contract-kind-per-family-the-provider-in-the-mandate-and-a-mandates-match" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
 <p class="admonition-title">In short</p>
-<p>Five resource reefs, each a small contract kind per family, with the provider chosen in the Mandate and a Mandate selected by its <code>match</code>. Status: Accepted (2026-11-14, by the owner; proposed 2026-10-30, rewritten 2026-11-12).</p>
+<p>Five resource Reefs, each a small contract kind per family, with the provider chosen in the Mandate and a Mandate selected by its <code>match</code>. Status: Accepted (2026-11-14, by the owner; proposed 2026-10-30, rewritten 2026-11-12).</p>
 </div>
 <p><strong>Status:</strong> Accepted (2026-11-14, by the owner; proposed 2026-10-30, rewritten 2026-11-12)</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
-<p>A platform provisions resources for the things that run on it: a database, a queue or a topic, a cache, a bucket, a hostname. The clouds offer each of them in their own way (a Postgres on RDS has <code>multiAz</code>, a topic on NATS has JetStream), and the owner, in the design session of #560 (the resource reefs and how a Mandate picks their Nereid), leaned towards one kind per engine or per provider offering, so that nothing of a provider is lost.</p>
-<p>ADR 0011 (reefs, Nereids and Mandates) says the opposite: an Instance's fields are generic, common to every Nereid of the reef, and what one Nereid needs and the others lack becomes a common field of the reef, never a Nereid-specific kind. A kind per engine would amend it, and would change the command a person types on every swap of provider, against ADR 0002 (the person asking names the reef, never the Tool).</p>
+<p>A platform provisions resources for the things that run on it: a database, a queue or a topic, a cache, a bucket, a hostname. The clouds offer each of them in their own way (a Postgres on RDS has <code>multiAz</code>, a topic on NATS has JetStream), and the owner, in the design session of #560 (the resource Reefs and how a Mandate picks their Nereid), leaned towards one kind per engine or per provider offering, so that nothing of a provider is lost.</p>
+<p>ADR 0011 (Reefs, Nereids and Mandates) says the opposite: an Instance's fields are generic, common to every Nereid of the Reef, and what one Nereid needs and the others lack becomes a common field of the Reef, never a Nereid-specific kind. A kind per engine would amend it, and would change the command a person types on every swap of provider, against ADR 0002 (the person asking names the Reef, never the Tool).</p>
 <p>The research asked for by the owner (on the owner's Drive, private) shows what teams do with Crossplane, the project closest to this problem: a generic kind bound to provider classes was tried and dropped in 2020 as the lowest common denominator, and teams now build two layers, a small contract kind on top (an engine, a size) and typed, provider-specific objects one layer down, picked by a selector or a class. It also shows how the platforms pick an implementation (Humanitec by the most specific criteria, StorageClass and IngressClass by a default, Score by the first match), and that a cache's contract is small and distinct from a database's.</p>
-<p>The order comes from the dogfooding: Nereus itself runs Triton on NATS with no reef (#483, Triton as the messaging reef) and publishes Triton through a tunnel made by hand (#470, publishing a reef's endpoint at a hostname: an edge reef with a cloudflare Nereid). No Workload of the catalog (#559, the catalog reef) asks for a database yet.</p>
+<p>The order comes from the dogfooding: Nereus itself runs Triton on NATS with no Reef (#483, Triton as the messaging Reef) and publishes Triton through a tunnel made by hand (#470, publishing a Reef's endpoint at a hostname: an edge Reef with a cloudflare Nereid). No Workload of the catalog (#559, the catalog Reef) asks for a database yet.</p>
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
-<p><strong>Five resource reefs, in the order the dogfooding asks.</strong> Each is a reef in ADR 0002's sense: an API group <code>&lt;reef&gt;.getnereus.dev/v1alpha1</code>, fulfilled by Nereids, bound by Mandates.</p>
+<p><strong>Five resource Reefs, in the order the dogfooding asks.</strong> Each is a Reef in ADR 0002's sense: an API group <code>&lt;reef&gt;.getnereus.dev/v1alpha1</code>, fulfilled by Nereids, bound by Mandates.</p>
 <table>
 <thead>
 <tr>
@@ -7205,7 +7205,7 @@
 <td>1</td>
 <td><code>messaging</code></td>
 <td><code>Queue</code>, <code>Topic</code></td>
-<td>Triton uses NATS with no reef (#483)</td>
+<td>Triton uses NATS with no Reef (#483)</td>
 </tr>
 <tr>
 <td>2</td>
@@ -7233,7 +7233,7 @@
 </tr>
 </tbody>
 </table>
-<p>DNS lives in <code>edge</code>. The other families of the research (data lake, streams, AI services, about 35 in all) enter one by one when <code>catalog check</code> (#559) points at the gap, each as its own reef or kind, never decided in advance.</p>
+<p>DNS lives in <code>edge</code>. The other families of the research (data lake, streams, AI services, about 35 in all) enter one by one when <code>catalog check</code> (#559) points at the gap, each as its own Reef or kind, never decided in advance.</p>
 <p><strong>A small contract kind per family, with <code>engine</code>.</strong> The kind carries <code>owner: {kind, name}</code> (the node of the tenancy tree it belongs to, #21, Organization and nested Projects), <code>engine</code> and the fields every engine understands. What only one provider has goes in the Mandate's <code>params</code>, written once by the admin; what a person chooses per request and every engine understands becomes a common field of the kind, as ADR 0011 asks. ADR 0011 stays as it is: the person writes the contract, the Mandate holds the provider.</p>
 <div class="language-yaml highlight"><pre><span></span><code><span class="c1"># The person asks (Instance): the small contract</span>
 <span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">messaging.getnereus.dev/v1alpha1</span>
@@ -7260,17 +7260,17 @@
 <li>A <code>match</code> holds when every key it names equals the request. A key the match does not name is not looked at.</li>
 <li><strong><code>owner</code> holds down the tree</strong> (owner, 2026-11-10, #1311): a match on a node of the tenancy tree (ADR 0015) holds for that node and for every node under it, so a Mandate matching an Organization covers its Projects.</li>
 <li>Among the Mandates whose match holds, the one whose match contains every other matching one wins (the most specific, by containment). On <code>owner</code>, the nearest node wins: a Project's own Mandate before its Organization's.</li>
-<li>The empty match is the reef's default (<code>spec.default: true</code> and no <code>match</code> mean the same).</li>
+<li>The empty match is the Reef's default (<code>spec.default: true</code> and no <code>match</code> mean the same).</li>
 <li><code>--mandate</code> on the request forces one Mandate, as today.</li>
-<li>The keys are <code>engine</code>, <code>environment</code> and <code>owner</code>; <code>kind</code> only in a reef with several resource kinds (<code>messaging</code>, with <code>Queue</code> and <code>Topic</code>).</li>
+<li>The keys are <code>engine</code>, <code>environment</code> and <code>owner</code>; <code>kind</code> only in a Reef with several resource kinds (<code>messaging</code>, with <code>Queue</code> and <code>Topic</code>).</li>
 <li><code>nereus mandate create</code> refuses a match identical to an existing one, and a partial overlap (two matches that can both hold on one request and neither contains the other), with an error that follows ADR 0012 (error messages) and gives the fix to copy. A tie is refused when the Mandate is made, never when a resource is asked. Two matches that differ only in <code>owner</code>, one node above the other in the tree, are not an overlap: the nearest wins.</li>
 <li>The output line of a request names the Mandate resolved and its Nereid.</li>
 </ul>
-<p><strong>The selection rule is the same for every reef</strong> (owner, 2026-11-10, #1311). A reef may have several Nereids at once, and a request picks its Mandate in this order:</p>
+<p><strong>The selection rule is the same for every Reef</strong> (owner, 2026-11-10, #1311). A Reef may have several Nereids at once, and a request picks its Mandate in this order:</p>
 <ol>
 <li><strong>Only the Nereids that serve the request take part.</strong> A Nereid serves a request when it publishes what the request needs: the kind, for a request of a kind; <code>status.oidc</code>, for a login (ADR 0006).</li>
 <li><strong>The Mandate whose <code>match</code> holds,</strong> the most specific one, by the rule above.</li>
-<li><strong>Else the reef's default.</strong></li>
+<li><strong>Else the Reef's default.</strong></li>
 <li><strong>Else the only one,</strong> when a single Mandate is left.</li>
 </ol>
 <p><code>--mandate</code> skips the order. A request that reaches the end with no Mandate, or with several, fails with the Mandates that exist and the <code>--match</code> that would catch it (ADR 0012).</p>
@@ -7339,8 +7339,8 @@ $ nereus mandate create database-postgres-eu \
   nereus mandate create database-postgres-eu --reef database --nereid aws-rds --match engine=postgres --match environment=nereus --match region=eu
   Nothing was changed.
 </code></pre></div>
-<p><strong>The same <code>match</code> picks who delivers into an environment.</strong> An <code>Environment</code> (the environment reef) is only the request, with no technology in its <code>spec</code>, and its name is a disposable label (<code>nereus</code> for the kept k3d cluster today, the name of the k3d cluster itself; never <code>prod</code>, owner 2026-10-30 and 2026-11-23), so that migrating data, restoring a backup or swapping the cluster under a Workload changes the environment, not the Workload; the Nereid of its Mandate materializes it (a kept cluster, a vcluster, a managed container service) and writes what it made in <code>status</code>. A Mandate of the release reef with a <code>match</code> on the environment picks the Nereid that knows how to deliver there, so <code>nereus release create</code> is the same command whatever the environment is made of.</p>
-<p><strong>A <code>cache</code> reef of its own, Valkey by default.</strong> The in-memory contract is small (get and set with a time to live; the data may be lost) and differs from a database's, so a cache is not a <code>Database</code> with another engine. Valkey, Redis and Memcached are engines and params of the <code>Cache</code> kind; the reef's default Nereid runs Valkey. A durable, no-eviction Redis is a key-value database (<code>database</code>, <code>engine: redis</code>); CDN and HTTP caches belong to the edge reef.</p>
+<p><strong>The same <code>match</code> picks who delivers into an environment.</strong> An <code>Environment</code> (the environment Reef) is only the request, with no technology in its <code>spec</code>, and its name is a disposable label (<code>nereus</code> for the kept k3d cluster today, the name of the k3d cluster itself; never <code>prod</code>, owner 2026-10-30 and 2026-11-23), so that migrating data, restoring a backup or swapping the cluster under a Workload changes the environment, not the Workload; the Nereid of its Mandate materializes it (a kept cluster, a vcluster, a managed container service) and writes what it made in <code>status</code>. A Mandate of the release Reef with a <code>match</code> on the environment picks the Nereid that knows how to deliver there, so <code>nereus release create</code> is the same command whatever the environment is made of.</p>
+<p><strong>A <code>cache</code> Reef of its own, Valkey by default.</strong> The in-memory contract is small (get and set with a time to live; the data may be lost) and differs from a database's, so a cache is not a <code>Database</code> with another engine. Valkey, Redis and Memcached are engines and params of the <code>Cache</code> kind; the Reef's default Nereid runs Valkey. A durable, no-eviction Redis is a key-value database (<code>database</code>, <code>engine: redis</code>); CDN and HTTP caches belong to the edge Reef.</p>
 <div class="language-yaml highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cache.getnereus.dev/v1alpha1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cache</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -7362,19 +7362,19 @@ $ nereus mandate create database-postgres-eu \
 <li>A person asks for a <code>Topic</code>, a <code>Database</code> or a <code>Cache</code> by its engine and never names a Tool or a provider; swapping NATS for Kafka, or CloudNativePG for RDS, changes a Mandate, not a command or a file of the person.</li>
 <li>Every provider-only setting is written once, in a Mandate's <code>params</code>, by the admin; a setting a person needs per request becomes a common field of the kind, which is the way out of the lowest common denominator ADR 0011 already names.</li>
 <li>The choice of Nereid is deterministic and refused early: with the overlap rule enforced at <code>mandate create</code>, every request resolves to one Mandate or to none, and a request with no Mandate fails with the Mandates that exist and the <code>--match</code> that would catch it (ADR 0012).</li>
-<li>A reef takes several Nereids at once: the refusal "one Nereid per reef" of <code>nereus nereid apply</code> goes away (#1313), and the authentication reef is the first to use it (ADR 0006).</li>
-<li><code>nereus mandate create</code> grows <code>--match &lt;key&gt;=&lt;value&gt;</code> (repeatable) next to <code>--param</code>, and <code>nereus mandate list</code> shows the match of each Mandate; <code>nereus status</code> keeps one row per reef and Nereid pair (ADR 0011).</li>
-<li>The messaging and edge reefs come first, so the two stand-ins of Nereus itself (NATS with no reef, the tunnel by hand) are retired by a feature of the platform, as #269 asks.</li>
-<li>Each reef's commands follow ADR 0013 (command conventions): <code>nereus &lt;reef&gt; &lt;kind&gt; &lt;verb&gt; &lt;name&gt;</code>, kinds singular in commands, a default kind per reef (<code>nereus database create</code> is <code>nereus database database create</code>), full-path output lines, <code>--dry-run</code> everywhere.</li>
+<li>A Reef takes several Nereids at once: the refusal "one Nereid per Reef" of <code>nereus nereid apply</code> goes away (#1313), and the authentication Reef is the first to use it (ADR 0006).</li>
+<li><code>nereus mandate create</code> grows <code>--match &lt;key&gt;=&lt;value&gt;</code> (repeatable) next to <code>--param</code>, and <code>nereus mandate list</code> shows the match of each Mandate; <code>nereus status</code> keeps one row per Reef and Nereid pair (ADR 0011).</li>
+<li>The messaging and edge Reefs come first, so the two stand-ins of Nereus itself (NATS with no Reef, the tunnel by hand) are retired by a feature of the platform, as #269 asks.</li>
+<li>Each Reef's commands follow ADR 0013 (command conventions): <code>nereus &lt;reef&gt; &lt;kind&gt; &lt;verb&gt; &lt;name&gt;</code>, kinds singular in commands, a default kind per Reef (<code>nereus database create</code> is <code>nereus database database create</code>), full-path output lines, <code>--dry-run</code> everywhere.</li>
 </ul>
 <h2 id="open-questions">Open questions<a class="headerlink" href="#open-questions" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>How a Workload lists the resources it needs.</strong> The catalog's <code>Workload</code> (#559) has no list of resources yet; the owner's idea of a chart carrying the Kubernetes objects plus a Score application spec makes Score's <code>resources</code> a candidate format, to weigh when the first resource reef is built.</li>
-<li><strong>How a Workload gets the credentials of a resource.</strong> The first opinion proposed a binding through the secrets reef in the Service Binding layout (the Nereid writes the connection as a secret the Workload mounts); not decided.</li>
-<li><strong>The edge reef's kinds.</strong> #470 names the hostname and the cloudflare Nereid; whether a certificate and a DNS record are kinds of their own or fields of the hostname is decided there.</li>
+<li><strong>How a Workload lists the resources it needs.</strong> The catalog's <code>Workload</code> (#559) has no list of resources yet; the owner's idea of a chart carrying the Kubernetes objects plus a Score application spec makes Score's <code>resources</code> a candidate format, to weigh when the first resource Reef is built.</li>
+<li><strong>How a Workload gets the credentials of a resource.</strong> The first opinion proposed a binding through the secrets Reef in the Service Binding layout (the Nereid writes the connection as a secret the Workload mounts); not decided.</li>
+<li><strong>The edge Reef's kinds.</strong> #470 names the hostname and the cloudflare Nereid; whether a certificate and a DNS record are kinds of their own or fields of the hostname is decided there.</li>
 </ul>
-<p><em>Origin: the owner's decisions of 2026-10-30, in the design session on the catalog, tenancy and resource reefs (#21, #559, #560); the brief, the opinions and the three research files (<code>research-crossplane.md</code>, <code>research-resource-families.md</code>, <code>research-mandate-matching.md</code>) in Drive <code>#pontos/beach/opinions/2026-10-29/</code> and <code>2026-10-30/</code> (private); the raw log under <code>#pontos/raw/2026-10-29/</code>.</em></p>
-<p><em>Rewritten 2026-11-12 from the owner's decisions of 2026-11-10 (#1311: the selection rule for every reef, and a match on <code>owner</code> holding down the tree); raw data in Drive <code>#pontos/raw/2026-11-10/</code>.</em></p>
+<p><em>Origin: the owner's decisions of 2026-10-30, in the design session on the catalog, tenancy and resource Reefs (#21, #559, #560); the brief, the opinions and the three research files (<code>research-crossplane.md</code>, <code>research-resource-families.md</code>, <code>research-mandate-matching.md</code>) in Drive <code>#pontos/beach/opinions/2026-10-29/</code> and <code>2026-10-30/</code> (private); the raw log under <code>#pontos/raw/2026-10-29/</code>.</em></p>
+<p><em>Rewritten 2026-11-12 from the owner's decisions of 2026-11-10 (#1311: the selection rule for every Reef, and a match on <code>owner</code> holding down the tree); raw data in Drive <code>#pontos/raw/2026-11-10/</code>.</em></p>
 
 
 

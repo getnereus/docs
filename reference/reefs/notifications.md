@@ -1,4 +1,4 @@
-# The notifications reef
+# The notifications Reef
 
 Every command that tells a person something and the devices that receive it.
 

@@ -49,9 +49,9 @@ The four capabilities the report proposes match what its sponsor sells (a store 
 
 **What Nereus already does the same way**
 
-- **One route in:** ADR 0018 (the Nereus API is the one door; CLI, portal and agents talk to it, the Kubernetes API stays behind it); MCP is a door of the same API, ADR 0029 (each reef declares its MCP tools, served at `/mcp`). An agent and a person get the same answer.
+- **One route in:** ADR 0018 (the Nereus API is the one door; CLI, portal and agents talk to it, the Kubernetes API stays behind it); MCP is a door of the same API, ADR 0029 (each Reef declares its MCP tools, served at `/mcp`). An agent and a person get the same answer.
 - **Declared and running state in one object:** ADR 0005 (`spec` written by the API, `status` by the Nereid), with continuous reconciliation.
-- **Ownership as data, not tags:** `owner: {kind, name}` points to the tenancy tree, ADR 0015 (a tenancy reef with one fixed shape), on the catalog's Workloads and Packages, ADR 0016 (each Workload with its `owner` and its `audience`, which may include `agents`), on Environments and Instances.
+- **Ownership as data, not tags:** `owner: {kind, name}` points to the tenancy tree, ADR 0015 (a tenancy Reef with one fixed shape), on the catalog's Workloads and Packages, ADR 0016 (each Workload with its `owner` and its `audience`, which may include `agents`), on Environments and Instances.
 - **The credential stays with the platform:** ADR 0017 (the provider is named in the Mandate) and ADR 0023 (an external registry's push credential is read by the Nereid, never on the person's machine); the platform proves itself through a Mandate, ADR 0006.
 - **Attribution:** ADR 0030 (Triton behind the Nereus API) adds `Principal.agent`, so the audit log says "person X, agent Y, via mcp".
 - **Generation kept apart from validation:** the project's deterministic pillar (guards, hooks, `make checks`), and the journeys' decision envelope (🟢 decide, 🟠 report, 🔴 wait for the owner), an exception-based review of the agents' own work.
@@ -59,7 +59,7 @@ The four capabilities the report proposes match what its sponsor sells (a store 
 **Gaps the report points at**
 
 - #2042 (agents as subjects of their own: each agent declared with an identity and a scope, and an unknown agent reported). Today an agent acts on the person's token and only names itself in a header; ADR 0027 leaves `Member.spec.kind: agent` and token exchange for later.
-- #2043 (resources outside Nereus: a reef lists what its tool runs without an Instance, and a person adopts or ignores it).
+- #2043 (resources outside Nereus: a Reef lists what its tool runs without an Instance, and a person adopts or ignores it).
 - #2044 (change classes: a rule decides which requests pass on the gates alone and which wait for a person, and each override is recorded).
 - A comment on #2035 (fleet rollout and drift): a drift's implication, its route to the owner, and revert-or-adopt decided per kind.
 - A comment on #2036 (the platform's business metrics): the report's three readouts.

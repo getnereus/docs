@@ -1,10 +1,10 @@
 deck:
   name: delivery
-  title: "The delivery reef"
+  title: "The delivery Reef"
   subtitle: "Every command that takes a Workload to an Environment, and says what runs"
   accent: "says what runs"
   pt:
-    title: "O reef delivery"
+    title: "O Reef delivery"
     subtitle: "Todos os comandos que levam um Workload a um Environment e dizem o que está rodando"
     accent: "dizem o que está rodando"
 
@@ -14,8 +14,8 @@ acts:
     pt: {title: "Abertura"}
   - name: setup
     title: "Setup"
-    question: "Where does the delivery reef come from?"
-    pt: {title: "Preparação", question: "De onde vem o reef delivery?"}
+    question: "Where does the delivery Reef come from?"
+    pt: {title: "Preparação", question: "De onde vem o Reef delivery?"}
   - name: deploy
     title: "Deploy"
     question: "How does a developer run an image in an Environment?"
@@ -40,17 +40,17 @@ slides:
   - name: cover
     act: opening
     cover: true
-    message: "The delivery reef"
+    message: "The delivery Reef"
     notes: |-
-      **The source of truth for the commands of the delivery reef** (#477, ADR 0020). #845 built the first slice: the slides still planned point to the issues that build them.
+      **The source of truth for the commands of the delivery Reef** (#477, ADR 0020). #845 built the first slice: the slides still planned point to the issues that build them.
 
-      **The catalog's two shortcuts live here for now:** `nereus workload` and `nereus template` go into the `catalog` reef, whose own deck is #570 (the catalog reef in the CLI reference), which links to these slides.
+      **The catalog's two shortcuts live here for now:** `nereus workload` and `nereus template` go into the `catalog` Reef, whose own deck is #570 (the catalog Reef in the CLI reference), which links to these slides.
     pt:
-      message: "O reef delivery"
+      message: "O Reef delivery"
       notes: |-
-        **A fonte da verdade dos comandos do reef delivery** (#477, ADR 0020). A #845 construiu a primeira fatia: os slides ainda planejados apontam para as issues que os constroem.
+        **A fonte da verdade dos comandos do Reef delivery** (#477, ADR 0020). A #845 construiu a primeira fatia: os slides ainda planejados apontam para as issues que os constroem.
 
-        **Os dois atalhos do catálogo ficam aqui por enquanto:** `nereus workload` e `nereus template` entram no reef `catalog`, cujo deck é o #570 (o reef catalog na referência do CLI), que linka estes slides.
+        **Os dois atalhos do catálogo ficam aqui por enquanto:** `nereus workload` e `nereus template` entram no Reef `catalog`, cujo deck é o #570 (o Reef catalog na referência do CLI), que linka estes slides.
 
   - name: chain
     act: opening
@@ -81,16 +81,16 @@ slides:
     topic: "reef apply"
     status: built
     issue: 845
-    message: "The reef, then the Nereid that delivers to Kubernetes"
+    message: "The Reef, then the Nereid that delivers to Kubernetes"
     accent: "delivers to Kubernetes"
     terminal:
       steps:
-        - comment: "The delivery reef's contract"
+        - comment: "The delivery Reef's contract"
           run: "nereus reef apply delivery"
           options: ["--from-file ./reefs/delivery/"]
           output: |-
             ✓ core/reefs/delivery created (delivery.getnereus.dev/v1alpha1)
-        - comment: "The Nereid, with the reef's default Mandate"
+        - comment: "The Nereid, with the Reef's default Mandate"
           run: "nereus nereid apply kubernetes"
           options: ["--reef delivery"]
           output: |-
@@ -102,13 +102,13 @@ slides:
 
               nereus workload deploy --help
     notes: |-
-      **The internal-developer-platform profile installs both** once #845 adds them (ADR 0014). Installing by name keeps today's form until #487 (the verb that installs a reef or a Nereid by name) closes.
+      **The internal-developer-platform profile installs both** once #845 adds them (ADR 0014). Installing by name keeps today's form until #487 (the verb that installs a Reef or a Nereid by name) closes.
     pt:
       topic: "reef apply"
-      message: "O reef, depois o Nereid que entrega para Kubernetes"
+      message: "O Reef, depois o Nereid que entrega para Kubernetes"
       accent: "entrega para Kubernetes"
       notes: |-
-        **O profile internal-developer-platform instala os dois** quando o #845 os adicionar (ADR 0014). Instalar por nome mantém a forma de hoje até o #487 (o verbo que instala um reef ou um Nereid por nome) fechar.
+        **O profile internal-developer-platform instala os dois** quando o #845 os adicionar (ADR 0014). Instalar por nome mantém a forma de hoje até o #487 (o verbo que instala um Reef ou um Nereid por nome) fechar.
 
   - name: workload-deploy
     act: deploy
@@ -350,13 +350,13 @@ slides:
             hello-stage  hello     stage        sha256:77ab40  True
     dependsOn: [workload-deploy]
     notes: |-
-      **`nereus delivery list` is the one path** (owner, 2026-11-03): `Delivery` is the reef's default kind, so it is `nereus delivery delivery list`, and `nereus workload` adds no second path to the same table.
+      **`nereus delivery list` is the one path** (owner, 2026-11-03): `Delivery` is the Reef's default kind, so it is `nereus delivery delivery list`, and `nereus workload` adds no second path to the same table.
     pt:
       topic: "delivery list"
       message: "O delivery list diz o que foi implantado"
       accent: "o que foi implantado"
       notes: |-
-        **O `nereus delivery list` é o único caminho** (owner, 2026-11-03): `Delivery` é o kind padrão do reef, então ele é `nereus delivery delivery list`, e o `nereus workload` não abre uma segunda porta para a mesma tabela.
+        **O `nereus delivery list` é o único caminho** (owner, 2026-11-03): `Delivery` é o kind padrão do Reef, então ele é `nereus delivery delivery list`, e o `nereus workload` não abre uma segunda porta para a mesma tabela.
 
   - name: delivery-get
     act: read
@@ -475,13 +475,13 @@ slides:
               nereus workload list
     dependsOn: [workload-deploy]
     notes: |-
-      **The Nereid removes the `Release` and the `Target` it wrote; the shared `Repository` and `Source` stay,** since other Deliveries use them. The Workload's catalog entry is another reef's and stays too.
+      **The Nereid removes the `Release` and the `Target` it wrote; the shared `Repository` and `Source` stay,** since other Deliveries use them. The Workload's catalog entry is another Reef's and stays too.
     pt:
       topic: "delivery delete"
       message: "Apagar uma Delivery tira o app do Environment"
       accent: "tira o app"
       notes: |-
-        **O Nereid remove o `Release` e o `Target` que escreveu; o `Repository` e o `Source` compartilhados ficam,** porque outras Deliveries os usam. A entrada do Workload no catálogo é de outro reef e fica também.
+        **O Nereid remove o `Release` e o `Target` que escreveu; o `Repository` e o `Source` compartilhados ficam,** porque outras Deliveries os usam. A entrada do Workload no catálogo é de outro Reef e fica também.
 
   - name: template-render
     act: template
@@ -502,13 +502,13 @@ slides:
 
               nereus catalog apply --from-file ./hello/catalog/
     notes: |-
-      **A shortcut of `nereus catalog template render`** (ADR 0016): `Template` is a kind of the catalog. Creating the repository stays with #279 (the repository reef). The verb is `render` because `create` makes the `Template` object and `apply` takes only files (ADR 0013).
+      **A shortcut of `nereus catalog template render`** (ADR 0016): `Template` is a kind of the catalog. Creating the repository stays with #279 (the repository Reef). The verb is `render` because `create` makes the `Template` object and `apply` takes only files (ADR 0013).
     pt:
       topic: "template render"
       message: "Um template escreve arquivos, e o catálogo os registra"
       accent: "escreve arquivos"
       notes: |-
-        **Um atalho de `nereus catalog template render`** (ADR 0016): `Template` é um kind do catálogo. Criar o repositório fica com o #279 (o reef repository). O verbo é `render` porque `create` faz o objeto `Template` e `apply` aceita só arquivos (ADR 0013).
+        **Um atalho de `nereus catalog template render`** (ADR 0016): `Template` é um kind do catálogo. Criar o repositório fica com o #279 (o Reef repository). O verbo é `render` porque `create` faz o objeto `Template` e `apply` aceita só arquivos (ADR 0013).
 
   - name: credits
     act: references

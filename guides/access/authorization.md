@@ -1,10 +1,10 @@
 # Authorize a team
 
-Give a team a role on a node of the tenancy tree: every member gets it by joining and loses it by leaving, and the Nereus API asks the authorization reef before every read and write.
+Give a team a role on a node of the tenancy tree: every member gets it by joining and loses it by leaving, and the Nereus API asks the authorization Reef before every read and write.
 
 ## Before you start
 
-- A cluster from [Prepare the cluster](../../start/init.md) with `--profile internal-developer-platform`: it brings the teams reef, the authorization reef and its Nereid `openfga` with the default Mandate that turns the check on. Before that Mandate exists, only `nereus-admins` passes.
+- A cluster from [Prepare the cluster](../../start/init.md) with `--profile internal-developer-platform`: it brings the teams Reef, the authorization Reef and its Nereid `openfga` with the default Mandate that turns the check on. Before that Mandate exists, only `nereus-admins` passes.
 - A Project to own the team, from [Know whose each thing is](tenancy.md): `project/payments` below.
 - [Tenancy and access](../../concepts/tenancy-and-access.md) tells a User, a Team, a Role and a Binding apart.
 
@@ -148,5 +148,5 @@ nereus environment create staging --owner project/payments
 
 ## Learn more
 
-- [The authorization reef](../../reference/reefs/authorization.md) and [the teams reef](../../reference/reefs/teams.md): every command, presenting rights included.
+- [The authorization Reef](../../reference/reefs/authorization.md) and [the teams Reef](../../reference/reefs/teams.md): every command, presenting rights included.
 - [ADR 0027](../../adr/0027-teams-roles-and-users.md): users, teams, roles and bindings.

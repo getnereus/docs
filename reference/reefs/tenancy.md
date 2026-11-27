@@ -1,11 +1,11 @@
-# The tenancy reef
+# The tenancy Reef
 
-Every command of the tenancy reef: whose a thing is, as a tree of Organizations and Projects.
+Every command of the tenancy Reef: whose a thing is, as a tree of Organizations and Projects.
 
 ## Commands
 
-- [`nereus reef apply tenancy`](../../specs/cli/reefs/tenancy.html#reef-apply) The tenancy reef, with the kinds of this instance
-- [`nereus status`](../../specs/cli/reefs/tenancy.html#status) No Nereid by design: the tenancy reef is Ready with none
+- [`nereus reef apply tenancy`](../../specs/cli/reefs/tenancy.html#reef-apply) The tenancy Reef, with the kinds of this instance
+- [`nereus status`](../../specs/cli/reefs/tenancy.html#status) No Nereid by design: the tenancy Reef is Ready with none
 - [`nereus tenancy organization create example`](../../specs/cli/reefs/tenancy.html#organization-create) Another boundary: an Organization, the root of its tree
 - [`nereus tenancy project create shop`](../../specs/cli/reefs/tenancy.html#project-create) A Project under the Organization, the path from the root
 - [`nereus tenancy project create checkout`](../../specs/cli/reefs/tenancy.html#project-nested) A Project under another Project
@@ -37,7 +37,7 @@ Next steps:
 
 ### status
 
-Right after a plain init: core, and the tenancy reef every profile applies.
+Right after a plain init: core, and the tenancy Reef every profile applies.
 
 ```bash
 nereus status

@@ -1,10 +1,10 @@
-# The release reef
+# The release Reef
 
-Every command of the release reef: where a chart comes from, what it is, where it goes and the release itself.
+Every command of the release Reef: where a chart comes from, what it is, where it goes and the release itself.
 
 ## Commands
 
-- [`nereus reef apply release`](../../specs/cli/reefs/release.html#apply-reef) One command applies the release reef, with its four kinds
+- [`nereus reef apply release`](../../specs/cli/reefs/release.html#apply-reef) One command applies the release Reef, with its four kinds
 - [`nereus nereid apply reference-release`](../../specs/cli/reefs/release.html#apply-reference) The reference-release Nereid answers every kind with no tool, through the reference Mandate
 - [`nereus nereid apply flux`](../../specs/cli/reefs/release.html#apply-flux) The flux Nereid installs Flux and becomes the default through its Mandate
 - [`nereus release repository create codecentric`](../../specs/cli/reefs/release.html#repository-create) A repository says where the charts come from
@@ -23,7 +23,7 @@ Every command of the release reef: where a chart comes from, what it is, where i
 - [`nereus release target list`](../../specs/cli/reefs/release.html#target-list) The list shows every target with its environment and namespace
 - [`nereus release target get dev-identity`](../../specs/cli/reefs/release.html#target-get) One target, by its name
 - [`nereus release target delete dev-identity`](../../specs/cli/reefs/release.html#target-delete) A target goes once no release names it
-- [`nereus release create keycloak-reference`](../../specs/cli/reefs/release.html#release-create) A release runs a source in a target, through the reef's default Mandate
+- [`nereus release create keycloak-reference`](../../specs/cli/reefs/release.html#release-create) A release runs a source in a target, through the Reef's default Mandate
 - [`nereus release create keycloak`](../../specs/cli/reefs/release.html#release-create-values) Values and a Mandate of your choice, with Flux installing the chart
 - [`nereus release create keycloak`](../../specs/cli/reefs/release.html#release-create-secrets) A release asks for its secrets by name, and its values never pass through Nereus
 - [`nereus release create keycloak-reference`](../../specs/cli/reefs/release.html#release-apply) One folder holds the whole release, and the second apply changes nothing
@@ -43,7 +43,7 @@ Every command of the release reef: where a chart comes from, what it is, where i
 
 ### apply-reef
 
-Apply the release reef.
+Apply the release Reef.
 
 ```bash
 nereus reef apply release
@@ -60,7 +60,7 @@ Next steps:
 
 ### apply-reference
 
-Apply the reference Nereid to the release reef.
+Apply the reference Nereid to the release Reef.
 
 ```bash
 nereus nereid apply reference-release \
@@ -78,7 +78,7 @@ Next steps:
 
 ### apply-flux
 
-Apply the flux Nereid to the release reef.
+Apply the flux Nereid to the release Reef.
 
 ```bash
 nereus nereid apply flux \
@@ -414,7 +414,7 @@ Next steps:
 
 ### release-apply
 
-Apply the folder: every kind of the reef, in order.
+Apply the folder: every kind of the Reef, in order.
 
 ```bash
 nereus release apply \

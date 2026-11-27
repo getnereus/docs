@@ -156,7 +156,7 @@ slides:
 
     **Dual coding** (Paivio, 1971): a word together with an image gives memory two cues, so recall gets easier.
 
-    Nereus is a memory palace: the sea is the palace; reef, Nereids and Glaucus are the places.
+    Nereus is a memory palace: the sea is the palace; Reef, Nereids and Glaucus are the places.
 
     **Observation by the owner**: telling Nereus through Hesiod's **Theogony**, I remember the myth and the system concepts.
 
@@ -188,7 +188,7 @@ slides:
 
       **Codificação dupla** (Paivio, 1971): palavra junto com imagem cria duas pistas na memória, e lembrar fica mais fácil.
 
-      O Nereus é um palácio da memória: o mar é o palácio; reef, Nereidas e Glauco são os lugares.
+      O Nereus é um palácio da memória: o mar é o palácio; Reef, Nereidas e Glauco são os lugares.
 
       **Observação do owner**: contando o Nereus pela **Teogonia** de Hesíodo, eu lembro do mito e dos conceitos do sistema.
 
@@ -206,7 +206,7 @@ slides:
   screen:
   - '**Nereus** (the old man of the sea): the platform'
   - '**Nereids** (his daughters): the components (controllers)'
-  - '**reef** (the reef): the group of resources of an area'
+  - '**Reef** (the Reef): the group of resources of an area'
   - '**beach** (where the raft lands): the folder of orders'
   - '**Glaucus** (a fisherman who became a sea god): the messenger'
   - '**Doris, Tide, pearl** (mother of the Nereids, tide, pearl): extract ideas, see over time, delivered idea'
@@ -222,7 +222,7 @@ slides:
     screen:
     - '**Nereus** (o velho do mar): a plataforma'
     - '**Nereids** (as filhas dele): os componentes (controllers)'
-    - '**reef** (o recife): o grupo de recursos de uma área'
+    - '**Reef** (o recife): o grupo de recursos de uma área'
     - '**praia** (onde a jangada chega): a pasta de ordens'
     - '**Glauco** (pescador que virou deus do mar): o mensageiro'
     - '**Doris, Tide, pearl** (mãe das Nereids, maré, pérola): extrair ideias, ver no tempo, ideia entregue'
@@ -569,7 +569,7 @@ slides:
   screen:
   - '**{agent:Claude}** · 20:03: Does Doris become a Nereid inside Nereus, or stay a tool outside it?'
   - '**{human:Me}** · 20:03: From what we gathered, I would go with Nereid.'
-  - '**{agent:Claude}** · 20:04: Which reef does it implement? The deck suggested `ideas`. Go with that one or do you prefer another name?'
+  - '**{agent:Claude}** · 20:04: Which Reef does it implement? The deck suggested `ideas`. Go with that one or do you prefer another name?'
   - '**{human:Me}** · 20:04: That one.'
   notes: |-
     Show that the conversation is **short on purpose**.
@@ -581,7 +581,7 @@ slides:
     screen:
     - '**{agent:Claude}** · 20:03: A Doris vira uma Nereid dentro do Nereus, ou fica como ferramenta fora dele?'
     - '**{human:Eu}** · 20:03: Pelo que levantamos, eu iria de Nereid.'
-    - '**{agent:Claude}** · 20:04: Qual reef ela implementa? O deck sugeria `ideas`. Vai com esse ou prefere outro nome?'
+    - '**{agent:Claude}** · 20:04: Qual Reef ela implementa? O deck sugeria `ideas`. Vai com esse ou prefere outro nome?'
     - '**{human:Eu}** · 20:04: Esse.'
     notes: |-
       Mostrar que a conversa é **curta de propósito**.
@@ -1339,12 +1339,12 @@ slides:
   topic: Next
   message: Next steps
   screen:
-  - '**Doris:** the Nereid of the `ideas` reef; extract and classify with the criteria of the five stages'
+  - '**Doris:** the Nereid of the `ideas` Reef; extract and classify with the criteria of the five stages'
   - '**Tide v2:** the 263 real events; Pearl layers + timeline (when + how)'
   - '**Two-tab panel:** classification first, raw after, with "I disagree"'
   - '**Heat map:** by hour of the day, measuring conversion (ideas that became backlog), not volume'
   notes: |-
-    Doris becomes the Nereid of the `ideas` reef: extract and classify, with the criteria of the five stages.
+    Doris becomes the Nereid of the `ideas` Reef: extract and classify, with the criteria of the five stages.
 
     Tide v2 with the 263 real events: Pearl layers + timeline (when + how).
 
@@ -1357,12 +1357,12 @@ slides:
     topic: Próximos
     message: Próximos passos
     screen:
-    - '**Doris:** a Nereid do reef `ideas`; extrair e classificar com os critérios dos cinco estágios'
+    - '**Doris:** a Nereid do Reef `ideas`; extrair e classificar com os critérios dos cinco estágios'
     - '**Tide v2:** os 263 eventos reais; Pearl layers + timeline (quando + como)'
     - '**Painel de duas abas:** classificação primeiro, bruto depois, com "discordo"'
     - '**Mapa de calor:** por hora do dia, medindo conversão (ideias que viraram backlog), não volume'
     notes: |-
-      Doris vira a Nereid do reef `ideas`: extrair e classificar, com os critérios dos cinco estágios.
+      Doris vira a Nereid do Reef `ideas`: extrair e classificar, com os critérios dos cinco estágios.
 
       Tide v2 com os 263 eventos reais: Pearl layers + timeline (quando + como).
 

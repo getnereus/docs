@@ -1,18 +1,18 @@
 # Turn on authentication
 
-Turn on sign-in for an installation: the authentication reef and its Nereid `keycloak` run the realm `nereus`, and every person logs in with `nereus login`, never with a kubeconfig.
+Turn on sign-in for an installation: the authentication Reef and its Nereid `keycloak` run the realm `nereus`, and every person logs in with `nereus login`, never with a kubeconfig.
 
 ## Before you start
 
-- A cluster from [Prepare the cluster](../../start/init.md). With `--profile internal-developer-platform` the reef and the Nereid are already there, and step 1 reports `unchanged`.
-- After a plain `nereus init`, Nereids for the secrets and release reefs, the release one with a default Mandate: Keycloak runs as a Release.
+- A cluster from [Prepare the cluster](../../start/init.md). With `--profile internal-developer-platform` the Reef and the Nereid are already there, and step 1 reports `unchanged`.
+- After a plain `nereus init`, Nereids for the secrets and release Reefs, the release one with a default Mandate: Keycloak runs as a Release.
 - [Tenancy and access](../../concepts/tenancy-and-access.md) explains who the initial admin is and what `nereus-admins` can do.
 
 ## Steps
 
-### 1. Install the reef and its Nereid
+### 1. Install the Reef and its Nereid
 
-[`nereus reef apply`](../../specs/cli/core.html#reef-apply) adds the reef; [`nereus nereid apply`](../../specs/cli/core.html#nereid-apply) runs Keycloak and makes the default Mandate `keycloak`.
+[`nereus reef apply`](../../specs/cli/core.html#reef-apply) adds the Reef; [`nereus nereid apply`](../../specs/cli/core.html#nereid-apply) runs Keycloak and makes the default Mandate `keycloak`.
 
 ```bash
 nereus reef apply authentication
@@ -101,7 +101,7 @@ nereus whoami
 ana-silva (nereus-admins, nereus-users)
 ```
 
-[`nereus status`](../../specs/cli/core.html#status) now reads through the API with your token, and lists the reef:
+[`nereus status`](../../specs/cli/core.html#status) now reads through the API with your token, and lists the Reef:
 
 ```bash
 nereus status
@@ -125,5 +125,5 @@ Registry  localhost:5111
 
 ## Learn more
 
-- [The authentication reef](../../reference/reefs/authentication.md): every command, and the realm's clients.
+- [The authentication Reef](../../reference/reefs/authentication.md): every command, and the realm's clients.
 - [ADR 0006](../../adr/0006-authentication-reef.md): the OIDC contract the default Mandate publishes.

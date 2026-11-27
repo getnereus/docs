@@ -1,10 +1,10 @@
-# The secrets reef
+# The secrets Reef
 
-Every command of the secrets reef: vaults, and the secrets in them, encrypted before they leave the machine.
+Every command of the secrets Reef: vaults, and the secrets in them, encrypted before they leave the machine.
 
 ## Commands
 
-- [`nereus init`](../../specs/cli/reefs/secrets.html#init) The profile brings the secrets reef ready to use, with its key and the vault default
+- [`nereus init`](../../specs/cli/reefs/secrets.html#init) The profile brings the secrets Reef ready to use, with its key and the vault default
 - [`nereus secrets create google-oauth`](../../specs/cli/reefs/secrets.html#create) A secret is encrypted on your machine, before it leaves it
 - [`nereus secrets create google-oauth`](../../specs/cli/reefs/secrets.html#create-exists) Creating it again is refused, with how to change it
 - [`nereus secrets create github-app`](../../specs/cli/reefs/secrets.html#create-file) A key can come from a file, such as a private key

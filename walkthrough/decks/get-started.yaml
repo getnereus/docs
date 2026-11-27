@@ -1,12 +1,12 @@
 deck:
   name: walkthrough-get-started
   title: "Get started"
-  subtitle: "From no cluster to a reef added at runtime, and a Nereid that adds its own commands to the CLI"
-  accent: "a reef added at runtime"
+  subtitle: "From no cluster to a Reef added at runtime, and a Nereid that adds its own commands to the CLI"
+  accent: "a Reef added at runtime"
   pt:
     title: "Começar"
-    subtitle: "De nenhum cluster a um reef adicionado em runtime, e uma Nereid que acrescenta os seus próprios comandos ao CLI"
-    accent: "um reef adicionado em runtime"
+    subtitle: "De nenhum cluster a um Reef adicionado em runtime, e uma Nereid que acrescenta os seus próprios comandos ao CLI"
+    accent: "um Reef adicionado em runtime"
 
 acts:
   - name: opening
@@ -20,9 +20,9 @@ acts:
     question: "How does a laptop become a Nereus instance?"
     pt: {title: "O cluster", question: "Como um laptop vira uma instância do Nereus?"}
   - name: reef
-    title: "A reef at runtime"
+    title: "A Reef at runtime"
     question: "How does a capability arrive after init?"
-    pt: {title: "Um reef em runtime", question: "Como uma capacidade chega depois do init?"}
+    pt: {title: "Um Reef em runtime", question: "Como uma capacidade chega depois do init?"}
   - name: cloud
     title: "The cloud"
     question: "What changes when the cluster reaches a cloud?"
@@ -38,13 +38,13 @@ slides:
     cover: true
     message: "Get started"
     notes: |-
-      **You end with a local cluster prepared by `nereus init`, a reef added at runtime and a Nereid that adds its own commands to the CLI**, then a cloud the cluster reaches with no secret of its own. For whoever tries Nereus for the first time, on a laptop: specs 0001 to 0004 (the first slice, a reef at runtime, Nereid conformance, the time SLO of init).
+      **You end with a local cluster prepared by `nereus init`, a Reef added at runtime and a Nereid that adds its own commands to the CLI**, then a cloud the cluster reaches with no secret of its own. For whoever tries Nereus for the first time, on a laptop: specs 0001 to 0004 (the first slice, a Reef at runtime, Nereid conformance, the time SLO of init).
 
       **Status: built.** Every step links to its command in the [core deck](../../specs/cli/core.html); `make scene` runs them all on a throwaway cluster. The cloud steps are recorded against fakes.
     pt:
       message: "Começar"
       notes: |-
-        **Você termina com um cluster local preparado pelo `nereus init`, um reef adicionado em runtime e uma Nereid que acrescenta os seus próprios comandos ao CLI**, depois uma nuvem que o cluster alcança sem nenhum secret próprio. Para quem experimenta o Nereus pela primeira vez, num laptop: as specs 0001 a 0004 (a primeira fatia, um reef em runtime, a conformidade das Nereids, o SLO de tempo do init).
+        **Você termina com um cluster local preparado pelo `nereus init`, um Reef adicionado em runtime e uma Nereid que acrescenta os seus próprios comandos ao CLI**, depois uma nuvem que o cluster alcança sem nenhum secret próprio. Para quem experimenta o Nereus pela primeira vez, num laptop: as specs 0001 a 0004 (a primeira fatia, um Reef em runtime, a conformidade das Nereids, o SLO de tempo do init).
 
         **Status: pronto.** Cada passo aponta para o seu comando no [deck do core](../../specs/cli/core.html); o `make scene` roda todos eles num cluster descartável. Os passos da nuvem são gravados contra fakes.
 
@@ -55,7 +55,7 @@ slides:
     screen:
       - "**The tools:** `docker`, `k3d`, `kubectl`, `uv` and `make`"
       - "**The clone:** `git clone https://github.com/getnereus/nereus.git`, then `make cli` puts `nereus` and `nrs` on the PATH"
-      - "**1 · Install the CLI:** its command groups, before any reef · [`nereus --help`](../../specs/cli/core.html#groups) · built"
+      - "**1 · Install the CLI:** its command groups, before any Reef · [`nereus --help`](../../specs/cli/core.html#groups) · built"
     notes: |-
       **`make cli` installs the CLI editable from the checkout**, so a change in `cli/` takes effect at the next run; `nereus --install-completion` turns on Tab completion for both names ([Install the CLI](../../start/install.md)). `make scene` runs every step that follows on a throwaway cluster, leaving your config alone.
     pt:
@@ -64,7 +64,7 @@ slides:
       screen:
         - "**As ferramentas:** `docker`, `k3d`, `kubectl`, `uv` e `make`"
         - "**O clone:** `git clone https://github.com/getnereus/nereus.git`, depois o `make cli` põe `nereus` e `nrs` no PATH"
-        - "**1 · Instalar o CLI:** os seus grupos de comandos, antes de qualquer reef · [`nereus --help`](../../specs/cli/core.html#groups) · pronto"
+        - "**1 · Instalar o CLI:** os seus grupos de comandos, antes de qualquer Reef · [`nereus --help`](../../specs/cli/core.html#groups) · pronto"
       notes: |-
         **O `make cli` instala o CLI editável a partir do checkout**, então uma mudança em `cli/` vale na próxima execução; o `nereus --install-completion` liga o completar com Tab para os dois nomes ([Instalar o CLI](../../start/install.md)). O `make scene` roda todos os passos seguintes num cluster descartável, sem tocar na sua configuração.
 
@@ -95,7 +95,7 @@ slides:
     accent: "then a profile"
     screen:
       - "**4 · Prepare the cluster:** core in two Helm releases, then thetis installs the profile · [`nereus init --profile internal-developer-platform`](../../specs/cli/core.html#init-profile) · built"
-      - "**Check it worked:** one row per reef and its Nereid · [`nereus status`](../../specs/cli/core.html#status) · built"
+      - "**Check it worked:** one row per Reef and its Nereid · [`nereus status`](../../specs/cli/core.html#status) · built"
     notes: |-
       **`make nereids` builds and pushes the Nereids' images first.** With this profile the instance offers sign-in, so log in right after: [`nereus login`](../../specs/cli/reefs/authentication.html#login). Profiles are listed, described and applied from the laptop too: [`profile list`](../../specs/cli/core.html#profile-list), [`profile describe`](../../specs/cli/core.html#profile-describe), [`profile apply`](../../specs/cli/core.html#profile-apply). Run it again and it reuses everything, in seconds ([`nereus init`](../../specs/cli/core.html#init); [Prepare the cluster](../../reference/init.md)).
     pt:
@@ -104,7 +104,7 @@ slides:
       accent: "depois um profile"
       screen:
         - "**4 · Preparar o cluster:** o core em duas releases do Helm, depois o thetis instala o profile · [`nereus init --profile internal-developer-platform`](../../specs/cli/core.html#init-profile) · pronto"
-        - "**Conferir:** uma linha por reef e a sua Nereid · [`nereus status`](../../specs/cli/core.html#status) · pronto"
+        - "**Conferir:** uma linha por Reef e a sua Nereid · [`nereus status`](../../specs/cli/core.html#status) · pronto"
       notes: |-
         **O `make nereids` constrói e publica as imagens das Nereids primeiro.** Com este profile a instância oferece login, então entre logo depois: [`nereus login`](../../specs/cli/reefs/authentication.html#login). Os profiles também são listados, descritos e aplicados do laptop: [`profile list`](../../specs/cli/core.html#profile-list), [`profile describe`](../../specs/cli/core.html#profile-describe), [`profile apply`](../../specs/cli/core.html#profile-apply). Rode de novo e ele reusa tudo, em segundos ([`nereus init`](../../specs/cli/core.html#init); [Preparar o cluster](../../reference/init.md)).
 
@@ -159,7 +159,7 @@ slides:
       - "**7 · No Nereids yet:** the list prints `No nereids added.` · [`nereus nereid list`](../../specs/cli/core.html#nereid-list) · built"
       - "**8 · Build the reference Nereid:** `make reference` builds its image and pushes it to the local registry"
     notes: |-
-      **The image declares in labels the reef it fulfils, the reefs it requires, its name and version**, and its commands are data, in `commands.yaml` ([No Nereids yet](../../start/look-around.md), [Build the reference Nereid](../../guides/build/image.md)). A new Nereid of your own starts from `scripts/nereid/new --reef <reef> --tool <tool>` ([Start a new Nereid](../../guides/build/new-nereid.md)).
+      **The image declares in labels the Reef it fulfils, the Reefs it requires, its name and version**, and its commands are data, in `commands.yaml` ([No Nereids yet](../../start/look-around.md), [Build the reference Nereid](../../guides/build/image.md)). A new Nereid of your own starts from `scripts/nereid/new --reef <reef> --tool <tool>` ([Start a new Nereid](../../guides/build/new-nereid.md)).
     pt:
       topic: "nenhuma Nereid ainda"
       message: "Antes de qualquer {nereid:Nereid}, o CLI tem só os seus comandos"
@@ -168,29 +168,29 @@ slides:
         - "**7 · Nenhuma Nereid ainda:** a lista imprime `No nereids added.` · [`nereus nereid list`](../../specs/cli/core.html#nereid-list) · pronto"
         - "**8 · Construir a Nereid de referência:** o `make reference` constrói a sua imagem e a publica no registry local"
       notes: |-
-        **A imagem declara em labels o reef que cumpre, os reefs que exige, o seu nome e a sua versão**, e os seus comandos são dados, em `commands.yaml` ([Nenhuma Nereid ainda](../../start/look-around.md), [Construir a Nereid de referência](../../guides/build/image.md)). Uma Nereid nova sua começa do `scripts/nereid/new --reef <reef> --tool <tool>` ([Começar uma Nereid nova](../../guides/build/new-nereid.md)).
+        **A imagem declara em labels o Reef que cumpre, os Reefs que exige, o seu nome e a sua versão**, e os seus comandos são dados, em `commands.yaml` ([Nenhuma Nereid ainda](../../start/look-around.md), [Construir a Nereid de referência](../../guides/build/image.md)). Uma Nereid nova sua começa do `scripts/nereid/new --reef <reef> --tool <tool>` ([Começar uma Nereid nova](../../guides/build/new-nereid.md)).
 
   - name: reef
     act: reef
-    topic: "the reef"
-    message: "First the {reef:release} reef, then the {nereid:Nereid} that serves it"
+    topic: "the Reef"
+    message: "First the {reef:release} Reef, then the {nereid:Nereid} that serves it"
     accent: "then the {nereid:Nereid}"
     screen:
-      - "**9 · Apply the reef:** its kinds, and a `release` group in the CLI · [`nereus reef apply release`](../../specs/cli/core.html#reef-apply) · built"
+      - "**9 · Apply the Reef:** its kinds, and a `release` group in the CLI · [`nereus reef apply release`](../../specs/cli/core.html#reef-apply) · built"
       - "**10 · Apply the Nereid:** pinned to its image's digest, and `Ready` · [`nereus nereid apply reference-release`](../../specs/cli/core.html#nereid-apply) · built"
-      - "**Check it worked:** the reef with its Nereid · [`nereus reef list`](../../specs/cli/core.html#reef-list) · built"
+      - "**Check it worked:** the Reef with its Nereid · [`nereus reef list`](../../specs/cli/core.html#reef-list) · built"
     notes: |-
-      **A Nereid needs its reef first:** without it, `nereid apply` is refused and names `nereus reef apply release`. `reef create` fails on a reef that exists ([reef create](../../specs/cli/core.html#reef-create)); `--from-file` applies local YAML ([reef apply --from-file](../../specs/cli/core.html#reef-apply-file)); another image updates the Nereid in place ([nereid apply --image](../../specs/cli/core.html#nereid-apply-image)) ([Apply the reef](../../reference/reefs-and-nereids.md), [Apply the Nereid](../../reference/reefs-and-nereids.md)).
+      **A Nereid needs its Reef first:** without it, `nereid apply` is refused and names `nereus reef apply release`. `reef create` fails on a Reef that exists ([Reef create](../../specs/cli/core.html#reef-create)); `--from-file` applies local YAML ([Reef apply --from-file](../../specs/cli/core.html#reef-apply-file)); another image updates the Nereid in place ([nereid apply --image](../../specs/cli/core.html#nereid-apply-image)) ([Apply the Reef](../../reference/reefs-and-nereids.md), [Apply the Nereid](../../reference/reefs-and-nereids.md)).
     pt:
-      topic: "o reef"
-      message: "Primeiro o reef {reef:release}, depois a {nereid:Nereid} que o serve"
+      topic: "o Reef"
+      message: "Primeiro o Reef {reef:release}, depois a {nereid:Nereid} que o serve"
       accent: "depois a {nereid:Nereid}"
       screen:
-        - "**9 · Aplicar o reef:** os seus kinds, e um grupo `release` no CLI · [`nereus reef apply release`](../../specs/cli/core.html#reef-apply) · pronto"
+        - "**9 · Aplicar o Reef:** os seus kinds, e um grupo `release` no CLI · [`nereus reef apply release`](../../specs/cli/core.html#reef-apply) · pronto"
         - "**10 · Aplicar a Nereid:** fixada no digest da sua imagem, e `Ready` · [`nereus nereid apply reference-release`](../../specs/cli/core.html#nereid-apply) · pronto"
-        - "**Conferir:** o reef com a sua Nereid · [`nereus reef list`](../../specs/cli/core.html#reef-list) · pronto"
+        - "**Conferir:** o Reef com a sua Nereid · [`nereus reef list`](../../specs/cli/core.html#reef-list) · pronto"
       notes: |-
-        **Uma Nereid precisa do seu reef primeiro:** sem ele, o `nereid apply` é recusado e nomeia o `nereus reef apply release`. O `reef create` falha num reef que existe ([reef create](../../specs/cli/core.html#reef-create)); o `--from-file` aplica YAML local ([reef apply --from-file](../../specs/cli/core.html#reef-apply-file)); outra imagem atualiza a Nereid no lugar ([nereid apply --image](../../specs/cli/core.html#nereid-apply-image)) ([Aplicar o reef](../../reference/reefs-and-nereids.md), [Aplicar a Nereid](../../reference/reefs-and-nereids.md)).
+        **Uma Nereid precisa do seu Reef primeiro:** sem ele, o `nereid apply` é recusado e nomeia o `nereus reef apply release`. O `reef create` falha num Reef que existe ([Reef create](../../specs/cli/core.html#reef-create)); o `--from-file` aplica YAML local ([Reef apply --from-file](../../specs/cli/core.html#reef-apply-file)); outra imagem atualiza a Nereid no lugar ([nereid apply --image](../../specs/cli/core.html#nereid-apply-image)) ([Aplicar o Reef](../../reference/reefs-and-nereids.md), [Aplicar a Nereid](../../reference/reefs-and-nereids.md)).
 
   - name: commands
     act: reef
@@ -201,7 +201,7 @@ slides:
       - "**11 · Its commands:** `nereus release --help` lists what the Nereid published, with no code downloaded"
       - "**12 · Run its commands:** `nereus release repo add` and `repo list` go to the Nereid's controller, which runs them"
     notes: |-
-      **These commands are not in the CLI reference on purpose:** the reference Nereid publishes them at runtime (ADR 0004, reefs extend the CLI), and the CLI builds them from that description. The group is named after the reef, not the Nereid ([Its commands](../../start/run.md), [Run its commands](../../start/run.md)).
+      **These commands are not in the CLI reference on purpose:** the reference Nereid publishes them at runtime (ADR 0004, Reefs extend the CLI), and the CLI builds them from that description. The group is named after the Reef, not the Nereid ([Its commands](../../start/run.md), [Run its commands](../../start/run.md)).
     pt:
       topic: "os seus comandos"
       message: "A {nereid:Nereid} encheu o grupo com os seus próprios comandos"
@@ -210,27 +210,27 @@ slides:
         - "**11 · Os seus comandos:** o `nereus release --help` lista o que a Nereid publicou, sem baixar código"
         - "**12 · Rodar os seus comandos:** o `nereus release repo add` e o `repo list` vão ao controller da Nereid, que os roda"
       notes: |-
-        **Estes comandos não estão na referência do CLI de propósito:** a Nereid de referência os publica em runtime (ADR 0004, os reefs estendem o CLI), e o CLI os constrói a partir dessa descrição. O grupo leva o nome do reef, não da Nereid ([Os seus comandos](../../start/run.md), [Rodar os seus comandos](../../start/run.md)).
+        **Estes comandos não estão na referência do CLI de propósito:** a Nereid de referência os publica em runtime (ADR 0004, os Reefs estendem o CLI), e o CLI os constrói a partir dessa descrição. O grupo leva o nome do Reef, não da Nereid ([Os seus comandos](../../start/run.md), [Rodar os seus comandos](../../start/run.md)).
 
   - name: requires
     act: reef
     topic: "requires"
-    message: "A {nereid:Nereid} requires reefs, never Nereids"
+    message: "A {nereid:Nereid} requires Reefs, never Nereids"
     accent: "never Nereids"
     screen:
-      - "**13 · Require a reef:** a `docs` reef and its Nereid, which requires `release` · [`nereus nereid apply reference-docs`](../../specs/cli/core.html#nereid-apply) · built"
-      - "**The last Nereid of a required reef stays** while another requires it · [`nereus nereid delete`](../../specs/cli/core.html#nereid-delete) · built"
+      - "**13 · Require a Reef:** a `docs` Reef and its Nereid, which requires `release` · [`nereus nereid apply reference-docs`](../../specs/cli/core.html#nereid-apply) · built"
+      - "**The last Nereid of a required Reef stays** while another requires it · [`nereus nereid delete`](../../specs/cli/core.html#nereid-delete) · built"
     notes: |-
-      **The requirement is the image label `core.getnereus.dev/requires`**, recorded in `spec.requires`; an apply whose required reef has no Nereid is refused, and one whose Nereid is not `Ready` warns but goes ahead (spec 0003, [Require a reef](../../guides/build/requires.md)).
+      **The requirement is the image label `core.getnereus.dev/requires`**, recorded in `spec.requires`; an apply whose required Reef has no Nereid is refused, and one whose Nereid is not `Ready` warns but goes ahead (spec 0003, [Require a Reef](../../guides/build/requires.md)).
     pt:
       topic: "requires"
-      message: "Uma {nereid:Nereid} exige reefs, nunca Nereids"
+      message: "Uma {nereid:Nereid} exige Reefs, nunca Nereids"
       accent: "nunca Nereids"
       screen:
-        - "**13 · Exigir um reef:** um reef `docs` e a sua Nereid, que exige o `release` · [`nereus nereid apply reference-docs`](../../specs/cli/core.html#nereid-apply) · pronto"
-        - "**A última Nereid de um reef exigido fica** enquanto outra o exige · [`nereus nereid delete`](../../specs/cli/core.html#nereid-delete) · pronto"
+        - "**13 · Exigir um Reef:** um Reef `docs` e a sua Nereid, que exige o `release` · [`nereus nereid apply reference-docs`](../../specs/cli/core.html#nereid-apply) · pronto"
+        - "**A última Nereid de um Reef exigido fica** enquanto outra o exige · [`nereus nereid delete`](../../specs/cli/core.html#nereid-delete) · pronto"
       notes: |-
-        **A exigência é a label de imagem `core.getnereus.dev/requires`**, gravada em `spec.requires`; um apply cujo reef exigido não tem Nereid é recusado, e um cuja Nereid não está `Ready` avisa mas segue (spec 0003, [Exigir um reef](../../guides/build/requires.md)).
+        **A exigência é a label de imagem `core.getnereus.dev/requires`**, gravada em `spec.requires`; um apply cujo Reef exigido não tem Nereid é recusado, e um cuja Nereid não está `Ready` avisa mas segue (spec 0003, [Exigir um Reef](../../guides/build/requires.md)).
 
   - name: undercloud
     act: cloud
@@ -260,7 +260,7 @@ slides:
     message: "A {nereid:Nereid} asks for access, and you grant it"
     accent: "you grant it"
     screen:
-      - "**16 · Grant access:** a Nereid that requires `cloud` acts as its reef's identity, with no secret · [`nereus nereid apply keyvault`](../../specs/cli/core.html#nereid-apply) · built"
+      - "**16 · Grant access:** a Nereid that requires `cloud` acts as its Reef's identity, with no secret · [`nereus nereid apply keyvault`](../../specs/cli/core.html#nereid-apply) · built"
       - "**See what is asked, then approve:** `nereus system access list` and `nereus system access approve --all`, the legacy commands"
     notes: |-
       **`nereus system` stays out of the CLI reference** (the deprecated aliases of the first proof of concept, #409), so the page shows these two as they run today; a failed plan undoes none of the others, and running it again applies only what is missing ([Grant access](../../guides/access/grant-access.md)). Recorded against fakes.
@@ -269,7 +269,7 @@ slides:
       message: "Uma {nereid:Nereid} pede acesso, e você o concede"
       accent: "você o concede"
       screen:
-        - "**16 · Conceder acesso:** uma Nereid que exige `cloud` age como a identidade do seu reef, sem nenhum secret · [`nereus nereid apply keyvault`](../../specs/cli/core.html#nereid-apply) · pronto"
+        - "**16 · Conceder acesso:** uma Nereid que exige `cloud` age como a identidade do seu Reef, sem nenhum secret · [`nereus nereid apply keyvault`](../../specs/cli/core.html#nereid-apply) · pronto"
         - "**Ver o que é pedido, depois aprovar:** `nereus system access list` e `nereus system access approve --all`, os comandos legados"
       notes: |-
         **O `nereus system` fica fora da referência do CLI** (os aliases obsoletos da primeira prova de conceito, #409), então a página mostra estes dois como rodam hoje; um plano que falha não desfaz nenhum dos outros, e rodar de novo aplica só o que falta ([Conceder acesso](../../guides/access/grant-access.md)). Gravado contra fakes.
@@ -297,21 +297,21 @@ slides:
   - name: delete
     act: end
     topic: "delete"
-    message: "The {nereid:Nereid} first, then its reef, then the cluster"
+    message: "The {nereid:Nereid} first, then its Reef, then the cluster"
     accent: "then the cluster"
     screen:
       - "**19 · Delete the Nereid:** its commands and everything it ran go with it · [`nereus nereid delete reference-release`](../../specs/cli/core.html#nereid-delete) · built"
-      - "**Delete the reef:** with no Nereid left, the reef and its group go · [`nereus reef delete release`](../../specs/cli/core.html#reef-delete) · built"
+      - "**Delete the Reef:** with no Nereid left, the Reef and its group go · [`nereus reef delete release`](../../specs/cli/core.html#reef-delete) · built"
       - "**20 · Clean up:** `k3d cluster delete nereus-local`, and `make cli-uninstall`"
     notes: |-
       **`reef delete` is refused while a Nereid of it is applied**, and names the `nereid delete` to run first ([Delete the Nereid](../../reference/reefs-and-nereids.md), [Clean up](../../start/clean-up.md)).
     pt:
       topic: "apagar"
-      message: "A {nereid:Nereid} primeiro, depois o seu reef, depois o cluster"
+      message: "A {nereid:Nereid} primeiro, depois o seu Reef, depois o cluster"
       accent: "depois o cluster"
       screen:
         - "**19 · Apagar a Nereid:** os seus comandos e tudo o que ela rodava vão junto · [`nereus nereid delete reference-release`](../../specs/cli/core.html#nereid-delete) · pronto"
-        - "**Apagar o reef:** sem nenhuma Nereid, o reef e o seu grupo vão embora · [`nereus reef delete release`](../../specs/cli/core.html#reef-delete) · pronto"
+        - "**Apagar o Reef:** sem nenhuma Nereid, o Reef e o seu grupo vão embora · [`nereus reef delete release`](../../specs/cli/core.html#reef-delete) · pronto"
         - "**20 · Limpar:** `k3d cluster delete nereus-local`, e `make cli-uninstall`"
       notes: |-
         **O `reef delete` é recusado enquanto uma Nereid dele estiver aplicada**, e nomeia o `nereid delete` a rodar primeiro ([Apagar a Nereid](../../reference/reefs-and-nereids.md), [Limpar](../../start/clean-up.md)).
@@ -321,15 +321,15 @@ slides:
     message: "The other goals start from this cluster"
     accent: "start from this cluster"
     screen:
-      - "**[Release a chart](release.html):** a Helm chart through the release reef, with Flux"
+      - "**[Release a chart](release.html):** a Helm chart through the release Reef, with Flux"
       - "**[All the goals](index.html):** the other walkthroughs"
     notes: |-
-      **Learn more:** spec 0001 (the first slice), spec 0002 (a reef at runtime), spec 0003 (Nereid conformance), spec 0004 (the time SLO of init), ADR 0004 (reefs extend the CLI), ADR 0005 (one writer per field), ADR 0014 (profiles).
+      **Learn more:** spec 0001 (the first slice), spec 0002 (a Reef at runtime), spec 0003 (Nereid conformance), spec 0004 (the time SLO of init), ADR 0004 (Reefs extend the CLI), ADR 0005 (one writer per field), ADR 0014 (profiles).
     pt:
       message: "Os outros objetivos partem deste cluster"
       accent: "partem deste cluster"
       screen:
-        - "**[Fazer o release de um chart](release.html):** um Helm chart pelo reef release, com o Flux"
+        - "**[Fazer o release de um chart](release.html):** um Helm chart pelo Reef release, com o Flux"
         - "**[Todos os objetivos](index.html):** os outros walkthroughs"
       notes: |-
-        **Para saber mais:** spec 0001 (a primeira fatia), spec 0002 (um reef em runtime), spec 0003 (a conformidade das Nereids), spec 0004 (o SLO de tempo do init), ADR 0004 (os reefs estendem o CLI), ADR 0005 (um escritor por campo), ADR 0014 (profiles).
+        **Para saber mais:** spec 0001 (a primeira fatia), spec 0002 (um Reef em runtime), spec 0003 (a conformidade das Nereids), spec 0004 (o SLO de tempo do init), ADR 0004 (os Reefs estendem o CLI), ADR 0005 (um escritor por campo), ADR 0014 (profiles).

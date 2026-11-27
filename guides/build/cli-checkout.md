@@ -24,7 +24,7 @@ From bash or zsh, for `nereus` and `nrs`, then open a new terminal:
 nereus --install-completion
 ```
 
-`nrs <Tab>` lists the commands, `nrs nereid apply --<Tab>` the options, and `nrs reef get <Tab>` the reefs the CLI last saw on the cluster, with no call to it ([#795](https://github.com/getnereus/nereus/issues/795)).
+`nrs <Tab>` lists the commands, `nrs nereid apply --<Tab>` the options, and `nrs reef get <Tab>` the Reefs the CLI last saw on the cluster, with no call to it ([#795](https://github.com/getnereus/nereus/issues/795)).
 
 ## Check it worked
 

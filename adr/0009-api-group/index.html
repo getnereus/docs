@@ -7134,25 +7134,25 @@
   
 
 
-<h1 id="0009-each-reef-is-an-api-group-reefgetnereusdev-starting-at-v1alpha1">0009. Each reef is an API group <code>&lt;reef&gt;.getnereus.dev</code>, starting at <code>v1alpha1</code><a class="headerlink" href="#0009-each-reef-is-an-api-group-reefgetnereusdev-starting-at-v1alpha1" title="Permanent link">&para;</a></h1>
+<h1 id="0009-each-reef-is-an-api-group-reefgetnereusdev-starting-at-v1alpha1">0009. Each Reef is an API group <code>&lt;reef&gt;.getnereus.dev</code>, starting at <code>v1alpha1</code><a class="headerlink" href="#0009-each-reef-is-an-api-group-reefgetnereusdev-starting-at-v1alpha1" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
 <p class="admonition-title">In short</p>
-<p>Each reef is its own API group <code>&lt;reef&gt;.getnereus.dev</code>, starting at <code>v1alpha1</code>; the platform's own kinds live in <code>core.getnereus.dev</code>. Status: Proposed (2026-10-17, rewritten 2026-10-25; the first version was Accepted).</p>
+<p>Each Reef is its own API group <code>&lt;reef&gt;.getnereus.dev</code>, starting at <code>v1alpha1</code>; the platform's own kinds live in <code>core.getnereus.dev</code>. Status: Proposed (2026-10-17, rewritten 2026-10-25; the first version was Accepted).</p>
 </div>
 <p><strong>Status:</strong> Proposed (2026-10-17, rewritten 2026-10-25; the 2026-10-17 version was Accepted)</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
-<p>ADR 0007 asks for an API group on a domain the project controls, not a personal one. The proof of concept used <code>platform.wasp.silvios.me</code>, a personal domain, for every CRD. The project now has the domain <code>getnereus.dev</code>, and each capability is a reef (ADR 0002), so the group can say which reef a resource belongs to.</p>
+<p>ADR 0007 asks for an API group on a domain the project controls, not a personal one. The proof of concept used <code>platform.wasp.silvios.me</code>, a personal domain, for every CRD. The project now has the domain <code>getnereus.dev</code>, and each capability is a Reef (ADR 0002), so the group can say which Reef a resource belongs to.</p>
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Each reef is its own API group: <code>&lt;reef&gt;.getnereus.dev</code>, starting at version <code>v1alpha1</code> (<code>secrets.getnereus.dev/v1alpha1</code>, <code>authentication.getnereus.dev/v1alpha1</code>).</li>
-<li>The platform's own kinds (<code>Reef</code>, <code>Nereid</code>, <code>Mandate</code>) live in the <code>core</code> reef's group, <code>core.getnereus.dev/v1alpha1</code>.</li>
+<li>Each Reef is its own API group: <code>&lt;reef&gt;.getnereus.dev</code>, starting at version <code>v1alpha1</code> (<code>secrets.getnereus.dev/v1alpha1</code>, <code>authentication.getnereus.dev/v1alpha1</code>).</li>
+<li>The platform's own kinds (<code>Reef</code>, <code>Nereid</code>, <code>Mandate</code>) live in the <code>core</code> Reef's group, <code>core.getnereus.dev/v1alpha1</code>.</li>
 <li>The domain is kept in one constant in the CLI and in the generated manifests, so changing it is a one-line change plus a regeneration.</li>
 </ul>
 <h2 id="consequences">Consequences<a class="headerlink" href="#consequences" title="Permanent link">&para;</a></h2>
 <ul>
 <li>The CRDs of today's code still use <code>platform.wasp.silvios.me</code>; renaming them is a change of its own, and clusters created before it are recreated, with no migration.</li>
 <li>The old group stays in the history. Before opening the repository, either rewrite the history or accept that it stays visible.</li>
-<li>A reef's version moves on its own (<code>v1alpha1</code>, <code>v1beta1</code>, <code>v1</code>), independent of the others.</li>
+<li>A Reef's version moves on its own (<code>v1alpha1</code>, <code>v1beta1</code>, <code>v1</code>), independent of the others.</li>
 </ul>
 <p><em>Rewritten 2026-10-25 from voice session; raw data in Drive #pontos/raw/2026-10-25. Rewritten again 2026-10-25 (order 20261025-1805): the platform's own kinds live in <code>core.getnereus.dev/v1alpha1</code>.</em></p>
 

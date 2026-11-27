@@ -7291,7 +7291,7 @@
 <p>Release a Helm chart into a namespace, with its values and its secrets, through the Nereid that its <a href="../../../concepts/model/">Mandate</a> picks: Flux here, swappable for another tool.</p>
 <h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">&para;</a></h2>
 <ul>
-<li>A cluster from <a href="../../../start/init/">Prepare the cluster</a> with <code>--profile internal-developer-platform</code>: it brings the release reef with the Nereid <code>flux</code> as its default, and the secrets reef.</li>
+<li>A cluster from <a href="../../../start/init/">Prepare the cluster</a> with <code>--profile internal-developer-platform</code>: it brings the release Reef with the Nereid <code>flux</code> as its default, and the secrets Reef.</li>
 <li>A secret <code>google-oauth</code> from <a href="../secrets/">Keep a secret</a>, in a vault that allows the target's namespace.</li>
 <li>A file <code>keycloak-values.yaml</code> with the chart's values.</li>
 </ul>
@@ -7326,7 +7326,7 @@ Next steps:
   nereus release target create &lt;name&gt; --namespace &lt;namespace&gt;
 </code></pre></div>
 <h3 id="3-say-where-it-goes">3. Say where it goes<a class="headerlink" href="#3-say-where-it-goes" title="Permanent link">&para;</a></h3>
-<p>A <a href="../../../specs/cli/reefs/release.html#target-create"><code>Target</code></a> is a namespace, made when missing. <code>--environment</code> picks an environment of the environment reef; without it, the target is in the cluster Nereus runs in.</p>
+<p>A <a href="../../../specs/cli/reefs/release.html#target-create"><code>Target</code></a> is a namespace, made when missing. <code>--environment</code> picks an environment of the environment Reef; without it, the target is in the cluster Nereus runs in.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>release<span class="w"> </span>target<span class="w"> </span>create<span class="w"> </span>dev-identity<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--environment<span class="w"> </span>dev<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--namespace<span class="w"> </span>identity
@@ -7377,8 +7377,8 @@ keycloak  keycloak  dev-identity  7.0.1    flux    Ready
 </ul>
 <h2 id="learn-more">Learn more<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../../../reference/reefs/release/">The release reef</a>: repositories, sources, targets and releases, every command.</li>
-<li><a href="../../../concepts/runtime-and-profiles/">Runtime and profiles</a>: why the Mandate, not the reef, picks Flux.</li>
+<li><a href="../../../reference/reefs/release/">The release Reef</a>: repositories, sources, targets and releases, every command.</li>
+<li><a href="../../../concepts/runtime-and-profiles/">Runtime and profiles</a>: why the Mandate, not the Reef, picks Flux.</li>
 </ul>
 
 

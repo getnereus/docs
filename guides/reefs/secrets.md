@@ -4,7 +4,7 @@ Keep a secret in a vault of the installation: each value is encrypted on your ma
 
 ## Before you start
 
-- A cluster from [Prepare the cluster](../../start/init.md) with `--profile internal-developer-platform`: it brings the secrets reef, the Nereid `openbao` and the vault `default`.
+- A cluster from [Prepare the cluster](../../start/init.md) with `--profile internal-developer-platform`: it brings the secrets Reef, the Nereid `openbao` and the vault `default`.
 - The values in environment variables or files, never on the command line, where the shell history keeps them.
 
 ## Steps
@@ -91,5 +91,5 @@ nereus secrets delete github-app
 
 ## Learn more
 
-- [The secrets reef](../../reference/reefs/secrets.md): vaults, secrets and bindings, every command.
+- [The secrets Reef](../../reference/reefs/secrets.md): vaults, secrets and bindings, every command.
 - [ADR 0013](../../adr/0013-command-conventions.md): `create` builds from flags, `apply` takes files.

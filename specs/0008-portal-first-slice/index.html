@@ -5785,7 +5785,7 @@
   <a href="#the-portal-reef" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The portal reef
+        The portal Reef
       
     </span>
   </a>
@@ -7228,7 +7228,7 @@
   <a href="#the-portal-reef" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The portal reef
+        The portal Reef
       
     </span>
   </a>
@@ -7358,8 +7358,8 @@
 <p><strong>Status:</strong> Proposed (2026-10-31)</p>
 <p>From the owner's session of 2026-10-31 (refining #46, the web portal, with a clickable prototype on the phone). Raw data in the session's Pontos log.</p>
 <h2 id="intent">Intent<a class="headerlink" href="#intent" title="Permanent link">&para;</a></h2>
-<p>The walking skeleton of the portal (#46): open <code>https://portal.getnereus.dev</code> on the phone, install it on the home screen, sign in with Google, see who is signed in, sign out, and sign in again. Nothing else. Every later screen (reefs, Nereids, commands as forms, push for #278) grows on top of this slice.</p>
-<p>The portal is installed the way every capability is: a reef, <code>portal</code>, and a Nereid that implements it, <code>nereus-portal</code>, applied from the CLI. Without it the platform works from the CLI alone; with it, the platform gains a graphical client (#46, the owner's comment: the portal itself is swappable).</p>
+<p>The walking skeleton of the portal (#46): open <code>https://portal.getnereus.dev</code> on the phone, install it on the home screen, sign in with Google, see who is signed in, sign out, and sign in again. Nothing else. Every later screen (Reefs, Nereids, commands as forms, push for #278) grows on top of this slice.</p>
+<p>The portal is installed the way every capability is: a Reef, <code>portal</code>, and a Nereid that implements it, <code>nereus-portal</code>, applied from the CLI. Without it the platform works from the CLI alone; with it, the platform gains a graphical client (#46, the owner's comment: the portal itself is swappable).</p>
 <h2 id="the-scene-that-ends-the-slice">The scene that ends the slice<a class="headerlink" href="#the-scene-that-ends-the-slice" title="Permanent link">&para;</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span class="c1"># Apply the portal reef (with no kinds of its own, as authentication)</span>
 nereus<span class="w"> </span>reef<span class="w"> </span>apply<span class="w"> </span>portal
@@ -7397,15 +7397,15 @@ HTTP/2 401
 <li><strong>Languages:</strong> pt-BR and en, from the browser's language, the login's texts style (no gendered words).</li>
 <li><strong>Touch targets</strong> of at least 44 px; text contrast of at least 4.5:1.</li>
 </ul>
-<h2 id="the-portal-reef">The <code>portal</code> reef<a class="headerlink" href="#the-portal-reef" title="Permanent link">&para;</a></h2>
-<p><code>portal.getnereus.dev/v1alpha1</code>, the capability of a graphical client of the platform. In this slice it has <strong>no kinds of its own</strong>: the Mandate's parameters carry what the Nereid needs (<code>publicUrl</code>, and <code>gateway</code>, the <code>&lt;namespace&gt;/&lt;name&gt;</code> of the Gateway its route attaches to, <code>istio-system/ingress</code> by default). <code>nereus reef apply portal</code> takes no flag: a reef the CLI pins no contract for is created with no kinds, as <code>authentication</code> is. A kind comes when the portal has state of its own (a theme, a menu); <a href="#open-questions">Open questions</a>.</p>
-<p>It requires the <code>authentication</code> reef (its login), and reaches the Nereus API (ADR 0018, the API is the one door) for everything it shows.</p>
+<h2 id="the-portal-reef">The <code>portal</code> Reef<a class="headerlink" href="#the-portal-reef" title="Permanent link">&para;</a></h2>
+<p><code>portal.getnereus.dev/v1alpha1</code>, the capability of a graphical client of the platform. In this slice it has <strong>no kinds of its own</strong>: the Mandate's parameters carry what the Nereid needs (<code>publicUrl</code>, and <code>gateway</code>, the <code>&lt;namespace&gt;/&lt;name&gt;</code> of the Gateway its route attaches to, <code>istio-system/ingress</code> by default). <code>nereus reef apply portal</code> takes no flag: a Reef the CLI pins no contract for is created with no kinds, as <code>authentication</code> is. A kind comes when the portal has state of its own (a theme, a menu); <a href="#open-questions">Open questions</a>.</p>
+<p>It requires the <code>authentication</code> Reef (its login), and reaches the Nereus API (ADR 0018, the API is the one door) for everything it shows.</p>
 <h2 id="the-nereus-portal-nereid">The <code>nereus-portal</code> Nereid<a class="headerlink" href="#the-nereus-portal-nereid" title="Permanent link">&para;</a></h2>
 <p>One image, <code>nereus-portal-controller</code>, under <code>controllers/nereus-portal/</code>, the shape of the other local Nereids (<code>server.py</code>, <code>/contract</code>, a <code>Dockerfile</code>, tests), listed in <code>NEREIDS</code> (<code>Makefile</code>) and <code>TOOLS</code> (<code>cli/src/nereus/local_nereids.py</code>), so <code>make nereids</code> builds it and <code>nereus nereid apply nereus-portal</code> needs no <code>--image</code>.</p>
 <ul>
 <li><strong>It serves the portal's files:</strong> a static single-page app, no build step, no framework: <code>index.html</code>, one script, one stylesheet, the web app manifest, the service worker and the icons. A small app with no build keeps the slice cheap; a framework comes when a screen needs one.</li>
 <li><strong>It forwards <code>/v1/*</code> to the Nereus API</strong> (<code>http://nereus-api.nereus-system.svc:8080</code>), on the same origin, so the browser needs no CORS and the API no public hostname of its own. The forward adds nothing and decides nothing: the API checks the token on every request. It is not a backend of the portal (#46: the portal must not grow one the API later replaces).</li>
-<li><strong>It serves <code>/config.json</code></strong>, from the Mandates: the issuer (the authentication reef's default Mandate's <code>status.oidc</code>), the client id (<code>nereus-portal</code>, a constant on both sides while the client is a stand-in) and its own Mandate's <code>publicUrl</code>. The page reads it at start, so no address is baked into the files.</li>
+<li><strong>It serves <code>/config.json</code></strong>, from the Mandates: the issuer (the authentication Reef's default Mandate's <code>status.oidc</code>), the client id (<code>nereus-portal</code>, a constant on both sides while the client is a stand-in) and its own Mandate's <code>publicUrl</code>. The page reads it at start, so no address is baked into the files.</li>
 <li><strong>Its Content Security Policy is built from the same issuer</strong>, so <code>connect-src</code> names <code>https://auth.getnereus.dev</code> on the kept cluster and the Environment's own issuer elsewhere.</li>
 <li><strong><code>/healthz</code></strong> answers <code>ok</code>.</li>
 </ul>
@@ -7413,7 +7413,7 @@ HTTP/2 401
 <ul>
 <li><strong>Authorization Code with PKCE (S256)</strong>, a public client, through <a href="https://github.com/authts/oidc-client-ts">oidc-client-ts</a> (Apache-2.0), vendored as one file (open source first).</li>
 <li><strong>The client <code>nereus-portal</code></strong> in the realm <code>nereus</code>: public, standard flow only, redirect <code>https://portal.getnereus.dev/callback</code>, post-logout redirect <code>https://portal.getnereus.dev/signed-out</code>, web origin <code>https://portal.getnereus.dev</code>, the <code>nereus-api</code> audience and the <code>groups</code> claim (as <code>nereus-cli</code> has them).</li>
-<li><strong>Who registers it:</strong> the keycloak Nereid, beside <code>nereus-cli</code>, <code>claude</code> and <code>triton</code>. It reads the <code>publicUrl</code> of every Mandate of the <code>portal</code> reef (every Nereid may read Mandates) and sets the client's redirects from them, so nobody repeats the portal's address on the keycloak Mandate (<code>mandate apply</code> replaces a Mandate's whole spec, and would drop the Google parameters). With no portal Mandate, the client exists with no redirect. This is a stand-in: a reef asking the authentication reef for a client of its own is the feature that retires it (#535, the authentication reef's <code>Client</code> kind).</li>
+<li><strong>Who registers it:</strong> the keycloak Nereid, beside <code>nereus-cli</code>, <code>claude</code> and <code>triton</code>. It reads the <code>publicUrl</code> of every Mandate of the <code>portal</code> Reef (every Nereid may read Mandates) and sets the client's redirects from them, so nobody repeats the portal's address on the keycloak Mandate (<code>mandate apply</code> replaces a Mandate's whole spec, and would drop the Google parameters). With no portal Mandate, the client exists with no redirect. This is a stand-in: a Reef asking the authentication Reef for a client of its own is the feature that retires it (#535, the authentication Reef's <code>Client</code> kind).</li>
 <li><strong>Tokens live in memory</strong> only, never in <code>localStorage</code>. Reopening the app finds no token and goes through the login again by itself, a redirect with <code>prompt=none</code> that shows nothing (#1256): while Keycloak's session lasts it returns at once to the signed-in screen, else Keycloak answers <code>login_required</code> and the start screen shows <strong>Entrar</strong>, with no error line. One attempt per tab (a <code>sessionStorage</code> flag, cleared by a login that works), never on <code>/signed-out</code>, never offline. A hidden iframe (<code>signinSilent</code>) was turned down: it needs Keycloak's cookie as a third-party cookie, which Safari and Chrome's tracking protection block. While signed in, the access token is renewed with the refresh token (#1758): a minute before it expires, and at once when the API answers 401, then the call is sent again once; one renew at a time, since Keycloak rotates refresh tokens. <code>signinSilent</code> uses the refresh token here, never the iframe.</li>
 <li><strong>Sign out</strong> is the RP-initiated logout of OpenID Connect: the end-session endpoint with <code>id_token_hint</code> and the post-logout redirect, so the next <strong>Entrar</strong> shows the login for real.</li>
 </ul>
@@ -7433,7 +7433,7 @@ HTTP/2 401
 <li><strong>iOS:</strong> the <code>apple-touch-icon</code> and <code>apple-mobile-web-app-*</code> tags. The login leaves the app for <code>auth.getnereus.dev</code> and must come back to it: the slice proves this on the owner's iPhone or Android, and if the return opens in the browser instead, that is recorded on the issue before widening.</li>
 </ul>
 <h2 id="reaching-the-internet">Reaching the internet<a class="headerlink" href="#reaching-the-internet" title="Permanent link">&para;</a></h2>
-<p>The Nereid publishes <code>portal.getnereus.dev</code> with a Gateway API <code>HTTPRoute</code> on the entrance's <code>Gateway</code> (#727, #728), to the portal's own port (8081), so its controller endpoints (port 8080, <code>/contract</code>, <code>/metrics</code>) stay inside the cluster. The named Cloudflare tunnel (<code>deploy/edge/cloudflared.yaml</code>) lists each hostname it sends to the gateway, <code>portal.getnereus.dev</code> among them (#732); the owner runs one DNS route once (<code>cloudflared tunnel route dns nereus portal.getnereus.dev</code>). The DNS route by hand is a stand-in for the edge reef (#470), which retires it.</p>
+<p>The Nereid publishes <code>portal.getnereus.dev</code> with a Gateway API <code>HTTPRoute</code> on the entrance's <code>Gateway</code> (#727, #728), to the portal's own port (8081), so its controller endpoints (port 8080, <code>/contract</code>, <code>/metrics</code>) stay inside the cluster. The named Cloudflare tunnel (<code>deploy/edge/cloudflared.yaml</code>) lists each hostname it sends to the gateway, <code>portal.getnereus.dev</code> among them (#732); the owner runs one DNS route once (<code>cloudflared tunnel route dns nereus portal.getnereus.dev</code>). The DNS route by hand is a stand-in for the edge Reef (#470), which retires it.</p>
 <h2 id="security-owasp">Security (OWASP)<a class="headerlink" href="#security-owasp" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>A01 Broken Access Control:</strong> the portal shows only what <code>GET /v1/me</code> answers for the token; the forward passes the <code>Authorization</code> header unchanged and nothing else.</li>
@@ -7445,30 +7445,30 @@ HTTP/2 401
 <h2 id="from-zero">From zero<a class="headerlink" href="#from-zero" title="Permanent link">&para;</a></h2>
 <p>The owner's direction (2026-10-31): a fresh Nereus, in a new Environment (today a vcluster inside the k3d cluster, #568), must be able to stand the portal up with Nereus's own commands, from nothing. So:</p>
 <ul>
-<li><strong>Everything the portal needs is a command of the scene above</strong>, run against a cluster with only <code>nereus init</code> and the authentication reef: no file edited by hand, no <code>kubectl apply</code> of the portal's own manifests.</li>
-<li><strong>What still needs a hand is listed</strong> as a stand-in below, with the feature that retires it: today the client in the realm (decided by the keycloak Nereid's code) and the public hostname (the tunnel). An Environment reaches the portal through its own entrance, never a port-forward (owner, 2026-10-31): a port of the k3d load balancer, opened when the cluster is created, to an ingress gateway (Istio's, once an Environment installs the mesh) that routes by hostname to the portal. The portal then publishes its route as a Gateway API <code>HTTPRoute</code>, which Istio and other gateways implement alike, so the portal never names the gateway. The entrance comes first (owner, 2026-10-31): #727 installs Istio's ingress gateway through the release reef behind a k3d port, and #728 sends <code>auth.</code> and <code>triton.</code> through it; the portal then only adds its <code>HTTPRoute</code>.</li>
+<li><strong>Everything the portal needs is a command of the scene above</strong>, run against a cluster with only <code>nereus init</code> and the authentication Reef: no file edited by hand, no <code>kubectl apply</code> of the portal's own manifests.</li>
+<li><strong>What still needs a hand is listed</strong> as a stand-in below, with the feature that retires it: today the client in the realm (decided by the keycloak Nereid's code) and the public hostname (the tunnel). An Environment reaches the portal through its own entrance, never a port-forward (owner, 2026-10-31): a port of the k3d load balancer, opened when the cluster is created, to an ingress gateway (Istio's, once an Environment installs the mesh) that routes by hostname to the portal. The portal then publishes its route as a Gateway API <code>HTTPRoute</code>, which Istio and other gateways implement alike, so the portal never names the gateway. The entrance comes first (owner, 2026-10-31): #727 installs Istio's ingress gateway through the release Reef behind a k3d port, and #728 sends <code>auth.</code> and <code>triton.</code> through it; the portal then only adds its <code>HTTPRoute</code>.</li>
 <li>The review of everything else a fresh instance needs is its own issue (#726, Nereus from zero, with #24, #61 and #568).</li>
 </ul>
 <h2 id="stand-ins">Stand-ins<a class="headerlink" href="#stand-ins" title="Permanent link">&para;</a></h2>
 <ul>
-<li>The client <code>nereus-portal</code> registered by the keycloak Nereid; retired by a reef asking for its own client (#535).</li>
-<li>The DNS route by hand; retired by the edge reef (#470).</li>
+<li>The client <code>nereus-portal</code> registered by the keycloak Nereid; retired by a Reef asking for its own client (#535).</li>
+<li>The DNS route by hand; retired by the edge Reef (#470).</li>
 </ul>
 <h2 id="delivered-by">Delivered by<a class="headerlink" href="#delivered-by" title="Permanent link">&para;</a></h2>
-<h1 id="729-the-slice-part-of-46-in-three-sub-issues-730-get-v1me-answers-name-and-identityprovider-731-the-keycloak-nereid-registers-nereus-portal-732-the-reef-and-the-nereid-depends-on-727-the-entrance">729 (the slice, part of #46), in three sub-issues: #730 (<code>GET /v1/me</code> answers <code>name</code> and <code>identityProvider</code>), #731 (the keycloak Nereid registers <code>nereus-portal</code>), #732 (the reef and the Nereid). Depends on #727 (the entrance).<a class="headerlink" href="#729-the-slice-part-of-46-in-three-sub-issues-730-get-v1me-answers-name-and-identityprovider-731-the-keycloak-nereid-registers-nereus-portal-732-the-reef-and-the-nereid-depends-on-727-the-entrance" title="Permanent link">&para;</a></h1>
+<h1 id="729-the-slice-part-of-46-in-three-sub-issues-730-get-v1me-answers-name-and-identityprovider-731-the-keycloak-nereid-registers-nereus-portal-732-the-reef-and-the-nereid-depends-on-727-the-entrance">729 (the slice, part of #46), in three sub-issues: #730 (<code>GET /v1/me</code> answers <code>name</code> and <code>identityProvider</code>), #731 (the keycloak Nereid registers <code>nereus-portal</code>), #732 (the Reef and the Nereid). Depends on #727 (the entrance).<a class="headerlink" href="#729-the-slice-part-of-46-in-three-sub-issues-730-get-v1me-answers-name-and-identityprovider-731-the-keycloak-nereid-registers-nereus-portal-732-the-reef-and-the-nereid-depends-on-727-the-entrance" title="Permanent link">&para;</a></h1>
 <h2 id="done-when">Done when<a class="headerlink" href="#done-when" title="Permanent link">&para;</a></h2>
 <ul>
 <li><code>make lint test deck-test docs-build shellcheck</code> passes, with tests for the Nereid (files served, <code>/config.json</code> from the Mandates, the <code>/v1</code> forward, the headers) and for the keycloak Nereid's new client.</li>
 <li>On the kept cluster, the scene above prints what it shows, and on the owner's phone steps 1 to 4 work in the browser and from the installed app, in the dark and the light theme.</li>
-<li>The portal reef's deck (<code>docs/specs/cli/reefs/portal.yaml</code>) has every command above; <code>README.md</code> has the Nereid's row; <code>docs/features.md</code> lists the two stand-ins.</li>
+<li>The portal Reef's deck (<code>docs/specs/cli/reefs/portal.yaml</code>) has every command above; <code>README.md</code> has the Nereid's row; <code>docs/features.md</code> lists the two stand-ins.</li>
 </ul>
 <h2 id="open-questions">Open questions<a class="headerlink" href="#open-questions" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Kinds of the <code>portal</code> reef:</strong> none in this slice; whether a <code>Portal</code> kind (hostname, theme) comes next, or the Mandate keeps carrying it.</li>
-<li><strong>The Nereid's name:</strong> <code>nereus-portal</code> (our own portal), leaving room for a <code>backstage</code> Nereid of the same reef.</li>
+<li><strong>Kinds of the <code>portal</code> Reef:</strong> none in this slice; whether a <code>Portal</code> kind (hostname, theme) comes next, or the Mandate keeps carrying it.</li>
+<li><strong>The Nereid's name:</strong> <code>nereus-portal</code> (our own portal), leaving room for a <code>backstage</code> Nereid of the same Reef.</li>
 </ul>
 <h2 id="what-is-left-to-other-issues">What is left to other issues<a class="headerlink" href="#what-is-left-to-other-issues" title="Permanent link">&para;</a></h2>
-<p>Push notifications (#278), the reefs' and Nereids' screens and commands as forms (#46), a light login theme, a theme switch, offline use, a public <code>api.getnereus.dev</code>.</p>
+<p>Push notifications (#278), the Reefs' and Nereids' screens and commands as forms (#46), a light login theme, a theme switch, offline use, a public <code>api.getnereus.dev</code>.</p>
 <h2 id="learn-more">Learn more<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://web.dev/explore/progressive-web-apps">Progressive Web Apps</a> (web.dev): the manifest, the service worker and installability.</li>

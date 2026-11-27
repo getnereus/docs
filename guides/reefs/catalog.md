@@ -1,10 +1,10 @@
 # Say what Nereus has
 
-Register what a repository says it runs and publishes, Workloads and Packages, from its files in `catalog/`, and check that it holds together: the files are the truth, the catalog reef holds a copy.
+Register what a repository says it runs and publishes, Workloads and Packages, from its files in `catalog/`, and check that it holds together: the files are the truth, the catalog Reef holds a copy.
 
 ## Before you start
 
-- A cluster from [Prepare the cluster](../../start/init.md) with `--profile internal-developer-platform`: it brings the catalog reef with its Nereid `catalog`, which writes each entry's status and changes nothing an entry names.
+- A cluster from [Prepare the cluster](../../start/init.md) with `--profile internal-developer-platform`: it brings the catalog Reef with its Nereid `catalog`, which writes each entry's status and changes nothing an entry names.
 - The [tenancy tree](../access/tenancy.md) the entries name as owners.
 - A checkout with a `catalog/` folder, such as Nereus's own.
 
@@ -81,7 +81,7 @@ nereus catalog check
 0 contradictions, 3 gaps
 ```
 
-`make catalog-check` runs it on the repository's files before a pull request, with a cluster that has the tenancy reef.
+`make catalog-check` runs it on the repository's files before a pull request, with a cluster that has the tenancy Reef.
 
 ## Check it worked
 
@@ -106,5 +106,5 @@ triton    Project/triton   service     agents, people  DeploymentNotFound
 
 ## Learn more
 
-- [The catalog reef](../../reference/reefs/catalog.md): Workloads, Packages, their types, every status and command.
+- [The catalog Reef](../../reference/reefs/catalog.md): Workloads, Packages, their types, every status and command.
 - [ADR 0016](../../adr/0016-catalog-reef.md): the files in the repository are the truth, the cluster holds a copy.

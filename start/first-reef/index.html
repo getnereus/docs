@@ -7139,10 +7139,10 @@
   
 
 
-<h1 id="apply-a-reef-and-its-nereid">Apply a reef and its Nereid<a class="headerlink" href="#apply-a-reef-and-its-nereid" title="Permanent link">&para;</a></h1>
-<p>Add the release reef, the reference Nereid that serves it, and the Mandate that makes that Nereid the reef's answer.</p>
+<h1 id="apply-a-reef-and-its-nereid">Apply a Reef and its Nereid<a class="headerlink" href="#apply-a-reef-and-its-nereid" title="Permanent link">&para;</a></h1>
+<p>Add the release Reef, the reference Nereid that serves it, and the Mandate that makes that Nereid the Reef's answer.</p>
 <h2 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h2>
-<p>Apply the reef, from the version this CLI pins: <a href="../../specs/cli/core.html#reef-apply"><code>nereus reef apply release</code></a></p>
+<p>Apply the Reef, from the version this CLI pins: <a href="../../specs/cli/core.html#reef-apply"><code>nereus reef apply release</code></a></p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>reef<span class="w"> </span>apply<span class="w"> </span>release
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ core/reefs/release 0.1.0 created (release.getnereus.dev/v1alpha1: releases, repositories, sources, targets)
@@ -7152,19 +7152,19 @@ Next steps:
   nereus release --help
   nereus nereid apply &lt;nereid&gt; --reef release
 </code></pre></div>
-<p>Apply the reference Nereid, which answers every command of the reef with no tool behind it: <a href="../../specs/cli/core.html#nereid-apply"><code>nereus nereid apply</code></a></p>
+<p>Apply the reference Nereid, which answers every command of the Reef with no tool behind it: <a href="../../specs/cli/core.html#nereid-apply"><code>nereus nereid apply</code></a></p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>nereid<span class="w"> </span>apply<span class="w"> </span>reference-release
 </code></pre></div>
-<p>The CLI reads the reef from the image's label, pins the image to its digest and waits until the Nereid reports <code>Ready</code>; its next step names the Mandate below.</p>
-<p>Bind the reef to it, as the reef's default: <a href="../../specs/cli/core.html#mandate-create"><code>nereus mandate create</code></a></p>
+<p>The CLI reads the Reef from the image's label, pins the image to its digest and waits until the Nereid reports <code>Ready</code>; its next step names the Mandate below.</p>
+<p>Bind the Reef to it, as the Reef's default: <a href="../../specs/cli/core.html#mandate-create"><code>nereus mandate create</code></a></p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>mandate<span class="w"> </span>create<span class="w"> </span>reference<span class="w"> </span>--reef<span class="w"> </span>release<span class="w"> </span>--nereid<span class="w"> </span>reference-release<span class="w"> </span>--default
 </code></pre></div>
 <p>It prints <code>core/mandates/reference created (reef: release, nereid: reference-release, default)</code>.</p>
 <h2 id="what-you-get">What you get<a class="headerlink" href="#what-you-get" title="Permanent link">&para;</a></h2>
 <ul>
-<li>The reef <code>release</code>, with its four kinds, and a <code>release</code> command group in the CLI: <code>nereus release --help</code> lists the commands its Nereid published.</li>
-<li>The Nereid <code>reference-release</code>, running in the cluster as the reef's controller.</li>
-<li>The Mandate <code>reference</code>, which sends every request of the reef to that Nereid (<a href="../../concepts/model/">Reef, Nereid and Mandate</a>).</li>
+<li>The Reef <code>release</code>, with its four kinds, and a <code>release</code> command group in the CLI: <code>nereus release --help</code> lists the commands its Nereid published.</li>
+<li>The Nereid <code>reference-release</code>, running in the cluster as the Reef's controller.</li>
+<li>The Mandate <code>reference</code>, which sends every request of the Reef to that Nereid (<a href="../../concepts/model/">Reef, Nereid and Mandate</a>).</li>
 </ul>
 <h2 id="next">Next<a class="headerlink" href="#next" title="Permanent link">&para;</a></h2>
 <p><a href="../run/">Run its commands</a>.</p>

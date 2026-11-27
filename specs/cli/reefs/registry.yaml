@@ -1,10 +1,10 @@
 deck:
   name: registry
-  title: "The registry reef"
+  title: "The registry Reef"
   subtitle: "Every command that runs an image registry in the cluster and publishes to it"
   accent: "publishes to it"
   pt:
-    title: "O reef registry"
+    title: "O Reef registry"
     subtitle: "Todos os comandos que rodam um registry de imagens no cluster e publicam nele"
     accent: "publicam nele"
 
@@ -26,13 +26,13 @@ slides:
   - name: cover
     act: opening
     cover: true
-    message: "The registry reef"
+    message: "The registry Reef"
     notes: |-
-      **The source of truth for the commands of the registry reef** (#847, ADR "The registry reef"). #1011 built the verbs of `Registry`; the slides still planned point to the issues that build them. The group is `registry.getnereus.dev/v1alpha1`, cluster-scoped. The Nereid registry (#22, #691) is another thing, under `nereus nereid`.
+      **The source of truth for the commands of the registry Reef** (#847, ADR "The registry Reef"). #1011 built the verbs of `Registry`; the slides still planned point to the issues that build them. The group is `registry.getnereus.dev/v1alpha1`, cluster-scoped. The Nereid registry (#22, #691) is another thing, under `nereus nereid`.
     pt:
-      message: "O reef registry"
+      message: "O Reef registry"
       notes: |-
-        **A fonte da verdade dos comandos do reef registry** (#847, ADR "The registry reef"). A #1011 construiu os verbos do `Registry`; os slides ainda planejados apontam para as issues que os constroem. O grupo é `registry.getnereus.dev/v1alpha1`, com escopo de cluster. O registro de Nereids (#22, #691) é outra coisa, em `nereus nereid`.
+        **A fonte da verdade dos comandos do Reef registry** (#847, ADR "The registry Reef"). A #1011 construiu os verbos do `Registry`; os slides ainda planejados apontam para as issues que os constroem. O grupo é `registry.getnereus.dev/v1alpha1`, com escopo de cluster. O registro de Nereids (#22, #691) é outra coisa, em `nereus nereid`.
 
   - name: kinds
     act: opening
@@ -65,7 +65,7 @@ slides:
     accent: "who makes it"
     terminal:
       steps:
-        - comment: "A registry, through the reef's default Mandate"
+        - comment: "A registry, through the Reef's default Mandate"
           run: "nereus registry create main"
           output: |-
             secrets/vaults/registries created
@@ -87,13 +87,13 @@ slides:
                 kind: Project
                 name: shop
     notes: |-
-      **`--owner` and `--mandate` are optional.** With no `--mandate`, the reef's default one; an owner, when named, must exist in the tenancy tree. Who may create is not enforced yet: a Stand-in until the authorization reef (#897) and ADR 0018 (the Nereus API as the one door). The zot Nereid and its `zot` Mandate are #1012. **The vault `registries` is created when missing (#1015):** the zot Nereid seals each Registry's read credential there.
+      **`--owner` and `--mandate` are optional.** With no `--mandate`, the Reef's default one; an owner, when named, must exist in the tenancy tree. Who may create is not enforced yet: a Stand-in until the authorization Reef (#897) and ADR 0018 (the Nereus API as the one door). The zot Nereid and its `zot` Mandate are #1012. **The vault `registries` is created when missing (#1015):** the zot Nereid seals each Registry's read credential there.
     pt:
       topic: "registry create"
       message: "O create pede um registry e diz quem o faz"
       accent: "quem o faz"
       notes: |-
-        **`--owner` e `--mandate` são opcionais.** Sem `--mandate`, vale o Mandate padrão do reef; um owner, quando informado, precisa existir na árvore da tenancy. Quem pode criar ainda não é verificado: um Stand-in até o reef de autorização (#897) e o ADR 0018 (a API do Nereus como única porta). O Nereid zot e o seu Mandate `zot` são a #1012. **O vault `registries` é criado quando falta (#1015):** o Nereid zot sela ali a credencial de leitura de cada Registry.
+        **`--owner` e `--mandate` são opcionais.** Sem `--mandate`, vale o Mandate padrão do Reef; um owner, quando informado, precisa existir na árvore da tenancy. Quem pode criar ainda não é verificado: um Stand-in até o Reef de autorização (#897) e o ADR 0018 (a API do Nereus como única porta). O Nereid zot e o seu Mandate `zot` são a #1012. **O vault `registries` é criado quando falta (#1015):** o Nereid zot sela ali a credencial de leitura de cada Registry.
 
   - name: registry-create-exists
     act: registry
@@ -322,7 +322,7 @@ slides:
       - "**[zot](https://zotregistry.dev/):** the first Nereid's registry"
       - "**[Kubernetes, NodePort](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport):** the port Kubernetes allocates"
     notes: |-
-      **The full credits are in the ADR of this reef.**
+      **The full credits are in the ADR of this Reef.**
     pt:
       topic: "referências"
       message: "De onde vieram as ideias"
@@ -331,4 +331,4 @@ slides:
         - "**[zot](https://zotregistry.dev/):** o registry do primeiro Nereid"
         - "**[Kubernetes, NodePort](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport):** a porta que o Kubernetes aloca"
       notes: |-
-        **Os créditos completos estão no ADR deste reef.**
+        **Os créditos completos estão no ADR deste Reef.**

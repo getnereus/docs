@@ -1,11 +1,11 @@
 deck:
   name: core
   title: "The core of the CLI"
-  subtitle: "The CLI's own commands: prepare a cluster, see how it is doing, and apply reefs, Nereids, Mandates and profiles"
+  subtitle: "The CLI's own commands: prepare a cluster, see how it is doing, and apply Reefs, Nereids, Mandates and profiles"
   accent: "The CLI's own commands"
   pt:
     title: "O core do CLI"
-    subtitle: "Os comandos do próprio CLI: preparar um cluster, ver como ele está, e aplicar reefs, Nereids, Mandates e profiles"
+    subtitle: "Os comandos do próprio CLI: preparar um cluster, ver como ele está, e aplicar Reefs, Nereids, Mandates e profiles"
     accent: "Os comandos do próprio CLI"
 
 acts:
@@ -18,8 +18,8 @@ acts:
     pt: {title: "Init", question: "Como um cluster vira uma instância do Nereus?"}
   - name: status
     title: "Status"
-    question: "How is each reef doing?"
-    pt: {title: "Status", question: "Como está cada reef?"}
+    question: "How is each Reef doing?"
+    pt: {title: "Status", question: "Como está cada Reef?"}
   - name: doctor
     title: "Doctor"
     question: "Is this instance healthy?"
@@ -30,16 +30,16 @@ acts:
     pt: {title: "Reef", question: "Como uma capacidade chega?"}
   - name: nereid
     title: "Nereid"
-    question: "Who looks after a reef?"
-    pt: {title: "Nereid", question: "Quem cuida de um reef?"}
+    question: "Who looks after a Reef?"
+    pt: {title: "Nereid", question: "Quem cuida de um Reef?"}
   - name: mandate
     title: "Mandate"
     question: "Which Nereid answers, and with which settings?"
     pt: {title: "Mandate", question: "Qual Nereid responde, e com quais configurações?"}
   - name: profile
     title: "Profile"
-    question: "Which reefs and Nereids come together?"
-    pt: {title: "Profile", question: "Quais reefs e Nereids vêm juntos?"}
+    question: "Which Reefs and Nereids come together?"
+    pt: {title: "Profile", question: "Quais Reefs e Nereids vêm juntos?"}
   - name: config
     title: "Config"
     question: "Which settings does the platform keep?"
@@ -55,47 +55,47 @@ slides:
     cover: true
     message: "The core of the CLI"
     notes: |-
-      **The source of truth for the CLI's own commands** (#477, #482 (port core into the CLI reference)): the commands of `cli/src/nereus/commands/` that are not a reef's. Every command here is built, and the outputs are what it prints, taken from the walkthrough pages, which record `make scene`'s output; a slide whose output comes from the code or from an offline run says so in its notes.
+      **The source of truth for the CLI's own commands** (#477, #482 (port core into the CLI reference)): the commands of `cli/src/nereus/commands/` that are not a Reef's. Every command here is built, and the outputs are what it prints, taken from the walkthrough pages, which record `make scene`'s output; a slide whose output comes from the code or from an offline run says so in its notes.
 
       **`nereus system`, the deprecated aliases of the first proof of concept (#409), stays out** (owner's decision): its commands are the ones of this deck under their old names.
     pt:
       message: "O core do CLI"
       notes: |-
-        **A fonte da verdade dos comandos do próprio CLI** (#477, #482 (migrar o core para a referência do CLI)): os comandos de `cli/src/nereus/commands/` que não são de um reef. Todo comando aqui está pronto, e as saídas são o que ele imprime, tiradas das páginas do walkthrough, que gravam a saída do `make scene`; um slide cuja saída vem do código ou de uma execução offline diz isso nas suas notas.
+        **A fonte da verdade dos comandos do próprio CLI** (#477, #482 (migrar o core para a referência do CLI)): os comandos de `cli/src/nereus/commands/` que não são de um Reef. Todo comando aqui está pronto, e as saídas são o que ele imprime, tiradas das páginas do walkthrough, que gravam a saída do `make scene`; um slide cuja saída vem do código ou de uma execução offline diz isso nas suas notas.
 
         **O `nereus system`, os aliases obsoletos da primeira prova de conceito (#409), fica de fora** (decisão do dono): os seus comandos são os deste deck com os nomes antigos.
 
   - name: groups
     act: opening
     topic: "groups"
-    message: "Eight groups, before any reef"
-    accent: "before any reef"
+    message: "Eight groups, before any Reef"
+    accent: "before any Reef"
     screen:
       - "**init:** prepares the cluster, core and a profile"
-      - "**status:** one row per reef and its Nereid"
+      - "**status:** one row per Reef and its Nereid"
       - "**doctor:** one pass or fail per check"
-      - "**reef:** a capability, its kinds and its command group"
-      - "**nereid:** the controller that looks after a reef"
-      - "**mandate:** binds a reef to a Nereid, with its params"
-      - "**profile:** the reefs, Nereids and Mandates that come together"
+      - "**Reef:** a capability, its kinds and its command group"
+      - "**nereid:** the controller that looks after a Reef"
+      - "**mandate:** binds a Reef to a Nereid, with its params"
+      - "**profile:** the Reefs, Nereids and Mandates that come together"
       - "**config:** the SLO, the installation and your current owner"
     notes: |-
-      **The verbs are kubectl's** (ADR 0013, command conventions): `create`, `apply`, `list`, `get` and `delete`, and every change takes `--dry-run`. A reef's own commands live in its deck ([The CLI](index.html)).
+      **The verbs are kubectl's** (ADR 0013, command conventions): `create`, `apply`, `list`, `get` and `delete`, and every change takes `--dry-run`. A Reef's own commands live in its deck ([The CLI](index.html)).
     pt:
       topic: "grupos"
-      message: "Oito grupos, antes de qualquer reef"
-      accent: "antes de qualquer reef"
+      message: "Oito grupos, antes de qualquer Reef"
+      accent: "antes de qualquer Reef"
       screen:
         - "**init:** prepara o cluster, o core e um profile"
-        - "**status:** uma linha por reef e a sua Nereid"
+        - "**status:** uma linha por Reef e a sua Nereid"
         - "**doctor:** um pass ou fail por verificação"
-        - "**reef:** uma capacidade, os seus kinds e o seu grupo de comandos"
-        - "**nereid:** o controller que cuida de um reef"
-        - "**mandate:** liga um reef a uma Nereid, com os seus params"
-        - "**profile:** os reefs, Nereids e Mandates que vêm juntos"
+        - "**Reef:** uma capacidade, os seus kinds e o seu grupo de comandos"
+        - "**nereid:** o controller que cuida de um Reef"
+        - "**mandate:** liga um Reef a uma Nereid, com os seus params"
+        - "**profile:** os Reefs, Nereids e Mandates que vêm juntos"
         - "**config:** o SLO, a instalação e o seu owner atual"
       notes: |-
-        **Os verbos são os do kubectl** (ADR 0013, convenções de comando): `create`, `apply`, `list`, `get` e `delete`, e toda mudança aceita `--dry-run`. Os comandos de um reef vivem no seu deck ([O CLI](index.html)).
+        **Os verbos são os do kubectl** (ADR 0013, convenções de comando): `create`, `apply`, `list`, `get` e `delete`, e toda mudança aceita `--dry-run`. Os comandos de um Reef vivem no seu deck ([O CLI](index.html)).
 
   - name: init-generate-file
     act: init
@@ -189,7 +189,7 @@ slides:
             ✓ cluster ready in context k3d-nereus-local · config in ~/.config/nereus/config.yaml · values in ~/.config/nereus/values.yaml
     dependsOn: [init-dry-run]
     notes: |-
-      **`init` checks Docker, k3d and Helm first**, then creates or reuses the local registry and the k3d cluster, and runs two `helm upgrade --install`s: `kinds` (the chart `nereus-reefs`) and `nereus` (the Nereus API and the profile core, with the tenancy reef). Between them, `images` checks that the registry holds every image the release names, and stops with `fix: make nereids` when one is missing, before anything changes (#2062). `installation` reads back the installation's identity.
+      **`init` checks Docker, k3d and Helm first**, then creates or reuses the local registry and the k3d cluster, and runs two `helm upgrade --install`s: `kinds` (the chart `nereus-reefs`) and `nereus` (the Nereus API and the profile core, with the tenancy Reef). Between them, `images` checks that the registry holds every image the release names, and stops with `fix: make nereids` when one is missing, before anything changes (#2062). `installation` reads back the installation's identity.
 
       **Each step prints its time, and the total is measured against the SLO** (spec 0004): 8 minutes on k3d; this run on a reused cluster was after `nereus config slo set --local 4m` ([The time SLO](../../guides/operate/slo.md)). Missing it never stops `init`; `--check-slo` fails past the tolerance.
     pt:
@@ -197,7 +197,7 @@ slides:
       message: "O core em duas releases do Helm, cada passo com o seu tempo"
       accent: "cada passo com o seu tempo"
       notes: |-
-        **O `init` confere o Docker, o k3d e o Helm primeiro**, depois cria ou reusa o registry local e o cluster k3d, e roda dois `helm upgrade --install`: `kinds` (o chart `nereus-reefs`) e `nereus` (a API do Nereus e o profile core, com o reef tenancy). Entre os dois, o `images` confere que o registry tem cada imagem que a release nomeia, e para com `fix: make nereids` quando falta uma, antes de mudar qualquer coisa (#2062). O `installation` lê de volta a identidade da instalação.
+        **O `init` confere o Docker, o k3d e o Helm primeiro**, depois cria ou reusa o registry local e o cluster k3d, e roda dois `helm upgrade --install`: `kinds` (o chart `nereus-reefs`) e `nereus` (a API do Nereus e o profile core, com o Reef tenancy). Entre os dois, o `images` confere que o registry tem cada imagem que a release nomeia, e para com `fix: make nereids` quando falta uma, antes de mudar qualquer coisa (#2062). O `installation` lê de volta a identidade da instalação.
 
         **Cada passo imprime o seu tempo, e o total é medido contra o SLO** (spec 0004): 8 minutos no k3d; esta execução num cluster reusado veio depois de `nereus config slo set --local 4m` ([O SLO de tempo](../../guides/operate/slo.md)). Perder o SLO nunca para o `init`; o `--check-slo` falha passada a tolerância.
 
@@ -238,17 +238,17 @@ slides:
             ! init took 8m40s, over its time objective of 8m, within the 20% tolerance (9m36s); slowest steps: ready keycloak 2m31s, ready nereus-portal 2m15s, ready openbao 1m11s; shorten them, or raise the objective: nereus config slo set --local 9m
     dependsOn: [init]
     notes: |-
-      **`init` runs no step of the profile itself** (ADR 0014, profiles): the value `profile` makes the chart `nereus` run thetis, the installer Nereid, which installs the profile's reefs, Nereids and Mandates in order. The step `ready` waits until each Nereid is Ready; `public key` prints the fingerprint of the secrets reef's key.
+      **`init` runs no step of the profile itself** (ADR 0014, profiles): the value `profile` makes the chart `nereus` run thetis, the installer Nereid, which installs the profile's Reefs, Nereids and Mandates in order. The step `ready` waits until each Nereid is Ready; `public key` prints the fingerprint of the secrets Reef's key.
 
-      **`--profile reference` installs each reef's reference Nereid** in place of the tools (#1421); no `--profile`, or `core`, installs core alone. An unknown profile is refused before anything changes. With sign-in on, log in right after: `nereus status`, `reef` and `nereid` read through the Nereus API ([nereus login](reefs/authentication.html#login)).
+      **`--profile reference` installs each Reef's reference Nereid** in place of the tools (#1421); no `--profile`, or `core`, installs core alone. An unknown profile is refused before anything changes. With sign-in on, log in right after: `nereus status`, `reef` and `nereid` read through the Nereus API ([nereus login](reefs/authentication.html#login)).
     pt:
       topic: "init --profile"
       message: "Um profile depois do core, instalado no cluster pelo thetis"
       accent: "instalado no cluster"
       notes: |-
-        **O `init` não roda nenhum passo do profile** (ADR 0014, profiles): o value `profile` faz o chart `nereus` rodar o thetis, a Nereid instaladora, que instala os reefs, as Nereids e os Mandates do profile em ordem. O passo `ready` espera cada Nereid ficar Ready; o `public key` imprime o fingerprint da chave do reef secrets.
+        **O `init` não roda nenhum passo do profile** (ADR 0014, profiles): o value `profile` faz o chart `nereus` rodar o thetis, a Nereid instaladora, que instala os Reefs, as Nereids e os Mandates do profile em ordem. O passo `ready` espera cada Nereid ficar Ready; o `public key` imprime o fingerprint da chave do Reef secrets.
 
-        **O `--profile reference` instala a Nereid de referência de cada reef** no lugar das ferramentas (#1421); sem `--profile`, ou com `core`, instala só o core. Um profile desconhecido é recusado antes de qualquer mudança. Com login ligado, entre logo depois: `nereus status`, `reef` e `nereid` leem pela API do Nereus ([nereus login](reefs/authentication.html#login)).
+        **O `--profile reference` instala a Nereid de referência de cada Reef** no lugar das ferramentas (#1421); sem `--profile`, ou com `core`, instala só o core. Um profile desconhecido é recusado antes de qualquer mudança. Com login ligado, entre logo depois: `nereus status`, `reef` e `nereid` leem pela API do Nereus ([nereus login](reefs/authentication.html#login)).
 
   - name: init-target
     act: init
@@ -281,17 +281,17 @@ slides:
             $ nereus init --yes --approve-access
     dependsOn: [init]
     notes: |-
-      **`--target <name>` creates the installation's undercloud, `<installation>-undercloud`, with the `cloud` reef**; `<name>` is that reef's Nereid, here `azure`, and everything Azure is asked goes through its plans, never a call of the CLI (spec 0005). The issuer is computed from the installation's id before the cluster exists, so the cloud can trust its tokens. `--target azure --installation-name tailwind` gives the same without a settings file.
+      **`--target <name>` creates the installation's undercloud, `<installation>-undercloud`, with the `cloud` Reef**; `<name>` is that Reef's Nereid, here `azure`, and everything Azure is asked goes through its plans, never a call of the CLI (spec 0005). The issuer is computed from the installation's id before the cluster exists, so the cloud can trust its tokens. `--target azure --installation-name tailwind` gives the same without a settings file.
 
-      **What changed on the machine, the plan for the cloud, the command to run next** (#379): nothing ran in Azure, but the undercloud, the installation and the `cloud` reef exist. `--show-requests` adds each request's why, method, URL and tags. The output is what `init` prints in its tests (`cli/tests/test_undercloud.py`), against fakes and recorded Azure answers ([Prepare the undercloud](../../guides/operate/undercloud.md)).
+      **What changed on the machine, the plan for the cloud, the command to run next** (#379): nothing ran in Azure, but the undercloud, the installation and the `cloud` Reef exist. `--show-requests` adds each request's why, method, URL and tags. The output is what `init` prints in its tests (`cli/tests/test_undercloud.py`), against fakes and recorded Azure answers ([Prepare the undercloud](../../guides/operate/undercloud.md)).
     pt:
       topic: "init --target"
       message: "Um undercloud no k3d, e o plano para a nuvem"
       accent: "o plano para a nuvem"
       notes: |-
-        **O `--target <nome>` cria o undercloud da instalação, `<instalação>-undercloud`, com o reef `cloud`**; `<nome>` é a Nereid desse reef, aqui a `azure`, e tudo o que se pede à Azure passa pelos planos dela, nunca por uma chamada do CLI (spec 0005). O issuer é calculado a partir do id da instalação antes de o cluster existir, para que a nuvem possa confiar nos seus tokens. O `--target azure --installation-name tailwind` dá o mesmo sem arquivo de configurações.
+        **O `--target <nome>` cria o undercloud da instalação, `<instalação>-undercloud`, com o Reef `cloud`**; `<nome>` é a Nereid desse Reef, aqui a `azure`, e tudo o que se pede à Azure passa pelos planos dela, nunca por uma chamada do CLI (spec 0005). O issuer é calculado a partir do id da instalação antes de o cluster existir, para que a nuvem possa confiar nos seus tokens. O `--target azure --installation-name tailwind` dá o mesmo sem arquivo de configurações.
 
-        **O que mudou na máquina, o plano para a nuvem, o comando a rodar em seguida** (#379): nada rodou na Azure, mas o undercloud, a instalação e o reef `cloud` existem. O `--show-requests` acrescenta o porquê, o método, a URL e as tags de cada requisição. A saída é a que o `init` imprime nos seus testes (`cli/tests/test_undercloud.py`), contra fakes e respostas gravadas da Azure ([Preparar o undercloud](../../guides/operate/undercloud.md)).
+        **O que mudou na máquina, o plano para a nuvem, o comando a rodar em seguida** (#379): nada rodou na Azure, mas o undercloud, a instalação e o Reef `cloud` existem. O `--show-requests` acrescenta o porquê, o método, a URL e as tags de cada requisição. A saída é a que o `init` imprime nos seus testes (`cli/tests/test_undercloud.py`), contra fakes e respostas gravadas da Azure ([Preparar o undercloud](../../guides/operate/undercloud.md)).
 
   - name: init-approve-access
     act: init
@@ -343,11 +343,11 @@ slides:
     act: status
     topic: "status"
     status: built
-    message: "One row per reef and Nereid, core first"
+    message: "One row per Reef and Nereid, core first"
     accent: "core first"
     terminal:
       steps:
-        - comment: "How each reef is doing, through the Nereus API"
+        - comment: "How each Reef is doing, through the Nereus API"
           run: "nereus status"
           output: |-
             REEF            NEREID      VERSION  STATUS  AGE
@@ -360,17 +360,17 @@ slides:
 
             Registry  localhost:5111
     notes: |-
-      **`Registry` is where images are pushed**, as the cluster declares it in the ConfigMap `kube-public/local-registry-hosting` (#855). `NotConformant` is computed by the CLI (spec 0003): a reef that exposes no kind has no `Ready` Nereid, unless it has none by design; the tenancy reef needs no Nereid and reads `Ready`.
+      **`Registry` is where images are pushed**, as the cluster declares it in the ConfigMap `kube-public/local-registry-hosting` (#855). `NotConformant` is computed by the CLI (spec 0003): a Reef that exposes no kind has no `Ready` Nereid, unless it has none by design; the tenancy Reef needs no Nereid and reads `Ready`.
 
-      **`--output json` (or `yaml`) is the stable contract** of the Nereus API's `GET /v1/status` and of its `/mcp` `status` tool: `{"installation", "registry", "items": [{"reef", "nereid", "version", "status", "reason", "createdAt", "icon"}]}` (`icon`: the reef's icon in the portal, or null, #1773). With sign-in on, it needs `nereus login`.
+      **`--output json` (or `yaml`) is the stable contract** of the Nereus API's `GET /v1/status` and of its `/mcp` `status` tool: `{"installation", "registry", "items": [{"reef", "nereid", "version", "status", "reason", "createdAt", "icon"}]}` (`icon`: the Reef's icon in the portal, or null, #1773). With sign-in on, it needs `nereus login`.
     pt:
       topic: "status"
-      message: "Uma linha por reef e Nereid, o core primeiro"
+      message: "Uma linha por Reef e Nereid, o core primeiro"
       accent: "o core primeiro"
       notes: |-
-        **O `Registry` é para onde as imagens são enviadas**, como o cluster o declara no ConfigMap `kube-public/local-registry-hosting` (#855). O `NotConformant` é calculado pelo CLI (spec 0003): um reef que não expõe kind não tem Nereid `Ready`, a não ser que não tenha nenhuma por design; o reef tenancy não precisa de Nereid e aparece `Ready`.
+        **O `Registry` é para onde as imagens são enviadas**, como o cluster o declara no ConfigMap `kube-public/local-registry-hosting` (#855). O `NotConformant` é calculado pelo CLI (spec 0003): um Reef que não expõe kind não tem Nereid `Ready`, a não ser que não tenha nenhuma por design; o Reef tenancy não precisa de Nereid e aparece `Ready`.
 
-        **O `--output json` (ou `yaml`) é o contrato estável** do `GET /v1/status` da API do Nereus e da ferramenta `status` do seu `/mcp`: `{"installation", "registry", "items": [{"reef", "nereid", "version", "status", "reason", "createdAt", "icon"}]}` (`icon`: o ícone do reef no portal, ou null, #1773). Com login ligado, ele precisa do `nereus login`.
+        **O `--output json` (ou `yaml`) é o contrato estável** do `GET /v1/status` da API do Nereus e da ferramenta `status` do seu `/mcp`: `{"installation", "registry", "items": [{"reef", "nereid", "version", "status", "reason", "createdAt", "icon"}]}` (`icon`: o ícone do Reef no portal, ou null, #1773). Com login ligado, ele precisa do `nereus login`.
 
   - name: doctor
     act: doctor
@@ -447,11 +447,11 @@ slides:
     act: reef
     topic: "reef apply"
     status: built
-    message: "A reef applied from the version this CLI pins"
+    message: "A Reef applied from the version this CLI pins"
     accent: "the version this CLI pins"
     terminal:
       steps:
-        - comment: "Apply the reef release, with its kinds"
+        - comment: "Apply the Reef release, with its kinds"
           run: "nereus reef apply release"
           output: |-
             ✓ core/reefs/release 0.1.0 created (release.getnereus.dev/v1alpha1: releases, repositories, sources, targets)
@@ -465,23 +465,23 @@ slides:
           output: |-
             core/reefs/release unchanged
     notes: |-
-      **A Nereid needs its reef first:** without it, `nereid apply` is refused with `Apply it first: nereus reef apply release`. Once the reef exists, the CLI has a `release` group, empty until a Nereid is applied.
+      **A Nereid needs its Reef first:** without it, `nereid apply` is refused with `Apply it first: nereus reef apply release`. Once the Reef exists, the CLI has a `release` group, empty until a Nereid is applied.
 
-      **`unchanged` when no resourceVersion moved**, as `kubectl apply` does. Every document is checked first: only CustomResourceDefinitions of the reef's own group, never a platform kind.
+      **`unchanged` when no resourceVersion moved**, as `kubectl apply` does. Every document is checked first: only CustomResourceDefinitions of the Reef's own group, never a platform kind.
     pt:
       topic: "reef apply"
-      message: "Um reef aplicado da versão que este CLI fixa"
+      message: "Um Reef aplicado da versão que este CLI fixa"
       accent: "da versão que este CLI fixa"
       notes: |-
-        **Uma Nereid precisa do seu reef antes:** sem ele, o `nereid apply` é recusado com `Apply it first: nereus reef apply release`. Assim que o reef existe, o CLI tem um grupo `release`, vazio até uma Nereid ser aplicada.
+        **Uma Nereid precisa do seu Reef antes:** sem ele, o `nereid apply` é recusado com `Apply it first: nereus reef apply release`. Assim que o Reef existe, o CLI tem um grupo `release`, vazio até uma Nereid ser aplicada.
 
-        **`unchanged` quando nenhum resourceVersion mudou**, como faz o `kubectl apply`. Todo documento é conferido antes: só CustomResourceDefinitions do grupo do próprio reef, nunca um kind da plataforma.
+        **`unchanged` quando nenhum resourceVersion mudou**, como faz o `kubectl apply`. Todo documento é conferido antes: só CustomResourceDefinitions do grupo do próprio Reef, nunca um kind da plataforma.
 
   - name: reef-apply-file
     act: reef
     topic: "reef apply --from-file"
     status: built
-    message: "A reef from local YAML, previewed first"
+    message: "A Reef from local YAML, previewed first"
     accent: "previewed first"
     terminal:
       steps:
@@ -500,19 +500,19 @@ slides:
             ✓ core/reefs/cloud 0.1.0 configured (cloud.getnereus.dev/v1alpha1: clouds)
     dependsOn: [reef-apply]
     notes: |-
-      **`apply` creates or updates from three sources:** the version the CLI pins, local YAML (`--from-file`, a file or a folder; alias `--path`) or a reef package (`--image`, an OCI artifact of YAML layers). `configured` when the files changed a kind; the same files again report `unchanged`.
+      **`apply` creates or updates from three sources:** the version the CLI pins, local YAML (`--from-file`, a file or a folder; alias `--path`) or a Reef package (`--image`, an OCI artifact of YAML layers). `configured` when the files changed a kind; the same files again report `unchanged`.
     pt:
       topic: "reef apply --from-file"
-      message: "Um reef de YAML local, visto antes"
+      message: "Um Reef de YAML local, visto antes"
       accent: "visto antes"
       notes: |-
-        **O `apply` cria ou atualiza de três fontes:** a versão que o CLI fixa, YAML local (`--from-file`, um arquivo ou uma pasta; alias `--path`) ou um pacote de reef (`--image`, um artefato OCI de camadas YAML). `configured` quando os arquivos mudaram um kind; os mesmos arquivos de novo dão `unchanged`.
+        **O `apply` cria ou atualiza de três fontes:** a versão que o CLI fixa, YAML local (`--from-file`, um arquivo ou uma pasta; alias `--path`) ou um pacote de Reef (`--image`, um artefato OCI de camadas YAML). `configured` quando os arquivos mudaram um kind; os mesmos arquivos de novo dão `unchanged`.
 
   - name: reef-create
     act: reef
     topic: "reef create"
     status: built
-    message: "create fails on a reef that exists, and says what changes it"
+    message: "create fails on a Reef that exists, and says what changes it"
     accent: "says what changes it"
     terminal:
       steps:
@@ -525,23 +525,23 @@ slides:
               nereus reef apply release --from-file <file or folder>
     dependsOn: [reef-apply]
     notes: |-
-      **On a new reef, `create` prints the same line as `apply`**, `core/reefs/<reef> <version> created`, from the version this CLI pins; on one that exists it fails and names the three ways to change it. It takes `--dry-run`.
+      **On a new Reef, `create` prints the same line as `apply`**, `core/reefs/<reef> <version> created`, from the version this CLI pins; on one that exists it fails and names the three ways to change it. It takes `--dry-run`.
     pt:
       topic: "reef create"
-      message: "O create falha num reef que existe, e diz o que o muda"
+      message: "O create falha num Reef que existe, e diz o que o muda"
       accent: "diz o que o muda"
       notes: |-
-        **Num reef novo, o `create` imprime a mesma linha do `apply`**, `core/reefs/<reef> <version> created`, da versão que este CLI fixa; num que existe ele falha e nomeia as três formas de mudá-lo. Ele aceita `--dry-run`.
+        **Num Reef novo, o `create` imprime a mesma linha do `apply`**, `core/reefs/<reef> <version> created`, da versão que este CLI fixa; num que existe ele falha e nomeia as três formas de mudá-lo. Ele aceita `--dry-run`.
 
   - name: reef-list
     act: reef
     topic: "reef list"
     status: built
-    message: "Each reef with the Nereids that look after it"
+    message: "Each Reef with the Nereids that look after it"
     accent: "the Nereids that look after it"
     terminal:
       steps:
-        - comment: "Every reef"
+        - comment: "Every Reef"
           run: "nereus reef list"
           output: |-
             REEF     NEREIDS
@@ -549,23 +549,23 @@ slides:
             secrets  openbao
     dependsOn: [reef-apply]
     notes: |-
-      **`reef list` and `reef get` read through the Nereus API** at the instance's URL, with the token of `nereus login`, so they need no kubeconfig; only a member of `nereus-admins` reads them. `-` is a reef no Nereid looks after yet.
+      **`reef list` and `reef get` read through the Nereus API** at the instance's URL, with the token of `nereus login`, so they need no kubeconfig; only a member of `nereus-admins` reads them. `-` is a Reef no Nereid looks after yet.
     pt:
       topic: "reef list"
-      message: "Cada reef com as Nereids que cuidam dele"
+      message: "Cada Reef com as Nereids que cuidam dele"
       accent: "as Nereids que cuidam dele"
       notes: |-
-        **O `reef list` e o `reef get` leem pela API do Nereus** na URL da instância, com o token do `nereus login`, então não precisam de kubeconfig; só um membro de `nereus-admins` os lê. `-` é um reef de que nenhuma Nereid cuida ainda.
+        **O `reef list` e o `reef get` leem pela API do Nereus** na URL da instância, com o token do `nereus login`, então não precisam de kubeconfig; só um membro de `nereus-admins` os lê. `-` é um Reef de que nenhuma Nereid cuida ainda.
 
   - name: reef-get
     act: reef
     topic: "reef get"
     status: built
-    message: "One reef in full: its group, kinds, Nereids and Mandates"
+    message: "One Reef in full: its group, kinds, Nereids and Mandates"
     accent: "in full"
     terminal:
       steps:
-        - comment: "The reef release, with its reference Nereid"
+        - comment: "The Reef release, with its reference Nereid"
           run: "nereus reef get release"
           output: |-
             Name:      release
@@ -577,15 +577,15 @@ slides:
             Age:       2m
     dependsOn: [reef-apply]
     notes: |-
-      **A reef with no Nereid ends with the `Next steps:` line `nereus nereid apply <nereid> --reef <reef>`**; one the API keeps by design, as tenancy, says `none needed: the API keeps its objects`.
+      **A Reef with no Nereid ends with the `Next steps:` line `nereus nereid apply <nereid> --reef <reef>`**; one the API keeps by design, as tenancy, says `none needed: the API keeps its objects`.
 
       **The output is taken from the code** (`cli/src/nereus/commands/reef.py`, its test in `cli/tests/test_commands.py`), not a recorded run: no walkthrough page records `reef get` yet.
     pt:
       topic: "reef get"
-      message: "Um reef por inteiro: grupo, kinds, Nereids e Mandates"
+      message: "Um Reef por inteiro: grupo, kinds, Nereids e Mandates"
       accent: "por inteiro"
       notes: |-
-        **Um reef sem Nereid termina com a linha de `Next steps:` `nereus nereid apply <nereid> --reef <reef>`**; um que a API guarda por design, como o tenancy, diz `none needed: the API keeps its objects`.
+        **Um Reef sem Nereid termina com a linha de `Next steps:` `nereus nereid apply <nereid> --reef <reef>`**; um que a API guarda por design, como o tenancy, diz `none needed: the API keeps its objects`.
 
         **A saída é tirada do código** (`cli/src/nereus/commands/reef.py`, o seu teste em `cli/tests/test_commands.py`), não de uma execução gravada: nenhuma página do walkthrough grava o `reef get` ainda.
 
@@ -593,11 +593,11 @@ slides:
     act: reef
     topic: "reef delete"
     status: built
-    message: "With no Nereid left, the reef and its group go"
+    message: "With no Nereid left, the Reef and its group go"
     accent: "its group go"
     terminal:
       steps:
-        - comment: "Delete the reef; its kinds stay"
+        - comment: "Delete the Reef; its kinds stay"
           run: "nereus reef delete release"
           output: |-
             ✓ core/reefs/release deleted
@@ -606,7 +606,7 @@ slides:
       **`reef delete` removes the `Reef` object and keeps its kinds**, so a Nereid's objects stay. It is refused while a Nereid of it is applied, and names the `nereid delete` to run first. It takes `--dry-run`.
     pt:
       topic: "reef delete"
-      message: "Sem Nereid restante, o reef e o seu grupo vão embora"
+      message: "Sem Nereid restante, o Reef e o seu grupo vão embora"
       accent: "o seu grupo vão embora"
       notes: |-
         **O `reef delete` remove o objeto `Reef` e mantém os seus kinds**, então os objetos de uma Nereid ficam. Ele é recusado enquanto uma Nereid dele estiver aplicada, e nomeia o `nereid delete` a rodar antes. Ele aceita `--dry-run`.
@@ -619,7 +619,7 @@ slides:
     accent: "pinned to the digest"
     terminal:
       steps:
-        - comment: "Apply the reference Nereid to the reef release"
+        - comment: "Apply the reference Nereid to the Reef release"
           run: "nereus nereid apply reference-release"
           options: ["--reef release", "--image localhost:5111/reference-release-controller:0.1.0"]
           output: |-
@@ -630,17 +630,17 @@ slides:
               nereus nereid list
     dependsOn: [reef-apply]
     notes: |-
-      **The CLI reads the image's labels in the registry** (manifest and config, no layer): name, reef, required reefs, version. It checks the reef exists, writes the `Nereid` object pinned to the digest, and runs the image as its controller, which reports `Ready`. The tag is resolved once, so pushing it again never changes what runs.
+      **The CLI reads the image's labels in the registry** (manifest and config, no layer): name, Reef, required Reefs, version. It checks the Reef exists, writes the `Nereid` object pinned to the digest, and runs the image as its controller, which reports `Ready`. The tag is resolved once, so pushing it again never changes what runs.
 
-      **A name argument wins over the label**, and `--reef` repeats. An image that declares no reef is refused unless `--reef` names one; a Nereid whose required reef has no Nereid is refused too ([Require a reef](../../guides/build/requires.md)).
+      **A name argument wins over the label**, and `--reef` repeats. An image that declares no Reef is refused unless `--reef` names one; a Nereid whose required Reef has no Nereid is refused too ([Require a Reef](../../guides/build/requires.md)).
     pt:
       topic: "nereid apply"
       message: "Uma {nereid:Nereid} da sua imagem, fixada pelo digest"
       accent: "fixada pelo digest"
       notes: |-
-        **O CLI lê os labels da imagem no registry** (manifest e config, nenhuma camada): nome, reef, reefs exigidos, versão. Ele confere que o reef existe, escreve o objeto `Nereid` fixado pelo digest, e roda a imagem como o seu controller, que reporta `Ready`. A tag é resolvida uma vez, então publicá-la de novo nunca muda o que roda.
+        **O CLI lê os labels da imagem no registry** (manifest e config, nenhuma camada): nome, Reef, Reefs exigidos, versão. Ele confere que o Reef existe, escreve o objeto `Nereid` fixado pelo digest, e roda a imagem como o seu controller, que reporta `Ready`. A tag é resolvida uma vez, então publicá-la de novo nunca muda o que roda.
 
-        **Um argumento de nome ganha do label**, e o `--reef` se repete. Uma imagem que não declara reef é recusada, a não ser que o `--reef` nomeie um; uma Nereid cujo reef exigido não tem Nereid também é recusada ([Exigir um reef](../../guides/build/requires.md)).
+        **Um argumento de nome ganha do label**, e o `--reef` se repete. Uma imagem que não declara Reef é recusada, a não ser que o `--reef` nomeie um; uma Nereid cujo Reef exigido não tem Nereid também é recusada ([Exigir um Reef](../../guides/build/requires.md)).
 
   - name: nereid-apply-image
     act: nereid
@@ -680,7 +680,7 @@ slides:
     accent: "a person grants"
     terminal:
       steps:
-        - comment: "Let the edge reef publish Triton's mcp endpoint"
+        - comment: "Let the edge Reef publish Triton's mcp endpoint"
           run: "nereus nereid apply triton"
           options: ["--publish mcp"]
           output: |-
@@ -694,13 +694,13 @@ slides:
             ✓ core/nereids/triton configured (publishes nothing)
     dependsOn: [nereid-apply]
     notes: |-
-      **The grant is the Nereid's `spec.publish`** (#1951, OWASP A01): an endpoint its status lists is published by the edge reef only when it is publishable and named here. The names given replace the grant; without `--publish` an apply leaves it as it is. Each name is checked before anything is written.
+      **The grant is the Nereid's `spec.publish`** (#1951, OWASP A01): an endpoint its status lists is published by the edge Reef only when it is publishable and named here. The names given replace the grant; without `--publish` an apply leaves it as it is. Each name is checked before anything is written.
     pt:
       topic: "nereid apply --publish"
       message: "Só os endpoints que uma pessoa concede são publicados"
       accent: "uma pessoa concede"
       notes: |-
-        **A concessão é o `spec.publish` da Nereid** (#1951, OWASP A01): um endpoint que o seu status lista só é publicado pelo reef edge quando é publicável e está nomeado aqui. Os nomes dados substituem a concessão; sem `--publish` um apply a deixa como está. Cada nome é verificado antes de qualquer escrita.
+        **A concessão é o `spec.publish` da Nereid** (#1951, OWASP A01): um endpoint que o seu status lista só é publicado pelo Reef edge quando é publicável e está nomeado aqui. Os nomes dados substituem a concessão; sem `--publish` um apply a deixa como está. Cada nome é verificado antes de qualquer escrita.
 
   - name: nereid-create
     act: nereid
@@ -743,7 +743,7 @@ slides:
     act: nereid
     topic: "nereid list"
     status: built
-    message: "Each {nereid:Nereid} with its reefs, image and status"
+    message: "Each {nereid:Nereid} with its Reefs, image and status"
     accent: "image and status"
     terminal:
       steps:
@@ -755,13 +755,13 @@ slides:
             openbao            secrets  localhost:5111/openbao-controller:0.1.0               Ready   1m
     dependsOn: [nereid-apply]
     notes: |-
-      **`REEFS` lists every reef the Nereid looks after; `IMAGE` is the repository and version.** `Unavailable` is computed by the CLI from the Deployment (spec 0003), as when the controller is scaled to zero. With none, it prints `No nereids added.`; with sign-in on, it reads through the Nereus API.
+      **`REEFS` lists every Reef the Nereid looks after; `IMAGE` is the repository and version.** `Unavailable` is computed by the CLI from the Deployment (spec 0003), as when the controller is scaled to zero. With none, it prints `No nereids added.`; with sign-in on, it reads through the Nereus API.
     pt:
       topic: "nereid list"
-      message: "Cada {nereid:Nereid} com os seus reefs, imagem e status"
+      message: "Cada {nereid:Nereid} com os seus Reefs, imagem e status"
       accent: "imagem e status"
       notes: |-
-        **O `REEFS` lista todo reef de que a Nereid cuida; o `IMAGE` é o repositório e a versão.** O `Unavailable` é calculado pelo CLI a partir do Deployment (spec 0003), como quando o controller está escalado para zero. Sem nenhuma, imprime `No nereids added.`; com login ligado, lê pela API do Nereus.
+        **O `REEFS` lista todo Reef de que a Nereid cuida; o `IMAGE` é o repositório e a versão.** O `Unavailable` é calculado pelo CLI a partir do Deployment (spec 0003), como quando o controller está escalado para zero. Sem nenhuma, imprime `No nereids added.`; com login ligado, lê pela API do Nereus.
 
   - name: nereid-get
     act: nereid
@@ -779,7 +779,7 @@ slides:
             Image:        localhost:5111/keycloak-controller:0.1.0
             Digest:       sha256:0f4675ab231b4e6d4a439d0c7d8e5b07011f35802b38592851542cf56666be93
             Title:        authentication-keycloak-controller
-            Description:  The keycloak Nereid of Nereus, for the authentication reef
+            Description:  The keycloak Nereid of Nereus, for the authentication Reef
             Status:       Ready
             Mandates:     keycloak (default)
             Age:          2m
@@ -801,7 +801,7 @@ slides:
     accent: "everything it ran"
     terminal:
       steps:
-        - comment: "The last Nereid of a reef another Nereid requires"
+        - comment: "The last Nereid of a Reef another Nereid requires"
           run: "nereus nereid delete reference-release"
           output: |-
             ✗ reference-release is the last Nereid of reef release, which added Nereids require: reference-docs.
@@ -812,13 +812,13 @@ slides:
             ✓ core/nereids/reference-release deleted
     dependsOn: [nereid-apply]
     notes: |-
-      **The Deployment, Service and identity belong to the `Nereid` object**, so they go too; the reef stays, and its group says `no Nereid added`. The first run is from [Require a reef](../../guides/build/requires.md), with `reference-docs` applied; `--force` deletes it anyway. It takes `--dry-run`.
+      **The Deployment, Service and identity belong to the `Nereid` object**, so they go too; the Reef stays, and its group says `no Nereid added`. The first run is from [Require a Reef](../../guides/build/requires.md), with `reference-docs` applied; `--force` deletes it anyway. It takes `--dry-run`.
     pt:
       topic: "nereid delete"
       message: "Os seus comandos e tudo o que ela rodava vão junto"
       accent: "tudo o que ela rodava"
       notes: |-
-        **O Deployment, o Service e a identidade pertencem ao objeto `Nereid`**, então vão também; o reef fica, e o seu grupo diz `no Nereid added`. A primeira execução é de [Exigir um reef](../../guides/build/requires.md), com `reference-docs` aplicada; o `--force` a apaga mesmo assim. Ele aceita `--dry-run`.
+        **O Deployment, o Service e a identidade pertencem ao objeto `Nereid`**, então vão também; o Reef fica, e o seu grupo diz `no Nereid added`. A primeira execução é de [Exigir um Reef](../../guides/build/requires.md), com `reference-docs` aplicada; o `--force` a apaga mesmo assim. Ele aceita `--dry-run`.
 
   - name: mandate-create
     act: mandate
@@ -829,7 +829,7 @@ slides:
     accent: "is a {mandate:Mandate}"
     terminal:
       steps:
-        - comment: "The App's identity, bound to the reef"
+        - comment: "The App's identity, bound to the Reef"
           run: "nereus mandate create github"
           options: ["--reef authentication", "--nereid github", "--param appId=123456", "--param privateKey=github-app-key", "--param allow=nereus-system:*:contents=read", "--param allow=example:example/app:metadata=read", "--default"]
           output: |-
@@ -841,17 +841,17 @@ slides:
               nereus mandate list
     dependsOn: [nereid-apply]
     notes: |-
-      **A Mandate binds a reef to the Nereid that fulfils it**, with its params (ADR 0011); `--default` makes it the reef's default, and the CLI lets the Nereid write its status (#406). Moved here from the authentication reef's deck (#482), where the App's private key was first stored as a plain secret, `github-app-key` ([nereus secrets create](reefs/secrets.html#create) with `--from-env GITHUB_APP_KEY`).
+      **A Mandate binds a Reef to the Nereid that fulfils it**, with its params (ADR 0011); `--default` makes it the Reef's default, and the CLI lets the Nereid write its status (#406). Moved here from the authentication Reef's deck (#482), where the App's private key was first stored as a plain secret, `github-app-key` ([nereus secrets create](reefs/secrets.html#create) with `--from-env GITHUB_APP_KEY`).
 
-      **No `--vendor` and no `Application` kind** (owner, 2026-11-09): the model of ADR 0011 holds, and `github` appears only in `nereid apply` and `mandate create`, never in a reef's command. The Nereid is opt-in (`nereus nereid apply github --reef authentication --reef scm`), outside the `internal-developer-platform` profile. It reads the key through a `SecretBinding` in its own namespace (ADR 0023's pattern). A second App is a second Mandate, chosen with `--mandate`. **`allow` says who may ask it a token** (#1287): `<namespace>:<repository or *>:<permission>=<level>[,...]`, repeated (the CLI joins a repeated `--param` with `;`); with none, no token is minted (deny by default).
+      **No `--vendor` and no `Application` kind** (owner, 2026-11-09): the model of ADR 0011 holds, and `github` appears only in `nereid apply` and `mandate create`, never in a Reef's command. The Nereid is opt-in (`nereus nereid apply github --reef authentication --reef scm`), outside the `internal-developer-platform` profile. It reads the key through a `SecretBinding` in its own namespace (ADR 0023's pattern). A second App is a second Mandate, chosen with `--mandate`. **`allow` says who may ask it a token** (#1287): `<namespace>:<repository or *>:<permission>=<level>[,...]`, repeated (the CLI joins a repeated `--param` with `;`); with none, no token is minted (deny by default).
     pt:
       topic: "mandate create"
       message: "Um GitHub App é um {mandate:Mandate} do Nereid {nereid:github}"
       accent: "é um {mandate:Mandate}"
       notes: |-
-        **Um Mandate liga um reef à Nereid que o cumpre**, com os seus params (ADR 0011); o `--default` o torna o padrão do reef, e o CLI deixa a Nereid escrever o seu status (#406). Movido para cá do deck do reef authentication (#482), onde a chave privada do App foi guardada antes como um secret simples, `github-app-key` ([nereus secrets create](reefs/secrets.html#create) com `--from-env GITHUB_APP_KEY`).
+        **Um Mandate liga um Reef à Nereid que o cumpre**, com os seus params (ADR 0011); o `--default` o torna o padrão do Reef, e o CLI deixa a Nereid escrever o seu status (#406). Movido para cá do deck do Reef authentication (#482), onde a chave privada do App foi guardada antes como um secret simples, `github-app-key` ([nereus secrets create](reefs/secrets.html#create) com `--from-env GITHUB_APP_KEY`).
 
-        **Sem `--vendor` e sem kind `Application`** (dono, 2026-11-09): o modelo do ADR 0011 vale, e `github` aparece só no `nereid apply` e no `mandate create`, nunca num comando de reef. O Nereid é opcional (`nereus nereid apply github --reef authentication --reef scm`), fora do profile `internal-developer-platform`. Ele lê a chave por um `SecretBinding` no seu próprio namespace (o padrão do ADR 0023). Um segundo App é um segundo Mandate, escolhido com `--mandate`. **O `allow` diz quem pode lhe pedir um token** (#1287): `<namespace>:<repositório ou *>:<permissão>=<nível>[,...]`, repetido (a CLI junta um `--param` repetido com `;`); sem nenhum, nenhum token é emitido (negado por padrão).
+        **Sem `--vendor` e sem kind `Application`** (dono, 2026-11-09): o modelo do ADR 0011 vale, e `github` aparece só no `nereid apply` e no `mandate create`, nunca num comando de Reef. O Nereid é opcional (`nereus nereid apply github --reef authentication --reef scm`), fora do profile `internal-developer-platform`. Ele lê a chave por um `SecretBinding` no seu próprio namespace (o padrão do ADR 0023). Um segundo App é um segundo Mandate, escolhido com `--mandate`. **O `allow` diz quem pode lhe pedir um token** (#1287): `<namespace>:<repositório ou *>:<permissão>=<nível>[,...]`, repetido (a CLI junta um `--param` repetido com `;`); sem nenhum, nenhum token é emitido (negado por padrão).
 
   - name: mandate-apply
     act: mandate
@@ -872,23 +872,23 @@ slides:
               nereus mandate list
     dependsOn: [mandate-create]
     notes: |-
-      **The reef and the Nereid never change**; the params and `--default` do. A Mandate that becomes the default prints the one that is no longer the default under it. The output is from the portal reef's deck ([nereus mandate apply](reefs/portal.html)). It takes `--dry-run`.
+      **The Reef and the Nereid never change**; the params and `--default` do. A Mandate that becomes the default prints the one that is no longer the default under it. The output is from the portal Reef's deck ([nereus mandate apply](reefs/portal.html)). It takes `--dry-run`.
     pt:
       topic: "mandate apply"
       message: "O apply cria ou muda os params de um {mandate:Mandate}"
       accent: "muda"
       notes: |-
-        **O reef e a Nereid nunca mudam**; os params e o `--default` sim. Um Mandate que vira o padrão imprime embaixo o que deixou de ser o padrão. A saída é do deck do reef portal ([nereus mandate apply](reefs/portal.html)). Ele aceita `--dry-run`.
+        **O Reef e a Nereid nunca mudam**; os params e o `--default` sim. Um Mandate que vira o padrão imprime embaixo o que deixou de ser o padrão. A saída é do deck do Reef portal ([nereus mandate apply](reefs/portal.html)). Ele aceita `--dry-run`.
 
   - name: mandate-list
     act: mandate
     topic: "mandate list"
     status: built
-    message: "A second {mandate:Mandate} of a reef, then the list"
+    message: "A second {mandate:Mandate} of a Reef, then the list"
     accent: "then the list"
     terminal:
       steps:
-        - comment: "Another Mandate of the same reef and Nereid"
+        - comment: "Another Mandate of the same Reef and Nereid"
           run: "nereus mandate create corporate"
           options: ["--reef authentication", "--nereid keycloak"]
           output: |-
@@ -907,13 +907,13 @@ slides:
             keycloak   authentication  keycloak  true     Ready   11s
     dependsOn: [mandate-create]
     notes: |-
-      **After `nereus login`, `nereus mandate` goes through the Nereus API**, for a person in `nereus-admins`, with no kubeconfig (#1323). `--default` would make `corporate` the reef's default.
+      **After `nereus login`, `nereus mandate` goes through the Nereus API**, for a person in `nereus-admins`, with no kubeconfig (#1323). `--default` would make `corporate` the Reef's default.
     pt:
       topic: "mandate list"
-      message: "Um segundo {mandate:Mandate} de um reef, depois a lista"
+      message: "Um segundo {mandate:Mandate} de um Reef, depois a lista"
       accent: "depois a lista"
       notes: |-
-        **Depois do `nereus login`, o `nereus mandate` passa pela API do Nereus**, para uma pessoa em `nereus-admins`, sem kubeconfig (#1323). O `--default` tornaria o `corporate` o padrão do reef.
+        **Depois do `nereus login`, o `nereus mandate` passa pela API do Nereus**, para uma pessoa em `nereus-admins`, sem kubeconfig (#1323). O `--default` tornaria o `corporate` o padrão do Reef.
 
   - name: mandate-get
     act: mandate
@@ -943,23 +943,23 @@ slides:
               example        example/app  metadata=read
     dependsOn: [mandate-create]
     notes: |-
-      **Every Mandate shows its reef, Nereid, params and status; the rest is what its Nereid wrote.** Moved here from the authentication reef's deck (#482).
+      **Every Mandate shows its Reef, Nereid, params and status; the rest is what its Nereid wrote.** Moved here from the authentication Reef's deck (#482).
 
-      **There is no `verify` command:** the status is `Ready`, `NotRegistered` (no App yet: [app-register](reefs/authentication.html#app-register)), `NotInstalled` (with the install URL in its message), `InvalidCredentials`, `MissingParam` or `InvalidParam` (an `allow` entry that does not parse, #1287). Permissions start at `metadata` and `contents` read (owner, 2026-11-09). The App's one webhook takes its secret from the param `webhookSecret` and points at the scm reef's receiver (ADR 0024).
+      **There is no `verify` command:** the status is `Ready`, `NotRegistered` (no App yet: [app-register](reefs/authentication.html#app-register)), `NotInstalled` (with the install URL in its message), `InvalidCredentials`, `MissingParam` or `InvalidParam` (an `allow` entry that does not parse, #1287). Permissions start at `metadata` and `contents` read (owner, 2026-11-09). The App's one webhook takes its secret from the param `webhookSecret` and points at the scm Reef's receiver (ADR 0024).
     pt:
       topic: "mandate get"
       message: "O status do Mandate diz o que o App pode fazer"
       accent: "o que o App pode fazer"
       notes: |-
-        **Todo Mandate mostra o seu reef, Nereid, params e status; o resto é o que a sua Nereid escreveu.** Movido para cá do deck do reef authentication (#482).
+        **Todo Mandate mostra o seu Reef, Nereid, params e status; o resto é o que a sua Nereid escreveu.** Movido para cá do deck do Reef authentication (#482).
 
-        **Não há comando `verify`:** o status é `Ready`, `NotRegistered` (sem App ainda: [app-register](reefs/authentication.html#app-register)), `NotInstalled` (com a URL de instalação na mensagem), `InvalidCredentials`, `MissingParam` ou `InvalidParam` (uma entrada de `allow` que não se lê, #1287). As permissões começam em leitura de `metadata` e `contents` (dono, 2026-11-09). O único webhook do App tira o seu secret do param `webhookSecret` e aponta para o receptor do reef scm (ADR 0024).
+        **Não há comando `verify`:** o status é `Ready`, `NotRegistered` (sem App ainda: [app-register](reefs/authentication.html#app-register)), `NotInstalled` (com a URL de instalação na mensagem), `InvalidCredentials`, `MissingParam` ou `InvalidParam` (uma entrada de `allow` que não se lê, #1287). As permissões começam em leitura de `metadata` e `contents` (dono, 2026-11-09). O único webhook do App tira o seu secret do param `webhookSecret` e aponta para o receptor do Reef scm (ADR 0024).
 
   - name: mandate-delete
     act: mandate
     topic: "mandate delete"
     status: built
-    message: "The reef and the {nereid:Nereid} stay; its grant goes first"
+    message: "The Reef and the {nereid:Nereid} stay; its grant goes first"
     accent: "its grant goes first"
     terminal:
       steps:
@@ -974,15 +974,15 @@ slides:
               nereus mandate list
     dependsOn: [mandate-list]
     notes: |-
-      **The Nereid's grant goes first, so a failed run deletes nothing and runs again** (#706). When it was its reef's default, the reef has none until another Mandate takes it, and the `Next steps:` name the `mandate apply ... --default` to run. It takes `--dry-run`.
+      **The Nereid's grant goes first, so a failed run deletes nothing and runs again** (#706). When it was its Reef's default, the Reef has none until another Mandate takes it, and the `Next steps:` name the `mandate apply ... --default` to run. It takes `--dry-run`.
 
       **The output is taken from the code** (`cli/src/nereus/commands/mandate.py`), not a recorded run.
     pt:
       topic: "mandate delete"
-      message: "O reef e a {nereid:Nereid} ficam; a sua permissão sai antes"
+      message: "O Reef e a {nereid:Nereid} ficam; a sua permissão sai antes"
       accent: "a sua permissão sai antes"
       notes: |-
-        **A permissão da Nereid sai antes, então uma execução que falha não apaga nada e roda de novo** (#706). Quando ele era o padrão do reef, o reef fica sem padrão até outro Mandate assumir, e os `Next steps:` nomeiam o `mandate apply ... --default` a rodar. Ele aceita `--dry-run`.
+        **A permissão da Nereid sai antes, então uma execução que falha não apaga nada e roda de novo** (#706). Quando ele era o padrão do Reef, o Reef fica sem padrão até outro Mandate assumir, e os `Next steps:` nomeiam o `mandate apply ... --default` a rodar. Ele aceita `--dry-run`.
 
         **A saída é tirada do código** (`cli/src/nereus/commands/mandate.py`), não de uma execução gravada.
 
@@ -1003,13 +1003,13 @@ slides:
             reference                    reference-secrets, reference-release                                                                                            -
             secrets                      openbao                                                                                                                         -
     notes: |-
-      **A profile is a set of reefs, Nereids and Mandates that come together** (ADR 0014). Profiles are built in; `profile create` is not built yet.
+      **A profile is a set of Reefs, Nereids and Mandates that come together** (ADR 0014). Profiles are built in; `profile create` is not built yet.
     pt:
       topic: "profile list"
       message: "Quatro profiles, embutidos, o core o padrão"
       accent: "o core o padrão"
       notes: |-
-        **Um profile é um conjunto de reefs, Nereids e Mandates que vêm juntos** (ADR 0014). Os profiles são embutidos; o `profile create` ainda não está pronto.
+        **Um profile é um conjunto de Reefs, Nereids e Mandates que vêm juntos** (ADR 0014). Os profiles são embutidos; o `profile create` ainda não está pronto.
 
   - name: profile-describe
     act: profile
@@ -1019,7 +1019,7 @@ slides:
     accent: "in the order of its images"
     terminal:
       steps:
-        - comment: "The Nereids, their reefs and Mandates, and who requires each"
+        - comment: "The Nereids, their Reefs and Mandates, and who requires each"
           run: "nereus profile describe internal-developer-platform"
           output: |-
             Ingress: Gateway API v1.7.0, Istio 1.30.4 (Gateway istio-system/ingress)
@@ -1140,13 +1140,13 @@ slides:
           output: |-
             ✓ config: owner = project/triton
     notes: |-
-      **The one setting of the person, not of the platform** (ADR 0016, #902): kept in `~/.config/nereus/config.yaml`, never the kubeconfig. The owner must exist in the tenancy tree; a command with no `--owner` uses it, and its output names the owner used ([The tenancy reef](reefs/tenancy.html#config-owner)).
+      **The one setting of the person, not of the platform** (ADR 0016, #902): kept in `~/.config/nereus/config.yaml`, never the kubeconfig. The owner must exist in the tenancy tree; a command with no `--owner` uses it, and its output names the owner used ([The tenancy Reef](reefs/tenancy.html#config-owner)).
     pt:
       topic: "config set"
       message: "O seu owner atual, na config do próprio CLI"
       accent: "na config do próprio CLI"
       notes: |-
-        **A única configuração da pessoa, não da plataforma** (ADR 0016, #902): guardada em `~/.config/nereus/config.yaml`, nunca no kubeconfig. O owner precisa existir na árvore do tenancy; um comando sem `--owner` o usa, e a sua saída nomeia o owner usado ([O reef tenancy](reefs/tenancy.html#config-owner)).
+        **A única configuração da pessoa, não da plataforma** (ADR 0016, #902): guardada em `~/.config/nereus/config.yaml`, nunca no kubeconfig. O owner precisa existir na árvore do tenancy; um comando sem `--owner` o usa, e a sua saída nomeia o owner usado ([O Reef tenancy](reefs/tenancy.html#config-owner)).
 
   - name: config-get
     act: config
@@ -1318,7 +1318,7 @@ slides:
     act: mcp
     topic: "mcp tool list"
     status: built
-    message: "The tools the reefs offer at /mcp, each on or off"
+    message: "The tools the Reefs offer at /mcp, each on or off"
     accent: "on or off"
     terminal:
       steps:
@@ -1330,13 +1330,13 @@ slides:
             presentations  presentations_list   on
             presentations  presentations_share  off (write)
     notes: |-
-      **Each reef declares its tools in its Nereid's contract, and the Nereus API serves them at `/mcp`** (ADR 0029). A row shows only a tool whose route you may call. `off (write)` is a tool whose route is a `POST`: it starts off until an admin enables it; `off (instance)` is one an admin turned off. Only the tools `on` reach claude.ai.
+      **Each Reef declares its tools in its Nereid's contract, and the Nereus API serves them at `/mcp`** (ADR 0029). A row shows only a tool whose route you may call. `off (write)` is a tool whose route is a `POST`: it starts off until an admin enables it; `off (instance)` is one an admin turned off. Only the tools `on` reach claude.ai.
     pt:
       topic: "mcp tool list"
-      message: "As ferramentas que os reefs oferecem em /mcp, cada uma ligada ou desligada"
+      message: "As ferramentas que os Reefs oferecem em /mcp, cada uma ligada ou desligada"
       accent: "ligada ou desligada"
       notes: |-
-        **Cada reef declara suas ferramentas no contrato da sua Nereid, e a API do Nereus as serve em `/mcp`** (ADR 0029). Uma linha mostra só uma ferramenta cuja rota você pode chamar. `off (write)` é uma ferramenta cuja rota é um `POST`: ela começa desligada até um admin habilitá-la; `off (instance)` é uma que um admin desligou. Só as ferramentas `on` chegam ao claude.ai.
+        **Cada Reef declara suas ferramentas no contrato da sua Nereid, e a API do Nereus as serve em `/mcp`** (ADR 0029). Uma linha mostra só uma ferramenta cuja rota você pode chamar. `off (write)` é uma ferramenta cuja rota é um `POST`: ela começa desligada até um admin habilitá-la; `off (instance)` é uma que um admin desligou. Só as ferramentas `on` chegam ao claude.ai.
 
   - name: mcp-tool-switch
     act: mcp
@@ -1350,7 +1350,7 @@ slides:
           run: "nereus mcp tool disable presentations_list"
           output: |-
             ✓ tool presentations_list disabled for the instance
-        - comment: "Offer every tool of a reef; the name above still wins"
+        - comment: "Offer every tool of a Reef; the name above still wins"
           run: "nereus mcp tool enable 'presentations_*'"
           output: |-
             ✓ tools presentations_* enabled for the instance
@@ -1387,13 +1387,13 @@ slides:
             claude-code  nereus  all    https://nereus.example.com/mcp  user
     dependsOn: [mcp-tool-list]
     notes: |-
-      **It runs the agent's own CLI** (`claude mcp add | list | get | remove`), never writes its settings and never copies your token: Claude Code logs in for `aud: nereus-mcp` itself (#1880). `--reef edge,catalog` adds a server of its own, `nereus-edge-catalog`, at `/mcp?reefs=edge,catalog`: only those reefs' tools and the core's (#2296). The OAuth client `claude-code` and its fixed callback port come from the instance's `/.well-known/nereus-configuration`, since Claude Code listens on `http://localhost:<port>/callback` and the realm accepts only that exact address.
+      **It runs the agent's own CLI** (`claude mcp add | list | get | remove`), never writes its settings and never copies your token: Claude Code logs in for `aud: nereus-mcp` itself (#1880). `--reef edge,catalog` adds a server of its own, `nereus-edge-catalog`, at `/mcp?reefs=edge,catalog`: only those Reefs' tools and the core's (#2296). The OAuth client `claude-code` and its fixed callback port come from the instance's `/.well-known/nereus-configuration`, since Claude Code listens on `http://localhost:<port>/callback` and the realm accepts only that exact address.
     pt:
       topic: "mcp client add | list | remove"
       message: "O /mcp da instância no Claude Code, com um comando"
       accent: "no Claude Code"
       notes: |-
-        **Ele roda o CLI do próprio agente** (`claude mcp add | list | get | remove`), nunca escreve as configurações dele e nunca copia o seu token: o Claude Code faz login para `aud: nereus-mcp` sozinho (#1880). `--reef edge,catalog` adiciona um servidor próprio, `nereus-edge-catalog`, em `/mcp?reefs=edge,catalog`: só as ferramentas desses reefs e as do core (#2296). O client OAuth `claude-code` e sua porta fixa de callback vêm do `/.well-known/nereus-configuration` da instância, já que o Claude Code escuta em `http://localhost:<porta>/callback` e o realm aceita só esse endereço exato.
+        **Ele roda o CLI do próprio agente** (`claude mcp add | list | get | remove`), nunca escreve as configurações dele e nunca copia o seu token: o Claude Code faz login para `aud: nereus-mcp` sozinho (#1880). `--reef edge,catalog` adiciona um servidor próprio, `nereus-edge-catalog`, em `/mcp?reefs=edge,catalog`: só as ferramentas desses Reefs e as do core (#2296). O client OAuth `claude-code` e sua porta fixa de callback vêm do `/.well-known/nereus-configuration` da instância, já que o Claude Code escuta em `http://localhost:<porta>/callback` e o realm aceita só esse endereço exato.
   - name: mcp-local
     act: mcp
     topic: "mcp local add | list | enable | disable"

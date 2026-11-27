@@ -2,7 +2,7 @@
 
 *A snapshot of 2026-11-05: versions, activity and features change, so check them again before deciding.*
 
-GitHub Projects is poor on a phone. This page compares open source alternatives that can be self-hosted, focused on use on a phone, then on deploy and on integration with GitHub. It is material for the `board` reef ([#137](https://github.com/getnereus/nereus/issues/137)), where Vikunja may become a Nereid; nothing here is decided.
+GitHub Projects is poor on a phone. This page compares open source alternatives that can be self-hosted, focused on use on a phone, then on deploy and on integration with GitHub. It is material for the `board` Reef ([#137](https://github.com/getnereus/nereus/issues/137)), where Vikunja may become a Nereid; nothing here is decided.
 
 ## How it was checked
 

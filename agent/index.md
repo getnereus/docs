@@ -2,7 +2,7 @@
 
 One page per topic, read on demand. `CLAUDE.md` stays small and points here, so a session loads only the guide it needs.
 
-- [The CLI design](cli.md): reef, Nereid, Mandate, the commands, legacy commands mapped.
+- [The CLI design](cli.md): Reef, Nereid, Mandate, the commands, legacy commands mapped.
 - [How the owner works](owner.md): voice, pt-BR, spoken summaries, the visual companion, the terminal format.
 - [Rules](rules.md): the durable rules and the pillars.
 - [The queue](queue.md): the board and how issues are registered.

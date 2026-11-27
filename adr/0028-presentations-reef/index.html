@@ -7178,17 +7178,17 @@
   
 
 
-<h1 id="0028-the-presentations-reef-nereus-keeps-the-deck-a-session-is-each-time-it-is-given">0028. The presentations reef: Nereus keeps the deck, a Session is each time it is given<a class="headerlink" href="#0028-the-presentations-reef-nereus-keeps-the-deck-a-session-is-each-time-it-is-given" title="Permanent link">&para;</a></h1>
+<h1 id="0028-the-presentations-reef-nereus-keeps-the-deck-a-session-is-each-time-it-is-given">0028. The presentations Reef: Nereus keeps the deck, a Session is each time it is given<a class="headerlink" href="#0028-the-presentations-reef-nereus-keeps-the-deck-a-session-is-each-time-it-is-given" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
 <p class="admonition-title">In short</p>
-<p>The <code>presentations</code> reef keeps the deck as a <code>Presentation</code> and each time it is given as a <code>Session</code>. Status: Accepted (2026-11-16).</p>
+<p>The <code>presentations</code> Reef keeps the deck as a <code>Presentation</code> and each time it is given as a <code>Session</code>. Status: Accepted (2026-11-16).</p>
 </div>
 <p><strong>Status:</strong> Accepted (2026-11-16)</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
-<p>Decks live in the repository today: an outline in YAML (<code>docs/presentations/*.yaml</code>) rendered by <code>docs/presentations/render-outline</code> into one self-contained HTML file. Presenting from a phone while a projector and the room follow, with questions and feedback later, needs a home on the platform. #218 (refine the presentations reef) and its children held only recommendations; on 2026-10-19 the owner decided there that the deck's source lives in Git.</p>
+<p>Decks live in the repository today: an outline in YAML (<code>docs/presentations/*.yaml</code>) rendered by <code>docs/presentations/render-outline</code> into one self-contained HTML file. Presenting from a phone while a projector and the room follow, with questions and feedback later, needs a home on the platform. #218 (refine the presentations Reef) and its children held only recommendations; on 2026-10-19 the owner decided there that the deck's source lives in Git.</p>
 <p>The review of 2026-11-16 (the deck <code>docs/presentations/presentations-reef.yaml</code>, PR #1685) took the decisions below and split the work into six journeys under #1687; the first, #1688 (J1, drive and follow), is the walking skeleton. Three measurements came first: #1689 (Server-Sent Events through the Nereus API), #1690 (the renderer under the portal's Content Security Policy) and #1691 (the database).</p>
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
-<p><strong>The reef is <code>presentations.getnereus.dev/v1alpha1</code>, with two kinds.</strong></p>
+<p><strong>The Reef is <code>presentations.getnereus.dev/v1alpha1</code>, with two kinds.</strong></p>
 <table>
 <thead>
 <tr>
@@ -7213,7 +7213,7 @@
 <p><code>Event</code> (groups Sessions) and <code>Workshop</code> (has steps) come later; until then the event's name and venue live on the Session. One writer per field (ADR 0005): the person writes <code>spec</code>, the Nereid writes <code>status</code>.</p>
 <p><strong>Nereus is the source of the deck; Git is only an optional origin to import from.</strong> A deck is written anywhere, by any agent or editor, against a published JSON Schema versioned by <code>outlineVersion</code>, served on a public route and by the CLI, and named by the deck with <code>$schema</code>. What the schema cannot say (links, references, fitting the screen) is checked by the Nereid on a dry run. This replaces the owner's decision of 2026-10-19 on #218 (the source in Git), because nobody should need a repository to present.</p>
 <p><strong>One package per revision, never changed afterwards.</strong> The import takes the YAML and everything it points to: its assets, the files it cites from outside its folder and the shared references, each copy with its origin (path and commit), listed in a <code>package.json</code> manifest at the root with their hashes and the <code>outlineVersion</code>. The package is a deterministic tar whose sha256 is the revision; a Session points to the revision it showed. OCI comes later, only to share a package.</p>
-<p><strong>One database for the revisions and the live state: PostgreSQL through the <code>Database</code> kind</strong> (#1691). The reef asks the database reef for one <code>Database</code> (<code>engine: postgres</code>) per installation; the Nereid of its Mandate (<code>cloudnative-pg</code> today, a managed PostgreSQL later) makes it, and the reef's Nereid, <code>leagore</code>, reads the connection from the Service Binding Secret. The API holds no database connection: it writes <code>spec</code> and calls the Nereid, found through the reef's Mandate, over HTTP inside the cluster, as the ideas reef reads its notes from doris; the store and its driver stay behind the Nereid, so the API never names a tool.</p>
+<p><strong>One database for the revisions and the live state: PostgreSQL through the <code>Database</code> kind</strong> (#1691). The Reef asks the database Reef for one <code>Database</code> (<code>engine: postgres</code>) per installation; the Nereid of its Mandate (<code>cloudnative-pg</code> today, a managed PostgreSQL later) makes it, and the Reef's Nereid, <code>leagore</code>, reads the connection from the Service Binding Secret. The API holds no database connection: it writes <code>spec</code> and calls the Nereid, found through the Reef's Mandate, over HTTP inside the cluster, as the ideas Reef reads its notes from doris; the store and its driver stay behind the Nereid, so the API never names a tool.</p>
 <ul>
 <li><strong>Revisions:</strong> a table keyed by digest, behind a small put and get; a put of an existing digest changes nothing, and the API refuses a package over 1 MB.</li>
 <li><strong>Live state:</strong> a Session's row holds the step and a sequence; a step change is one statement, issued by <code>leagore</code>, that updates the row and calls <code>pg_notify</code>, so the state and its event commit together.</li>
@@ -7226,12 +7226,12 @@
 <li>the API sends a heartbeat every 15 s, a fixed server setting, as a named event <code>hb</code> rather than a comment, since <code>EventSource</code> hides comments from the page, and a <code>retry:</code> delay; the page reopens the stream after about 35 s with no event, since neither TCP nor <code>EventSource</code> notices a dead network;</li>
 <li>the stream's route has no request timeout, and each follower has a bounded queue, dropped when full, so a slow follower never holds the others back;</li>
 <li>the API raises its open-files limit at start, and a cap of followers per pod answers <code>503</code>: with the container's 1024, one pod failed every route at about 1000 followers;</li>
-<li>driving is a plain <code>POST</code> that needs a token with the presentations reef in J1 and the right to present from J6 (#1725); following needs no token, only the Session's short code, and is read-only.</li>
+<li>driving is a plain <code>POST</code> that needs a token with the presentations Reef in J1 and the right to present from J6 (#1725); following needs no token, only the Session's short code, and is read-only.</li>
 </ul>
 <p>WebSocket was not chosen: it would also pass the entrance, but a follower only receives, and the API has no WebSocket library.</p>
 <p><strong>The deck fits the portal's policy with no exception.</strong> The portal keeps <code>default-src 'self'</code>; the renderer writes its script and its style as files of their own for the portal, and keeps one self-contained HTML file, everything inline, for the offline export (<code>nereus presentations presentation get --output html</code>). #1690 found 6 violations per deck (one inline script, one style block, four style attributes), so the split (#1693) is small.</p>
 <p><strong>The audience is anonymous; sign-up is a choice, later.</strong> A follower is a random id per device, with no login. Signing up (linking the device to a User, e-mails optional, deletion at any time) comes after the six journeys.</p>
-<p><strong>The reef's Nereid is <code>leagore</code></strong>, the Nereid who gathers the people: Nereus's own code, so it takes a sea name, as <code>doris</code>, <code>thetis</code> and <code>triton</code> do. It is born with a new field, <code>nameOrigin</code>, that explains its name and is shown by the CLI and the portal; the field for every Nereid is its own issue. The name joins the reserved list, so no agent session gets it.</p>
+<p><strong>The Reef's Nereid is <code>leagore</code></strong>, the Nereid who gathers the people: Nereus's own code, so it takes a sea name, as <code>doris</code>, <code>thetis</code> and <code>triton</code> do. It is born with a new field, <code>nameOrigin</code>, that explains its name and is shown by the CLI and the portal; the field for every Nereid is its own issue. The name joins the reserved list, so no agent session gets it.</p>
 <div class="language-text highlight"><pre><span></span><code>$ nereus presentations presentation create storytelling \
     --from talks/storytelling.yaml
 ✓ presentations/presentations/storytelling created, revision 1 (sha256:3f9c2a71)
@@ -7243,7 +7243,7 @@ $ nereus presentations session create platform-day \
   follow: https://nereus.example.com/p/K7Q4
 </code></pre></div>
 <p>The import is <code>create --from</code> and the check is <code>create --dry-run</code>, the verbs of ADR 0013 (commands), so no new verb is needed.</p>
-<p><strong>Stand-ins, J1 only:</strong> one YAML stored as a blob, with no package (J2, #1699); only the talk time, with no rehearsal (J3, #1707); any token with the presentations reef drives (J6, #1725; retired by #1726, presenting a right of the authorization reef); one API replica.</p>
+<p><strong>Stand-ins, J1 only:</strong> one YAML stored as a blob, with no package (J2, #1699); only the talk time, with no rehearsal (J3, #1707); any token with the presentations Reef drives (J6, #1725; retired by #1726, presenting a right of the authorization Reef); one API replica.</p>
 <h2 id="prior-art">Prior art<a class="headerlink" href="#prior-art" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Quiz platforms where the audience joins by a short code: a thin page fed by the server that redraws the state it receives.</li>
@@ -7256,7 +7256,7 @@ $ nereus presentations session create platform-day \
 <ul>
 <li>A speaker needs no repository: any tool writes a deck against the schema, and Nereus keeps its history by digest.</li>
 <li>The Nereus API gains its first long-lived stream: an open-files limit raised at start, a cap of followers per pod, and memory per follower (about 30 KB in the API and 55 KB in the gateway, #1689) to size for.</li>
-<li>The presentations reef depends on the database reef: an installation without a <code>Database</code> Mandate cannot run it.</li>
+<li>The presentations Reef depends on the database Reef: an installation without a <code>Database</code> Mandate cannot run it.</li>
 <li><code>leagore</code> is on the drive and follow path: while it is down, the steps stop and the followers wait; the API reopens its stream to <code>leagore</code> and sends each follower the current state.</li>
 <li>The renderer gains a split output for the portal while the offline export stays one file.</li>
 <li><code>cloudnative-pg</code> configures no backup today, so a Session's live state and the revisions are not backed up until it does: a separate issue, outside J1.</li>
@@ -7268,7 +7268,7 @@ $ nereus presentations session create platform-day \
 <li>The credential for a follower when following stops being public (sign-up, rights): <code>EventSource</code> sends no <code>Authorization</code> header, so a cookie or a short-lived query token, decided with that journey.</li>
 <li>The name of the audience's identifier when sign-up comes, and how deletion keeps the statistics anonymized.</li>
 </ul>
-<p><em>Origin: the owner's decisions of 2026-11-16 in the review of the presentations reef (the deck <code>docs/presentations/presentations-reef.yaml</code>, PR #1685, journeys #1687 and #1688), replacing the decision of 2026-10-19 on #218; the figures of the spikes #1689, #1690 and #1691 of the same day. Raw data in Drive <code>#pontos/raw/2026-11-16/</code>.</em></p>
+<p><em>Origin: the owner's decisions of 2026-11-16 in the review of the presentations Reef (the deck <code>docs/presentations/presentations-reef.yaml</code>, PR #1685, journeys #1687 and #1688), replacing the decision of 2026-10-19 on #218; the figures of the spikes #1689, #1690 and #1691 of the same day. Raw data in Drive <code>#pontos/raw/2026-11-16/</code>.</em></p>
 
 
 

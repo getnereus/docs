@@ -1,6 +1,6 @@
 # Use the MCP server
 
-Reach the tools of the installed reefs from Claude Code or claude.ai: the [Nereus API](../../concepts/nereus-api.md) serves `/mcp` itself, each tool run as you, through the installation's entrance as `/v1` is.
+Reach the tools of the installed Reefs from Claude Code or claude.ai: the [Nereus API](../../concepts/nereus-api.md) serves `/mcp` itself, each tool run as you, through the installation's entrance as `/v1` is.
 
 ## Before you start
 
@@ -11,7 +11,7 @@ Reach the tools of the installed reefs from Claude Code or claude.ai: the [Nereu
 
 ### 1. See the tools you may call
 
-[`nereus mcp tool list`](../../specs/cli/core.html#mcp-tool-list) shows each tool the installed reefs declare whose route you may call, the core's `status` first. A tool whose route is a `POST` shows `off (write)`: it starts off until an admin enables it.
+[`nereus mcp tool list`](../../specs/cli/core.html#mcp-tool-list) shows each tool the installed Reefs declare whose route you may call, the core's `status` first. A tool whose route is a `POST` shows `off (write)`: it starts off until an admin enables it.
 
 ```bash
 nereus mcp tool list
@@ -25,7 +25,7 @@ presentations  presentations_list  on
 
 ### 2. Choose the tools the installation offers
 
-An admin turns tools off or on with [`nereus mcp tool disable` and `enable`](../../specs/cli/core.html#mcp-tool-switch), by name or every tool of a reef (`<reef>_*`). An exact name beats a pattern.
+An admin turns tools off or on with [`nereus mcp tool disable` and `enable`](../../specs/cli/core.html#mcp-tool-switch), by name or every tool of a Reef (`<reef>_*`). An exact name beats a pattern.
 
 ```bash
 nereus mcp tool disable presentations_list
@@ -73,7 +73,7 @@ Next steps:
 
 In Claude Code, `/mcp` opens the realm's login page in the browser.
 
-A chat that needs only some reefs takes a server of its own with `--reef`, named `nereus-<reefs>`: its URL carries `?reefs=`, so it offers only those reefs' tools and the core's, whose generic reads reach only those reefs (#2296). A reef the instance lacks is refused at the connection, naming the installed ones.
+A chat that needs only some Reefs takes a server of its own with `--reef`, named `nereus-<reefs>`: its URL carries `?reefs=`, so it offers only those Reefs' tools and the core's, whose generic reads reach only those Reefs (#2296). A Reef the instance lacks is refused at the connection, naming the installed ones.
 
 ```bash
 nereus mcp client add claude-code \
@@ -102,7 +102,7 @@ curl --silent https://nereus.example.com/.well-known/oauth-protected-resource/mc
 
 ## Check it worked
 
-After the login, the Claude Code session lists the same tools as `nereus mcp tool list`. `/mcp` is stateless: a reef installed or uninstalled shows on the client's next connection. `nereus mcp client list` shows the coding agents that have it, one row per server.
+After the login, the Claude Code session lists the same tools as `nereus mcp tool list`. `/mcp` is stateless: a Reef installed or uninstalled shows on the client's next connection. `nereus mcp client list` shows the coding agents that have it, one row per server.
 
 ```bash
 nereus mcp client list
@@ -132,4 +132,4 @@ nereus mcp client remove claude-code --reef edge,catalog
 
 ## Learn more
 
-- [ADR 0029](../../adr/0029-mcp-tools.md): each reef declares its tools in its Nereid's contract, and the Nereus API serves them.
+- [ADR 0029](../../adr/0029-mcp-tools.md): each Reef declares its tools in its Nereid's contract, and the Nereus API serves them.

@@ -4,7 +4,7 @@ Build the installation's tenancy tree, Organizations with Projects under them, s
 
 ## Before you start
 
-- A cluster from [Prepare the cluster](../../start/init.md), in any profile: `nereus init` installs the tenancy reef, its admission policy and the tree in `tenancy/`. The reef has no Nereid.
+- A cluster from [Prepare the cluster](../../start/init.md), in any profile: `nereus init` installs the tenancy Reef, its admission policy and the tree in `tenancy/`. The Reef has no Nereid.
 - [Tenancy and access](../../concepts/tenancy-and-access.md) explains the tree and what an `owner` points at.
 
 ## Steps
@@ -101,5 +101,5 @@ nereus tenancy project delete shop --cascade
 
 ## Learn more
 
-- [The tenancy reef](../../reference/reefs/tenancy.md): every command.
+- [The tenancy Reef](../../reference/reefs/tenancy.md): every command.
 - [ADR 0015](../../adr/0015-tenancy.md): one tree of a fixed shape, with kinds from each installation.

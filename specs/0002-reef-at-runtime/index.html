@@ -7222,10 +7222,10 @@
   
 
 
-<h1 id="0002-reef-at-runtime-a-reef-added-from-the-cli-and-the-reference-nereid-installed-into-it-from-its-image-label">0002. Reef at runtime: a reef added from the CLI, and the reference Nereid installed into it from its image label<a class="headerlink" href="#0002-reef-at-runtime-a-reef-added-from-the-cli-and-the-reference-nereid-installed-into-it-from-its-image-label" title="Permanent link">&para;</a></h1>
+<h1 id="0002-reef-at-runtime-a-reef-added-from-the-cli-and-the-reference-nereid-installed-into-it-from-its-image-label">0002. Reef at runtime: a Reef added from the CLI, and the reference Nereid installed into it from its image label<a class="headerlink" href="#0002-reef-at-runtime-a-reef-added-from-the-cli-and-the-reference-nereid-installed-into-it-from-its-image-label" title="Permanent link">&para;</a></h1>
 <p><strong>Status:</strong> Done (2026-10-17)</p>
 <h2 id="intent">Intent<a class="headerlink" href="#intent" title="Permanent link">&para;</a></h2>
-<p>Prove ADR 0010 end to end from the CLI with the least new code, the way the first slice proved ADRs 0003 and 0004: a reef is an object added at runtime, a Nereid is installed into the reef its image declares, and the command group is named after the reef, not the Nereid (ADR 0011). It is the second cut of #45 (#99), after the <code>system</code> group of #98, and the first part of layer 1 of <a href="../0003-nereid-conformance/">spec 0003</a>: the <code>reef</code> label, read from the registry.</p>
+<p>Prove ADR 0010 end to end from the CLI with the least new code, the way the first slice proved ADRs 0003 and 0004: a Reef is an object added at runtime, a Nereid is installed into the Reef its image declares, and the command group is named after the Reef, not the Nereid (ADR 0011). It is the second cut of #45 (#99), after the <code>system</code> group of #98, and the first part of layer 1 of <a href="../0003-nereid-conformance/">spec 0003</a>: the <code>reef</code> label, read from the registry.</p>
 <h2 id="the-scene-that-ends-the-slice">The scene that ends the slice<a class="headerlink" href="#the-scene-that-ends-the-slice" title="Permanent link">&para;</a></h2>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>init<span class="w"> </span>--yes<span class="w">                                   </span><span class="c1"># also creates the local registry localhost:5111</span>
 make<span class="w"> </span>reference<span class="w">                                             </span><span class="c1"># builds the reference image with its label, pushes it there</span>
@@ -7246,32 +7246,32 @@ nereus<span class="w"> </span>nereid<span class="w"> </span>delete<span class="w
 nereus<span class="w"> </span>release<span class="w"> </span>--help<span class="w">                               </span><span class="c1"># the reef stays: no Nereid installed</span>
 nereus<span class="w"> </span>reef<span class="w"> </span>delete<span class="w"> </span>release
 </code></pre></div>
-<p><code>test/scene</code> runs it on a throwaway k3d cluster, and also checks the two refusals: installing before the reef was added, and an image with no reef label.</p>
+<p><code>test/scene</code> runs it on a throwaway k3d cluster, and also checks the two refusals: installing before the Reef was added, and an image with no Reef label.</p>
 <h2 id="parts">Parts<a class="headerlink" href="#parts" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>The <code>Reef</code> kind</strong> (CRD, cluster-scoped): only a name for now. <code>spec.active</code> comes with #72; the contract of a reef with #18. Written by the CLI (ADR 0005).</li>
-<li><strong>The reefs on the <code>Nereid</code> kind</strong>, <code>spec.reefs</code>, required, written by the CLI.</li>
+<li><strong>The <code>Reef</code> kind</strong> (CRD, cluster-scoped): only a name for now. <code>spec.active</code> comes with #72; the contract of a Reef with #18. Written by the CLI (ADR 0005).</li>
+<li><strong>The Reefs on the <code>Nereid</code> kind</strong>, <code>spec.reefs</code>, required, written by the CLI.</li>
 <li><strong><code>nereus reef apply | list | delete</code>.</strong></li>
 <li><code>apply</code> refuses a name that is not a command name or that a command of the CLI already uses (<code>init</code>, <code>system</code>), and is idempotent.</li>
-<li><code>list</code> shows each reef with the Nereid installed into it.</li>
-<li><code>delete</code> is refused while a Nereid of the reef is installed, naming the <code>nereus nereid delete</code> to run.</li>
+<li><code>list</code> shows each Reef with the Nereid installed into it.</li>
+<li><code>delete</code> is refused while a Nereid of the Reef is installed, naming the <code>nereus nereid delete</code> to run.</li>
 <li><strong><code>nereus nereid apply &lt;name&gt; --image &lt;ref&gt; [--reef &lt;reef&gt;]</code></strong> follows steps 1, 3 and 4 of spec 0003's layer 1, with its messages:</li>
 <li>It reads the label <code>&lt;API_GROUP&gt;/reef</code> (<code>cli/src/nereus/names.py</code>) from the registry. Its value is a comma-separated list.</li>
-<li>With <code>--reef</code>, it uses that reef, which must be one the label lists when there is a label.</li>
+<li>With <code>--reef</code>, it uses that Reef, which must be one the label lists when there is a label.</li>
 <li>With no <code>--reef</code>, it uses the one name the label lists; it refuses several names or none.</li>
-<li>It refuses a reef that was not added (<code>nereus reef apply &lt;name&gt; --from-file ./reefs/&lt;name&gt;/</code>).</li>
+<li>It refuses a Reef that was not added (<code>nereus reef apply &lt;name&gt; --from-file ./reefs/&lt;name&gt;/</code>).</li>
 <li><strong>The registry client</strong> (<code>cli/src/nereus/registry.py</code>), standard library only, behind one function, <code>labels(image, platform)</code>:</li>
 <li>References are read as Docker reads them (<code>reference-release-controller</code> is <code>docker.io/library/reference-release-controller</code>).</li>
 <li><code>GET /v2/&lt;name&gt;/manifests/&lt;ref&gt;</code>; for an index, the manifest of the platform of the cluster's first node (attestation entries have none and are skipped); then <code>GET /v2/&lt;name&gt;/blobs/&lt;config digest&gt;</code> and its <code>.config.Labels</code>.</li>
 <li>A <code>401</code> with a <code>Bearer</code> challenge gets an anonymous token from its realm, scoped to <code>repository:&lt;name&gt;:pull</code>.</li>
 <li>HTTPS, except for <code>localhost</code>, <code>*.localhost</code> and loopback addresses, as Docker does.</li>
-<li><strong>Command groups named after the reef</strong> (ADR 0004, ADR 0010). The cache holds one entry per reef with its Nereid and the commands it published. A group with no Nereid says so, with the install hint. The first slice's group named after the Nereid is gone.</li>
+<li><strong>Command groups named after the Reef</strong> (ADR 0004, ADR 0010). The cache holds one entry per Reef with its Nereid and the commands it published. A group with no Nereid says so, with the install hint. The first slice's group named after the Nereid is gone.</li>
 <li><strong>The local registry.</strong> <code>nereus init --create-cluster</code> on k3d creates the registry <code>k3d-nereus-registry.localhost</code> on port 5111 of the loopback (<code>names.REGISTRY</code>, <code>names.REGISTRY_BIND</code>, <code>names.REGISTRY_PORT</code>; #654: it has no authentication, so nothing on the local network reaches it), or reuses it. It creates the cluster with <code>--registry-use</code>, and with a mirror of <code>localhost:5111</code> to that registry, so one reference serves <code>docker push</code> on the machine, the CLI's read and the cluster's pull. One registry serves every cluster <code>init</code> creates. Docker pushes over plain HTTP to <code>localhost:&lt;port&gt;</code>, but not to <code>k3d-*.localhost:&lt;port&gt;</code>, so the mirror is needed.</li>
-<li><strong>The reference image</strong> gets <code>LABEL ${API_GROUP}/reef=${REEF}</code>. <code>API_GROUP</code> is a build argument with no default, passed from <code>names.py</code> by <code>make reference</code> and <code>test/scene</code>, so a rename stays a one-line change. <code>REEF</code> defaults to <code>release</code>; empty, it builds an image that declares no reef, for the scene's refusal.</li>
+<li><strong>The reference image</strong> gets <code>LABEL ${API_GROUP}/reef=${REEF}</code>. <code>API_GROUP</code> is a build argument with no default, passed from <code>names.py</code> by <code>make reference</code> and <code>test/scene</code>, so a rename stays a one-line change. <code>REEF</code> defaults to <code>release</code>; empty, it builds an image that declares no Reef, for the scene's refusal.</li>
 </ol>
 <h2 id="decisions">Decisions<a class="headerlink" href="#decisions" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>One Nereid per reef until #72.</strong> Installing a second one into a reef was refused, naming the one to uninstall: before <code>spec.active</code> existed, nothing said which one the group's commands would go to. Superseded (owner, 2026-11-19, #1894): a reef takes several Nereids, one the default and the others reached through a Mandate (ADR 0011).</li>
+<li><strong>One Nereid per Reef until #72.</strong> Installing a second one into a Reef was refused, naming the one to uninstall: before <code>spec.active</code> existed, nothing said which one the group's commands would go to. Superseded (owner, 2026-11-19, #1894): a Reef takes several Nereids, one the default and the others reached through a Mandate (ADR 0011).</li>
 <li><strong><code>nereus init</code> creates and owns the local registry</strong>, shared by every cluster it creates, on a fixed port so the reference reads the same in the docs and on every machine. A cluster reused by <code>init</code> keeps the registries it was created with.</li>
 <li><strong>The platform of an index</strong> is the first node's. Mixed-architecture clusters wait for a need.</li>
 <li><strong>The labels the image declares beyond <code>reef</code></strong> (<code>requires</code>, <code>nereid</code>, the version) are spec 0003's, not this slice's.</li>
@@ -7279,7 +7279,7 @@ nereus<span class="w"> </span>reef<span class="w"> </span>delete<span class="w">
 <h2 id="security-and-quality-attributes">Security and quality attributes<a class="headerlink" href="#security-and-quality-attributes" title="Permanent link">&para;</a></h2>
 <p>Under the lens of #28, this slice is <strong>alpha</strong>: a proof that works end to end on a throwaway cluster, never production.</p>
 <ul>
-<li><strong>Read before run.</strong> The reef is read from the registry before anything is pulled or run, two or three small requests and no layer, so a wrong image is refused before it reaches the cluster.</li>
+<li><strong>Read before run.</strong> The Reef is read from the registry before anything is pulled or run, two or three small requests and no layer, so a wrong image is refused before it reaches the cluster.</li>
 <li><strong>What the CLI trusts from a registry.</strong></li>
 <li>References are validated before they become a URL.</li>
 <li>A manifest fetched by digest, and the config blob, are checked against their digest.</li>
@@ -7290,7 +7290,7 @@ nereus<span class="w"> </span>reef<span class="w"> </span>delete<span class="w">
 <li><strong>Anonymous only.</strong> A registry that asks for credentials is refused with a message that points to #87. Private registries and their credentials are #87.</li>
 <li><strong>Plain HTTP only for this machine's registry</strong>, the local one <code>init</code> creates.</li>
 <li><strong>What beta would need:</strong></li>
-<li>two Nereids of one reef, with one active (#72), instead of refusing the second;</li>
+<li>two Nereids of one Reef, with one active (#72), instead of refusing the second;</li>
 <li>private registries (#87);</li>
 <li>the rest of spec 0003's layer 1: <code>requires</code> checked, the Nereid's name and version from its labels.</li>
 <li><strong>Fitness functions:</strong></li>
@@ -7299,7 +7299,7 @@ nereus<span class="w"> </span>reef<span class="w"> </span>delete<span class="w">
 <li><code>test/scene</code> end to end.</li>
 </ul>
 <h2 id="constraints">Constraints<a class="headerlink" href="#constraints" title="Permanent link">&para;</a></h2>
-<p>Every rule in <code>CLAUDE.md</code> and <code>docs/adr/</code> applies, especially "one writer per field" (ADR 0005) and "the API never names a Nereid": the CLI reads the reef from the image, never from a list of known Nereids.</p>
+<p>Every rule in <code>CLAUDE.md</code> and <code>docs/adr/</code> applies, especially "one writer per field" (ADR 0005) and "the API never names a Nereid": the CLI reads the Reef from the image, never from a list of known Nereids.</p>
 <h2 id="learn-more">Learn more<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Fitness functions</strong> come from <em>Building Evolutionary Architectures</em> (Neal Ford, Rebecca Parsons, Patrick Kua, O'Reilly, 2017; <a href="https://evolutionaryarchitecture.com/">evolutionaryarchitecture.com</a>): an automated check that a quality of the architecture holds, run on every change. This spec lists its own under "Security and quality attributes".</li>

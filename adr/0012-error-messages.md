@@ -58,4 +58,4 @@ Learn more: the four links above, in that order, go from the principle to the CL
 - A Controller's refusal becomes structured data in `status`, with limits the CLI enforces.
 - Follow-ups: #327 applies these rules to the issuer refusal and adds the refusal fields to spec 0005's `Stalled` condition; #330 makes `make docs` say its port is taken, and how to pick another, without a traceback.
 
-*Aligned in wording 2026-10-25 from voice session (reef, Nereid, Mandate, `nereus`); raw data in Drive #pontos/raw/2026-10-25.*
+*Aligned in wording 2026-10-25 from voice session (Reef, Nereid, Mandate, `nereus`); raw data in Drive #pontos/raw/2026-10-25.*

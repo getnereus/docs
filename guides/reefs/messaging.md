@@ -10,7 +10,7 @@ A topic carries each message to everyone who listens, on the subject `topics.<na
 
 ## Steps
 
-### 1. Apply the messaging reef
+### 1. Apply the messaging Reef
 
 [`nereus reef apply`](../../specs/cli/reefs/messaging.html#apply-reef) brings the two kinds.
 
@@ -172,5 +172,5 @@ Next steps:
 
 ## Learn more
 
-- [The messaging reef](../../reference/reefs/messaging.md): topics, queues and sessions, every command.
+- [The messaging Reef](../../reference/reefs/messaging.md): topics, queues and sessions, every command.
 - [Reef, Nereid and Mandate](../../concepts/model.md): why the Mandate, not the code, picks NATS.

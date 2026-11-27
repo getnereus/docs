@@ -1,10 +1,10 @@
-# The environment reef
+# The environment Reef
 
-Every command of the environment reef: an environment per agent, made by a Nereid, gone at its expiry.
+Every command of the environment Reef: an environment per agent, made by a Nereid, gone at its expiry.
 
 ## Commands
 
-- [`nereus reef apply environment`](../../specs/cli/reefs/environment.html#setup) The environment reef, the vcluster Nereid and its default Mandate
+- [`nereus reef apply environment`](../../specs/cli/reefs/environment.html#setup) The environment Reef, the vcluster Nereid and its default Mandate
 - [`nereus environment create a`](../../specs/cli/reefs/environment.html#create) An environment of its own, for an hour
 - [`nereus mandate create heavy`](../../specs/cli/reefs/environment.html#size) A bigger environment, for Nereus itself
 - [`nereus environment list`](../../specs/cli/reefs/environment.html#list) Two agents, two environments, and the time each one has left
@@ -17,7 +17,7 @@ Every command of the environment reef: an environment per agent, made by a Nerei
 
 ### setup
 
-The vcluster Nereid requires the release reef: it asks it for the vcluster chart.
+The vcluster Nereid requires the release Reef: it asks it for the vcluster chart.
 
 ```bash
 nereus reef apply environment

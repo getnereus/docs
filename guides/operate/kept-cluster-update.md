@@ -1,6 +1,6 @@
 # Update the kept cluster without a rebuild
 
-Move one Nereid, or the Nereus API and its charts, of the kept cluster `k3d-nereus` to a new build, keeping the Installation and every reef, Nereid and secret.
+Move one Nereid, or the Nereus API and its charts, of the kept cluster `k3d-nereus` to a new build, keeping the Installation and every Reef, Nereid and secret.
 
 ## Before you start
 
@@ -102,9 +102,9 @@ Run each `fix` line init printed, as in steps 2 and 3. thetis's next pass finds 
 
 ## Check it worked
 
-[`nereus nereid list`](../../specs/cli/core.html#nereid-list) shows each Nereid Ready with the image you applied, and [`nereus status`](../../specs/cli/core.html#status) shows every reef Ready.
+[`nereus nereid list`](../../specs/cli/core.html#nereid-list) shows each Nereid Ready with the image you applied, and [`nereus status`](../../specs/cli/core.html#status) shows every Reef Ready.
 
 ## Next
 
 - [Rebuild the kept cluster](kept-cluster.md) when an in-place update is not enough.
-- [Get a reef's commands working again](../troubleshoot/nereid-stops.md) when a Nereid has no pod serving.
+- [Get a Reef's commands working again](../troubleshoot/nereid-stops.md) when a Nereid has no pod serving.

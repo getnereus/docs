@@ -40,7 +40,7 @@ nereus login --initial-admin
 
 ### 4. Bring up the tunnel and trust it at the ingress gateway
 
-Apply the edge reef and its Nereid `cloudflare` ([Publish at a hostname](edge.md)), keep the credentials file as `edge/cloudflare-tunnel` and an API token (DNS Edit on the zone, Tunnel Read) as `edge/cloudflare-token`, then create the Mandate with `--param tunnel=nereus --param credentialsSecret=edge/cloudflare-tunnel --param apiTokenSecret=edge/cloudflare-token --default`. Create the routes at once.
+Apply the edge Reef and its Nereid `cloudflare` ([Publish at a hostname](edge.md)), keep the credentials file as `edge/cloudflare-tunnel` and an API token (DNS Edit on the zone, Tunnel Read) as `edge/cloudflare-token`, then create the Mandate with `--param tunnel=nereus --param credentialsSecret=edge/cloudflare-tunnel --param apiTokenSecret=edge/cloudflare-token --default`. Create the routes at once.
 
 ```bash
 nereus edge route create triton --hostname triton.getnereus.dev
@@ -83,11 +83,11 @@ nereus mandate apply keycloak \
 
 [`nereus mandate apply`](../../specs/cli/core.html#mandate-apply) `nereus-portal` with `--param publicUrl=https://portal.getnereus.dev`.
 
-Then the Mandate `messaging-nats` is the messaging reef's default with no match (`--default`, no `--match`), so it holds the Rooms' Topics, which name no engine (ADR 0030).
+Then the Mandate `messaging-nats` is the messaging Reef's default with no match (`--default`, no `--match`), so it holds the Rooms' Topics, which name no engine (ADR 0030).
 
 A cluster that had `--param agents=true` there keeps the old streams of the account `AGENTS` on the claim, unread, and the Secret `nats-triton` of `nereus-system`: drop the parameter, run `nereus nereid apply nats --reef messaging` again, and delete the Secret by hand.
 
-The rooms reef needs no parameter and no NATS account of its own (#2078). Triton's issuer is the public realm of step 5, given with `--set` (#2157); without it Triton stops with `--issuer is required`.
+The rooms Reef needs no parameter and no NATS account of its own (#2078). Triton's issuer is the public realm of step 5, given with `--set` (#2157); without it Triton stops with `--issuer is required`.
 
 ```bash
 nereus reef apply rooms
@@ -122,7 +122,7 @@ From then on your calls take the normal check, and the doctor's count of emergen
 
 ## Check it worked
 
-[`nereus status`](../../specs/cli/core.html#status) shows every reef Ready; `curl` on `https://triton.getnereus.dev/healthz`, `https://portal.getnereus.dev/` and `https://api.getnereus.dev/.well-known/nereus-configuration` answers 200, and the realm `master` answers 404 from outside.
+[`nereus status`](../../specs/cli/core.html#status) shows every Reef Ready; `curl` on `https://triton.getnereus.dev/healthz`, `https://portal.getnereus.dev/` and `https://api.getnereus.dev/.well-known/nereus-configuration` answers 200, and the realm `master` answers 404 from outside.
 
 ```bash
 nereus status

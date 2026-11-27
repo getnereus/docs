@@ -10,7 +10,7 @@ See the group's commands; the CLI built them from what the Nereid published, wit
 nereus release --help
 ```
 
-It lists one group per kind of the reef: `repository`, `source` and `target`, next to the releases themselves.
+It lists one group per kind of the Reef: `repository`, `source` and `target`, next to the releases themselves.
 
 Add a Helm repository: [`nereus release repository create`](../specs/cli/reefs/release.html#repository-create)
 
@@ -44,7 +44,7 @@ codecentric  http  https://codecentric.github.io/helm-charts  True
 ## What you get
 
 - A `Repository` object in the cluster, `Ready`: the reference Nereid answered it with no tool behind it.
-- The group is named after the reef, not the Nereid: another Nereid of `release` would serve the same commands ([Reef, Nereid and Mandate](../concepts/model.md)).
+- The group is named after the Reef, not the Nereid: another Nereid of `release` would serve the same commands ([Reef, Nereid and Mandate](../concepts/model.md)).
 
 ## Next
 

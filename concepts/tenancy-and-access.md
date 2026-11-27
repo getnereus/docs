@@ -4,7 +4,7 @@ Tenancy says whose each thing is, a tree of Organizations and nested Projects; a
 
 ## Example
 
-The tree is two kinds of the tenancy reef, applied with [`nereus tenancy apply`](../specs/cli/reefs/tenancy.html#apply):
+The tree is two kinds of the tenancy Reef, applied with [`nereus tenancy apply`](../specs/cli/reefs/tenancy.html#apply):
 
 ```yaml
 apiVersion: tenancy.getnereus.dev/v1alpha1
@@ -33,10 +33,10 @@ spec:
 
 ## How it works
 
-- Tenancy is a reef, `tenancy.getnereus.dev`, whose kinds come from each instance: every kind is a node with an optional `spec.parent`, and one kind, the boundary, isolates people and billing (here `Organization`).
+- Tenancy is a Reef, `tenancy.getnereus.dev`, whose kinds come from each instance: every kind is a node with an optional `spec.parent`, and one kind, the boundary, isolates people and billing (here `Organization`).
 - Whatever belongs somewhere names `owner: {kind, name}` in the tree: a Workload, an Environment, a team.
-- The `authorization` reef holds access: a `Role` is a list of rules, `<reef>:<kinds>:<verbs>`, and a `Binding` gives it to a team, a position in a team or, as the exception, one User, on one node; access flows down the tree.
-- The `teams` reef keeps one list of members: joining a team grants its access, leaving removes it. A person is one core `User` whatever the login, and a login with no User has no permission.
+- The `authorization` Reef holds access: a `Role` is a list of rules, `<reef>:<kinds>:<verbs>`, and a `Binding` gives it to a team, a position in a team or, as the exception, one User, on one node; access flows down the tree.
+- The `teams` Reef keeps one list of members: joining a team grants its access, leaving removes it. A person is one core `User` whatever the login, and a login with no User has no permission.
 - The Nereus API asks before it acts; [`nereus can-i`](../specs/cli/reefs/authorization.html#can-i-yes) asks the same question and names the binding that grants it.
 
 ## Not this

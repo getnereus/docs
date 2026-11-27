@@ -7182,18 +7182,18 @@
 <h2 id="how-it-maps-to-nereus">How it maps to Nereus<a class="headerlink" href="#how-it-maps-to-nereus" title="Permanent link">&para;</a></h2>
 <p><strong>What Nereus already does the same way</strong></p>
 <ul>
-<li><strong>"Your platform, your way"</strong> is Nereus: Kratix is a framework to build platforms, and so is Nereus; an Internal Developer Platform is one profile, ADR 0014 (a profile is a YAML file that installs a set of reefs).</li>
-<li><strong>Golden bricks are the reefs:</strong> each capability is an API group installed at runtime, ADR 0010 (reefs at runtime); a profile assembles the path from them.</li>
-<li><strong>A managed service instead of a puppy:</strong> a resource reef, ADR 0017 (resource reefs), keeps the tool behind the API; <code>database</code> with the Nereid <code>cloudnative-pg</code> writes the connection Secret in <code>status.binding</code> and stays the owner of Day 2.</li>
-<li><strong>The marketplace's contribution model</strong> is the Nereid contract with a Mandate, ADR 0011 (reefs, Nereids and Mandates): a specialist writes a Nereid and binds it to a reef, without touching the core.</li>
-<li><strong>Three tiers, interfaces as doors:</strong> everything comes from the Nereus API, ADR 0018; the portal gets a screen per reef, ADR 0022 (a reef's screen is a Web Component its Nereid serves); MCP is a door of the API, ADR 0029 (each reef declares its MCP tools, served at <code>/mcp</code>).</li>
+<li><strong>"Your platform, your way"</strong> is Nereus: Kratix is a framework to build platforms, and so is Nereus; an Internal Developer Platform is one profile, ADR 0014 (a profile is a YAML file that installs a set of Reefs).</li>
+<li><strong>Golden bricks are the Reefs:</strong> each capability is an API group installed at runtime, ADR 0010 (Reefs at runtime); a profile assembles the path from them.</li>
+<li><strong>A managed service instead of a puppy:</strong> a resource Reef, ADR 0017 (resource Reefs), keeps the tool behind the API; <code>database</code> with the Nereid <code>cloudnative-pg</code> writes the connection Secret in <code>status.binding</code> and stays the owner of Day 2.</li>
+<li><strong>The marketplace's contribution model</strong> is the Nereid contract with a Mandate, ADR 0011 (Reefs, Nereids and Mandates): a specialist writes a Nereid and binds it to a Reef, without touching the core.</li>
+<li><strong>Three tiers, interfaces as doors:</strong> everything comes from the Nereus API, ADR 0018; the portal gets a screen per Reef, ADR 0022 (a Reef's screen is a Web Component its Nereid serves); MCP is a door of the API, ADR 0029 (each Reef declares its MCP tools, served at <code>/mcp</code>).</li>
 <li><strong>Agents as one more kind of consumer:</strong> Triton, ADR 0030 (the messaging Nereid for agents), and the project's own work with agent sessions inside boundaries (journeys, guards).</li>
-<li><strong>Owner and audience:</strong> the catalog records each Workload's <code>owner</code> and <code>audience</code>, ADR 0016 (the reef that says what Nereus has).</li>
+<li><strong>Owner and audience:</strong> the catalog records each Workload's <code>owner</code> and <code>audience</code>, ADR 0016 (the Reef that says what Nereus has).</li>
 </ul>
 <p><strong>Gaps the episode points at</strong></p>
 <ul>
 <li>
-<h1 id="2033-reef-maturity-at-runtime-an-alpha-reef-is-offered-only-to-its-audience-a-sub-issue-of-28-how-every-feature-is-born-alpha-beta-stable">2033 (reef maturity at runtime: an alpha reef is offered only to its audience), a sub-issue of #28 (how every feature is born: alpha, beta, stable).<a class="headerlink" href="#2033-reef-maturity-at-runtime-an-alpha-reef-is-offered-only-to-its-audience-a-sub-issue-of-28-how-every-feature-is-born-alpha-beta-stable" title="Permanent link">&para;</a></h1>
+<h1 id="2033-reef-maturity-at-runtime-an-alpha-reef-is-offered-only-to-its-audience-a-sub-issue-of-28-how-every-feature-is-born-alpha-beta-stable">2033 (Reef maturity at runtime: an alpha Reef is offered only to its audience), a sub-issue of #28 (how every feature is born: alpha, beta, stable).<a class="headerlink" href="#2033-reef-maturity-at-runtime-an-alpha-reef-is-offered-only-to-its-audience-a-sub-issue-of-28-how-every-feature-is-born-alpha-beta-stable" title="Permanent link">&para;</a></h1>
 </li>
 <li>
 <h1 id="2034-profile-guarantees-a-profile-states-the-expectations-it-meets-as-runnable-checks-for-those-who-leave-the-golden-path">2034 (profile guarantees: a profile states the expectations it meets as runnable checks, for those who leave the golden path).<a class="headerlink" href="#2034-profile-guarantees-a-profile-states-the-expectations-it-meets-as-runnable-checks-for-those-who-leave-the-golden-path" title="Permanent link">&para;</a></h1>

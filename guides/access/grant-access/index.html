@@ -7266,11 +7266,11 @@
 
 
 <h1 id="grant-access">Grant access<a class="headerlink" href="#grant-access" title="Permanent link">&para;</a></h1>
-<p>Grant a Nereid that reaches the cloud the roles it asks for: the Nereid acts as its reef's identity, <code>&lt;installation&gt;-&lt;reef&gt;-&lt;role&gt;</code>, with no secret of its own; it asks, and you approve with your own login.</p>
+<p>Grant a Nereid that reaches the cloud the roles it asks for: the Nereid acts as its Reef's identity, <code>&lt;installation&gt;-&lt;reef&gt;-&lt;role&gt;</code>, with no secret of its own; it asks, and you approve with your own login.</p>
 <h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">&para;</a></h2>
 <ul>
-<li>An installation <a href="../../operate/cloud/">connected to the cloud</a>: the cloud reef with its Nereid <code>azure</code>.</li>
-<li>A Nereid whose image declares <code>requires: cloud</code> (<a href="../../../specs/0005-cloud-reef/">spec 0005</a>), here <code>keyvault</code> for the secrets reef.</li>
+<li>An installation <a href="../../operate/cloud/">connected to the cloud</a>: the cloud Reef with its Nereid <code>azure</code>.</li>
+<li>A Nereid whose image declares <code>requires: cloud</code> (<a href="../../../specs/0005-cloud-reef/">spec 0005</a>), here <code>keyvault</code> for the secrets Reef.</li>
 <li>A cloud login that can create identities and role assignments. A role it cannot write is printed as the command an administrator runs.</li>
 </ul>
 <div class="admonition note">
@@ -7279,7 +7279,7 @@
 </div>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
 <h3 id="1-apply-the-nereid">1. Apply the Nereid<a class="headerlink" href="#1-apply-the-nereid" title="Permanent link">&para;</a></h3>
-<p><a href="../../../specs/cli/core.html#nereid-apply"><code>nereus nereid apply</code></a> gives the Nereid a short-lived token for the cloud, writes its reef's access entry and shows the plan that creates its identity.</p>
+<p><a href="../../../specs/cli/core.html#nereid-apply"><code>nereus nereid apply</code></a> gives the Nereid a short-lived token for the cloud, writes its Reef's access entry and shows the plan that creates its identity.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>nereid<span class="w"> </span>apply<span class="w"> </span>keyvault<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--reef<span class="w"> </span>secrets
 </code></pre></div>
@@ -7298,9 +7298,9 @@ Approve 2 requests? [y/N]: y
   total            0.1s
 ✓ keyvault added to secrets · acts as tailwind-secrets-reader
 </code></pre></div>
-<p>Another Nereid of the same reef later keeps the identity and its grants: the plan only swaps the federated credential.</p>
+<p>Another Nereid of the same Reef later keeps the identity and its grants: the plan only swaps the federated credential.</p>
 <h3 id="2-see-what-is-asked">2. See what is asked<a class="headerlink" href="#2-see-what-is-asked" title="Permanent link">&para;</a></h3>
-<p><code>nereus system access list</code> shows each reef's access entries and the roles its Nereid asks for but nobody approved yet.</p>
+<p><code>nereus system access list</code> shows each Reef's access entries and the roles its Nereid asks for but nobody approved yet.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>system<span class="w"> </span>access<span class="w"> </span>list
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>REEF       REQUEST        WHAT                                                                                                              STATE
@@ -7311,7 +7311,7 @@ terraform  -              grant Storage Blob Data Contributor on storage account
 </code></pre></div>
 <p>An ask for <code>Owner</code>, <code>User Access Administrator</code> or <code>Role Based Access Control Administrator</code> shows <code>Refused</code> and is never copied into a plan.</p>
 <h3 id="3-approve">3. Approve<a class="headerlink" href="#3-approve" title="Permanent link">&para;</a></h3>
-<p><code>nereus system access approve --all</code> turns every reef's asks into plans, shows them and runs them after one question; <code>--dry-run</code> shows them and runs none.</p>
+<p><code>nereus system access approve --all</code> turns every Reef's asks into plans, shows them and runs them after one question; <code>--dry-run</code> shows them and runs none.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>system<span class="w"> </span>access<span class="w"> </span>approve<span class="w"> </span>--all
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>1/2 secrets  r-01m5bk…5563  2 requests
@@ -7356,7 +7356,7 @@ Approve 2 requests? [y/N]: y
 <h2 id="learn-more">Learn more<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../../concepts/undercloud-overcloud/">Undercloud and overcloud</a>: why the installation's identity lives in the cloud.</li>
-<li><a href="../../../specs/0005-cloud-reef/">Spec 0005</a>: the cloud reef, its plans and what a Nereid may ask.</li>
+<li><a href="../../../specs/0005-cloud-reef/">Spec 0005</a>: the cloud Reef, its plans and what a Nereid may ask.</li>
 </ul>
 
 

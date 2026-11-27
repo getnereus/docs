@@ -7288,7 +7288,7 @@
 
 
 <h1 id="prepare-the-undercloud">Prepare the undercloud<a class="headerlink" href="#prepare-the-undercloud" title="Permanent link">&para;</a></h1>
-<p>Create the installation's undercloud, <code>&lt;installation&gt;-undercloud</code>, a local cluster with the <code>cloud</code> reef whose public OIDC issuer a cloud trusts, here Azure.</p>
+<p>Create the installation's undercloud, <code>&lt;installation&gt;-undercloud</code>, a local cluster with the <code>cloud</code> Reef whose public OIDC issuer a cloud trusts, here Azure.</p>
 <div class="admonition note">
 <p class="admonition-title">Recorded against fakes</p>
 <p>The outputs are what <code>init</code> prints in its tests, against a fake k3d, a fake Nereid, a fake <code>az</code> and recorded Azure answers. A real subscription is checked by hand (#266).</p>
@@ -7342,7 +7342,7 @@ $ nereus init --yes --approve-access
 </code></pre></div>
 <p>A request Azure refuses marks its line <code>✗</code> and says what an administrator has to run (<a href="../cloud/">Connect to the cloud</a>).</p>
 <h3 id="4-run-it-again">4. Run it again<a class="headerlink" href="#4-run-it-again" title="Permanent link">&para;</a></h3>
-<p>The cluster, the installation and the reef are kept, and the plan is made again. When the published keys are the cluster's own, nothing is uploaded; when they changed, the issuer is marked <code>Stale</code> and the upload planned. A cluster presenting another issuer is recreated, but only one whose namespace says <code>undercloud</code> and whose Installation has this name and id.</p>
+<p>The cluster, the installation and the Reef are kept, and the plan is made again. When the published keys are the cluster's own, nothing is uploaded; when they changed, the issuer is marked <code>Stale</code> and the upload planned. A cluster presenting another issuer is recreated, but only one whose namespace says <code>undercloud</code> and whose Installation has this name and id.</p>
 <h2 id="check-it-worked">Check it worked<a class="headerlink" href="#check-it-worked" title="Permanent link">&para;</a></h2>
 <p>The run ends with <code>✓ azure exchanged its token as tailwind-cloud-provisioner</code>. Each run that sends requests writes a log, readable by you alone, in <code>~/.local/state/nereus/logs/</code>: the plan, each request and its answer's status, never a token.</p>
 <h2 id="next">Next<a class="headerlink" href="#next" title="Permanent link">&para;</a></h2>
@@ -7353,7 +7353,7 @@ $ nereus init --yes --approve-access
 <h2 id="learn-more">Learn more<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../../concepts/undercloud-overcloud/">Undercloud and overcloud</a>.</li>
-<li><a href="../../../specs/0005-cloud-reef/">Spec 0005</a>: the cloud reef and the issuer.</li>
+<li><a href="../../../specs/0005-cloud-reef/">Spec 0005</a>: the cloud Reef and the issuer.</li>
 </ul>
 
 

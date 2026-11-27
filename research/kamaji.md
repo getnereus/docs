@@ -1,4 +1,4 @@
-# Kamaji or vCluster for the environment reef
+# Kamaji or vCluster for the environment Reef
 
 **Keep vCluster as the Nereid of today's Environments; register Kamaji as the candidate Nereid for an Environment, or a cluster, with nodes of its own.** The owner asked on 2026-11-07 whether [Kamaji](https://kamaji.clastix.io/) should replace vCluster. Facts come from Kamaji's [README](https://github.com/clastix/kamaji/blob/master/README.md) and [versioning page](https://github.com/clastix/kamaji/blob/master/docs/content/reference/versioning.md), opened on GitHub that day; `kamaji.clastix.io` was not reachable from the session.
 
@@ -21,7 +21,7 @@
 
 ## Where Kamaji fits
 
-- **An Environment with its own nodes**, isolated at the node level: a second Nereid of the environment reef, chosen by Mandate, without changing the reef (ADR 0002).
+- **An Environment with its own nodes**, isolated at the node level: a second Nereid of the environment Reef, chosen by Mandate, without changing the Reef (ADR 0002).
 - **Bootstrapping from a local seed** (#61): the clusters the platform creates in a cloud, with Cluster API, could get their control planes from Kamaji, many on one management cluster and one shared datastore (CloudNativePG, already a Nereid).
 
 ## Learn more

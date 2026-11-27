@@ -1,10 +1,10 @@
 deck:
   name: release
-  title: "The release reef"
+  title: "The release Reef"
   subtitle: "From a chart repository to a running release, step by step"
   accent: "step by step"
   pt:
-    title: "O reef release"
+    title: "O Reef release"
     subtitle: "De um repositório de charts até uma release rodando, passo a passo"
     accent: "passo a passo"
 
@@ -13,9 +13,9 @@ acts:
     title: "Opening"
     pt: {title: "Abertura"}
   - name: model
-    title: "The reef"
+    title: "The Reef"
     question: "Which questions does a release answer?"
-    pt: {title: "O reef", question: "Que perguntas uma release responde?"}
+    pt: {title: "O Reef", question: "Que perguntas uma release responde?"}
   - name: install
     title: "Step by step"
     question: "What does a person type to run a chart?"
@@ -31,10 +31,10 @@ references:
     author: "The Flux project (CNCF)"
     url: "https://fluxcd.io/flux/components/helm/"
     about: "Flux keeps a cluster in sync with sources of configuration; its helm-controller reconciles HelmRelease objects from charts that its source-controller fetches."
-    forUs: "The `flux` Nereid writes a **HelmRepository** for each Repository and a **HelmRelease** for each Release, and copies Flux's Ready condition back, with a reason the reef's contract declares."
+    forUs: "The `flux` Nereid writes a **HelmRepository** for each Repository and a **HelmRelease** for each Release, and copies Flux's Ready condition back, with a reason the Reef's contract declares."
     pt:
       about: "O Flux mantém um cluster em sincronia com fontes de configuração; o seu helm-controller reconcilia objetos HelmRelease a partir de charts que o source-controller busca."
-      forUs: "O Nereid `flux` escreve um **HelmRepository** para cada Repository e um **HelmRelease** para cada Release, e copia de volta a condition Ready do Flux, com um reason que o contrato do reef declara."
+      forUs: "O Nereid `flux` escreve um **HelmRepository** para cada Repository e um **HelmRelease** para cada Release, e copia de volta a condition Ready do Flux, com um reason que o contrato do Reef declara."
   - name: helm
     title: "Helm: the package manager for Kubernetes"
     author: "The Helm project (CNCF)"
@@ -72,17 +72,17 @@ slides:
     message: "Nine commands take a Helm chart from its repository to a running release"
     refs: [phillips]
     notes: |-
-      What we want to say: **a person names the reef, never the tool**. The {reef:release} reef runs a Helm chart without tying Nereus to Flux, Argo CD or plain Helm.
+      What we want to say: **a person names the Reef, never the tool**. The {reef:release} Reef runs a Helm chart without tying Nereus to Flux, Argo CD or plain Helm.
 
-      **Route:** the four kinds of the reef, the nine commands with Flux, what the Nereid writes underneath, and how the tool can change.
+      **Route:** the four kinds of the Reef, the nine commands with Flux, what the Nereid writes underneath, and how the tool can change.
 
       Source: docs/guides/reefs/release.md.
     pt:
       message: "Nove comandos levam um Helm chart do seu repositório a uma release rodando"
       notes: |-
-        O que queremos dizer: **a pessoa nomeia o reef, nunca a ferramenta**. O reef {reef:release} roda um Helm chart sem amarrar o Nereus ao Flux, ao Argo CD ou ao Helm puro.
+        O que queremos dizer: **a pessoa nomeia o Reef, nunca a ferramenta**. O Reef {reef:release} roda um Helm chart sem amarrar o Nereus ao Flux, ao Argo CD ou ao Helm puro.
 
-        **Roteiro:** os quatro kinds do reef, os nove comandos com o Flux, o que o Nereid escreve por baixo e como a ferramenta pode mudar.
+        **Roteiro:** os quatro kinds do Reef, os nove comandos com o Flux, o que o Nereid escreve por baixo e como a ferramenta pode mudar.
 
         Fonte: docs/guides/reefs/release.md.
 
@@ -90,7 +90,7 @@ slides:
   - name: kinds-where-what
     act: model
     topic: "Four kinds · 1/2"
-    message: "The {reef:release} reef splits a release into four questions, each one a kind"
+    message: "The {reef:release} Reef splits a release into four questions, each one a kind"
     accent: "four questions"
     heading: "release.getnereus.dev/v1alpha1"
     screen: ["**Repository:** where it comes from (http, oci or git)", "**Source:** what, a chart of a repository at a version"]
@@ -104,7 +104,7 @@ slides:
     pt:
       topic: "Quatro kinds · 1/2"
       heading: "release.getnereus.dev/v1alpha1"
-      message: "O reef {reef:release} divide uma release em quatro perguntas, cada uma um kind"
+      message: "O Reef {reef:release} divide uma release em quatro perguntas, cada uma um kind"
       accent: "quatro perguntas"
       screen: ["**Repository:** de onde vem (http, oci ou git)", "**Source:** o quê, um chart de um repositório numa versão"]
       notes: |-
@@ -125,7 +125,7 @@ slides:
     notes: |-
       What we want to say: **the Release is the only kind that runs something**; the other three describe it.
 
-      Until the environment reef exists, every Target is the cluster Nereus runs in, and the Nereid says so in the Target's status.
+      Until the environment Reef exists, every Target is the cluster Nereus runs in, and the Nereid says so in the Target's status.
 
       Source: docs/guides/reefs/release.md.
     pt:
@@ -137,20 +137,20 @@ slides:
       notes: |-
         O que queremos dizer: **a Release é o único kind que roda algo**; os outros três a descrevem.
 
-        Enquanto o reef environment não existe, todo Target é o cluster onde o Nereus roda, e o Nereid diz isso no status do Target.
+        Enquanto o Reef environment não existe, todo Target é o cluster onde o Nereus roda, e o Nereid diz isso no status do Target.
 
         Fonte: docs/guides/reefs/release.md.
 
   # ── Step by step ────────────────────────────────────
   - name: apply-reef
     act: install
-    topic: "1 · The reef"
-    message: "One command applies the {reef:release} reef, and the CLI gains its commands"
+    topic: "1 · The Reef"
+    message: "One command applies the {reef:release} Reef, and the CLI gains its commands"
     accent: "One command"
     terminal:
       cwd: "~/example"
       steps:
-        - comment: "Apply the release reef"
+        - comment: "Apply the release Reef"
           run: "nereus reef apply release"
           output: |-
             ✓ core/reefs/release 0.1.0 created (release.getnereus.dev/v1alpha1: releases, repositories, sources, targets)
@@ -160,15 +160,15 @@ slides:
               nereus release --help
               nereus nereid apply <nereid> --reef release
     notes: |-
-      What we want to say: **the reef comes first, with no tool behind it**. The CLI gains the command group `nereus release`, which says so while no Nereid looks after it.
+      What we want to say: **the Reef comes first, with no tool behind it**. The CLI gains the command group `nereus release`, which says so while no Nereid looks after it.
 
       Source: docs/guides/reefs/release.md.
     pt:
-      topic: "1 · O reef"
-      message: "Um comando aplica o reef {reef:release}, e a CLI ganha os seus comandos"
+      topic: "1 · O Reef"
+      message: "Um comando aplica o Reef {reef:release}, e a CLI ganha os seus comandos"
       accent: "Um comando"
       notes: |-
-        O que queremos dizer: **o reef vem primeiro, sem ferramenta por trás**. A CLI ganha o grupo de comandos `nereus release`, que avisa isso enquanto nenhum Nereid cuida dele.
+        O que queremos dizer: **o Reef vem primeiro, sem ferramenta por trás**. A CLI ganha o grupo de comandos `nereus release`, que avisa isso enquanto nenhum Nereid cuida dele.
 
         Fonte: docs/guides/reefs/release.md.
 
@@ -180,7 +180,7 @@ slides:
     terminal:
       cwd: "~/example"
       steps:
-        - comment: "Apply the flux Nereid to the release reef"
+        - comment: "Apply the flux Nereid to the release Reef"
           run: "nereus nereid apply flux"
           options: ["--reef release"]
           output: |-
@@ -193,7 +193,7 @@ slides:
     dependsOn: [apply-reef]
     refs: [flux]
     notes: |-
-      What we want to say: **only the two controllers the reef uses**: source-controller and helm-controller, from Flux's `install.yaml` of the version the CLI pins, refused unless its digest is the pinned one.
+      What we want to say: **only the two controllers the Reef uses**: source-controller and helm-controller, from Flux's `install.yaml` of the version the CLI pins, refused unless its digest is the pinned one.
 
       Applying it again changes nothing. Who upgrades Flux is still open: #449 (decide who upgrades Flux, the Tool the flux Nereid installs).
 
@@ -203,7 +203,7 @@ slides:
       message: "O Nereid {nereid:flux} instala o Flux primeiro, fixado por versão e digest"
       accent: "primeiro"
       notes: |-
-        O que queremos dizer: **só os dois controllers que o reef usa**: source-controller e helm-controller, do `install.yaml` do Flux na versão que a CLI fixa, recusado se o digest não for o fixado.
+        O que queremos dizer: **só os dois controllers que o Reef usa**: source-controller e helm-controller, do `install.yaml` do Flux na versão que a CLI fixa, recusado se o digest não for o fixado.
 
         Aplicar de novo não muda nada. Quem atualiza o Flux ainda está aberto: #449 (decidir quem atualiza o Flux, a Tool que o Nereid flux instala).
 
@@ -212,12 +212,12 @@ slides:
   - name: create-mandate
     act: install
     topic: "3 · The Mandate"
-    message: "A {mandate:Mandate} makes {nereid:flux} the default Nereid of the {reef:release} reef"
+    message: "A {mandate:Mandate} makes {nereid:flux} the default Nereid of the {reef:release} Reef"
     accent: "default"
     terminal:
       cwd: "~/example"
       steps:
-        - comment: "Bind the release reef to the flux Nereid, as the default"
+        - comment: "Bind the release Reef to the flux Nereid, as the default"
           run: "nereus mandate create flux"
           options: ["--reef release", "--nereid flux", "--default"]
           output: |-
@@ -229,21 +229,21 @@ slides:
               nereus release repository create <name> --url <url>
     dependsOn: [apply-nereid]
     notes: |-
-      What we want to say: **the admin decides which Nereid serves the reef**, never the person who asks for a release.
+      What we want to say: **the admin decides which Nereid serves the Reef**, never the person who asks for a release.
 
-      The Mandate binds one reef to one Nereid; the default one serves every Release that names none.
+      The Mandate binds one Reef to one Nereid; the default one serves every Release that names none.
 
-      Source: docs/guides/reefs/release.md, ADR 0011 (reefs, Nereids and Mandates).
+      Source: docs/guides/reefs/release.md, ADR 0011 (Reefs, Nereids and Mandates).
     pt:
       topic: "3 · O Mandate"
-      message: "Um {mandate:Mandate} faz do {nereid:flux} o Nereid padrão do reef {reef:release}"
+      message: "Um {mandate:Mandate} faz do {nereid:flux} o Nereid padrão do Reef {reef:release}"
       accent: "padrão"
       notes: |-
-        O que queremos dizer: **o admin decide qual Nereid atende o reef**, nunca quem pede uma release.
+        O que queremos dizer: **o admin decide qual Nereid atende o Reef**, nunca quem pede uma release.
 
-        O Mandate liga um reef a um Nereid; o padrão atende toda Release que não nomeia nenhum.
+        O Mandate liga um Reef a um Nereid; o padrão atende toda Release que não nomeia nenhum.
 
-        Fonte: docs/guides/reefs/release.md, ADR 0011 (reefs, Nereids e Mandates).
+        Fonte: docs/guides/reefs/release.md, ADR 0011 (Reefs, Nereids e Mandates).
 
   - name: create-repository
     act: install
@@ -267,7 +267,7 @@ slides:
     dependsOn: [create-mandate]
     refs: [keycloakx]
     notes: |-
-      What we want to say: **a private registry is one option more**: `--type oci` and `--secret <secret>`, a {secret:secret} of the secrets reef.
+      What we want to say: **a private registry is one option more**: `--type oci` and `--secret <secret>`, a {secret:secret} of the secrets Reef.
 
       Source: docs/guides/reefs/release.md.
     pt:
@@ -275,7 +275,7 @@ slides:
       message: "Um Repository diz de onde o chart vem"
       accent: "de onde"
       notes: |-
-        O que queremos dizer: **um registry privado é só mais uma opção**: `--type oci` e `--secret <secret>`, um {secret:secret} do reef secrets.
+        O que queremos dizer: **um registry privado é só mais uma opção**: `--type oci` e `--secret <secret>`, um {secret:secret} do Reef secrets.
 
         Fonte: docs/guides/reefs/release.md.
 
@@ -333,7 +333,7 @@ slides:
               nereus release create <name> --source <source> --target dev-identity
     dependsOn: [create-source]
     notes: |-
-      What we want to say: **`--environment` is optional**. Until the environment reef exists, every Target is the cluster Nereus runs in, and the Nereid says so in the Target's status.
+      What we want to say: **`--environment` is optional**. Until the environment Reef exists, every Target is the cluster Nereus runs in, and the Nereid says so in the Target's status.
 
       Source: docs/guides/reefs/release.md.
     pt:
@@ -341,7 +341,7 @@ slides:
       message: "Um Target diz para onde: um namespace de um environment"
       accent: "para onde"
       notes: |-
-        O que queremos dizer: **`--environment` é opcional**. Enquanto o reef environment não existe, todo Target é o cluster onde o Nereus roda, e o Nereid diz isso no status do Target.
+        O que queremos dizer: **`--environment` é opcional**. Enquanto o Reef environment não existe, todo Target é o cluster onde o Nereus roda, e o Nereid diz isso no status do Target.
 
         Fonte: docs/guides/reefs/release.md.
 
@@ -398,9 +398,9 @@ slides:
               nereus release get keycloak --watch
     dependsOn: [values]
     notes: |-
-      What we want to say: **`nereus release create` is `nereus release release create`**: a kind named after its reef takes the reef's own verbs.
+      What we want to say: **`nereus release create` is `nereus release release create`**: a kind named after its Reef takes the Reef's own verbs.
 
-      `--mandate` is optional: without it, the Release goes through the reef's default Mandate.
+      `--mandate` is optional: without it, the Release goes through the Reef's default Mandate.
 
       Source: docs/guides/reefs/release.md.
     pt:
@@ -408,9 +408,9 @@ slides:
       message: "A Release roda o Source no Target, pelo Mandate {mandate:flux}"
       accent: "roda"
       notes: |-
-        O que queremos dizer: **`nereus release create` é `nereus release release create`**: um kind com o nome do reef usa os verbos do próprio reef.
+        O que queremos dizer: **`nereus release create` é `nereus release release create`**: um kind com o nome do Reef usa os verbos do próprio Reef.
 
-        `--mandate` é opcional: sem ele, a Release passa pelo Mandate padrão do reef.
+        `--mandate` é opcional: sem ele, a Release passa pelo Mandate padrão do Reef.
 
         Fonte: docs/guides/reefs/release.md.
 
@@ -499,7 +499,7 @@ slides:
     screen: ["**Changes:** the {nereid:Nereid} and its {mandate:Mandate}", "**Stays:** every `nereus release` command"]
     dependsOn: [helmrelease]
     notes: |-
-      What we want to say: **swapping the tool changes no command**, and CI checks it: `cli/tests/test_swap.py` compares the commands with one Nereid of the release reef and then another (#124, swapping a Nereid changes no command).
+      What we want to say: **swapping the tool changes no command**, and CI checks it: `cli/tests/test_swap.py` compares the commands with one Nereid of the release Reef and then another (#124, swapping a Nereid changes no command).
 
       An Argo CD Nereid does not exist yet: this slide is the contract, not a recording.
 
@@ -510,7 +510,7 @@ slides:
       accent: "os mesmos"
       screen: ["**Muda:** o {nereid:Nereid} e o seu {mandate:Mandate}", "**Fica:** todo comando `nereus release`"]
       notes: |-
-        O que queremos dizer: **trocar a ferramenta não muda nenhum comando**, e o CI confere: `cli/tests/test_swap.py` compara os comandos com um Nereid do reef release e depois com outro (#124, trocar um Nereid não muda nenhum comando).
+        O que queremos dizer: **trocar a ferramenta não muda nenhum comando**, e o CI confere: `cli/tests/test_swap.py` compara os comandos com um Nereid do Reef release e depois com outro (#124, trocar um Nereid não muda nenhum comando).
 
         Um Nereid de Argo CD ainda não existe: este slide é o contrato, não uma gravação.
 

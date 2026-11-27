@@ -1,10 +1,10 @@
 deck:
   name: teams
-  title: "The teams reef"
+  title: "The teams Reef"
   subtitle: "Every command of the first slice: teams on the tenancy tree, their members and positions"
   accent: "their members and positions"
   pt:
-    title: "O reef teams"
+    title: "O Reef teams"
     subtitle: "Todos os comandos da primeira fatia: times na árvore de tenancy, os seus membros e posições"
     accent: "os seus membros e posições"
 
@@ -29,28 +29,28 @@ slides:
   - name: cover
     act: opening
     cover: true
-    message: "The teams reef"
+    message: "The teams Reef"
     notes: |-
-      **The source of truth for the commands of the teams reef** (#1646, the teams reef of the first slice of teams and authorization). Its kinds are `Team`, the default kind, and `Member`, in `teams.getnereus.dev/v1alpha1`, cluster-scoped; the Nereus API's routes are `/v1/teams/teams` and `/v1/teams/members`, and the commands `nereus teams create | apply | list | get | delete` and `nereus teams member create | apply | list | get | delete`.
+      **The source of truth for the commands of the teams Reef** (#1646, the teams Reef of the first slice of teams and authorization). Its kinds are `Team`, the default kind, and `Member`, in `teams.getnereus.dev/v1alpha1`, cluster-scoped; the Nereus API's routes are `/v1/teams/teams` and `/v1/teams/members`, and the commands `nereus teams create | apply | list | get | delete` and `nereus teams member create | apply | list | get | delete`.
 
-      **No Nereid serves this reef:** the Nereus API keeps its objects and their rules, as it keeps the tenancy tree (ADR 0015, tenancy: Organization and Project). The authorization reef reads the teams to grant roles (docs/specs/cli/reefs/authorization.html).
+      **No Nereid serves this Reef:** the Nereus API keeps its objects and their rules, as it keeps the tenancy tree (ADR 0015, tenancy: Organization and Project). The authorization Reef reads the teams to grant roles (docs/specs/cli/reefs/authorization.html).
     pt:
-      message: "O reef teams"
+      message: "O Reef teams"
       notes: |-
-        **A fonte da verdade dos comandos do reef teams** (#1646, o reef teams da primeira fatia de times e autorização). Os seus kinds são `Team`, o kind padrão, e `Member`, em `teams.getnereus.dev/v1alpha1`, no escopo do cluster; as rotas da Nereus API são `/v1/teams/teams` e `/v1/teams/members`, e os comandos `nereus teams create | apply | list | get | delete` e `nereus teams member create | apply | list | get | delete`.
+        **A fonte da verdade dos comandos do Reef teams** (#1646, o Reef teams da primeira fatia de times e autorização). Os seus kinds são `Team`, o kind padrão, e `Member`, em `teams.getnereus.dev/v1alpha1`, no escopo do cluster; as rotas da Nereus API são `/v1/teams/teams` e `/v1/teams/members`, e os comandos `nereus teams create | apply | list | get | delete` e `nereus teams member create | apply | list | get | delete`.
 
-        **Nenhuma Nereid serve este reef:** a Nereus API guarda os seus objetos e as suas regras, como guarda a árvore de tenancy (ADR 0015, tenancy: Organization e Project). O reef authorization lê os times para conceder papéis (docs/specs/cli/reefs/authorization.html).
+        **Nenhuma Nereid serve este Reef:** a Nereus API guarda os seus objetos e as suas regras, como guarda a árvore de tenancy (ADR 0015, tenancy: Organization e Project). O Reef authorization lê os times para conceder papéis (docs/specs/cli/reefs/authorization.html).
 
   - name: reef-apply
     act: setup
     topic: "reef apply"
     status: built
     issue: 1646
-    message: "The {reef:teams} reef brings teams and members"
+    message: "The {reef:teams} Reef brings teams and members"
     accent: "teams and members"
     terminal:
       steps:
-        - comment: "The kinds of the reef, with no Nereid"
+        - comment: "The kinds of the Reef, with no Nereid"
           run: "nereus reef apply teams"
           output: |-
             ✓ core/reefs/teams created (teams.getnereus.dev/v1alpha1: members, teams)
@@ -61,15 +61,15 @@ slides:
     notes: |-
       **Two kinds and their admission policies:** a team with no owner is refused, and so is a member whose name does not start with its team, even when written with kubectl.
 
-      **No profile holds it yet:** a profile installs one lane per Nereid, and this reef has none, so it is applied on its own.
+      **No profile holds it yet:** a profile installs one lane per Nereid, and this Reef has none, so it is applied on its own.
     pt:
       topic: "reef apply"
-      message: "O reef {reef:teams} traz times e membros"
+      message: "O Reef {reef:teams} traz times e membros"
       accent: "times e membros"
       notes: |-
         **Dois kinds e as suas políticas de admissão:** um time sem owner é recusado, e também um membro cujo nome não começa pelo seu time, mesmo escrito com kubectl.
 
-        **Nenhum profile o guarda ainda:** um profile instala uma faixa por Nereid, e este reef não tem nenhuma, então é aplicado sozinho.
+        **Nenhum profile o guarda ainda:** um profile instala uma faixa por Nereid, e este Reef não tem nenhuma, então é aplicado sozinho.
 
   - name: team-create
     act: people
@@ -91,7 +91,7 @@ slides:
               nereus teams member create <user> --team payments
     dependsOn: [reef-apply]
     notes: |-
-      **`Team` is the default kind of the `teams` reef**, so `nereus teams create` acts on it (ADR 0013, command conventions).
+      **`Team` is the default kind of the `teams` Reef**, so `nereus teams create` acts on it (ADR 0013, command conventions).
 
       **The owner is a node of the tenancy tree** (ADR 0015, tenancy: Organization and Project): an Organization or a Project, which must exist. Teams do not nest in this slice; the tree is the hierarchy.
     pt:
@@ -99,7 +99,7 @@ slides:
       message: "Um time fica em um nó da árvore de tenancy"
       accent: "um nó da árvore de tenancy"
       notes: |-
-        **`Team` é o kind padrão do reef `teams`**, então `nereus teams create` age sobre ele (ADR 0013, convenções de comando).
+        **`Team` é o kind padrão do Reef `teams`**, então `nereus teams create` age sobre ele (ADR 0013, convenções de comando).
 
         **O owner é um nó da árvore de tenancy** (ADR 0015, tenancy: Organization e Project): uma Organization ou um Project, que precisa existir. Times não se aninham nesta fatia; a árvore é a hierarquia.
 
@@ -213,13 +213,13 @@ slides:
               nereus authorization binding create <name> --role <role> --team payments --project payments
     dependsOn: [member-developer]
     notes: |-
-      **One list of members, and access derives from it.** The next step is a binding of the authorization reef: what this team, or one of its positions, may do.
+      **One list of members, and access derives from it.** The next step is a binding of the authorization Reef: what this team, or one of its positions, may do.
     pt:
       topic: "teams get"
       message: "O time mostra os seus membros e posições"
       accent: "membros e posições"
       notes: |-
-        **Uma só lista de membros, e o acesso deriva dela.** O próximo passo é um binding do reef authorization: o que este time, ou uma das suas posições, pode fazer.
+        **Uma só lista de membros, e o acesso deriva dela.** O próximo passo é um binding do Reef authorization: o que este time, ou uma das suas posições, pode fazer.
 
   - name: team-list
     act: people

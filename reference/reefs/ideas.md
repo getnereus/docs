@@ -1,10 +1,10 @@
-# The ideas reef
+# The ideas Reef
 
 The owner's classified notes, served inside the cluster for Tide.
 
 ## Commands
 
-- [`nereus reef apply ideas`](../../specs/cli/reefs/ideas.html#reef-apply) The ideas reef, with no kinds
+- [`nereus reef apply ideas`](../../specs/cli/reefs/ideas.html#reef-apply) The ideas Reef, with no kinds
 - [`nereus nereid apply doris`](../../specs/cli/reefs/ideas.html#nereid-apply) The doris Nereid reads the node's notes folder
 - [`nereus mandate apply doris`](../../specs/cli/reefs/ideas.html#mandate-apply) The source and the readers, then the count of notes
 
@@ -12,7 +12,7 @@ The owner's classified notes, served inside the cluster for Tide.
 
 ### reef-apply
 
-No contract to pin: a reef with no kinds is made from its name.
+No contract to pin: a Reef with no kinds is made from its name.
 
 ```bash
 nereus reef apply ideas

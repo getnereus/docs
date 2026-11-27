@@ -1,10 +1,10 @@
-# The scm reef
+# The scm Reef
 
 Every command that lets Nereus reach a source host as an application, never as a person.
 
 ## Commands
 
-- [`nereus nereid apply github`](../../specs/cli/reefs/scm.html#apply-github) One github Nereid serves both reefs, opt-in
+- [`nereus nereid apply github`](../../specs/cli/reefs/scm.html#apply-github) One github Nereid serves both Reefs, opt-in
 - [`nereus scm connection create example`](../../specs/cli/reefs/scm.html#connection-create) A Connection names an organisation, and nothing secret
 - [`nereus scm connection list`](../../specs/cli/reefs/scm.html#connection-list) list says what each App reaches, and what is missing
 - [`nereus scm connection delete labs`](../../specs/cli/reefs/scm.html#connection-delete) delete removes the Connection, never the App
@@ -16,7 +16,7 @@ Every command that lets Nereus reach a source host as an application, never as a
 
 ### apply-github
 
-Apply the github Nereid to both reefs.
+Apply the github Nereid to both Reefs.
 
 ```bash
 nereus nereid apply github \
@@ -36,7 +36,7 @@ Next steps:
 
 ### connection-create
 
-The organisation, through the reef's default Mandate.
+The organisation, through the Reef's default Mandate.
 
 ```bash
 nereus scm connection create example \
@@ -85,7 +85,7 @@ Next steps:
 
 ### mirror-apply
 
-Apply the forgejo Nereid to the scm reef; it needs the release and secrets reefs.
+Apply the forgejo Nereid to the scm Reef; it needs the release and secrets Reefs.
 
 ```bash
 nereus nereid apply forgejo \

@@ -7040,19 +7040,19 @@
 <td>Every architecture decision is recorded in <code>docs/adr/</code>, one file per decision in Nygard's format. A number is valid only once its ADR is merged into <code>main</code>.</td>
 </tr>
 <tr>
-<td><a href="../../adr/0002-conceptual-model/">0002. Conceptual model: reef, Instance, Mandate, Nereid, Tool</a></td>
+<td><a href="../../adr/0002-conceptual-model/">0002. Conceptual model: Reef, Instance, Mandate, Nereid, Tool</a></td>
 <td>Proposed</td>
-<td>The platform is five layers plus Vendor: reef, Instance, Mandate, Nereid and Tool. A reef is a capability, an API group, and may exist with no Nereid.</td>
+<td>The platform is five layers plus Vendor: Reef, Instance, Mandate, Nereid and Tool. A Reef is a capability, an API group, and may exist with no Nereid.</td>
 </tr>
 <tr>
-<td><a href="../../adr/0003-init-and-nereids-at-runtime/">0003. <code>nereus init</code> prepares the platform; reefs and Nereids are added at runtime</a></td>
+<td><a href="../../adr/0003-init-and-nereids-at-runtime/">0003. <code>nereus init</code> prepares the platform; Reefs and Nereids are added at runtime</a></td>
 <td>Accepted</td>
-<td><code>nereus init</code> prepares a cluster with the built-in <code>core</code> reef, the <code>tenancy</code> reef and a profile's reefs; every other capability arrives later as a reef, with Nereids added at runtime. What init installs is revised by ADR 0014.</td>
+<td><code>nereus init</code> prepares a cluster with the built-in <code>core</code> Reef, the <code>tenancy</code> Reef and a profile's Reefs; every other capability arrives later as a Reef, with Nereids added at runtime. What init installs is revised by ADR 0014.</td>
 </tr>
 <tr>
 <td><a href="../../adr/0004-reefs-extend-the-cli/">0004. Reefs and their Nereids extend the CLI with their own commands</a></td>
 <td>Proposed</td>
-<td>Each reef describes its commands as data published in <code>status</code>, and the CLI builds them at runtime, grouped by reef, never by Nereid or Tool.</td>
+<td>Each Reef describes its commands as data published in <code>status</code>, and the CLI builds them at runtime, grouped by Reef, never by Nereid or Tool.</td>
 </tr>
 <tr>
 <td><a href="../../adr/0005-one-writer-per-field/">0005. One writer per field</a></td>
@@ -7060,9 +7060,9 @@
 <td>The API writes <code>spec</code>; each Nereid writes only its own part of <code>status</code>. A field that needs two writers is split.</td>
 </tr>
 <tr>
-<td><a href="../../adr/0006-authentication-reef/">0006. Authentication is a reef</a></td>
+<td><a href="../../adr/0006-authentication-reef/">0006. Authentication is a Reef</a></td>
 <td>Proposed</td>
-<td><code>authentication</code> is a reef: logins are always OIDC, the platform proves itself outwards through a Mandate per identity, and the User belongs to core.</td>
+<td><code>authentication</code> is a Reef: logins are always OIDC, the platform proves itself outwards through a Mandate per identity, and the User belongs to core.</td>
 </tr>
 <tr>
 <td><a href="../../adr/0007-public-by-design/">0007. Public by design</a></td>
@@ -7075,19 +7075,19 @@
 <td>The CLI is written in Python, managed with <code>uv</code>, with <code>typer</code> for commands and the official <code>kubernetes</code> client.</td>
 </tr>
 <tr>
-<td><a href="../../adr/0009-api-group/">0009. Each reef is an API group <code>&lt;reef&gt;.getnereus.dev</code></a></td>
+<td><a href="../../adr/0009-api-group/">0009. Each Reef is an API group <code>&lt;reef&gt;.getnereus.dev</code></a></td>
 <td>Proposed</td>
-<td>Each reef is its own API group <code>&lt;reef&gt;.getnereus.dev</code>, starting at <code>v1alpha1</code>; the platform's own kinds live in <code>core.getnereus.dev</code>.</td>
+<td>Each Reef is its own API group <code>&lt;reef&gt;.getnereus.dev</code>, starting at <code>v1alpha1</code>; the platform's own kinds live in <code>core.getnereus.dev</code>.</td>
 </tr>
 <tr>
-<td><a href="../../adr/0010-reefs-at-runtime/">0010. Reefs are added at runtime; commands are grouped by reef</a></td>
+<td><a href="../../adr/0010-reefs-at-runtime/">0010. Reefs are added at runtime; commands are grouped by Reef</a></td>
 <td>Proposed</td>
-<td>A reef is added at runtime from its contract, and a Nereid is added on its own and looks after one or more reefs. The <code>release</code> reef has four kinds.</td>
+<td>A Reef is added at runtime from its contract, and a Nereid is added on its own and looks after one or more Reefs. The <code>release</code> Reef has four kinds.</td>
 </tr>
 <tr>
 <td><a href="../../adr/0011-reefs-nereids-and-mandates/">0011. Reefs, Nereids and Mandates, managed with top-level commands</a></td>
 <td>Proposed</td>
-<td>Reefs, Nereids and Mandates are managed with top-level commands, with <code>--reef</code> and <code>--nereid</code> as the flags everywhere; a Mandate binds one reef to one Nereid.</td>
+<td>Reefs, Nereids and Mandates are managed with top-level commands, with <code>--reef</code> and <code>--nereid</code> as the flags everywhere; a Mandate binds one Reef to one Nereid.</td>
 </tr>
 <tr>
 <td><a href="../../adr/0012-error-messages/">0012. Every error message says what happened and how to fix it</a></td>
@@ -7102,22 +7102,22 @@
 <tr>
 <td><a href="../../adr/0014-profiles/">0014. Profiles</a></td>
 <td>Proposed</td>
-<td>Core is only the engine; a profile lists the reefs, Nereids and Mandates to install, run as the commands a person would type. It revises what <code>nereus init</code> installs (ADR 0003).</td>
+<td>Core is only the engine; a profile lists the Reefs, Nereids and Mandates to install, run as the commands a person would type. It revises what <code>nereus init</code> installs (ADR 0003).</td>
 </tr>
 <tr>
 <td><a href="../../adr/0015-tenancy/">0015. Tenancy</a></td>
 <td>Proposed</td>
-<td>Tenancy is a reef whose kinds come from each instance, with one fixed shape: every kind is a tree node with an optional parent, and one kind is the boundary.</td>
+<td>Tenancy is a Reef whose kinds come from each instance, with one fixed shape: every kind is a tree node with an optional parent, and one kind is the boundary.</td>
 </tr>
 <tr>
-<td><a href="../../adr/0016-catalog-reef/">0016. The catalog reef</a></td>
+<td><a href="../../adr/0016-catalog-reef/">0016. The catalog Reef</a></td>
 <td>Proposed</td>
-<td>A <code>catalog</code> reef holds two kinds split by lifecycle, <code>Workload</code> for what runs and <code>Package</code> for what is published, with three characteristics and configurable types.</td>
+<td>A <code>catalog</code> Reef holds two kinds split by lifecycle, <code>Workload</code> for what runs and <code>Package</code> for what is published, with three characteristics and configurable types.</td>
 </tr>
 <tr>
-<td><a href="../../adr/0017-resource-reefs/">0017. Resource reefs</a></td>
+<td><a href="../../adr/0017-resource-reefs/">0017. Resource Reefs</a></td>
 <td>Accepted</td>
-<td>Five resource reefs, each a small contract kind per family, with the provider chosen in the Mandate and a Mandate selected by its <code>match</code>.</td>
+<td>Five resource Reefs, each a small contract kind per family, with the provider chosen in the Mandate and a Mandate selected by its <code>match</code>.</td>
 </tr>
 <tr>
 <td><a href="../../adr/0018-nereus-api/">0018. The Nereus API is the one door</a></td>
@@ -7125,24 +7125,24 @@
 <td>The Nereus API is the one door of the platform: clients talk to it with the person's token, and the Kubernetes API stays behind it.</td>
 </tr>
 <tr>
-<td><a href="../../adr/0019-messaging-reef/">0019. The messaging reef</a></td>
+<td><a href="../../adr/0019-messaging-reef/">0019. The messaging Reef</a></td>
 <td>Proposed</td>
-<td>The conversation joins the <code>messaging</code> reef as records (<code>Thread</code>, <code>Order</code>, <code>Claim</code>, <code>Message</code>), with a bus behind a Nereid.</td>
+<td>The conversation joins the <code>messaging</code> Reef as records (<code>Thread</code>, <code>Order</code>, <code>Claim</code>, <code>Message</code>), with a bus behind a Nereid.</td>
 </tr>
 <tr>
-<td><a href="../../adr/0020-delivery-reef/">0020. The delivery reef</a></td>
+<td><a href="../../adr/0020-delivery-reef/">0020. The delivery Reef</a></td>
 <td>Proposed</td>
-<td>A <code>delivery</code> reef with one kind, <code>Delivery</code>, takes a Workload to an Environment; the Nereid, never the client, resolves an image tag to a digest.</td>
+<td>A <code>delivery</code> Reef with one kind, <code>Delivery</code>, takes a Workload to an Environment; the Nereid, never the client, resolves an image tag to a digest.</td>
 </tr>
 <tr>
-<td><a href="../../adr/0021-registry-reef/">0021. The registry reef</a></td>
+<td><a href="../../adr/0021-registry-reef/">0021. The registry Reef</a></td>
 <td>Proposed</td>
-<td>A <code>registry</code> reef with <code>Registry</code> and <code>Repository</code> kinds; images are read with one read-only credential per Registry, over TLS, and published through the platform.</td>
+<td>A <code>registry</code> Reef with <code>Registry</code> and <code>Repository</code> kinds; images are read with one read-only credential per Registry, over TLS, and published through the platform.</td>
 </tr>
 <tr>
-<td><a href="../../adr/0022-reef-screens-in-the-portal/">0022. A reef adds a screen to the portal as a Web Component its Nereid serves</a></td>
+<td><a href="../../adr/0022-reef-screens-in-the-portal/">0022. A Reef adds a screen to the portal as a Web Component its Nereid serves</a></td>
 <td>Accepted</td>
-<td>A reef adds a screen to the portal as a Web Component its Nereid serves, named in its contract, loaded at runtime.</td>
+<td>A Reef adds a screen to the portal as a Web Component its Nereid serves, named in its contract, loaded at runtime.</td>
 </tr>
 <tr>
 <td><a href="../../adr/0023-external-registry-push-credential/">0023. An external registry's push credential is the Repository's secret</a></td>
@@ -7150,9 +7150,9 @@
 <td>An external registry's push credential is the Repository's <code>secretRef</code>, read by the Nereid through a SecretBinding, never on the person's machine.</td>
 </tr>
 <tr>
-<td><a href="../../adr/0024-scm-reef/">0024. The scm reef</a></td>
+<td><a href="../../adr/0024-scm-reef/">0024. The scm Reef</a></td>
 <td>Proposed</td>
-<td>An <code>scm</code> reef holds what a source host is to Nereus: a <code>Connection</code> names an organisation, reached through the App its scm Mandate names, and a <code>Mirror</code> copies a repository.</td>
+<td>An <code>scm</code> Reef holds what a source host is to Nereus: a <code>Connection</code> names an organisation, reached through the App its scm Mandate names, and a <code>Mirror</code> copies a repository.</td>
 </tr>
 <tr>
 <td><a href="../../adr/0025-metrics-intake/">0025. The platform receives metrics from anywhere through the CLI and the Nereus API</a></td>
@@ -7160,9 +7160,9 @@
 <td>Metrics enter only through the Nereus API, with the CLI as the official client: declared sources, a spool, late-send alerts with a heartbeat, and machine identities.</td>
 </tr>
 <tr>
-<td><a href="../../adr/0026-environment-reef/">0026. The environment reef</a></td>
+<td><a href="../../adr/0026-environment-reef/">0026. The environment Reef</a></td>
 <td>Proposed</td>
-<td>The <code>environment</code> reef has one kind, <code>Environment</code>, which is only the request; the cluster kept for it is <code>nereus</code>.</td>
+<td>The <code>environment</code> Reef has one kind, <code>Environment</code>, which is only the request; the cluster kept for it is <code>nereus</code>.</td>
 </tr>
 <tr>
 <td><a href="../../adr/0027-teams-roles-and-users/">0027. Teams</a></td>
@@ -7170,24 +7170,24 @@
 <td>A role is bound to a team, a position or a User on a node of the tenancy tree, and the Nereus API asks before it acts. Access roles, teams and Users are kept apart.</td>
 </tr>
 <tr>
-<td><a href="../../adr/0028-presentations-reef/">0028. The presentations reef</a></td>
+<td><a href="../../adr/0028-presentations-reef/">0028. The presentations Reef</a></td>
 <td>Accepted</td>
-<td>The <code>presentations</code> reef keeps the deck as a <code>Presentation</code> and each time it is given as a <code>Session</code>.</td>
+<td>The <code>presentations</code> Reef keeps the deck as a <code>Presentation</code> and each time it is given as a <code>Session</code>.</td>
 </tr>
 <tr>
-<td><a href="../../adr/0029-mcp-tools/">0029. A reef declares its MCP tools in the Nereid contract</a></td>
+<td><a href="../../adr/0029-mcp-tools/">0029. A Reef declares its MCP tools in the Nereid contract</a></td>
 <td>Proposed</td>
-<td>MCP is a door of the Nereus API, not a reef: each reef declares its MCP tools in its Nereid contract, and the API serves them at <code>/mcp</code>.</td>
+<td>MCP is a door of the Nereus API, not a Reef: each Reef declares its MCP tools in its Nereid contract, and the API serves them at <code>/mcp</code>.</td>
 </tr>
 <tr>
-<td><a href="../../adr/0030-triton-rooms-nereid/">0030. Triton is the rooms reef's Nereid: Room and Peer, on a Topic of the messaging reef</a></td>
+<td><a href="../../adr/0030-triton-rooms-nereid/">0030. Triton is the rooms Reef's Nereid: Room and Peer, on a Topic of the messaging Reef</a></td>
 <td>Accepted</td>
-<td>The conversation between agents is a reef of its own, <code>rooms</code> (<code>Room</code>, <code>Peer</code>), looked after by Triton, which requires the <code>messaging</code> reef and asks it for a Topic per Room.</td>
+<td>The conversation between agents is a Reef of its own, <code>rooms</code> (<code>Room</code>, <code>Peer</code>), looked after by Triton, which requires the <code>messaging</code> Reef and asks it for a Topic per Room.</td>
 </tr>
 <tr>
 <td><a href="../../adr/0031-gates-and-approvals/">0031. Gates and approvals native to Nereus</a></td>
 <td>Accepted</td>
-<td>A hard gate refuses; under a soft gate the object is written held <code>Pending</code> until an approver approves or rejects it through the API: <code>Gate</code> and <code>Approval</code> in the <code>authorization</code> reef, one hold, one admission policy, no flow per kind.</td>
+<td>A hard gate refuses; under a soft gate the object is written held <code>Pending</code> until an approver approves or rejects it through the API: <code>Gate</code> and <code>Approval</code> in the <code>authorization</code> Reef, one hold, one admission policy, no flow per kind.</td>
 </tr>
 </tbody>
 </table>

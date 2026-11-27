@@ -271,7 +271,7 @@
       "title": "Worktrees"
     },
     "concepts/model/": {
-      "goal": "Understand reefs, Nereids and Mandates, the three words of the Nereus model",
+      "goal": "Understand Reefs, Nereids and Mandates, the three words of the Nereus model",
       "md": "concepts/model.md",
       "title": "Reef, Nereid and Mandate"
     },
@@ -281,7 +281,7 @@
       "title": "The Nereus API"
     },
     "concepts/runtime-and-profiles/": {
-      "goal": "Understand how reefs and Nereids are installed at runtime and what a profile is",
+      "goal": "Understand how Reefs and Nereids are installed at runtime and what a profile is",
       "md": "concepts/runtime-and-profiles.md",
       "title": "Runtime install and profiles"
     },
@@ -331,12 +331,12 @@
       "title": "Run the CLI from a checkout"
     },
     "guides/build/conformance/": {
-      "goal": "Prove that a Nereid serves every verb of every kind of its reef and honours its contract",
+      "goal": "Prove that a Nereid serves every verb of every kind of its Reef and honours its contract",
       "md": "guides/build/conformance.md",
       "title": "Pass the conformance tests"
     },
     "guides/build/image/": {
-      "goal": "Build a Nereid's image with the labels that name its reef, push it and apply it",
+      "goal": "Build a Nereid's image with the labels that name its Reef, push it and apply it",
       "md": "guides/build/image.md",
       "title": "Build a Nereid's image"
     },
@@ -346,7 +346,7 @@
       "title": "Start a new Nereid"
     },
     "guides/build/requires/": {
-      "goal": "Make a Nereid require another reef, so it is applied only once that reef has a Nereid",
+      "goal": "Make a Nereid require another Reef, so it is applied only once that Reef has a Nereid",
       "md": "guides/build/requires.md",
       "title": "Require a reef"
     },
@@ -371,7 +371,7 @@
       "title": "Deploy main to the live cluster"
     },
     "guides/operate/edge/": {
-      "goal": "Publish a reef's endpoint at a hostname of your own domain, through a Cloudflare tunnel",
+      "goal": "Publish a Reef's endpoint at a hostname of your own domain, through a Cloudflare tunnel",
       "md": "guides/operate/edge.md",
       "title": "Publish at a hostname"
     },
@@ -411,7 +411,7 @@
       "title": "Follow the golden path"
     },
     "guides/reefs/mcp/": {
-      "goal": "Reach the tools of the installed reefs from Claude Code or claude.ai through the Nereus API's /mcp",
+      "goal": "Reach the tools of the installed Reefs from Claude Code or claude.ai through the Nereus API's /mcp",
       "md": "guides/reefs/mcp.md",
       "title": "Use the MCP server"
     },
@@ -481,7 +481,7 @@
       "title": "A name is taken"
     },
     "guides/troubleshoot/nereid-stops/": {
-      "goal": "Get a reef's commands working again when its Nereid has no pod serving",
+      "goal": "Get a Reef's commands working again when its Nereid has no pod serving",
       "md": "guides/troubleshoot/nereid-stops.md",
       "title": "When the Nereid stops"
     },
@@ -491,7 +491,7 @@
       "title": "A cloud request is refused"
     },
     "guides/troubleshoot/see-what-happened/": {
-      "goal": "Find why a reef, a Nereid or one of its objects is not Ready, from the CLI down to the pod's log",
+      "goal": "Find why a Reef, a Nereid or one of its objects is not Ready, from the CLI down to the pod's log",
       "md": "guides/troubleshoot/see-what-happened.md",
       "title": "See what happened"
     },
@@ -551,7 +551,7 @@
       "title": "The installation"
     },
     "reference/metrics-reef/": {
-      "goal": "What the metrics reef's Nereid victoriametrics installs, what it scrapes and who reaches it",
+      "goal": "What the metrics Reef's Nereid victoriametrics installs, what it scrapes and who reaches it",
       "md": "reference/metrics-reef.md",
       "title": "Inside the metrics reef"
     },
@@ -561,112 +561,112 @@
       "title": "The profiles"
     },
     "reference/reefs-and-nereids/": {
-      "goal": "How the CLI applies, lists and deletes a reef and a Nereid, and the objects behind them",
+      "goal": "How the CLI applies, lists and deletes a Reef and a Nereid, and the objects behind them",
       "md": "reference/reefs-and-nereids.md",
       "title": "Reefs and Nereids"
     },
     "reference/reefs/authentication/": {
-      "goal": "Every command of the authentication reef",
+      "goal": "Every command of the authentication Reef",
       "md": "reference/reefs/authentication.md",
       "title": "authentication"
     },
     "reference/reefs/authorization/": {
-      "goal": "Every command of the authorization reef",
+      "goal": "Every command of the authorization Reef",
       "md": "reference/reefs/authorization.md",
       "title": "authorization"
     },
     "reference/reefs/build/": {
-      "goal": "Every command of the build reef",
+      "goal": "Every command of the build Reef",
       "md": "reference/reefs/build.md",
       "title": "build"
     },
     "reference/reefs/catalog/": {
-      "goal": "Every command of the catalog reef",
+      "goal": "Every command of the catalog Reef",
       "md": "reference/reefs/catalog.md",
       "title": "catalog"
     },
     "reference/reefs/database/": {
-      "goal": "Every command of the database reef",
+      "goal": "Every command of the database Reef",
       "md": "reference/reefs/database.md",
       "title": "database"
     },
     "reference/reefs/delivery/": {
-      "goal": "Every command of the delivery reef",
+      "goal": "Every command of the delivery Reef",
       "md": "reference/reefs/delivery.md",
       "title": "delivery"
     },
     "reference/reefs/edge/": {
-      "goal": "Every command of the edge reef",
+      "goal": "Every command of the edge Reef",
       "md": "reference/reefs/edge.md",
       "title": "edge"
     },
     "reference/reefs/environment/": {
-      "goal": "Every command of the environment reef",
+      "goal": "Every command of the environment Reef",
       "md": "reference/reefs/environment.md",
       "title": "environment"
     },
     "reference/reefs/ideas/": {
-      "goal": "Every command of the ideas reef",
+      "goal": "Every command of the ideas Reef",
       "md": "reference/reefs/ideas.md",
       "title": "ideas"
     },
     "reference/reefs/messaging/": {
-      "goal": "Every command of the messaging reef",
+      "goal": "Every command of the messaging Reef",
       "md": "reference/reefs/messaging.md",
       "title": "messaging"
     },
     "reference/reefs/notifications/": {
-      "goal": "Every command of the notifications reef",
+      "goal": "Every command of the notifications Reef",
       "md": "reference/reefs/notifications.md",
       "title": "notifications"
     },
     "reference/reefs/portal/": {
-      "goal": "Every command of the portal reef",
+      "goal": "Every command of the portal Reef",
       "md": "reference/reefs/portal.md",
       "title": "portal"
     },
     "reference/reefs/presentations/": {
-      "goal": "Every command of the presentations reef",
+      "goal": "Every command of the presentations Reef",
       "md": "reference/reefs/presentations.md",
       "title": "presentations"
     },
     "reference/reefs/registry/": {
-      "goal": "Every command of the registry reef",
+      "goal": "Every command of the registry Reef",
       "md": "reference/reefs/registry.md",
       "title": "registry"
     },
     "reference/reefs/release/": {
-      "goal": "Every command of the release reef",
+      "goal": "Every command of the release Reef",
       "md": "reference/reefs/release.md",
       "title": "release"
     },
     "reference/reefs/rooms/": {
-      "goal": "Every command of the rooms reef",
+      "goal": "Every command of the rooms Reef",
       "md": "reference/reefs/rooms.md",
       "title": "rooms"
     },
     "reference/reefs/scm/": {
-      "goal": "Every command of the scm reef",
+      "goal": "Every command of the scm Reef",
       "md": "reference/reefs/scm.md",
       "title": "scm"
     },
     "reference/reefs/secrets/": {
-      "goal": "Every command of the secrets reef",
+      "goal": "Every command of the secrets Reef",
       "md": "reference/reefs/secrets.md",
       "title": "secrets"
     },
     "reference/reefs/teams/": {
-      "goal": "Every command of the teams reef",
+      "goal": "Every command of the teams Reef",
       "md": "reference/reefs/teams.md",
       "title": "teams"
     },
     "reference/reefs/tenancy/": {
-      "goal": "Every command of the tenancy reef",
+      "goal": "Every command of the tenancy Reef",
       "md": "reference/reefs/tenancy.md",
       "title": "tenancy"
     },
     "reference/reefs/usage/": {
-      "goal": "Every command of the usage reef",
+      "goal": "Every command of the usage Reef",
       "md": "reference/reefs/usage.md",
       "title": "usage"
     },
@@ -696,7 +696,7 @@
       "title": "Infrastructure governance in the agentic era"
     },
     "research/kagent/": {
-      "goal": "Amphitrite is the Nereid that will give the platform its AI agents: a reef whose kind is Agent (plural agents), used by",
+      "goal": "Amphitrite is the Nereid that will give the platform its AI agents: a Reef whose kind is Agent (plural agents), used by",
       "md": "research/kagent.md",
       "title": "kagent for Amphitrite"
     },
@@ -781,7 +781,7 @@
       "title": "Authorization first slice"
     },
     "specs/0012-presentations-first-slice/": {
-      "goal": "The walking skeleton of the presentations reef (ADR 0028, journey #1688): a phone drives a Session's step, another phone",
+      "goal": "The walking skeleton of the presentations Reef (ADR 0028, journey #1688): a phone drives a Session's step, another phone",
       "md": "specs/0012-presentations-first-slice.md",
       "title": "Presentations first slice"
     },
@@ -796,7 +796,7 @@
       "title": "Clean up"
     },
     "start/first-reef/": {
-      "goal": "Apply a reef, the Nereid that serves it and the Mandate that binds them",
+      "goal": "Apply a Reef, the Nereid that serves it and the Mandate that binds them",
       "md": "start/first-reef.md",
       "title": "Apply a reef and its Nereid"
     },
@@ -811,12 +811,12 @@
       "title": "Install the CLI"
     },
     "start/look-around/": {
-      "goal": "See the installation, its reefs and its Nereids",
+      "goal": "See the installation, its Reefs and its Nereids",
       "md": "start/look-around.md",
       "title": "Look around"
     },
     "start/run/": {
-      "goal": "Run the commands a reef's Nereid adds to the CLI",
+      "goal": "Run the commands a Reef's Nereid adds to the CLI",
       "md": "start/run.md",
       "title": "Run its commands"
     },
@@ -831,7 +831,7 @@
       "title": "Thinking in platforms"
     },
     "vision/": {
-      "goal": "Every client, one door; each box in a plane is a candidate reef.",
+      "goal": "Every client, one door; each box in a plane is a candidate Reef.",
       "md": "vision.md",
       "title": "Vision"
     }

@@ -24,4 +24,4 @@ The repository starts private and is meant to be opened, so other projects can b
 - **The API group** of the CRDs: answered by ADR 0009, `<reef>.getnereus.dev`, a domain the project controls.
 - **Contributions:** whether to require DCO sign-off (`Signed-off-by`) from the first external contribution.
 
-*Aligned in wording 2026-10-25 from voice session (reef, Nereid, Mandate, `nereus`); raw data in Drive #pontos/raw/2026-10-25.*
+*Aligned in wording 2026-10-25 from voice session (Reef, Nereid, Mandate, `nereus`); raw data in Drive #pontos/raw/2026-10-25.*

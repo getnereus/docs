@@ -28,7 +28,7 @@ k3d registry delete k3d-nereus-registry.localhost
 
 ## What you get
 
-- The `release` command group goes with the Nereid, and its Deployment, Service and identity with it; the reef stays until the cluster goes.
+- The `release` command group goes with the Nereid, and its Deployment, Service and identity with it; the Reef stays until the cluster goes.
 - No cluster and no registry left.
 - The settings stay in `~/.config/nereus/`: a next `nereus init --yes` creates a cluster that is the same installation, with the same id. Delete that folder to start from nothing.
 

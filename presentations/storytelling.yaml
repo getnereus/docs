@@ -1052,7 +1052,7 @@ slides:
     accumulate: true
     dependsOn: [this-project]
     notes: |-
-      What we want to say: **the platform grows one capability at a time**, each one a reef behind the same API, and what is not there yet is drawn dashed.
+      What we want to say: **the platform grows one capability at a time**, each one a Reef behind the same API, and what is not there yet is drawn dashed.
 
       The diagram is the one of the Nereus deck, carried from outside this deck's folder: the package takes it along.
 
@@ -1062,7 +1062,7 @@ slides:
       topic: "Este projeto"
       subtitle: "Uma linha tracejada ainda não está na plataforma"
       notes: |-
-        O que queremos dizer: **a plataforma cresce uma capability de cada vez**, cada uma um reef atrás da mesma API, e o que ainda não existe aparece tracejado.
+        O que queremos dizer: **a plataforma cresce uma capability de cada vez**, cada uma um Reef atrás da mesma API, e o que ainda não existe aparece tracejado.
 
         O diagrama é o do deck do Nereus, trazido de fora da pasta deste deck: o pacote o leva junto.
 

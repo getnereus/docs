@@ -90,4 +90,4 @@ Next steps:
 
 ## Learn more
 
-- [The secrets reef](../../reference/reefs/secrets.md): vaults, secrets and bindings, every command.
+- [The secrets Reef](../../reference/reefs/secrets.md): vaults, secrets and bindings, every command.

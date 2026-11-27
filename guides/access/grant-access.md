@@ -1,11 +1,11 @@
 # Grant access
 
-Grant a Nereid that reaches the cloud the roles it asks for: the Nereid acts as its reef's identity, `<installation>-<reef>-<role>`, with no secret of its own; it asks, and you approve with your own login.
+Grant a Nereid that reaches the cloud the roles it asks for: the Nereid acts as its Reef's identity, `<installation>-<reef>-<role>`, with no secret of its own; it asks, and you approve with your own login.
 
 ## Before you start
 
-- An installation [connected to the cloud](../operate/cloud.md): the cloud reef with its Nereid `azure`.
-- A Nereid whose image declares `requires: cloud` ([spec 0005](../../specs/0005-cloud-reef.md)), here `keyvault` for the secrets reef.
+- An installation [connected to the cloud](../operate/cloud.md): the cloud Reef with its Nereid `azure`.
+- A Nereid whose image declares `requires: cloud` ([spec 0005](../../specs/0005-cloud-reef.md)), here `keyvault` for the secrets Reef.
 - A cloud login that can create identities and role assignments. A role it cannot write is printed as the command an administrator runs.
 
 !!! note "Recorded against fakes"
@@ -15,7 +15,7 @@ Grant a Nereid that reaches the cloud the roles it asks for: the Nereid acts as 
 
 ### 1. Apply the Nereid
 
-[`nereus nereid apply`](../../specs/cli/core.html#nereid-apply) gives the Nereid a short-lived token for the cloud, writes its reef's access entry and shows the plan that creates its identity.
+[`nereus nereid apply`](../../specs/cli/core.html#nereid-apply) gives the Nereid a short-lived token for the cloud, writes its Reef's access entry and shows the plan that creates its identity.
 
 ```bash
 nereus nereid apply keyvault \
@@ -39,11 +39,11 @@ Approve 2 requests? [y/N]: y
 ✓ keyvault added to secrets · acts as tailwind-secrets-reader
 ```
 
-Another Nereid of the same reef later keeps the identity and its grants: the plan only swaps the federated credential.
+Another Nereid of the same Reef later keeps the identity and its grants: the plan only swaps the federated credential.
 
 ### 2. See what is asked
 
-`nereus system access list` shows each reef's access entries and the roles its Nereid asks for but nobody approved yet.
+`nereus system access list` shows each Reef's access entries and the roles its Nereid asks for but nobody approved yet.
 
 ```bash
 nereus system access list
@@ -61,7 +61,7 @@ An ask for `Owner`, `User Access Administrator` or `Role Based Access Control Ad
 
 ### 3. Approve
 
-`nereus system access approve --all` turns every reef's asks into plans, shows them and runs them after one question; `--dry-run` shows them and runs none.
+`nereus system access approve --all` turns every Reef's asks into plans, shows them and runs them after one question; `--dry-run` shows them and runs none.
 
 ```bash
 nereus system access approve --all
@@ -118,4 +118,4 @@ Approve 2 requests? [y/N]: y
 ## Learn more
 
 - [Undercloud and overcloud](../../concepts/undercloud-overcloud.md): why the installation's identity lives in the cloud.
-- [Spec 0005](../../specs/0005-cloud-reef.md): the cloud reef, its plans and what a Nereid may ask.
+- [Spec 0005](../../specs/0005-cloud-reef.md): the cloud Reef, its plans and what a Nereid may ask.

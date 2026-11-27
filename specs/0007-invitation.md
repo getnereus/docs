@@ -10,7 +10,7 @@ The first dive is a recorded conversation between two people on one Nereus. The 
 
 The slice is the walking skeleton of people coming into Nereus: one command prints a link and its QR code, accepting it creates the person as a `User` of core (ADR 0006), and both the invitation and the access it grants expire, each on its own clock. That access ends on its own, in front of everyone, is part of what the slice shows.
 
-**Simple on the surface, consistent underneath** (the owner's design principle, voice file 113): the root form `nereus invitation create` is the familiar, welcoming one; underneath, the invitation is a kind of the `authentication` reef with the same verbs, output and errors as every other noun (ADR 0013).
+**Simple on the surface, consistent underneath** (the owner's design principle, voice file 113): the root form `nereus invitation create` is the familiar, welcoming one; underneath, the invitation is a kind of the `authentication` Reef with the same verbs, output and errors as every other noun (ADR 0013).
 
 ## The scene that ends the slice
 
@@ -50,7 +50,7 @@ Next steps:
 
 ## The commands
 
-The canonical form lives in the reef (ADR 0013, ADR 0010): `nereus authentication invitation <verb> <name>`. The root form `nereus invitation <verb>` is an alias: the CLI runs exactly the same command, the way `kubectl` aliases do, and never adds behaviour of its own. Docs, `--help`, `--examples` and errors always show the canonical form; aliases exist only for the most used actions (voice file 113).
+The canonical form lives in the Reef (ADR 0013, ADR 0010): `nereus authentication invitation <verb> <name>`. The root form `nereus invitation <verb>` is an alias: the CLI runs exactly the same command, the way `kubectl` aliases do, and never adds behaviour of its own. Docs, `--help`, `--examples` and errors always show the canonical form; aliases exist only for the most used actions (voice file 113).
 
 | Verb | Does |
 |---|---|
@@ -80,7 +80,7 @@ The QR code is drawn with [segno](https://segno.readthedocs.io/), the open sourc
 ## Accepting
 
 1. The link opens a page served by core: `https://<the API's public host>/invitations/accept#<token>`.
-2. The page sends the person to sign in through the authentication reef's default Mandate (Keycloak brokering Google, ADR 0006), keeping the token in the browser.
+2. The page sends the person to sign in through the authentication Reef's default Mandate (Keycloak brokering Google, ADR 0006), keeping the token in the browser.
 3. Back from the login, the page posts the token. Core checks, in this order: the token's hash matches an invitation; it has not expired; nobody accepted it; with `--to`, the token's verified e-mail is exactly that address; without `--to`, the verified e-mail's domain is one the Mandate allows.
 4. Core creates the `User` (ADR 0006: the platform generates its id, and the identity is the token's issuer and `sub`) with the access's end, and writes the acceptance in the invitation's `status`. The page says until when the access lasts.
 
@@ -166,7 +166,7 @@ On the acceptance page: an expired or deleted invitation says so and asks for a 
 
 ## Out of this slice
 
-- **Sending the invitation by e-mail.** The first dive needs only the QR code and SSO; e-mail delivery comes through a notification reef, and only if it is easy (voice file 118).
+- **Sending the invitation by e-mail.** The first dive needs only the QR code and SSO; e-mail delivery comes through a notification Reef, and only if it is easy (voice file 118).
 - **Evaluation licences with a waiting queue** (voice files 118, 119): a demo instance limited to a few users, the next ones waiting on a screen until the representative approves more seats from a push notification, all audited and replayed. Kept as an idea, back when the sales demo is built.
 - **`--max-uses`** and invitations for many people at once.
 - **Linking a second identity** to a User, and **making an access permanent** from the CLI (`nereus user` commands).

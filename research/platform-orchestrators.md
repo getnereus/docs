@@ -1,6 +1,6 @@
 # Platform orchestrators
 
-*Historical page (2026-10-19): it uses the model's words of that time (Interface, Implementation, `platform`); today's are reef, Nereid and `nereus` ([The CLI design](../agent/cli.md)).*
+*Historical page (2026-10-19): it uses the model's words of that time (Interface, Implementation, `platform`); today's are Reef, Nereid and `nereus` ([The CLI design](../agent/cli.md)).*
 
 Are we reinventing the wheel? "Native first, build last" ([vision](../vision.md)) asks, before building more of Nereus, whether an existing tool already does what it proposes. The page [Platform Orchestrators](https://internaldeveloperplatform.org/platform-orchestrators/) of internaldeveloperplatform.org calls the orchestrator the centrepiece of an Internal Developer Platform and, after Thoughtworks, describes these tools as offering published contracts between developers and platform teams, with variations self-served through configuration. That is close to what Nereus proposes, so this page compares the four orchestrators it lists (Humanitec, Kratix, KusionStack, Massdriver) and the open-source tools closest to the model (Crossplane, Radius, KubeVela, kro, and Score as a workload specification), as asked in #363 (evaluate the platform orchestrators). Every fact below comes from a page opened on 2026-10-19 and linked in [Learn more](#learn-more); what could not be verified is said so. Repository figures (licence, stars, last push, last release) were read from the GitHub API on that day.
 

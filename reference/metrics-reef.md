@@ -1,10 +1,10 @@
-# Inside the metrics reef
+# Inside the metrics Reef
 
-What the Nereid `victoriametrics` of the metrics reef installs to keep the platform's metrics in [VictoriaMetrics](https://docs.victoriametrics.com/) (Apache-2.0) ([#742](https://github.com/getnereus/nereus/issues/742)). The queries are in [Collect metrics](../guides/reefs/metrics.md).
+What the Nereid `victoriametrics` of the metrics Reef installs to keep the platform's metrics in [VictoriaMetrics](https://docs.victoriametrics.com/) (Apache-2.0) ([#742](https://github.com/getnereus/nereus/issues/742)). The queries are in [Collect metrics](../guides/reefs/metrics.md).
 
 ## The operator
 
-The Nereid asks the release reef for the [VictoriaMetrics operator](https://docs.victoriametrics.com/operator/) (chart `victoria-metrics-operator` 0.68.1, operator v0.75.0, pinned by digest), released by the flux Mandate into the namespace `metrics-system`.
+The Nereid asks the release Reef for the [VictoriaMetrics operator](https://docs.victoriametrics.com/operator/) (chart `victoria-metrics-operator` 0.68.1, operator v0.75.0, pinned by digest), released by the flux Mandate into the namespace `metrics-system`.
 
 The operator turns a few Kubernetes kinds into running VictoriaMetrics components, as CloudNativePG turns a `Cluster` into PostgreSQL.
 
@@ -32,7 +32,7 @@ The label `nereid` of each series comes from the pod's `app.kubernetes.io/name`,
 
 The VMNodeScrape `kubelet-cadvisor` reads each node's kubelet at `/metrics/cadvisor`: CPU and memory per container. A target that fails shows as down, and nothing else stops.
 
-The VMPodScrape `kube-state-metrics` reads [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics) ([#2177](https://github.com/getnereus/nereus/issues/2177)), which the Nereid also asks the release reef for: chart 9.1.0, v2.20.0 pinned by digest, in `metrics-system`. The Nereid does not wait for it: it logs a Release not Ready.
+The VMPodScrape `kube-state-metrics` reads [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics) ([#2177](https://github.com/getnereus/nereus/issues/2177)), which the Nereid also asks the release Reef for: chart 9.1.0, v2.20.0 pinned by digest, in `metrics-system`. The Nereid does not wait for it: it logs a Release not Ready.
 
 It reads only the pods, Deployments and VerticalPodAutoscalers of `nereus-system`, through a Role there, and no Secret. It exposes six series, among them the requests, the ready replicas and each VPA's recommendation.
 
@@ -48,7 +48,7 @@ Its series keep their own `namespace` and `pod` (`honorLabels: true`): those of 
 
 ## The contract
 
-The Mandate `victoriametrics` publishes `status.query.url`, the in-cluster address of the query API, `status.query.scrapeInterval` (`30s`) and its Ready condition; `nereus mandate get victoriametrics` shows them. It names no backend: another Nereid of the metrics reef would publish the same fields.
+The Mandate `victoriametrics` publishes `status.query.url`, the in-cluster address of the query API, `status.query.scrapeInterval` (`30s`) and its Ready condition; `nereus mandate get victoriametrics` shows them. It names no backend: another Nereid of the metrics Reef would publish the same fields.
 
 The Nereus API keeps the status signals one scrape interval and steps the detail's 5m and 1h ranges by it.
 
@@ -60,4 +60,4 @@ Deleting series takes a random key nobody is given (`-deleteAuthKey`, from the S
 
 ## The proof
 
-`make scene-metrics` installs the reef on a throwaway cluster and runs the three queries of [Collect metrics](../guides/reefs/metrics.md), expecting one series per Nereid.
+`make scene-metrics` installs the Reef on a throwaway cluster and runs the three queries of [Collect metrics](../guides/reefs/metrics.md), expecting one series per Nereid.

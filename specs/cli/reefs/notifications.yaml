@@ -1,10 +1,10 @@
 deck:
   name: notifications
-  title: "The notifications reef"
+  title: "The notifications Reef"
   subtitle: "Every command that tells a person something and the devices that receive it"
   accent: "tells a person something"
   pt:
-    title: "O reef notifications"
+    title: "O Reef notifications"
     subtitle: "Todos os comandos que contam algo a uma pessoa e os dispositivos que o recebem"
     accent: "contam algo a uma pessoa"
 
@@ -23,13 +23,13 @@ slides:
   - name: cover
     act: opening
     cover: true
-    message: "The notifications reef"
+    message: "The notifications Reef"
     notes: |-
-      **The source of truth for the commands of the notifications reef** (#278, spoken summaries as notifications). #2147 builds its first slice: the kinds `Notification` and `Subscription`, the Nereus API's routes `/v1/notifications/notifications` and `/v1/notifications/subscriptions`, `nereus notify`, `nereus notifications notification ...`, `nereus notifications subscription ...` and the reference Nereid `reference-notifications`. The group is `notifications.getnereus.dev/v1alpha1`, cluster-scoped. Delivery to the devices is #2148's.
+      **The source of truth for the commands of the notifications Reef** (#278, spoken summaries as notifications). #2147 builds its first slice: the kinds `Notification` and `Subscription`, the Nereus API's routes `/v1/notifications/notifications` and `/v1/notifications/subscriptions`, `nereus notify`, `nereus notifications notification ...`, `nereus notifications subscription ...` and the reference Nereid `reference-notifications`. The group is `notifications.getnereus.dev/v1alpha1`, cluster-scoped. Delivery to the devices is #2148's.
     pt:
-      message: "O reef notifications"
+      message: "O Reef notifications"
       notes: |-
-        **A fonte da verdade dos comandos do reef notifications** (#278, resumos falados como notificações). A #2147 constrói a primeira fatia: os kinds `Notification` e `Subscription`, as rotas `/v1/notifications/notifications` e `/v1/notifications/subscriptions` da Nereus API, `nereus notify`, `nereus notifications notification ...`, `nereus notifications subscription ...` e o Nereid de referência `reference-notifications`. O grupo é `notifications.getnereus.dev/v1alpha1`, com escopo de cluster. A entrega aos dispositivos é da #2148.
+        **A fonte da verdade dos comandos do Reef notifications** (#278, resumos falados como notificações). A #2147 constrói a primeira fatia: os kinds `Notification` e `Subscription`, as rotas `/v1/notifications/notifications` e `/v1/notifications/subscriptions` da Nereus API, `nereus notify`, `nereus notifications notification ...`, `nereus notifications subscription ...` e o Nereid de referência `reference-notifications`. O grupo é `notifications.getnereus.dev/v1alpha1`, com escopo de cluster. A entrega aos dispositivos é da #2148.
 
   - name: kinds
     act: opening
@@ -126,13 +126,13 @@ slides:
             n-20261122-0002  decision  #2078 merged  1/1        1m
     dependsOn: [notification-create]
     notes: |-
-      **DELIVERED is the deliveries made over the Subscriptions the Notification went to**, from `status.deliveries`, which the Nereid of the reef's Mandate writes. The reference Nereid delivers nothing: each entry is `Skipped` and the column reads `0/1`. `get`, `delete` and `apply --from-file` follow ADR 0013.
+      **DELIVERED is the deliveries made over the Subscriptions the Notification went to**, from `status.deliveries`, which the Nereid of the Reef's Mandate writes. The reference Nereid delivers nothing: each entry is `Skipped` and the column reads `0/1`. `get`, `delete` and `apply --from-file` follow ADR 0013.
     pt:
       topic: "notifications notification list"
       message: "O list mostra o que foi entregue do que foi pedido"
       accent: "o que foi entregue"
       notes: |-
-        **DELIVERED são as entregas feitas sobre as Subscriptions para onde a Notification foi**, do `status.deliveries`, que o Nereid do Mandate do reef escreve. O Nereid de referência não entrega nada: cada entrada é `Skipped` e a coluna mostra `0/1`. `get`, `delete` e `apply --from-file` seguem a ADR 0013.
+        **DELIVERED são as entregas feitas sobre as Subscriptions para onde a Notification foi**, do `status.deliveries`, que o Nereid do Mandate do Reef escreve. O Nereid de referência não entrega nada: cada entrada é `Skipped` e a coluna mostra `0/1`. `get`, `delete` e `apply --from-file` seguem a ADR 0013.
 
   - name: subscription-create
     act: subscription

@@ -1,17 +1,17 @@
 # Pass the conformance tests
 
-Prove that a Nereid serves every verb of every kind of its reef, with the status its contract declares, before anyone else relies on it.
+Prove that a Nereid serves every verb of every kind of its Reef, with the status its contract declares, before anyone else relies on it.
 
 ## Before you start
 
 - A throwaway k3d cluster, never the kept cluster `k3d-nereus`: the check creates and deletes objects, and refuses any other context.
-- The Nereid applied and `Ready` ([Build a Nereid's image](image.md)), and named by the reef's default Mandate.
+- The Nereid applied and `Ready` ([Build a Nereid's image](image.md)), and named by the Reef's default Mandate.
 
 ## Steps
 
 ### 1. Ship a sample per kind
 
-Each kind of the reef has a sample in its contract, `cli/src/nereus/interfaces/<reef>/samples/<kind>.yaml`: the objects the kind needs first, the object as created, then the same object with a change to its spec. The `release` reef ships `release.yaml`, `repository.yaml`, `source.yaml` and `target.yaml`.
+Each kind of the Reef has a sample in its contract, `cli/src/nereus/interfaces/<reef>/samples/<kind>.yaml`: the objects the kind needs first, the object as created, then the same object with a change to its spec. The `release` Reef ships `release.yaml`, `repository.yaml`, `source.yaml` and `target.yaml`.
 
 ### 2. Write the status the contract declares
 
@@ -40,7 +40,7 @@ The last line of the run names every kind it proved; any `FAIL:` line before it 
 ## Next
 
 - [See what happened](../troubleshoot/see-what-happened.md) when a step of the check fails.
-- [Require a reef](requires.md).
+- [Require a Reef](requires.md).
 
 ## Learn more
 

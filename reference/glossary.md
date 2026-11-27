@@ -6,34 +6,34 @@ The project's words and acronyms, one line each. A new term enters in the pull r
 
 | Term | Meaning |
 |---|---|
-| Nereus | The project: a composable API platform, with an API and a CLI: reefs add the APIs, Nereids look after them, installed at runtime. An Internal Developer Platform is one profile of it. Organisation `getnereus`, domains `getnereus.dev` (development) and `getnereus.app` (production). After [Nereus](https://en.wikipedia.org/wiki/Nereus), the old man of the sea. |
+| Nereus | The project: a composable API platform, with an API and a CLI: Reefs add the APIs, Nereids look after them, installed at runtime. An Internal Developer Platform is one profile of it. Organisation `getnereus`, domains `getnereus.dev` (development) and `getnereus.app` (production). After [Nereus](https://en.wikipedia.org/wiki/Nereus), the old man of the sea. |
 | Nereus API | `nereus-api`, the platform's own HTTP API in the cluster (`api/`, #607): `GET /v1/me` answers who a token names, after checking it against the default authentication Mandate; `GET /v1/status`, what `nereus status --output json` prints (#739). |
 
 ## The model
 
-Words of ADR 0002 (Conceptual model) and ADR 0011 (reefs, Nereids and Mandates; `nereus reef`, `nereus nereid`, `nereus mandate`), used exactly.
+Words of ADR 0002 (Conceptual model) and ADR 0011 (Reefs, Nereids and Mandates; `nereus reef`, `nereus nereid`, `nereus mandate`), used exactly.
 
 | Term | Meaning |
 |---|---|
-| reef | A capability of the platform (`auth`, `secrets`, `release`), an API group. Added with `nereus reef apply`; a `Reef` object of `core.getnereus.dev/v1alpha1`; its own kinds live in `<reef>.getnereus.dev/v1alpha1` (ADR 0009). Legacy: Interface. |
-| Nereid | What looks after a reef (`keycloak`, `auth0`, `reference-release`): a controller installed in the platform with `nereus nereid apply`; a `Nereid` object of `core.getnereus.dev/v1alpha1`. Legacy: Implementation. |
-| Mandate | Binds one reef to one Nereid and may make it the default; `nereus mandate create`, after Gateway API's [`GatewayClass`](https://gateway-api.sigs.k8s.io/reference/api-types/gatewayclass/). A `Mandate` object of `core.getnereus.dev/v1alpha1` (`azure` binds the `cloud` reef to the `azure` Nereid). Legacy: Class. |
-| Profile | A named list of reefs, Nereids and Mandates applied on top of core (`core`, `internal-developer-platform`, `reference`, `secrets`); `nereus init --profile`, `nereus profile apply` (ADR 0014). |
-| thetis | The installer Nereid: run by the chart `nereus` when a profile is set, it installs the profile's reefs, Nereids and Mandates in order. |
-| Instance | One occurrence of a reef: a login for a team, a database for an app in an environment. |
-| Repository (release reef) | Where a chart comes from: a Helm repository (`http`), an OCI registry (`oci`) or Git (`git`), with an optional secret of the secrets reef; a kind of `release.getnereus.dev/v1alpha1` (ADR 0010). `flux` writes it as a Flux [`HelmRepository`](https://fluxcd.io/flux/components/source/helmrepositories/). |
-| Source (release reef) | What is released: a chart of a Repository at a version (later Kustomize or plain manifests); a kind of `release.getnereus.dev/v1alpha1` (ADR 0010). |
-| Target (release reef) | Where a release goes: a namespace of an environment (`environmentRef`) or, with none, of the cluster Nereus runs in; a kind of `release.getnereus.dev/v1alpha1` (ADR 0010). |
-| Connection (scm reef) | One organisation of a source host, reached through the App its scm Mandate names (`--param identity=<authentication mandate>`); its status says whether the App is installed there, on every repository, with the permissions it needs (ADR 0024, #1281). `nereus scm connection create`. |
-| Registry (registry reef) | A registry of images that runs in the cluster, a kind of `registry.getnereus.dev/v1alpha1` (ADR 0021). Not the Nereid registry (#22), the public site listing Nereids. |
-| Release (release reef) | A Source running in a Target, with its values, made by the Nereid of its Mandate; a kind of `release.getnereus.dev/v1alpha1` (ADR 0010). `flux` writes it as a Flux [`HelmRelease`](https://fluxcd.io/flux/components/helm/helmreleases/). `nereus release <verb>` is `nereus release release <verb>`: a kind named after its reef takes the reef's verbs. |
+| Reef | A capability of the platform (`auth`, `secrets`, `release`), an API group. Added with `nereus reef apply`; a `Reef` object of `core.getnereus.dev/v1alpha1`; its own kinds live in `<reef>.getnereus.dev/v1alpha1` (ADR 0009). Legacy: Interface. |
+| Nereid | What looks after a Reef (`keycloak`, `auth0`, `reference-release`): a controller installed in the platform with `nereus nereid apply`; a `Nereid` object of `core.getnereus.dev/v1alpha1`. Legacy: Implementation. |
+| Mandate | Binds one Reef to one Nereid and may make it the default; `nereus mandate create`, after Gateway API's [`GatewayClass`](https://gateway-api.sigs.k8s.io/reference/api-types/gatewayclass/). A `Mandate` object of `core.getnereus.dev/v1alpha1` (`azure` binds the `cloud` Reef to the `azure` Nereid). Legacy: Class. |
+| Profile | A named list of Reefs, Nereids and Mandates applied on top of core (`core`, `internal-developer-platform`, `reference`, `secrets`); `nereus init --profile`, `nereus profile apply` (ADR 0014). |
+| thetis | The installer Nereid: run by the chart `nereus` when a profile is set, it installs the profile's Reefs, Nereids and Mandates in order. |
+| Instance | One occurrence of a Reef: a login for a team, a database for an app in an environment. |
+| Repository (release Reef) | Where a chart comes from: a Helm repository (`http`), an OCI registry (`oci`) or Git (`git`), with an optional secret of the secrets Reef; a kind of `release.getnereus.dev/v1alpha1` (ADR 0010). `flux` writes it as a Flux [`HelmRepository`](https://fluxcd.io/flux/components/source/helmrepositories/). |
+| Source (release Reef) | What is released: a chart of a Repository at a version (later Kustomize or plain manifests); a kind of `release.getnereus.dev/v1alpha1` (ADR 0010). |
+| Target (release Reef) | Where a release goes: a namespace of an environment (`environmentRef`) or, with none, of the cluster Nereus runs in; a kind of `release.getnereus.dev/v1alpha1` (ADR 0010). |
+| Connection (scm Reef) | One organisation of a source host, reached through the App its scm Mandate names (`--param identity=<authentication mandate>`); its status says whether the App is installed there, on every repository, with the permissions it needs (ADR 0024, #1281). `nereus scm connection create`. |
+| Registry (registry Reef) | A registry of images that runs in the cluster, a kind of `registry.getnereus.dev/v1alpha1` (ADR 0021). Not the Nereid registry (#22), the public site listing Nereids. |
+| Release (release Reef) | A Source running in a Target, with its values, made by the Nereid of its Mandate; a kind of `release.getnereus.dev/v1alpha1` (ADR 0010). `flux` writes it as a Flux [`HelmRelease`](https://fluxcd.io/flux/components/helm/helmreleases/). `nereus release <verb>` is `nereus release release <verb>`: a kind named after its Reef takes the Reef's verbs. |
 | Controller | The mechanism: each Nereid runs as a [Kubernetes controller](https://kubernetes.io/docs/concepts/architecture/controller/) that reconciles and writes `status`. Used in ADRs, code and repository names, not in commands. |
 | Tool | What a Nereid works with: the `helm` binary, the Auth0 Management API. |
 | Vendor | An attribute: whose thing it is (Auth0, AWS, local). |
-| Concept | Former word for reef (then Interface), before ADR 0011. |
-| Default Mandate | The one a reef's commands go to when several Nereids look after it (#72); formerly the active Implementation. |
+| Concept | Former word for Reef (then Interface), before ADR 0011. |
+| Default Mandate | The one a Reef's commands go to when several Nereids look after it (#72); formerly the active Implementation. |
 | Good Citizen | The rules every Nereid must follow, checked by the platform (spec 0003). |
-| Conformance | Whether a Nereid honours its reef's contract: labels at add, the contract call at start, a suite before the catalog (spec 0003). |
+| Conformance | Whether a Nereid honours its Reef's contract: labels at add, the contract call at start, a suite before the catalog (spec 0003). |
 
 ## The platform
 
@@ -57,10 +57,10 @@ Words of ADR 0002 (Conceptual model) and ADR 0011 (reefs, Nereids and Mandates; 
 | Inception | The platform building, running, measuring and telling its own construction (#24): its services run on itself, its metrics and agent records come through its own tools (#137), and it learns from how its owner suggests (#138). A lens: how could each practice become a native capability. |
 | Lean Inception | The workshop ([Paulo Caroli's method](https://martinfowler.com/articles/lean-inception/)) that shaped the MVP (#79, `docs/inception.md`). |
 | One writer per field | ADR 0005: the API (or the CLI) writes `spec`, the Nereid writes `status`, after Kubernetes' [spec and status](https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#spec-and-status). |
-| Pinned version | The version of a reef's kinds a CLI ships and `nereus reef apply` applies (`cloud` 0.1.0, in `cli/src/nereus/interfaces/`); `apply --path` or `--image` apply another (#264). |
-| Reef package | An OCI artifact whose layers are a reef's CRDs as YAML (`application/yaml`), which `nereus reef apply --image` reads (#264). |
+| Pinned version | The version of a Reef's kinds a CLI ships and `nereus reef apply` applies (`cloud` 0.1.0, in `cli/src/nereus/interfaces/`); `apply --path` or `--image` apply another (#264). |
+| Reef package | An OCI artifact whose layers are a Reef's CRDs as YAML (`application/yaml`), which `nereus reef apply --image` reads (#264). |
 | Pinned by digest | An image recorded as `<repository>@sha256:...`, the digest of the manifest its labels were read from, not a tag that can be pushed again (#126, spec 0003 rule 3). |
-| `cloud` reef | The connection to a cloud: an account, optionally the organization above it, and the identity the platform presents; `azure` is its first Nereid (spec 0005). |
+| `cloud` Reef | The connection to a cloud: an account, optionally the organization above it, and the identity the platform presents; `azure` is its first Nereid (spec 0005). |
 | Workload identity | A pod trades the token its cluster signs for its service account at the cloud for a token of an identity, then calls the cloud as that identity; the platform projects that token into every Nereid that requires `cloud` (spec 0005, #310). |
 | Workload identity federation | A cloud trusts tokens a cluster signs for one service account and trades them for its own, so the platform keeps no secret (spec 0005; [Microsoft Entra](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation)). |
 | Discovery document | `/.well-known/openid-configuration`: names the issuer and where its JWKS is. |
@@ -68,12 +68,12 @@ Words of ADR 0002 (Conceptual model) and ADR 0011 (reefs, Nereids and Mandates; 
 | Names plan | The read-only plan the `cloud` Nereid publishes before the bootstrap plan, checking every name at once; `init` runs it with no question, and a `404` is an answer, not a failure (spec 0005, #263). |
 | Service principal | What roles are granted to in Entra ID; a managed identity has one, as an app registration does. |
 | App registration | An application's definition in Entra ID; spec 0005 needs none for now. |
-| Access entry | What a reef needs from the cloud, its identity and optionally a role on a scope, kept in the `Cloud` Instance's `spec.access` once a person approves it (spec 0005). |
+| Access entry | What a Reef needs from the cloud, its identity and optionally a role on a scope, kept in the `Cloud` Instance's `spec.access` once a person approves it (spec 0005). |
 | Location | Where an installation's resources are created, in the cloud's words (`northeurope`, `eu-west-1`): the `Cloud` Instance's `spec.location`, from `--param location=<region>` or the Tool's default (`az config set defaults.location=<region>`) (#319). |
 | Requester tags | The tags every cloud resource the platform creates carries: installation, who asked, request id, Instance and the purpose the contract fixes; for attribution, never authorisation (spec 0005, #155). |
 | Installation | One running platform, named once (`tailwind`): the name never changes, names its `Installation` object and is part of every name the platform creates; an id (random UUID v4) never changes either; an alias that listings show may. Undercloud and overcloud are one installation across the pivot (#154, #251). |
 | Installation alias | What listings show of an installation, free text (`Tailwind Prod`) changed by `nereus config installation set --alias`; no resource name changes (spec 0006). |
-| Invitation | A link and QR code that let one person into a Nereus, a kind of the `authentication` reef (`nereus authentication invitation create`, alias `nereus invitation create`); the link and the access expire separately (`--invitation-expires`, `--access-expires`), and accepting creates a core `User` ([spec 0007](../specs/0007-invitation.md)). |
+| Invitation | A link and QR code that let one person into a Nereus, a kind of the `authentication` Reef (`nereus authentication invitation create`, alias `nereus invitation create`); the link and the access expire separately (`--invitation-expires`, `--access-expires`), and accepting creates a core `User` ([spec 0007](../specs/0007-invitation.md)). |
 | Naming override | A name a person gives instead of a generated one that is taken (`issuer.storage`, `state.storage`, `secrets.vault`), kept in `spec.naming.overrides` of the installation and validated against the resource's rules (spec 0005, spec 0006). |
 | Plan | The cloud requests a `cloud` Nereid publishes in its Instance's `status.plans[]` for the CLI to run with the person's login, each a method, an `https` URL and a JSON body, shown and approved first; untrusted input, checked against the request protocol's limits (`cli/src/nereus/plans.py`, spec 0005). |
 | Stalled | The condition a Nereid sets `True` when it refuses an Instance as it is and plans nothing until its spec changes, with a reason, a message, the `observedGeneration` and, when known, the refusal's `cause`, `check` and `fix` (ADR 0012); `nereus nereid apply` stops on it and prints why, one line per field, after Kubernetes' [kstatus](https://github.com/kubernetes-sigs/cli-utils/blob/master/pkg/kstatus/README.md) (spec 0005, #318, #327). |
@@ -81,7 +81,7 @@ Words of ADR 0002 (Conceptual model) and ADR 0011 (reefs, Nereids and Mandates; 
 | Naming function | The one place that turns the naming table of spec 0005, the installation's name and id, and its overrides into full names (`tailwind-platform`, `tailwind-cloud-provisioner`, `tailwind-undercloud-azure`, `issuers<id16>`); automation receives the full name, never composes one (`cli/src/nereus/naming.py`, #307). |
 | Cloud resource identification | The attributes every cloud resource the platform creates carries: installation id and name, requester id and name, request id; names only when a compliance policy allows (#155). |
 | Request protocol | How a Nereid reaches a cloud before it has an identity: it publishes a plan, and once approved the CLI runs it on the person's machine with their own short-lived login, from a Tool entry fixed in the CLI (`az` first); the token never leaves the machine. Limits: `https`, the Tool's hosts (issuer storage only for the issuer's documents), no header but `Content-Type`, bodies up to 64 KiB, at most 50 requests, substitutions only from an earlier answer into a string value (#82, #264, spec 0005). |
-| Managed identity (user-assigned) | An Azure identity created as a resource, with no secret to keep; one per reef and per installation, `<installation>-<reef>-<role>` (`tailwind-secrets-reader`), the same across the pivot (#82, spec 0005). |
+| Managed identity (user-assigned) | An Azure identity created as a resource, with no secret to keep; one per Reef and per installation, `<installation>-<reef>-<role>` (`tailwind-secrets-reader`), the same across the pivot (#82, spec 0005). |
 | Federated credential | A trust on a cloud identity: tokens from one OIDC issuer, for one subject (a Kubernetes service account) and audience, are exchanged for the identity's access, with no secret stored (#82, #93). |
 | OIDC issuer | The URL whose discovery document and JWKS let a cloud verify a cluster's service-account tokens; a k3d undercloud publishes its own on a public storage container, AKS has one built in (#82). |
 
@@ -92,10 +92,10 @@ Words of ADR 0027 (teams, roles and Users).
 | Term | Meaning |
 |---|---|
 | User | A person, one core `User` whatever the login; a login with no User has no permission. |
-| Team | A group of people who work together; a `Team` of the `teams` reef. Joining it grants its access, leaving removes it. |
-| Member | One person in a Team, pointing to their User; a `Member` of the `teams` reef. |
+| Team | A group of people who work together; a `Team` of the `teams` Reef. Joining it grants its access, leaving removes it. |
+| Member | One person in a Team, pointing to their User; a `Member` of the `teams` Reef. |
 | Position | A free, lowercase name on a Member (`tech-lead`); a Binding that names it follows whoever holds it. |
-| Role | A list of rules, `<reef>:<kinds>:<verbs>`; a `Role` of the `authorization` reef. |
+| Role | A list of rules, `<reef>:<kinds>:<verbs>`; a `Role` of the `authorization` Reef. |
 | Binding | Gives a Role to a Team, a Position or, as the exception, one User, on one node of the tenancy tree; access flows down the tree. |
 
 ## Ways of working
@@ -160,4 +160,4 @@ Words of ADR 0027 (teams, roles and Users).
 | STRIDE | Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege: the six threats a threat model asks about for each part ([Microsoft, "STRIDE model"](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats)); the method proposed for #125. |
 | STS | Security Token Service: where AWS and GCP trade a federated token for their own. |
 | WIP | Work in progress. |
-| XRD | CompositeResourceDefinition: [Crossplane's contract](https://docs.crossplane.io/latest/composition/composite-resource-definitions/), a precedent for reefs. |
+| XRD | CompositeResourceDefinition: [Crossplane's contract](https://docs.crossplane.io/latest/composition/composite-resource-definitions/), a precedent for Reefs. |

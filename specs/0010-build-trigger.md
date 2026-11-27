@@ -6,7 +6,7 @@ From #914 (a push starts a build), with the owner's decisions of 2026-11-11 reco
 
 ## The answer
 
-A `Trigger` of the build reef names a Workload (here `triton`, the Workload of `catalog/workloads/triton.yaml`, whose source is this repository). Its Nereid follows the scm reef's Mirror of that Workload's repository and, whenever the Mirror's `status.commit` changes, creates a Build of that commit. Each Nereid writes only its own reef's objects: the forgejo Nereid keeps the Mirror's commit, the buildkit Nereid creates the Builds.
+A `Trigger` of the build Reef names a Workload (here `triton`, the Workload of `catalog/workloads/triton.yaml`, whose source is this repository). Its Nereid follows the scm Reef's Mirror of that Workload's repository and, whenever the Mirror's `status.commit` changes, creates a Build of that commit. Each Nereid writes only its own Reef's objects: the forgejo Nereid keeps the Mirror's commit, the buildkit Nereid creates the Builds.
 
 ```console
 $ nereus scm mirror create nereus --from https://github.com/getnereus/nereus
@@ -32,9 +32,9 @@ triton-a1b2c3d  triton    a1b2c3d  Succeeded  sha256:4f2a…
 
 ## Decided (owner, 2026-11-11)
 
-- **The build reef turns a commit into a Build**, not the scm reef's webhook receiver: no Nereid writes another reef's objects.
+- **The build Reef turns a commit into a Build**, not the scm Reef's webhook receiver: no Nereid writes another Reef's objects.
 - **Webhook or watching is the Mirror's choice.** The forgejo Nereid already reads each Mirror's head on every pass (15 s), which is the watching mode; Forgejo's webhook, which shortens that by at most one pass, is a later slice (`nereus scm mirror create --webhook`). The build side is the same for both.
-- **The opt-in is a kind of the build reef, `Trigger`**, not a field of the Workload: the catalog reef stays as it is, and deleting the Trigger stops it.
+- **The opt-in is a kind of the build Reef, `Trigger`**, not a field of the Workload: the catalog Reef stays as it is, and deleting the Trigger stops it.
 - **A new Trigger builds the commit the Mirror holds now**, without waiting for the next one: its list shows a result at once.
 - **A burst of pushes builds the last commit only:** while a Build of the Trigger is not over (no phase yet, `Pending` or `Running`), nothing new starts, which bounds the builds, as spec 0009 asks.
 - **Deleting a Trigger keeps its Builds:** a Build is an image in the registry; the Trigger only automates them.
@@ -43,9 +43,9 @@ triton-a1b2c3d  triton    a1b2c3d  Succeeded  sha256:4f2a…
 
 Cluster-scoped, as a Build, a Workload and a Mirror are (`reefs/build/triggers.yaml`).
 
-- `spec.workload` (required, never changes): the Workload of the catalog reef it builds.
+- `spec.workload` (required, never changes): the Workload of the catalog Reef it builds.
 - `spec.owner` (an Organization or a Project): the owner of every Build it creates; absent, the Builds have none, as a Build created by hand.
-- `spec.mandate`: a build Mandate, so the Nereid that serves it and builds; absent, the reef's default.
+- `spec.mandate`: a build Mandate, so the Nereid that serves it and builds; absent, the Reef's default.
 - `status`: `nereid`, `mirror` (the Mirror it follows), `branch`, `commit` (the last commit it saw on the Mirror), `lastBuild` (the Build it created last) and the `Ready` condition.
 
 ## What the Nereid does on each pass
@@ -61,7 +61,7 @@ The details of those steps:
 - A Build with no phase yet counts as not over, as `Pending` does (step 4).
 - `status.commit` is the Mirror's commit the Trigger saw on its last pass, built or not yet.
 - The cut name loses a trailing hyphen before `-<commit>`, so it never holds `--`.
-- The Build carries the Trigger's `spec.mandate` only when it names one; with none, the Build names none either and gets the reef's default, as a Build created by hand.
+- The Build carries the Trigger's `spec.mandate` only when it names one; with none, the Build names none either and gets the Reef's default, as a Build created by hand.
 
 A new Trigger builds the commit the Mirror holds when it is created. A Build it created is never deleted by it: deleting the Trigger leaves its Builds.
 

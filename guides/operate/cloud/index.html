@@ -7288,7 +7288,7 @@
 
 
 <h1 id="connect-to-the-cloud">Connect to the cloud<a class="headerlink" href="#connect-to-the-cloud" title="Permanent link">&para;</a></h1>
-<p>Apply the Nereid <code>azure</code> of the <code>cloud</code> reef: it plans the cloud requests, and the CLI shows them in plain words, asks, and runs them on your machine with your short-lived token, which never leaves it.</p>
+<p>Apply the Nereid <code>azure</code> of the <code>cloud</code> Reef: it plans the cloud requests, and the CLI shows them in plain words, asks, and runs them on your machine with your short-lived token, which never leaves it.</p>
 <div class="admonition note">
 <p class="admonition-title">Recorded against fakes</p>
 <p>The outputs are what the CLI prints in its tests, against a fake Nereid, <code>az</code> and cloud. A real subscription is checked by hand with <code>test/scene-azure</code> (#266).</p>
@@ -7297,7 +7297,7 @@
 <ul>
 <li>A cluster whose issuer Azure can reach: <a href="../undercloud/">Prepare the undercloud</a> runs these steps for you; run them by hand on an existing cluster or for another subscription.</li>
 <li><code>az login</code> done, and a default location (<code>az config set defaults.location=westeurope</code>) or <code>--param location=&lt;region&gt;</code> below.</li>
-<li>The <code>cloud</code> reef applied: <code>nereus reef apply cloud --from-file ./reefs/cloud/</code>.</li>
+<li>The <code>cloud</code> Reef applied: <code>nereus reef apply cloud --from-file ./reefs/cloud/</code>.</li>
 </ul>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
 <h3 id="1-see-the-plan-run-nothing">1. See the plan, run nothing<a class="headerlink" href="#1-see-the-plan-run-nothing" title="Permanent link">&para;</a></h3>
@@ -7339,7 +7339,7 @@ $ nereus nereid apply azure --reef cloud --param location=northeurope --approve-
 <ul>
 <li><a href="../../troubleshoot/issuer-not-public/">The Nereid refused the Instance</a>, when the cluster's issuer is not public.</li>
 <li><a href="../../troubleshoot/request-refused/">A cloud request is refused</a>, when you lack a right.</li>
-<li><a href="../../access/grant-access/">Grant access</a>: what the reefs ask of the cloud.</li>
+<li><a href="../../access/grant-access/">Grant access</a>: what the Reefs ask of the cloud.</li>
 </ul>
 <h2 id="learn-more">Learn more<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <ul>

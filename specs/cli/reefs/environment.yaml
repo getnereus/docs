@@ -1,11 +1,11 @@
 deck:
   name: environment
-  title: "The environment reef"
-  subtitle: "Every command of the environment reef: an environment per agent, made by a Nereid, gone at its expiry"
+  title: "The environment Reef"
+  subtitle: "Every command of the environment Reef: an environment per agent, made by a Nereid, gone at its expiry"
   accent: "gone at its expiry"
   pt:
-    title: "O reef environment"
-    subtitle: "Todos os comandos do reef environment: um ambiente por agente, feito por uma Nereid, apagado quando expira"
+    title: "O Reef environment"
+    subtitle: "Todos os comandos do Reef environment: um ambiente por agente, feito por uma Nereid, apagado quando expira"
     accent: "apagado quando expira"
 
 acts:
@@ -25,15 +25,15 @@ slides:
   - name: cover
     act: opening
     cover: true
-    message: "The environment reef"
+    message: "The environment Reef"
     notes: |-
-      **The source of truth for the commands of the environment reef** (#477). Every command here is built: the CLI builds them itself from the contract it pins (`cli/src/nereus/commands/environment.py`, #620 (the vcluster Nereid of the environment reef)), and the outputs are what they print, recorded on the throwaway cluster by `make scene-environment`.
+      **The source of truth for the commands of the environment Reef** (#477). Every command here is built: the CLI builds them itself from the contract it pins (`cli/src/nereus/commands/environment.py`, #620 (the vcluster Nereid of the environment Reef)), and the outputs are what they print, recorded on the throwaway cluster by `make scene-environment`.
 
       **Parallel agents each get their own environment** instead of queueing for the one throwaway cluster: an Environment asked with an expiry becomes a vcluster inside the current cluster, with the vcluster Nereid, and goes away by itself.
     pt:
-      message: "O reef environment"
+      message: "O Reef environment"
       notes: |-
-        **A fonte da verdade dos comandos do reef environment** (#477). Todo comando aqui está pronto menos `nereus` (planejado, #575): o próprio CLI os constrói a partir do contrato que ele fixa (`cli/src/nereus/commands/environment.py`, #620 (a Nereid vcluster do reef environment)), e as saídas são o que eles imprimem, gravadas no cluster descartável pelo `make scene-environment`.
+        **A fonte da verdade dos comandos do Reef environment** (#477). Todo comando aqui está pronto menos `nereus` (planejado, #575): o próprio CLI os constrói a partir do contrato que ele fixa (`cli/src/nereus/commands/environment.py`, #620 (a Nereid vcluster do Reef environment)), e as saídas são o que eles imprimem, gravadas no cluster descartável pelo `make scene-environment`.
 
         **Agentes em paralelo ganham cada um o seu ambiente** em vez de fazer fila pelo único cluster descartável: um Environment pedido com uma expiração vira um vcluster dentro do cluster atual, com a Nereid vcluster, e some sozinho.
 
@@ -46,9 +46,9 @@ slides:
       - "**spec:** `owner` (an Organization or a Project), `region`, `expires` (`30m`, `4h`, `3d`) and `mandate`, never a technology"
       - "**status:** written by its Nereid: `phase`, `expiresAt`, `kubernetes.context` and the Secret of its kubeconfig"
     notes: |-
-      **Environment lives in `environment.getnereus.dev/v1alpha1`**, in the namespace Nereus runs in, and is the reef's default kind: `nereus environment create` is `nereus environment environment create`. It takes `create`, `apply`, `list`, `get` and `delete` (ADR 0013, command conventions), and `kubeconfig`.
+      **Environment lives in `environment.getnereus.dev/v1alpha1`**, in the namespace Nereus runs in, and is the Reef's default kind: `nereus environment create` is `nereus environment environment create`. It takes `create`, `apply`, `list`, `get` and `delete` (ADR 0013, command conventions), and `kubeconfig`.
 
-      **The person names the reef, never the Tool** (ADR 0002): the Mandate (`--mandate`, or the reef's default) says which Nereid makes it, a vcluster for the vcluster Nereid. The kubeconfig is never in the Environment: its status names the Secret that holds it (ADR 0005, one writer per field).
+      **The person names the Reef, never the Tool** (ADR 0002): the Mandate (`--mandate`, or the Reef's default) says which Nereid makes it, a vcluster for the vcluster Nereid. The kubeconfig is never in the Environment: its status names the Secret that holds it (ADR 0005, one writer per field).
     pt:
       topic: "kind"
       message: "Um kind, só o pedido: para quem, onde, e por quanto tempo"
@@ -57,19 +57,19 @@ slides:
         - "**spec:** `owner` (uma Organization ou um Project), `region`, `expires` (`30m`, `4h`, `3d`) e `mandate`, nunca uma tecnologia"
         - "**status:** escrito pela sua Nereid: `phase`, `expiresAt`, `kubernetes.context` e o Secret do seu kubeconfig"
       notes: |-
-        **Environment vive em `environment.getnereus.dev/v1alpha1`**, no namespace onde o Nereus roda, e é o kind padrão do reef: `nereus environment create` é `nereus environment environment create`. Ele aceita `create`, `apply`, `list`, `get` e `delete` (ADR 0013, convenções de comando), e `kubeconfig`.
+        **Environment vive em `environment.getnereus.dev/v1alpha1`**, no namespace onde o Nereus roda, e é o kind padrão do Reef: `nereus environment create` é `nereus environment environment create`. Ele aceita `create`, `apply`, `list`, `get` e `delete` (ADR 0013, convenções de comando), e `kubeconfig`.
 
-        **A pessoa nomeia o reef, nunca a Tool** (ADR 0002): o Mandate (`--mandate`, ou o padrão do reef) diz qual Nereid o faz, um vcluster para a Nereid vcluster. O kubeconfig nunca fica no Environment: o seu status nomeia o Secret que o guarda (ADR 0005, um escritor por campo).
+        **A pessoa nomeia o Reef, nunca a Tool** (ADR 0002): o Mandate (`--mandate`, ou o padrão do Reef) diz qual Nereid o faz, um vcluster para a Nereid vcluster. O kubeconfig nunca fica no Environment: o seu status nomeia o Secret que o guarda (ADR 0005, um escritor por campo).
 
   - name: setup
     act: setup
     topic: "reef apply"
     status: built
-    message: "The {reef:environment} reef, the vcluster {nereid:Nereid} and its default {mandate:Mandate}"
+    message: "The {reef:environment} Reef, the vcluster {nereid:Nereid} and its default {mandate:Mandate}"
     accent: "default"
     terminal:
       steps:
-        - comment: "The vcluster Nereid requires the release reef: it asks it for the vcluster chart"
+        - comment: "The vcluster Nereid requires the release Reef: it asks it for the vcluster chart"
           run: "nereus reef apply environment"
           output: |-
             ✓ core/reefs/environment 0.1.0 created (environment.getnereus.dev/v1alpha1: environments)
@@ -88,21 +88,21 @@ slides:
 
               nereus environment create <name> --project <name> --expires 4h
     notes: |-
-      **`nereus init --profile internal-developer-platform` runs these steps** (#827 (the profile installs the environment reef and the vcluster Nereid)), so `nereus environment create` works right after it.
+      **`nereus init --profile internal-developer-platform` runs these steps** (#827 (the profile installs the environment Reef and the vcluster Nereid)), so `nereus environment create` works right after it.
 
-      **The release reef with the flux Nereid comes first** (the release reef's deck): the vcluster Nereid writes its own Release of the vcluster chart, as the keycloak Nereid does (#597 (a Nereid writes its own Release)), and Flux installs it.
+      **The release Reef with the flux Nereid comes first** (the release Reef's deck): the vcluster Nereid writes its own Release of the vcluster chart, as the keycloak Nereid does (#597 (a Nereid writes its own Release)), and Flux installs it.
 
-      **What the vcluster Nereid may do follows from the kinds it serves:** namespaces (`get`, `list`, `create`, `delete`) and the release reef's objects in Nereus's namespace, narrowed by an admission policy bound to its service account, since RBAC cannot narrow by label or name prefix: it creates and deletes only the namespaces `env-<its name>-<environment>` (at most 63 characters, its name without `-`) labelled with their Environment and its own name, writes only the release objects labelled with its name, its Target and Release named after their Environment, the Target only in that Environment's namespace, and the Release, Repository and Source only of the chart its image declares (label `core.getnereus.dev/chart`), with no secrets and exactly the values its image declares (label `core.getnereus.dev/values`, held at `nereus nereid apply` to an allowlist of the keys an environment's chart may set, its free leaves single values and each image exactly the registry and repository its Nereid pins in that slot (`ghcr.io/loft-sh/kubernetes`, `ghcr.io/loft-sh/vcluster-oss`), pinned by digest, and compared whole), the Target's, Repository's and Source's spec compared whole; a second policy, for every principal (Flux's createNamespace included), creates a namespace `env-*` only named `env-<nereid>-<environment>` with those labels and `baseline` or `restricted` pod security, lets a Nereid's service account create none but its own, lets only the Nereid it is labelled with create it with the annotation `environment.getnereus.dev/uid`, the Environment's UID, and keeps those labels and that annotation unchanged afterwards, by which the Nereid adopts only a namespace it made (#633 (pod security, a narrower RBAC and a checked kubeconfig), #645 (the residual risks of the environment Nereids)). The flux Nereid applies a Release labelled for an Environment only through a Target with the same labels in `env-<nereid>-<environment>`.
+      **What the vcluster Nereid may do follows from the kinds it serves:** namespaces (`get`, `list`, `create`, `delete`) and the release Reef's objects in Nereus's namespace, narrowed by an admission policy bound to its service account, since RBAC cannot narrow by label or name prefix: it creates and deletes only the namespaces `env-<its name>-<environment>` (at most 63 characters, its name without `-`) labelled with their Environment and its own name, writes only the release objects labelled with its name, its Target and Release named after their Environment, the Target only in that Environment's namespace, and the Release, Repository and Source only of the chart its image declares (label `core.getnereus.dev/chart`), with no secrets and exactly the values its image declares (label `core.getnereus.dev/values`, held at `nereus nereid apply` to an allowlist of the keys an environment's chart may set, its free leaves single values and each image exactly the registry and repository its Nereid pins in that slot (`ghcr.io/loft-sh/kubernetes`, `ghcr.io/loft-sh/vcluster-oss`), pinned by digest, and compared whole), the Target's, Repository's and Source's spec compared whole; a second policy, for every principal (Flux's createNamespace included), creates a namespace `env-*` only named `env-<nereid>-<environment>` with those labels and `baseline` or `restricted` pod security, lets a Nereid's service account create none but its own, lets only the Nereid it is labelled with create it with the annotation `environment.getnereus.dev/uid`, the Environment's UID, and keeps those labels and that annotation unchanged afterwards, by which the Nereid adopts only a namespace it made (#633 (pod security, a narrower RBAC and a checked kubeconfig), #645 (the residual risks of the environment Nereids)). The flux Nereid applies a Release labelled for an Environment only through a Target with the same labels in `env-<nereid>-<environment>`.
     pt:
       topic: "reef apply"
-      message: "O reef {reef:environment}, a {nereid:Nereid} vcluster e o seu {mandate:Mandate} padrão"
+      message: "O Reef {reef:environment}, a {nereid:Nereid} vcluster e o seu {mandate:Mandate} padrão"
       accent: "padrão"
       notes: |-
-        **`nereus init --profile internal-developer-platform` roda estes passos** (#827 (o perfil instala o reef environment e a Nereid vcluster)), então `nereus environment create` funciona logo depois dele.
+        **`nereus init --profile internal-developer-platform` roda estes passos** (#827 (o perfil instala o Reef environment e a Nereid vcluster)), então `nereus environment create` funciona logo depois dele.
 
-        **O reef release com a Nereid flux vem antes** (o deck do reef release): a Nereid vcluster escreve o seu próprio Release do chart do vcluster, como a Nereid keycloak faz (#597 (uma Nereid escreve o seu próprio Release)), e o Flux o instala.
+        **O Reef release com a Nereid flux vem antes** (o deck do Reef release): a Nereid vcluster escreve o seu próprio Release do chart do vcluster, como a Nereid keycloak faz (#597 (uma Nereid escreve o seu próprio Release)), e o Flux o instala.
 
-        **O que a Nereid vcluster pode fazer decorre dos kinds que ela serve:** namespaces (`get`, `list`, `create`, `delete`) e os objetos do reef release no namespace do Nereus, estreitados por uma admission policy ligada à sua service account, já que o RBAC não estreita por label nem por prefixo de nome: ela cria e apaga só os namespaces `env-<seu nome>-<environment>` (até 63 caracteres, o seu nome sem `-`) rotulados com o seu Environment e o seu próprio nome, escreve só os objetos de release rotulados com o seu nome, o seu Target e o seu Release nomeados pelo seu Environment, o Target só no namespace desse Environment, e o Release, o Repository e o Source só do chart que a sua imagem declara (label `core.getnereus.dev/chart`), sem secrets e exatamente com os values que a sua imagem declara (label `core.getnereus.dev/values`, conferidos no `nereus nereid apply` contra uma allowlist das chaves que o chart de um ambiente pode definir, com as folhas livres valores únicos e cada imagem exatamente o registry e o repository que a sua Nereid fixa naquele slot (`ghcr.io/loft-sh/kubernetes`, `ghcr.io/loft-sh/vcluster-oss`), fixada por digest, e comparados por inteiro), e o spec do Target, do Repository e do Source comparado por inteiro; uma segunda policy, para qualquer principal (o createNamespace do Flux incluído), só cria um namespace `env-*` chamado `env-<nereid>-<environment>` com esses labels e pod security `baseline` ou `restricted`, não deixa a service account de uma Nereid criar nenhum além dos seus, só deixa a Nereid do seu label criá-lo com a annotation `environment.getnereus.dev/uid`, o UID do Environment, e mantém esses labels e essa annotation inalterados depois, pela qual a Nereid só adota um namespace que ela criou (#633 (pod security, um RBAC mais estreito e um kubeconfig conferido), #645 (os riscos residuais das Nereids de ambiente)). A Nereid flux só aplica um Release rotulado para um Environment por um Target com os mesmos labels em `env-<nereid>-<environment>`.
+        **O que a Nereid vcluster pode fazer decorre dos kinds que ela serve:** namespaces (`get`, `list`, `create`, `delete`) e os objetos do Reef release no namespace do Nereus, estreitados por uma admission policy ligada à sua service account, já que o RBAC não estreita por label nem por prefixo de nome: ela cria e apaga só os namespaces `env-<seu nome>-<environment>` (até 63 caracteres, o seu nome sem `-`) rotulados com o seu Environment e o seu próprio nome, escreve só os objetos de release rotulados com o seu nome, o seu Target e o seu Release nomeados pelo seu Environment, o Target só no namespace desse Environment, e o Release, o Repository e o Source só do chart que a sua imagem declara (label `core.getnereus.dev/chart`), sem secrets e exatamente com os values que a sua imagem declara (label `core.getnereus.dev/values`, conferidos no `nereus nereid apply` contra uma allowlist das chaves que o chart de um ambiente pode definir, com as folhas livres valores únicos e cada imagem exatamente o registry e o repository que a sua Nereid fixa naquele slot (`ghcr.io/loft-sh/kubernetes`, `ghcr.io/loft-sh/vcluster-oss`), fixada por digest, e comparados por inteiro), e o spec do Target, do Repository e do Source comparado por inteiro; uma segunda policy, para qualquer principal (o createNamespace do Flux incluído), só cria um namespace `env-*` chamado `env-<nereid>-<environment>` com esses labels e pod security `baseline` ou `restricted`, não deixa a service account de uma Nereid criar nenhum além dos seus, só deixa a Nereid do seu label criá-lo com a annotation `environment.getnereus.dev/uid`, o UID do Environment, e mantém esses labels e essa annotation inalterados depois, pela qual a Nereid só adota um namespace que ela criou (#633 (pod security, um RBAC mais estreito e um kubeconfig conferido), #645 (os riscos residuais das Nereids de ambiente)). A Nereid flux só aplica um Release rotulado para um Environment por um Target com os mesmos labels em `env-<nereid>-<environment>`.
 
   - name: create
     act: environment
@@ -233,7 +233,7 @@ slides:
             kube-system       Active   42s
     dependsOn: [create]
     notes: |-
-      **The kubeconfig is the one vcluster writes, in the Secret `vc-a` of the namespace `env-vcluster-a`** (the Nereid in its name, #645), read by the CLI with the person's kubeconfig; it names the server `https://localhost:8443`, so a port-forward to the vcluster's service reaches it. A stand-in: the edge reef publishes it as a Route later (#470 (the cloudflare Nereid)).
+      **The kubeconfig is the one vcluster writes, in the Secret `vc-a` of the namespace `env-vcluster-a`** (the Nereid in its name, #645), read by the CLI with the person's kubeconfig; it names the server `https://localhost:8443`, so a port-forward to the vcluster's service reaches it. A stand-in: the edge Reef publishes it as a Route later (#470 (the cloudflare Nereid)).
 
       **The CLI reads only that Secret, and checks what it prints** (#633): a status naming another Secret is refused before anything is read, and the Secret's kubeconfig is never printed as it is: a fresh one named `env-<name>` is built from only the https server and CA of its one cluster and the token or client certificate of its one user, so nothing kubectl would act on with your rights (`exec`, `tokenFile`, a proxy, a context naming your own user) reaches the output; one that cannot be rebuilt is refused.
     pt:
@@ -241,7 +241,7 @@ slides:
       message: "O seu kubeconfig, lido com as suas próprias credenciais"
       accent: "as suas próprias credenciais"
       notes: |-
-        **O kubeconfig é o que o vcluster escreve, no Secret `vc-a` do namespace `env-vcluster-a`** (a Nereid no nome, #645), lido pelo CLI com o kubeconfig da pessoa; ele aponta para o servidor `https://localhost:8443`, então um port-forward para o service do vcluster o alcança. Um stand-in: o reef edge o publica como uma Route depois (#470 (a Nereid cloudflare)).
+        **O kubeconfig é o que o vcluster escreve, no Secret `vc-a` do namespace `env-vcluster-a`** (a Nereid no nome, #645), lido pelo CLI com o kubeconfig da pessoa; ele aponta para o servidor `https://localhost:8443`, então um port-forward para o service do vcluster o alcança. Um stand-in: o Reef edge o publica como uma Route depois (#470 (a Nereid cloudflare)).
 
         **O CLI lê só esse Secret, e confere o que imprime** (#633): um status que nomeia outro Secret é recusado antes de qualquer leitura, e o kubeconfig do Secret nunca é impresso como está: um novo, chamado `env-<name>`, é montado só com o servidor https e a CA do seu único cluster e o token ou o certificado do seu único usuário, então nada sobre o que o kubectl agiria com os seus direitos (`exec`, `tokenFile`, um proxy, um contexto que nomeia o seu próprio usuário) chega à saída; um que não dá para remontar é recusado.
 
@@ -334,14 +334,14 @@ slides:
             pr-123       getnereus     nereus   vcluster  Ready   small  2d
     dependsOn: [create]
     notes: |-
-      **The kept k3d cluster is the Environment `nereus`** (ADR 0026, the environment reef), a disposable label like any environment's, never `prod`: swapping the cluster changes the environment, not the Workload. The `k3d` Nereid knows only the cluster it runs in: it adopts it, writes `status.kubernetes`, refuses a second one and never deletes the cluster, a stand-in until a Nereid makes clusters.
+      **The kept k3d cluster is the Environment `nereus`** (ADR 0026, the environment Reef), a disposable label like any environment's, never `prod`: swapping the cluster changes the environment, not the Workload. The `k3d` Nereid knows only the cluster it runs in: it adopts it, writes `status.kubernetes`, refuses a second one and never deletes the cluster, a stand-in until a Nereid makes clusters.
 
-      **The Mandate is the one named, else the reef's default**: the vcluster Mandate stays the default, so `nereus` is the only environment that names one (`--mandate local`). A release with `--target nereus` reads its `status` like any environment's.
+      **The Mandate is the one named, else the Reef's default**: the vcluster Mandate stays the default, so `nereus` is the only environment that names one (`--mandate local`). A release with `--target nereus` reads its `status` like any environment's.
     pt:
       topic: "nereus"
       message: "O cluster mantido é o ambiente nereus, feito pelo seu próprio Mandate"
       accent: "nereus"
       notes: |-
-        **O cluster k3d mantido é o Environment `nereus`** (ADR 0026, o reef environment), um rótulo descartável como o de qualquer ambiente, nunca `prod`: trocar o cluster muda o ambiente, não o Workload. A Nereid `k3d` só conhece o cluster onde roda: ela o adota, escreve `status.kubernetes`, recusa um segundo e nunca apaga o cluster, um stand-in até uma Nereid criar clusters.
+        **O cluster k3d mantido é o Environment `nereus`** (ADR 0026, o Reef environment), um rótulo descartável como o de qualquer ambiente, nunca `prod`: trocar o cluster muda o ambiente, não o Workload. A Nereid `k3d` só conhece o cluster onde roda: ela o adota, escreve `status.kubernetes`, recusa um segundo e nunca apaga o cluster, um stand-in até uma Nereid criar clusters.
 
-        **O Mandate é o nomeado, senão o padrão do reef**: o Mandate do vcluster continua o padrão, então `nereus` é o único ambiente que nomeia um (`--mandate local`). Um release com `--target nereus` lê o seu `status` como o de qualquer ambiente.
+        **O Mandate é o nomeado, senão o padrão do Reef**: o Mandate do vcluster continua o padrão, então `nereus` é o único ambiente que nomeia um (`--mandate local`). Um release com `--target nereus` lê o seu `status` como o de qualquer ambiente.

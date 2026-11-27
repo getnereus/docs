@@ -4,7 +4,7 @@ Report the share of a coding agent's quota window you read, and see where it is 
 
 ## Before you start
 
-- A cluster from [Prepare the cluster](../../start/init.md) with `--profile internal-developer-platform`: it brings the usage reef with its Nereid `reference-usage`.
+- A cluster from [Prepare the cluster](../../start/init.md) with `--profile internal-developer-platform`: it brings the usage Reef with its Nereid `reference-usage`.
 - `nereus login` done: the readings go through the Nereus API.
 - The share used and the reset of the window, as your agent's status line shows them.
 
@@ -52,7 +52,7 @@ Sun 15/11  +25%   100%   plan
 
 ### 3. Cut the days where you live
 
-The days and the times are cut in the time zone of the reef's Mandate, UTC until you set one. [`nereus mandate apply`](../../specs/cli/core.html#mandate-apply) replaces every param, so name them all.
+The days and the times are cut in the time zone of the Reef's Mandate, UTC until you set one. [`nereus mandate apply`](../../specs/cli/core.html#mandate-apply) replaces every param, so name them all.
 
 ```bash
 nereus mandate apply reference-usage \
@@ -113,4 +113,4 @@ Sun 15/11  +8%    100%   plan
 
 ## Next
 
-- [The usage reef's commands](../../reference/reefs/usage.md), with `apply`, `list` and `delete`.
+- [The usage Reef's commands](../../reference/reefs/usage.md), with `apply`, `list` and `delete`.

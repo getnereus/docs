@@ -7225,7 +7225,7 @@ spec:
 </table>
 <p><code>profile</code> is what <code>init</code> installs after core: <code>core</code> (nothing more), <code>internal-developer-platform</code> or <code>secrets</code> (<a href="../../adr/0014-profiles/">ADR 0014</a>, the profiles). A cloud target takes no profile yet.</p>
 <p><code>ingressPort</code> is the host port of the cluster's ingress gateway, from 1 to 65535, mapped on the loopback only to port 80 of the load balancer of a cluster <code>init</code> creates.</p>
-<p><code>cloud</code> names the Nereid of the cloud reef whose cloud the cluster bootstraps. It is absent for a local <code>k3d</code> cluster, and it cannot be <code>k3d</code>.</p>
+<p><code>cloud</code> names the Nereid of the cloud Reef whose cloud the cluster bootstraps. It is absent for a local <code>k3d</code> cluster, and it cannot be <code>k3d</code>.</p>
 <p><code>undercloud.create</code> creates the cluster, or reuses it when it exists. <code>undercloud.name</code> is the name of the cluster to create.</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <p>The second document names the installation, after the cluster unless <code>--installation-name</code> says otherwise (<a href="../../specs/0006-installation-identity/">spec 0006</a>).</p>

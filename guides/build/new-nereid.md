@@ -5,7 +5,7 @@ Render a new [Nereid](../../concepts/model.md) from the template: a skeleton tha
 ## Before you start
 
 - A checkout of Nereus, with `uv` on the `PATH`: the template runs through [Copier](https://copier.readthedocs.io/), pinned and run by `uvx`, so there is nothing else to install.
-- The reef the Nereid looks after, and the Tool it drives: here the `edge` reef and Caddy.
+- The Reef the Nereid looks after, and the Tool it drives: here the `edge` Reef and Caddy.
 
 ## Steps
 
@@ -32,11 +32,11 @@ Next steps:
   nereus nereid apply caddy --reef edge --image localhost:5111/caddy-controller:0.1.0
 ```
 
-By default it serves the kind `<reef>s`; `--kinds hostnames,certificates` names the reef's kinds it serves instead.
+By default it serves the kind `<reef>s`; `--kinds hostnames,certificates` names the Reef's kinds it serves instead.
 
 ### 2. Write the Tool's work
 
-The Tool's work goes in `reconcile()` of `server.py`. The generated `README.md` lists what every Nereid must do: serve every verb of every kind of its reef, with the status its contract declares.
+The Tool's work goes in `reconcile()` of `server.py`. The generated `README.md` lists what every Nereid must do: serve every verb of every kind of its Reef, with the status its contract declares.
 
 ### 3. Wire it into the build
 
@@ -76,9 +76,9 @@ A Nereid sets each object's `Ready` condition through `operations.ready(item, st
 
 ## Next
 
-- [Build a Nereid's image](image.md), with the labels that name its reef, and apply it.
-- [Require a reef](requires.md) when the Nereid needs another reef's work.
-- [Pass the conformance tests](conformance.md): every verb of every kind of its reef.
+- [Build a Nereid's image](image.md), with the labels that name its Reef, and apply it.
+- [Require a Reef](requires.md) when the Nereid needs another Reef's work.
+- [Pass the conformance tests](conformance.md): every verb of every kind of its Reef.
 
 ## Learn more
 

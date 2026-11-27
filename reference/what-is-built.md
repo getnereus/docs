@@ -2,7 +2,7 @@
 
 What runs on `main` today, area by area, each with a status chip and where it is decided. [built]
 
-Planned work and ideas are on the [roadmap](../project/roadmap.md); each reef's commands are in [the reef pages](reefs/secrets.md).
+Planned work and ideas are on the [roadmap](../project/roadmap.md); each Reef's commands are in [the Reef pages](reefs/secrets.md).
 
 A chip says how far a feature is: `built` is code on `main`, `planned` has an issue that builds it, `idea` is still being refined.
 
@@ -15,8 +15,8 @@ A chip says how far a feature is: `built` is code on `main`, `planned` has an is
 | Installation identity | One `Installation` object per cluster, written by the first `init`. [spec 0006](../specs/0006-installation-identity.md) | [built] |
 | Reefs at runtime | `nereus reef create | apply | list | delete`. [ADR 0010](../adr/0010-reefs-at-runtime.md) | [built] |
 | Nereids at runtime | `nereus nereid apply` reads the image's labels from the registry. [ADR 0003](../adr/0003-init-and-nereids-at-runtime.md) | [built] |
-| Required reefs | A Nereid is refused when a reef it requires is missing. [spec 0003](../specs/0003-nereid-conformance.md) | [built] |
-| Commands from a Nereid | A reef's command group is built from data in the Nereid's status. [ADR 0004](../adr/0004-reefs-extend-the-cli.md) | [built] |
+| Required Reefs | A Nereid is refused when a Reef it requires is missing. [spec 0003](../specs/0003-nereid-conformance.md) | [built] |
+| Commands from a Nereid | A Reef's command group is built from data in the Nereid's status. [ADR 0004](../adr/0004-reefs-extend-the-cli.md) | [built] |
 | The CLI design commands | `reef`, `nereid`, `mandate` and the conventions. [ADR 0013](../adr/0013-command-conventions.md) | [built] |
 | One writer per field | The CLI writes `spec`, a Nereid writes only `status`. [ADR 0005](../adr/0005-one-writer-per-field.md) | [built] |
 | Profiles | `core` and `internal-developer-platform`; `nereus profile apply`. [ADR 0014](../adr/0014-profiles.md) | [built] |
@@ -30,7 +30,7 @@ A chip says how far a feature is: `built` is code on `main`, `planned` has an is
 | Feature | What it gives | Status |
 |---|---|---|
 | Nereus API | `nereus-api` in the cluster; `nereus whoami` calls `GET /v1/me`. [#607](https://github.com/getnereus/nereus/issues/607) | [built] |
-| MCP tools from reefs | A reef declares tools; the API serves them at `/mcp`. [ADR 0029](../adr/0029-mcp-tools.md) | [built] |
+| MCP tools from Reefs | A Reef declares tools; the API serves them at `/mcp`. [ADR 0029](../adr/0029-mcp-tools.md) | [built] |
 | Chosen MCP tools | `nereus mcp tool enable | disable` in the `Installation`. [#1809](https://github.com/getnereus/nereus/issues/1809) | [built] |
 | `/mcp` in Claude Code | `nereus mcp client add claude-code`. [#1880](https://github.com/getnereus/nereus/issues/1880) | [built] |
 | `nereus-mcp` retired | The instance's entrance serves `/mcp`. [#1810](https://github.com/getnereus/nereus/issues/1810) | [built] |
@@ -39,7 +39,7 @@ A chip says how far a feature is: `built` is code on `main`, `planned` has an is
 
 | Feature | What it gives | Status |
 |---|---|---|
-| Reef kinds shipped by a reef | The `cloud` reef ships its kind `Cloud` and its Mandate. [spec 0005](../specs/0005-cloud-reef.md) | [built] |
+| Reef kinds shipped by a Reef | The `cloud` Reef ships its kind `Cloud` and its Mandate. [spec 0005](../specs/0005-cloud-reef.md) | [built] |
 | Cloud plans | A Nereid's plan is checked, approved and run with the person's login. [#307](https://github.com/getnereus/nereus/issues/307) | [built] |
 | Requester tags | Every cloud resource says which installation created it and why. [#155](https://github.com/getnereus/nereus/issues/155) | [built] |
 | Undercloud | `nereus init --target <name>` brings up the k3d undercloud. [#263](https://github.com/getnereus/nereus/issues/263) | [built] |

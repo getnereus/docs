@@ -7193,31 +7193,31 @@
 <h1 id="0004-reefs-and-their-nereids-extend-the-cli-with-their-own-commands">0004. Reefs and their Nereids extend the CLI with their own commands<a class="headerlink" href="#0004-reefs-and-their-nereids-extend-the-cli-with-their-own-commands" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
 <p class="admonition-title">In short</p>
-<p>Each reef describes its commands as data published in <code>status</code>, and the CLI builds them at runtime, grouped by reef, never by Nereid or Tool. Status: Proposed (2026-10-17, rewritten 2026-10-25).</p>
+<p>Each Reef describes its commands as data published in <code>status</code>, and the CLI builds them at runtime, grouped by Reef, never by Nereid or Tool. Status: Proposed (2026-10-17, rewritten 2026-10-25).</p>
 </div>
 <p><strong>Status:</strong> Proposed (2026-10-17, rewritten 2026-10-25)</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
-<p>If reefs and Nereids are added at runtime (ADR 0003), the CLI cannot know their commands in advance. Shipping a new CLI release for each would undo the point. The Azure CLI solves a similar problem with extensions, but an extension is code installed on the client.</p>
+<p>If Reefs and Nereids are added at runtime (ADR 0003), the CLI cannot know their commands in advance. Shipping a new CLI release for each would undo the point. The Azure CLI solves a similar problem with extensions, but an extension is code installed on the client.</p>
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
-<p>Each reef describes the commands it serves, and the CLI builds them at runtime:</p>
+<p>Each Reef describes the commands it serves, and the CLI builds them at runtime:</p>
 <ul>
-<li>The commands are grouped by reef, never by Nereid or Tool: adding the <code>secrets</code> reef adds <code>nereus secrets apply</code>, whichever Nereid keeps the secrets.</li>
+<li>The commands are grouped by Reef, never by Nereid or Tool: adding the <code>secrets</code> Reef adds <code>nereus secrets apply</code>, whichever Nereid keeps the secrets.</li>
 <li>The description of the commands (names, arguments, flags, help text, examples) is data, not code, published in <code>status</code>.</li>
-<li>The CLI caches these descriptions when it lists reefs or logs in, as <code>kubectl</code> caches API discovery.</li>
-<li>Running a command reaches the reef's resources or the Nereid that handles it under the reef's Mandate. In the first test, the CLI reaches the Nereid through the Kubernetes API's Service proxy, with no Platform API and no login. Later the Platform API sits in between and decides who may run what.</li>
+<li>The CLI caches these descriptions when it lists Reefs or logs in, as <code>kubectl</code> caches API discovery.</li>
+<li>Running a command reaches the Reef's resources or the Nereid that handles it under the Reef's Mandate. In the first test, the CLI reaches the Nereid through the Kubernetes API's Service proxy, with no Platform API and no login. Later the Platform API sits in between and decides who may run what.</li>
 </ul>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>reef<span class="w"> </span>apply<span class="w"> </span>secrets<span class="w"> </span>--from-file<span class="w"> </span>./reefs/secrets/
 nereus<span class="w"> </span>secrets<span class="w"> </span>--help
 nereus<span class="w"> </span>secrets<span class="w"> </span>apply<span class="w"> </span>google-sso<span class="w"> </span>--from-file<span class="w"> </span>google-sso.json
 </code></pre></div>
 <h3 id="amendment-named-options-and-the-answers-steps-2026-11-09">Amendment: named options and the answer's steps (2026-11-09)<a class="headerlink" href="#amendment-named-options-and-the-answers-steps-2026-11-09" title="Permanent link">&para;</a></h3>
-<p>Decided by the owner on 2026-11-09 for #1290 (a command a Nereid publishes appears under its reef, takes named options, and can open the browser and write the Mandate's params), the generic mechanism the github Nereid's <code>app-register</code> uses first:</p>
+<p>Decided by the owner on 2026-11-09 for #1290 (a command a Nereid publishes appears under its Reef, takes named options, and can open the browser and write the Mandate's params), the generic mechanism the github Nereid's <code>app-register</code> uses first:</p>
 <ul>
-<li><strong>Every Nereid of a reef publishes into the reef's group.</strong> The same path published by two Nereids is one command, routed by <code>--mandate</code>: the Nereid of that Mandate, else the reef's default Mandate's; a path one Nereid publishes goes to it. <code>--mandate</code> is the option the CLI adds to every published command of a reef with several Nereids, unless the command declares it; a Mandate whose Nereid does not publish the command is refused, naming it. The CLI's own commands of a reef still win.</li>
+<li><strong>Every Nereid of a Reef publishes into the Reef's group.</strong> The same path published by two Nereids is one command, routed by <code>--mandate</code>: the Nereid of that Mandate, else the Reef's default Mandate's; a path one Nereid publishes goes to it. <code>--mandate</code> is the option the CLI adds to every published command of a Reef with several Nereids, unless the command declares it; a Mandate whose Nereid does not publish the command is refused, naming it. The CLI's own commands of a Reef still win.</li>
 <li><strong>Named options:</strong> a command declares <code>options</code> (<code>name</code>, <code>help</code>, <code>required</code>, <code>pattern</code>) beside its positional <code>arguments</code>; the CLI checks each value against its <code>pattern</code> before sending it, and sends the options by name.</li>
 <li><strong>The answer's steps:</strong> <code>POST /run</code> answers JSON with <code>output</code>, <code>error</code> and <code>exitCode</code>, and may ask two steps the CLI carries out as the person's client, in this order:</li>
 <li><code>browser</code> (<code>url</code>, <code>callback</code>, <code>timeoutSeconds</code>, optional <code>form</code>): the CLI listens on <code>127.0.0.1</code> only, generates a <code>state</code> and checks it on the callback, opens the URL (or, with a <code>form</code>, a local page that POSTs it, for GitHub's manifest flow, served once at an unguessable path), keeps only the listed callback parameters, and refuses every request after the first valid callback. <code>{{callback}}</code> and <code>{{state}}</code> in the URL and the form become the listener's callback URL and that state.</li>
-<li><code>mandateParams</code> (<code>mandate</code>, <code>params</code>): the CLI merges the params into the spec of that Mandate, which must be one the answering Nereid serves on this reef (ADR 0005: the person, through the CLI, writes <code>spec</code>), and prints <code>core/mandates/&lt;name&gt; configured (...)</code>.</li>
+<li><code>mandateParams</code> (<code>mandate</code>, <code>params</code>): the CLI merges the params into the spec of that Mandate, which must be one the answering Nereid serves on this Reef (ADR 0005: the person, through the CLI, writes <code>spec</code>), and prints <code>core/mandates/&lt;name&gt; configured (...)</code>.</li>
 <li><strong>The Nereid stays stateless:</strong> after a <code>browser</code> step, the CLI posts the command again with the original options plus everything the steps collected (<code>collected</code>), until an answer asks no <code>browser</code> step, at most five rounds. A failed answer (<code>exitCode</code> other than 0) runs no step.</li>
 <li><code>nextSteps</code> (a list of lines, #1291): the CLI closes the run with them in its own <code>Next steps:</code> block (ADR 0013), after the other steps, so a line like the App's install URL comes after the Mandate is written.</li>
 <li>No step carries a secret: a Nereid answers with secret names, never their values.</li>
@@ -7225,14 +7225,14 @@ nereus<span class="w"> </span>secrets<span class="w"> </span>apply<span class="w
 </ul>
 <h2 id="consequences">Consequences<a class="headerlink" href="#consequences" title="Permanent link">&para;</a></h2>
 <ul>
-<li>A reef extends the MCP door the same way: its Nereid's contract lists its tools, and the Nereus API serves them at <code>/mcp</code> (ADR 0029).</li>
+<li>A Reef extends the MCP door the same way: its Nereid's contract lists its tools, and the Nereus API serves them at <code>/mcp</code> (ADR 0029).</li>
 <li>No client-side code is downloaded: a Nereid cannot run anything on the user's machine.</li>
 <li>Swapping a Nereid changes no command a person types.</li>
 <li>What a Nereid publishes is untrusted input: validated before the CLI renders or routes it.</li>
 </ul>
 <h2 id="open-questions">Open questions<a class="headerlink" href="#open-questions" title="Permanent link">&para;</a></h2>
 <ul>
-<li>How a reef's contract becomes commands: built from the schema of its resources, published by its Nereids for actions that are not resources, or both (ADR 0010).</li>
+<li>How a Reef's contract becomes commands: built from the schema of its resources, published by its Nereids for actions that are not resources, or both (ADR 0010).</li>
 </ul>
 <p><em>Rewritten 2026-10-25 from voice session; raw data in Drive #pontos/raw/2026-10-25.</em></p>
 <p><em>Amended 2026-11-09 from the owner's decisions on #1290; raw data in Drive #pontos/raw/2026-11-09.</em></p>

@@ -1,11 +1,11 @@
 deck:
   name: cli
   title: "The CLI's commands"
-  subtitle: "One deck per reef, the source of truth for every command, built or imagined"
+  subtitle: "One deck per Reef, the source of truth for every command, built or imagined"
   accent: "the source of truth"
   pt:
     title: "Os comandos do CLI"
-    subtitle: "Um deck por reef, a fonte da verdade de todo comando, pronto ou imaginado"
+    subtitle: "Um deck por Reef, a fonte da verdade de todo comando, pronto ou imaginado"
     accent: "a fonte da verdade"
 
 acts:
@@ -13,9 +13,9 @@ acts:
     title: "Opening"
     pt: {title: "Abertura"}
   - name: reefs
-    title: "The reefs"
+    title: "The Reefs"
     question: "Where does each command live?"
-    pt: {title: "Os reefs", question: "Onde vive cada comando?"}
+    pt: {title: "Os Reefs", question: "Onde vive cada comando?"}
 
 slides:
   - name: cover
@@ -23,19 +23,19 @@ slides:
     cover: true
     message: "The CLI's commands"
     notes: |-
-      **Every command of the nereus CLI, built or only imagined, lives here first** (#477). An idea for a command goes into its reef's deck before anything else; the issue that builds it points to its slide.
+      **Every command of the nereus CLI, built or only imagined, lives here first** (#477). An idea for a command goes into its Reef's deck before anything else; the issue that builds it points to its slide.
 
       **The source of truth is each deck's YAML**, rendered to HTML by `docs/presentations/render-outline`; `make deck-test` fails when the two differ. Each command slide carries a tag: built, planned (with its issue) or idea.
     pt:
       message: "Os comandos do CLI"
       notes: |-
-        **Todo comando do CLI nereus, pronto ou só imaginado, vive aqui primeiro** (#477). Uma ideia de comando entra no deck do seu reef antes de qualquer coisa; a issue que o constrói aponta para o seu slide.
+        **Todo comando do CLI nereus, pronto ou só imaginado, vive aqui primeiro** (#477). Uma ideia de comando entra no deck do seu Reef antes de qualquer coisa; a issue que o constrói aponta para o seu slide.
 
         **A fonte da verdade é o YAML de cada deck**, renderizado em HTML por `docs/presentations/render-outline`; o `make deck-test` falha quando os dois diferem. Cada slide de comando leva uma etiqueta: pronto, planejado (com a sua issue) ou ideia.
 
   - name: decks
     act: reefs
-    message: "Each reef has its own deck, a section per kind"
+    message: "Each Reef has its own deck, a section per kind"
     accent: "its own deck"
     screen:
       - "**[{reef:edge}](reefs/edge.html):** domain, zone, route"
@@ -53,16 +53,16 @@ slides:
       - "**[{reef:scm}](reefs/scm.html):** connection, token · planned"
       - "**[{reef:portal}](reefs/portal.html):** the PWA, no kinds"
       - "**[{reef:ideas}](reefs/ideas.html):** the owner's classified notes, no kinds"
-      - "**[{reef:messaging}](reefs/messaging.html):** topic, queue · session and room until the rooms reef"
+      - "**[{reef:messaging}](reefs/messaging.html):** topic, queue · session and room until the rooms Reef"
       - "**[{reef:rooms}](reefs/rooms.html):** room, peer, session, follow, post · planned"
       - "**[{reef:usage}](reefs/usage.html):** window: a coding agent's quota and its forecast"
       - "**[{reef:notifications}](reefs/notifications.html):** notification, subscription: tell a person something, on their devices"
       - "**[{reef:teams}](reefs/teams.html):** team, member: who works with whom, on the tenancy tree"
       - "**[{reef:authorization}](reefs/authorization.html):** user, team, role, binding, can-i · planned"
     notes: |-
-      **The edge reef is the first deck**, the walking skeleton of #477, the release reef the first ported one (#479) and the secrets reef the next (#530), every command built; a reef's name opens its deck. The walkthroughs (`docs/walkthrough/decks/`) link to its slides, one per step. The tenancy reef's deck holds only ideas (#569), until #573 builds them. The others are ported one reef per pull request: their commands are in `docs/agent/cli.md` and the walkthroughs until then.
+      **The edge Reef is the first deck**, the walking skeleton of #477, the release Reef the first ported one (#479) and the secrets Reef the next (#530), every command built; a Reef's name opens its deck. The walkthroughs (`docs/walkthrough/decks/`) link to its slides, one per step. The tenancy Reef's deck holds only ideas (#569), until #573 builds them. The others are ported one Reef per pull request: their commands are in `docs/agent/cli.md` and the walkthroughs until then.
     pt:
-      message: "Cada reef tem o seu deck, uma seção por kind"
+      message: "Cada Reef tem o seu deck, uma seção por kind"
       accent: "o seu deck"
       screen:
         - "**[{reef:edge}](reefs/edge.html):** domain, zone, route"
@@ -80,11 +80,11 @@ slides:
         - "**[{reef:scm}](reefs/scm.html):** connection, token · planejado"
         - "**[{reef:portal}](reefs/portal.html):** o PWA, sem kinds"
         - "**[{reef:ideas}](reefs/ideas.html):** as notas classificadas do dono, sem kinds"
-        - "**[{reef:messaging}](reefs/messaging.html):** topic, queue · session e room até o reef rooms"
+        - "**[{reef:messaging}](reefs/messaging.html):** topic, queue · session e room até o Reef rooms"
         - "**[{reef:rooms}](reefs/rooms.html):** room, peer, session, follow, post · planejado"
         - "**[{reef:usage}](reefs/usage.html):** window: a cota de um agente de código e a sua previsão"
         - "**[{reef:notifications}](reefs/notifications.html):** notification, subscription: contar algo a uma pessoa, nos dispositivos dela"
         - "**[{reef:teams}](reefs/teams.html):** team, member: quem trabalha com quem, na árvore de tenancy"
         - "**[{reef:authorization}](reefs/authorization.html):** user, team, role, binding, can-i · planejado"
       notes: |-
-        **O reef edge é o primeiro deck**, o walking skeleton do #477, o reef release o primeiro migrado (#479) e o reef secrets o seguinte (#530), todo comando pronto; o nome de um reef abre o seu deck. Os walkthroughs (`docs/walkthrough/decks/`) apontam para os seus slides, um por passo. O deck do reef tenancy tem só ideias (#569), até o #573 construí-las. Os outros são migrados um reef por pull request: até lá, os seus comandos estão em `docs/agent/cli.md` e nos walkthroughs.
+        **O Reef edge é o primeiro deck**, o walking skeleton do #477, o Reef release o primeiro migrado (#479) e o Reef secrets o seguinte (#530), todo comando pronto; o nome de um Reef abre o seu deck. Os walkthroughs (`docs/walkthrough/decks/`) apontam para os seus slides, um por passo. O deck do Reef tenancy tem só ideias (#569), até o #573 construí-las. Os outros são migrados um Reef por pull request: até lá, os seus comandos estão em `docs/agent/cli.md` e nos walkthroughs.

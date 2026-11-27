@@ -8,9 +8,9 @@ Connect an organisation of a source host to Nereus through the GitHub App an scm
 
 ## Steps
 
-### 1. Apply the scm reef and the github Nereid
+### 1. Apply the scm Reef and the github Nereid
 
-The scm reef is opt-in, outside the `internal-developer-platform` profile. One `github` Nereid serves both the authentication and the scm reef.
+The scm Reef is opt-in, outside the `internal-developer-platform` profile. One `github` Nereid serves both the authentication and the scm Reef.
 
 ```bash
 nereus reef apply scm
@@ -20,7 +20,7 @@ nereus reef apply scm
 ✓ core/reefs/scm created (scm.getnereus.dev/v1alpha1: connections)
 ```
 
-[`nereus nereid apply`](../../specs/cli/reefs/scm.html#apply-github) names both reefs.
+[`nereus nereid apply`](../../specs/cli/reefs/scm.html#apply-github) names both Reefs.
 
 ```bash
 nereus nereid apply github \
@@ -38,9 +38,9 @@ Next steps:
   nereus mandate create github-scm --reef scm --nereid github --param identity=github --default
 ```
 
-### 2. Bind the scm reef to the App
+### 2. Bind the scm Reef to the App
 
-[`nereus mandate create`](../../specs/cli/core.html#mandate-create) binds the scm reef to the Nereid. Its name follows `<nereid>-<reef>`, and its param `identity` names the App's Mandate; a second App is a second scm Mandate.
+[`nereus mandate create`](../../specs/cli/core.html#mandate-create) binds the scm Reef to the Nereid. Its name follows `<nereid>-<reef>`, and its param `identity` names the App's Mandate; a second App is a second scm Mandate.
 
 ```bash
 nereus mandate create github-scm \
@@ -61,7 +61,7 @@ Next steps:
 
 ### 3. Connect the organisations
 
-[`nereus scm connection create`](../../specs/cli/reefs/scm.html#connection-create) names one organisation. The first Connection is the reef's default; `--mandate` picks another scm Mandate.
+[`nereus scm connection create`](../../specs/cli/reefs/scm.html#connection-create) names one organisation. The first Connection is the Reef's default; `--mandate` picks another scm Mandate.
 
 ```bash
 nereus scm connection create example \
@@ -76,7 +76,7 @@ Next steps:
   nereus scm connection get example
 ```
 
-Connect `labs`, `meta` and `some` the same way, with `--org example-labs`, `example-meta` and `example-some`. A second `--default` is refused: one in the reef.
+Connect `labs`, `meta` and `some` the same way, with `--org example-labs`, `example-meta` and `example-some`. A second `--default` is refused: one in the Reef.
 
 ```bash
 nereus scm connection create other \
@@ -127,7 +127,7 @@ The App's webhook points at `POST /scm/webhook` on the github Nereid's Service, 
 
 ## Clean up
 
-[`nereus scm connection delete`](../../specs/cli/reefs/scm.html#connection-delete) removes the Connection; the App stays installed on the organisation, and its Mandate in the authentication reef.
+[`nereus scm connection delete`](../../specs/cli/reefs/scm.html#connection-delete) removes the Connection; the App stays installed on the organisation, and its Mandate in the authentication Reef.
 
 ```bash
 nereus scm connection delete labs
@@ -147,5 +147,5 @@ Next steps:
 
 ## Learn more
 
-- [The scm reef](../../reference/reefs/scm.md): Connections and Mirrors, every command.
+- [The scm Reef](../../reference/reefs/scm.md): Connections and Mirrors, every command.
 - [Reef, Nereid and Mandate](../../concepts/model.md): why a Mandate holds the App, never the Connection.

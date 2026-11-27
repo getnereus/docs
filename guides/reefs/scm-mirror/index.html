@@ -2259,7 +2259,7 @@
   <a href="#1-apply-the-scm-reef-and-the-forgejo-nereid" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Apply the scm reef and the forgejo Nereid
+        1. Apply the scm Reef and the forgejo Nereid
       
     </span>
   </a>
@@ -7178,7 +7178,7 @@
   <a href="#1-apply-the-scm-reef-and-the-forgejo-nereid" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Apply the scm reef and the forgejo Nereid
+        1. Apply the scm Reef and the forgejo Nereid
       
     </span>
   </a>
@@ -7269,16 +7269,16 @@
 <p>Copy a public Git repository into the cluster, where the <code>forgejo</code> Nereid keeps it in a Forgejo it runs, pulled again on an interval. A public source needs no <a href="../scm-connection/">Connection</a> and no App.</p>
 <h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">&para;</a></h2>
 <ul>
-<li>The release reef with the flux Nereid, and the secrets reef with the openbao Nereid and the vault <code>default</code>: Forgejo comes from its upstream chart through the release reef, and its admin is sealed into the vault.</li>
-<li>The profile <code>internal-developer-platform</code> brings the scm reef and the forgejo Nereid already: then go to step 2.</li>
+<li>The release Reef with the flux Nereid, and the secrets Reef with the openbao Nereid and the vault <code>default</code>: Forgejo comes from its upstream chart through the release Reef, and its admin is sealed into the vault.</li>
+<li>The profile <code>internal-developer-platform</code> brings the scm Reef and the forgejo Nereid already: then go to step 2.</li>
 </ul>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
-<h3 id="1-apply-the-scm-reef-and-the-forgejo-nereid">1. Apply the scm reef and the forgejo Nereid<a class="headerlink" href="#1-apply-the-scm-reef-and-the-forgejo-nereid" title="Permanent link">&para;</a></h3>
+<h3 id="1-apply-the-scm-reef-and-the-forgejo-nereid">1. Apply the scm Reef and the forgejo Nereid<a class="headerlink" href="#1-apply-the-scm-reef-and-the-forgejo-nereid" title="Permanent link">&para;</a></h3>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>reef<span class="w"> </span>apply<span class="w"> </span>scm
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ core/reefs/scm created (scm.getnereus.dev/v1alpha1: connections)
 </code></pre></div>
-<p><a href="../../../specs/cli/reefs/scm.html#mirror-apply"><code>nereus nereid apply</code></a> installs the Nereid. It makes its own Mandate <code>forgejo</code>, asks the release reef for Forgejo (SQLite on a volume, no Ingress) and makes Forgejo's admin.</p>
+<p><a href="../../../specs/cli/reefs/scm.html#mirror-apply"><code>nereus nereid apply</code></a> installs the Nereid. It makes its own Mandate <code>forgejo</code>, asks the release Reef for Forgejo (SQLite on a volume, no Ingress) and makes Forgejo's admin.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>nereid<span class="w"> </span>apply<span class="w"> </span>forgejo<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--reef<span class="w"> </span>scm
 </code></pre></div>
@@ -7291,7 +7291,7 @@ Next steps:
 </code></pre></div>
 <p>Forgejo copies from <code>github.com</code> only. The Nereid's setting <code>MIRROR_ALLOWED_DOMAINS</code> adds hosts, comma-separated (<code>--set MIRROR_ALLOWED_DOMAINS=git.example.com</code>).</p>
 <h3 id="2-mirror-a-repository">2. Mirror a repository<a class="headerlink" href="#2-mirror-a-repository" title="Permanent link">&para;</a></h3>
-<p><a href="../../../specs/cli/reefs/scm.html#mirror-create"><code>nereus scm mirror create</code></a> copies the repository at <code>--from</code>, pulled again every <code>--interval</code>. It goes through <code>--mandate</code>, else the reef's default Mandate; a Mandate whose Nereid serves no mirrors, such as <code>github-scm</code>, is refused.</p>
+<p><a href="../../../specs/cli/reefs/scm.html#mirror-create"><code>nereus scm mirror create</code></a> copies the repository at <code>--from</code>, pulled again every <code>--interval</code>. It goes through <code>--mandate</code>, else the Reef's default Mandate; a Mandate whose Nereid serves no mirrors, such as <code>github-scm</code>, is refused.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>scm<span class="w"> </span>mirror<span class="w"> </span>create<span class="w"> </span>nereus<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--from<span class="w"> </span>https://github.com/getnereus/nereus<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--interval<span class="w"> </span>10m
@@ -7364,7 +7364,7 @@ Message:      getnereus/nereus holds 68d7a0d6f1c2 of main, pulled every 10m.
 </ul>
 <h2 id="learn-more">Learn more<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../../../reference/reefs/scm/">The scm reef</a>: Connections and Mirrors, every command.</li>
+<li><a href="../../../reference/reefs/scm/">The scm Reef</a>: Connections and Mirrors, every command.</li>
 </ul>
 
 

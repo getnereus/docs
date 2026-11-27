@@ -7273,7 +7273,7 @@
 <span class="gp">$ </span>make<span class="w"> </span>cli-publish<span class="w"> </span><span class="nv">PUBLISH</span><span class="o">=</span><span class="m">1</span>
 </code></pre></div>
 <ul>
-<li><strong>The wheel</strong> is built at the tag (<code>VERSION=0.1.N</code>, default the highest tag <code>v*</code>) in a throwaway git worktree, so hatch-vcs reads the version from the tag; the script refuses a wheel whose name or <code>METADATA</code> says another version, or that misses any file of <code>cli/src/nereus/</code> (the charts, CRDs, manifests, assets and the reefs and tree it links).</li>
+<li><strong>The wheel</strong> is built at the tag (<code>VERSION=0.1.N</code>, default the highest tag <code>v*</code>) in a throwaway git worktree, so hatch-vcs reads the version from the tag; the script refuses a wheel whose name or <code>METADATA</code> says another version, or that misses any file of <code>cli/src/nereus/</code> (the charts, CRDs, manifests, assets and the Reefs and tree it links).</li>
 <li><strong>The charts inside the wheel are git's</strong> (<code>0.0.0-dev</code>, no <code>images.lock</code>): only the charts <code>make release</code> pushes to ghcr.io carry the version and the digests.</li>
 <li><strong>Once, first:</strong> <code>make cli-publish SETUP=1</code> says how it would create <code>getnereus/install</code> public, push <code>deploy/install/</code> (<code>install.sh</code>, <code>index.html</code>, <code>README.md</code>) to its default branch and turn on GitHub Pages from its root; <code>SETUP=1 PUBLISH=1</code> does it.</li>
 <li><strong>It refuses</strong> a tag that does not exist and a release that exists, unless <code>FORCE=1</code>, which replaces its files. The credential is the gh CLI's.</li>

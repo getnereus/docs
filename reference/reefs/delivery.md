@@ -1,10 +1,10 @@
-# The delivery reef
+# The delivery Reef
 
 Every command that takes a Workload to an Environment, and says what runs.
 
 ## Commands
 
-- [`nereus reef apply delivery`](../../specs/cli/reefs/delivery.html#reef-apply) The reef, then the Nereid that delivers to Kubernetes
+- [`nereus reef apply delivery`](../../specs/cli/reefs/delivery.html#reef-apply) The Reef, then the Nereid that delivers to Kubernetes
 - [`nereus workload deploy hello@dev`](../../specs/cli/reefs/delivery.html#workload-deploy) One command takes a Workload to an Environment
 - [`nereus workload deploy hello`](../../specs/cli/reefs/delivery.html#deploy-refuses) deploy never guesses the target
 - [`nereus workload deploy hello@dev`](../../specs/cli/reefs/delivery.html#deploy-build) deploy runs what a Build pushed, by its digest
@@ -23,7 +23,7 @@ Every command that takes a Workload to an Environment, and says what runs.
 
 ### reef-apply
 
-The delivery reef's contract.
+The delivery Reef's contract.
 
 ```bash
 nereus reef apply delivery \

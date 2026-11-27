@@ -2224,7 +2224,7 @@
   <a href="#1-apply-the-scm-reef-and-the-github-nereid" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Apply the scm reef and the github Nereid
+        1. Apply the scm Reef and the github Nereid
       
     </span>
   </a>
@@ -2235,7 +2235,7 @@
   <a href="#2-bind-the-scm-reef-to-the-app" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Bind the scm reef to the App
+        2. Bind the scm Reef to the App
       
     </span>
   </a>
@@ -7189,7 +7189,7 @@
   <a href="#1-apply-the-scm-reef-and-the-github-nereid" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Apply the scm reef and the github Nereid
+        1. Apply the scm Reef and the github Nereid
       
     </span>
   </a>
@@ -7200,7 +7200,7 @@
   <a href="#2-bind-the-scm-reef-to-the-app" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Bind the scm reef to the App
+        2. Bind the scm Reef to the App
       
     </span>
   </a>
@@ -7294,13 +7294,13 @@
 <li>The App's Mandate <code>github</code>, <code>Ready</code>, from <a href="../../access/github-app/">Prove a GitHub App installed</a>. For GitHub to deliver events, give that Mandate the App's webhook secret in <code>--param webhookSecret=&lt;secret&gt;</code>.</li>
 </ul>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
-<h3 id="1-apply-the-scm-reef-and-the-github-nereid">1. Apply the scm reef and the github Nereid<a class="headerlink" href="#1-apply-the-scm-reef-and-the-github-nereid" title="Permanent link">&para;</a></h3>
-<p>The scm reef is opt-in, outside the <code>internal-developer-platform</code> profile. One <code>github</code> Nereid serves both the authentication and the scm reef.</p>
+<h3 id="1-apply-the-scm-reef-and-the-github-nereid">1. Apply the scm Reef and the github Nereid<a class="headerlink" href="#1-apply-the-scm-reef-and-the-github-nereid" title="Permanent link">&para;</a></h3>
+<p>The scm Reef is opt-in, outside the <code>internal-developer-platform</code> profile. One <code>github</code> Nereid serves both the authentication and the scm Reef.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>reef<span class="w"> </span>apply<span class="w"> </span>scm
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ core/reefs/scm created (scm.getnereus.dev/v1alpha1: connections)
 </code></pre></div>
-<p><a href="../../../specs/cli/reefs/scm.html#apply-github"><code>nereus nereid apply</code></a> names both reefs.</p>
+<p><a href="../../../specs/cli/reefs/scm.html#apply-github"><code>nereus nereid apply</code></a> names both Reefs.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>nereid<span class="w"> </span>apply<span class="w"> </span>github<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--reef<span class="w"> </span>authentication<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--reef<span class="w"> </span>scm
@@ -7313,8 +7313,8 @@ Next steps:
   nereus mandate create github --reef authentication --nereid github --param appId=&lt;id&gt; --param privateKey=&lt;secret&gt; --param allow=&lt;namespace&gt;:&lt;repository&gt;:&lt;permission&gt;=&lt;level&gt; --default
   nereus mandate create github-scm --reef scm --nereid github --param identity=github --default
 </code></pre></div>
-<h3 id="2-bind-the-scm-reef-to-the-app">2. Bind the scm reef to the App<a class="headerlink" href="#2-bind-the-scm-reef-to-the-app" title="Permanent link">&para;</a></h3>
-<p><a href="../../../specs/cli/core.html#mandate-create"><code>nereus mandate create</code></a> binds the scm reef to the Nereid. Its name follows <code>&lt;nereid&gt;-&lt;reef&gt;</code>, and its param <code>identity</code> names the App's Mandate; a second App is a second scm Mandate.</p>
+<h3 id="2-bind-the-scm-reef-to-the-app">2. Bind the scm Reef to the App<a class="headerlink" href="#2-bind-the-scm-reef-to-the-app" title="Permanent link">&para;</a></h3>
+<p><a href="../../../specs/cli/core.html#mandate-create"><code>nereus mandate create</code></a> binds the scm Reef to the Nereid. Its name follows <code>&lt;nereid&gt;-&lt;reef&gt;</code>, and its param <code>identity</code> names the App's Mandate; a second App is a second scm Mandate.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>mandate<span class="w"> </span>create<span class="w"> </span>github-scm<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--reef<span class="w"> </span>scm<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--nereid<span class="w"> </span>github<span class="w"> </span><span class="se">\</span>
@@ -7329,7 +7329,7 @@ Next steps:
   nereus mandate list
 </code></pre></div>
 <h3 id="3-connect-the-organisations">3. Connect the organisations<a class="headerlink" href="#3-connect-the-organisations" title="Permanent link">&para;</a></h3>
-<p><a href="../../../specs/cli/reefs/scm.html#connection-create"><code>nereus scm connection create</code></a> names one organisation. The first Connection is the reef's default; <code>--mandate</code> picks another scm Mandate.</p>
+<p><a href="../../../specs/cli/reefs/scm.html#connection-create"><code>nereus scm connection create</code></a> names one organisation. The first Connection is the Reef's default; <code>--mandate</code> picks another scm Mandate.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>scm<span class="w"> </span>connection<span class="w"> </span>create<span class="w"> </span>example<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--org<span class="w"> </span>example
 </code></pre></div>
@@ -7339,7 +7339,7 @@ Next steps:
 
   nereus scm connection get example
 </code></pre></div>
-<p>Connect <code>labs</code>, <code>meta</code> and <code>some</code> the same way, with <code>--org example-labs</code>, <code>example-meta</code> and <code>example-some</code>. A second <code>--default</code> is refused: one in the reef.</p>
+<p>Connect <code>labs</code>, <code>meta</code> and <code>some</code> the same way, with <code>--org example-labs</code>, <code>example-meta</code> and <code>example-some</code>. A second <code>--default</code> is refused: one in the Reef.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>scm<span class="w"> </span>connection<span class="w"> </span>create<span class="w"> </span>other<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--org<span class="w"> </span>example-other<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--default
@@ -7372,7 +7372,7 @@ Message:       the App of mandate github is not installed on the organisation ex
 </code></pre></div>
 <p>The App's webhook points at <code>POST /scm/webhook</code> on the github Nereid's Service, reached only inside the cluster for now: a delivery is accepted only when <code>X-Hub-Signature-256</code> checks with the App's <code>webhookSecret</code>.</p>
 <h2 id="clean-up">Clean up<a class="headerlink" href="#clean-up" title="Permanent link">&para;</a></h2>
-<p><a href="../../../specs/cli/reefs/scm.html#connection-delete"><code>nereus scm connection delete</code></a> removes the Connection; the App stays installed on the organisation, and its Mandate in the authentication reef.</p>
+<p><a href="../../../specs/cli/reefs/scm.html#connection-delete"><code>nereus scm connection delete</code></a> removes the Connection; the App stays installed on the organisation, and its Mandate in the authentication Reef.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>scm<span class="w"> </span>connection<span class="w"> </span>delete<span class="w"> </span>labs
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ scm/connections/labs deleted
@@ -7387,7 +7387,7 @@ Next steps:
 </ul>
 <h2 id="learn-more">Learn more<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../../../reference/reefs/scm/">The scm reef</a>: Connections and Mirrors, every command.</li>
+<li><a href="../../../reference/reefs/scm/">The scm Reef</a>: Connections and Mirrors, every command.</li>
 <li><a href="../../../concepts/model/">Reef, Nereid and Mandate</a>: why a Mandate holds the App, never the Connection.</li>
 </ul>
 

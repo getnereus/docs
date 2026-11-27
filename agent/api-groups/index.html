@@ -7025,16 +7025,16 @@
 
 <h1 id="api-groups">API groups<a class="headerlink" href="#api-groups" title="Permanent link">&para;</a></h1>
 <p><strong>Status: proposed, to be written as an ADR and reviewed with the owner.</strong> Until that ADR is accepted, this page records the intent, not a rule.</p>
-<p>An API group is a reef (<a href="../cli/">The CLI design</a>): <code>&lt;reef&gt;.getnereus.dev/v1alpha1</code>, for example <code>secrets.getnereus.dev/v1alpha1</code>.</p>
+<p>An API group is a Reef (<a href="../cli/">The CLI design</a>): <code>&lt;reef&gt;.getnereus.dev/v1alpha1</code>, for example <code>secrets.getnereus.dev/v1alpha1</code>.</p>
 <ol>
-<li>Every new idea is first modelled as an API group (a reef), before any Nereid.</li>
+<li>Every new idea is first modelled as an API group (a Reef), before any Nereid.</li>
 <li>Then we design how the API and the CLI interact with it, as CLI examples first.</li>
 <li>Every API group is born with the standard verbs of ADR 0013 (command conventions), kubectl's: <code>create</code> fails when the thing exists and lists the <code>apply</code> commands to run; <code>apply</code> creates or updates (it is the update verb); plus <code>list</code>, <code>get</code> and <code>delete</code>. Any other verb is an API extension.</li>
-<li>Every API group has a reference Nereid: once installed, the CLI answers every command and the resources are really created in Kubernetes. It is one Nereid for every reef (<code>controllers/reference</code>, #486), the subject of each reef's TCK: a reef is a module of its <code>reefs/</code>, the Nereid <code>reference-&lt;reef&gt;</code>, and every real Nereid of the reef must behave as it does. A port adds the reef's module there ("A port adds its reef" in its README). Not to be confused with a <em>fake</em>, an imitation of an outside tool's API that tests a real Nereid without the tool (<code>test/fake-github</code>).</li>
+<li>Every API group has a reference Nereid: once installed, the CLI answers every command and the resources are really created in Kubernetes. It is one Nereid for every Reef (<code>controllers/reference</code>, #486), the subject of each Reef's TCK: a Reef is a module of its <code>reefs/</code>, the Nereid <code>reference-&lt;reef&gt;</code>, and every real Nereid of the Reef must behave as it does. A port adds the Reef's module there ("A port adds its Reef" in its README). Not to be confused with a <em>fake</em>, an imitation of an outside tool's API that tests a real Nereid without the tool (<code>test/fake-github</code>).</li>
 </ol>
 <p>Open points for the ADR:</p>
 <ul>
-<li>The CRDs follow ADR 0009 (#20): a reef's own kinds in <code>&lt;reef&gt;.getnereus.dev/v1alpha1</code> (<code>clouds.cloud.getnereus.dev</code>), the platform's in <code>core.getnereus.dev/v1alpha1</code>, which also prefixes the keys of the platform's labels and annotations. The platform's kinds are <code>Reef</code>, <code>Nereid</code> and <code>Mandate</code> (renamed by #402).</li>
+<li>The CRDs follow ADR 0009 (#20): a Reef's own kinds in <code>&lt;reef&gt;.getnereus.dev/v1alpha1</code> (<code>clouds.cloud.getnereus.dev</code>), the platform's in <code>core.getnereus.dev/v1alpha1</code>, which also prefixes the keys of the platform's labels and annotations. The platform's kinds are <code>Reef</code>, <code>Nereid</code> and <code>Mandate</code> (renamed by #402).</li>
 </ul>
 
 

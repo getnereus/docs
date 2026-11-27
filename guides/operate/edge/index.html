@@ -1611,7 +1611,7 @@
   <a href="#1-apply-the-edge-reef" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Apply the edge reef
+        1. Apply the edge Reef
       
     </span>
   </a>
@@ -7200,7 +7200,7 @@
   <a href="#1-apply-the-edge-reef" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Apply the edge reef
+        1. Apply the edge Reef
       
     </span>
   </a>
@@ -7310,14 +7310,14 @@
 
 
 <h1 id="publish-at-a-hostname">Publish at a hostname<a class="headerlink" href="#publish-at-a-hostname" title="Permanent link">&para;</a></h1>
-<p>Publish a reef's endpoint, here Triton, at a hostname of your own domain, while Nereus runs on your machine behind a Cloudflare tunnel.</p>
+<p>Publish a Reef's endpoint, here Triton, at a hostname of your own domain, while Nereus runs on your machine behind a Cloudflare tunnel.</p>
 <h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">&para;</a></h2>
 <ul>
-<li>A cluster from <a href="../../../start/init/">Prepare the cluster</a> with the secrets reef: the Nereid <code>cloudflare</code> requires it, and makes the vault <code>edge</code>.</li>
+<li>A cluster from <a href="../../../start/init/">Prepare the cluster</a> with the secrets Reef: the Nereid <code>cloudflare</code> requires it, and makes the vault <code>edge</code>.</li>
 <li>A domain, a Cloudflare account on the free plan, and a named tunnel's credentials from <code>cloudflared tunnel create nereus</code>, in <code>~/.cloudflared/&lt;UUID&gt;.json</code>.</li>
 </ul>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
-<h3 id="1-apply-the-edge-reef">1. Apply the edge reef<a class="headerlink" href="#1-apply-the-edge-reef" title="Permanent link">&para;</a></h3>
+<h3 id="1-apply-the-edge-reef">1. Apply the edge Reef<a class="headerlink" href="#1-apply-the-edge-reef" title="Permanent link">&para;</a></h3>
 <p><a href="../../../specs/cli/reefs/edge.html#apply-reef"><code>nereus reef apply edge</code></a> adds the kinds <code>Zone</code>, <code>Domain</code> and <code>Route</code>.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>reef<span class="w"> </span>apply<span class="w"> </span>edge
 </code></pre></div>
@@ -7358,7 +7358,7 @@
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ edge/routes/triton created, Ready: https://triton.getnereus.dev
 </code></pre></div>
-<p>A route may also name the endpoint a reef publishes, never a cluster, a namespace, a Service or a port (#1951). <a href="../../../specs/cli/reefs/edge.html#endpoint-list"><code>nereus edge endpoint list</code></a> shows every endpoint the Nereids publish, with the hostnames each one serves; none is published by default. The Nereid's own apply grants one, then the route names it:</p>
+<p>A route may also name the endpoint a Reef publishes, never a cluster, a namespace, a Service or a port (#1951). <a href="../../../specs/cli/reefs/edge.html#endpoint-list"><code>nereus edge endpoint list</code></a> shows every endpoint the Nereids publish, with the hostnames each one serves; none is published by default. The Nereid's own apply grants one, then the route names it:</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>edge<span class="w"> </span>endpoint<span class="w"> </span>list
 nereus<span class="w"> </span>nereid<span class="w"> </span>apply<span class="w"> </span>triton<span class="w"> </span>--reef<span class="w"> </span>rooms<span class="w"> </span>--publish<span class="w"> </span>mcp
 nereus<span class="w"> </span>edge<span class="w"> </span>route<span class="w"> </span>create<span class="w"> </span>triton<span class="w"> </span>--hostname<span class="w"> </span>triton.getnereus.dev<span class="w"> </span>--endpoint<span class="w"> </span>rooms/mcp

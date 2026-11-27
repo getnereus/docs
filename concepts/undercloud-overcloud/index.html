@@ -7211,7 +7211,7 @@
 <p><em>The undercloud gets the cloud to trust it, then hands the platform to the overcloud.</em></p>
 <h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../../specs/cli/core.html#init-target"><code>nereus init --target azure</code></a> computes the cluster's OIDC issuer from the installation's id before the cluster exists, then installs the <code>cloud</code> reef and its <code>azure</code> Nereid.</li>
+<li><a href="../../specs/cli/core.html#init-target"><code>nereus init --target azure</code></a> computes the cluster's OIDC issuer from the installation's id before the cluster exists, then installs the <code>cloud</code> Reef and its <code>azure</code> Nereid.</li>
 <li>The Nereid plans the bootstrap (the names, the issuer storage, the issuer documents, the first identity); the CLI shows the plan and runs it with your own login once you approve.</li>
 <li>From then on the cloud trusts the cluster's tokens through workload identity federation, so the platform keeps no secret.</li>
 <li>The pivot moves the platform to the overcloud, as Cluster API's <code>clusterctl move</code> does, moves the federated credential to the overcloud's issuer, then deletes the undercloud <span class="chip planned">planned #61</span>.</li>

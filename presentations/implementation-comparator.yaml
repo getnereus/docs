@@ -11,9 +11,9 @@ acts:
   pt:
     title: Experimento
 - name: reef
-  title: The reef
+  title: The Reef
   pt:
-    title: O reef
+    title: O Reef
 - name: cost
   title: Cost
   pt:
@@ -98,7 +98,7 @@ slides:
 - name: interface
   act: reef
   topic: The interface
-  message: An interface is a reef
+  message: An interface is a Reef
   terminal:
     steps:
     - run: nereus reef get authentication
@@ -107,18 +107,18 @@ slides:
 
         sessions  create get list delete  # nereus login
   notes: |-
-    In Nereus, **an interface is a reef**, the equivalent of a Kubernetes API Group.
+    In Nereus, **an interface is a Reef**, the equivalent of a Kubernetes API Group.
 
-    Installing the **authentication** reef installs the CRDs, among them **sessions**: that's how **login becomes a create**. **Users** live in **core**, because identity belongs to the platform, not to the reef.
+    Installing the **authentication** Reef installs the CRDs, among them **sessions**: that's how **login becomes a create**. **Users** live in **core**, because identity belongs to the platform, not to the Reef.
 
     The version in the name states the maturity: **v1alpha1**, **v1beta1** and, once validated, **v1**.
   pt:
     topic: A interface
-    message: Uma interface é um reef
+    message: Uma interface é um Reef
     notes: |-
-      No Nereus, **interface é um reef**, o equivalente ao API Group do Kubernetes.
+      No Nereus, **interface é um Reef**, o equivalente ao API Group do Kubernetes.
 
-      Instalar o reef **authentication** instala os CRDs, entre eles **sessions**: é assim que o **login vira um create**. Os **users** ficam no **core**, porque a identidade é da plataforma, não do reef.
+      Instalar o Reef **authentication** instala os CRDs, entre eles **sessions**: é assim que o **login vira um create**. Os **users** ficam no **core**, porque a identidade é da plataforma, não do Reef.
 
       A versão no nome diz a maturidade: **v1alpha1**, **v1beta1** e, depois de validada, **v1**.
 - name: implementations
@@ -132,7 +132,7 @@ slides:
   - keycloak
   - auth0
   notes: |-
-    Keycloak and Auth0 are **Nereids** of the **same reef**.
+    Keycloak and Auth0 are **Nereids** of the **same Reef**.
 
     It's the **Gateway API** model: one contract, many implementations.
   pt:
@@ -140,7 +140,7 @@ slides:
     message: Duas Nereidas, o mesmo contrato
     diagram: implementation-comparator/implementacoes.svg
     notes: |-
-      Keycloak e Auth0 são **Nereidas** do **mesmo reef**.
+      Keycloak e Auth0 são **Nereidas** do **mesmo Reef**.
 
       É o modelo do **Gateway API**: um contrato, várias implementações.
 - name: side-by-side
@@ -154,7 +154,7 @@ slides:
   notes: |-
     Both run **at the same time**.
 
-    A **mandate**, like GatewayClass, says which Nereid serves each reef.
+    A **mandate**, like GatewayClass, says which Nereid serves each Reef.
 
     Each person **stays on one provider** during the experiment.
   pt:
@@ -164,7 +164,7 @@ slides:
     notes: |-
       Os dois rodam **ao mesmo tempo**.
 
-      Um **mandate**, como o GatewayClass, diz qual Nereida atende cada reef.
+      Um **mandate**, como o GatewayClass, diz qual Nereida atende cada Reef.
 
       Cada pessoa **fica num provedor só** durante o experimento.
 - name: measured
@@ -454,9 +454,9 @@ slides:
         sla                  {dim:own team}  vendor
         verdict      {nereid:auth0}
   notes: |-
-    The **comparator** is also a **Nereid**: it compares any pair of implementations of the **same reef**, on demand or automatically.
+    The **comparator** is also a **Nereid**: it compares any pair of implementations of the **same Reef**, on demand or automatically.
 
-    **The comparison is of a verb, not the whole reef.** The authentication reef has several kinds, and measuring them together would dilute what matters. Here the target is **login** (sessions create): the **time** is login time, **satisfaction** is the score given right after signing in, and **cost** is what the implementation spends serving that verb, apportioned by call volume.
+    **The comparison is of a verb, not the whole Reef.** The authentication Reef has several kinds, and measuring them together would dilute what matters. Here the target is **login** (sessions create): the **time** is login time, **satisfaction** is the score given right after signing in, and **cost** is what the implementation spends serving that verb, apportioned by call volume.
 
     **In SRE terms:** the **SLI** is what's measured, here the share of logins under 1 s, the score and the cost. The **SLO** is the internal target for that SLI: 99% of logins under 1 s over 30 days. The **SLA** is the contract with consequences: Auth0 offers a vendor one; with Keycloak, the team itself is on the hook.
 
@@ -468,14 +468,14 @@ slides:
 
     Behind the scenes, the platform turns each value into a **score** and applies the weights. The math **stays with the platform**.
 
-    **SLOs and weights are defined up front**, per **reef and verb**, along with the contract. Nobody tweaks anything after seeing the result.
+    **SLOs and weights are defined up front**, per **Reef and verb**, along with the contract. Nobody tweaks anything after seeing the result.
   pt:
     topic: O comparador
     message: Uma Nereida compara as implementações
     notes: |-
-      O **comparador** também é uma **Nereida**: compara qualquer par de implementações do **mesmo reef**, a pedido ou automaticamente.
+      O **comparador** também é uma **Nereida**: compara qualquer par de implementações do **mesmo Reef**, a pedido ou automaticamente.
 
-      **A comparação é de um verbo, não do reef inteiro.** O reef authentication tem vários kinds, e medir tudo junto diluiria o que importa. Aqui o alvo é o **login** (sessions create): o **tempo** é o do login, a **satisfação** é a nota dada logo depois de entrar, e o **custo** é o que a implementação gasta para atender esse verbo, rateado pelo volume de chamadas.
+      **A comparação é de um verbo, não do Reef inteiro.** O Reef authentication tem vários kinds, e medir tudo junto diluiria o que importa. Aqui o alvo é o **login** (sessions create): o **tempo** é o do login, a **satisfação** é a nota dada logo depois de entrar, e o **custo** é o que a implementação gasta para atender esse verbo, rateado pelo volume de chamadas.
 
       **No vocabulário de SRE:** o **SLI** é o que se mede, aqui a fração de logins abaixo de 1 s, a nota e o custo. O **SLO** é a meta interna para esse SLI: 99% dos logins abaixo de 1 s em 30 dias. O **SLA** é o contrato com consequência: o Auth0 oferece um do fornecedor; no Keycloak, quem responde é o próprio time.
 
@@ -487,7 +487,7 @@ slides:
 
       Por trás, a plataforma transforma cada valor numa **nota** e aplica os pesos. O detalhe do cálculo **fica com ela**.
 
-      Os **SLOs e os pesos são definidos antes**, por **reef e verbo**, junto com o contrato. Ninguém ajusta nada depois de ver o resultado.
+      Os **SLOs e os pesos são definidos antes**, por **Reef e verbo**, junto com o contrato. Ninguém ajusta nada depois de ver o resultado.
 - name: marginal
   act: decision
   topic: The comparator
@@ -623,7 +623,7 @@ slides:
       - --account payments-dev
       output: '{dim:database/orders created (}{mandate:azure}{dim: · sql)}'
   notes: |-
-    **In the CLI**, the order follows the reef: **reef → kind → verb**. Installing the reef hangs that tree under nereus.
+    **In the CLI**, the order follows the Reef: **Reef → kind → verb**. Installing the Reef hangs that tree under nereus.
 
     **Without --mandate**, the **default mandate** applies, like Kubernetes **StorageClass**. The output shows which one was used and **suggests** where to see the others, because a destination **costs money**.
 
@@ -646,7 +646,7 @@ slides:
         - --account pagamentos-dev
         output: '{dim:database/pedidos created (}{mandate:azure}{dim: · sql)}'
     notes: |-
-      **Na CLI**, a ordem segue o reef: **reef → kind → verbo**. Instalar o reef pendura essa árvore embaixo de nereus.
+      **Na CLI**, a ordem segue o Reef: **Reef → kind → verbo**. Instalar o Reef pendura essa árvore embaixo de nereus.
 
       **Sem --mandate**, vale o **mandate default**, como na **StorageClass** do Kubernetes. A saída mostra qual foi usado e **sugere** onde ver as outras, porque destino **gera custo**.
 
@@ -737,11 +737,11 @@ slides:
 
     **Why let teams create their own accounts:** the platform knows **who owns** each account, and cloud billing **already comes split by account**. It's easy to know whom to charge, both in the cloud console and inside the platform.
 
-    **can-i hangs off the hierarchy:** asking under cloudaccount answers about accounts; under cloudaccount database, only about databases. The top-level nereus can-i shows everything, across all reefs. Every installed reef gets its own can-i, just like create and list.
+    **can-i hangs off the hierarchy:** asking under cloudaccount answers about accounts; under cloudaccount database, only about databases. The top-level nereus can-i shows everything, across all Reefs. Every installed Reef gets its own can-i, just like create and list.
 
     **Without a flag, the question is about whoever asks:** can-i answers your effective permissions, your direct ones plus your teams'. --team shows only what the team grants; --user shows someone else's effective permissions, and asking about someone else **is a permission too**, like kubectl's --as.
 
-    **Who is asking:** the authentication reef brings nereus authentication whoami (user, organization, teams), like kubectl auth whoami. Authorization is a separate reef, authorization, with OpenFGA as one of its mandates, and the top-level nereus can-i is nereus authorization can-i. Spelling both names out avoids the ambiguity of “auth”. The top-level nereus whoami and nereus can-i are only **shortcuts**: the CLI expands it to the full command before calling the API, so authorization is checked against the real resource, and the shortcut **never bypasses permissions**. authn and authz can also be accepted as short aliases for the two reefs. Only core reefs register top-level shortcuts, and the platform rejects collisions.
+    **Who is asking:** the authentication Reef brings nereus authentication whoami (user, organization, teams), like kubectl auth whoami. Authorization is a separate Reef, authorization, with OpenFGA as one of its mandates, and the top-level nereus can-i is nereus authorization can-i. Spelling both names out avoids the ambiguity of “auth”. The top-level nereus whoami and nereus can-i are only **shortcuts**: the CLI expands it to the full command before calling the API, so authorization is checked against the real resource, and the shortcut **never bypasses permissions**. authn and authz can also be accepted as short aliases for the two Reefs. Only core Reefs register top-level shortcuts, and the platform rejects collisions.
   pt:
     topic: contas
     message: Criar conta também é permissão. O `mandate` entra como condição
@@ -762,11 +762,11 @@ slides:
 
       **Por que deixar o time criar a própria conta:** a plataforma sabe **de quem é** cada conta, e a cobrança da nuvem **já vem separada por conta**. Fica fácil saber de quem cobrar, tanto no console da nuvem quanto dentro da plataforma.
 
-      **O can-i fica pendurado na hierarquia:** perguntar em cloudaccount responde sobre contas; em cloudaccount database, só sobre databases. O nereus can-i no topo mostra tudo, de todos os reefs. Cada reef instalado ganha o seu can-i, como ganha create e list.
+      **O can-i fica pendurado na hierarquia:** perguntar em cloudaccount responde sobre contas; em cloudaccount database, só sobre databases. O nereus can-i no topo mostra tudo, de todos os Reefs. Cada Reef instalado ganha o seu can-i, como ganha create e list.
 
       **Sem flag, a pergunta é sobre quem pergunta:** o can-i responde as suas permissões efetivas, as diretas somadas às dos seus times. O --team mostra só o que o time concede; o --user mostra o efetivo de outra pessoa, e perguntar sobre outra pessoa **também é permissão**, como o --as do kubectl.
 
-      **Quem está perguntando:** o reef authentication traz o nereus authentication whoami (usuário, organização, times), como o kubectl auth whoami. A autorização é outro reef, authorization, com o OpenFGA como um dos mandates, e o nereus can-i do topo é o nereus authorization can-i. Os dois nomes por extenso evitam a ambiguidade de “auth”. O nereus whoami e o nereus can-i no topo são só **atalhos**: a CLI expande para o comando completo antes de chamar a API, então a autorização é checada no recurso real, e o atalho **nunca contorna a permissão**. Também dá para aceitar authn e authz como apelidos curtos dos dois reefs. Só reefs do core registram atalhos no topo, e a plataforma recusa colisões.
+      **Quem está perguntando:** o Reef authentication traz o nereus authentication whoami (usuário, organização, times), como o kubectl auth whoami. A autorização é outro Reef, authorization, com o OpenFGA como um dos mandates, e o nereus can-i do topo é o nereus authorization can-i. Os dois nomes por extenso evitam a ambiguidade de “auth”. O nereus whoami e o nereus can-i no topo são só **atalhos**: a CLI expande para o comando completo antes de chamar a API, então a autorização é checada no recurso real, e o atalho **nunca contorna a permissão**. Também dá para aceitar authn e authz como apelidos curtos dos dois Reefs. Só Reefs do core registram atalhos no topo, e a plataforma recusa colisões.
 - name: permissions-inside
   act: permissions
   topic: inside the account
@@ -818,13 +818,13 @@ slides:
   act: permissions
   topic: inside the account
   message: One door
-  subtitle: 'OpenFGA: organization, project, reef, account, resource and verb.'
-  notes: 'All of this with **OpenFGA**: organization, project, reef, account, resource and verb. **One door:** Nereus checks OpenFGA before every action.'
+  subtitle: 'OpenFGA: organization, project, Reef, account, resource and verb.'
+  notes: 'All of this with **OpenFGA**: organization, project, Reef, account, resource and verb. **One door:** Nereus checks OpenFGA before every action.'
   pt:
     topic: dentro da conta
     message: Uma só porta
-    subtitle: 'OpenFGA: organization, project, reef, conta, recurso e verbo.'
-    notes: 'Tudo isso com **OpenFGA**: organization, project, reef, conta, recurso e verbo. **Uma só porta:** o Nereus consulta o OpenFGA antes de qualquer ação.'
+    subtitle: 'OpenFGA: organization, project, Reef, conta, recurso e verbo.'
+    notes: 'Tudo isso com **OpenFGA**: organization, project, Reef, conta, recurso e verbo. **Uma só porta:** o Nereus consulta o OpenFGA antes de qualquer ação.'
 - name: kubernetes
   act: platform
   topic: Kubernetes fades
@@ -839,7 +839,7 @@ slides:
 
     Earlier, he had already called Kubernetes **a platform for building platforms**: a starting point, not the endgame.
 
-    **Nereus takes both seriously.** Underneath it's all Kubernetes: reefs are CRDs, Nereids are operators. But users only see **nereus**: secrets, authentication, organization. Nobody types kubectl, nobody sees a namespace. The target can be Azure, AWS or a local cluster, and the command is the same.
+    **Nereus takes both seriously.** Underneath it's all Kubernetes: Reefs are CRDs, Nereids are operators. But users only see **nereus**: secrets, authentication, organization. Nobody types kubectl, nobody sees a namespace. The target can be Azure, AWS or a local cluster, and the command is the same.
 
     [Article on The New Stack](https://thenewstack.io/kelsey-hightower-predicts-how-the-kubernetes-community-will-evolve/)
   pt:
@@ -855,7 +855,7 @@ slides:
 
       Antes, ele já tinha dito que o Kubernetes é **uma plataforma para construir plataformas**: um ponto de partida, não o fim do caminho.
 
-      **O Nereus leva as duas a sério.** Por baixo é tudo Kubernetes: reefs são CRDs, Nereidas são operators. Mas quem usa só vê **nereus**: secrets, authentication, organization. Ninguém digita kubectl, ninguém vê namespace. O target pode ser Azure, AWS ou um cluster local, e o comando é o mesmo.
+      **O Nereus leva as duas a sério.** Por baixo é tudo Kubernetes: Reefs são CRDs, Nereidas são operators. Mas quem usa só vê **nereus**: secrets, authentication, organization. Ninguém digita kubectl, ninguém vê namespace. O target pode ser Azure, AWS ou um cluster local, e o comando é o mesmo.
 
       [Artigo no The New Stack](https://thenewstack.io/kelsey-hightower-predicts-how-the-kubernetes-community-will-evolve/)
 - name: two-levels
@@ -864,18 +864,18 @@ slides:
   message: Nereus guarantees the contract, not the APIs
   screen:
   - '**Swap the implementation** · recommended: Same API, new Nereid. CLI and can-i keep working'
-  - '**Swap the API** · possible: The customer''s own reefs and Nereids'
+  - '**Swap the API** · possible: The customer''s own Reefs and Nereids'
   - '✓ **The contract** · annotations: Follow the contract, get CLI and can-i'
   notes: |-
     **Two levels of swapping.** The first is the recommended one: the customer keeps **our API** and writes a **new Nereid**, which becomes one more mandate. CLI, can-i and catalog keep working.
 
-    The second is possible, but not recommended: the customer installs **their own reefs** and implements their own Nereids.
+    The second is possible, but not recommended: the customer installs **their own Reefs** and implements their own Nereids.
 
-    **The platform guarantees the contract, not our APIs.** The CLI knows no API in advance: it **discovers what is installed** in that instance, like kubectl discovery. The CRD **annotations** state the group's name in the CLI, which field points to the parent (accountRef becomes --account), whether there is a mandate and which one is the default, and which shortcuts the reef requests.
+    **The platform guarantees the contract, not our APIs.** The CLI knows no API in advance: it **discovers what is installed** in that instance, like kubectl discovery. The CRD **annotations** state the group's name in the CLI, which field points to the parent (accountRef becomes --account), whether there is a mandate and which one is the default, and which shortcuts the Reef requests.
 
     Whoever follows the contract gets **CLI, can-i and catalog for free**. A **conformance test**, like Gateway API's, checks it before installation.
 
-    **Every instance starts empty.** Whoever initializes it becomes the **administrator**, and then installs the reefs and Nereids, including authentication and authorization. That answers who authorizes before authorization exists.
+    **Every instance starts empty.** Whoever initializes it becomes the **administrator**, and then installs the Reefs and Nereids, including authentication and authorization. That answers who authorizes before authorization exists.
   pt:
     topic: Dois níveis de troca
     message: O Nereus garante o contrato, não as APIs
@@ -886,13 +886,13 @@ slides:
     notes: |-
       **Dois níveis de troca.** O primeiro é o recomendado: o cliente mantém a **nossa API** e escreve uma **Nereida nova**, que vira mais um mandate. CLI, can-i e catálogo continuam funcionando.
 
-      O segundo é possível, mas não recomendado: o cliente instala **os próprios reefs** e implementa as próprias Nereidas.
+      O segundo é possível, mas não recomendado: o cliente instala **os próprios Reefs** e implementa as próprias Nereidas.
 
-      **A plataforma garante o contrato, não as nossas APIs.** A CLI não conhece nenhuma API de antemão: ela **descobre o que está instalado** naquela instância, como o discovery do kubectl. As **annotations** do CRD dizem o nome do reef na CLI, qual campo aponta para o pai (accountRef vira --account), se há mandate e qual é o default, e quais atalhos o grupo pede.
+      **A plataforma garante o contrato, não as nossas APIs.** A CLI não conhece nenhuma API de antemão: ela **descobre o que está instalado** naquela instância, como o discovery do kubectl. As **annotations** do CRD dizem o nome do Reef na CLI, qual campo aponta para o pai (accountRef vira --account), se há mandate e qual é o default, e quais atalhos o grupo pede.
 
       Quem segue o contrato ganha **CLI, can-i e catálogo de graça**. Um **teste de conformidade**, como o do Gateway API, verifica isso antes da instalação.
 
-      **Toda instância nasce vazia.** Quem a inicializa vira o **administrador**, e daí instala os reefs e as Nereidas, inclusive authentication e authorization. É assim que se resolve quem autoriza antes de existir autorização.
+      **Toda instância nasce vazia.** Quem a inicializa vira o **administrador**, e daí instala os Reefs e as Nereidas, inclusive authentication e authorization. É assim que se resolve quem autoriza antes de existir autorização.
 - name: marketplace
   act: platform
   topic: Marketplace
@@ -910,13 +910,13 @@ slides:
                     cloudaccount.failed
         nereid/{nereid:azure} created
   notes: |-
-    **The marketplace is where reefs and Nereids come from.** Each one is a **signed artifact**, and signing is itself a reef. An instance installs straight from the marketplace or just references it.
+    **The marketplace is where Reefs and Nereids come from.** Each one is a **signed artifact**, and signing is itself a Reef. An instance installs straight from the marketplace or just references it.
 
     **The catalog Nereid** knows the marketplace: it knows when there is a **new version** or a **new product** and raises alerts. It's the model of Kubernetes **OLM**, behind OperatorHub: a catalog, a subscription with update channels (stable, alpha) and an install plan with manual approval. Crossplane does part of this with packages signed with cosign.
 
     **Each instance says whom it trusts.** Our APIs come signed with our key. A customer who brings their own signs with their key, and the instance has a policy stating which keys it accepts. "We don't recommend it, but you can" becomes an **explicit administrator decision**, not a shortcut.
 
-    **The marketplace is also a platform instance.** Ours exposes the catalog and the **installation profiles** (reefs, the Nereid for each and the topics, in one package). Every new instance points to it by default. A customer can run their own marketplace, with their own key and their own profiles. The course deck shows a profile being created and installed.
+    **The marketplace is also a platform instance.** Ours exposes the catalog and the **installation profiles** (Reefs, the Nereid for each and the topics, in one package). Every new instance points to it by default. A customer can run their own marketplace, with their own key and their own profiles. The course deck shows a profile being created and installed.
   pt:
     topic: Marketplace
     message: Tudo entra assinado. Cada Nereida pede os `tópicos` que quer usar
@@ -933,13 +933,13 @@ slides:
                       cloudaccount.failed
           nereid/{nereid:azure} created
     notes: |-
-      **O marketplace é de onde vêm os reefs e as Nereidas.** Cada um é um **artefato assinado**, e a assinatura é ela mesma um reef. Uma instância instala direto do marketplace ou só o referencia.
+      **O marketplace é de onde vêm os Reefs e as Nereidas.** Cada um é um **artefato assinado**, e a assinatura é ela mesma um Reef. Uma instância instala direto do marketplace ou só o referencia.
 
       **A Nereida de catálogo** conhece o marketplace: sabe quando há **versão nova** ou **produto novo** e gera alertas. É o modelo do **OLM** do Kubernetes, por trás do OperatorHub: catálogo, assinatura com canais de atualização (stable, alpha) e plano de instalação com aprovação manual. O Crossplane faz parte disso com pacotes assinados com cosign.
 
       **Cada instância diz em quem confia.** As nossas APIs vêm assinadas pela nossa chave. O cliente que trouxer as próprias assina com a chave dele, e a instância tem uma política dizendo quais chaves aceita. O "não recomendamos, mas pode" vira uma **decisão explícita do administrador**, e não um atalho.
 
-      **O marketplace também é uma instância da plataforma.** A nossa expõe o catálogo e os **perfis de instalação** (reefs, a Nereida de cada um e os tópicos, num pacote só). Toda instância nova aponta para ela por padrão. Um cliente pode subir o próprio marketplace, com a própria chave e os próprios perfis. O deck do curso mostra a criação e a instalação de um perfil.
+      **O marketplace também é uma instância da plataforma.** A nossa expõe o catálogo e os **perfis de instalação** (Reefs, a Nereida de cada um e os tópicos, num pacote só). Toda instância nova aponta para ela por padrão. Um cliente pode subir o próprio marketplace, com a própria chave e os próprios perfis. O deck do curso mostra a criação e a instalação de um perfil.
 - name: install
   act: platform
   topic: Marketplace
@@ -950,7 +950,7 @@ slides:
 
     **At install time, the Nereid asks; the administrator picks.** It works like an Android permissions manifest: the Nereid lists the topics it wants to consume and publish, splitting **required** from **optional**, and whoever installs it, with the privilege to do so, approves all or only part. From then on, the Nereid is a **subject in authorization**, checked by the same can-i as people.
 
-    **Publishing weighs more than consuming:** a Nereid publishing to cloudaccount.ready is claiming an account is ready. Each event's format is part of the **reef contract**.
+    **Publishing weighs more than consuming:** a Nereid publishing to cloudaccount.ready is claiming an account is ready. Each event's format is part of the **Reef contract**.
   pt:
     topic: Marketplace
     message: Instalar é aprovar
@@ -960,7 +960,7 @@ slides:
 
       **Na instalação, a Nereida pede; o administrador escolhe.** Funciona como o manifesto de permissões do Android: a Nereida lista os tópicos que quer consumir e publicar, separando os **obrigatórios** dos **opcionais**, e quem instala, com privilégio para isso, aprova tudo ou só uma parte. Depois, a Nereida vira um **sujeito no authorization**, checado pelo mesmo can-i das pessoas.
 
-      **Publicar pesa mais que consumir:** uma Nereida que publica em cloudaccount.ready está afirmando que uma conta ficou pronta. O formato de cada evento faz parte do **contrato do reef**.
+      **Publicar pesa mais que consumir:** uma Nereida que publica em cloudaccount.ready está afirmando que uma conta ficou pronta. O formato de cada evento faz parte do **contrato do Reef**.
 - name: end-to-end
   act: platform
   topic: End to end
@@ -971,7 +971,7 @@ slides:
   notes: |-
     The full step-by-step is in a separate deck: an **end-to-end walkthrough**, from the empty instance to the software development lifecycle.
 
-    **Foundation:** the file, the instance, secrets, authentication and login, in dependency order. Then **people** joining through an **invite QR Code**, the **catalog**, **composition** with reefs and the **lifecycle** with agents coordinated by the **Agent Coordinator**.
+    **Foundation:** the file, the instance, secrets, authentication and login, in dependency order. Then **people** joining through an **invite QR Code**, the **catalog**, **composition** with Reefs and the **lifecycle** with agents coordinated by the **Agent Coordinator**.
 
     It ends on the **inception** pillar: once the MVP is live, the platform is developed inside itself.
 
@@ -985,36 +985,36 @@ slides:
     notes: |-
       O passo a passo completo está num deck à parte: um **walkthrough de ponta a ponta**, da instância vazia ao ciclo de vida de desenvolvimento.
 
-      **Foundation:** o arquivo, a instância, secrets, authentication e login, na ordem das dependências. Depois, **pessoas** entrando por um **QR Code de convite**, o **catálogo**, a **composição** com reefs e o **ciclo de vida** com agentes coordenados pelo **Agent Coordinator**.
+      **Foundation:** o arquivo, a instância, secrets, authentication e login, na ordem das dependências. Depois, **pessoas** entrando por um **QR Code de convite**, o **catálogo**, a **composição** com Reefs e o **ciclo de vida** com agentes coordenados pelo **Agent Coordinator**.
 
       Termina no pilar **inception**: com o MVP no ar, a plataforma passa a ser desenvolvida dentro dela mesma.
 
       O cartão abre o **walkthrough**, no mesmo formato deste.
 - name: another-reef
   act: beyond
-  topic: Another reef
+  topic: Another Reef
   message: This presentation could be a platform resource
   screen:
   - '**Per-slide metrics:** who reached the end, without identifying anyone'
   - '**Survey before and after:** how much the audience thinks it knows'
   - '**Word cloud:** an agent suggests, the speaker decides'
-  - '**Fixes become issues:** in another reef, without leaving the platform'
+  - '**Fixes become issues:** in another Reef, without leaving the platform'
   notes: |-
-    The same pattern works for **the presentation itself**: a **presentations** reef, with the slide engine as a Nereid.
+    The same pattern works for **the presentation itself**: a **presentations** Reef, with the slide engine as a Nereid.
 
     **Per-slide metrics**, anonymous. A **survey** at the start and end.
 
     A **word cloud** moderated by an agent, with the **speaker deciding**. And **fixes become issues**.
   pt:
-    topic: Outro reef
+    topic: Outro Reef
     message: Esta apresentação poderia ser um recurso da plataforma
     screen:
     - '**Métricas por slide:** quem chegou ao fim, sem identificar ninguém'
     - '**Pesquisa antes e depois:** quanto a plateia acha que sabe'
     - '**Nuvem de palavras:** o agente sugere, quem apresenta decide'
-    - '**Correção vira issue:** em outro reef, sem sair da plataforma'
+    - '**Correção vira issue:** em outro Reef, sem sair da plataforma'
     notes: |-
-      O mesmo padrão serve para **a própria apresentação**: um reef de **presentations**, com o motor de slides como Nereida.
+      O mesmo padrão serve para **a própria apresentação**: um Reef de **presentations**, com o motor de slides como Nereida.
 
       **Métricas por slide**, anônimas. **Pesquisa** no início e no fim.
 
@@ -1030,7 +1030,7 @@ slides:
   notes: |-
     What if the talk has a **prize draw**? In Brazil, promotional draws **need authorization**.
 
-    The platform opens a **request for legal** in an **approvals** reef. The talk is **ready**; the draw, **pending**.
+    The platform opens a **request for legal** in an **approvals** Reef. The talk is **ready**; the draw, **pending**.
 
     A director prioritizes, legal takes it and approves with a **recorded opinion**. Time to approval becomes a **flow metric**.
 
@@ -1045,7 +1045,7 @@ slides:
     notes: |-
       E se a palestra tiver **sorteio**? No Brasil, sorteio promocional **precisa de autorização**.
 
-      A plataforma cria uma **pendência para o jurídico** num reef de **approvals**. A palestra fica **pronta**; o sorteio, **pendente**.
+      A plataforma cria uma **pendência para o jurídico** num Reef de **approvals**. A palestra fica **pronta**; o sorteio, **pendente**.
 
       Diretor prioriza, jurídico assume e aprova com **parecer registrado**. O tempo até a aprovação vira **métrica de fluxo**.
 
@@ -1062,7 +1062,7 @@ slides:
   notes: |-
     **The platform is where developers already are every day.** So the rest of their life at the company can live there too.
 
-    **University:** internal courses from the corporate university come in as one more reef. When someone logs in, the platform already knows **which courses they have**.
+    **University:** internal courses from the corporate university come in as one more Reef. When someone logs in, the platform already knows **which courses they have**.
 
     **Skills:** completed courses and what people declare become a **skills map**.
 
@@ -1082,7 +1082,7 @@ slides:
     notes: |-
       **A plataforma é onde o desenvolvedor já está todos os dias.** Então o resto da vida dele na empresa pode morar ali também.
 
-      **Universidade:** os cursos internos da universidade corporativa entram como mais um reef. Quando a pessoa faz login, a plataforma já sabe **quais cursos ela tem**.
+      **Universidade:** os cursos internos da universidade corporativa entram como mais um Reef. Quando a pessoa faz login, a plataforma já sabe **quais cursos ela tem**.
 
       **Skills:** cursos concluídos e o que a pessoa declara viram um **mapa de skills**.
 
@@ -1175,7 +1175,7 @@ slides:
 
     **Measuring people:** the metric becomes a target.
 
-    **Starting with the hardest:** authentication has sessions, passwords and security. So by-design capture is proven first with a **simple reef**.
+    **Starting with the hardest:** authentication has sessions, passwords and security. So by-design capture is proven first with a **simple Reef**.
 
     **Sources:** [CMDB](https://virima.com/blog/the-real-reason-your-cmdb-keeps-failing-and-how-to-fix-it) · [Pragmatic Engineer](https://newsletter.pragmaticengineer.com/p/measuring-developer-productivity)
   pt:
@@ -1192,7 +1192,7 @@ slides:
 
       **Medir pessoas:** a métrica vira meta.
 
-      **Começar pelo mais difícil:** authentication tem sessões, senhas e segurança. Por isso a captura by design se prova antes com um **reef simples**.
+      **Começar pelo mais difícil:** authentication tem sessões, senhas e segurança. Por isso a captura by design se prova antes com um **Reef simples**.
 
       **Fontes:** [CMDB](https://virima.com/blog/the-real-reason-your-cmdb-keeps-failing-and-how-to-fix-it) · [Pragmatic Engineer](https://newsletter.pragmaticengineer.com/p/measuring-developer-productivity)
 - name: prove
@@ -1201,13 +1201,13 @@ slides:
   message: Two hypotheses, in four steps
   screen:
   - '**By-design capture:** a Nereid with no instrumentation; metrics in minutes'
-  - '**Two implementations:** same reef; license and people entered by hand'
+  - '**Two implementations:** same Reef; license and people entered by hand'
   - '**Comparator:** `nereus comparison` with configurable weights'
   - '**Projection · optional:** with the mandate pricing model, where the math flips'
   notes: |-
     **Step 1:** by-design capture. A Nereid **with no instrumentation**, metrics **in minutes**.
 
-    **Step 2:** **two implementations** of the same reef, with license and team costs entered by hand.
+    **Step 2:** **two implementations** of the same Reef, with license and team costs entered by hand.
 
     **Step 3:** the **comparator**.
 
@@ -1217,13 +1217,13 @@ slides:
     message: Duas hipóteses, em quatro passos
     screen:
     - '**Captura by design:** Nereida sem instrumentação; métricas em minutos'
-    - '**Duas implementações:** mesmo reef; licença e pessoas à mão'
+    - '**Duas implementações:** mesmo Reef; licença e pessoas à mão'
     - '**Comparador:** `nereus comparison` com pesos configuráveis'
     - '**Projeção · opcional:** com o modelo de preço do mandate, onde a conta vira'
     notes: |-
       **Passo 1:** captura by design. Uma Nereida **sem instrumentação**, métricas **em minutos**.
 
-      **Passo 2:** **duas implementações** do mesmo reef, com licença e times lançados à mão.
+      **Passo 2:** **duas implementações** do mesmo Reef, com licença e times lançados à mão.
 
       **Passo 3:** o **comparador**.
 

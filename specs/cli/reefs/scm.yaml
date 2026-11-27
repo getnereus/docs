@@ -1,10 +1,10 @@
 deck:
   name: scm
-  title: "The scm reef"
+  title: "The scm Reef"
   subtitle: "Every command that lets Nereus reach a source host as an application, never as a person"
   accent: "never as a person"
   pt:
-    title: "O reef scm"
+    title: "O Reef scm"
     subtitle: "Todos os comandos que deixam o Nereus alcançar um host de código como uma aplicação, nunca como uma pessoa"
     accent: "nunca como uma pessoa"
 
@@ -32,17 +32,17 @@ slides:
   - name: cover
     act: opening
     cover: true
-    message: "The scm reef"
+    message: "The scm Reef"
     notes: |-
-      **The source of truth for the commands of the scm reef** (#927, ADR 0024). The Connection is built (#1281, the Connection names an organisation reached through a Mandate), its output the one `make scene-github` prints against a fake GitHub API; the Mirror is built (#1255, the forgejo Nereid runs Forgejo in the cluster and mirrors a GitHub repository), its output the one `make scene-forgejo` prints against a fake Git host in the cluster. The group is `scm.getnereus.dev/v1alpha1`.
+      **The source of truth for the commands of the scm Reef** (#927, ADR 0024). The Connection is built (#1281, the Connection names an organisation reached through a Mandate), its output the one `make scene-github` prints against a fake GitHub API; the Mirror is built (#1255, the forgejo Nereid runs Forgejo in the cluster and mirrors a GitHub repository), its output the one `make scene-forgejo` prints against a fake Git host in the cluster. The group is `scm.getnereus.dev/v1alpha1`.
 
-      **Who the platform is towards GitHub is not here:** the GitHub App is a Mandate of the authentication reef, and a short-lived token is that reef's `Token` (ADR 0006, its deck).
+      **Who the platform is towards GitHub is not here:** the GitHub App is a Mandate of the authentication Reef, and a short-lived token is that Reef's `Token` (ADR 0006, its deck).
     pt:
-      message: "O reef scm"
+      message: "O Reef scm"
       notes: |-
-        **A fonte da verdade dos comandos do reef scm** (#927, ADR 0024). A Connection está construída (#1281, a Connection nomeia uma organização alcançada por um Mandate), a sua saída a que o `make scene-github` imprime contra uma API do GitHub falsa; o Mirror está construído (#1255, o Nereid forgejo roda o Forgejo no cluster e espelha um repositório do GitHub), a sua saída a que o `make scene-forgejo` imprime contra um host Git falso no cluster. O grupo é `scm.getnereus.dev/v1alpha1`.
+        **A fonte da verdade dos comandos do Reef scm** (#927, ADR 0024). A Connection está construída (#1281, a Connection nomeia uma organização alcançada por um Mandate), a sua saída a que o `make scene-github` imprime contra uma API do GitHub falsa; o Mirror está construído (#1255, o Nereid forgejo roda o Forgejo no cluster e espelha um repositório do GitHub), a sua saída a que o `make scene-forgejo` imprime contra um host Git falso no cluster. O grupo é `scm.getnereus.dev/v1alpha1`.
 
-        **Quem a plataforma é perante o GitHub não está aqui:** o GitHub App é um Mandate do reef authentication, e um token de vida curta é o `Token` desse reef (ADR 0006, o seu deck).
+        **Quem a plataforma é perante o GitHub não está aqui:** o GitHub App é um Mandate do Reef authentication, e um token de vida curta é o `Token` desse Reef (ADR 0006, o seu deck).
 
   - name: kinds
     act: opening
@@ -52,9 +52,9 @@ slides:
     screen:
       - "**`Connection`, the default kind:** `spec` has `org`, `mandate` and `default`; `status` has `installationId`, `repositorySelection` and `permissions`"
       - "**No vendor, no key, no token:** the App is an authentication Mandate, the token its `Token`"
-      - "**One webhook per App:** the scm reef receives it and checks its signature"
+      - "**One webhook per App:** the scm Reef receives it and checks its signature"
     notes: |-
-      **One writer per field (ADR 0005):** the person, or a Nereid as a client, writes `spec`; the Nereid of the Mandate writes `status`. `--mandate` names an scm Mandate (ADR 0011), with none the reef's default; its param `identity` names the authentication Mandate, the App. The webhook's secret is a param of the App's Mandate; the push of #914 builds on the receiver. `Mirror` (a repository copied into the cluster, #1255) needs no Connection: a public source needs no App; the forgejo Nereid keeps it.
+      **One writer per field (ADR 0005):** the person, or a Nereid as a client, writes `spec`; the Nereid of the Mandate writes `status`. `--mandate` names an scm Mandate (ADR 0011), with none the Reef's default; its param `identity` names the authentication Mandate, the App. The webhook's secret is a param of the App's Mandate; the push of #914 builds on the receiver. `Mirror` (a repository copied into the cluster, #1255) needs no Connection: a public source needs no App; the forgejo Nereid keeps it.
     pt:
       topic: "os kinds"
       message: "Uma Connection nomeia uma organização, um Mandate a alcança"
@@ -62,20 +62,20 @@ slides:
       screen:
         - "**`Connection`, o kind padrão:** o `spec` tem `org`, `mandate` e `default`; o `status` tem `installationId`, `repositorySelection` e `permissions`"
         - "**Sem vendor, sem chave, sem token:** o App é um Mandate do authentication, o token o seu `Token`"
-        - "**Um webhook por App:** o reef scm o recebe e confere a sua assinatura"
+        - "**Um webhook por App:** o Reef scm o recebe e confere a sua assinatura"
       notes: |-
-        **Um escritor por campo (ADR 0005):** a pessoa, ou um Nereid como cliente, escreve o `spec`; o Nereid do Mandate escreve o `status`. `--mandate` nomeia um Mandate do scm (ADR 0011), sem ele o padrão do reef; o seu param `identity` nomeia o Mandate do authentication, o App. O secret do webhook é um param do Mandate do App; o push da #914 se apoia no receptor. `Mirror` (um repositório copiado para o cluster, #1255) não precisa de Connection: uma fonte pública não precisa de App; o Nereid forgejo o mantém.
+        **Um escritor por campo (ADR 0005):** a pessoa, ou um Nereid como cliente, escreve o `spec`; o Nereid do Mandate escreve o `status`. `--mandate` nomeia um Mandate do scm (ADR 0011), sem ele o padrão do Reef; o seu param `identity` nomeia o Mandate do authentication, o App. O secret do webhook é um param do Mandate do App; o push da #914 se apoia no receptor. `Mirror` (um repositório copiado para o cluster, #1255) não precisa de Connection: uma fonte pública não precisa de App; o Nereid forgejo o mantém.
 
   - name: apply-github
     act: setup
     topic: "nereid apply"
     status: built
     issue: 1281
-    message: "One {nereid:github} Nereid serves both reefs, opt-in"
+    message: "One {nereid:github} Nereid serves both Reefs, opt-in"
     accent: "opt-in"
     terminal:
       steps:
-        - comment: "Apply the github Nereid to both reefs"
+        - comment: "Apply the github Nereid to both Reefs"
           run: "nereus nereid apply github"
           options: ["--reef authentication", "--reef scm"]
           output: |-
@@ -86,7 +86,7 @@ slides:
 
               nereus mandate create github --reef authentication --nereid github --param appId=<id> --param privateKey=<secret> --param allow=<namespace>:<repository>:<permission>=<level> --default
               nereus mandate create github-scm --reef scm --nereid github --param identity=github --default
-        - comment: "Bind the scm reef to it, through the App github"
+        - comment: "Bind the scm Reef to it, through the App github"
           run: "nereus mandate create github-scm"
           options: ["--reef scm", "--nereid github", "--param identity=github", "--default"]
           output: |-
@@ -100,7 +100,7 @@ slides:
       **The `internal-developer-platform` profile does not install it** (owner, 2026-11-09): it needs a GitHub App the person owns. The App itself is the authentication Mandate `github` (#1273), created first; this scm Mandate says which Nereid serves Connections and, with `identity`, which App they use (owner, 2026-11-09). Mandate names are global, so it takes its own name, by the convention `<nereid>-<reef>`.
     pt:
       topic: "nereid apply"
-      message: "Um Nereid {nereid:github} serve os dois reefs, opcional"
+      message: "Um Nereid {nereid:github} serve os dois Reefs, opcional"
       accent: "opcional"
       notes: |-
         **O profile `internal-developer-platform` não o instala** (dono, 2026-11-09): ele precisa de um GitHub App que a pessoa possui. O App em si é o Mandate `github` do authentication (#1273), criado antes; este Mandate do scm diz qual Nereid serve as Connections e, com `identity`, qual App elas usam (dono, 2026-11-09). Os nomes de Mandate são globais, então ele tem nome próprio, pela convenção `<nereid>-<reef>`.
@@ -114,7 +114,7 @@ slides:
     accent: "nothing secret"
     terminal:
       steps:
-        - comment: "The organisation, through the reef's default Mandate"
+        - comment: "The organisation, through the Reef's default Mandate"
           run: "nereus scm connection create example"
           options: ["--org example"]
           output: |-
@@ -123,19 +123,19 @@ slides:
             Next steps:
 
               nereus scm connection get example
-        - comment: "A second default is refused: one in the reef"
+        - comment: "A second default is refused: one in the Reef"
           run: "nereus scm connection create other"
           options: ["--org example-other", "--default"]
           output: |-
             ✗ scm/connections/example is the reef's default already: one in the reef. Nothing was changed.
     notes: |-
-      **`--mandate` names an scm Mandate,** as on every object (ADR 0011); with none, the reef's default. That Mandate's param `identity` names the App that reaches the organisation; a second App is a second scm Mandate (`nereus mandate create github-scm-labs --reef scm --nereid github --param identity=other-app`). `--default` makes the Connection the reef's default, one in the reef. No `--vendor`, no App id, no key: those are the Mandate's (ADR 0006).
+      **`--mandate` names an scm Mandate,** as on every object (ADR 0011); with none, the Reef's default. That Mandate's param `identity` names the App that reaches the organisation; a second App is a second scm Mandate (`nereus mandate create github-scm-labs --reef scm --nereid github --param identity=other-app`). `--default` makes the Connection the Reef's default, one in the Reef. No `--vendor`, no App id, no key: those are the Mandate's (ADR 0006).
     pt:
       topic: "connection create"
       message: "Uma Connection nomeia uma organização, e nada secreto"
       accent: "nada secreto"
       notes: |-
-        **`--mandate` nomeia um Mandate do scm,** como em todo objeto (ADR 0011); sem ele, o padrão do reef. O param `identity` desse Mandate nomeia o App que alcança a organização; um segundo App é um segundo Mandate do scm (`nereus mandate create github-scm-labs --reef scm --nereid github --param identity=other-app`). `--default` torna a Connection a padrão do reef, uma no reef. Sem `--vendor`, sem id de App, sem chave: isso é do Mandate (ADR 0006).
+        **`--mandate` nomeia um Mandate do scm,** como em todo objeto (ADR 0011); sem ele, o padrão do Reef. O param `identity` desse Mandate nomeia o App que alcança a organização; um segundo App é um segundo Mandate do scm (`nereus mandate create github-scm-labs --reef scm --nereid github --param identity=other-app`). `--default` torna a Connection a padrão do Reef, uma no Reef. Sem `--vendor`, sem id de App, sem chave: isso é do Mandate (ADR 0006).
 
   - name: connection-list
     act: connection
@@ -196,13 +196,13 @@ slides:
               nereus scm connection list
     dependsOn: [connection-create]
     notes: |-
-      **The App stays on GitHub, and its Mandate in the authentication reef,** until the person deletes them.
+      **The App stays on GitHub, and its Mandate in the authentication Reef,** until the person deletes them.
     pt:
       topic: "connection delete"
       message: "O delete remove a Connection, nunca o App"
       accent: "nunca o App"
       notes: |-
-        **O App continua no GitHub, e o seu Mandate no reef authentication,** até a pessoa apagá-los.
+        **O App continua no GitHub, e o seu Mandate no Reef authentication,** até a pessoa apagá-los.
 
   - name: mirror-apply
     act: mirror
@@ -213,7 +213,7 @@ slides:
     accent: "in the profile"
     terminal:
       steps:
-        - comment: "Apply the forgejo Nereid to the scm reef; it needs the release and secrets reefs"
+        - comment: "Apply the forgejo Nereid to the scm Reef; it needs the release and secrets Reefs"
           run: "nereus nereid apply forgejo"
           options: ["--reef scm"]
           output: |-
@@ -224,13 +224,13 @@ slides:
 
               nereus scm mirror create <name> --from https://github.com/<owner>/<repository>
     notes: |-
-      **The profile `internal-developer-platform` installs it** (#1327), and its Mandate `forgejo` is the scm reef's default there; on another profile, this command does (#1255). It makes its Mandate `forgejo`, then asks the release reef for Forgejo's upstream Helm chart (SQLite on a volume, no Ingress) and makes Forgejo's admin, sealed into the vault `default` as the secret `forgejo-admin`. Forgejo copies from `github.com` only; the setting `MIRROR_ALLOWED_DOMAINS` adds a host, as the scene adds its fake. Plain `http://` needs `--allow-http` and the setting `MIRROR_ALLOW_HTTP=true`, which only the scene sets.
+      **The profile `internal-developer-platform` installs it** (#1327), and its Mandate `forgejo` is the scm Reef's default there; on another profile, this command does (#1255). It makes its Mandate `forgejo`, then asks the release Reef for Forgejo's upstream Helm chart (SQLite on a volume, no Ingress) and makes Forgejo's admin, sealed into the vault `default` as the secret `forgejo-admin`. Forgejo copies from `github.com` only; the setting `MIRROR_ALLOWED_DOMAINS` adds a host, as the scene adds its fake. Plain `http://` needs `--allow-http` and the setting `MIRROR_ALLOW_HTTP=true`, which only the scene sets.
     pt:
       topic: "nereid apply"
       message: "O Nereid forgejo roda o Forgejo no cluster, no profile"
       accent: "no profile"
       notes: |-
-        **O profile `internal-developer-platform` o instala** (#1327), e o seu Mandate `forgejo` é o padrão do reef scm ali; em outro profile, este comando o instala (#1255). Ele cria o seu Mandate `forgejo`, depois pede ao reef release o Helm chart oficial do Forgejo (SQLite num volume, sem Ingress) e cria o admin do Forgejo, selado no vault `default` como o secret `forgejo-admin`. O Forgejo copia só de `github.com`; a setting `MIRROR_ALLOWED_DOMAINS` acrescenta um host, como a cena acrescenta o seu falso. `http://` simples precisa de `--allow-http` e da setting `MIRROR_ALLOW_HTTP=true`, que só a cena usa.
+        **O profile `internal-developer-platform` o instala** (#1327), e o seu Mandate `forgejo` é o padrão do Reef scm ali; em outro profile, este comando o instala (#1255). Ele cria o seu Mandate `forgejo`, depois pede ao Reef release o Helm chart oficial do Forgejo (SQLite num volume, sem Ingress) e cria o admin do Forgejo, selado no vault `default` como o secret `forgejo-admin`. O Forgejo copia só de `github.com`; a setting `MIRROR_ALLOWED_DOMAINS` acrescenta um host, como a cena acrescenta o seu falso. `http://` simples precisa de `--allow-http` e da setting `MIRROR_ALLOW_HTTP=true`, que só a cena usa.
 
   - name: mirror-create
     act: mirror
@@ -252,13 +252,13 @@ slides:
               nereus scm mirror get nereus
     dependsOn: [mirror-apply]
     notes: |-
-      **No Connection, no App:** a public source needs neither. The Mirror goes through `--mandate`, else the reef's default Mandate, and the CLI refuses one whose Nereid does not list `mirrors` in its `status.kinds`: the default may be the github Nereid's, which checks Connections only. The copy lands at `<owner>/<repository>` on Forgejo, private; two Mirrors of one place, the oldest keeps it and the other is `Taken`.
+      **No Connection, no App:** a public source needs neither. The Mirror goes through `--mandate`, else the Reef's default Mandate, and the CLI refuses one whose Nereid does not list `mirrors` in its `status.kinds`: the default may be the github Nereid's, which checks Connections only. The copy lands at `<owner>/<repository>` on Forgejo, private; two Mirrors of one place, the oldest keeps it and the other is `Taken`.
     pt:
       topic: "mirror create"
       message: "Um Mirror copia um repositório para o cluster"
       accent: "para o cluster"
       notes: |-
-        **Sem Connection, sem App:** uma fonte pública não precisa de nenhum. O Mirror passa pelo `--mandate`, senão pelo Mandate padrão do reef, e o CLI recusa um cujo Nereid não lista `mirrors` no seu `status.kinds`: o padrão pode ser o do Nereid github, que só confere Connections. A cópia fica em `<owner>/<repository>` no Forgejo, privada; dois Mirrors do mesmo lugar, o mais antigo o mantém e o outro fica `Taken`.
+        **Sem Connection, sem App:** uma fonte pública não precisa de nenhum. O Mirror passa pelo `--mandate`, senão pelo Mandate padrão do Reef, e o CLI recusa um cujo Nereid não lista `mirrors` no seu `status.kinds`: o padrão pode ser o do Nereid github, que só confere Connections. A cópia fica em `<owner>/<repository>` no Forgejo, privada; dois Mirrors do mesmo lugar, o mais antigo o mantém e o outro fica `Taken`.
 
   - name: mirror-list
     act: mirror
@@ -309,7 +309,7 @@ slides:
       - "**[GitHub, installation access tokens](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-an-installation-access-token-for-a-github-app):** an installation and its repository selection"
       - "**[GitHub, validating webhook deliveries](https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries):** the signature the receiver checks"
     notes: |-
-      **The full credits are in the ADR of this reef.**
+      **The full credits are in the ADR of this Reef.**
     pt:
       topic: "referências"
       message: "De onde vieram as ideias"
@@ -318,4 +318,4 @@ slides:
         - "**[GitHub, tokens de instalação](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-an-installation-access-token-for-a-github-app):** uma instalação e a sua seleção de repositórios"
         - "**[GitHub, validando entregas de webhook](https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries):** a assinatura que o receptor confere"
       notes: |-
-        **Os créditos completos estão no ADR deste reef.**
+        **Os créditos completos estão no ADR deste Reef.**

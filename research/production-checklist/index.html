@@ -7423,32 +7423,32 @@
 <h1 id="production-grade-checklist">Production-grade checklist<a class="headerlink" href="#production-grade-checklist" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Recommendations, not a gate</p>
-<p>This page is a reference for opportunities Nereus may take up, one day or never. It is not a list of requirements: no slice, Nereid, reef or PR has to tick these items, and no check enforces them. When one of them becomes work, it starts as an issue and, if it is a new capability, as an API group (<a href="../../agent/api-groups/">API groups</a>).</p>
+<p>This page is a reference for opportunities Nereus may take up, one day or never. It is not a list of requirements: no slice, Nereid, Reef or PR has to tick these items, and no check enforces them. When one of them becomes work, it starts as an issue and, if it is a new capability, as an API group (<a href="../../agent/api-groups/">API groups</a>).</p>
 </div>
-<p>The list follows the production-grade infrastructure checklist in Yevgeniy Brikman's book <em>Terraform: Up &amp; Running: Writing Infrastructure as Code</em>, Second Edition. The descriptions below are our own words; the tools are examples, not choices. Where a task fits the model, a short note says how it could map to a reef or a Nereid (<a href="../../agent/cli/">The CLI design</a>, ADR 0002 (the conceptual model: reefs, Nereids, Mandates)); those notes are ideas, not decisions.</p>
+<p>The list follows the production-grade infrastructure checklist in Yevgeniy Brikman's book <em>Terraform: Up &amp; Running: Writing Infrastructure as Code</em>, Second Edition. The descriptions below are our own words; the tools are examples, not choices. Where a task fits the model, a short note says how it could map to a Reef or a Nereid (<a href="../../agent/cli/">The CLI design</a>, ADR 0002 (the conceptual model: Reefs, Nereids, Mandates)); those notes are ideas, not decisions.</p>
 <h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
 <p>Get the software and everything it depends on onto the machine or into the image, in a way that can be repeated.</p>
 <ul>
 <li><strong>Example tools:</strong> Bash, Ansible, Chef, Puppet, container images built by Docker or Buildpacks.</li>
-<li><strong>In Nereus:</strong> a Nereid ships as a container image, so installing it is pulling that image; the <code>release</code> reef (with the <code>flux</code> Nereid) already installs Helm charts.</li>
+<li><strong>In Nereus:</strong> a Nereid ships as a container image, so installing it is pulling that image; the <code>release</code> Reef (with the <code>flux</code> Nereid) already installs Helm charts.</li>
 </ul>
 <h2 id="configure">Configure<a class="headerlink" href="#configure" title="Permanent link">&para;</a></h2>
 <p>Set how the software behaves when it runs: ports, certificates, how services find each other, which node leads, how data is replicated.</p>
 <ul>
 <li><strong>Example tools:</strong> Ansible, Chef, Puppet, Helm values, Kustomize, ConfigMaps.</li>
-<li><strong>In Nereus:</strong> the <code>spec</code> of a reef's object carries the configuration the API writes, and the Nereid turns it into the tool's own settings (ADR 0005 (one writer per field: the API writes <code>spec</code>, the Nereid writes <code>status</code>)).</li>
+<li><strong>In Nereus:</strong> the <code>spec</code> of a Reef's object carries the configuration the API writes, and the Nereid turns it into the tool's own settings (ADR 0005 (one writer per field: the API writes <code>spec</code>, the Nereid writes <code>status</code>)).</li>
 </ul>
 <h2 id="provision">Provision<a class="headerlink" href="#provision" title="Permanent link">&para;</a></h2>
 <p>Create the infrastructure itself: servers, networks, load balancers, firewall rules, identities and their permissions.</p>
 <ul>
 <li><strong>Example tools:</strong> Terraform, OpenTofu, CloudFormation, Crossplane, Pulumi.</li>
-<li><strong>In Nereus:</strong> the <code>cloud</code> reef (spec 0005) and the <code>environment</code> reef are where provisioning lands; a Terraform or Crossplane Nereid could serve them behind a Mandate, so the tool can be swapped.</li>
+<li><strong>In Nereus:</strong> the <code>cloud</code> Reef (spec 0005) and the <code>environment</code> Reef are where provisioning lands; a Terraform or Crossplane Nereid could serve them behind a Mandate, so the tool can be swapped.</li>
 </ul>
 <h2 id="deploy">Deploy<a class="headerlink" href="#deploy" title="Permanent link">&para;</a></h2>
 <p>Put the service on top of the infrastructure and roll out new versions without taking it down, gradually or side by side.</p>
 <ul>
 <li><strong>Example tools:</strong> Kubernetes, Helm, Flux, Argo CD, Argo Rollouts, Flagger, ECS.</li>
-<li><strong>In Nereus:</strong> the <code>release</code> reef; blue-green, rolling and canary strategies could become fields of a release, served by a Nereid that wraps Flagger or Argo Rollouts.</li>
+<li><strong>In Nereus:</strong> the <code>release</code> Reef; blue-green, rolling and canary strategies could become fields of a release, served by a Nereid that wraps Flagger or Argo Rollouts.</li>
 </ul>
 <h2 id="high-availability">High availability<a class="headerlink" href="#high-availability" title="Permanent link">&para;</a></h2>
 <p>Keep working when a process, a server, a service, a data centre or a whole region fails.</p>
@@ -7460,55 +7460,55 @@
 <p>Grow and shrink with the load, by adding more copies (out) or bigger machines (up).</p>
 <ul>
 <li><strong>Example tools:</strong> Horizontal Pod Autoscaler, KEDA, Karpenter, Cluster Autoscaler, sharding, caches.</li>
-<li><strong>In Nereus:</strong> scaling rules could sit beside availability in the same objects; KEDA fits well where an event bus (the <code>messaging</code> reef) drives the load.</li>
+<li><strong>In Nereus:</strong> scaling rules could sit beside availability in the same objects; KEDA fits well where an event bus (the <code>messaging</code> Reef) drives the load.</li>
 </ul>
 <h2 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">&para;</a></h2>
 <p>Use CPU, memory, disk, network and GPU well, and know it from measurement: profiling, benchmarks, load tests, query tuning.</p>
 <ul>
 <li><strong>Example tools:</strong> k6, JMeter, Locust, pprof, py-spy, Pyroscope, Dynatrace.</li>
-<li><strong>In Nereus:</strong> the init time SLO (spec 0004) is already one measured target; a load test could become a command of a reef, run against an Instance before a release is promoted.</li>
+<li><strong>In Nereus:</strong> the init time SLO (spec 0004) is already one measured target; a load test could become a command of a Reef, run against an Instance before a release is promoted.</li>
 </ul>
 <h2 id="networking">Networking<a class="headerlink" href="#networking" title="Permanent link">&para;</a></h2>
 <p>Addresses, ports, DNS, how services discover each other, firewalls, and how people reach machines (SSH, VPN).</p>
 <ul>
 <li><strong>Example tools:</strong> VPCs, security groups, CoreDNS, ExternalDNS, Cilium, Tailscale, WireGuard, Cloudflare Tunnel.</li>
-<li><strong>In Nereus:</strong> the planned <code>edge</code> reef with a <code>cloudflare</code> Nereid publishes a hostname as a Route (<a href="../../guides/operate/edge/">Publish at a hostname</a>); DNS and private access could follow as reefs of their own.</li>
+<li><strong>In Nereus:</strong> the planned <code>edge</code> Reef with a <code>cloudflare</code> Nereid publishes a hostname as a Route (<a href="../../guides/operate/edge/">Publish at a hostname</a>); DNS and private access could follow as Reefs of their own.</li>
 </ul>
 <h2 id="security">Security<a class="headerlink" href="#security" title="Permanent link">&para;</a></h2>
 <p>Encrypt data on the wire and at rest, know who is calling and what they may do, keep secrets out of code, harden what runs.</p>
 <ul>
 <li><strong>Example tools:</strong> cert-manager, Let's Encrypt, OpenBao, Vault, KMS, Keycloak, Kyverno, Trivy, CIS benchmarks.</li>
-<li><strong>In Nereus:</strong> the <code>secrets</code> reef (the <code>openbao</code> Nereid, with client-side encryption by the CLI) and the <code>authentication</code> reef (the <code>keycloak</code> Nereid) cover part of it already; certificates and policy could be reefs too. "Security from the first slice" is already a pillar (<a href="../../agent/rules/">Rules</a>).</li>
+<li><strong>In Nereus:</strong> the <code>secrets</code> Reef (the <code>openbao</code> Nereid, with client-side encryption by the CLI) and the <code>authentication</code> Reef (the <code>keycloak</code> Nereid) cover part of it already; certificates and policy could be Reefs too. "Security from the first slice" is already a pillar (<a href="../../agent/rules/">Rules</a>).</li>
 </ul>
 <h2 id="metrics">Metrics<a class="headerlink" href="#metrics" title="Permanent link">&para;</a></h2>
 <p>Measure whether the system is up and doing its job, from the business down to the server, trace requests, and alert a person when it matters.</p>
 <ul>
 <li><strong>Example tools:</strong> Prometheus, Grafana, OpenTelemetry, Tempo, Alertmanager, Datadog, Honeycomb.</li>
-<li><strong>In Nereus:</strong> an <code>observability</code> reef could let a Nereid publish its metrics and traces the same way whatever the backend; the <code>notifications</code> reef idea (#278 (spoken summaries as notifications)) could carry the alerts.</li>
+<li><strong>In Nereus:</strong> an <code>observability</code> Reef could let a Nereid publish its metrics and traces the same way whatever the backend; the <code>notifications</code> Reef idea (#278 (spoken summaries as notifications)) could carry the alerts.</li>
 </ul>
 <h2 id="logs">Logs<a class="headerlink" href="#logs" title="Permanent link">&para;</a></h2>
 <p>Keep logs from filling the disk, and gather them in one place where they can be searched.</p>
 <ul>
 <li><strong>Example tools:</strong> Fluent Bit, Vector, Loki, OpenSearch, the ELK stack, CloudWatch Logs.</li>
-<li><strong>In Nereus:</strong> the same <code>observability</code> reef could take logs, with a Loki or OpenSearch Nereid behind a Mandate.</li>
+<li><strong>In Nereus:</strong> the same <code>observability</code> Reef could take logs, with a Loki or OpenSearch Nereid behind a Mandate.</li>
 </ul>
 <h2 id="backup-and-restore">Backup and restore<a class="headerlink" href="#backup-and-restore" title="Permanent link">&para;</a></h2>
 <p>Copy databases, caches and other data on a schedule, keep a copy in another region or account, and prove that it restores.</p>
 <ul>
 <li><strong>Example tools:</strong> Velero, CloudNativePG backups, restic, snapshots of managed databases, cross-region replication.</li>
-<li><strong>In Nereus:</strong> a <code>backup</code> reef could ask for a schedule and a retention on an Instance, served by a Velero Nereid; a restore test could be one of its commands.</li>
+<li><strong>In Nereus:</strong> a <code>backup</code> Reef could ask for a schedule and a retention on an Instance, served by a Velero Nereid; a restore test could be one of its commands.</li>
 </ul>
 <h2 id="cost-optimization">Cost optimization<a class="headerlink" href="#cost-optimization" title="Permanent link">&para;</a></h2>
 <p>Pick the right machine sizes, use spot and reserved capacity, scale down when idle, and remove what nobody uses.</p>
 <ul>
 <li><strong>Example tools:</strong> OpenCost, Kubecost, Karpenter, spot and reserved instances, auto scaling, cloud-nuke.</li>
-<li><strong>In Nereus:</strong> costs are a lever among the pillars (<a href="../../vision/">Vision</a>); the <code>cost</code> reef idea (#277 (the AI-usage Nereid of the <code>cost</code> reef)) could grow to infrastructure costs with an OpenCost Nereid.</li>
+<li><strong>In Nereus:</strong> costs are a lever among the pillars (<a href="../../vision/">Vision</a>); the <code>cost</code> Reef idea (#277 (the AI-usage Nereid of the <code>cost</code> Reef)) could grow to infrastructure costs with an OpenCost Nereid.</li>
 </ul>
 <h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
 <p>Write down the code, the architecture and the practices, and keep runbooks for the incidents that will happen.</p>
 <ul>
 <li><strong>Example tools:</strong> MkDocs, Backstage TechDocs, ADRs, runbooks, READMEs.</li>
-<li><strong>In Nereus:</strong> this site, the ADRs and the walkthrough already do much of it; a reef or Nereid could publish its own runbook next to its commands.</li>
+<li><strong>In Nereus:</strong> this site, the ADRs and the walkthrough already do much of it; a Reef or Nereid could publish its own runbook next to its commands.</li>
 </ul>
 <h2 id="tests">Tests<a class="headerlink" href="#tests" title="Permanent link">&para;</a></h2>
 <p>Test the infrastructure code automatically, on every change and on a schedule.</p>

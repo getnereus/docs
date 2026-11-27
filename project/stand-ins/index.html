@@ -7045,24 +7045,24 @@
 <td><a href="https://github.com/getnereus/nereus/issues/1331">#1331</a>: a tenant's Build gets a clone token only for a repository its own Organization is allowed</td>
 </tr>
 <tr>
-<td>A namespace that asks Tokens is labelled <code>authentication.&lt;domain&gt;/tokens=true</code>, and the Role of each Nereid serving the Token there is applied by the CLI: by <code>nereid apply</code> of a Nereid that serves it, by <code>nereid apply catalog</code>, by <code>nereid apply buildkit</code> (in <code>builds</code>, <a href="https://github.com/getnereus/nereus/issues/1070">#1070</a>), and by <code>nereus authentication token create</code> (<a href="https://github.com/getnereus/nereus/issues/1274">#1274</a>); which Nereids serve the Token, a kind only some Nereids of the reef serve, is pinned in <code>contracts.KINDS_SOME_NEREIDS_SERVE</code></td>
-<td>The API granting a Nereid what a requester's namespace asks of it (<a href="../../adr/0018-nereus-api/">ADR 0018</a>), and a reef saying which of its kinds are optional</td>
+<td>A namespace that asks Tokens is labelled <code>authentication.&lt;domain&gt;/tokens=true</code>, and the Role of each Nereid serving the Token there is applied by the CLI: by <code>nereid apply</code> of a Nereid that serves it, by <code>nereid apply catalog</code>, by <code>nereid apply buildkit</code> (in <code>builds</code>, <a href="https://github.com/getnereus/nereus/issues/1070">#1070</a>), and by <code>nereus authentication token create</code> (<a href="https://github.com/getnereus/nereus/issues/1274">#1274</a>); which Nereids serve the Token, a kind only some Nereids of the Reef serve, is pinned in <code>contracts.KINDS_SOME_NEREIDS_SERVE</code></td>
+<td>The API granting a Nereid what a requester's namespace asks of it (<a href="../../adr/0018-nereus-api/">ADR 0018</a>), and a Reef saying which of its kinds are optional</td>
 </tr>
 <tr>
 <td><code>scripts/deploy/line run</code> verifies a <code>main</code> by hand with <code>make scene-core</code>, and <code>make release</code> publishes it from the owner's machine (<a href="https://github.com/getnereus/nereus/issues/1611">#1611</a>, <a href="../../guides/operate/deploy-live/">walkthrough</a>)</td>
 <td>The line on the platform: k3d-nereus mirrors <code>main</code> and builds it (<a href="https://github.com/getnereus/nereus/issues/1613">#1613</a>, <a href="https://github.com/getnereus/nereus/issues/1614">#1614</a>, <a href="https://github.com/getnereus/nereus/issues/1615">#1615</a>), publishes the release (<a href="https://github.com/getnereus/nereus/issues/1616">#1616</a>) and upgrades itself (<a href="https://github.com/getnereus/nereus/issues/1531">#1531</a>)</td>
 </tr>
 <tr>
-<td>The notes of the <code>ideas</code> reef reach the cluster as a host folder that <code>rclone sync</code> fills every hour from the owner's machine, mounted on the k3d nodes (<code>NEREUS_K3D_NOTES</code>) and read by <code>doris</code> (<a href="https://github.com/getnereus/nereus/issues/1106">#1106</a>, <a href="https://github.com/getnereus/nereus/tree/main/controllers/doris#stand-in">controllers/doris</a>)</td>
-<td><code>doris</code> reading the notes' store itself with a credential from the secrets reef (its own issue, opened when #1106 closes)</td>
+<td>The notes of the <code>ideas</code> Reef reach the cluster as a host folder that <code>rclone sync</code> fills every hour from the owner's machine, mounted on the k3d nodes (<code>NEREUS_K3D_NOTES</code>) and read by <code>doris</code> (<a href="https://github.com/getnereus/nereus/issues/1106">#1106</a>, <a href="https://github.com/getnereus/nereus/tree/main/controllers/doris#stand-in">controllers/doris</a>)</td>
+<td><code>doris</code> reading the notes' store itself with a credential from the secrets Reef (its own issue, opened when #1106 closes)</td>
 </tr>
 <tr>
 <td>leagore's memory store (<code>STORE=memory</code>), for unit tests and <code>make scene-core</code>, which install no database: a Session and its deck last as long as the process (<a href="https://github.com/getnereus/nereus/issues/1695">#1695</a>, <a href="https://github.com/getnereus/nereus/tree/main/controllers/leagore">controllers/leagore</a>)</td>
-<td>the PostgreSQL store, a Database of the database reef, which is what every installation runs (<code>STORE=postgres</code>)</td>
+<td>the PostgreSQL store, a Database of the database Reef, which is what every installation runs (<code>STORE=postgres</code>)</td>
 </tr>
 <tr>
 <td>Who may publish to a Repository is not enforced: whoever reaches its Secret may push (<a href="https://github.com/getnereus/nereus/issues/1013">#1013</a>)</td>
-<td>The registry's token service asking the authorization reef's check (after <a href="https://github.com/getnereus/nereus/issues/1644">#1644</a>, whose first slice covers the Nereus API only)</td>
+<td>The registry's token service asking the authorization Reef's check (after <a href="https://github.com/getnereus/nereus/issues/1644">#1644</a>, whose first slice covers the Nereus API only)</td>
 </tr>
 <tr>
 <td><code>nereus registry repository publish</code> reads the push Secret and port-forwards through the person's kubeconfig (<a href="https://github.com/getnereus/nereus/issues/1013">#1013</a>)</td>
@@ -7074,34 +7074,34 @@
 </tr>
 <tr>
 <td>The zot Nereid issues each Registry's certificate from the platform's registry CA, whose key it reads from the Secret <code>registry-ca</code> (<a href="https://github.com/getnereus/nereus/issues/1064">#1064</a>)</td>
-<td>The certificate reef, with cert-manager as its reference Nereid (<a href="https://github.com/getnereus/nereus/issues/1101">#1101</a>)</td>
+<td>The certificate Reef, with cert-manager as its reference Nereid (<a href="https://github.com/getnereus/nereus/issues/1101">#1101</a>)</td>
 </tr>
 <tr>
 <td><code>nereus doctor</code> reads a developer's failing Releases with that person's own kube context, not through the Nereus API, since a Release has no owner and the API no per-person route (<a href="https://github.com/getnereus/nereus/issues/854">#854</a>)</td>
-<td>The authorization reef (ADR 0015), so <code>GET /v1/doctor</code> answers each person what they may read</td>
+<td>The authorization Reef (ADR 0015), so <code>GET /v1/doctor</code> answers each person what they may read</td>
 </tr>
 <tr>
 <td>OpenBao's unseal key in the Kubernetes Secret <code>openbao-seal</code>, read by its static seal (#797, <a href="https://github.com/getnereus/nereus/tree/main/controllers/openbao">controllers/openbao</a>)</td>
 <td>Auto-unseal by a cloud KMS, the key outside the cluster</td>
 </tr>
 <tr>
-<td>The reefs with no kinds by design, pinned in the CLI (<code>contracts.REEFS_WITHOUT_KINDS</code>, <a href="https://github.com/getnereus/nereus/issues/794">#794</a>)</td>
-<td>Each reef's own kinds (<a href="https://github.com/getnereus/nereus/issues/535">#535</a> for authentication)</td>
+<td>The Reefs with no kinds by design, pinned in the CLI (<code>contracts.REEFS_WITHOUT_KINDS</code>, <a href="https://github.com/getnereus/nereus/issues/794">#794</a>)</td>
+<td>Each Reef's own kinds (<a href="https://github.com/getnereus/nereus/issues/535">#535</a> for authentication)</td>
 </tr>
 <tr>
 <td>The portal's client <code>nereus-portal</code> written by the keycloak Nereid, its redirects from the portal Mandates' <code>publicUrl</code> (<a href="https://github.com/getnereus/nereus/issues/731">#731</a>)</td>
-<td>The authentication reef's <code>Client</code> kind (<a href="https://github.com/getnereus/nereus/issues/535">#535</a>)</td>
+<td>The authentication Reef's <code>Client</code> kind (<a href="https://github.com/getnereus/nereus/issues/535">#535</a>)</td>
 </tr>
 <tr>
-<td>The scm reef's webhook receiver, <code>POST /scm/webhook</code> on the github Nereid's Service, is reached only inside the cluster (<a href="https://github.com/getnereus/nereus/issues/1281">#1281</a>)</td>
-<td>The receiver exposed to GitHub through the edge reef (<a href="https://github.com/getnereus/nereus/issues/577">#577</a>)</td>
+<td>The scm Reef's webhook receiver, <code>POST /scm/webhook</code> on the github Nereid's Service, is reached only inside the cluster (<a href="https://github.com/getnereus/nereus/issues/1281">#1281</a>)</td>
+<td>The receiver exposed to GitHub through the edge Reef (<a href="https://github.com/getnereus/nereus/issues/577">#577</a>)</td>
 </tr>
 <tr>
-<td>The other reefs a local Nereid may serve next to its own, opt-in, in the CLI's table of the local Nereids (<code>local_nereids.TOOLS</code>, <code>also</code>: the github Nereid's scm reef, <a href="https://github.com/getnereus/nereus/issues/1281">#1281</a>)</td>
-<td>A Nereid that looks after several reefs, declared by its image (<a href="https://github.com/getnereus/nereus/issues/72">#72</a>)</td>
+<td>The other Reefs a local Nereid may serve next to its own, opt-in, in the CLI's table of the local Nereids (<code>local_nereids.TOOLS</code>, <code>also</code>: the github Nereid's scm Reef, <a href="https://github.com/getnereus/nereus/issues/1281">#1281</a>)</td>
+<td>A Nereid that looks after several Reefs, declared by its image (<a href="https://github.com/getnereus/nereus/issues/72">#72</a>)</td>
 </tr>
 <tr>
-<td>The reefs a local Nereid requires, in the CLI's table of the local Nereids (<code>local_nereids.TOOLS</code>), since one image runs them all (<a href="https://github.com/getnereus/nereus/issues/420">#420</a>)</td>
+<td>The Reefs a local Nereid requires, in the CLI's table of the local Nereids (<code>local_nereids.TOOLS</code>), since one image runs them all (<a href="https://github.com/getnereus/nereus/issues/420">#420</a>)</td>
 <td>Each Nereid's image label <code>core.getnereus.dev/requires</code> (ADR 0014)</td>
 </tr>
 <tr>
@@ -7114,7 +7114,7 @@
 </tr>
 <tr>
 <td><code>ingress.address</code> of the chart <code>nereus</code> (<code>NEREUS_INGRESS_ADDRESS</code> of <code>thetis</code>): the address the portal's Mandate gets as <code>publicUrl</code>, and the keycloak Mandate with <code>auth.</code> before its host (<a href="https://github.com/getnereus/nereus/issues/1933">#1933</a>), because thetis, in its Pod, cannot ask k3d for the ingress port (<a href="https://github.com/getnereus/nereus/issues/1079">#1079</a>)</td>
-<td>The edge reef owning routes (<a href="https://github.com/getnereus/nereus/issues/470">#470</a>)</td>
+<td>The edge Reef owning routes (<a href="https://github.com/getnereus/nereus/issues/470">#470</a>)</td>
 </tr>
 <tr>
 <td><code>LOCAL_REGISTRY</code> of the <code>kubernetes</code> Nereid: the one address its digest and port lookups call outside their rules, because a Delivery names the local registry as <code>localhost:5111</code> (<a href="https://github.com/getnereus/nereus/issues/845">#845</a>)</td>
@@ -7134,11 +7134,11 @@
 </tr>
 <tr>
 <td>Who may create a Build is not enforced: whoever may create one pushes to the Repository of any Workload (<a href="https://github.com/getnereus/nereus/issues/1067">#1067</a>)</td>
-<td>The containment probes and the ValidatingAdmissionPolicy (<a href="https://github.com/getnereus/nereus/issues/1069">#1069</a>), then a rule on the Workload's owner in the authorization reef (<a href="https://github.com/getnereus/nereus/issues/1644">#1644</a> holds the API's check)</td>
+<td>The containment probes and the ValidatingAdmissionPolicy (<a href="https://github.com/getnereus/nereus/issues/1069">#1069</a>), then a rule on the Workload's owner in the authorization Reef (<a href="https://github.com/getnereus/nereus/issues/1644">#1644</a> holds the API's check)</td>
 </tr>
 <tr>
 <td>The first identity of a User is linked by the token's verified e-mail, trusting the <code>email_verified</code> claim of the instance's own issuer, also when it brokered another identity provider; the User's id is the object's name (spec 0011, decision 4, <a href="../../adr/0027-teams-roles-and-users/">ADR 0027</a>)</td>
-<td>An e-mail code that links a new <code>sub</code>, and an id the platform generates (ADR 0006), once a notification reef exists</td>
+<td>An e-mail code that links a new <code>sub</code>, and an id the platform generates (ADR 0006), once a notification Reef exists</td>
 </tr>
 <tr>
 <td>A binding's position is a free name on the <code>Member</code>, and <code>nereus-admins</code> is the emergency exit that passes when the check does not (<a href="../../adr/0027-teams-roles-and-users/">ADR 0027</a>)</td>
@@ -7158,7 +7158,7 @@
 </tr>
 <tr>
 <td>The gaps of <code>nereus catalog check</code>, in the CLI's table (<code>catalog.USES</code>, <code>EDGE_ISSUE</code>, <a href="https://github.com/getnereus/nereus/issues/903">#903</a>)</td>
-<td>The edge reef (<a href="https://github.com/getnereus/nereus/issues/470">#470</a>) and the messaging reef (<a href="https://github.com/getnereus/nereus/issues/576">#576</a>): a gap disappears once the cluster serves the reef</td>
+<td>The edge Reef (<a href="https://github.com/getnereus/nereus/issues/470">#470</a>) and the messaging Reef (<a href="https://github.com/getnereus/nereus/issues/576">#576</a>): a gap disappears once the cluster serves the Reef</td>
 </tr>
 <tr>
 <td>Session metrics recorded in the private repository</td>
@@ -7178,7 +7178,7 @@
 </tr>
 <tr>
 <td><code>leagore</code>'s memory store, for unit tests and <code>make scene-core</code> only; until #1695 the API's tests stand a fake Nereid in for it</td>
-<td>The PostgreSQL store, a <code>Database</code> of the database reef (<a href="https://github.com/getnereus/nereus/issues/1695">#1695</a> (leagore, the presentations reef's Nereid))</td>
+<td>The PostgreSQL store, a <code>Database</code> of the database Reef (<a href="https://github.com/getnereus/nereus/issues/1695">#1695</a> (leagore, the presentations Reef's Nereid))</td>
 </tr>
 <tr>
 <td>The board skill renders a local HTML page</td>
@@ -7186,7 +7186,7 @@
 </tr>
 <tr>
 <td><code>scripts/board/queue</code> and the <code>issue</code> skill</td>
-<td>The <code>board</code> reef: <code>nereus board item next</code>, <code>claim</code>, <code>doctor</code>, <code>list</code>, GitHub first and Jira swappable (<a href="https://github.com/getnereus/nereus/issues/137">#137</a>)</td>
+<td>The <code>board</code> Reef: <code>nereus board item next</code>, <code>claim</code>, <code>doctor</code>, <code>list</code>, GitHub first and Jira swappable (<a href="https://github.com/getnereus/nereus/issues/137">#137</a>)</td>
 </tr>
 <tr>
 <td>Decisions taken on the brainstorming visual companion, written by hand as "(owner, date)"</td>
@@ -7202,15 +7202,15 @@
 </tr>
 <tr>
 <td>Tokens counted from session transcripts (<code>scripts/metrics/session</code>, <a href="https://github.com/getnereus/nereus/issues/271">#271</a>)</td>
-<td>The AI-usage Nereid of the <code>cost</code> reef (<a href="https://github.com/getnereus/nereus/issues/277">#277</a>)</td>
+<td>The AI-usage Nereid of the <code>cost</code> Reef (<a href="https://github.com/getnereus/nereus/issues/277">#277</a>)</td>
 </tr>
 <tr>
 <td>Each order's performance, cost and rating in a CSV (<code>scripts/metrics/order</code>, <a href="https://github.com/getnereus/nereus/issues/803">#803</a>)</td>
-<td>Agent runs as Instances (<a href="https://github.com/getnereus/nereus/issues/276">#276</a>) and the AI-usage Nereid of the <code>cost</code> reef (<a href="https://github.com/getnereus/nereus/issues/277">#277</a>)</td>
+<td>Agent runs as Instances (<a href="https://github.com/getnereus/nereus/issues/276">#276</a>) and the AI-usage Nereid of the <code>cost</code> Reef (<a href="https://github.com/getnereus/nereus/issues/277">#277</a>)</td>
 </tr>
 <tr>
 <td>The <code>speak</code> command, on the owner's machine only</td>
-<td>Spoken summaries as notifications: a <code>notifications</code> reef and a <code>piper</code> Nereid (<a href="https://github.com/getnereus/nereus/issues/278">#278</a>)</td>
+<td>Spoken summaries as notifications: a <code>notifications</code> Reef and a <code>piper</code> Nereid (<a href="https://github.com/getnereus/nereus/issues/278">#278</a>)</td>
 </tr>
 <tr>
 <td>Talks dictated and edited in YAML</td>
@@ -7218,7 +7218,7 @@
 </tr>
 <tr>
 <td><code>cloud-azure-controller</code> set up by hand</td>
-<td>The catalog's first template, a new Nereid repository (<a href="https://github.com/getnereus/nereus/issues/268">#268</a>), created and protected by the <code>repository</code> reef (<a href="https://github.com/getnereus/nereus/issues/279">#279</a>)</td>
+<td>The catalog's first template, a new Nereid repository (<a href="https://github.com/getnereus/nereus/issues/268">#268</a>), created and protected by the <code>repository</code> Reef (<a href="https://github.com/getnereus/nereus/issues/279">#279</a>)</td>
 </tr>
 <tr>
 <td>Spec 0005's scene run by hand in the Azure sandbox (<a href="https://github.com/getnereus/nereus/issues/266">#266</a>)</td>
@@ -7226,19 +7226,19 @@
 </tr>
 <tr>
 <td><code>test/secrets-probe</code>, a test Nereid of <code>secrets</code> that reads the Key Vault the scene creates with the person's login (<a href="https://github.com/getnereus/nereus/issues/266">#266</a>)</td>
-<td>The <code>secrets</code> reef and the Key Vault Nereid, adopting the vault (<a href="https://github.com/getnereus/nereus/issues/81">#81</a>)</td>
+<td>The <code>secrets</code> Reef and the Key Vault Nereid, adopting the vault (<a href="https://github.com/getnereus/nereus/issues/81">#81</a>)</td>
 </tr>
 <tr>
 <td><code>nereus nereid apply &lt;name&gt; --reef &lt;reef&gt;</code> with no <code>--image</code> takes <code>&lt;reef&gt;-&lt;name&gt;-controller</code> from the local registry (<a href="https://github.com/getnereus/nereus/issues/307">#307</a>)</td>
 <td>The Nereid registry (<a href="https://github.com/getnereus/nereus/issues/22">#22</a>)</td>
 </tr>
 <tr>
-<td>The CLI builds the release reef's commands from the contract it pins (<a href="https://github.com/getnereus/nereus/issues/445">#445</a>)</td>
-<td>Commands built from any reef's schema (ADR 0010, open questions; <a href="https://github.com/getnereus/nereus/issues/18">#18</a>)</td>
+<td>The CLI builds the release Reef's commands from the contract it pins (<a href="https://github.com/getnereus/nereus/issues/445">#445</a>)</td>
+<td>Commands built from any Reef's schema (ADR 0010, open questions; <a href="https://github.com/getnereus/nereus/issues/18">#18</a>)</td>
 </tr>
 <tr>
-<td>The CLI builds the environment reef's commands from the contract it pins (<a href="https://github.com/getnereus/nereus/issues/620">#620</a>)</td>
-<td>Commands built from any reef's schema (ADR 0010, open questions; <a href="https://github.com/getnereus/nereus/issues/18">#18</a>)</td>
+<td>The CLI builds the environment Reef's commands from the contract it pins (<a href="https://github.com/getnereus/nereus/issues/620">#620</a>)</td>
+<td>Commands built from any Reef's schema (ADR 0010, open questions; <a href="https://github.com/getnereus/nereus/issues/18">#18</a>)</td>
 </tr>
 <tr>
 <td>The <code>k3d</code> Nereid knows only the cluster it runs in and adopts it as <code>nereus</code> (<a href="https://github.com/getnereus/nereus/issues/575">#575</a>, ADR 0026)</td>
@@ -7246,7 +7246,7 @@
 </tr>
 <tr>
 <td>An Environment's kubeconfig names <code>https://localhost:8443</code>, reached with <code>kubectl port-forward</code> to its vcluster's service (<a href="https://github.com/getnereus/nereus/issues/620">#620</a>)</td>
-<td>The <code>edge</code> reef publishes each Environment's API server as a Route (<a href="https://github.com/getnereus/nereus/issues/470">#470</a>)</td>
+<td>The <code>edge</code> Reef publishes each Environment's API server as a Route (<a href="https://github.com/getnereus/nereus/issues/470">#470</a>)</td>
 </tr>
 <tr>
 <td>The "raft" channel: work orders from the voice session as files on Google Drive (<a href="../../agent/beach/">Beach</a>)</td>
@@ -7254,15 +7254,15 @@
 </tr>
 <tr>
 <td><code>scripts/beach/watch</code>: each machine's agent polls the beach with rclone and starts <code>claude -p</code> on its own orders (<a href="../../agent/beach/">Beach</a>)</td>
-<td>An event bus on Nereus: an order is a message of the <code>messaging</code> reef, and the agent subscribes</td>
+<td>An event bus on Nereus: an order is a message of the <code>messaging</code> Reef, and the agent subscribes</td>
 </tr>
 <tr>
-<td>Triton applied with <code>kubectl</code> from <code>controllers/triton/deploy</code> (order 20261028-1712); a Nereid of the <code>messaging</code> reef since <a href="https://github.com/getnereus/nereus/issues/1894">#1894</a>, NATS the <code>nats</code> Nereid's since <a href="https://github.com/getnereus/nereus/issues/1599">#1599</a></td>
-<td>Triton as a Nereid of the <code>messaging</code> reef (<a href="https://github.com/getnereus/nereus/tree/main/controllers/triton">controllers/triton</a>)</td>
+<td>Triton applied with <code>kubectl</code> from <code>controllers/triton/deploy</code> (order 20261028-1712); a Nereid of the <code>messaging</code> Reef since <a href="https://github.com/getnereus/nereus/issues/1894">#1894</a>, NATS the <code>nats</code> Nereid's since <a href="https://github.com/getnereus/nereus/issues/1599">#1599</a></td>
+<td>Triton as a Nereid of the <code>messaging</code> Reef (<a href="https://github.com/getnereus/nereus/tree/main/controllers/triton">controllers/triton</a>)</td>
 </tr>
 <tr>
-<td>The named tunnel <code>nereus</code> (renamed from <code>triton</code>, <a href="https://github.com/getnereus/nereus/issues/1931">#1931</a>), cloudflared a plain Deployment of <code>nereus-system</code> with its credential in the secrets reef, with its hostnames (<code>triton.getnereus.dev</code>, <code>auth.getnereus.dev</code> for the keycloak Nereid's realm, <a href="https://github.com/getnereus/nereus/issues/495">#495</a>, and <code>portal.getnereus.dev</code> for the portal, its DNS record made once with <code>cloudflared tunnel route dns</code>, <a href="https://github.com/getnereus/nereus/issues/732">#732</a>) set up by hand with <code>cloudflared</code> (the shared token retired by #495: Triton takes Keycloak logins)</td>
-<td>m15 as an Agent of the <code>ai</code> reef, and the <code>edge</code> reef with a <code>cloudflare</code> Nereid publishing each hostname as a Route (<a href="https://github.com/getnereus/nereus/issues/470">#470</a>) (<a href="https://github.com/getnereus/nereus/blob/main/deploy/edge/README.md">deploy/edge</a>)</td>
+<td>The named tunnel <code>nereus</code> (renamed from <code>triton</code>, <a href="https://github.com/getnereus/nereus/issues/1931">#1931</a>), cloudflared a plain Deployment of <code>nereus-system</code> with its credential in the secrets Reef, with its hostnames (<code>triton.getnereus.dev</code>, <code>auth.getnereus.dev</code> for the keycloak Nereid's realm, <a href="https://github.com/getnereus/nereus/issues/495">#495</a>, and <code>portal.getnereus.dev</code> for the portal, its DNS record made once with <code>cloudflared tunnel route dns</code>, <a href="https://github.com/getnereus/nereus/issues/732">#732</a>) set up by hand with <code>cloudflared</code> (the shared token retired by #495: Triton takes Keycloak logins)</td>
+<td>m15 as an Agent of the <code>ai</code> Reef, and the <code>edge</code> Reef with a <code>cloudflare</code> Nereid publishing each hostname as a Route (<a href="https://github.com/getnereus/nereus/issues/470">#470</a>) (<a href="https://github.com/getnereus/nereus/blob/main/deploy/edge/README.md">deploy/edge</a>)</td>
 </tr>
 <tr>
 <td><code>test/conformance &lt;reef&gt; --nereid &lt;nereid&gt;</code>, a script on the throwaway cluster of <code>make scene-release</code>, checks a Nereid's answers kind by kind (<a href="https://github.com/getnereus/nereus/issues/528">#528</a>)</td>
@@ -7274,19 +7274,19 @@
 </tr>
 <tr>
 <td>The login theme of Keycloak (the honeycomb, a black card, PT | EN) inside the <code>keycloak</code> Nereid's image, copied by an init container of its Release (<a href="https://github.com/getnereus/nereus/issues/598">#598</a>)</td>
-<td>Appearance as a reef: a default theme Nereid, swappable by installing another (<a href="https://github.com/getnereus/nereus/issues/74">#74</a>)</td>
+<td>Appearance as a Reef: a default theme Nereid, swappable by installing another (<a href="https://github.com/getnereus/nereus/issues/74">#74</a>)</td>
 </tr>
 <tr>
 <td>Cloudflare's rate limiting rule <code>login-rate-limit</code> on <code>auth.getnereus.dev</code>'s login form, made by hand in the dashboard (<a href="https://github.com/getnereus/nereus/blob/main/deploy/edge/README.md#the-edges-rate-limit">deploy/edge</a>)</td>
-<td>The <code>edge</code> reef with a <code>cloudflare</code> Nereid owning the zone's rules (<a href="https://github.com/getnereus/nereus/issues/470">#470</a>)</td>
+<td>The <code>edge</code> Reef with a <code>cloudflare</code> Nereid owning the zone's rules (<a href="https://github.com/getnereus/nereus/issues/470">#470</a>)</td>
 </tr>
 <tr>
-<td>The Gateway API CRDs v1.7.0 (standard channel), from the release's <code>standard-install.yaml</code>, and the Gateway <code>ingress</code> (class <code>istio</code>, one HTTP listener on port 80), applied outside the release reef: by the <code>internal-developer-platform</code> profile's entrance through the CLI's own client (<a href="https://github.com/getnereus/nereus/issues/951">#951</a>), and by hand with <code>kubectl</code> in <code>make scene-ingress</code> on core. The <code>HTTPRoute</code> of <code>triton.getnereus.dev</code> stays applied by hand from <code>deploy/ingress/</code> (<a href="https://github.com/getnereus/nereus/issues/745">#745</a>, <a href="https://github.com/getnereus/nereus/issues/728">#728</a>); the realm's, <code>deploy/ingress/auth.yaml</code>, is retired: the keycloak Nereid writes it for the host of its Mandate's <code>publicUrl</code> (<a href="https://github.com/getnereus/nereus/issues/1933">#1933</a>). The CRDs also come in the kinds step of the profile's init, so the chart <code>nereus</code> renders the API's <code>HTTPRoute</code> (only <code>/.well-known/nereus-configuration</code>, the instance's URL <code>nereus login</code> asks) on a new cluster (<a href="https://github.com/getnereus/nereus/issues/1301">#1301</a>)</td>
-<td>The release reef installs manifests from git (<a href="https://github.com/getnereus/nereus/issues/751">#751</a>), and the <code>edge</code> reef owns the routes (<a href="https://github.com/getnereus/nereus/issues/470">#470</a>)</td>
+<td>The Gateway API CRDs v1.7.0 (standard channel), from the release's <code>standard-install.yaml</code>, and the Gateway <code>ingress</code> (class <code>istio</code>, one HTTP listener on port 80), applied outside the release Reef: by the <code>internal-developer-platform</code> profile's entrance through the CLI's own client (<a href="https://github.com/getnereus/nereus/issues/951">#951</a>), and by hand with <code>kubectl</code> in <code>make scene-ingress</code> on core. The <code>HTTPRoute</code> of <code>triton.getnereus.dev</code> stays applied by hand from <code>deploy/ingress/</code> (<a href="https://github.com/getnereus/nereus/issues/745">#745</a>, <a href="https://github.com/getnereus/nereus/issues/728">#728</a>); the realm's, <code>deploy/ingress/auth.yaml</code>, is retired: the keycloak Nereid writes it for the host of its Mandate's <code>publicUrl</code> (<a href="https://github.com/getnereus/nereus/issues/1933">#1933</a>). The CRDs also come in the kinds step of the profile's init, so the chart <code>nereus</code> renders the API's <code>HTTPRoute</code> (only <code>/.well-known/nereus-configuration</code>, the instance's URL <code>nereus login</code> asks) on a new cluster (<a href="https://github.com/getnereus/nereus/issues/1301">#1301</a>)</td>
+<td>The release Reef installs manifests from git (<a href="https://github.com/getnereus/nereus/issues/751">#751</a>), and the <code>edge</code> Reef owns the routes (<a href="https://github.com/getnereus/nereus/issues/470">#470</a>)</td>
 </tr>
 <tr>
 <td><code>docker build</code> and <code>docker push</code> on the developer's machine, to the k3d registry, in <code>make scene-golden-path</code> (<a href="https://github.com/getnereus/nereus/issues/826">#826</a>)</td>
-<td>Building a Package from a Workload's source (<a href="https://github.com/getnereus/nereus/issues/578">#578</a>), and the <code>build</code> and <code>registry</code> reefs of <a href="https://github.com/getnereus/nereus/issues/835">#835</a></td>
+<td>Building a Package from a Workload's source (<a href="https://github.com/getnereus/nereus/issues/578">#578</a>), and the <code>build</code> and <code>registry</code> Reefs of <a href="https://github.com/getnereus/nereus/issues/835">#835</a></td>
 </tr>
 <tr>
 <td><code>kubectl get pods</code> for the reason of a failed start, in <a href="../../guides/reefs/golden-path/">the golden path</a> (<a href="https://github.com/getnereus/nereus/issues/826">#826</a>; the app's <code>kubectl logs</code> retired by <code>nereus workload logs</code>, <a href="https://github.com/getnereus/nereus/issues/846">#846</a>)</td>
@@ -7305,11 +7305,11 @@
 <td>Each image named by the hash of its inputs, so a release restarts only the Nereids that changed (<a href="https://github.com/getnereus/nereus/issues/1574">#1574</a>)</td>
 </tr>
 <tr>
-<td>Who may notify whom is a rule in the Nereus API, not a check of the authorization reef: an admin notifies any User, a person only themselves (<a href="https://github.com/getnereus/nereus/issues/2147">#2147</a>)</td>
-<td>The authorization reef deciding it, once gates and approvals (<a href="https://github.com/getnereus/nereus/issues/2117">#2117</a>) need more than that</td>
+<td>Who may notify whom is a rule in the Nereus API, not a check of the authorization Reef: an admin notifies any User, a person only themselves (<a href="https://github.com/getnereus/nereus/issues/2147">#2147</a>)</td>
+<td>The authorization Reef deciding it, once gates and approvals (<a href="https://github.com/getnereus/nereus/issues/2117">#2117</a>) need more than that</td>
 </tr>
 <tr>
-<td>The reference Nereid of the notifications reef delivers nothing: each delivery is <code>Skipped</code> (<a href="https://github.com/getnereus/nereus/issues/2147">#2147</a>)</td>
+<td>The reference Nereid of the notifications Reef delivers nothing: each delivery is <code>Skipped</code> (<a href="https://github.com/getnereus/nereus/issues/2147">#2147</a>)</td>
 <td>The webpush Nereid, which sends Web Push to each Subscription (<a href="https://github.com/getnereus/nereus/issues/2148">#2148</a>)</td>
 </tr>
 </tbody>

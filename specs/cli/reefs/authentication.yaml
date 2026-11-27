@@ -1,10 +1,10 @@
 deck:
   name: authentication
-  title: "The authentication reef"
+  title: "The authentication Reef"
   subtitle: "Who the person is, and who the platform is towards the systems it acts on"
   accent: "who the platform is"
   pt:
-    title: "O reef authentication"
+    title: "O Reef authentication"
     subtitle: "Quem a pessoa é, e quem a plataforma é perante os sistemas em que age"
     accent: "quem a plataforma é"
 
@@ -29,21 +29,21 @@ slides:
   - name: cover
     act: opening
     cover: true
-    message: "The authentication reef"
+    message: "The authentication Reef"
     notes: |-
-      **The source of truth for the commands of the authentication reef** (#477). `nereus login` and `nereus logout` are the reef's shortcut at the top of the CLI that ADR 0013 (command conventions) allows, built by the CLI itself (`cli/src/nereus/commands/login.py`, #605 (nereus login and logout)), a port of `wasp-idp`'s login. `nereus whoami` asks the Nereus API (#607, its `GET /v1/me`): the API, not the local token, says who you are.
+      **The source of truth for the commands of the authentication Reef** (#477). `nereus login` and `nereus logout` are the Reef's shortcut at the top of the CLI that ADR 0013 (command conventions) allows, built by the CLI itself (`cli/src/nereus/commands/login.py`, #605 (nereus login and logout)), a port of `wasp-idp`'s login. `nereus whoami` asks the Nereus API (#607, its `GET /v1/me`): the API, not the local token, says who you are.
 
-      **Nothing is fixed in the code:** the issuer and the CLI's client come from the reef's default Mandate, `status.oidc.issuer` and `status.oidc.cliClientId` (ADR 0006, the contract every authentication Nereid writes), and the endpoints from the issuer's discovery document. The tokens live in `~/.config/nereus/credentials` (0600) with the client that issued them, and are never printed.
+      **Nothing is fixed in the code:** the issuer and the CLI's client come from the Reef's default Mandate, `status.oidc.issuer` and `status.oidc.cliClientId` (ADR 0006, the contract every authentication Nereid writes), and the endpoints from the issuer's discovery document. The tokens live in `~/.config/nereus/credentials` (0600) with the client that issued them, and are never printed.
 
-      **The platform has an identity too** (ADR 0006, rewritten 2026-11-09, #234): a GitHub App is a Mandate of the `github` Nereid (#1273), created in the browser by a Nereid action (#1275), and a consumer gets a short-lived installation token as a `Token`, the reef's first kind (#1274), built. The browser's slides are planned.
+      **The platform has an identity too** (ADR 0006, rewritten 2026-11-09, #234): a GitHub App is a Mandate of the `github` Nereid (#1273), created in the browser by a Nereid action (#1275), and a consumer gets a short-lived installation token as a `Token`, the Reef's first kind (#1274), built. The browser's slides are planned.
     pt:
-      message: "O reef authentication"
+      message: "O Reef authentication"
       notes: |-
-        **A fonte da verdade dos comandos do reef authentication** (#477). `nereus login` e `nereus logout` são o atalho do reef no topo do CLI que o ADR 0013 (convenções de comando) permite, construídos pelo próprio CLI (`cli/src/nereus/commands/login.py`, #605 (nereus login e logout)), um port do login do `wasp-idp`. O `nereus whoami` pergunta à API do Nereus (#607, o seu `GET /v1/me`): a API, não o token local, diz quem você é.
+        **A fonte da verdade dos comandos do Reef authentication** (#477). `nereus login` e `nereus logout` são o atalho do Reef no topo do CLI que o ADR 0013 (convenções de comando) permite, construídos pelo próprio CLI (`cli/src/nereus/commands/login.py`, #605 (nereus login e logout)), um port do login do `wasp-idp`. O `nereus whoami` pergunta à API do Nereus (#607, o seu `GET /v1/me`): a API, não o token local, diz quem você é.
 
-        **Nada fica fixo no código:** o issuer e o client do CLI vêm do Mandate padrão do reef, `status.oidc.issuer` e `status.oidc.cliClientId` (ADR 0006, o contrato que toda Nereid de autenticação escreve), e os endpoints do documento de discovery do issuer. Os tokens ficam em `~/.config/nereus/credentials` (0600) com o client que os emitiu, e nunca são impressos.
+        **Nada fica fixo no código:** o issuer e o client do CLI vêm do Mandate padrão do Reef, `status.oidc.issuer` e `status.oidc.cliClientId` (ADR 0006, o contrato que toda Nereid de autenticação escreve), e os endpoints do documento de discovery do issuer. Os tokens ficam em `~/.config/nereus/credentials` (0600) com o client que os emitiu, e nunca são impressos.
 
-        **A plataforma também tem uma identidade** (ADR 0006, reescrito em 2026-11-09, #234): um GitHub App é um Mandate do Nereid `github` (#1273), criado no navegador por uma ação do Nereid (#1275), e um consumidor recebe um token de instalação de vida curta como um `Token`, o primeiro kind do reef (#1274), já construído. Os slides do navegador estão planejados.
+        **A plataforma também tem uma identidade** (ADR 0006, reescrito em 2026-11-09, #234): um GitHub App é um Mandate do Nereid `github` (#1273), criado no navegador por uma ação do Nereid (#1275), e um consumidor recebe um token de instalação de vida curta como um `Token`, o primeiro kind do Reef (#1274), já construído. Os slides do navegador estão planejados.
 
   - name: login
     act: session
@@ -129,13 +129,13 @@ slides:
               nereus whoami
               https://auth.example.com/realms/nereus/account/account-security/signing-in   (set a password, optional)
     notes: |-
-      **The initial admin (#1932)**: before the authentication reef the kubeconfig is the administrator; once it is installed, the realm's user `nereus`, in `nereus-admins`, is the instance's initial admin, and `nereus init` ends naming it. `--initial-admin` reads its password from the Secret `keycloak-user` of `nereus-system` with the person's kubeconfig and copies it with `wl-copy`, `xclip` or `pbcopy`, through the tool's stdin; with none of them it names the Secret and the `kubectl` line that reads it. The value is never printed. The login page always asks, `nereus` filled in, even with another session open in the realm (`prompt=login`, `login_hint`, #1995), and `nereus whoami` asks no User for it.
+      **The initial admin (#1932)**: before the authentication Reef the kubeconfig is the administrator; once it is installed, the realm's user `nereus`, in `nereus-admins`, is the instance's initial admin, and `nereus init` ends naming it. `--initial-admin` reads its password from the Secret `keycloak-user` of `nereus-system` with the person's kubeconfig and copies it with `wl-copy`, `xclip` or `pbcopy`, through the tool's stdin; with none of them it names the Secret and the `kubectl` line that reads it. The value is never printed. The login page always asks, `nereus` filled in, even with another session open in the realm (`prompt=login`, `login_hint`, #1995), and `nereus whoami` asks no User for it.
     pt:
       topic: "--initial-admin"
       message: "Uma instância nova tem uma entrada óbvia: o seu admin inicial"
       accent: "o seu admin inicial"
       notes: |-
-        **O admin inicial (#1932)**: antes do reef de autenticação o kubeconfig é o administrador; depois dele, o usuário `nereus` do realm, em `nereus-admins`, é o admin inicial da instância, e o `nereus init` termina nomeando-o. `--initial-admin` lê a senha do Secret `keycloak-user` de `nereus-system` com o kubeconfig da pessoa e a copia com `wl-copy`, `xclip` ou `pbcopy`, pelo stdin da ferramenta; sem nenhum deles, nomeia o Secret e a linha `kubectl` que a lê. O valor nunca é impresso. A página de login sempre pede, com `nereus` preenchido, mesmo com outra sessão aberta no realm (`prompt=login`, `login_hint`, #1995), e o `nereus whoami` não pede User para ele.
+        **O admin inicial (#1932)**: antes do Reef de autenticação o kubeconfig é o administrador; depois dele, o usuário `nereus` do realm, em `nereus-admins`, é o admin inicial da instância, e o `nereus init` termina nomeando-o. `--initial-admin` lê a senha do Secret `keycloak-user` de `nereus-system` com o kubeconfig da pessoa e a copia com `wl-copy`, `xclip` ou `pbcopy`, pelo stdin da ferramenta; sem nenhum deles, nomeia o Secret e a linha `kubectl` que a lê. O valor nunca é impresso. A página de login sempre pede, com `nereus` preenchido, mesmo com outra sessão aberta no realm (`prompt=login`, `login_hint`, #1995), e o `nereus whoami` não pede User para ele.
 
   - name: login-refresh
     act: session
@@ -209,7 +209,7 @@ slides:
       message: "A API do Nereus diz quem você é"
       accent: "diz quem você é"
       notes: |-
-        **A resposta vem da API do Nereus, nunca do token local:** a `nereus-api` roda no cluster (o `nereus init` a instala em `nereus-system`) e confere a assinatura do token com as chaves do Mandate padrão do reef authentication (`status.oidc.clusterJwksUrl`), o issuer e a audience `nereus-api`. O CLI chega nela por `kubectl port-forward`, ou por `NEREUS_API_URL` até a API ter um endereço público (#577).
+        **A resposta vem da API do Nereus, nunca do token local:** a `nereus-api` roda no cluster (o `nereus init` a instala em `nereus-system`) e confere a assinatura do token com as chaves do Mandate padrão do Reef authentication (`status.oidc.clusterJwksUrl`), o issuer e a audience `nereus-api`. O CLI chega nela por `kubectl port-forward`, ou por `NEREUS_API_URL` até a API ter um endereço público (#577).
 
         **Um token expirado, ou de outro issuer, é recusado** com `Not logged in` e o comando para entrar de novo.
 
@@ -222,7 +222,7 @@ slides:
       - "**Create it:** [nereus mandate create](../core.html#mandate-create), with the App's id, its key and who may ask it a token"
       - "**Read it:** [nereus mandate get](../core.html#mandate-get), what the App may do, as its Nereid wrote it"
     notes: |-
-      **The Mandate's commands are core's, not the reef's** (#482): their slides moved to the core deck, with their outputs. No `--vendor` and no `Application` kind (owner, 2026-11-09): `github` appears only in `nereid apply` and `mandate create`, never in a reef's command.
+      **The Mandate's commands are core's, not the Reef's** (#482): their slides moved to the core deck, with their outputs. No `--vendor` and no `Application` kind (owner, 2026-11-09): `github` appears only in `nereid apply` and `mandate create`, never in a Reef's command.
     pt:
       topic: "mandate"
       message: "Um GitHub App é um {mandate:Mandate} do Nereid {nereid:github}"
@@ -231,7 +231,7 @@ slides:
         - "**Crie:** [nereus mandate create](../core.html#mandate-create), com o id do App, a sua chave e quem pode lhe pedir um token"
         - "**Leia:** [nereus mandate get](../core.html#mandate-get), o que o App pode fazer, como a sua Nereid o escreveu"
       notes: |-
-        **Os comandos do Mandate são do core, não do reef** (#482): os seus slides foram para o deck do core, com as suas saídas. Sem `--vendor` e sem kind `Application` (dono, 2026-11-09): `github` aparece só no `nereid apply` e no `mandate create`, nunca num comando de reef.
+        **Os comandos do Mandate são do core, não do Reef** (#482): os seus slides foram para o deck do core, com as suas saídas. Sem `--vendor` e sem kind `Application` (dono, 2026-11-09): `github` aparece só no `nereid apply` e no `mandate create`, nunca num comando de Reef.
 
   - name: app-register
     act: platform
@@ -242,7 +242,7 @@ slides:
     accent: "in the browser"
     terminal:
       steps:
-        - comment: "An action the github Nereid publishes under the reef"
+        - comment: "An action the github Nereid publishes under the Reef"
           run: "nereus authentication app-register"
           options: ["--mandate team", "--org example-team"]
           output: |-

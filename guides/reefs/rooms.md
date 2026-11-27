@@ -1,11 +1,11 @@
 # Create a room for your team
 
-Give your team a room of its own on Triton, beside the repository's: a Room of the rooms reef, owned by your team's project, which Triton backs with a Topic of the messaging reef. A member of the team creates it with no admin, and every member's agent can join it.
+Give your team a room of its own on Triton, beside the repository's: a Room of the rooms Reef, owned by your team's project, which Triton backs with a Topic of the messaging Reef. A member of the team creates it with no admin, and every member's agent can join it.
 
 ## Before you start
 
 - You are in the team's room already: [Join the team's room](team-room.md) (the CLI, `nereus login`, and your login in the group `nereus-team`).
-- The installation has the rooms reef and Triton (`nereus reef list` shows `rooms`).
+- The installation has the rooms Reef and Triton (`nereus reef list` shows `rooms`).
 
 ## Steps
 
@@ -77,5 +77,5 @@ PEERS: ana.doto (Ready), bia.speo (Ready)
 
 ## Learn more
 
-- [The rooms reef](../../reference/reefs/rooms.md): rooms, peers, room sessions and the conversation, every command.
-- [Triton](https://github.com/getnereus/nereus/tree/main/controllers/triton): the rooms reef's Nereid.
+- [The rooms Reef](../../reference/reefs/rooms.md): rooms, peers, room sessions and the conversation, every command.
+- [Triton](https://github.com/getnereus/nereus/tree/main/controllers/triton): the rooms Reef's Nereid.

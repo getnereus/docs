@@ -1,10 +1,10 @@
-# The presentations reef
+# The presentations Reef
 
 The first slice: a deck kept by the platform, and a Session a phone drives and a room follows.
 
 ## Commands
 
-- [`nereus reef apply presentations`](../../specs/cli/reefs/presentations.html#reef-apply) The presentations reef brings decks and sessions
+- [`nereus reef apply presentations`](../../specs/cli/reefs/presentations.html#reef-apply) The presentations Reef brings decks and sessions
 - [`nereus presentations schema list`](../../specs/cli/reefs/presentations.html#schema) A deck is written anywhere, against a published schema
 - [`nereus presentations presentation create storytelling`](../../specs/cli/reefs/presentations.html#presentation-create) A deck travels as a package the platform keeps by its digest
 - [`nereus presentations presentation get storytelling`](../../specs/cli/reefs/presentations.html#presentation-export) The deck goes home as one file that opens offline
@@ -17,7 +17,7 @@ The first slice: a deck kept by the platform, and a Session a phone drives and a
 
 ### reef-apply
 
-The kinds of the reef; its Nereid, leagore, comes in #1695.
+The kinds of the Reef; its Nereid, leagore, comes in #1695.
 
 ```bash
 nereus reef apply presentations

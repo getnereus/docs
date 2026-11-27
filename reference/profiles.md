@@ -14,34 +14,34 @@ The four built-in profiles, `core`, `internal-developer-platform`, `reference` a
 
 ## core
 
-No `--profile`, or `--profile core`, installs core alone with the tenancy reef ([ADR 0015](../adr/0015-tenancy.md), [#646](https://github.com/getnereus/nereus/issues/646)): no other reef, no Nereid.
+No `--profile`, or `--profile core`, installs core alone with the tenancy Reef ([ADR 0015](../adr/0015-tenancy.md), [#646](https://github.com/getnereus/nereus/issues/646)): no other Reef, no Nereid.
 
 ## reference
 
-`--profile reference` ([#1421](https://github.com/getnereus/nereus/issues/1421)) installs the reference Nereid of each reef that has one, such as `reference-secrets` ([#486](https://github.com/getnereus/nereus/issues/486)), in place of the tools: the reefs' kinds answer end to end and no tool image is pulled. `make scene-core` runs it.
+`--profile reference` ([#1421](https://github.com/getnereus/nereus/issues/1421)) installs the reference Nereid of each Reef that has one, such as `reference-secrets` ([#486](https://github.com/getnereus/nereus/issues/486)), in place of the tools: the Reefs' kinds answer end to end and no tool image is pulled. `make scene-core` runs it.
 
-The authorization reef's, `reference-authorization`, is the gate Nereid of [ADR 0031](../adr/0031-gates-and-approvals.md) there: a held object stays `Pending` until its Approval is decided ([#2213](https://github.com/getnereus/nereus/issues/2213)).
+The authorization Reef's, `reference-authorization`, is the gate Nereid of [ADR 0031](../adr/0031-gates-and-approvals.md) there: a held object stays `Pending` until its Approval is decided ([#2213](https://github.com/getnereus/nereus/issues/2213)).
 
 ## internal-developer-platform
 
-Each Nereid comes after the Nereids of the reefs it requires. With this profile the instance offers sign-in, so `nereus status`, `reef` and `nereid` read through the Nereus API with your token.
+Each Nereid comes after the Nereids of the Reefs it requires. With this profile the instance offers sign-in, so `nereus status`, `reef` and `nereid` read through the Nereus API with your token.
 
 - **Secrets:** Nereid `openbao`, Mandate `default` and the vault `default` ([Keep a secret](../guides/reefs/secrets.md)).
 - **Release:** Nereid `flux` and Mandate `flux` ([Release a chart](../guides/reefs/release.md)).
 - **Database:** Nereid `cloudnative-pg`, which installs CloudNativePG through a Release, and Mandate `cloudnative-pg`.
 - **Authentication:** Nereid `keycloak`, its Database `keycloak` and Mandate `keycloak` ([Turn on authentication](../guides/access/authentication.md)).
-- **The entrance:** the Gateway API CRDs, Istio through the release reef and the Gateway `istio-system/ingress` ([#951](https://github.com/getnereus/nereus/issues/951)).
+- **The entrance:** the Gateway API CRDs, Istio through the release Reef and the Gateway `istio-system/ingress` ([#951](https://github.com/getnereus/nereus/issues/951)).
 - **Portal:** Nereid and Mandate `nereus-portal`, after the entrance ([#896](https://github.com/getnereus/nereus/issues/896)).
 - **Metrics:** Nereid and Mandate `victoriametrics` ([Collect metrics](../guides/reefs/metrics.md)).
 - **Environment:** Nereid and Mandate `vcluster` ([#827](https://github.com/getnereus/nereus/issues/827)).
 - **Catalog and delivery:** Nereids `catalog` and `kubernetes` ([Follow the golden path](../guides/reefs/golden-path.md)).
-- **Teams and authorization:** the `teams` reef and Nereid `openfga` ([Say who may do what](../guides/access/authorization.md)).
+- **Teams and authorization:** the `teams` Reef and Nereid `openfga` ([Say who may do what](../guides/access/authorization.md)).
 - **Registry:** Nereid `zot` ([Run a registry](../guides/reefs/registry.md)).
 - **Messaging:** Nereid `nats` and Mandate `messaging-nats` ([Send messages](../guides/reefs/messaging.md)).
 - **Build and scm:** Nereids `buildkit` and `forgejo`.
-- **Usage and presentations:** Nereid `reference-usage` (the usage reef's reference Nereid, until it has a real one) and Nereid `leagore`, so the portal shows the Usage and Presentations tabs ([#2018](https://github.com/getnereus/nereus/issues/2018)).
+- **Usage and presentations:** Nereid `reference-usage` (the usage Reef's reference Nereid, until it has a real one) and Nereid `leagore`, so the portal shows the Usage and Presentations tabs ([#2018](https://github.com/getnereus/nereus/issues/2018)).
 
-## The secrets reef's key
+## The secrets Reef's key
 
 OpenBao runs next to the Nereid `openbao`, which creates a non-exportable `rsa-4096` key and writes its public key in the Mandate's status; thetis checks it, and `init` prints its fingerprint.
 
@@ -69,7 +69,7 @@ content-length: 0
 
 The profile installs `buildkit` in portable mode, Pod Security privileged, so it builds on any cluster. Where a sandbox runtime is installed, apply it in sandbox mode with `nereus nereid apply buildkit --set BUILD_RUNTIME_CLASS=gvisor` ([#1231](https://github.com/getnereus/nereus/issues/1231)).
 
-`forgejo` mirrors a repository through the scm reef's default Mandate `forgejo` ([Mirror a repository](../guides/reefs/scm-mirror.md)). Forgejo copies from github.com alone until `nereus nereid apply forgejo --set MIRROR_ALLOWED_DOMAINS=git.example.com` names other hosts.
+`forgejo` mirrors a repository through the scm Reef's default Mandate `forgejo` ([Mirror a repository](../guides/reefs/scm-mirror.md)). Forgejo copies from github.com alone until `nereus nereid apply forgejo --set MIRROR_ALLOWED_DOMAINS=git.example.com` names other hosts.
 
 ## Apply a profile later
 
@@ -79,7 +79,7 @@ A profile also layers on core after `init` ([#425](https://github.com/getnereus/
 
 ## Describe a profile
 
-[`nereus profile describe internal-developer-platform`](../specs/cli/core.html#profile-describe) shows its ingress and each Nereid with its reef, Mandate and who requires it, in order.
+[`nereus profile describe internal-developer-platform`](../specs/cli/core.html#profile-describe) shows its ingress and each Nereid with its Reef, Mandate and who requires it, in order.
 
 The order comes from each Nereid's image label `core.getnereus.dev/requires` ([#1368](https://github.com/getnereus/nereus/issues/1368)). With no registry answering, `describe` prints the order from the offline list `cli/src/nereus/requires.yaml`, and its last line says so.
 

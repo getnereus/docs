@@ -2,13 +2,13 @@
 
 How Nereus started: a [Lean Inception](https://martinfowler.com/articles/lean-inception/) (Paulo Caroli's method) run with an agent as facilitator, which fixed the vision, the goals and the sequence of the MVP.
 
-The words are the model's: [reef, Nereid and Mandate](../concepts/model.md). The work that followed is on the [roadmap](roadmap.md) and in [What is built](../reference/what-is-built.md).
+The words are the model's: [Reef, Nereid and Mandate](../concepts/model.md). The work that followed is on the [roadmap](roadmap.md) and in [What is built](../reference/what-is-built.md).
 
 ## Product vision
 
 For platform teams whose IDP is a fixed set of tools glued by hand, where swapping one means rewriting the platform, Nereus is a composable platform API and CLI built out of Nereids added at runtime.
 
-Unlike Humanitec (commercial, with its own resource model) and Kratix (each Promise bundles contract and implementation), Nereus separates the contract, the reef, from what implements it, the Nereid, and swaps one for another without changing the API.
+Unlike Humanitec (commercial, with its own resource model) and Kratix (each Promise bundles contract and implementation), Nereus separates the contract, the Reef, from what implements it, the Nereid, and swaps one for another without changing the API.
 
 ## Is, is not
 
@@ -49,9 +49,9 @@ The platform engineer betting on the idea. Wants to run it first, end to end, an
 
 1. Already there: the CLI, an Azure CLI login and a Key Vault holding the Google OAuth client.
 2. Bring up the undercloud: `nereus init --target azure` creates a local k3d cluster and the installation's identity.
-3. Connect to Azure: the `cloud` reef and its Nereid `azure`.
-4. Secrets: the `secrets` reef and the Key Vault Nereid, which adopts the vault with no copy.
-5. Authentication: the `authentication` reef and the Keycloak Nereid, with Google keys read from `secrets`.
+3. Connect to Azure: the `cloud` Reef and its Nereid `azure`.
+4. Secrets: the `secrets` Reef and the Key Vault Nereid, which adopts the vault with no copy.
+5. Authentication: the `authentication` Reef and the Keycloak Nereid, with Google keys read from `secrets`.
 6. Auth0 alongside, then `nereus mandate create` makes it the default: the same commands, the same API.
 7. Show it: record the session or run it live.
 
@@ -60,7 +60,7 @@ The platform engineer betting on the idea. Wants to run it first, end to end, an
 Names from OpenStack TripleO, behaviour from Cluster API. See [Undercloud and overcloud](../concepts/undercloud-overcloud.md).
 
 - **Undercloud:** a local k3d that bootstraps a cloud; it publishes its OIDC issuer so Azure can verify service-account tokens, and the signing key never leaves the cluster.
-- **Identities:** one managed identity per reef and per installation, trusted through a federated credential; no client secret or certificate is kept.
+- **Identities:** one managed identity per Reef and per installation, trusted through a federated credential; no client secret or certificate is kept.
 - **Overcloud:** AKS, created by running Stacks; after the pivot it takes over its own lifecycle and the k3d is deleted.
 - **First wave:** stays on k3d and proves the handshake with Azure; AKS and the pivot come second.
 

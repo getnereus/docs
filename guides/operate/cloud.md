@@ -1,6 +1,6 @@
 # Connect to the cloud
 
-Apply the Nereid `azure` of the `cloud` reef: it plans the cloud requests, and the CLI shows them in plain words, asks, and runs them on your machine with your short-lived token, which never leaves it.
+Apply the Nereid `azure` of the `cloud` Reef: it plans the cloud requests, and the CLI shows them in plain words, asks, and runs them on your machine with your short-lived token, which never leaves it.
 
 !!! note "Recorded against fakes"
     The outputs are what the CLI prints in its tests, against a fake Nereid, `az` and cloud. A real subscription is checked by hand with `test/scene-azure` (#266).
@@ -9,7 +9,7 @@ Apply the Nereid `azure` of the `cloud` reef: it plans the cloud requests, and t
 
 - A cluster whose issuer Azure can reach: [Prepare the undercloud](undercloud.md) runs these steps for you; run them by hand on an existing cluster or for another subscription.
 - `az login` done, and a default location (`az config set defaults.location=westeurope`) or `--param location=<region>` below.
-- The `cloud` reef applied: `nereus reef apply cloud --from-file ./reefs/cloud/`.
+- The `cloud` Reef applied: `nereus reef apply cloud --from-file ./reefs/cloud/`.
 
 ## Steps
 
@@ -69,7 +69,7 @@ The run ends with `✓ azure exchanged its token as tailwind-cloud-provisioner`.
 
 - [The Nereid refused the Instance](../troubleshoot/issuer-not-public.md), when the cluster's issuer is not public.
 - [A cloud request is refused](../troubleshoot/request-refused.md), when you lack a right.
-- [Grant access](../access/grant-access.md): what the reefs ask of the cloud.
+- [Grant access](../access/grant-access.md): what the Reefs ask of the cloud.
 
 ## Learn more
 

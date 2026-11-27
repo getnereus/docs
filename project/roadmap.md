@@ -11,10 +11,10 @@ Open issues only; each carries its context, dependencies and "Done when".
 | Step | Issue | Status |
 |---|---|---|
 | Auth0 Nereid and the swap from keycloak by a Mandate | [#91](https://github.com/getnereus/nereus/issues/91) | [planned #91] |
-| The terraform reef and its stack Nereid (AKS Stack) | [#92](https://github.com/getnereus/nereus/issues/92) | [planned #92] |
+| The terraform Reef and its stack Nereid (AKS Stack) | [#92](https://github.com/getnereus/nereus/issues/92) | [planned #92] |
 | `terraform-packager` with workload identity | [#93](https://github.com/getnereus/nereus/issues/93) | [planned #93] |
 | Bootstrap from the local seed: pivot to the overcloud | [#61](https://github.com/getnereus/nereus/issues/61) | [planned #61] |
-| Azure Nereid of the cost reef | [#156](https://github.com/getnereus/nereus/issues/156) | [planned #156] |
+| Azure Nereid of the cost Reef | [#156](https://github.com/getnereus/nereus/issues/156) | [planned #156] |
 | Azure Key Vault Nereid that creates or adopts vaults | [#81](https://github.com/getnereus/nereus/issues/81) | [planned #81] |
 | A real Azure test in CI | [#170](https://github.com/getnereus/nereus/issues/170) | [planned #170] |
 | Messaging: a `nats` Nereid applied by `nereus` on k3d-nereus | [#576](https://github.com/getnereus/nereus/issues/576) | [planned #576] |
@@ -22,17 +22,17 @@ Open issues only; each carries its context, dependencies and "Done when".
 | Build: Dockerfile with named contexts and build arguments | [#1614](https://github.com/getnereus/nereus/issues/1614) | [planned #1614] |
 | Every published image is a catalog Workload with a Trigger | [#1615](https://github.com/getnereus/nereus/issues/1615) | [planned #1615] |
 | Publish a release from the Builds of main | [#1616](https://github.com/getnereus/nereus/issues/1616) | [planned #1616] |
-| Reference Nereids for every reef a tool serves | [#1502](https://github.com/getnereus/nereus/issues/1502) | [planned #1502] |
+| Reference Nereids for every Reef a tool serves | [#1502](https://github.com/getnereus/nereus/issues/1502) | [planned #1502] |
 | An always-on environment: `main` deployed to a live cluster | [#159](https://github.com/getnereus/nereus/issues/159) | [planned #159] |
 | Release on merge: a labelled PR publishes the next version | [#1531](https://github.com/getnereus/nereus/issues/1531) | [planned #1531] |
 | Flux installs only the chart digest a Nereid pinned | [#662](https://github.com/getnereus/nereus/issues/662) | [planned #662] |
-| Plain manifests from git in the release reef | [#751](https://github.com/getnereus/nereus/issues/751) | [planned #751] |
+| Plain manifests from git in the release Reef | [#751](https://github.com/getnereus/nereus/issues/751) | [planned #751] |
 | Private images resolved with the registry credential | [#953](https://github.com/getnereus/nereus/issues/953) | [planned #953] |
 | Keycloak brokers a GitHub login through the github Mandate | [#1282](https://github.com/getnereus/nereus/issues/1282) | [planned #1282] |
 | Teams, roles and Users: how they relate | [#1306](https://github.com/getnereus/nereus/issues/1306) | [planned #1306] |
-| The teams reef: Team, Position and Member | [#1307](https://github.com/getnereus/nereus/issues/1307) | [planned #1307] |
-| A certificate reef with cert-manager | [#1101](https://github.com/getnereus/nereus/issues/1101) | [planned #1101] |
-| Tide as the ideas reef's portal screen | [#1108](https://github.com/getnereus/nereus/issues/1108) | [planned #1108] |
+| The teams Reef: Team, Position and Member | [#1307](https://github.com/getnereus/nereus/issues/1307) | [planned #1307] |
+| A certificate Reef with cert-manager | [#1101](https://github.com/getnereus/nereus/issues/1101) | [planned #1101] |
+| Tide as the ideas Reef's portal screen | [#1108](https://github.com/getnereus/nereus/issues/1108) | [planned #1108] |
 | Presentations journey: a talk driven from the phone | [#1687](https://github.com/getnereus/nereus/issues/1687) | [planned #1687] |
 | The phone shows how the instance is doing | [#738](https://github.com/getnereus/nereus/issues/738) | [planned #738] |
 | A war room for agents in Triton | [#618](https://github.com/getnereus/nereus/issues/618) | [planned #618] |
@@ -55,7 +55,7 @@ When an idea moves, its row changes ring and date in the same pull request.
 | Idea | Moved | Source |
 |---|---|---|
 | Triton's room: agents say hello on a NATS subject | 2026-10-28 | [#468](https://github.com/getnereus/nereus/pull/468) |
-| Triton becomes the Nereid of the `rooms` reef, on a Topic of the `messaging` reef | 2026-11-23 | [#2067](https://github.com/getnereus/nereus/issues/2067), [ADR 0030](../adr/0030-triton-rooms-nereid.md) |
+| Triton becomes the Nereid of the `rooms` Reef, on a Topic of the `messaging` Reef | 2026-11-23 | [#2067](https://github.com/getnereus/nereus/issues/2067), [ADR 0030](../adr/0030-triton-rooms-nereid.md) |
 | Triton: an MCP server that sends orders over NATS | 2026-10-28 | [#469](https://github.com/getnereus/nereus/pull/469) |
 
 ### Refining
@@ -63,7 +63,7 @@ When an idea moves, its row changes ring and date in the same pull request.
 | Idea | Moved | Source |
 |---|---|---|
 | `nereus init` creates the k3d cluster with external volumes | 2026-10-29 | no issue yet |
-| An `edge` reef with a `cloudflare` Nereid, behind a tunnel | 2026-10-29 | [#470](https://github.com/getnereus/nereus/issues/470) |
+| An `edge` Reef with a `cloudflare` Nereid, behind a tunnel | 2026-10-29 | [#470](https://github.com/getnereus/nereus/issues/470) |
 | The beach watcher claims an order while it serves the only agent | 2026-10-28 | no issue yet |
 
 ### Exploring
@@ -75,14 +75,14 @@ When an idea moves, its row changes ring and date in the same pull request.
 | Triton checks who speaks: a credential per agent | 2026-10-29 | no issue yet |
 | Triton remembers: JetStream survives a restart | 2026-10-29 | no issue yet |
 | Triton bridges agents, every word on record | 2026-10-29 | no issue yet |
-| Amphitrite: an `Agent` reef that wraps kagent | 2026-10-28 | [#467](https://github.com/getnereus/nereus/pull/467) |
+| Amphitrite: an `Agent` Reef that wraps kagent | 2026-10-28 | [#467](https://github.com/getnereus/nereus/pull/467) |
 
 ### Parked
 
 | Idea | Moved | Source |
 |---|---|---|
 | Cluster intent: a `Cluster` resource and provisioner Nereids | 2026-10-29 | no issue yet |
-| An `azure-dns` Nereid of the `edge` reef | 2026-10-29 | [#470](https://github.com/getnereus/nereus/issues/470) |
+| An `azure-dns` Nereid of the `edge` Reef | 2026-10-29 | [#470](https://github.com/getnereus/nereus/issues/470) |
 
 ## Ideas being refined
 
@@ -99,12 +99,12 @@ Each ends in a spec or an ADR, not in code. Open issues only.
 | A visual identity: palette, type and mark | [#44](https://github.com/getnereus/nereus/issues/44) | [idea] |
 | FinOps: costs of the project's clouds | [#56](https://github.com/getnereus/nereus/issues/56) | [idea] |
 | Cost from the clouds, in the CLI | [#64](https://github.com/getnereus/nereus/issues/64) | [idea] |
-| Observability as a cross-cutting reef | [#68](https://github.com/getnereus/nereus/issues/68) | [idea] |
-| Appearance as a reef | [#74](https://github.com/getnereus/nereus/issues/74) | [idea] |
+| Observability as a cross-cutting Reef | [#68](https://github.com/getnereus/nereus/issues/68) | [idea] |
+| Appearance as a Reef | [#74](https://github.com/getnereus/nereus/issues/74) | [idea] |
 | A declarative installer: an Operator reading a `Platform` | [#77](https://github.com/getnereus/nereus/issues/77) | [idea] |
 | A collaborative Lean Inception session | [#83](https://github.com/getnereus/nereus/issues/83) | [idea] |
 | A misbehaviour policy for Nereids | [#86](https://github.com/getnereus/nereus/issues/86) | [idea] |
-| A registry reef for private images | [#87](https://github.com/getnereus/nereus/issues/87) | [idea] |
+| A registry Reef for private images | [#87](https://github.com/getnereus/nereus/issues/87) | [idea] |
 | The storytelling of the presentation | [#190](https://github.com/getnereus/nereus/issues/190) | [idea] |
 | A survey of what bothers developers | [#192](https://github.com/getnereus/nereus/issues/192) | [idea] |
 | Feedback at every presentation | [#197](https://github.com/getnereus/nereus/issues/197) | [idea] |
@@ -114,8 +114,8 @@ Each ends in a spec or an ADR, not in code. Open issues only.
 | Presenting from the platform | [#221](https://github.com/getnereus/nereus/issues/221) | [idea] |
 | Decisions as records of the platform | [#275](https://github.com/getnereus/nereus/issues/275) | [idea] |
 | Agent runs as Instances | [#276](https://github.com/getnereus/nereus/issues/276) | [idea] |
-| A repository reef: repositories born private with CI | [#279](https://github.com/getnereus/nereus/issues/279) | [idea] |
-| Reef maturity at runtime: an alpha reef only for its audience | [#2033](https://github.com/getnereus/nereus/issues/2033) | [idea] |
+| A repository Reef: repositories born private with CI | [#279](https://github.com/getnereus/nereus/issues/279) | [idea] |
+| Reef maturity at runtime: an alpha Reef only for its audience | [#2033](https://github.com/getnereus/nereus/issues/2033) | [idea] |
 | Profile guarantees as runnable checks | [#2034](https://github.com/getnereus/nereus/issues/2034) | [idea] |
 | Fleet rollout and drift per Mandate | [#2035](https://github.com/getnereus/nereus/issues/2035) | [idea] |
 | The platform's two business metrics | [#2036](https://github.com/getnereus/nereus/issues/2036) | [idea] |

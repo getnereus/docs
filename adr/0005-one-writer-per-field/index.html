@@ -7167,7 +7167,7 @@
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
 <ul>
 <li>The API (or the CLI, before the API exists) writes <code>spec</code>: what was asked.</li>
-<li>Each Nereid (its controller) writes only its own part of <code>status</code>: what it did and what it publishes. When several Nereids look after the same reef side by side, each writes under its own key, <code>status.nereids.&lt;name&gt;</code>.</li>
+<li>Each Nereid (its controller) writes only its own part of <code>status</code>: what it did and what it publishes. When several Nereids look after the same Reef side by side, each writes under its own key, <code>status.nereids.&lt;name&gt;</code>.</li>
 <li>Choosing which Nereid handles a request is a Mandate's <code>spec</code> (ADR 0002), written through the API.</li>
 </ul>
 <h2 id="prior-art">Prior art<a class="headerlink" href="#prior-art" title="Permanent link">&para;</a></h2>
@@ -7179,9 +7179,9 @@
 <ul>
 <li>Every new field is designed with its writer. A field that needs two writers is split.</li>
 <li>Reading <code>status</code> is how the API and the CLI learn what a Nereid offers: endpoints, commands (ADR 0004), readiness.</li>
-<li><strong>One handover, for held objects</strong> (ADR 0031): while an object carries the hold of a soft gate, the <code>authorization</code> reef's gate Nereid is the one writer of its <code>status</code>; the kind's own Nereid writes it from the moment the API lifts the hold.</li>
+<li><strong>One handover, for held objects</strong> (ADR 0031): while an object carries the hold of a soft gate, the <code>authorization</code> Reef's gate Nereid is the one writer of its <code>status</code>; the kind's own Nereid writes it from the moment the API lifts the hold.</li>
 </ul>
-<p><em>Aligned in wording 2026-10-25 from voice session (reef, Nereid, Mandate, <code>nereus</code>); raw data in Drive #pontos/raw/2026-10-25.</em></p>
+<p><em>Aligned in wording 2026-10-25 from voice session (Reef, Nereid, Mandate, <code>nereus</code>); raw data in Drive #pontos/raw/2026-10-25.</em></p>
 
 
 

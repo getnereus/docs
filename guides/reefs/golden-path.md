@@ -4,7 +4,7 @@ Run your own image in an Environment of its own, a vcluster, from `docker build`
 
 ## Before you start
 
-- A cluster from [Prepare the cluster](../../start/init.md) with `--profile internal-developer-platform`, and `nereus login` done: it brings the environment reef with the Nereid `vcluster`, the catalog, the delivery reef with the Nereid `kubernetes`, and the release reef with `flux`.
+- A cluster from [Prepare the cluster](../../start/init.md) with `--profile internal-developer-platform`, and `nereus login` done: it brings the environment Reef with the Nereid `vcluster`, the catalog, the delivery Reef with the Nereid `kubernetes`, and the release Reef with `flux`.
 - The workload type `service` from the repository's catalog, as in [Say what Nereus has](catalog.md).
 - Your image pushed to the registry that `nereus status` names, such as `docker build --tag localhost:5111/hello:0.1.0 test/golden-path`, then `docker push localhost:5111/hello:0.1.0`. The same reference pushes and pulls, from your machine and from the nodes.
 
@@ -145,5 +145,5 @@ Next steps:
 
 ## Learn more
 
-- [The environment reef](../../reference/reefs/environment.md): sizes, expiry, kubeconfig and every command.
-- [The delivery reef](../../reference/reefs/delivery.md): Deliveries, the chart they release and why one fails.
+- [The environment Reef](../../reference/reefs/environment.md): sizes, expiry, kubeconfig and every command.
+- [The delivery Reef](../../reference/reefs/delivery.md): Deliveries, the chart they release and why one fails.

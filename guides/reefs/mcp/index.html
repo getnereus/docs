@@ -7310,7 +7310,7 @@
 
 
 <h1 id="use-the-mcp-server">Use the MCP server<a class="headerlink" href="#use-the-mcp-server" title="Permanent link">&para;</a></h1>
-<p>Reach the tools of the installed reefs from Claude Code or claude.ai: the <a href="../../../concepts/nereus-api/">Nereus API</a> serves <code>/mcp</code> itself, each tool run as you, through the installation's entrance as <code>/v1</code> is.</p>
+<p>Reach the tools of the installed Reefs from Claude Code or claude.ai: the <a href="../../../concepts/nereus-api/">Nereus API</a> serves <code>/mcp</code> itself, each tool run as you, through the installation's entrance as <code>/v1</code> is.</p>
 <h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">&para;</a></h2>
 <ul>
 <li>An installation reachable at <code>https://nereus.example.com</code>, and <code>nereus login</code> done, from <a href="../../access/authentication/">Turn on authentication</a>.</li>
@@ -7318,7 +7318,7 @@
 </ul>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
 <h3 id="1-see-the-tools-you-may-call">1. See the tools you may call<a class="headerlink" href="#1-see-the-tools-you-may-call" title="Permanent link">&para;</a></h3>
-<p><a href="../../../specs/cli/core.html#mcp-tool-list"><code>nereus mcp tool list</code></a> shows each tool the installed reefs declare whose route you may call, the core's <code>status</code> first. A tool whose route is a <code>POST</code> shows <code>off (write)</code>: it starts off until an admin enables it.</p>
+<p><a href="../../../specs/cli/core.html#mcp-tool-list"><code>nereus mcp tool list</code></a> shows each tool the installed Reefs declare whose route you may call, the core's <code>status</code> first. A tool whose route is a <code>POST</code> shows <code>off (write)</code>: it starts off until an admin enables it.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>mcp<span class="w"> </span>tool<span class="w"> </span>list
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>REEF           TOOL                STATE
@@ -7326,7 +7326,7 @@ core           status              on
 presentations  presentations_list  on
 </code></pre></div>
 <h3 id="2-choose-the-tools-the-installation-offers">2. Choose the tools the installation offers<a class="headerlink" href="#2-choose-the-tools-the-installation-offers" title="Permanent link">&para;</a></h3>
-<p>An admin turns tools off or on with <a href="../../../specs/cli/core.html#mcp-tool-switch"><code>nereus mcp tool disable</code> and <code>enable</code></a>, by name or every tool of a reef (<code>&lt;reef&gt;_*</code>). An exact name beats a pattern.</p>
+<p>An admin turns tools off or on with <a href="../../../specs/cli/core.html#mcp-tool-switch"><code>nereus mcp tool disable</code> and <code>enable</code></a>, by name or every tool of a Reef (<code>&lt;reef&gt;_*</code>). An exact name beats a pattern.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>mcp<span class="w"> </span>tool<span class="w"> </span>disable<span class="w"> </span>presentations_list
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ tool presentations_list disabled for the instance
@@ -7353,7 +7353,7 @@ Next steps:
   claude    # then /mcp, and log in to nereus
 </code></pre></div>
 <p>In Claude Code, <code>/mcp</code> opens the realm's login page in the browser.</p>
-<p>A chat that needs only some reefs takes a server of its own with <code>--reef</code>, named <code>nereus-&lt;reefs&gt;</code>: its URL carries <code>?reefs=</code>, so it offers only those reefs' tools and the core's, whose generic reads reach only those reefs (#2296). A reef the instance lacks is refused at the connection, naming the installed ones.</p>
+<p>A chat that needs only some Reefs takes a server of its own with <code>--reef</code>, named <code>nereus-&lt;reefs&gt;</code>: its URL carries <code>?reefs=</code>, so it offers only those Reefs' tools and the core's, whose generic reads reach only those Reefs (#2296). A Reef the instance lacks is refused at the connection, naming the installed ones.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>mcp<span class="w"> </span>client<span class="w"> </span>add<span class="w"> </span>claude-code<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--reef<span class="w"> </span>edge,catalog
 </code></pre></div>
@@ -7370,7 +7370,7 @@ Next steps:
 <div class="language-json output highlight"><span class="filename">output</span><pre><span></span><code><span class="p">{</span><span class="nt">"resource"</span><span class="p">:</span><span class="s2">"https://nereus.example.com/mcp"</span><span class="p">,</span><span class="nt">"authorization_servers"</span><span class="p">:[</span><span class="s2">"https://auth.example.com/realms/nereus"</span><span class="p">],</span><span class="nt">"scopes_supported"</span><span class="p">:[</span><span class="s2">"openid"</span><span class="p">,</span><span class="s2">"offline_access"</span><span class="p">],</span><span class="nt">"bearer_methods_supported"</span><span class="p">:[</span><span class="s2">"header"</span><span class="p">]}</span>
 </code></pre></div>
 <h2 id="check-it-worked">Check it worked<a class="headerlink" href="#check-it-worked" title="Permanent link">&para;</a></h2>
-<p>After the login, the Claude Code session lists the same tools as <code>nereus mcp tool list</code>. <code>/mcp</code> is stateless: a reef installed or uninstalled shows on the client's next connection. <code>nereus mcp client list</code> shows the coding agents that have it, one row per server.</p>
+<p>After the login, the Claude Code session lists the same tools as <code>nereus mcp tool list</code>. <code>/mcp</code> is stateless: a Reef installed or uninstalled shows on the client's next connection. <code>nereus mcp client list</code> shows the coding agents that have it, one row per server.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>mcp<span class="w"> </span>client<span class="w"> </span>list
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>CLIENT       SERVER               REEFS          URL                                                SCOPE
@@ -7390,7 +7390,7 @@ nereus<span class="w"> </span>mcp<span class="w"> </span>client<span class="w"> 
 </ul>
 <h2 id="learn-more">Learn more<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../../../adr/0029-mcp-tools/">ADR 0029</a>: each reef declares its tools in its Nereid's contract, and the Nereus API serves them.</li>
+<li><a href="../../../adr/0029-mcp-tools/">ADR 0029</a>: each Reef declares its tools in its Nereid's contract, and the Nereus API serves them.</li>
 </ul>
 
 

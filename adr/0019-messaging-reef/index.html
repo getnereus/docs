@@ -7178,10 +7178,10 @@
   
 
 
-<h1 id="0019-the-messaging-reef-threads-orders-and-claims-as-records-a-bus-behind-a-nereid">0019. The messaging reef: threads, orders and claims as records, a bus behind a Nereid<a class="headerlink" href="#0019-the-messaging-reef-threads-orders-and-claims-as-records-a-bus-behind-a-nereid" title="Permanent link">&para;</a></h1>
+<h1 id="0019-the-messaging-reef-threads-orders-and-claims-as-records-a-bus-behind-a-nereid">0019. The messaging Reef: threads, orders and claims as records, a bus behind a Nereid<a class="headerlink" href="#0019-the-messaging-reef-threads-orders-and-claims-as-records-a-bus-behind-a-nereid" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
 <p class="admonition-title">In short</p>
-<p>The conversation joins the <code>messaging</code> reef as records (<code>Thread</code>, <code>Order</code>, <code>Claim</code>, <code>Message</code>), with a bus behind a Nereid. Status: Proposed (2026-10-26).</p>
+<p>The conversation joins the <code>messaging</code> Reef as records (<code>Thread</code>, <code>Order</code>, <code>Claim</code>, <code>Message</code>), with a bus behind a Nereid. Status: Proposed (2026-10-26).</p>
 </div>
 <p><strong>Status:</strong> Proposed (2026-10-26)</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
@@ -7190,17 +7190,17 @@
 <li><strong>Owner is not author.</strong> Drive keeps the owner when an editor changes a file, so anyone with edit access to the folder can rewrite an order that still passes the check.</li>
 <li><strong>Checked is not what runs.</strong> The watcher checks the owner, then the run reads the order from Drive again; the text may have changed in between (a time-of-check to time-of-use gap).</li>
 </ol>
-<p>The owner accepted that risk for now and made the replacement the priority: a <code>messaging</code> reef, where an order is a message of the platform rather than a file. The owner also asked for threads: with remote agents, every subject arrives in one conversation, and the person must work out which subject each message belongs to.</p>
-<p>Two earlier ideas touch the same ground: a contract for Controllers to exchange events with the platform (#254), and a <code>communication</code> reef for queues and topics, RabbitMQ first (#257, #374, both closed since).</p>
+<p>The owner accepted that risk for now and made the replacement the priority: a <code>messaging</code> Reef, where an order is a message of the platform rather than a file. The owner also asked for threads: with remote agents, every subject arrives in one conversation, and the person must work out which subject each message belongs to.</p>
+<p>Two earlier ideas touch the same ground: a contract for Controllers to exchange events with the platform (#254), and a <code>communication</code> Reef for queues and topics, RabbitMQ first (#257, #374, both closed since).</p>
 <p><strong>Since this was first written (2026-10-26):</strong></p>
 <ul>
 <li><strong>Triton</strong> (<code>controllers/triton</code>) carries orders today: its door, an MCP server behind OAuth through the keycloak Nereid (#495), takes an order from the voice session and hands it to an agent's open Claude Code session over NATS; the orders and their status live on JetStream and survive a restart (#506); every agent joins NATS with its own login through NATS's auth callout (#497). The beach is its backup.</li>
-<li><strong>ADR 0017</strong> (resource reefs) puts the machine side in this same reef: <code>messaging</code> holds <code>Topic</code> and <code>Queue</code>, fulfilled by a <code>nats</code> Nereid through the Mandate <code>messaging-nats</code>, and Triton becomes a Nereid of it (#576, #483).</li>
+<li><strong>ADR 0017</strong> (resource Reefs) puts the machine side in this same Reef: <code>messaging</code> holds <code>Topic</code> and <code>Queue</code>, fulfilled by a <code>nats</code> Nereid through the Mandate <code>messaging-nats</code>, and Triton becomes a Nereid of it (#576, #483).</li>
 <li><strong>ADR 0018</strong> (the Nereus API is the one door) makes the Nereus API, not the Kubernetes API, what clients talk to.</li>
 </ul>
-<p><strong>Origin:</strong> the owner, in the voice session of 2026-10-26, through order 20261026-1236 (messaging reef design) and its addendum 01 (threads); raw data in Drive <code>#pontos/beach/</code> and <code>beach/replies/20261026-1236-messaging-reef-design/design.md</code>, which holds the survey of buses in full.</p>
+<p><strong>Origin:</strong> the owner, in the voice session of 2026-10-26, through order 20261026-1236 (messaging Reef design) and its addendum 01 (threads); raw data in Drive <code>#pontos/beach/</code> and <code>beach/replies/20261026-1236-messaging-reef-design/design.md</code>, which holds the survey of buses in full.</p>
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
-<p><strong>The conversation joins the <code>messaging</code> reef</strong>, API group <code>messaging.getnereus.dev/v1alpha1</code> (ADR 0009, ADR 0010), next to ADR 0017's <code>Topic</code> and <code>Queue</code>: its records are kinds of the same reef; a bus only carries notifications of those records, behind a Nereid (ADR 0002).</p>
+<p><strong>The conversation joins the <code>messaging</code> Reef</strong>, API group <code>messaging.getnereus.dev/v1alpha1</code> (ADR 0009, ADR 0010), next to ADR 0017's <code>Topic</code> and <code>Queue</code>: its records are kinds of the same Reef; a bus only carries notifications of those records, behind a Nereid (ADR 0002).</p>
 <p><strong>The records</strong> (kind names proposed, to decide with the owner):</p>
 <table>
 <thead>
@@ -7238,7 +7238,7 @@
 <p><strong>Deterministic first:</strong> routing (<code>spec.to</code>), the claim (create-if-absent), the digest and the end of a run are code; AI only runs the order's text.</p>
 <p><strong>Closing the two gaps:</strong></p>
 <ul>
-<li><strong>An authenticated identity publishes.</strong> People publish through <code>nereus</code> or the Nereus API's <code>/mcp</code> with an OIDC token of the authentication reef (ADR 0006), through the Nereus API (ADR 0018), which acts as the person, so RBAC and the audit log see the person. A ValidatingAdmissionPolicy refuses a record whose <code>spec.author</code> is not the caller. Each agent has an identity of its own, as it has on NATS since #497.</li>
+<li><strong>An authenticated identity publishes.</strong> People publish through <code>nereus</code> or the Nereus API's <code>/mcp</code> with an OIDC token of the authentication Reef (ADR 0006), through the Nereus API (ADR 0018), which acts as the person, so RBAC and the audit log see the person. A ValidatingAdmissionPolicy refuses a record whose <code>spec.author</code> is not the caller. Each agent has an identity of its own, as it has on NATS since #497.</li>
 <li><strong>The text checked is the text run.</strong> <code>Order.spec</code> is immutable (a CEL rule <code>self == oldSelf</code>); the Nereid writes <code>status.digest</code>; the runner reads the order once, checks the digest, records it in the <code>Claim</code>, and passes that text to the run on stdin.</li>
 <li><strong>Each run is isolated:</strong> a rootless container (podman first, a Kubernetes Job later) with the worktree only, no sudo, a one-hour GitHub App token scoped to the repository, egress limited to GitHub, the model's API and Nereus; pushing to <code>main</code> and merging are refused by a ruleset, not by the agent's restraint.</li>
 </ul>
@@ -7267,7 +7267,7 @@ merge-readme-pr-437     Merge the README PR         needs-you  m15    question, 
 <ul>
 <li><strong>NATS and JetStream</strong> (<a href="https://docs.nats.io/">docs.nats.io</a>): subject-based routing with per-subject permissions, durable consumers, and a key-value <code>create</code> that fails when the key exists (<a href="https://docs.nats.io/using-nats/developer/develop_jetstream/kv">key-value store</a>); the recommended bus and the shape of the claim.</li>
 <li><strong>RabbitMQ</strong> (<a href="https://www.rabbitmq.com/docs/oauth2">OAuth 2.0 backend</a>, <a href="https://www.rabbitmq.com/kubernetes/operator/operator-overview">Kubernetes operators</a>): the alternative, the working choice of <code>communication</code> until #257 closed.</li>
-<li><strong>Knative Eventing, Argo Events and Dapr pub/sub</strong> (<a href="https://knative.dev/docs/eventing/triggers/">triggers</a>, <a href="https://argoproj.github.io/argo-events/concepts/eventbus/">EventBus</a>, <a href="https://docs.dapr.io/developing-applications/building-blocks/pubsub/pubsub-overview/">pub/sub</a>): evaluated and not chosen as the reef's contract; Argo Events stays a candidate for "an order starts a Job".</li>
+<li><strong>Knative Eventing, Argo Events and Dapr pub/sub</strong> (<a href="https://knative.dev/docs/eventing/triggers/">triggers</a>, <a href="https://argoproj.github.io/argo-events/concepts/eventbus/">EventBus</a>, <a href="https://docs.dapr.io/developing-applications/building-blocks/pubsub/pubsub-overview/">pub/sub</a>): evaluated and not chosen as the Reef's contract; Argo Events stays a candidate for "an order starts a Job".</li>
 <li><strong>CloudEvents</strong> (<a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md">spec</a>, <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/extensions/README.md">extensions</a>): the envelope of every event; the spec has no correlation attribute, so the thread travels as an extension.</li>
 <li><strong>Threads in chat systems:</strong> Matrix's <code>m.thread</code> relation and its root summary (<a href="https://spec.matrix.org/latest/client-server-api/#threading">spec</a>), Zulip's topics (<a href="https://zulip.com/help/introduction-to-topics">topics</a>), Slack's <code>thread_ts</code> (<a href="https://docs.slack.dev/messaging/">messaging</a>), and Google Chat's client-chosen <code>thread_key</code> (<a href="https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages/create">spaces.messages.create</a>), the model for planned threads.</li>
 <li><strong>Kubernetes:</strong> immutability with CEL (<a href="https://kubernetes.io/blog/2022/09/29/enforce-immutability-using-cel/">blog</a>), ValidatingAdmissionPolicy (<a href="https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-policy/">docs</a>) and user impersonation (<a href="https://kubernetes.io/docs/reference/access-authn-authz/authentication/#user-impersonation">docs</a>).</li>
@@ -7276,7 +7276,7 @@ merge-readme-pr-437     Merge the README PR         needs-you  m15    question, 
 <h2 id="consequences">Consequences<a class="headerlink" href="#consequences" title="Permanent link">&para;</a></h2>
 <ul>
 <li>An order's author is a platform identity, audited by the API server, and the text a run receives is the text that was checked.</li>
-<li>The voice session publishes with no secret of its own, but only while the instance behind <code>/mcp</code> is reachable: the reef depends on an always-on instance.</li>
+<li>The voice session publishes with no secret of its own, but only while the instance behind <code>/mcp</code> is reachable: the Reef depends on an always-on instance.</li>
 <li>The beach watcher stand-in of <code>docs/features.md</code> gets its replacement; it retires when the Drive source is turned off.</li>
 <li>The first slice needs no broker; the bus arrives with #254 and is swappable through a Mandate.</li>
 <li>Agents need identities and RBAC roles of their own, and the repository needs a ruleset that makes merging without the owner impossible.</li>
@@ -7284,7 +7284,7 @@ merge-readme-pr-437     Merge the README PR         needs-you  m15    question, 
 <h2 id="open-questions">Open questions<a class="headerlink" href="#open-questions" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Whether Triton's door writes <code>Order</code> records itself, or the records replace the door's JetStream orders.</li>
-<li>Whether the conversation kinds belong in <code>messaging</code> with ADR 0017's <code>Topic</code> and <code>Queue</code>, or in a reef of their own.</li>
+<li>Whether the conversation kinds belong in <code>messaging</code> with ADR 0017's <code>Topic</code> and <code>Queue</code>, or in a Reef of their own.</li>
 <li>Where the always-on instance runs.</li>
 <li>The kind names: <code>Thread</code>, <code>Order</code>, <code>Claim</code>, <code>Message</code>, or <code>Conversation</code>, <code>WorkOrder</code>, a core <code>Lease</code>.</li>
 <li>Whether a thread closes only by a person's word, and whether a claim expires.</li>

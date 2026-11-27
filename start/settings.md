@@ -55,7 +55,7 @@ spec:
 ## What you get
 
 - Two documents: the `InitConfig`, how this machine builds the platform, and the `Installation`, whose name never changes ([spec 0006](../specs/0006-installation-identity.md)).
-- The profile `core`: core and the tenancy reef, nothing more until you add it ([Runtime and profiles](../concepts/runtime-and-profiles.md)).
+- The profile `core`: core and the tenancy Reef, nothing more until you add it ([Runtime and profiles](../concepts/runtime-and-profiles.md)).
 - A plain `nereus init` reads this file; a flag wins over it, and an unknown key is an error.
 - Nothing created yet: no cluster, no registry.
 

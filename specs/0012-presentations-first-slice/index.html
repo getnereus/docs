@@ -7244,8 +7244,8 @@
   
 
 
-<h1 id="0012-the-presentations-reef-first-slice-drive-and-follow-j1">0012. The presentations reef, first slice: drive and follow (J1)<a class="headerlink" href="#0012-the-presentations-reef-first-slice-drive-and-follow-j1" title="Permanent link">&para;</a></h1>
-<p>The walking skeleton of the presentations reef (ADR 0028, journey #1688): a phone drives a Session's step, another phone and a projector follow it. Crude on purpose: one deck as a blob (a package since #1701), only the talk time, any token with the reef drives (until #1726 made presenting a right of the authorization reef), one API replica.</p>
+<h1 id="0012-the-presentations-reef-first-slice-drive-and-follow-j1">0012. The presentations Reef, first slice: drive and follow (J1)<a class="headerlink" href="#0012-the-presentations-reef-first-slice-drive-and-follow-j1" title="Permanent link">&para;</a></h1>
+<p>The walking skeleton of the presentations Reef (ADR 0028, journey #1688): a phone drives a Session's step, another phone and a projector follow it. Crude on purpose: one deck as a blob (a package since #1701), only the talk time, any token with the Reef drives (until #1726 made presenting a right of the authorization Reef), one API replica.</p>
 <h2 id="the-commands">The commands<a class="headerlink" href="#the-commands" title="Permanent link">&para;</a></h2>
 <div class="language-console highlight"><pre><span></span><code><span class="gp">$ </span>nereus<span class="w"> </span>presentations<span class="w"> </span>presentation<span class="w"> </span>create<span class="w"> </span>storytelling<span class="w"> </span>--from<span class="w"> </span>talks/storytelling.yaml
 <span class="go">✓ presentations/presentations/storytelling created, revision 1 (sha256:3f9c2a71)</span>
@@ -7274,7 +7274,7 @@
 <span class="go">✓ presentations/sessions/warm-room exported (3 slides, 4 questions, 3 feedback answers)</span>
 <span class="go">  pace: slide intro 0 slow 1 fast; slide demo 2 slow 14 fast (peak 14:21)</span>
 </code></pre></div>
-<p><code>presentation</code> is the reef's default kind (<code>nereus presentations create</code> is the same as <code>nereus presentations presentation create</code>). Each kind has <code>create</code>, <code>get</code>, <code>list</code> and <code>delete</code>, with <code>--dry-run</code> and <code>--examples</code> (ADR 0013).</p>
+<p><code>presentation</code> is the Reef's default kind (<code>nereus presentations create</code> is the same as <code>nereus presentations presentation create</code>). Each kind has <code>create</code>, <code>get</code>, <code>list</code> and <code>delete</code>, with <code>--dry-run</code> and <code>--examples</code> (ADR 0013).</p>
 <h2 id="who-does-what">Who does what<a class="headerlink" href="#who-does-what" title="Permanent link">&para;</a></h2>
 <div class="language-text highlight"><pre><span></span><code>phone / projector / follower
         │  POST step (token)        GET follow stream (no token, by short code)
@@ -7288,7 +7288,7 @@
   PostgreSQL, a Database of the database reef (engine postgres)
 </code></pre></div>
 <ul>
-<li><strong>The API holds no database connection</strong> (🟠 decision of #1688, settled with a Fable review): it writes <code>spec</code>, and calls the Nereid for everything else. The rule "The API never names a Nereid" keeps the store and its driver behind the Nereid, as the ideas reef does with doris (<code>api/ideas_notes.py</code>).</li>
+<li><strong>The API holds no database connection</strong> (🟠 decision of #1688, settled with a Fable review): it writes <code>spec</code>, and calls the Nereid for everything else. The rule "The API never names a Nereid" keeps the store and its driver behind the Nereid, as the ideas Reef does with doris (<code>api/ideas_notes.py</code>).</li>
 <li><strong>The Nereid writes <code>status</code></strong> (ADR 0005) and holds the one <code>LISTEN</code> connection; each API replica holds one internal stream to it and fans out to its own followers.</li>
 <li><strong>The short code is given synchronously</strong> by the Nereid inside the create request, so <code>session create</code> prints the follow link at once; its reconciler gives the same code to a Session created any other way.</li>
 </ul>
@@ -7304,7 +7304,7 @@
 <li><code>status</code>: <code>revision</code> (the digest it shows, fixed at create), <code>code</code> (four characters; none for a rehearsal), <code>step</code>, <code>slides</code>, <code>times</code> (#1710: <code>[{name, seconds}]</code>, each slide's time on screen, in the deck's order), <code>ended</code> (#1710), <code>conditions</code> (<code>Ready</code>), <code>observedGeneration</code>.</li>
 </ul>
 <h2 id="the-nereids-http-contract">The Nereid's HTTP contract<a class="headerlink" href="#the-nereids-http-contract" title="Permanent link">&para;</a></h2>
-<p>On the controller port of the Nereid's Service, inside the cluster only. JSON in and out, except the deck. <code>leagore</code> serves it over one store interface with two stores: memory (unit tests and <code>make scene-core</code>, which installs no real tool) and PostgreSQL (<code>make scene-presentations</code> and <code>k3d-nereus</code>); one contract test suite runs against both. No reference Nereid: leagore is Nereus's own code, as doris is for the ideas reef (🟠 decision of #1688).</p>
+<p>On the controller port of the Nereid's Service, inside the cluster only. JSON in and out, except the deck. <code>leagore</code> serves it over one store interface with two stores: memory (unit tests and <code>make scene-core</code>, which installs no real tool) and PostgreSQL (<code>make scene-presentations</code> and <code>k3d-nereus</code>); one contract test suite runs against both. No reference Nereid: leagore is Nereus's own code, as doris is for the ideas Reef (🟠 decision of #1688).</p>
 <table>
 <thead>
 <tr>
@@ -7488,27 +7488,27 @@
 <tbody>
 <tr>
 <td><code>POST /v1/presentations/presentations</code></td>
-<td>the reef</td>
+<td>the Reef</td>
 <td>creates the Presentation, then puts the deck in its Nereid; <code>{"name", "package" | "folder" | "deck", "description"?, "source"?}</code>: <code>package</code> is the tar in base64 (1 MB counted on the tar), <code>folder</code> the files of a folder picked in the portal (#1705), <code>{"deck": its YAML's path, "files": {path: base64}}</code>, 4 MB at most, which the API packs as the CLI does, refusing a name that leaves the folder, <code>deck</code> the YAML as text from a CLI before #1701, which becomes a package of that YAML alone. <code>?dryRun=true</code> has the Nereid check the package (<code>POST /presentations/{name}/checks</code>) and writes nothing: <code>200</code> with <code>steps</code> and <code>warnings</code>, or <code>400 Invalid</code> with <code>errors</code>, every reason. A deck the Nereid refuses at create is the same <code>400</code>, and the object is deleted again</td>
 </tr>
 <tr>
 <td><code>GET /v1/presentations/presentations[/{name}]</code>, <code>DELETE …/{name}</code></td>
-<td>the reef</td>
+<td>the Reef</td>
 <td>list, get, delete</td>
 </tr>
 <tr>
 <td><code>GET /v1/presentations/presentations/{name}/deck</code></td>
-<td>the reef, asked as an apply (the notes are in it)</td>
+<td>the Reef, asked as an apply (the notes are in it)</td>
 <td>the offline export (#1703): <code>nereus presentations presentation get &lt;name&gt; --output html</code> writes it as <code>&lt;name&gt;.html</code>; served as an attachment, sandboxed, with the follow page's headers</td>
 </tr>
 <tr>
 <td><code>POST /v1/presentations/presentations/{name}/link</code>, <code>DELETE …</code></td>
-<td>the reef, an apply</td>
+<td>the Reef, an apply</td>
 <td>the public link (#1704): <code>{"expires": "30d"}</code> (hours, days or weeks from now, <code>h</code>/<code>d</code>/<code>w</code>, at most 9999) or no body for one that never expires; answers <code>{name, link, path: "/d/&lt;link&gt;", expires}</code>; <code>409 AlreadyExists</code> when the Presentation has one; <code>?dryRun=true</code> writes nothing</td>
 </tr>
 <tr>
 <td><code>GET /v1/presentations/presentations/{name}/link</code>, <code>GET /v1/presentations/links</code></td>
-<td>the reef</td>
+<td>the Reef</td>
 <td>get (<code>404</code> with the fix <code>link create</code>), list</td>
 </tr>
 <tr>
@@ -7518,62 +7518,62 @@
 </tr>
 <tr>
 <td><code>POST /v1/presentations/sessions</code></td>
-<td>the reef</td>
+<td>the Reef</td>
 <td>creates the Session, then <code>PUT /sessions/{name}</code> on the Nereid; answers the state and <code>follow: /p/&lt;code&gt;</code></td>
 </tr>
 <tr>
 <td><code>GET /v1/presentations/sessions[/{name}]</code>, <code>DELETE …/{name}</code></td>
-<td>the reef</td>
+<td>the Reef</td>
 <td>list, get (with the live step, the followers, the <code>slides</code> of every step, #1759, and the last rehearsal's <code>pace</code>, #1711), delete</td>
 </tr>
 <tr>
 <td><code>POST /v1/presentations/sessions/{name}/step</code></td>
-<td>the reef</td>
+<td>the Reef</td>
 <td>drives: <code>{"step": n}</code>, answers the new state; <code>400</code> outside the slides, <code>404</code> unknown (#1696), <code>409 Refused</code> once ended (#1710)</td>
 </tr>
 <tr>
 <td><code>POST /v1/presentations/sessions/{name}/end</code></td>
-<td>the reef</td>
+<td>the Reef</td>
 <td>the speaker's End (#1710): answers the state with <code>ended</code></td>
 </tr>
 <tr>
 <td><code>POST /v1/presentations/sessions/{name}/sharing</code></td>
-<td>the reef</td>
+<td>the Reef</td>
 <td>drives: <code>{"on": bool}</code>, the drive screen's "Show on the projector" in its Share sheet (#1859); answers the state with <code>sharing</code>, which the followers get, so the projector shows the follow QR code on any slide; <code>400 Invalid</code> anything but a boolean</td>
 </tr>
 <tr>
 <td><code>POST /v1/presentations/sessions/{name}/thermometer</code></td>
-<td>the reef</td>
+<td>the Reef</td>
 <td>drives: <code>{"on": bool}</code>, the switch Pace thermometer in the drive screen's Share sheet (#1723), or <code>session create --thermometer</code> from the start; answers the state with <code>thermometer</code> and <code>gauge</code>; <code>400 Invalid</code> anything but a boolean</td>
 </tr>
 <tr>
 <td><code>GET /v1/presentations/sessions/{name}/thermometer</code></td>
-<td>the reef</td>
+<td>the Reef</td>
 <td>drives: the gauge <code>{on, slow, fast}</code> (#1723), never cached; the drive screen reads it every 1.5 s while the thermometer is on and shows Too slow and Too fast with their counts; the projector shows nothing</td>
 </tr>
 <tr>
 <td><code>POST /v1/presentations/sessions/{name}/open</code></td>
-<td>the reef</td>
+<td>the Reef</td>
 <td>drives: <code>{"part": "questions" \| "rating"}</code>, the Questions sheet's "Open questions" and the last step's "Ask the room to rate" (#1876); answers the state, which the followers get; <code>400 Invalid</code> another part, <code>409 Refused</code> the questions once ended</td>
 </tr>
 <tr>
 <td><code>POST /v1/presentations/sessions/{name}/polls/{poll}/open</code>, <code>POST /v1/presentations/sessions/{name}/polls/{poll}/close</code>, <code>GET /v1/presentations/sessions/{name}/polls</code></td>
-<td>the reef</td>
+<td>the Reef</td>
 <td>drives: the drive screen's "Open question" on a poll slide (#1722), never by itself, its "Close question" and "Reopen question" (#1917), and the speaker's view of the polls with the texts; <code>404 NotFound</code> a poll the deck has not, <code>409 Refused</code> an open poll opened again, a poll not open closed, or an ended Session</td>
 </tr>
 <tr>
 <td><code>GET /v1/presentations/sessions/{name}/questions</code></td>
-<td>the reef</td>
+<td>the Reef</td>
 <td>drives: the audience's questions in arrival order, each device by its six-character label only (#1716); the drive screen reads it every 5 s into its Questions sheet</td>
 </tr>
 <tr>
 <td><code>GET /v1/presentations/sessions/{name}/feedback</code></td>
-<td>the reef</td>
+<td>the Reef</td>
 <td>drives: the audience's feedback once the rating opened or the Session ended (#1717, #1876), <code>{count, average, comments}</code>, the average to one decimal (<code>null</code> with no answer), no device; the drive screen shows it in its Questions sheet and <code>nereus presentations session get</code> under the Session</td>
 </tr>
 <tr>
 <td><code>GET /v1/presentations/sessions/{name}/export</code></td>
-<td>the reef</td>
+<td>the Reef</td>
 <td>drives (the notes are in it): the Session for an agent (#1718), <code>{session: {name, presentation, revision, rehearsal, talkSeconds, questionsSeconds, started, ended}, slides: [{name, title, text, notes, seconds?, questions: [{text, at}]}], questionsWithoutSlide?, feedback, pace}</code>, <code>pace</code> the thermometer's taps by slide, <code>[{slide, slow, fast, peak}]</code> with <code>peak</code> the last tap of the slide's busiest minute (<code>null</code> with no tap), and the session's <code>thermometer</code> (#1723), only the contract's fields of the Nereid's answer, so no device id nor label; <code>nereus presentations session get &lt;name&gt; --output agent</code> prints it as YAML</td>
 </tr>
 <tr>
@@ -7645,14 +7645,14 @@
 <p>leagore's <code>uiPort</code> serves nothing but <code>ui/</code>: its Service has a second port and its NetworkPolicy opens it to the portal's pods alone, never the controller's port (decks and Sessions), as doris's.</p>
 <h2 id="security">Security<a class="headerlink" href="#security" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>A01 Broken Access Control:</strong> every write needs a token with the reef, and driving a Session the right <code>drive</code> of the authorization reef, held by its speakers (#1726); the follow route is read-only and answers only the state of one Session, by its code; an unknown code says only "not found".</li>
+<li><strong>A01 Broken Access Control:</strong> every write needs a token with the Reef, and driving a Session the right <code>drive</code> of the authorization Reef, held by its speakers (#1726); the follow route is read-only and answers only the state of one Session, by its code; an unknown code says only "not found".</li>
 <li><strong>A04 Insecure Design:</strong> the Nereid's Service admits only the API's pods; the code space (31⁴, about 923 thousand) is enumerable, so the follow route is rate limited per client and reveals no deck.</li>
 <li><strong>A05 Security Misconfiguration:</strong> the portal keeps its CSP with no exception (#1693).</li>
 <li><strong>No personal data:</strong> a follower is anonymous; logs carry the Session's name and code only.</li>
 </ul>
 <h2 id="stand-ins">Stand-ins<a class="headerlink" href="#stand-ins" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Any token with the reef drives (J6, #1725): retired by #1726, where only a Session's speakers, or a binding that gives <code>drive</code> on <code>presentations/sessions</code>, drive it.</li>
+<li>Any token with the Reef drives (J6, #1725): retired by #1726, where only a Session's speakers, or a binding that gives <code>drive</code> on <code>presentations/sessions</code>, drive it.</li>
 <li>One API replica.</li>
 <li>leagore's memory store, for unit tests and scene-core only.</li>
 <li>Until #1695, the API's tests stand a fake Nereid in for leagore.</li>

@@ -7316,7 +7316,7 @@
 <h2 id="intent">Intent<a class="headerlink" href="#intent" title="Permanent link">&para;</a></h2>
 <p>The first dive is a recorded conversation between two people on one Nereus. The owner has to let the second person in during the call, with no account set up beforehand: an invitation shown as a QR code on the screen, accepted on the phone through single sign-on (SSO), with access that ends by itself.</p>
 <p>The slice is the walking skeleton of people coming into Nereus: one command prints a link and its QR code, accepting it creates the person as a <code>User</code> of core (ADR 0006), and both the invitation and the access it grants expire, each on its own clock. That access ends on its own, in front of everyone, is part of what the slice shows.</p>
-<p><strong>Simple on the surface, consistent underneath</strong> (the owner's design principle, voice file 113): the root form <code>nereus invitation create</code> is the familiar, welcoming one; underneath, the invitation is a kind of the <code>authentication</code> reef with the same verbs, output and errors as every other noun (ADR 0013).</p>
+<p><strong>Simple on the surface, consistent underneath</strong> (the owner's design principle, voice file 113): the root form <code>nereus invitation create</code> is the familiar, welcoming one; underneath, the invitation is a kind of the <code>authentication</code> Reef with the same verbs, output and errors as every other noun (ADR 0013).</p>
 <h2 id="the-scene-that-ends-the-slice">The scene that ends the slice<a class="headerlink" href="#the-scene-that-ends-the-slice" title="Permanent link">&para;</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span class="c1"># On the owner's machine: invite one person; the QR code goes on the screen of the call</span>
 nereus<span class="w"> </span>authentication<span class="w"> </span>invitation<span class="w"> </span>create<span class="w"> </span>dive-01<span class="w"> </span><span class="se">\</span>
@@ -7348,7 +7348,7 @@ Next steps:
   nereus authentication invitation get dive-01
 </code></pre></div>
 <h2 id="the-commands">The commands<a class="headerlink" href="#the-commands" title="Permanent link">&para;</a></h2>
-<p>The canonical form lives in the reef (ADR 0013, ADR 0010): <code>nereus authentication invitation &lt;verb&gt; &lt;name&gt;</code>. The root form <code>nereus invitation &lt;verb&gt;</code> is an alias: the CLI runs exactly the same command, the way <code>kubectl</code> aliases do, and never adds behaviour of its own. Docs, <code>--help</code>, <code>--examples</code> and errors always show the canonical form; aliases exist only for the most used actions (voice file 113).</p>
+<p>The canonical form lives in the Reef (ADR 0013, ADR 0010): <code>nereus authentication invitation &lt;verb&gt; &lt;name&gt;</code>. The root form <code>nereus invitation &lt;verb&gt;</code> is an alias: the CLI runs exactly the same command, the way <code>kubectl</code> aliases do, and never adds behaviour of its own. Docs, <code>--help</code>, <code>--examples</code> and errors always show the canonical form; aliases exist only for the most used actions (voice file 113).</p>
 <table>
 <thead>
 <tr>
@@ -7427,7 +7427,7 @@ Next steps:
 <h2 id="accepting">Accepting<a class="headerlink" href="#accepting" title="Permanent link">&para;</a></h2>
 <ol>
 <li>The link opens a page served by core: <code>https://&lt;the API's public host&gt;/invitations/accept#&lt;token&gt;</code>.</li>
-<li>The page sends the person to sign in through the authentication reef's default Mandate (Keycloak brokering Google, ADR 0006), keeping the token in the browser.</li>
+<li>The page sends the person to sign in through the authentication Reef's default Mandate (Keycloak brokering Google, ADR 0006), keeping the token in the browser.</li>
 <li>Back from the login, the page posts the token. Core checks, in this order: the token's hash matches an invitation; it has not expired; nobody accepted it; with <code>--to</code>, the token's verified e-mail is exactly that address; without <code>--to</code>, the verified e-mail's domain is one the Mandate allows.</li>
 <li>Core creates the <code>User</code> (ADR 0006: the platform generates its id, and the identity is the token's issuer and <code>sub</code>) with the access's end, and writes the acceptance in the invitation's <code>status</code>. The page says until when the access lasts.</li>
 </ol>
@@ -7566,7 +7566,7 @@ $ nereus status
 </table>
 <h2 id="out-of-this-slice">Out of this slice<a class="headerlink" href="#out-of-this-slice" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Sending the invitation by e-mail.</strong> The first dive needs only the QR code and SSO; e-mail delivery comes through a notification reef, and only if it is easy (voice file 118).</li>
+<li><strong>Sending the invitation by e-mail.</strong> The first dive needs only the QR code and SSO; e-mail delivery comes through a notification Reef, and only if it is easy (voice file 118).</li>
 <li><strong>Evaluation licences with a waiting queue</strong> (voice files 118, 119): a demo instance limited to a few users, the next ones waiting on a screen until the representative approves more seats from a push notification, all audited and replayed. Kept as an idea, back when the sales demo is built.</li>
 <li><strong><code>--max-uses</code></strong> and invitations for many people at once.</li>
 <li><strong>Linking a second identity</strong> to a User, and <strong>making an access permanent</strong> from the CLI (<code>nereus user</code> commands).</li>

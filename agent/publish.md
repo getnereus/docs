@@ -62,7 +62,7 @@ dry run: nothing changes on GitHub (--publish runs it)
 $ make cli-publish PUBLISH=1
 ```
 
-- **The wheel** is built at the tag (`VERSION=0.1.N`, default the highest tag `v*`) in a throwaway git worktree, so hatch-vcs reads the version from the tag; the script refuses a wheel whose name or `METADATA` says another version, or that misses any file of `cli/src/nereus/` (the charts, CRDs, manifests, assets and the reefs and tree it links).
+- **The wheel** is built at the tag (`VERSION=0.1.N`, default the highest tag `v*`) in a throwaway git worktree, so hatch-vcs reads the version from the tag; the script refuses a wheel whose name or `METADATA` says another version, or that misses any file of `cli/src/nereus/` (the charts, CRDs, manifests, assets and the Reefs and tree it links).
 - **The charts inside the wheel are git's** (`0.0.0-dev`, no `images.lock`): only the charts `make release` pushes to ghcr.io carry the version and the digests.
 - **Once, first:** `make cli-publish SETUP=1` says how it would create `getnereus/install` public, push `deploy/install/` (`install.sh`, `index.html`, `README.md`) to its default branch and turn on GitHub Pages from its root; `SETUP=1 PUBLISH=1` does it.
 - **It refuses** a tag that does not exist and a release that exists, unless `FORCE=1`, which replaces its files. The credential is the gh CLI's.

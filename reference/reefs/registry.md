@@ -1,4 +1,4 @@
-# The registry reef
+# The registry Reef
 
 Every command that runs an image registry in the cluster and publishes to it.
 
@@ -17,7 +17,7 @@ Every command that runs an image registry in the cluster and publishes to it.
 
 ### registry-create
 
-A registry, through the reef's default Mandate.
+A registry, through the Reef's default Mandate.
 
 ```bash
 nereus registry create main

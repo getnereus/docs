@@ -76,10 +76,10 @@ references:
     author: "OpenFGA (CNCF)"
     url: "https://openfga.dev/"
     about: "Open source relationship-based authorization, created by the Auth0/Okta team, inspired by Google Zanzibar, a CNCF project."
-    forUs: "The future {nereid:openfga} Nereid of the {reef:authorization} reef: **inviting outside people comes later**, after the owner logs in alone."
+    forUs: "The future {nereid:openfga} Nereid of the {reef:authorization} Reef: **inviting outside people comes later**, after the owner logs in alone."
     pt:
       about: "Autorização baseada em relacionamentos, open source, criada pelo time do Auth0/Okta, inspirada no Google Zanzibar, um projeto da CNCF."
-      forUs: "A futura Nereida {nereid:openfga} do reef {reef:authorization}: **convidar gente de fora vem depois**, quando o dono já entra sozinho."
+      forUs: "A futura Nereida {nereid:openfga} do Reef {reef:authorization}: **convidar gente de fora vem depois**, quando o dono já entra sozinho."
   - name: phillips
     title: "How to avoid death by PowerPoint"
     author: "David JP Phillips"
@@ -329,7 +329,7 @@ slides:
   - name: step-1-zone
     act: roadmap
     topic: "Step 1 · A fixed address · 5/6"
-    message: "The {reef:edge} reef takes the domain, and the {nereid:cloudflare} Nereid does the work"
+    message: "The {reef:edge} Reef takes the domain, and the {nereid:cloudflare} Nereid does the work"
     accent: "takes the domain"
     terminal:
       cwd: "~/example"
@@ -345,27 +345,27 @@ slides:
               Set the nameservers at your registrar: ada.ns.cloudflare.com, bob.ns.cloudflare.com
     dependsOn: [step-1-tunnel]
     notes: |-
-      What we want to say: **the domain becomes part of the platform**, as #250 (an edge Interface: domains, DNS and certificates) proposes. Kinds Zone (the delegated domain, its nameservers in the status), Route (an endpoint at a hostname) and, later, Record (a CNAME or an A entry). These commands are the contract, not built yet; the idea is #470 (Refine publishing a reef's endpoint at a hostname), a sub-issue of #250.
+      What we want to say: **the domain becomes part of the platform**, as #250 (an edge Interface: domains, DNS and certificates) proposes. Kinds Zone (the delegated domain, its nameservers in the status), Route (an endpoint at a hostname) and, later, Record (a CNAME or an A entry). These commands are the contract, not built yet; the idea is #470 (Refine publishing a Reef's endpoint at a hostname), a sub-issue of #250.
 
       The {nereid:cloudflare} Nereid handles the zone, the records and the tunnel. A second Nereid, {nereid:azure-dns}, comes when environments run on Azure with a public IP: swapping one for the other is swapping the {mandate:cloudflare} Mandate, and Zone and Route stay the same.
     pt:
-      message: "O reef {reef:edge} assume o domínio, e a Nereida {nereid:cloudflare} faz o trabalho"
+      message: "O Reef {reef:edge} assume o domínio, e a Nereida {nereid:cloudflare} faz o trabalho"
       topic: "Etapa 1 · Endereço fixo · 5/6"
       accent: "assume o domínio"
       notes: |-
-        O que queremos dizer: **o domínio vira parte da plataforma**, como propõe a #250 (uma interface edge: domínios, DNS e certificados). Kinds Zone (o domínio delegado, com os nameservers no status), Route (um endpoint num hostname) e, depois, Record (uma entrada CNAME ou A). Estes comandos são o contrato, ainda não construído; a ideia é a #470 (refinar a publicação do endpoint de um reef num hostname), sub-issue da #250.
+        O que queremos dizer: **o domínio vira parte da plataforma**, como propõe a #250 (uma interface edge: domínios, DNS e certificados). Kinds Zone (o domínio delegado, com os nameservers no status), Route (um endpoint num hostname) e, depois, Record (uma entrada CNAME ou A). Estes comandos são o contrato, ainda não construído; a ideia é a #470 (refinar a publicação do endpoint de um Reef num hostname), sub-issue da #250.
 
         A Nereida {nereid:cloudflare} cuida da zona, dos registros e do túnel. Uma segunda Nereida, {nereid:azure-dns}, entra quando houver ambientes na Azure com IP público: trocar uma pela outra é trocar a Mandate {mandate:cloudflare}, e Zone e Route continuam iguais.
 
   - name: step-1-route
     act: roadmap
     topic: "Step 1 · A fixed address · 6/6"
-    message: "A route publishes what a reef offers, never where it runs"
+    message: "A route publishes what a Reef offers, never where it runs"
     accent: "never where it runs"
     terminal:
       cwd: "~/example"
       steps:
-        - comment: "What the reefs offer to publish"
+        - comment: "What the Reefs offer to publish"
           run: "nereus edge endpoint list"
           output: |-
             REEF        ENDPOINT   PROTOCOL   PUBLISHED
@@ -377,19 +377,19 @@ slides:
             ✓ route/triton created, Ready: https://triton.getnereus.dev
     dependsOn: [step-1-zone]
     notes: |-
-      What we want to say: **the person names a reef's endpoint, never a cluster, a namespace or a port**. Each Nereid publishes its endpoints in its status (ADR 0005, one writer per field: reading status is how the API and the CLI learn what a Nereid offers), and the API reads them without naming the Nereid (ADR 0002, the conceptual model).
+      What we want to say: **the person names a Reef's endpoint, never a cluster, a namespace or a port**. Each Nereid publishes its endpoints in its status (ADR 0005, one writer per field: reading status is how the API and the CLI learn what a Nereid offers), and the API reads them without naming the Nereid (ADR 0002, the conceptual model).
 
-      So the {reef:rooms} reef offers `mcp`, and the {nereid:cloudflare} Nereid resolves `rooms/mcp` to whatever runs behind it. If Triton moves, or Kubernetes gives way to something else, the route does not change.
+      So the {reef:rooms} Reef offers `mcp`, and the {nereid:cloudflare} Nereid resolves `rooms/mcp` to whatever runs behind it. If Triton moves, or Kubernetes gives way to something else, the route does not change.
 
       Done when you send an order from the phone in the morning and it arrives without you touching anything; the session that listens stays open in tmux.
     pt:
-      message: "Uma rota publica o que um reef oferece, nunca onde ele roda"
+      message: "Uma rota publica o que um Reef oferece, nunca onde ele roda"
       topic: "Etapa 1 · Endereço fixo · 6/6"
       accent: "nunca onde ele roda"
       notes: |-
-        O que queremos dizer: **a pessoa nomeia o endpoint de um reef, nunca um cluster, um namespace ou uma porta**. Cada Nereida publica os seus endpoints no status (ADR 0005, um escritor por campo: é lendo o status que a API e a CLI sabem o que uma Nereida oferece), e a API os lê sem nomear a Nereida (ADR 0002, o modelo conceitual).
+        O que queremos dizer: **a pessoa nomeia o endpoint de um Reef, nunca um cluster, um namespace ou uma porta**. Cada Nereida publica os seus endpoints no status (ADR 0005, um escritor por campo: é lendo o status que a API e a CLI sabem o que uma Nereida oferece), e a API os lê sem nomear a Nereida (ADR 0002, o modelo conceitual).
 
-        Então o reef {reef:rooms} oferece `mcp`, e a Nereida {nereid:cloudflare} resolve `rooms/mcp` para o que estiver rodando por trás. Se o Tritão mudar de lugar, ou o Kubernetes der lugar a outra coisa, a rota não muda.
+        Então o Reef {reef:rooms} oferece `mcp`, e a Nereida {nereid:cloudflare} resolve `rooms/mcp` para o que estiver rodando por trás. Se o Tritão mudar de lugar, ou o Kubernetes der lugar a outra coisa, a rota não muda.
 
         Pronto quando você manda uma ordem do celular de manhã e ela chega sem você mexer em nada; a sessão que escuta fica aberta no tmux.
 
@@ -398,12 +398,12 @@ slides:
     topic: "Step 2 · Security"
     message: "Triton takes orders only from someone logged in to Nereus"
     accent: "logged in to Nereus"
-    screen: ["**First:** the {reef:authentication} reef, with its {nereid:keycloak} Nereid logging the owner in", "**Then:** each agent its own NATS credential, only its own subjects"]
+    screen: ["**First:** the {reef:authentication} Reef, with its {nereid:keycloak} Nereid logging the owner in", "**Then:** each agent its own NATS credential, only its own subjects"]
     dependsOn: [step-1-address]
     notes: |-
-      What we want to say: **no Nereus login, no order**. Decided by the owner on 2026-10-29: Triton accepts no order until the {reef:authentication} reef is installed and its {nereid:keycloak} Nereid authenticates the user; the login replaces the shared token.
+      What we want to say: **no Nereus login, no order**. Decided by the owner on 2026-10-29: Triton accepts no order until the {reef:authentication} Reef is installed and its {nereid:keycloak} Nereid authenticates the user; the login replaces the shared token.
 
-      The reef and the Nereid already exist: ADR 0006 (the authentication reef) and #407 (the authentication reef with a local Keycloak Nereid, the OAuth authorization server of the claude.ai connector), already used by `nereus-mcp` in #415 (nereus-mcp over public HTTPS: the status tool, OAuth with the keycloak Nereid, and a cloudflared quick tunnel). Triton follows the same path. At first a single administrator, the owner; inviting outside people comes later, through the {reef:authorization} reef.
+      The Reef and the Nereid already exist: ADR 0006 (the authentication Reef) and #407 (the authentication Reef with a local Keycloak Nereid, the OAuth authorization server of the claude.ai connector), already used by `nereus-mcp` in #415 (nereus-mcp over public HTTPS: the status tool, OAuth with the keycloak Nereid, and a cloudflared quick tunnel). Triton follows the same path. At first a single administrator, the owner; inviting outside people comes later, through the {reef:authorization} Reef.
 
       Done when a random pod of the cluster, or anyone without a login, can no longer send orders to m15. Triton also checks that the `from` of a message matches the identity of the connection. It closes OWASP A01 (Broken Access Control) and A07 (Identification and Authentication Failures).
 
@@ -414,11 +414,11 @@ slides:
       message: "A porta só aceita ordens de quem entrou no Nereus"
       topic: "Etapa 2 · Segurança"
       accent: "entrou no Nereus"
-      screen: ["**Primeiro:** o reef {reef:authentication}, com a Nereida {nereid:keycloak} autenticando o dono", "**Depois:** cada agente com a própria credencial no NATS, só os próprios assuntos"]
+      screen: ["**Primeiro:** o Reef {reef:authentication}, com a Nereida {nereid:keycloak} autenticando o dono", "**Depois:** cada agente com a própria credencial no NATS, só os próprios assuntos"]
       notes: |-
-        O que queremos dizer: **sem login no Nereus, sem ordem**. Decidido pelo dono em 2026-10-29: o servidor MCP do Tritão não aceita ordem até o reef {reef:authentication} estar instalado e a Nereida {nereid:keycloak} autenticar o usuário; o login substitui a senha única.
+        O que queremos dizer: **sem login no Nereus, sem ordem**. Decidido pelo dono em 2026-10-29: o servidor MCP do Tritão não aceita ordem até o Reef {reef:authentication} estar instalado e a Nereida {nereid:keycloak} autenticar o usuário; o login substitui a senha única.
 
-        O reef e a Nereida já existem: ADR 0006 (o reef authentication) e #407 (o reef authentication com uma Nereida Keycloak local, o servidor de autorização OAuth do conector do claude.ai), já usados pelo `nereus-mcp` em #415 (o nereus-mcp em HTTPS público: a ferramenta status, OAuth com a Nereida keycloak e um quick tunnel do cloudflared). O servidor MCP segue o mesmo caminho. No começo um único administrador, o dono; convidar gente de fora vem depois, pelo reef {reef:authorization}.
+        O Reef e a Nereida já existem: ADR 0006 (o Reef authentication) e #407 (o Reef authentication com uma Nereida Keycloak local, o servidor de autorização OAuth do conector do claude.ai), já usados pelo `nereus-mcp` em #415 (o nereus-mcp em HTTPS público: a ferramenta status, OAuth com a Nereida keycloak e um quick tunnel do cloudflared). O servidor MCP segue o mesmo caminho. No começo um único administrador, o dono; convidar gente de fora vem depois, pelo Reef {reef:authorization}.
 
         Pronto quando um pod qualquer do cluster, ou qualquer um sem login, não consegue mais mandar ordens ao m15. O Tritão também confere se o `from` da mensagem bate com a identidade da conexão. Fecha o OWASP A01 (Broken Access Control) e o A07 (Identification and Authentication Failures).
 
@@ -488,23 +488,23 @@ slides:
   - name: step-5-nereid
     act: roadmap
     topic: "Step 5 · A Nereid"
-    message: "Triton becomes the {nereid:triton} Nereid of the {reef:rooms} reef"
+    message: "Triton becomes the {nereid:triton} Nereid of the {reef:rooms} Reef"
     accent: "Nereid"
-    screen: ["**The reef:** `rooms`, its kinds `Room`, `Peer` and `RoomSession` (ADR 0030)", "**NATS:** a Topic of the {reef:messaging} reef per Room, run by the {nereid:nats} Nereid"]
+    screen: ["**The Reef:** `rooms`, its kinds `Room`, `Peer` and `RoomSession` (ADR 0030)", "**NATS:** a Topic of the {reef:messaging} Reef per Room, run by the {nereid:nats} Nereid"]
     dependsOn: [step-4-bridge]
     notes: |-
-      What we want to say: **from a program in a pod to a part of the platform**. Triton reads `spec`, writes `status`, and the CLI has the reef's commands: `nereus rooms create`, `join`, `follow`, `post`, `peer list` and `session list`. Built by the journey #2067 (the rooms reef: Room and Peer reconciled by triton, on the messaging reef's Topic by contract).
+      What we want to say: **from a program in a pod to a part of the platform**. Triton reads `spec`, writes `status`, and the CLI has the Reef's commands: `nereus rooms create`, `join`, `follow`, `post`, `peer list` and `session list`. Built by the journey #2067 (the rooms Reef: Room and Peer reconciled by triton, on the messaging Reef's Topic by contract).
 
       It meets Amphitrite there: #225 (AI agents on behalf of the platform) and #66 (AI agents as Controllers inside the platform). Triton becomes a declared Agent.
 
       Source: controllers/triton/README.md, section "What is missing to make it a Nereid".
     pt:
-      message: "O Tritão vira a Nereida {nereid:triton} do reef {reef:rooms}"
+      message: "O Tritão vira a Nereida {nereid:triton} do Reef {reef:rooms}"
       topic: "Etapa 5 · Uma Nereida"
       accent: "Nereida"
-      screen: ["**O reef:** `rooms`, os seus kinds `Room`, `Peer` e `RoomSession` (ADR 0030)", "**NATS:** um Topic do reef {reef:messaging} por Room, rodado pela Nereida {nereid:nats}"]
+      screen: ["**O Reef:** `rooms`, os seus kinds `Room`, `Peer` e `RoomSession` (ADR 0030)", "**NATS:** um Topic do Reef {reef:messaging} por Room, rodado pela Nereida {nereid:nats}"]
       notes: |-
-        O que queremos dizer: **de um programa num pod a uma parte da plataforma**. O Tritão lê o `spec`, escreve o `status`, e o CLI tem os comandos do reef: `nereus rooms create`, `join`, `follow`, `post`, `peer list` e `session list`. Construído pela jornada #2067 (o reef rooms: Room e Peer reconciliados pelo triton, sobre o Topic do reef messaging por contrato).
+        O que queremos dizer: **de um programa num pod a uma parte da plataforma**. O Tritão lê o `spec`, escreve o `status`, e o CLI tem os comandos do Reef: `nereus rooms create`, `join`, `follow`, `post`, `peer list` e `session list`. Construído pela jornada #2067 (o Reef rooms: Room e Peer reconciliados pelo triton, sobre o Topic do Reef messaging por contrato).
 
         Ele encontra a Anfitrite aí: #225 (agentes de IA a serviço da plataforma) e #66 (agentes de IA como Controllers dentro da plataforma). O Tritão vira um Agent declarado.
 
@@ -520,9 +520,9 @@ slides:
     refs: [openfga]
     dependsOn: [step-5-nereid]
     notes: |-
-      What we want to say: **decided by the owner on 2026-10-29, security first, and stronger than proposed**: Triton accepts no order until the {reef:authentication} reef is installed and its {nereid:keycloak} Nereid authenticates the user. Only users logged in to Nereus send orders. Storing orders that anyone can forge would only keep the forgery, so memory (step 3) comes after.
+      What we want to say: **decided by the owner on 2026-10-29, security first, and stronger than proposed**: Triton accepts no order until the {reef:authentication} Reef is installed and its {nereid:keycloak} Nereid authenticates the user. Only users logged in to Nereus send orders. Storing orders that anyone can forge would only keep the forgery, so memory (step 3) comes after.
 
-      At first a single administrator, the owner. Inviting outside people comes later, through a second reef, {reef:authorization}, with an {nereid:openfga} Nereid: OpenFGA is open source, created by the Auth0/Okta team, inspired by Google Zanzibar, a CNCF project. ADR 0014 (Profiles, bundles of reefs, Nereids and Mandates) already names both, not built yet.
+      At first a single administrator, the owner. Inviting outside people comes later, through a second Reef, {reef:authorization}, with an {nereid:openfga} Nereid: OpenFGA is open source, created by the Auth0/Okta team, inspired by Google Zanzibar, a CNCF project. ADR 0014 (Profiles, bundles of Reefs, Nereids and Mandates) already names both, not built yet.
 
       Still the owner's action: **step 1 waits for the nameservers**; until GoDaddy points to Cloudflare, the zone is not active and the tunnel cannot have a name. Decided on 2026-10-29 too: the zone on Cloudflare now, Azure DNS later as a second Nereid.
     pt:
@@ -531,29 +531,29 @@ slides:
       accent: "Segurança vem primeiro"
       screen: ["**Decidido:** um administrador, o dono, autenticado pela {nereid:keycloak}; gente de fora depois, pelo {reef:authorization} com a {nereid:openfga}", "**Falta:** na GoDaddy, o DNSSEC desligado primeiro, depois apontar o getnereus.dev para a Cloudflare, uma vez"]
       notes: |-
-        O que queremos dizer: **decidido pelo dono em 2026-10-29, segurança primeiro, e mais forte do que o proposto**: o servidor MCP do Tritão não aceita ordem até o reef {reef:authentication} estar instalado e a Nereida {nereid:keycloak} autenticar o usuário. Só quem entrou no Nereus manda ordens. Guardar ordens que qualquer um pode forjar só guardaria a falsificação, então a memória (etapa 3) vem depois.
+        O que queremos dizer: **decidido pelo dono em 2026-10-29, segurança primeiro, e mais forte do que o proposto**: o servidor MCP do Tritão não aceita ordem até o Reef {reef:authentication} estar instalado e a Nereida {nereid:keycloak} autenticar o usuário. Só quem entrou no Nereus manda ordens. Guardar ordens que qualquer um pode forjar só guardaria a falsificação, então a memória (etapa 3) vem depois.
 
-        No começo um único administrador, o dono. Convidar gente de fora vem depois, por um segundo reef, {reef:authorization}, com uma Nereida {nereid:openfga}: o OpenFGA é open source, criado pelo time do Auth0/Okta, inspirado no Google Zanzibar, um projeto da CNCF. O ADR 0014 (Profiles, pacotes de reefs, Nereidas e Mandates) já cita os dois, ainda não construídos.
+        No começo um único administrador, o dono. Convidar gente de fora vem depois, por um segundo Reef, {reef:authorization}, com uma Nereida {nereid:openfga}: o OpenFGA é open source, criado pelo time do Auth0/Okta, inspirado no Google Zanzibar, um projeto da CNCF. O ADR 0014 (Profiles, pacotes de Reefs, Nereidas e Mandates) já cita os dois, ainda não construídos.
 
         Ainda é ação do dono: **a etapa 1 espera os nameservers**; até a GoDaddy apontar para a Cloudflare, a zona não fica ativa e o túnel não pode ter nome. Também decidido em 2026-10-29: a zona na Cloudflare agora, a Azure DNS depois como segunda Nereida.
 
   - name: decide-reef
     act: decisions
     topic: "For the owner · 2/2"
-    message: "One {reef:messaging} reef, with Triton as its Nereid"
+    message: "One {reef:messaging} Reef, with Triton as its Nereid"
     accent: "One"
-    screen: ["**Decided:** one reef, {reef:messaging}, with {nereid:triton} as its Nereid, for now", "**Later:** split into two reefs only if it proves useful"]
+    screen: ["**Decided:** one Reef, {reef:messaging}, with {nereid:triton} as its Nereid, for now", "**Later:** split into two Reefs only if it proves useful"]
     dependsOn: [decide-domain-order]
     notes: |-
-      What we want to say: **decided by the owner on 2026-10-29**: one {reef:messaging} reef, and Triton its Nereid; a second reef for the switchboard only if it proves useful. The ADR of step 5 starts from this name.
+      What we want to say: **decided by the owner on 2026-10-29**: one {reef:messaging} Reef, and Triton its Nereid; a second Reef for the switchboard only if it proves useful. The ADR of step 5 starts from this name.
 
       Next: one issue per step, chained, each with its context, once the owner says go.
     pt:
-      message: "Um reef {reef:messaging}, com o Tritão como Nereida"
+      message: "Um Reef {reef:messaging}, com o Tritão como Nereida"
       topic: "Para o dono · 2/2"
       accent: "Um"
-      screen: ["**Decidido:** um reef, {reef:messaging}, com a {nereid:triton} como Nereida, por enquanto", "**Depois:** dividir em dois reefs só se for útil"]
+      screen: ["**Decidido:** um Reef, {reef:messaging}, com a {nereid:triton} como Nereida, por enquanto", "**Depois:** dividir em dois Reefs só se for útil"]
       notes: |-
-        O que queremos dizer: **decidido pelo dono em 2026-10-29**: um reef {reef:messaging}, e o Tritão como a sua Nereida; um segundo reef para a telefonista só se for útil. O ADR da etapa 5 parte deste nome.
+        O que queremos dizer: **decidido pelo dono em 2026-10-29**: um Reef {reef:messaging}, e o Tritão como a sua Nereida; um segundo Reef para a telefonista só se for útil. O ADR da etapa 5 parte deste nome.
 
         Próximo passo: uma issue por etapa, encadeadas, cada uma com o seu contexto, assim que o dono der o go.

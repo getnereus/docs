@@ -1,13 +1,13 @@
 # kagent for Amphitrite
 
-Amphitrite is the Nereid that will give the platform its AI agents: a reef whose kind is `Agent` (plural `agents`), used by other Nereids for the tasks where AI does better than a deterministic step (summarise, catalogue, classify). The Agent does not name its engine: it points at a mandate that says which gateway and model to use, as a PersistentVolumeClaim points at a StorageClass, so swapping LiteLLM for OpenRouter is swapping the mandate. Triton, the coordinator of the agents, is the first Agent. "Native first, build last" ([vision](../vision.md)) asks whether an open-source tool already does this; this page evaluates [kagent](https://kagent.dev), compares it briefly with the alternatives, and records a first end-to-end run of Triton on k3d with a tiny local model through Ollama. It answers the beach order `20261028-1708-evaluate-kagent-for-amphitrite-resend`. Facts come from pages opened on 2026-10-28, linked inline and in [Learn more](#learn-more); repository figures were read from the GitHub API that day; what the run on k3d showed is marked as our own observation.
+Amphitrite is the Nereid that will give the platform its AI agents: a Reef whose kind is `Agent` (plural `agents`), used by other Nereids for the tasks where AI does better than a deterministic step (summarise, catalogue, classify). The Agent does not name its engine: it points at a mandate that says which gateway and model to use, as a PersistentVolumeClaim points at a StorageClass, so swapping LiteLLM for OpenRouter is swapping the mandate. Triton, the coordinator of the agents, is the first Agent. "Native first, build last" ([vision](../vision.md)) asks whether an open-source tool already does this; this page evaluates [kagent](https://kagent.dev), compares it briefly with the alternatives, and records a first end-to-end run of Triton on k3d with a tiny local model through Ollama. It answers the beach order `20261028-1708-evaluate-kagent-for-amphitrite-resend`. Facts come from pages opened on 2026-10-28, linked inline and in [Learn more](#learn-more); repository figures were read from the GitHub API that day; what the run on k3d showed is marked as our own observation.
 
 ## Recommendation
 
-**Adopt kagent as the Tool of the Amphitrite Nereid, behind a thin Nereus reef: wrap it, do not build our own runtime and do not expose kagent's CRDs as the platform's API.**
+**Adopt kagent as the Tool of the Amphitrite Nereid, behind a thin Nereus Reef: wrap it, do not build our own runtime and do not expose kagent's CRDs as the platform's API.**
 
 - **Adopt the runtime:** kagent already does what we would build: a Kubernetes controller that turns an `Agent` resource into a Deployment serving the agent over A2A, a `ModelConfig` that is exactly the StorageClass-style engine object of the design, OpenAI-compatible endpoints (LiteLLM, OpenRouter) and Ollama as providers, MCP tools, memory, a UI and a CLI. It is Apache-2.0, a CNCF Sandbox project, and very active. It ran Triton end to end on k3d in minutes (below).
-- **Wrap it in a reef:** kagent's API is `kagent.dev/v1alpha2` and moving fast towards 1.0 (17 alphas in five weeks, and the chart on `main` already differs from the 0.10 docs), so other Nereids should depend on a Nereus contract, not on kagent's. The rule "the API never names a Nereid" ([rules](../agent/rules.md)) says the same: the reef's `Agent` carries what an agent is (description, instructions, the engine's mandate, tools), and Amphitrite renders it into kagent's `Agent` and `ModelConfig`. Swapping kagent later (for Ark, say) changes the Nereid, not the Nereids that use agents.
+- **Wrap it in a Reef:** kagent's API is `kagent.dev/v1alpha2` and moving fast towards 1.0 (17 alphas in five weeks, and the chart on `main` already differs from the 0.10 docs), so other Nereids should depend on a Nereus contract, not on kagent's. The rule "the API never names a Nereid" ([rules](../agent/rules.md)) says the same: the Reef's `Agent` carries what an agent is (description, instructions, the engine's mandate, tools), and Amphitrite renders it into kagent's `Agent` and `ModelConfig`. Swapping kagent later (for Ark, say) changes the Nereid, not the Nereids that use agents.
 - **Do not build our own CR runtime:** the alternatives either are not an agent definition (Agent Sandbox, Dapr Agents) or are younger and smaller than kagent (Ark, Kagenti).
 
 ## kagent
@@ -49,9 +49,9 @@ The whole k3d node used about 970 MiB of memory with Triton running. The UI has 
 
 ### What to watch
 
-- **Security:** the controller's `auth.mode` defaults to `unsecure`: a caller who reaches port 8083 acts as `admin@kagent.dev` (chart values, `controller.auth`). Amphitrite must install it with `trusted-proxy` (oauth2-proxy in front) or keep the controller unreachable outside the cluster; the authentication reef is the natural front. This is OWASP A01 (Broken Access Control) and A07 (Identification and Authentication Failures).
+- **Security:** the controller's `auth.mode` defaults to `unsecure`: a caller who reaches port 8083 acts as `admin@kagent.dev` (chart values, `controller.auth`). Amphitrite must install it with `trusted-proxy` (oauth2-proxy in front) or keep the controller unreachable outside the cluster; the authentication Reef is the natural front. This is OWASP A01 (Broken Access Control) and A07 (Identification and Authentication Failures).
 - **The bundled Postgres** is for evaluation only; a real install points `database.postgres.url` at a database of the platform.
-- **API churn:** v1alpha2 and a 1.0 in alpha; the reef shields the other Nereids from it.
+- **API churn:** v1alpha2 and a 1.0 in alpha; the Reef shields the other Nereids from it.
 - **Unknown:** how the 1.0 Substrate runtime changes the footprint.
 
 ## Alternatives
@@ -67,7 +67,7 @@ LangGraph Platform and Kubeflow were not evaluated.
 
 ## Triton under the recommendation
 
-The reef's `Agent`, what other Nereids and the CLI write. The reef's name and the shape of the mandate are open questions (below); this draft assumes a reef `agent` and a second reef `model` whose mandates are the engines (Nereids `ollama`, `litellm`, `openrouter`):
+The Reef's `Agent`, what other Nereids and the CLI write. The Reef's name and the shape of the mandate are open questions (below); this draft assumes a Reef `agent` and a second Reef `model` whose mandates are the engines (Nereids `ollama`, `litellm`, `openrouter`):
 
 ```yaml
 apiVersion: agent.getnereus.dev/v1alpha1
@@ -203,8 +203,8 @@ To clean up: `k3d cluster delete amphitrite` and `docker rm --force amphitrite-o
 
 ## Open questions
 
-- **The reef's name and group:** `agent.getnereus.dev` (kind `Agent`, plural `agents`) is a draft.
-- **Where the model lives:** a second reef `model` (Nereids `ollama`, `litellm`, `openrouter`, its mandates naming gateway and model) or the model as a parameter of Amphitrite's own mandate. ADR 0011 (a Mandate binds one reef to one Nereid) fits the first: the Agent references a mandate of the `model` reef.
+- **The Reef's name and group:** `agent.getnereus.dev` (kind `Agent`, plural `agents`) is a draft.
+- **Where the model lives:** a second Reef `model` (Nereids `ollama`, `litellm`, `openrouter`, its mandates naming gateway and model) or the model as a parameter of Amphitrite's own mandate. ADR 0011 (a Mandate binds one Reef to one Nereid) fits the first: the Agent references a mandate of the `model` Reef.
 - **Does Amphitrite expose kagent's tools and memory** in the first slice, or only description, instructions and model?
 - **The UI and Postgres:** keep kagent's UI (no flag to turn it off) and point it at a database of the platform, or wait for the 1.0 chart.
 

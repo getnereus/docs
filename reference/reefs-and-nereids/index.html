@@ -4009,7 +4009,7 @@
   <a href="#apply-a-reef" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Apply a reef
+        Apply a Reef
       
     </span>
   </a>
@@ -4020,7 +4020,7 @@
   <a href="#what-a-reef-may-ship" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What a reef may ship
+        What a Reef may ship
       
     </span>
   </a>
@@ -4031,7 +4031,7 @@
   <a href="#a-reef-with-no-nereid" class="md-nav__link">
     <span class="md-ellipsis">
       
-        A reef with no Nereid
+        A Reef with no Nereid
       
     </span>
   </a>
@@ -7156,7 +7156,7 @@
   <a href="#apply-a-reef" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Apply a reef
+        Apply a Reef
       
     </span>
   </a>
@@ -7167,7 +7167,7 @@
   <a href="#what-a-reef-may-ship" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What a reef may ship
+        What a Reef may ship
       
     </span>
   </a>
@@ -7178,7 +7178,7 @@
   <a href="#a-reef-with-no-nereid" class="md-nav__link">
     <span class="md-ellipsis">
       
-        A reef with no Nereid
+        A Reef with no Nereid
       
     </span>
   </a>
@@ -7272,18 +7272,18 @@
 
 
 <h1 id="reefs-and-nereids">Reefs and Nereids<a class="headerlink" href="#reefs-and-nereids" title="Permanent link">&para;</a></h1>
-<p>The rules behind <code>nereus reef</code> and <code>nereus nereid</code>: what each command checks, writes and refuses. The model is in <a href="../../concepts/model/">Reef, Nereid and Mandate</a>; a first run is in <a href="../../start/first-reef/">Apply a reef and its Nereid</a>.</p>
-<h2 id="apply-a-reef">Apply a reef<a class="headerlink" href="#apply-a-reef" title="Permanent link">&para;</a></h2>
-<p><a href="../../specs/cli/core.html#reef-apply"><code>nereus reef apply release</code></a> applies the reef's kinds from the version this CLI pins; applying again reports <code>unchanged</code> when no resourceVersion moved, as <code>kubectl apply</code> does.</p>
-<p><a href="../../specs/cli/core.html#reef-create"><code>nereus reef create release</code></a> fails on an existing reef, as <code>kubectl create</code> does, and shows the installed version: <code>reef cloud already exists (0.1.0)</code>.</p>
-<p><code>apply</code> takes three sources: the pinned version, local YAML with <a href="../../specs/cli/core.html#reef-apply-file"><code>--from-file</code></a> (a file or a folder, alias <code>--path</code>), or a reef package with <code>--image</code> (an OCI artifact of YAML layers). <code>--dry-run</code> lists what it would create.</p>
+<p>The rules behind <code>nereus reef</code> and <code>nereus nereid</code>: what each command checks, writes and refuses. The model is in <a href="../../concepts/model/">Reef, Nereid and Mandate</a>; a first run is in <a href="../../start/first-reef/">Apply a Reef and its Nereid</a>.</p>
+<h2 id="apply-a-reef">Apply a Reef<a class="headerlink" href="#apply-a-reef" title="Permanent link">&para;</a></h2>
+<p><a href="../../specs/cli/core.html#reef-apply"><code>nereus reef apply release</code></a> applies the Reef's kinds from the version this CLI pins; applying again reports <code>unchanged</code> when no resourceVersion moved, as <code>kubectl apply</code> does.</p>
+<p><a href="../../specs/cli/core.html#reef-create"><code>nereus reef create release</code></a> fails on an existing Reef, as <code>kubectl create</code> does, and shows the installed version: <code>reef cloud already exists (0.1.0)</code>.</p>
+<p><code>apply</code> takes three sources: the pinned version, local YAML with <a href="../../specs/cli/core.html#reef-apply-file"><code>--from-file</code></a> (a file or a folder, alias <code>--path</code>), or a Reef package with <code>--image</code> (an OCI artifact of YAML layers). <code>--dry-run</code> lists what it would create.</p>
 <p>With <code>--from-file</code>, it reports <code>configured</code> when the files changed a kind and <code>unchanged</code> when the same files come again.</p>
-<h2 id="what-a-reef-may-ship">What a reef may ship<a class="headerlink" href="#what-a-reef-may-ship" title="Permanent link">&para;</a></h2>
-<p>A reef is a <code>Reef</code> object, and may ship kinds of its own: the <code>cloud</code> reef ships <code>Cloud</code> with the CLI, never with a Nereid (<a href="../../specs/0005-cloud-reef/#the-objects">spec 0005</a>).</p>
-<p>Whatever the source, the CLI checks every document first: only CustomResourceDefinitions of the platform's group, never a platform kind (<code>Reef</code>, <code>Nereid</code>, <code>Mandate</code>, <code>Installation</code>, <code>ServiceLevelObjective</code>), nor one another reef owns.</p>
-<p>A reef may also ship a <code>ValidatingAdmissionPolicy</code> and binding, named <code>&lt;name&gt;.&lt;reef group&gt;</code>, matching only its own group, without parameters. The API then refuses for every client, as the tenancy reef refuses a Project that is its own parent (<a href="https://github.com/getnereus/nereus/issues/646">#646</a>).</p>
-<h2 id="a-reef-with-no-nereid">A reef with no Nereid<a class="headerlink" href="#a-reef-with-no-nereid" title="Permanent link">&para;</a></h2>
-<p>The reef's command group exists, empty until a Nereid is applied:</p>
+<h2 id="what-a-reef-may-ship">What a Reef may ship<a class="headerlink" href="#what-a-reef-may-ship" title="Permanent link">&para;</a></h2>
+<p>A Reef is a <code>Reef</code> object, and may ship kinds of its own: the <code>cloud</code> Reef ships <code>Cloud</code> with the CLI, never with a Nereid (<a href="../../specs/0005-cloud-reef/#the-objects">spec 0005</a>).</p>
+<p>Whatever the source, the CLI checks every document first: only CustomResourceDefinitions of the platform's group, never a platform kind (<code>Reef</code>, <code>Nereid</code>, <code>Mandate</code>, <code>Installation</code>, <code>ServiceLevelObjective</code>), nor one another Reef owns.</p>
+<p>A Reef may also ship a <code>ValidatingAdmissionPolicy</code> and binding, named <code>&lt;name&gt;.&lt;reef group&gt;</code>, matching only its own group, without parameters. The API then refuses for every client, as the tenancy Reef refuses a Project that is its own parent (<a href="https://github.com/getnereus/nereus/issues/646">#646</a>).</p>
+<h2 id="a-reef-with-no-nereid">A Reef with no Nereid<a class="headerlink" href="#a-reef-with-no-nereid" title="Permanent link">&para;</a></h2>
+<p>The Reef's command group exists, empty until a Nereid is applied:</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>release<span class="w"> </span>--help
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code> Usage: nereus release [OPTIONS] COMMAND [ARGS]...
@@ -7292,14 +7292,14 @@
 
  Apply one: nereus nereid apply &lt;nereid&gt; --reef release --image &lt;image&gt;
 </code></pre></div>
-<p><a href="../../specs/cli/core.html#reef-list"><code>nereus reef list</code></a> shows <code>-</code> under <code>NEREIDS</code>. Without the reef, <code>nereid apply</code> is refused with <code>Apply it first: nereus reef apply release</code>.</p>
+<p><a href="../../specs/cli/core.html#reef-list"><code>nereus reef list</code></a> shows <code>-</code> under <code>NEREIDS</code>. Without the Reef, <code>nereid apply</code> is refused with <code>Apply it first: nereus reef apply release</code>.</p>
 <h2 id="apply-a-nereid">Apply a Nereid<a class="headerlink" href="#apply-a-nereid" title="Permanent link">&para;</a></h2>
-<p><a href="../../specs/cli/core.html#nereid-apply"><code>nereus nereid apply reference-release</code></a> reads the image's labels in the registry (manifest and config, no layer): name, reef, required reefs, version, repository.</p>
-<p>It checks the reef exists, writes the <code>Nereid</code> object pinned to the digest, runs the image as its controller and waits until it reports <code>Ready</code>. The same image again reports <code>core/nereids/reference-release unchanged</code>.</p>
+<p><a href="../../specs/cli/core.html#nereid-apply"><code>nereus nereid apply reference-release</code></a> reads the image's labels in the registry (manifest and config, no layer): name, Reef, required Reefs, version, repository.</p>
+<p>It checks the Reef exists, writes the <code>Nereid</code> object pinned to the digest, runs the image as its controller and waits until it reports <code>Ready</code>. The same image again reports <code>core/nereids/reference-release unchanged</code>.</p>
 <ul>
 <li>A name argument wins over the label.</li>
-<li><code>--reef &lt;reef&gt;</code> names a reef the label lacks, or picks one when the label lists several; it repeats.</li>
-<li>An image that declares no reef is refused: <code>declares no reef (label core.getnereus.dev/reef)</code>.</li>
+<li><code>--reef &lt;reef&gt;</code> names a Reef the label lacks, or picks one when the label lists several; it repeats.</li>
+<li>An image that declares no Reef is refused: <code>declares no reef (label core.getnereus.dev/reef)</code>.</li>
 </ul>
 <h2 id="the-digest">The digest<a class="headerlink" href="#the-digest" title="Permanent link">&para;</a></h2>
 <p>The tag is resolved once to a digest (<code>pinned to</code>, the first 12 hex characters), so pushing the tag again never changes what runs.</p>
@@ -7308,19 +7308,19 @@
 <p><a href="../../specs/cli/core.html#nereid-apply-image"><code>nereus nereid apply reference-release --image</code></a> moves a Nereid to another image with no delete: rules, Deployment and record move together; the apply ends once the new pod runs (<a href="https://github.com/getnereus/nereus/issues/386">#386</a>).</p>
 <p><code>--dry-run</code> shows the digest it would move to. The same image with outdated rules names what it wrote, ending <code>clusterrole/controller-reference-release rules updated</code>.</p>
 <p>A new image that fails prints the <code>nereus nereid apply</code> line with the last image that worked, which the Nereid records until a new pod has run.</p>
-<p>Another reef is refused: moving a Nereid between reefs is a delete and an apply.</p>
+<p>Another Reef is refused: moving a Nereid between Reefs is a delete and an apply.</p>
 <h2 id="list-and-get">List and get<a class="headerlink" href="#list-and-get" title="Permanent link">&para;</a></h2>
-<p><a href="../../specs/cli/core.html#nereid-list"><code>nereus nereid list</code></a> shows each Nereid with its reefs, image and status; <a href="../../specs/cli/core.html#nereid-get"><code>nereus nereid get</code></a> adds the pinned digest, title, description and the Mandates naming it.</p>
+<p><a href="../../specs/cli/core.html#nereid-list"><code>nereus nereid list</code></a> shows each Nereid with its Reefs, image and status; <a href="../../specs/cli/core.html#nereid-get"><code>nereus nereid get</code></a> adds the pinned digest, title, description and the Mandates naming it.</p>
 <p><code>reef list|get</code>, <code>nereid list|get</code> and <code>nereus status</code> read through the Nereus API with the token of <code>nereus login</code>, so they need no kubeconfig; only a member of <code>nereus-admins</code> reads them.</p>
 <p>Logged out, they print <code>Not logged in</code> with the <code>nereus login</code> line. Until the instance offers sign-in (core alone), they read the cluster with the kubeconfig and print the same.</p>
 <h2 id="delete">Delete<a class="headerlink" href="#delete" title="Permanent link">&para;</a></h2>
-<p><a href="../../specs/cli/core.html#nereid-delete"><code>nereus nereid delete reference-release</code></a> removes the Nereid with its commands, Deployment, Service and identity, which belong to the <code>Nereid</code> object. The reef stays, and its group says <code>no Nereid applied</code>.</p>
-<p><code>nereid delete</code> refuses the last Nereid of a reef that applied Nereids require (<a href="../../guides/build/requires/">Require a reef</a>), unless <code>--force</code>.</p>
-<p><a href="../../specs/cli/core.html#reef-delete"><code>nereus reef delete release</code></a> removes the <code>Reef</code> object and keeps its kinds, so a Nereid's objects stay. It is refused while a Nereid of the reef is applied, and names the <code>nereid delete</code> to run first.</p>
+<p><a href="../../specs/cli/core.html#nereid-delete"><code>nereus nereid delete reference-release</code></a> removes the Nereid with its commands, Deployment, Service and identity, which belong to the <code>Nereid</code> object. The Reef stays, and its group says <code>no Nereid applied</code>.</p>
+<p><code>nereid delete</code> refuses the last Nereid of a Reef that applied Nereids require (<a href="../../guides/build/requires/">Require a Reef</a>), unless <code>--force</code>.</p>
+<p><a href="../../specs/cli/core.html#reef-delete"><code>nereus reef delete release</code></a> removes the <code>Reef</code> object and keeps its kinds, so a Nereid's objects stay. It is refused while a Nereid of the Reef is applied, and names the <code>nereid delete</code> to run first.</p>
 <h2 id="the-objects">The objects<a class="headerlink" href="#the-objects" title="Permanent link">&para;</a></h2>
-<p>A reef and a Nereid are Kubernetes objects, <code>Reef</code> and <code>Nereid</code> of <code>core.getnereus.dev</code>: <code>kubectl get reefs</code> and <code>kubectl get nereids</code> list them.</p>
-<p>One writer per field (ADR 0005, one writer for each field of an object): the CLI writes the reef and the Nereid's <code>spec.image</code>, <code>spec.reefs</code>, <code>spec.requires</code> and <code>spec.version</code>; the controller writes only <code>status.conditions</code> and <code>status.commands</code>.</p>
-<p>The CLI caches each reef's group and its Nereid's commands in <code>~/.cache/nereus/commands.json</code>, as <code>kubectl</code> caches API discovery; <code>reef</code> and <code>nereid</code> commands refresh it.</p>
+<p>A Reef and a Nereid are Kubernetes objects, <code>Reef</code> and <code>Nereid</code> of <code>core.getnereus.dev</code>: <code>kubectl get reefs</code> and <code>kubectl get nereids</code> list them.</p>
+<p>One writer per field (ADR 0005, one writer for each field of an object): the CLI writes the Reef and the Nereid's <code>spec.image</code>, <code>spec.reefs</code>, <code>spec.requires</code> and <code>spec.version</code>; the controller writes only <code>status.conditions</code> and <code>status.commands</code>.</p>
+<p>The CLI caches each Reef's group and its Nereid's commands in <code>~/.cache/nereus/commands.json</code>, as <code>kubectl</code> caches API discovery; <code>reef</code> and <code>nereid</code> commands refresh it.</p>
 
 
 

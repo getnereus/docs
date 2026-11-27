@@ -1,4 +1,4 @@
-# The authentication reef
+# The authentication Reef
 
 Who the person is, and who the platform is towards the systems it acts on.
 
@@ -112,7 +112,7 @@ ana-silva (nereus-admins, nereus-users)
 
 ### app-register
 
-An action the github Nereid publishes under the reef.
+An action the github Nereid publishes under the Reef.
 
 ```bash
 nereus authentication app-register \

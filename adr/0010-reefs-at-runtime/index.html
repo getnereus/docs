@@ -7178,30 +7178,30 @@
   
 
 
-<h1 id="0010-reefs-are-added-at-runtime-commands-are-grouped-by-reef">0010. Reefs are added at runtime; commands are grouped by reef<a class="headerlink" href="#0010-reefs-are-added-at-runtime-commands-are-grouped-by-reef" title="Permanent link">&para;</a></h1>
+<h1 id="0010-reefs-are-added-at-runtime-commands-are-grouped-by-reef">0010. Reefs are added at runtime; commands are grouped by Reef<a class="headerlink" href="#0010-reefs-are-added-at-runtime-commands-are-grouped-by-reef" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
 <p class="admonition-title">In short</p>
-<p>A reef is added at runtime from its contract, and a Nereid is added on its own and looks after one or more reefs. The <code>release</code> reef has four kinds. Status: Proposed (2026-10-17, rewritten 2026-10-25).</p>
+<p>A Reef is added at runtime from its contract, and a Nereid is added on its own and looks after one or more Reefs. The <code>release</code> Reef has four kinds. Status: Proposed (2026-10-17, rewritten 2026-10-25).</p>
 </div>
 <p><strong>Status:</strong> Proposed (2026-10-17, rewritten 2026-10-25)</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
-<p>ADR 0002 says the person asking names the reef, never the Tool. Naming a command group after whoever fulfils it (<code>platform helm repo add</code>) would expose the Tool and would not survive a swap: Flux has no <code>helm repo</code>, and its sources may be Git repositories.</p>
+<p>ADR 0002 says the person asking names the Reef, never the Tool. Naming a command group after whoever fulfils it (<code>platform helm repo add</code>) would expose the Tool and would not survive a swap: Flux has no <code>helm repo</code>, and its sources may be Git repositories.</p>
 <p>Helm, Flux and Argo CD all take something from a source and keep a version of it running in a cluster. Kubernetes keeps the same split for traffic: a <code>GatewayClass</code> exists in the cluster and names a <code>controllerName</code>; the person writing a <code>Gateway</code> never names the load balancer. Crossplane does it for infrastructure: a <code>CompositeResourceDefinition</code> is the contract, and Compositions fulfil it.</p>
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
-<p><strong>A reef is added at runtime</strong>, from its contract, and listed with the others:</p>
+<p><strong>A Reef is added at runtime</strong>, from its contract, and listed with the others:</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>reef<span class="w"> </span>apply<span class="w"> </span>release<span class="w"> </span>--from-file<span class="w"> </span>./reefs/release/
 nereus<span class="w"> </span>reef<span class="w"> </span>list
 </code></pre></div>
-<p><strong>A Nereid is added on its own, top-level, and looks after one or more reefs</strong>; a reef with no Nereid waits:</p>
+<p><strong>A Nereid is added on its own, top-level, and looks after one or more Reefs</strong>; a Reef with no Nereid waits:</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>nereid<span class="w"> </span>apply<span class="w"> </span>helm<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--reef<span class="w"> </span>release<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--image<span class="w"> </span>ghcr.io/getnereus/nereus/release-helm-controller:0.1.0
 </code></pre></div>
 <ul>
-<li>Its commands are served under the reef's group: <code>nereus release ...</code> (ADR 0004).</li>
-<li>Several Nereids may look after one reef. Which one handles a request is chosen by a Mandate (ADR 0002), the reef's default one when the request names none: <code>nereus mandate create ... --default</code>.</li>
+<li>Its commands are served under the Reef's group: <code>nereus release ...</code> (ADR 0004).</li>
+<li>Several Nereids may look after one Reef. Which one handles a request is chosen by a Mandate (ADR 0002), the Reef's default one when the request names none: <code>nereus mandate create ... --default</code>.</li>
 </ul>
-<p><strong>The release reef, <code>release.getnereus.dev/v1alpha1</code>, has four kinds</strong> (#445), each named for one question, in the namespace Nereus runs in:</p>
+<p><strong>The release Reef, <code>release.getnereus.dev/v1alpha1</code>, has four kinds</strong> (#445), each named for one question, in the namespace Nereus runs in:</p>
 <table>
 <thead>
 <tr>
@@ -7215,7 +7215,7 @@ nereus<span class="w"> </span>reef<span class="w"> </span>list
 <tr>
 <td><code>Repository</code></td>
 <td>where it comes from</td>
-<td><code>type</code> (<code>http</code>, <code>oci</code>, <code>git</code>), <code>url</code>, optional <code>secretRef</code> (a secret of the secrets reef)</td>
+<td><code>type</code> (<code>http</code>, <code>oci</code>, <code>git</code>), <code>url</code>, optional <code>secretRef</code> (a secret of the secrets Reef)</td>
 <td><code>ready</code>, <code>nereid</code>, <code>conditions</code></td>
 </tr>
 <tr>
@@ -7227,28 +7227,28 @@ nereus<span class="w"> </span>reef<span class="w"> </span>list
 <tr>
 <td><code>Target</code></td>
 <td>where to</td>
-<td>optional <code>environmentRef</code> (an environment of the environment reef, which knows the cluster and its credentials), <code>namespace</code></td>
+<td>optional <code>environmentRef</code> (an environment of the environment Reef, which knows the cluster and its credentials), <code>namespace</code></td>
 <td><code>ready</code>, <code>nereid</code>, <code>conditions</code></td>
 </tr>
 <tr>
 <td><code>Release</code></td>
 <td>a Source running in a Target</td>
-<td>optional <code>mandate</code> (the reef's default when absent), <code>sourceRef</code>, <code>targetRef</code>, <code>values</code></td>
-<td><code>phase</code> (<code>Pending</code>, <code>Progressing</code>, <code>Ready</code>, <code>Failed</code>), <code>version</code>, <code>nereid</code>, <code>mandate</code>, and a <code>Ready</code> condition in the reef's reasons</td>
+<td>optional <code>mandate</code> (the Reef's default when absent), <code>sourceRef</code>, <code>targetRef</code>, <code>values</code></td>
+<td><code>phase</code> (<code>Pending</code>, <code>Progressing</code>, <code>Ready</code>, <code>Failed</code>), <code>version</code>, <code>nereid</code>, <code>mandate</code>, and a <code>Ready</code> condition in the Reef's reasons</td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li><strong>A Target with no environment is the cluster Nereus runs in</strong>, until the environment reef exists.</li>
-<li><strong>Who writes which status</strong> (ADR 0005): a Release's, the Nereid of its Mandate; a Repository's, a Source's and a Target's, the Nereid of the reef's default Mandate.</li>
-<li><strong>A Nereid keeps its Tool's objects next to the reef's, on purpose:</strong> the <code>flux</code> Nereid writes a Flux <code>HelmRepository</code> for each <code>Repository</code> and a Flux <code>HelmRelease</code> for each <code>Release</code> (its chart template from the <code>Source</code>), each owned by the Nereus object it comes from, and translates their <code>Ready</code> condition into the reasons the reef declares (<code>Released</code> or <code>Indexed</code>, <code>Progressing</code>, <code>ReleaseFailed</code> or <code>IndexFailed</code>), keeping its status and message (#528); Flux's other conditions stay on Flux's objects. Swapping Flux for Argo CD or plain Helm changes the second object, never the first.</li>
+<li><strong>A Target with no environment is the cluster Nereus runs in</strong>, until the environment Reef exists.</li>
+<li><strong>Who writes which status</strong> (ADR 0005): a Release's, the Nereid of its Mandate; a Repository's, a Source's and a Target's, the Nereid of the Reef's default Mandate.</li>
+<li><strong>A Nereid keeps its Tool's objects next to the Reef's, on purpose:</strong> the <code>flux</code> Nereid writes a Flux <code>HelmRepository</code> for each <code>Repository</code> and a Flux <code>HelmRelease</code> for each <code>Release</code> (its chart template from the <code>Source</code>), each owned by the Nereus object it comes from, and translates their <code>Ready</code> condition into the reasons the Reef declares (<code>Released</code> or <code>Indexed</code>, <code>Progressing</code>, <code>ReleaseFailed</code> or <code>IndexFailed</code>), keeping its status and message (#528); Flux's other conditions stay on Flux's objects. Swapping Flux for Argo CD or plain Helm changes the second object, never the first.</li>
 </ul>
-<p><strong>A reef has two levels of commands:</strong></p>
+<p><strong>A Reef has two levels of commands:</strong></p>
 <ul>
-<li><strong>Configuring</strong> the reef, done by a platform admin: where things come from (<code>repository</code>), what (<code>source</code>) and where they go (<code>target</code>).</li>
-<li><strong>Using</strong> the reef, done by a developer: its Instances (<code>release</code>), which name a source and a target that already exist.</li>
+<li><strong>Configuring</strong> the Reef, done by a platform admin: where things come from (<code>repository</code>), what (<code>source</code>) and where they go (<code>target</code>).</li>
+<li><strong>Using</strong> the Reef, done by a developer: its Instances (<code>release</code>), which name a source and a target that already exist.</li>
 </ul>
-<p>The commands are <code>nereus &lt;reef&gt; &lt;kind&gt; &lt;verb&gt; &lt;name&gt;</code>, with long options and kubectl's verbs (ADR 0013). <strong>A kind named after its reef takes the reef's own verbs:</strong> <code>nereus release create</code> is <code>nereus release release create</code>, as <code>nereus environment create</code> will be <code>nereus environment environment create</code>.</p>
+<p>The commands are <code>nereus &lt;reef&gt; &lt;kind&gt; &lt;verb&gt; &lt;name&gt;</code>, with long options and kubectl's verbs (ADR 0013). <strong>A kind named after its Reef takes the Reef's own verbs:</strong> <code>nereus release create</code> is <code>nereus release release create</code>, as <code>nereus environment create</code> will be <code>nereus environment environment create</code>.</p>
 <div class="language-bash highlight"><pre><span></span><code><span class="c1"># The admin, once: the Nereid and the reef's default Mandate</span>
 nereus<span class="w"> </span>nereid<span class="w"> </span>apply<span class="w"> </span>flux<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--reef<span class="w"> </span>release
@@ -7282,14 +7282,14 @@ nereus<span class="w"> </span>release<span class="w"> </span>create<span class="
 nereus<span class="w"> </span>release<span class="w"> </span>list
 </code></pre></div>
 <p><strong>Repositories are typed</strong> (<code>http</code>, <code>oci</code>, <code>git</code>). A Nereid says in a Repository's status when it does not take its type: the <code>flux</code> Nereid takes <code>http</code> and <code>oci</code>, not <code>git</code> yet.</p>
-<p><strong>GitOps is a way of making releases</strong>, a Mandate of the <code>release</code> reef in ADR 0002's terms, not a reef of its own: a <code>gitops</code> reef would leave plain Helm out.</p>
-<p><strong>The contract of a reef is a Kubernetes API</strong>, the API group <code>&lt;reef&gt;.getnereus.dev/v1alpha1</code> (ADR 0009). Adding a reef applies the CRDs of its contract (for <code>release</code>: its repositories, sources, targets and releases), so the platform's API is extended through Kubernetes itself: validation by OpenAPI schema, discovery, RBAC per resource, <code>kubectl</code> and watches come with it. Nereids reconcile those resources and write their <code>status</code>.</p>
+<p><strong>GitOps is a way of making releases</strong>, a Mandate of the <code>release</code> Reef in ADR 0002's terms, not a Reef of its own: a <code>gitops</code> Reef would leave plain Helm out.</p>
+<p><strong>The contract of a Reef is a Kubernetes API</strong>, the API group <code>&lt;reef&gt;.getnereus.dev/v1alpha1</code> (ADR 0009). Adding a Reef applies the CRDs of its contract (for <code>release</code>: its repositories, sources, targets and releases), so the platform's API is extended through Kubernetes itself: validation by OpenAPI schema, discovery, RBAC per resource, <code>kubectl</code> and watches come with it. Nereids reconcile those resources and write their <code>status</code>.</p>
 <p><strong>Inspired by Crossplane, not built on it.</strong> The model borrows the shape of a <code>CompositeResourceDefinition</code>, but the platform does not depend on Crossplane. Crossplane stays free to be what ADR 0002 makes of any other project: a Tool, used by a Nereid.</p>
 <h2 id="prior-art">Prior art<a class="headerlink" href="#prior-art" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Gateway API's <code>GatewayClass</code></strong> (<a href="https://gateway-api.sigs.k8s.io/reference/api-types/gatewayclass/">gateway-api.sigs.k8s.io</a>): the class names a <code>controllerName</code>, and the person writing a <code>Gateway</code> never names the load balancer.</li>
-<li><strong>Crossplane's composite resource definitions</strong> (<a href="https://docs.crossplane.io/latest/composition/composite-resource-definitions/">docs.crossplane.io</a>): a definition is the contract, and Compositions fulfil it; the contract of a reef takes the shape, not the dependency.</li>
-<li><strong>Flux's source and helm controllers</strong> (<a href="https://fluxcd.io/flux/components/source/helmrepositories/">fluxcd.io, HelmRepository</a>; <a href="https://fluxcd.io/flux/components/helm/helmreleases/">HelmRelease</a>): where a chart comes from apart from what is released and where; the release reef's <code>Repository</code>, <code>Source</code> and <code>Release</code> take the same split, and the <code>flux</code> Nereid writes those objects.</li>
+<li><strong>Crossplane's composite resource definitions</strong> (<a href="https://docs.crossplane.io/latest/composition/composite-resource-definitions/">docs.crossplane.io</a>): a definition is the contract, and Compositions fulfil it; the contract of a Reef takes the shape, not the dependency.</li>
+<li><strong>Flux's source and helm controllers</strong> (<a href="https://fluxcd.io/flux/components/source/helmrepositories/">fluxcd.io, HelmRepository</a>; <a href="https://fluxcd.io/flux/components/helm/helmreleases/">HelmRelease</a>): where a chart comes from apart from what is released and where; the release Reef's <code>Repository</code>, <code>Source</code> and <code>Release</code> take the same split, and the <code>flux</code> Nereid writes those objects.</li>
 <li><strong>Custom resources and the operator pattern</strong> (<a href="https://kubernetes.io/docs/concepts/extend-kubernetes/operator/">Kubernetes, "Operator pattern"</a>): the API is extended at runtime with CRDs, and a controller reconciles them.</li>
 </ul>
 <h2 id="consequences">Consequences<a class="headerlink" href="#consequences" title="Permanent link">&para;</a></h2>
@@ -7301,16 +7301,16 @@ nereus<span class="w"> </span>release<span class="w"> </span>list
 </ul>
 <h2 id="open-questions">Open questions<a class="headerlink" href="#open-questions" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>How a contract is written and turned into commands.</strong> To decide: how a reef is packaged (<code>--from-file</code> today; an image or an OCI package next), how the CLI builds commands from its schema, and how a contract is versioned. Today the CLI builds the release reef's commands from the contract it pins (#445), a stand-in for commands built from any reef's schema.</li>
-<li><strong>How the Platform API sits in front of the reefs.</strong> <code>kubectl</code> reaches the CRDs of one cluster; the Platform API is the one door for every client (the CLI, a portal, an IDE, an agent), none of which should need a kubeconfig. It composes reefs and owns what crosses them: authentication (ADR 0006), authorization by team, policy, cost, several clusters.</li>
+<li><strong>How a contract is written and turned into commands.</strong> To decide: how a Reef is packaged (<code>--from-file</code> today; an image or an OCI package next), how the CLI builds commands from its schema, and how a contract is versioned. Today the CLI builds the release Reef's commands from the contract it pins (#445), a stand-in for commands built from any Reef's schema.</li>
+<li><strong>How the Platform API sits in front of the Reefs.</strong> <code>kubectl</code> reaches the CRDs of one cluster; the Platform API is the one door for every client (the CLI, a portal, an IDE, an agent), none of which should need a kubeconfig. It composes Reefs and owns what crosses them: authentication (ADR 0006), authorization by team, policy, cost, several clusters.</li>
 <li><strong>Actions that are not resources.</strong> <code>source apply</code> and <code>release create</code> map to resources; <code>release rollback</code>, <code>sync</code> or <code>logs</code> are actions. Likely both mechanisms stay: commands built from the contract's schema for resources, and commands a Nereid publishes for actions (ADR 0004).</li>
-<li><strong>What a target is</strong> beyond the cluster Nereus runs in: an environment of the environment reef names the cluster and its credentials; whether a Target may also name a cluster directly is open.</li>
-<li><strong>Where the reef's objects live:</strong> today the namespace Nereus runs in; a namespace per organization and project comes with them.</li>
+<li><strong>What a target is</strong> beyond the cluster Nereus runs in: an environment of the environment Reef names the cluster and its credentials; whether a Target may also name a cluster directly is open.</li>
+<li><strong>Where the Reef's objects live:</strong> today the namespace Nereus runs in; a namespace per organization and project comes with them.</li>
 <li><strong>Who upgrades the Tool</strong> (<a href="https://github.com/getnereus/nereus/issues/449">#449</a>): <code>nereus nereid apply flux</code> installs Flux before the Nereid, as the <code>openbao</code> Nereid runs OpenBao (owner, 2026-10-26): the source and helm controllers, from Flux's <code>install.yaml</code> pinned by version and digest. Who upgrades it, what the CLI does to a Flux it finds, and whether deleting the Nereid uninstalls it are open.</li>
 </ul>
-<p><strong>The first Release the platform makes itself</strong> (order 20261026-0840, step 2; <a href="https://github.com/getnereus/nereus/issues/597">#597</a>): Keycloak. The <code>keycloak</code> Nereid writes it itself, by server-side apply through the reef's default Mandate: a Repository <code>codecentric</code>, a Source <code>keycloak</code> (<code>keycloakx</code> 7.0.1), a Target <code>keycloak</code> (the namespace Nereus runs in) and a Release <code>keycloak</code> with the chart's values. While the release reef has no default Mandate it writes nothing and reports <code>Ready=False</code> (<code>NoReleaseNereid</code>, naming <code>nereus nereid apply flux --reef release</code>); it reports <code>WaitingForRelease</code> until the Nereid of that Mandate reports the Release Ready, <code>ReleaseFailed</code> with the Release's own message when it fails, and only then applies its realm and publishes <code>status.oidc</code>, reaching Keycloak through the chart's Service. So the <code>keycloak</code> Nereid requires the <code>release</code> reef, besides <code>secrets</code>. The Source, the Target and the Release are owned by the <code>core/nereids/keycloak</code> object, so deleting the Nereid lets Kubernetes' garbage collector delete them, and Flux uninstalls Keycloak; the shared Repository has no owner, and <code>nereus nereid delete keycloak</code> deletes it once no Source names it (owner, 2026-10-26).</p>
+<p><strong>The first Release the platform makes itself</strong> (order 20261026-0840, step 2; <a href="https://github.com/getnereus/nereus/issues/597">#597</a>): Keycloak. The <code>keycloak</code> Nereid writes it itself, by server-side apply through the Reef's default Mandate: a Repository <code>codecentric</code>, a Source <code>keycloak</code> (<code>keycloakx</code> 7.0.1), a Target <code>keycloak</code> (the namespace Nereus runs in) and a Release <code>keycloak</code> with the chart's values. While the release Reef has no default Mandate it writes nothing and reports <code>Ready=False</code> (<code>NoReleaseNereid</code>, naming <code>nereus nereid apply flux --reef release</code>); it reports <code>WaitingForRelease</code> until the Nereid of that Mandate reports the Release Ready, <code>ReleaseFailed</code> with the Release's own message when it fails, and only then applies its realm and publishes <code>status.oidc</code>, reaching Keycloak through the chart's Service. So the <code>keycloak</code> Nereid requires the <code>release</code> Reef, besides <code>secrets</code>. The Source, the Target and the Release are owned by the <code>core/nereids/keycloak</code> object, so deleting the Nereid lets Kubernetes' garbage collector delete them, and Flux uninstalls Keycloak; the shared Repository has no owner, and <code>nereus nereid delete keycloak</code> deletes it once no Source names it (owner, 2026-10-26).</p>
 <p><strong>A Nereid that needs a Helm chart writes its own Release</strong> (owner, 2026-10-30, <a href="https://github.com/getnereus/nereus/issues/597">#597</a>), with the customisations it needs, through the chart's native options where possible (its values, <code>extraInitContainers</code>, <code>extraVolumes</code>); the CLI only installs the Nereid and never customises a chart. What a Nereid adds to its chart runs from its own image when it needs one (<code>NEREID_IMAGE</code>, pinned by digest), as the login theme of <a href="https://github.com/getnereus/nereus/issues/598">#598</a> will.</p>
-<p><em>Rewritten 2026-10-25 from voice session; raw data in Drive #pontos/raw/2026-10-25. Rewritten again 2026-10-26 (order 20261026-1748, #445): the release reef's four kinds (Repository, Source, Target, Release) and their fields, from the owner's walkthrough deck of 2026-10-26; <code>source</code> became <code>repository</code> and the chart moved from the release to the source; the syntax sugar of a kind named after its reef. Amended 2026-10-26 (order 20261026-1843): the <code>flux</code> Nereid installs Flux itself. Amended again (order 20261026-0840, step 2): Keycloak is a Release of this reef. Amended 2026-10-30 (#597): the <code>keycloak</code> Nereid writes that Release itself, and every Nereid that needs a chart writes its own.</em></p>
+<p><em>Rewritten 2026-10-25 from voice session; raw data in Drive #pontos/raw/2026-10-25. Rewritten again 2026-10-26 (order 20261026-1748, #445): the release Reef's four kinds (Repository, Source, Target, Release) and their fields, from the owner's walkthrough deck of 2026-10-26; <code>source</code> became <code>repository</code> and the chart moved from the release to the source; the syntax sugar of a kind named after its Reef. Amended 2026-10-26 (order 20261026-1843): the <code>flux</code> Nereid installs Flux itself. Amended again (order 20261026-0840, step 2): Keycloak is a Release of this Reef. Amended 2026-10-30 (#597): the <code>keycloak</code> Nereid writes that Release itself, and every Nereid that needs a chart writes its own.</em></p>
 
 
 

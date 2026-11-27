@@ -1,4 +1,4 @@
-# The catalog reef
+# The catalog Reef
 
 Every command that says what Nereus has: what runs, what is published, and whether it holds together.
 

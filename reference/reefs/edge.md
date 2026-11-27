@@ -1,10 +1,10 @@
-# The edge reef
+# The edge Reef
 
-Every command of the edge reef: domains, zones and routes, in the order a person types them.
+Every command of the edge Reef: domains, zones and routes, in the order a person types them.
 
 ## Commands
 
-- [`nereus reef apply edge`](../../specs/cli/reefs/edge.html#apply-reef) One command applies the edge reef, with its kinds Route, Zone and Domain
+- [`nereus reef apply edge`](../../specs/cli/reefs/edge.html#apply-reef) One command applies the edge Reef, with its kinds Route, Zone and Domain
 - [`nereus nereid apply cloudflare`](../../specs/cli/reefs/edge.html#apply-cloudflare) The cloudflare Nereid runs the tunnel its Mandate names
 - [`nereus nereid apply godaddy`](../../specs/cli/reefs/edge.html#apply-godaddy) The godaddy Nereid talks to the registrar, through its Mandate
 - [`nereus edge zone create getnereus.dev`](../../specs/cli/reefs/edge.html#zone-create) A zone gives the domain the nameservers that will answer for it
@@ -14,7 +14,7 @@ Every command of the edge reef: domains, zones and routes, in the order a person
 - [`nereus edge domain get getnereus.dev`](../../specs/cli/reefs/edge.html#domain-get) One domain shows every detail, its nameservers one per line
 - [`nereus edge route create triton`](../../specs/cli/reefs/edge.html#route-hostname) A route makes a hostname reach the platform
 - [`nereus edge endpoint list`](../../specs/cli/reefs/edge.html#endpoint-list) The Nereids say what they serve, never where it runs
-- [`nereus edge route create triton`](../../specs/cli/reefs/edge.html#route-create) A route publishes a reef's endpoint at a fixed address
+- [`nereus edge route create triton`](../../specs/cli/reefs/edge.html#route-create) A route publishes a Reef's endpoint at a fixed address
 - [`nereus edge apply`](../../specs/cli/reefs/edge.html#apply-file) One file applies every Route and Zone, each checked before any is written
 - [`nereus edge route delete triton`](../../specs/cli/reefs/edge.html#route-delete) A delete waits until its Nereid takes away what it made, unless told not to
 
@@ -22,7 +22,7 @@ Every command of the edge reef: domains, zones and routes, in the order a person
 
 ### apply-reef
 
-Apply the edge reef.
+Apply the edge Reef.
 
 ```bash
 nereus reef apply edge
@@ -39,7 +39,7 @@ Next steps:
 
 ### apply-cloudflare
 
-Apply the cloudflare Nereid to the edge reef.
+Apply the cloudflare Nereid to the edge Reef.
 
 ```bash
 nereus nereid apply cloudflare \
@@ -57,7 +57,7 @@ Next steps:
 
 ### apply-godaddy
 
-Apply the godaddy Nereid to the edge reef.
+Apply the godaddy Nereid to the edge Reef.
 
 ```bash
 nereus nereid apply godaddy \

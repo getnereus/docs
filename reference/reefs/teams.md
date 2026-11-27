@@ -1,10 +1,10 @@
-# The teams reef
+# The teams Reef
 
 Every command of the first slice: teams on the tenancy tree, their members and positions.
 
 ## Commands
 
-- [`nereus reef apply teams`](../../specs/cli/reefs/teams.html#reef-apply) The teams reef brings teams and members
+- [`nereus reef apply teams`](../../specs/cli/reefs/teams.html#reef-apply) The teams Reef brings teams and members
 - [`nereus teams create payments`](../../specs/cli/reefs/teams.html#team-create) A team sits on a node of the tenancy tree
 - [`nereus teams create billing`](../../specs/cli/reefs/teams.html#team-missing-owner) A team whose owner does not exist is refused
 - [`nereus teams member create ana`](../../specs/cli/reefs/teams.html#member-lead) Ana joins as the tech lead: a position
@@ -19,7 +19,7 @@ Every command of the first slice: teams on the tenancy tree, their members and p
 
 ### reef-apply
 
-The kinds of the reef, with no Nereid.
+The kinds of the Reef, with no Nereid.
 
 ```bash
 nereus reef apply teams

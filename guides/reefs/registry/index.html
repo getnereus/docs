@@ -7291,11 +7291,11 @@
 <p>Run a <a href="https://zotregistry.dev">zot</a> registry of your own in the cluster, publish an image to it and run that image: TLS only, nothing anonymous, images kept on its own volume.</p>
 <h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">&para;</a></h2>
 <ul>
-<li>A cluster from <a href="../../../start/init/">Prepare the cluster</a> with <code>--profile internal-developer-platform</code>: it brings the registry reef with the Nereid <code>zot</code>, the release reef that installs zot, and the secrets reef that keeps each registry's read credential.</li>
+<li>A cluster from <a href="../../../start/init/">Prepare the cluster</a> with <code>--profile internal-developer-platform</code>: it brings the registry Reef with the Nereid <code>zot</code>, the release Reef that installs zot, and the secrets Reef that keeps each registry's read credential.</li>
 <li><code>nereus login</code> done: publishing pushes through the Nereus API, for a person in <code>nereus-admins</code>.</li>
 <li>The namespace <code>builds</code>, which <code>nereus nereid apply buildkit --reef build</code> makes: each repository's push identity lives there.</li>
 <li>An image built locally with a tag, such as <code>docker build --tag hello:v1 .</code>.</li>
-<li>A k3d cluster: on AKS the registry reef is <span class="chip planned">planned</span>, since the nodes pull only from registries whose certificate they trust, and they do not trust the CA of a registry in the cluster (<a href="../../operate/cluster/">Prepare a cluster for Nereus</a>).</li>
+<li>A k3d cluster: on AKS the registry Reef is <span class="chip planned">planned</span>, since the nodes pull only from registries whose certificate they trust, and they do not trust the CA of a registry in the cluster (<a href="../../operate/cluster/">Prepare a cluster for Nereus</a>).</li>
 </ul>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
 <h3 id="1-create-a-registry">1. Create a registry<a class="headerlink" href="#1-create-a-registry" title="Permanent link">&para;</a></h3>
@@ -7371,7 +7371,7 @@ Next steps:
 </ul>
 <h2 id="learn-more">Learn more<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../../../reference/reefs/registry/">The registry reef</a>: registries, repositories, purge and every command.</li>
+<li><a href="../../../reference/reefs/registry/">The registry Reef</a>: registries, repositories, purge and every command.</li>
 <li><a href="../../../concepts/tenancy-and-access/">Tenancy and access</a>: who may read a registry with an owner.</li>
 </ul>
 

@@ -1,6 +1,6 @@
 # Prepare the undercloud
 
-Create the installation's undercloud, `<installation>-undercloud`, a local cluster with the `cloud` reef whose public OIDC issuer a cloud trusts, here Azure.
+Create the installation's undercloud, `<installation>-undercloud`, a local cluster with the `cloud` Reef whose public OIDC issuer a cloud trusts, here Azure.
 
 !!! note "Recorded against fakes"
     The outputs are what `init` prints in its tests, against a fake k3d, a fake Nereid, a fake `az` and recorded Azure answers. A real subscription is checked by hand (#266).
@@ -71,7 +71,7 @@ A request Azure refuses marks its line `✗` and says what an administrator has 
 
 ### 4. Run it again
 
-The cluster, the installation and the reef are kept, and the plan is made again. When the published keys are the cluster's own, nothing is uploaded; when they changed, the issuer is marked `Stale` and the upload planned. A cluster presenting another issuer is recreated, but only one whose namespace says `undercloud` and whose Installation has this name and id.
+The cluster, the installation and the Reef are kept, and the plan is made again. When the published keys are the cluster's own, nothing is uploaded; when they changed, the issuer is marked `Stale` and the upload planned. A cluster presenting another issuer is recreated, but only one whose namespace says `undercloud` and whose Installation has this name and id.
 
 ## Check it worked
 
@@ -85,4 +85,4 @@ The run ends with `✓ azure exchanged its token as tailwind-cloud-provisioner`.
 ## Learn more
 
 - [Undercloud and overcloud](../../concepts/undercloud-overcloud.md).
-- [Spec 0005](../../specs/0005-cloud-reef.md): the cloud reef and the issuer.
+- [Spec 0005](../../specs/0005-cloud-reef.md): the cloud Reef and the issuer.

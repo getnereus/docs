@@ -7224,9 +7224,9 @@
 
 <h1 id="the-cli-design">The CLI design<a class="headerlink" href="#the-cli-design" title="Permanent link">&para;</a></h1>
 <p>The target CLI, from the owner's voice session of 2026-10-25 (raw data in Drive <code>#pontos/raw/2026-10-25</code>, files 38 to 47; the flow in <code>last-terminal.html</code>). It wins over any legacy command: the commands of today's code (<code>platform ...</code>) are reference only, mapped below.</p>
-<p><strong>Every command lives in a deck, one per reef</strong> (#477): <code>docs/specs/cli/reefs/&lt;reef&gt;.yaml</code>, with a section per kind and the index in <code>docs/specs/cli/index.yaml</code>. The YAML is the source of truth, an outline of the deck engine (<code>docs/presentations/render-outline</code>, <a href="../decks/">Decks</a>); each command slide has a <code>status</code> (<code>built</code>, <code>planned</code> with its <code>issue</code>, or <code>idea</code>), shown as a tag after its label.</p>
-<p>A new command, or a change to one, goes into its reef's deck first, and the issue that builds it points to the slide (<code>reefs/edge.html#domain-get</code>). The get-started, release and edge decks in <code>docs/walkthrough/decks/</code> link each step to its command's slide; the engine refuses a link to a slide that does not exist.</p>
-<p><code>make decks</code> renders them all; <code>make deck-test</code> checks them and fails when an HTML is stale. The reefs not ported yet keep their commands in this page and in the walkthroughs.</p>
+<p><strong>Every command lives in a deck, one per Reef</strong> (#477): <code>docs/specs/cli/reefs/&lt;reef&gt;.yaml</code>, with a section per kind and the index in <code>docs/specs/cli/index.yaml</code>. The YAML is the source of truth, an outline of the deck engine (<code>docs/presentations/render-outline</code>, <a href="../decks/">Decks</a>); each command slide has a <code>status</code> (<code>built</code>, <code>planned</code> with its <code>issue</code>, or <code>idea</code>), shown as a tag after its label.</p>
+<p>A new command, or a change to one, goes into its Reef's deck first, and the issue that builds it points to the slide (<code>reefs/edge.html#domain-get</code>). The get-started, release and edge decks in <code>docs/walkthrough/decks/</code> link each step to its command's slide; the engine refuses a link to a slide that does not exist.</p>
+<p><code>make decks</code> renders them all; <code>make deck-test</code> checks them and fails when an HTML is stale. The Reefs not ported yet keep their commands in this page and in the walkthroughs.</p>
 <h2 id="the-words">The words<a class="headerlink" href="#the-words" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -7238,58 +7238,58 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>reef</strong></td>
-<td>A capability of the platform, an API group <code>&lt;reef&gt;.getnereus.dev/v1alpha1</code> (for example <code>secrets.getnereus.dev/v1alpha1</code>). A reef can exist with no Nereid; then it waits. <code>core</code> is built in.</td>
+<td><strong>Reef</strong></td>
+<td>A capability of the platform, an API group <code>&lt;reef&gt;.getnereus.dev/v1alpha1</code> (for example <code>secrets.getnereus.dev/v1alpha1</code>). A Reef can exist with no Nereid; then it waits. <code>core</code> is built in.</td>
 <td>Interface</td>
 </tr>
 <tr>
 <td><strong>Nereid</strong></td>
-<td>A controller installed in the platform, top-level, with a name global to the platform. One Nereid may look after many reefs (<code>--reef</code> repeats), and one reef may have many Nereids. It owns its authentication (for example <code>workload-identity</code>) and its default target parameters (for example a default <code>vaultUrl</code>). Its image is <code>&lt;reef&gt;-&lt;tool&gt;-controller</code>.</td>
+<td>A controller installed in the platform, top-level, with a name global to the platform. One Nereid may look after many Reefs (<code>--reef</code> repeats), and one Reef may have many Nereids. It owns its authentication (for example <code>workload-identity</code>) and its default target parameters (for example a default <code>vaultUrl</code>). Its image is <code>&lt;reef&gt;-&lt;tool&gt;-controller</code>.</td>
 <td>Implementation</td>
 </tr>
 <tr>
 <td><strong>Mandate</strong></td>
-<td>Binds one reef to one Nereid, top-level. It may override the Nereid's target parameters with <code>--param</code> (a Nereid may serve several vaults); <code>--default</code> makes it the reef's default; <code>--match &lt;key&gt;=&lt;value&gt;</code> picks it for the requests whose keys equal the values, the most specific match winning (ADR 0017, #1598).</td>
+<td>Binds one Reef to one Nereid, top-level. It may override the Nereid's target parameters with <code>--param</code> (a Nereid may serve several vaults); <code>--default</code> makes it the Reef's default; <code>--match &lt;key&gt;=&lt;value&gt;</code> picks it for the requests whose keys equal the values, the most specific match winning (ADR 0017, #1598).</td>
 <td>Class</td>
 </tr>
 <tr>
 <td><strong>tenancy</strong></td>
-<td>The reef that holds whose a thing is (ADR 0015): <code>tenancy.getnereus.dev/v1alpha1</code>, its kinds from each instance's <code>reefs/tenancy/</code> (here <code>Organization</code>, the boundary, and <code>Project</code>), every kind a node with <code>spec.parent: {kind, name}</code>. Its commands are ideas in <a href="../../specs/cli/reefs/tenancy.html">its deck</a> (#569) until #573 builds them.</td>
+<td>The Reef that holds whose a thing is (ADR 0015): <code>tenancy.getnereus.dev/v1alpha1</code>, its kinds from each instance's <code>reefs/tenancy/</code> (here <code>Organization</code>, the boundary, and <code>Project</code>), every kind a node with <code>spec.parent: {kind, name}</code>. Its commands are ideas in <a href="../../specs/cli/reefs/tenancy.html">its deck</a> (#569) until #573 builds them.</td>
 <td>none</td>
 </tr>
 <tr>
 <td><strong>catalog</strong></td>
-<td>The reef that says what Nereus has (ADR 0016): <code>catalog.getnereus.dev/v1alpha1</code>, its kinds <code>Workload</code> (what runs, the default kind, so <code>nereus catalog list</code> is <code>nereus catalog workload list</code>), <code>Package</code> (what is published), the configurable <code>WorkloadType</code> and <code>PackageType</code>, and <code>Template</code> (its <code>render</code> is the delivery deck's). Every entry names its <code>owner</code> and a Workload its <code>audience</code>; <code>source.ref</code> is structured as Flux's (<code>--ref &lt;field&gt;=&lt;value&gt;</code>, repeatable, never one string); <code>--audience none</code> is <code>audience: []</code>. Its commands are ideas in <a href="../../specs/cli/reefs/catalog.html">its deck</a> (#570) until #574 builds them.</td>
+<td>The Reef that says what Nereus has (ADR 0016): <code>catalog.getnereus.dev/v1alpha1</code>, its kinds <code>Workload</code> (what runs, the default kind, so <code>nereus catalog list</code> is <code>nereus catalog workload list</code>), <code>Package</code> (what is published), the configurable <code>WorkloadType</code> and <code>PackageType</code>, and <code>Template</code> (its <code>render</code> is the delivery deck's). Every entry names its <code>owner</code> and a Workload its <code>audience</code>; <code>source.ref</code> is structured as Flux's (<code>--ref &lt;field&gt;=&lt;value&gt;</code>, repeatable, never one string); <code>--audience none</code> is <code>audience: []</code>. Its commands are ideas in <a href="../../specs/cli/reefs/catalog.html">its deck</a> (#570) until #574 builds them.</td>
 <td>none</td>
 </tr>
 <tr>
 <td><strong>delivery</strong></td>
-<td>The reef that takes a Workload to an Environment (ADR 0020): <code>delivery.getnereus.dev/v1alpha1</code>, its kind <code>Delivery</code> (the default kind), one per pair. <code>nereus workload deploy</code> writes it, and the Nereid <code>kubernetes</code> resolves the image's digest and writes a <code>Release</code>. Its commands are planned in <a href="../../specs/cli/reefs/delivery.html">its deck</a> until #845 builds them.</td>
+<td>The Reef that takes a Workload to an Environment (ADR 0020): <code>delivery.getnereus.dev/v1alpha1</code>, its kind <code>Delivery</code> (the default kind), one per pair. <code>nereus workload deploy</code> writes it, and the Nereid <code>kubernetes</code> resolves the image's digest and writes a <code>Release</code>. Its commands are planned in <a href="../../specs/cli/reefs/delivery.html">its deck</a> until #845 builds them.</td>
 <td>none</td>
 </tr>
 <tr>
 <td><strong>database</strong></td>
-<td>The first resource reef (ADR 0017, #653): <code>database.getnereus.dev/v1alpha1</code>, its kind <code>Database</code> (the default kind, so <code>nereus database create</code>) with <code>owner: {kind, name}</code> in the tenancy tree, which must exist, and <code>engine</code> (<code>postgres</code>), in the nereus namespace only; the Nereid <code>cloudnative-pg</code> of its default Mandate <code>cloudnative-pg</code> (applied by the <code>internal-developer-platform</code> profile) writes in <code>status.binding.secret</code> the Secret of the connection.</td>
+<td>The first resource Reef (ADR 0017, #653): <code>database.getnereus.dev/v1alpha1</code>, its kind <code>Database</code> (the default kind, so <code>nereus database create</code>) with <code>owner: {kind, name}</code> in the tenancy tree, which must exist, and <code>engine</code> (<code>postgres</code>), in the nereus namespace only; the Nereid <code>cloudnative-pg</code> of its default Mandate <code>cloudnative-pg</code> (applied by the <code>internal-developer-platform</code> profile) writes in <code>status.binding.secret</code> the Secret of the connection.</td>
 <td>none</td>
 </tr>
 <tr>
 <td><strong>messaging</strong></td>
-<td>A resource reef (ADR 0017, #1597, the first cut of #576): <code>messaging.getnereus.dev/v1alpha1</code>, its kinds <code>Topic</code> and <code>Queue</code> (no default kind, so <code>nereus messaging topic create</code> and <code>nereus messaging queue create</code>; the agents' sessions moved to the rooms reef, #2076) with <code>owner: {kind, name}</code> in the tenancy tree, <code>engine</code> (<code>nats</code>) and <code>deletionPolicy</code> (<code>retain</code>, the default, or <code>delete</code>), in the nereus namespace only; the Nereid <code>nats</code> of the admin's default Mandate (<code>--param jetstream=true</code>) runs NATS next to it and writes in <code>status.binding.secret</code> the Secret <code>&lt;name&gt;-topic</code> or <code>&lt;name&gt;-queue</code>.</td>
+<td>A resource Reef (ADR 0017, #1597, the first cut of #576): <code>messaging.getnereus.dev/v1alpha1</code>, its kinds <code>Topic</code> and <code>Queue</code> (no default kind, so <code>nereus messaging topic create</code> and <code>nereus messaging queue create</code>; the agents' sessions moved to the rooms Reef, #2076) with <code>owner: {kind, name}</code> in the tenancy tree, <code>engine</code> (<code>nats</code>) and <code>deletionPolicy</code> (<code>retain</code>, the default, or <code>delete</code>), in the nereus namespace only; the Nereid <code>nats</code> of the admin's default Mandate (<code>--param jetstream=true</code>) runs NATS next to it and writes in <code>status.binding.secret</code> the Secret <code>&lt;name&gt;-topic</code> or <code>&lt;name&gt;-queue</code>.</td>
 <td>none</td>
 </tr>
 <tr>
 <td><strong>rooms</strong></td>
-<td>The reef of the conversation between agents (ADR 0030, #2067): <code>rooms.getnereus.dev/v1alpha1</code>, its kinds <code>Room</code> (the default kind, so <code>nereus rooms create</code>, <code>apply</code>, <code>list</code>, <code>get</code> and <code>delete</code>) and <code>Peer</code> (an agent's session in the rooms, <code>nereus rooms peer list</code> and <code>get</code>), with <code>nereus rooms join</code> and <code>leave</code> (#2075), <code>nereus rooms follow</code> and <code>pull</code> (#2076) and <code>post</code> (#1889). The Nereid <code>triton</code> requires the messaging reef and asks it for a Topic <code>room-&lt;room&gt;</code> per Room. <code>create</code>, <code>apply</code>, <code>list</code>, <code>get</code> and <code>delete</code> of a Room go through the Nereus API, asked on the Room's owner: a team's members create rooms owned by the team's owner, admins delete them (#1491), and a new room past the default Mandate's <code>maxRooms</code> (20) fails. Triton writes a <code>RoomSession</code> per room's activity, read with <code>nereus rooms session list</code> and <code>get</code> (#2100). Every command is in <a href="../../specs/cli/reefs/rooms.html">its deck</a>; the old names are mapped in <a href="#legacy-commands">Legacy commands</a>.</td>
+<td>The Reef of the conversation between agents (ADR 0030, #2067): <code>rooms.getnereus.dev/v1alpha1</code>, its kinds <code>Room</code> (the default kind, so <code>nereus rooms create</code>, <code>apply</code>, <code>list</code>, <code>get</code> and <code>delete</code>) and <code>Peer</code> (an agent's session in the rooms, <code>nereus rooms peer list</code> and <code>get</code>), with <code>nereus rooms join</code> and <code>leave</code> (#2075), <code>nereus rooms follow</code> and <code>pull</code> (#2076) and <code>post</code> (#1889). The Nereid <code>triton</code> requires the messaging Reef and asks it for a Topic <code>room-&lt;room&gt;</code> per Room. <code>create</code>, <code>apply</code>, <code>list</code>, <code>get</code> and <code>delete</code> of a Room go through the Nereus API, asked on the Room's owner: a team's members create rooms owned by the team's owner, admins delete them (#1491), and a new room past the default Mandate's <code>maxRooms</code> (20) fails. Triton writes a <code>RoomSession</code> per room's activity, read with <code>nereus rooms session list</code> and <code>get</code> (#2100). Every command is in <a href="../../specs/cli/reefs/rooms.html">its deck</a>; the old names are mapped in <a href="#legacy-commands">Legacy commands</a>.</td>
 <td>none</td>
 </tr>
 <tr>
 <td><strong>registry</strong></td>
-<td>The reef that runs a registry of images in the cluster (ADR 0021): <code>registry.getnereus.dev/v1alpha1</code>, its kinds <code>Registry</code> (the default kind) and <code>Repository</code> (#1013, its own push credential). The Nereid writes <code>status.pullAddress</code> for a node and <code>status.internalAddress</code> for a Pod. Not the Nereid registry (#22). See <a href="../../specs/cli/reefs/registry.html">its deck</a>.</td>
+<td>The Reef that runs a registry of images in the cluster (ADR 0021): <code>registry.getnereus.dev/v1alpha1</code>, its kinds <code>Registry</code> (the default kind) and <code>Repository</code> (#1013, its own push credential). The Nereid writes <code>status.pullAddress</code> for a node and <code>status.internalAddress</code> for a Pod. Not the Nereid registry (#22). See <a href="../../specs/cli/reefs/registry.html">its deck</a>.</td>
 <td>none</td>
 </tr>
 <tr>
 <td><strong>scm</strong></td>
-<td>The reef that holds what a source host is to Nereus (ADR "The scm reef", #927): <code>scm.getnereus.dev/v1alpha1</code>, its kind <code>Connection</code> (one organisation of a host, reached through the GitHub App that its scm Mandate's param <code>identity</code> names; the default kind). Who the platform is towards the host (the App, a short-lived <code>Token</code>) is the authentication reef's (ADR 0006). The <code>github</code> Nereid serves both reefs, opt-in. See <a href="../../specs/cli/reefs/scm.html">its deck</a>.</td>
+<td>The Reef that holds what a source host is to Nereus (ADR "The scm Reef", #927): <code>scm.getnereus.dev/v1alpha1</code>, its kind <code>Connection</code> (one organisation of a host, reached through the GitHub App that its scm Mandate's param <code>identity</code> names; the default kind). Who the platform is towards the host (the App, a short-lived <code>Token</code>) is the authentication Reef's (ADR 0006). The <code>github</code> Nereid serves both Reefs, opt-in. See <a href="../../specs/cli/reefs/scm.html">its deck</a>.</td>
 <td>none</td>
 </tr>
 <tr>
@@ -7427,19 +7427,19 @@ nereus config set check_interval 24h
 <li><strong>Examples:</strong> every command and group takes <code>--examples</code>, or <code>-e</code> (#674): each example after a <code># &lt;what it does&gt;</code> line, as tldr prints them; a group lists every command under it, each after a <code>## &lt;path&gt;</code> line, and <code>nereus --examples</code> lists the whole CLI. With <code>--output</code>, they come as data for agents: <code>command</code> and <code>description</code>, plus <code>path</code> on a group (#675). In code, <code>examples()</code> takes <code>(description, command)</code> pairs, and <code>cli/tests/test_help.py</code> requires a description for each.</li>
 <li><strong>Help:</strong> flat, Click's plain text, no Rich markup or colours (<code>TYPER_USE_RICH=0</code>, set in <code>cli/src/nereus/__init__.py</code>, #704). <code>nereus --help</code> lists its commands in sections <code>Platform</code>, <code>Session</code>, <code>Model</code> and <code>Reefs</code>, each sorted by name, one line per command; a new top-level command sets <code>short_help</code> (at most 60 characters) and <code>rich_help_panel</code> (one of those four), and <code>cli/tests/test_help.py</code> requires both.</li>
 <li><strong>Flags:</strong> <code>--param &lt;key&gt;=&lt;value&gt;</code> for every parameter (never <code>--set</code>); <code>--reef</code> and <code>--nereid</code> everywhere (never <code>--implements</code>), never prepositions (<code>--on-reef</code>, <code>--to-nereid</code>); examples use long-form options, one per line. <strong>Every long option also has a short one</strong> (owner, 2026-11-26): the docs and the examples show the long one, a person typing may use either (<code>-e</code> for <code>--examples</code>, <code>-o</code> for <code>--output</code>); <code>WITHOUT_SHORT</code> in <code>cli/tests/test_help.py</code> lists the long options still without one, a list that only shrinks, and a new long option with no short one fails the test.</li>
-<li><strong>Verbs:</strong> kubectl's, ADR 0013 (command conventions): <code>create</code> builds from flags and fails when the thing exists, <code>apply</code> creates or updates from files or folders of <code>.yaml</code> only (every former <code>add</code>), <code>delete</code> deletes, plus <code>get</code> and <code>list</code>; every noun takes all five, and every command that changes something takes <code>--dry-run</code>. <code>add</code> and <code>remove</code> are not verbs. Installing a reef or a Nereid by name (<code>nereus nereid apply &lt;nereid&gt;</code>) keeps today's form until #487 (the verb that installs a reef or a Nereid by name) decides it.</li>
+<li><strong>Verbs:</strong> kubectl's, ADR 0013 (command conventions): <code>create</code> builds from flags and fails when the thing exists, <code>apply</code> creates or updates from files or folders of <code>.yaml</code> only (every former <code>add</code>), <code>delete</code> deletes, plus <code>get</code> and <code>list</code>; every noun takes all five, and every command that changes something takes <code>--dry-run</code>. <code>add</code> and <code>remove</code> are not verbs. Installing a Reef or a Nereid by name (<code>nereus nereid apply &lt;nereid&gt;</code>) keeps today's form until #487 (the verb that installs a Reef or a Nereid by name) decides it.</li>
 <li>
-<p><strong>Output lines</strong> name the object by its full path, as Azure's resource ids do: the reef, then each kind in the plural and its name, parents before children, the platform's kinds under <code>core</code>, and end in <code>created</code>, <code>configured</code>, <code>unchanged</code> or <code>deleted</code>:</p>
+<p><strong>Output lines</strong> name the object by its full path, as Azure's resource ids do: the Reef, then each kind in the plural and its name, parents before children, the platform's kinds under <code>core</code>, and end in <code>created</code>, <code>configured</code>, <code>unchanged</code> or <code>deleted</code>:</p>
 <div class="language-text highlight"><pre><span></span><code>secrets/vaults/default/secrets/google-oauth created (key SHA256:Xy3…)
 release/releases/keycloak created
 core/mandates/default unchanged (reef: secrets, nereid: openbao, default)
 </code></pre></div>
 </li>
 <li>
-<p><strong>Delete waits, as kubectl's does (#526):</strong> an object whose Nereid keeps its cleanup finalizer (#525) stays until the Nereid removed what it made; meanwhile <code>list</code> and <code>get</code> show <code>Terminating</code> in the state column (computed by the CLI from <code>metadata.deletionTimestamp</code>, never written in status, ADR 0005; the <code>--output</code> forms carry the object as it is). <code>delete</code> waits until the object is gone, printing each step of <code>status.steps</code> as it changes (the time it changed, <code>✓</code> Done, <code>…</code> InProgress, <code>·</code> Pending, <code>✗</code> Failed, its name, its message), then the deleted line; a step <code>Failed</code> or <code>Ready=False</code> with <code>reason: CleanupFailed</code> ends it with exit 1 and <code>Next steps:</code> naming <code>get</code>. <code>--wait=false</code> (kubectl's spelling: <code>--wait</code> takes <code>true</code> or <code>false</code>) returns at once with <code>&lt;path&gt; is Terminating: &lt;nereid&gt; removes what it made.</code>; <code>--timeout</code> (seconds, as <code>get --watch</code>'s) ends the wait with a failure naming the step in progress, the object left as it is. <code>get --watch</code> prints the steps too, and stops once a Terminating object is gone. The shared part lives in <code>cli/src/nereus/reefkinds.py</code>, for every reef's commands.</p>
+<p><strong>Delete waits, as kubectl's does (#526):</strong> an object whose Nereid keeps its cleanup finalizer (#525) stays until the Nereid removed what it made; meanwhile <code>list</code> and <code>get</code> show <code>Terminating</code> in the state column (computed by the CLI from <code>metadata.deletionTimestamp</code>, never written in status, ADR 0005; the <code>--output</code> forms carry the object as it is). <code>delete</code> waits until the object is gone, printing each step of <code>status.steps</code> as it changes (the time it changed, <code>✓</code> Done, <code>…</code> InProgress, <code>·</code> Pending, <code>✗</code> Failed, its name, its message), then the deleted line; a step <code>Failed</code> or <code>Ready=False</code> with <code>reason: CleanupFailed</code> ends it with exit 1 and <code>Next steps:</code> naming <code>get</code>. <code>--wait=false</code> (kubectl's spelling: <code>--wait</code> takes <code>true</code> or <code>false</code>) returns at once with <code>&lt;path&gt; is Terminating: &lt;nereid&gt; removes what it made.</code>; <code>--timeout</code> (seconds, as <code>get --watch</code>'s) ends the wait with a failure naming the step in progress, the object left as it is. <code>get --watch</code> prints the steps too, and stops once a Terminating object is gone. The shared part lives in <code>cli/src/nereus/reefkinds.py</code>, for every Reef's commands.</p>
 </li>
 <li><strong>What a delete must respect lives behind the API (#874):</strong> the vcluster Nereid holds an Environment's finalizer while a Target names it and says why in the status, for any client; <code>nereus environment delete</code> checks first only to refuse early, and refuses when it cannot check.</li>
-<li><strong>Discovery (#839):</strong> a reef's commands come from a cache, as <code>kubectl</code>'s discovery. <code>nereus login</code> fills it from <code>GET /v1/discovery</code>, open to any signed-in person (the kubeconfig without sign-in); a run naming a reef refreshes it past one hour or from another instance; an unknown first word rediscovers once, then fails naming <code>nereus status</code>. <code>--help</code> and completion never call.</li>
+<li><strong>Discovery (#839):</strong> a Reef's commands come from a cache, as <code>kubectl</code>'s discovery. <code>nereus login</code> fills it from <code>GET /v1/discovery</code>, open to any signed-in person (the kubeconfig without sign-in); a run naming a Reef refreshes it past one hour or from another instance; an unknown first word rediscovers once, then fails naming <code>nereus status</code>. <code>--help</code> and completion never call.</li>
 <li>
 <p><strong>Next steps:</strong> every output ends with a <code>Next steps:</code> label, a blank line before and after it, and the command indented two spaces:</p>
 <div class="language-text highlight"><pre><span></span><code>core/reefs/secrets created (secrets.getnereus.dev/v1alpha1: secrets, secretbindings, vaults)
@@ -7451,7 +7451,7 @@ Next steps:
 </li>
 </ul>
 <h2 id="kinds">Kinds<a class="headerlink" href="#kinds" title="Permanent link">&para;</a></h2>
-<p>The platform's own kinds are <code>Reef</code>, <code>Nereid</code> and <code>Mandate</code>, in <code>core.getnereus.dev/v1alpha1</code>, owned by the <code>core</code> reef (ADR 0002, ADR 0009); a reef's own kinds live in <code>&lt;reef&gt;.getnereus.dev/v1alpha1</code>. Today's code applies these kinds in these groups (#20, #402): the <code>cloud</code> reef ships only its <code>Cloud</code> kind, and its Nereid's binding is a <code>Mandate</code>.</p>
+<p>The platform's own kinds are <code>Reef</code>, <code>Nereid</code> and <code>Mandate</code>, in <code>core.getnereus.dev/v1alpha1</code>, owned by the <code>core</code> Reef (ADR 0002, ADR 0009); a Reef's own kinds live in <code>&lt;reef&gt;.getnereus.dev/v1alpha1</code>. Today's code applies these kinds in these groups (#20, #402): the <code>cloud</code> Reef ships only its <code>Cloud</code> kind, and its Nereid's binding is a <code>Mandate</code>.</p>
 <p>Their fields:</p>
 <table>
 <thead>
@@ -7470,7 +7470,7 @@ Next steps:
 <tr>
 <td><code>Nereid</code></td>
 <td><code>spec.reefs</code></td>
-<td>the reefs it looks after (a list)</td>
+<td>the Reefs it looks after (a list)</td>
 </tr>
 <tr>
 <td><code>Nereid</code></td>
@@ -7485,7 +7485,7 @@ Next steps:
 <tr>
 <td><code>Mandate</code></td>
 <td><code>spec.reef</code>, <code>spec.nereid</code></td>
-<td>the reef and the Nereid it binds</td>
+<td>the Reef and the Nereid it binds</td>
 </tr>
 <tr>
 <td><code>Mandate</code></td>
@@ -7495,11 +7495,11 @@ Next steps:
 <tr>
 <td><code>Mandate</code></td>
 <td><code>spec.default</code></td>
-<td><code>true</code> for the reef's default Mandate</td>
+<td><code>true</code> for the Reef's default Mandate</td>
 </tr>
 </tbody>
 </table>
-<p>A reef's own objects key their entries by reef, never by Nereid: a <code>Cloud</code> access entry is <code>{reef: secrets, ...}</code>. Today's code uses <code>reef:</code> in those entries and <code>spec.reefs</code> (a list) on <code>Nereid</code>.</p>
+<p>A Reef's own objects key their entries by Reef, never by Nereid: a <code>Cloud</code> access entry is <code>{reef: secrets, ...}</code>. Today's code uses <code>reef:</code> in those entries and <code>spec.reefs</code> (a list) on <code>Nereid</code>.</p>
 <h2 id="listing">Listing<a class="headerlink" href="#listing" title="Permanent link">&para;</a></h2>
 <div class="language-text highlight"><pre><span></span><code>$ nereus status
 REEF     NEREID           VERSION  STATUS  AGE
@@ -7510,12 +7510,12 @@ $ nereus nereid list
 NEREID           REEFS    IMAGE                                                              STATUS  AGE
 azure-key-vault  secrets  ghcr.io/getnereus/nereus/secrets-azure-key-vault-controller:0.1.0  Ready   8m
 </code></pre></div>
-<p><code>nereus status</code> has one row per reef and Nereid pair; <code>nereus nereid list</code> one row per Nereid, its reefs comma-separated (ADR 0011). <code>nereus nereid get &lt;nereid&gt;</code> shows one Nereid in full, with the image's OCI labels <code>org.opencontainers.image.title</code> and <code>org.opencontainers.image.description</code> and its digest, which <code>nereid list</code> leaves out.</p>
-<p><code>STATUS</code> is computed by the CLI, not written by the Nereid (spec 0003, layer 2, #527): the Nereid's own <code>Ready</code> condition, unless its Controller has no pod serving (<code>Unavailable</code>, which wins) or it does not honour its reefs' kinds (<code>NotConformant</code>): a reef that exposes no kind has no <code>Ready</code> Nereid, unless it has none by design (<code>authentication</code>, <code>portal</code> and <code>metrics</code>, pinned in <code>contracts.REEFS_WITHOUT_KINDS</code>, #794), and a Nereid serves every kind its reef exposes, declared in its <code>status.kinds</code> as <code>&lt;plural&gt;.&lt;group&gt;</code>.</p>
-<p><code>core</code> is built in and always <code>Ready</code>; a reef with no Nereid is <code>Waiting</code>, unless it needs none by design: every CRD of the reef annotated <code>core.getnereus.dev/nereid: "none"</code> (the tenancy reef, whose objects the API keeps, ADR 0015; #651) makes its row <code>Ready</code> with <code>-</code> as its Nereid, and its <code>reason</code> says why.</p>
+<p><code>nereus status</code> has one row per Reef and Nereid pair; <code>nereus nereid list</code> one row per Nereid, its Reefs comma-separated (ADR 0011). <code>nereus nereid get &lt;nereid&gt;</code> shows one Nereid in full, with the image's OCI labels <code>org.opencontainers.image.title</code> and <code>org.opencontainers.image.description</code> and its digest, which <code>nereid list</code> leaves out.</p>
+<p><code>STATUS</code> is computed by the CLI, not written by the Nereid (spec 0003, layer 2, #527): the Nereid's own <code>Ready</code> condition, unless its Controller has no pod serving (<code>Unavailable</code>, which wins) or it does not honour its Reefs' kinds (<code>NotConformant</code>): a Reef that exposes no kind has no <code>Ready</code> Nereid, unless it has none by design (<code>authentication</code>, <code>portal</code> and <code>metrics</code>, pinned in <code>contracts.REEFS_WITHOUT_KINDS</code>, #794), and a Nereid serves every kind its Reef exposes, declared in its <code>status.kinds</code> as <code>&lt;plural&gt;.&lt;group&gt;</code>.</p>
+<p><code>core</code> is built in and always <code>Ready</code>; a Reef with no Nereid is <code>Waiting</code>, unless it needs none by design: every CRD of the Reef annotated <code>core.getnereus.dev/nereid: "none"</code> (the tenancy Reef, whose objects the API keeps, ADR 0015; #651) makes its row <code>Ready</code> with <code>-</code> as its Nereid, and its <code>reason</code> says why.</p>
 <p><code>nereus nereid get</code> prints why on a <code>Reason</code> line, <code>nereus status --output json|yaml</code> as the <code>reason</code> field of each row, and a command to a <code>NotConformant</code> Nereid is refused with that reason.</p>
 <h2 id="secrets-are-encrypted-on-the-client">Secrets are encrypted on the client<a class="headerlink" href="#secrets-are-encrypted-on-the-client" title="Permanent link">&para;</a></h2>
-<p>A mandatory capability of the <code>secrets</code> reef contract: every secrets Nereid publishes a public key for each Mandate naming it, in the Mandate's <code>status.publicKey</code>, and decrypts inside its own boundary. The CLI encrypts each secret locally with envelope encryption: an AES-256-GCM data key encrypts the value, and the Mandate's RSA-OAEP-256 public key wraps the data key.</p>
+<p>A mandatory capability of the <code>secrets</code> Reef contract: every secrets Nereid publishes a public key for each Mandate naming it, in the Mandate's <code>status.publicKey</code>, and decrypts inside its own boundary. The CLI encrypts each secret locally with envelope encryption: an AES-256-GCM data key encrypts the value, and the Mandate's RSA-OAEP-256 public key wraps the data key.</p>
 <p><code>nereus secrets create</code> uses the key of the Mandate it targets, the default one unless a Mandate is named. The CLI stays provider-agnostic; only the Nereid differs:</p>
 <table>
 <thead>
@@ -7557,7 +7557,7 @@ azure-key-vault  secrets  ghcr.io/getnereus/nereus/secrets-azure-key-vault-contr
 </tr>
 <tr>
 <td><code>platform init --target azure</code></td>
-<td><code>nereus init --target azure</code> (it also adds the secrets reef with Azure Key Vault, its default <code>default</code> Mandate, its RSA key and the vault <code>default</code>, ADR 0003)</td>
+<td><code>nereus init --target azure</code> (it also adds the secrets Reef with Azure Key Vault, its default <code>default</code> Mandate, its RSA key and the vault <code>default</code>, ADR 0003)</td>
 </tr>
 <tr>
 <td><code>platform system</code> interface, install, uninstall, implementation</td>
@@ -7581,11 +7581,11 @@ azure-key-vault  secrets  ghcr.io/getnereus/nereus/secrets-azure-key-vault-contr
 </tr>
 <tr>
 <td><code>platform release ...</code>, <code>platform helm repo ...</code>, <code>platform namespace ...</code>, <code>platform cloud ...</code></td>
-<td>The reef's own commands: <code>nereus &lt;reef&gt; &lt;verb&gt;</code></td>
+<td>The Reef's own commands: <code>nereus &lt;reef&gt; &lt;verb&gt;</code></td>
 </tr>
 <tr>
 <td><code>platform login</code>, <code>platform user ...</code></td>
-<td>Old form, no new form: users come through SSO (authentication reef); <code>nereus user</code> commands will be designed when Nereus needs them</td>
+<td>Old form, no new form: users come through SSO (authentication Reef); <code>nereus user</code> commands will be designed when Nereus needs them</td>
 </tr>
 <tr>
 <td>none</td>
@@ -7593,7 +7593,7 @@ azure-key-vault  secrets  ghcr.io/getnereus/nereus/secrets-azure-key-vault-contr
 </tr>
 </tbody>
 </table>
-<p>The commands of the room moved under the rooms reef (#2076, #2075). Each old name is hidden from the help and prints one line, <code>&lt;old&gt; moved: run \</code><new>`<code>, exiting 2;</code>nereus room pull<code>stays a silent alias, since the hooks of sessions started before #2076 run it, and</code>nereus mcp local add` rewrites those hooks.</p>
+<p>The commands of the room moved under the rooms Reef (#2076, #2075). Each old name is hidden from the help and prints one line, <code>&lt;old&gt; moved: run \</code><new>`<code>, exiting 2;</code>nereus room pull<code>stays a silent alias, since the hooks of sessions started before #2076 run it, and</code>nereus mcp local add` rewrites those hooks.</p>
 <table>
 <thead>
 <tr>
@@ -7623,9 +7623,9 @@ azure-key-vault  secrets  ghcr.io/getnereus/nereus/secrets-azure-key-vault-contr
 <h2 id="first-implementation-step">First implementation step<a class="headerlink" href="#first-implementation-step" title="Permanent link">&para;</a></h2>
 <p>Before any command of this design is built, the code's binary <code>platform</code> became <code>nereus</code> and the MCP server's name <code>platform-mcp</code> became <code>nereus-mcp</code> (#396; the names live in <code>cli/src/nereus/names.py</code> and one build setting, <code>docs/agent/rules.md</code>), so the legacy commands now run as <code>nereus system ...</code>, <code>nereus config ...</code>. The sequence after that:</p>
 <ul>
-<li>The kinds <code>Interface</code>, <code>Implementation</code> and the per-reef classes (<code>CloudClass</code>) became <code>Reef</code>, <code>Nereid</code> and <code>Mandate</code> in <code>core.getnereus.dev/v1alpha1</code> (#402).</li>
-<li><code>nereus init</code> with no target came with the secrets reef, the <code>openbao</code> Nereid, the default <code>vault</code> Mandate and its public key (#404).</li>
-<li><code>nereus nereid apply keycloak --reef authentication</code> (then a legacy alias under <code>system</code>) added the authentication reef's local Nereid, the authorization server of the claude.ai connector (#407).</li>
+<li>The kinds <code>Interface</code>, <code>Implementation</code> and the per-Reef classes (<code>CloudClass</code>) became <code>Reef</code>, <code>Nereid</code> and <code>Mandate</code> in <code>core.getnereus.dev/v1alpha1</code> (#402).</li>
+<li><code>nereus init</code> with no target came with the secrets Reef, the <code>openbao</code> Nereid, the default <code>vault</code> Mandate and its public key (#404).</li>
+<li><code>nereus nereid apply keycloak --reef authentication</code> (then a legacy alias under <code>system</code>) added the authentication Reef's local Nereid, the authorization server of the claude.ai connector (#407).</li>
 <li><code>nereus reef create|apply|list|delete</code>, <code>nereus nereid apply|list|get|delete</code>, <code>nereus mandate create|apply|list</code> and <code>nereus status</code> came, with <code>nereus status --output json</code> as the contract of the first MCP tool, <code>status</code>, served today by the Nereus API's <code>/mcp</code> (#409, ADR 0029).</li>
 <li><code>nereus reef get</code>, <code>nereus nereid create</code>, <code>nereus mandate get</code> and <code>nereus mandate delete</code> completed the five verbs, and the legacy aliases of <code>nereus system</code> went (#410).</li>
 </ul>

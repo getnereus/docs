@@ -2609,7 +2609,7 @@
   <a href="#1-declare-the-reef-in-labels" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Declare the reef in labels
+        1. Declare the Reef in labels
       
     </span>
   </a>
@@ -7200,7 +7200,7 @@
   <a href="#1-declare-the-reef-in-labels" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Declare the reef in labels
+        1. Declare the Reef in labels
       
     </span>
   </a>
@@ -7310,16 +7310,16 @@
 
 
 <h1 id="build-a-nereids-image">Build a Nereid's image<a class="headerlink" href="#build-a-nereids-image" title="Permanent link">&para;</a></h1>
-<p>Build a Nereid's image whose labels name its reef, push it to the local registry and apply it: the CLI reads the labels before anything runs in the cluster.</p>
+<p>Build a Nereid's image whose labels name its Reef, push it to the local registry and apply it: the CLI reads the labels before anything runs in the cluster.</p>
 <h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">&para;</a></h2>
 <ul>
 <li>A cluster from <a href="../../../start/init/">Prepare the cluster</a>: <code>nereus init</code> creates the local registry <code>localhost:5111</code>.</li>
-<li>The reef applied, here <code>release</code>: <a href="../../../start/first-reef/">Apply your first reef</a>.</li>
+<li>The Reef applied, here <code>release</code>: <a href="../../../start/first-reef/">Apply your first Reef</a>.</li>
 <li>Docker, to build and push. The example is the reference Nereid of <code>controllers/reference</code>, whose commands only simulate output.</li>
 </ul>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
-<h3 id="1-declare-the-reef-in-labels">1. Declare the reef in labels<a class="headerlink" href="#1-declare-the-reef-in-labels" title="Permanent link">&para;</a></h3>
-<p>The <code>Dockerfile</code> names the reef the Nereid looks after, the reefs it requires, its name and its version:</p>
+<h3 id="1-declare-the-reef-in-labels">1. Declare the Reef in labels<a class="headerlink" href="#1-declare-the-reef-in-labels" title="Permanent link">&para;</a></h3>
+<p>The <code>Dockerfile</code> names the Reef the Nereid looks after, the Reefs it requires, its name and its version:</p>
 <div class="language-dockerfile highlight"><pre><span></span><code><span class="k">LABEL</span><span class="w"> </span><span class="si">${</span><span class="nv">API_GROUP</span><span class="si">}</span>/reef<span class="o">=</span><span class="si">${</span><span class="nv">REEF</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
 <span class="w">      </span><span class="si">${</span><span class="nv">API_GROUP</span><span class="si">}</span>/requires<span class="o">=</span><span class="si">${</span><span class="nv">REQUIRES</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
 <span class="w">      </span><span class="si">${</span><span class="nv">API_GROUP</span><span class="si">}</span>/nereid<span class="o">=</span><span class="si">${</span><span class="nv">NEREID</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
@@ -7337,7 +7337,7 @@
 <span class="w">      </span><span class="nt">help</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">URL of the repository.</span>
 </code></pre></div>
 <h3 id="2-build-and-push">2. Build and push<a class="headerlink" href="#2-build-and-push" title="Permanent link">&para;</a></h3>
-<p><code>make reference</code> builds the image for the <code>release</code> reef and pushes it; a Nereid from the template builds with <code>make nereids</code>.</p>
+<p><code>make reference</code> builds the image for the <code>release</code> Reef and pushes it; a Nereid from the template builds with <code>make nereids</code>.</p>
 <div class="language-bash highlight"><pre><span></span><code>make<span class="w"> </span>reference
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ localhost:5111/reference-release-controller:0.1.0 pushed: nereus nereid apply --image localhost:5111/reference-release-controller:0.1.0
@@ -7370,23 +7370,23 @@ Nothing changed (--dry-run).
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ core/nereids/reference-release configured, Ready, pinned to sha256:3f2a9c1d7e4b (was sha256:ffb8e8957c6e): see 'nereus release --help'
 </code></pre></div>
 <h2 id="check-it-worked">Check it worked<a class="headerlink" href="#check-it-worked" title="Permanent link">&para;</a></h2>
-<p><a href="../../../specs/cli/core.html#nereid-list"><code>nereus nereid list</code></a> shows the Nereid <code>Ready</code> on its reef:</p>
+<p><a href="../../../specs/cli/core.html#nereid-list"><code>nereus nereid list</code></a> shows the Nereid <code>Ready</code> on its Reef:</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>nereid<span class="w"> </span>list
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>NEREID             REEFS    IMAGE                                                 STATUS  AGE
 reference-release  release  localhost:5111/reference-release-controller:0.1.0     Ready   10s
 openbao            secrets  localhost:5111/openbao-controller:0.1.0               Ready   1m
 </code></pre></div>
-<p>The commands it published are under its reef: <code>nereus release --help</code>.</p>
+<p>The commands it published are under its Reef: <code>nereus release --help</code>.</p>
 <h2 id="clean-up">Clean up<a class="headerlink" href="#clean-up" title="Permanent link">&para;</a></h2>
-<p><a href="../../../specs/cli/core.html#nereid-delete"><code>nereus nereid delete</code></a> removes it; its reef stays.</p>
+<p><a href="../../../specs/cli/core.html#nereid-delete"><code>nereus nereid delete</code></a> removes it; its Reef stays.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>nereid<span class="w"> </span>delete<span class="w"> </span>reference-release
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✓ core/nereids/reference-release deleted
 </code></pre></div>
 <h2 id="next">Next<a class="headerlink" href="#next" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../requires/">Require a reef</a>: a label that makes one Nereid depend on another reef.</li>
+<li><a href="../requires/">Require a Reef</a>: a label that makes one Nereid depend on another Reef.</li>
 <li><a href="../conformance/">Pass the conformance tests</a>.</li>
 </ul>
 <h2 id="learn-more">Learn more<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>

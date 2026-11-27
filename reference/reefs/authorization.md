@@ -1,15 +1,15 @@
-# The authorization reef
+# The authorization Reef
 
 Every command of the first slice: Users, teams, roles and bindings, and who may do what.
 
 ## Commands
 
-- [`nereus reef apply authorization`](../../specs/cli/reefs/authorization.html#reef-apply) The authorization reef brings roles and bindings
+- [`nereus reef apply authorization`](../../specs/cli/reefs/authorization.html#reef-apply) The authorization Reef brings roles and bindings
 - [`nereus profile apply internal-developer-platform`](../../specs/cli/reefs/authorization.html#nereid-apply) openfga answers who may do what
 - [`nereus user create ana`](../../specs/cli/reefs/authorization.html#user-create) A person is one User, whatever the login
 - [`nereus user list`](../../specs/cli/reefs/authorization.html#user-list) Every User, and how many identities each has
 - [`nereus authorization role list`](../../specs/cli/reefs/authorization.html#role-list) One built-in role, four examples to edit
-- [`nereus authorization role get team-lead`](../../specs/cli/reefs/authorization.html#role-get) A role is a list of rules: reef, kinds, verbs
+- [`nereus authorization role get team-lead`](../../specs/cli/reefs/authorization.html#role-get) A role is a list of rules: Reef, kinds, verbs
 - [`nereus authorization role create release-manager`](../../specs/cli/reefs/authorization.html#role-create) A new role takes the words the CLI already uses
 - [`nereus authorization role delete administrator`](../../specs/cli/reefs/authorization.html#role-delete) The administrator role cannot be deleted
 - [`nereus authorization binding create payments-developers`](../../specs/cli/reefs/authorization.html#binding-team) A binding gives a role to a team on a node
@@ -35,7 +35,7 @@ Every command of the first slice: Users, teams, roles and bindings, and who may 
 
 ### reef-apply
 
-The kinds of the reef.
+The kinds of the Reef.
 
 ```bash
 nereus reef apply authorization

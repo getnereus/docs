@@ -7140,13 +7140,13 @@
 
 
 <h1 id="look-around">Look around<a class="headerlink" href="#look-around" title="Permanent link">&para;</a></h1>
-<p>See what the new installation holds before you add anything: its reefs and the Nereids that look after them.</p>
+<p>See what the new installation holds before you add anything: its Reefs and the Nereids that look after them.</p>
 <h2 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h2>
-<p>See how each reef is doing, one row per reef and Nereid: <a href="../../specs/cli/core.html#status"><code>nereus status</code></a></p>
+<p>See how each Reef is doing, one row per Reef and Nereid: <a href="../../specs/cli/core.html#status"><code>nereus status</code></a></p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>status
 </code></pre></div>
 <p>On core alone there are two rows, <code>core</code> and <code>tenancy</code>, both <code>Ready</code>.</p>
-<p>List the reefs: <a href="../../specs/cli/core.html#reef-list"><code>nereus reef list</code></a></p>
+<p>List the Reefs: <a href="../../specs/cli/core.html#reef-list"><code>nereus reef list</code></a></p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>reef<span class="w"> </span>list
 </code></pre></div>
 <p><code>tenancy</code> is the only one, with <code>-</code> under <code>NEREIDS</code>: the Nereus API keeps its objects itself, so no Nereid serves it.</p>
@@ -7156,11 +7156,11 @@
 <p>There are none yet; the line it prints points to <code>nereus nereid apply --help</code>.</p>
 <h2 id="what-you-get">What you get<a class="headerlink" href="#what-you-get" title="Permanent link">&para;</a></h2>
 <ul>
-<li>A map of the installation: a reef is a capability with its own API group, a Nereid is the controller that looks after it (<a href="../../concepts/model/">Reef, Nereid and Mandate</a>).</li>
-<li>These commands read the cluster with your kubeconfig, since core alone offers no sign-in; once an installation has the authentication reef, they read through the Nereus API and ask for <code>nereus login</code> first.</li>
+<li>A map of the installation: a Reef is a capability with its own API group, a Nereid is the controller that looks after it (<a href="../../concepts/model/">Reef, Nereid and Mandate</a>).</li>
+<li>These commands read the cluster with your kubeconfig, since core alone offers no sign-in; once an installation has the authentication Reef, they read through the Nereus API and ask for <code>nereus login</code> first.</li>
 </ul>
 <h2 id="next">Next<a class="headerlink" href="#next" title="Permanent link">&para;</a></h2>
-<p><a href="../first-reef/">Apply a reef and its Nereid</a>.</p>
+<p><a href="../first-reef/">Apply a Reef and its Nereid</a>.</p>
 
 
 

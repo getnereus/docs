@@ -7141,7 +7141,7 @@
 </div>
 <p><strong>Status:</strong> Accepted (2026-10-17)</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
-<p>The first slice (spec 0001) needs a CLI that talks to a cluster and builds command groups at runtime from what reefs and Nereids publish (ADR 0004). Go gives one static binary and the <code>kubectl</code>/<code>helm</code>/<code>k3d</code> toolchain (<code>client-go</code>, <code>cobra</code>); Python gives a faster start and simpler dynamic command building.</p>
+<p>The first slice (spec 0001) needs a CLI that talks to a cluster and builds command groups at runtime from what Reefs and Nereids publish (ADR 0004). Go gives one static binary and the <code>kubectl</code>/<code>helm</code>/<code>k3d</code> toolchain (<code>client-go</code>, <code>cobra</code>); Python gives a faster start and simpler dynamic command building.</p>
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
 <p>The CLI is written in Python, managed with <code>uv</code>, with <code>typer</code> for commands and the official <code>kubernetes</code> client for the cluster. The binary name is set in one place: the <code>[project.scripts]</code> entry of <code>pyproject.toml</code> (<code>platform</code> in today's code, <code>nereus</code> in the new design).</p>
 <h2 id="consequences">Consequences<a class="headerlink" href="#consequences" title="Permanent link">&para;</a></h2>
@@ -7150,7 +7150,7 @@
 <li>Users need a Python runtime; <code>uv tool install</code> covers it. Distribution as a single binary is harder and is revisited before the project is opened.</li>
 <li>The fake Controller (spec 0001) can share the language, but it does not have to: it only speaks HTTP and writes <code>status</code>.</li>
 </ul>
-<p><em>Aligned in wording 2026-10-25 from voice session (reef, Nereid, Mandate, <code>nereus</code>); raw data in Drive #pontos/raw/2026-10-25.</em></p>
+<p><em>Aligned in wording 2026-10-25 from voice session (Reef, Nereid, Mandate, <code>nereus</code>); raw data in Drive #pontos/raw/2026-10-25.</em></p>
 
 
 

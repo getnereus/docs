@@ -48,7 +48,7 @@ Every key lives under `spec` of the `InitConfig` document.
 
 `ingressPort` is the host port of the cluster's ingress gateway, from 1 to 65535, mapped on the loopback only to port 80 of the load balancer of a cluster `init` creates.
 
-`cloud` names the Nereid of the cloud reef whose cloud the cluster bootstraps. It is absent for a local `k3d` cluster, and it cannot be `k3d`.
+`cloud` names the Nereid of the cloud Reef whose cloud the cluster bootstraps. It is absent for a local `k3d` cluster, and it cannot be `k3d`.
 
 `undercloud.create` creates the cluster, or reuses it when it exists. `undercloud.name` is the name of the cluster to create.
 

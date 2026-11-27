@@ -7156,36 +7156,36 @@
   
 
 
-<h1 id="0030-triton-is-the-rooms-reefs-nereid-room-and-peer-on-a-topic-of-the-messaging-reef-reached-only-through-the-nereus-api">0030. Triton is the rooms reef's Nereid: Room and Peer, on a Topic of the messaging reef, reached only through the Nereus API<a class="headerlink" href="#0030-triton-is-the-rooms-reefs-nereid-room-and-peer-on-a-topic-of-the-messaging-reef-reached-only-through-the-nereus-api" title="Permanent link">&para;</a></h1>
+<h1 id="0030-triton-is-the-rooms-reefs-nereid-room-and-peer-on-a-topic-of-the-messaging-reef-reached-only-through-the-nereus-api">0030. Triton is the rooms Reef's Nereid: Room and Peer, on a Topic of the messaging Reef, reached only through the Nereus API<a class="headerlink" href="#0030-triton-is-the-rooms-reefs-nereid-room-and-peer-on-a-topic-of-the-messaging-reef-reached-only-through-the-nereus-api" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
 <p class="admonition-title">In short</p>
-<p>The conversation between agents is a reef of its own, <code>rooms</code> (<code>Room</code>, <code>Peer</code>), looked after by Triton, which requires the <code>messaging</code> reef and asks it for a Topic per Room. Triton is an internal service reached only through the Nereus API. Status: Accepted.</p>
+<p>The conversation between agents is a Reef of its own, <code>rooms</code> (<code>Room</code>, <code>Peer</code>), looked after by Triton, which requires the <code>messaging</code> Reef and asks it for a Topic per Room. Triton is an internal service reached only through the Nereus API. Status: Accepted.</p>
 </div>
 <p><strong>Status:</strong> Accepted</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
 <p>The goal of Triton and NATS was always one thing: agents on different machines talk to each other as if they were on the same machine, with peers, rooms and Claude Code's cross-session messaging (owner, 2026-11-21; journey #1890 proves it for two people).</p>
-<p>The first form of this ADR (2026-11-18) made Triton a second Nereid of the <code>messaging</code> reef, beside <code>nats</code>, and said that swapping the engine keeps the rooms. Checked on 2026-11-21, on the kept cluster and in the code:</p>
+<p>The first form of this ADR (2026-11-18) made Triton a second Nereid of the <code>messaging</code> Reef, beside <code>nats</code>, and said that swapping the engine keeps the rooms. Checked on 2026-11-21, on the kept cluster and in the code:</p>
 <ul>
-<li><strong>Nobody uses the engine's kinds.</strong> The reef has <code>Topic</code> and <code>Queue</code>, both reconciled by <code>nats</code>; the cluster holds none of either.</li>
-<li><strong>Triton does not use the reef.</strong> It opens its own JetStream streams (<code>rooms.&lt;room&gt;</code>, <code>controllers/triton/rooms.py</code>) and two KV buckets (<code>orders</code>, <code>agents</code>) in a NATS account of its own, <code>AGENTS</code>.</li>
+<li><strong>Nobody uses the engine's kinds.</strong> The Reef has <code>Topic</code> and <code>Queue</code>, both reconciled by <code>nats</code>; the cluster holds none of either.</li>
+<li><strong>Triton does not use the Reef.</strong> It opens its own JetStream streams (<code>rooms.&lt;room&gt;</code>, <code>controllers/triton/rooms.py</code>) and two KV buckets (<code>orders</code>, <code>agents</code>) in a NATS account of its own, <code>AGENTS</code>.</li>
 <li><strong>The engine knows its client by name.</strong> A Mandate's <code>agents=true</code> makes the <code>nats</code> Nereid write the account <code>AGENTS</code> and the user <code>triton</code>.</li>
-<li><strong>Triton declares no required reef</strong> in its image, though it needs the NATS the <code>nats</code> Nereid runs.</li>
-<li><strong>Triton reconciles no kind,</strong> so <code>nereus nereid list</code> shows it <code>NotConformant</code>: a Nereid reconciles every kind of each reef it looks after (#2065), and a <code>Room</code> kind in <code>messaging</code> would make <code>nats</code> not conformant instead.</li>
+<li><strong>Triton declares no required Reef</strong> in its image, though it needs the NATS the <code>nats</code> Nereid runs.</li>
+<li><strong>Triton reconciles no kind,</strong> so <code>nereus nereid list</code> shows it <code>NotConformant</code>: a Nereid reconciles every kind of each Reef it looks after (#2065), and a <code>Room</code> kind in <code>messaging</code> would make <code>nats</code> not conformant instead.</li>
 <li><strong>A session's presence is a key in the bucket <code>agents</code>,</strong> one revision per change of state; its heartbeats stay in memory.</li>
 </ul>
 <p>So the engine's swap kept nothing: the rooms were NATS streams by another name. What an agent on another machine lives through is the same whatever the shape: the CLI's bridge, the Nereus API, Triton, over HTTPS; no machine reaches NATS (#1599).</p>
-<p>ADR 0018 makes the Nereus API the one door, and ADR 0029 has the API serve <code>/mcp</code> with the tools the reefs declare in their contract.</p>
+<p>ADR 0018 makes the Nereus API the one door, and ADR 0029 has the API serve <code>/mcp</code> with the tools the Reefs declare in their contract.</p>
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
 <p><strong>The measure of the feature</strong> (owner, 2026-11-22): a Nereus user creates a room, and their agent joins it beside a teammate's agent. No extra configuration, no paperwork, no request to an admin, no change to Nereus's settings. Every step below is checked against it, and an end-to-end scene with two ordinary users, neither of them an admin, is its acceptance test.</p>
 <p><strong>The flow, as a person lives it:</strong></p>
 <ol>
 <li>Ana creates the room: <code>nereus rooms create ops</code>. Without a name, the room takes the repository's name; without <code>--owner</code>, her own team (the token's <code>nereus_owner</code>). The API checks that she may create it, as it checks a Topic.</li>
-<li>Triton sees the Room and asks the messaging reef for a Topic <code>room-ops</code>; the <code>nats</code> Nereid makes the stream and a NATS user of the owner, and gives the credential back in a binding beside the Topic; Triton opens the room with it. The Room is <code>Ready</code>, with no agent in it.</li>
+<li>Triton sees the Room and asks the messaging Reef for a Topic <code>room-ops</code>; the <code>nats</code> Nereid makes the stream and a NATS user of the owner, and gives the credential back in a binding beside the Topic; Triton opens the room with it. The Room is <code>Ready</code>, with no agent in it.</li>
 <li>Ana and Bruno each run <code>nereus rooms list</code>, see <code>ops</code>, and run <code>nereus rooms join ops</code>. The join registers their Peer with <code>ops</code> in <code>spec.rooms</code>.</li>
 <li>When a room goes from no agent to one, a new <strong>room session</strong> starts; it ends when the last agent leaves, and its data is kept for analysis afterwards (below).</li>
 <li>Their agents post and read through the CLI's MCP server, the API and Triton; a hook brings each new message into the session's context.</li>
 </ol>
-<p><strong>Who may create a Room is the authorization reef's answer on the Room's <code>spec.owner</code>,</strong> and the profile installs what lets a member of a team create Rooms owned by that team (owner, 2026-11-22): a grant of the authorization reef, either a Role and its Binding seeded with the reef or a rule the openfga Nereid computes, as it does for a Session's staff (#1727); #1491 settles which. It is a setting of the installation, made once, not a request to an admin: without it only <code>nereus-admins</code> could create a Room, and the measure of the feature would fail. Policies will refine it later (owner, 2026-11-22), outside the journey #2067, as the hard and soft gates of <em>Thinking in Platforms</em>: a hard gate refuses, a soft gate lets an ordinary user ask and waits for an admin's approval, the Room standing in a pending phase (its name to be decided) until then; which part is the authorization engine's (OpenFGA) and which is a policy's is to be worked out.</p>
+<p><strong>Who may create a Room is the authorization Reef's answer on the Room's <code>spec.owner</code>,</strong> and the profile installs what lets a member of a team create Rooms owned by that team (owner, 2026-11-22): a grant of the authorization Reef, either a Role and its Binding seeded with the Reef or a rule the openfga Nereid computes, as it does for a Session's staff (#1727); #1491 settles which. It is a setting of the installation, made once, not a request to an admin: without it only <code>nereus-admins</code> could create a Room, and the measure of the feature would fail. Policies will refine it later (owner, 2026-11-22), outside the journey #2067, as the hard and soft gates of <em>Thinking in Platforms</em>: a hard gate refuses, a soft gate lets an ordinary user ask and waits for an admin's approval, the Room standing in a pending phase (its name to be decided) until then; which part is the authorization engine's (OpenFGA) and which is a policy's is to be worked out.</p>
 <p><strong><code>nereus rooms join</code> is one command, wherever it runs</strong> (owner, 2026-11-22). It takes the room as its argument, the repository's name without one, and <code>nereus rooms session create</code> and its <code>--room</code> go:</p>
 <ul>
 <li><strong>Outside Claude Code,</strong> it does what <code>session create</code> did: it draws the agent's name, registers the Peer and opens Claude Code with the Nereus MCP server's <code>rooms</code> tools on.</li>
@@ -7201,7 +7201,7 @@ $ nereus rooms leave ops
 doto left the room ops
 </code></pre></div>
 <p><strong>An agent leaves a room two ways</strong> (owner, 2026-11-22): <code>nereus rooms leave &lt;room&gt;</code> takes the room off its Peer at once, inside or outside Claude Code as <code>join</code> does, so an agent changes rooms with its session open; and its session ending takes it out of every room (the heartbeats stop, the Peer goes <code>Away</code>).</p>
-<p><strong>A room session is a <code>RoomSession</code> in the cluster</strong> (owner, 2026-11-22, narrowed 2026-11-23 in #2100). Beside its Room and written by Triton, it says who came and went, when, and how many messages were posted. Its messages stay on the Topic while the Topic's own retention (<code>maxAge</code>, short) keeps them: no file, no Drive and no automatic delete. Keeping the history goes with #1269 (history out of etcd) and #2099 (the observability reef, VictoriaLogs first, Drive as an export).</p>
+<p><strong>A room session is a <code>RoomSession</code> in the cluster</strong> (owner, 2026-11-22, narrowed 2026-11-23 in #2100). Beside its Room and written by Triton, it says who came and went, when, and how many messages were posted. Its messages stay on the Topic while the Topic's own retention (<code>maxAge</code>, short) keeps them: no file, no Drive and no automatic delete. Keeping the history goes with #1269 (history out of etcd) and #2099 (the observability Reef, VictoriaLogs first, Drive as an export).</p>
 <p><strong>The CLI is the agent's MCP server, with groups of tools</strong> (owner, 2026-11-22: "the Nereus MCP server with different tools that can be turned on or not by calling the CLI"). Today <code>session create</code> passes the bridge (<code>--mcp-config</code>) and the pull hooks (<code>--settings</code>) to each Claude Code it opens, so a session already open cannot join. Instead:</p>
 <ul>
 <li><code>nereus mcp local add</code> registers, once and in the user's scope, one MCP server, <code>nereus mcp local serve</code>, and the hooks, as <code>claude mcp add</code> does for any server; <code>nereus rooms join</code> runs it when it is missing.</li>
@@ -7210,13 +7210,13 @@ doto left the room ops
 <li>The <code>rooms</code> group is today's bridge: it holds the person's token (refreshed, never in the session's argv or environment), names the agent in <code>Nereus-Agent</code>, lets through the peer tools only, and sends the heartbeat that makes the Peer <code>Ready</code>; with the session in no room it sends none.</li>
 </ul>
 <p>This server is local and serves an agent on its machine; the API's <code>/mcp</code> below is a remote one, for a person in claude.ai. The word <code>local</code> keeps the two apart in the CLI (owner, 2026-11-22): <code>nereus mcp tool</code> and <code>nereus mcp client</code> stay the remote <code>/mcp</code>'s.</p>
-<p><strong>Two small reefs, composed</strong> (owner, 2026-11-21). <code>messaging</code> is the engine's reef: <code>Topic</code> and <code>Queue</code>, looked after by <code>nats</code>. <code>rooms</code> is the conversation's reef: <code>Room</code> and <code>Peer</code>, looked after by <code>triton</code>. Each Nereid reconciles every kind of its reef, with no exemption. Triton looks after <code>rooms</code> only: <code>messaging</code> leaves its <code>spec.reefs</code> and stays as the reef it requires, so it never answers for <code>Topic</code> or <code>Queue</code>.</p>
-<p><strong>Triton knows the contract, not the engine</strong> (owner, 2026-11-21: "it only needs to understand the contract and depend on the reef"). Its image declares <code>requires=messaging</code>, as keycloak's declares <code>secrets</code>, so a profile installs the engine first and refuses to leave it out. There are two planes:</p>
+<p><strong>Two small Reefs, composed</strong> (owner, 2026-11-21). <code>messaging</code> is the engine's Reef: <code>Topic</code> and <code>Queue</code>, looked after by <code>nats</code>. <code>rooms</code> is the conversation's Reef: <code>Room</code> and <code>Peer</code>, looked after by <code>triton</code>. Each Nereid reconciles every kind of its Reef, with no exemption. Triton looks after <code>rooms</code> only: <code>messaging</code> leaves its <code>spec.reefs</code> and stays as the Reef it requires, so it never answers for <code>Topic</code> or <code>Queue</code>.</p>
+<p><strong>Triton knows the contract, not the engine</strong> (owner, 2026-11-21: "it only needs to understand the contract and depend on the Reef"). Its image declares <code>requires=messaging</code>, as keycloak's declares <code>secrets</code>, so a profile installs the engine first and refuses to leave it out. There are two planes:</p>
 <ul>
-<li><strong>The control plane is the reef's contract.</strong> For each <code>Room</code>, Triton applies a <code>Topic</code> named <code>room-&lt;room&gt;</code>, owned by the Room, with the Room's <code>spec.owner</code>, and reads the binding the reef gives back. It opens no stream of its own.</li>
+<li><strong>The control plane is the Reef's contract.</strong> For each <code>Room</code>, Triton applies a <code>Topic</code> named <code>room-&lt;room&gt;</code>, owned by the Room, with the Room's <code>spec.owner</code>, and reads the binding the Reef gives back. It opens no stream of its own.</li>
 <li><strong>A Room has an owner,</strong> an Organization or a Project of the tenancy tree (ADR 0015), as a Topic has, and it cannot change (owner, 2026-11-21, #2073): its Topic takes it, so each team's room lives in that owner's NATS account, and the API checks a Room as it checks a Topic, on its <code>spec.owner</code>.</li>
-<li><strong>Rooms live in the namespace <code>nereus-rooms</code></strong> (owner, 2026-11-21, #2073: "create a room and join it with your teammates", so a new Room works at once, with no list to change): a Room's Topic sits beside it, the reef writes a Topic's binding in the Topic's own namespace, and Triton reads Secrets there only, never in <code>nereus-system</code>.</li>
-<li><strong>The Mandate stays the only routing key</strong> (#2065). Triton names no engine and no Nereid in a Topic (a Topic's <code>spec.engine</code> is optional, #2073): the messaging reef's Mandate picks who reconciles it, and the binding's <code>provider</code> only reports who did.</li>
+<li><strong>Rooms live in the namespace <code>nereus-rooms</code></strong> (owner, 2026-11-21, #2073: "create a room and join it with your teammates", so a new Room works at once, with no list to change): a Room's Topic sits beside it, the Reef writes a Topic's binding in the Topic's own namespace, and Triton reads Secrets there only, never in <code>nereus-system</code>.</li>
+<li><strong>The Mandate stays the only routing key</strong> (#2065). Triton names no engine and no Nereid in a Topic (a Topic's <code>spec.engine</code> is optional, #2073): the messaging Reef's Mandate picks who reconciles it, and the binding's <code>provider</code> only reports who did.</li>
 <li><strong>One writer per field</strong> (ADR 0005). A Room's Topic is Triton's to ask for: Triton alone writes its <code>spec</code>, as keycloak writes the Release it requires, and <code>nats</code> writes its <code>status</code> and its binding.</li>
 <li><strong>The data plane is an adapter</strong> chosen by the binding's <code>provider</code>. A room needs four operations of an engine: open, read the last sequence, append only if the last sequence is still the expected one, and read after a cursor. One adapter exists, for NATS. A second engine asks for a second adapter, and that is the whole of "swapping the engine keeps the rooms".</li>
 </ul>
@@ -7238,19 +7238,19 @@ doto left the room ops
 </thead>
 <tbody>
 <tr>
-<td>The reef of the conversation</td>
+<td>The Reef of the conversation</td>
 <td><code>rooms</code>, API group <code>rooms.&lt;domain&gt;/v1alpha1</code></td>
 </tr>
 <tr>
 <td>Its kinds</td>
-<td><code>Room</code> (the reef's default kind), <code>Peer</code>, <code>RoomSession</code>, all namespaced, as <code>Topic</code> is; Rooms in <code>nereus-rooms</code></td>
+<td><code>Room</code> (the Reef's default kind), <code>Peer</code>, <code>RoomSession</code>, all namespaced, as <code>Topic</code> is; Rooms in <code>nereus-rooms</code></td>
 </tr>
 <tr>
 <td>Its Nereid</td>
 <td><code>triton</code>, whose image declares <code>requires=messaging</code></td>
 </tr>
 <tr>
-<td>The engine's reef</td>
+<td>The engine's Reef</td>
 <td><code>messaging</code>: <code>Topic</code>, <code>Queue</code>, Nereid <code>nats</code></td>
 </tr>
 <tr>
@@ -7324,13 +7324,13 @@ ana.doto  ops    Ready  10:02:11
 </thead>
 <tbody>
 <tr>
-<td>One Nereid for one reef</td>
+<td>One Nereid for one Reef</td>
 <td><code>nats</code> and <code>triton</code> merged, reconciling <code>Topic</code>, <code>Queue</code> and <code>Room</code></td>
 <td>Two code bases merged; a second engine's Nereid would have to do rooms too</td>
 </tr>
 <tr>
 <td>The conversation alone</td>
-<td>One reef with <code>Room</code> only, <code>Topic</code> and <code>Queue</code> removed, NATS inside Triton</td>
+<td>One Reef with <code>Room</code> only, <code>Topic</code> and <code>Queue</code> removed, NATS inside Triton</td>
 <td>Drops the <code>nats</code> Nereid already built and the queue a Workload will ask for</td>
 </tr>
 <tr>
@@ -7341,15 +7341,15 @@ ana.doto  ops    Ready  10:02:11
 <tr>
 <td>Triton on NATS directly, said so</td>
 <td>Today's code, the ADR saying "rooms on NATS"</td>
-<td>The engine keeps a parameter for one client, and Triton depends on a Nereid, not on a reef</td>
+<td>The engine keeps a parameter for one client, and Triton depends on a Nereid, not on a Reef</td>
 </tr>
 <tr>
 <td>The messaging name for the conversation</td>
-<td><code>messaging</code> holds <code>Room</code>, the engine moves to a new reef</td>
+<td><code>messaging</code> holds <code>Room</code>, the engine moves to a new Reef</td>
 <td>Moves the kinds ADR 0017 named; the owner is the only user of the session commands, so renaming those is the cheaper side</td>
 </tr>
 <tr>
-<td><strong>Two reefs, Triton on the reef's contract</strong></td>
+<td><strong>Two Reefs, Triton on the Reef's contract</strong></td>
 <td>Above</td>
 <td>A Room costs a Topic and a binding, and the Topic's contract grows by retention and a credential</td>
 </tr>
@@ -7410,7 +7410,7 @@ ana.doto  ops    Ready  10:02:11
 <h1 id="2071-a-topics-binding-carries-its-owners-credential-so-only-the-owner-publishes">2071: a Topic's binding carries its owner's credential, so only the owner publishes.<a class="headerlink" href="#2071-a-topics-binding-carries-its-owners-credential-so-only-the-owner-publishes" title="Permanent link">&para;</a></h1>
 </li>
 <li>
-<h1 id="2072-the-rooms-reef-and-its-two-kinds-triton-looks-after-it-and-requires-messaging-no-kind-of-either-reef-joins-the-list-of-exempt-kinds-which-2066-freezes">2072: the <code>rooms</code> reef and its two kinds; <code>triton</code> looks after it and requires <code>messaging</code>; no kind of either reef joins the list of exempt kinds, which #2066 freezes.<a class="headerlink" href="#2072-the-rooms-reef-and-its-two-kinds-triton-looks-after-it-and-requires-messaging-no-kind-of-either-reef-joins-the-list-of-exempt-kinds-which-2066-freezes" title="Permanent link">&para;</a></h1>
+<h1 id="2072-the-rooms-reef-and-its-two-kinds-triton-looks-after-it-and-requires-messaging-no-kind-of-either-reef-joins-the-list-of-exempt-kinds-which-2066-freezes">2072: the <code>rooms</code> Reef and its two kinds; <code>triton</code> looks after it and requires <code>messaging</code>; no kind of either Reef joins the list of exempt kinds, which #2066 freezes.<a class="headerlink" href="#2072-the-rooms-reef-and-its-two-kinds-triton-looks-after-it-and-requires-messaging-no-kind-of-either-reef-joins-the-list-of-exempt-kinds-which-2066-freezes" title="Permanent link">&para;</a></h1>
 </li>
 <li>
 <h1 id="2073-triton-reconciles-room-the-topic-the-binding-the-adapter">2073: Triton reconciles <code>Room</code>: the Topic, the binding, the adapter.<a class="headerlink" href="#2073-triton-reconciles-room-the-topic-the-binding-the-adapter" title="Permanent link">&para;</a></h1>
@@ -7454,11 +7454,11 @@ ana.doto  ops    Ready  10:02:11
 <li>Until v1.0.0 this ADR is rewritten in place when the decision changes (ADR 0001).</li>
 </ul>
 <h2 id="origin">Origin<a class="headerlink" href="#origin" title="Permanent link">&para;</a></h2>
-<p>Decided by the owner on 2026-11-18, refining #1812 (Triton's tools served by the Nereus API's <code>/mcp</code>) one question at a time: the door, the bridge, the tools. Decided again on 2026-11-21, evaluating the messaging reef one question at a time: the two reefs, the name <code>rooms</code>, Triton on the reef's contract, the <code>Peer</code> kind, the orders' code, and one journey for all of it (#2067). Decided again on 2026-11-22, the flow as a person lives it, one question at a time: the measure of the feature, who may create a Room, <code>nereus rooms join</code> and <code>leave</code>, the room sessions and what they keep, and the CLI's MCP server. Narrowed on 2026-11-23 (#2100, #2079, the owner's word): a room session keeps no file on Drive.</p>
+<p>Decided by the owner on 2026-11-18, refining #1812 (Triton's tools served by the Nereus API's <code>/mcp</code>) one question at a time: the door, the bridge, the tools. Decided again on 2026-11-21, evaluating the messaging Reef one question at a time: the two Reefs, the name <code>rooms</code>, Triton on the Reef's contract, the <code>Peer</code> kind, the orders' code, and one journey for all of it (#2067). Decided again on 2026-11-22, the flow as a person lives it, one question at a time: the measure of the feature, who may create a Room, <code>nereus rooms join</code> and <code>leave</code>, the room sessions and what they keep, and the CLI's MCP server. Narrowed on 2026-11-23 (#2100, #2079, the owner's word): a room session keeps no file on Drive.</p>
 <h2 id="open-questions">Open questions<a class="headerlink" href="#open-questions" title="Permanent link">&para;</a></h2>
 <ul>
 <li>A <code>RoomSession</code>'s retention in the cluster, and where a room's history is kept: #1269 (history out of etcd).</li>
-<li>Later, most likely, a room session's logs and metrics go to the observability reef, VictoriaLogs first and Drive as an export (owner, 2026-11-22): #2099, outside this journey.</li>
+<li>Later, most likely, a room session's logs and metrics go to the observability Reef, VictoriaLogs first and Drive as an export (owner, 2026-11-22): #2099, outside this journey.</li>
 <li>Whether Claude Code applies <code>notifications/tools/list_changed</code> in an open session: checked before the CLI's MCP server is built.</li>
 <li>
 <p>The hard and soft gates on creating a Room: the pending phase's name, and what is OpenFGA's and what a policy's (#2102).</p>
@@ -7466,11 +7466,11 @@ ana.doto  ops    Ready  10:02:11
 <li>
 <p>How orders arrive if they come back: #2068.</p>
 </li>
-<li>Who may join a room: any member of the team group for now; a room's own members wait for the teams reef (#1307).</li>
+<li>Who may join a room: any member of the team group for now; a room's own members wait for the teams Reef (#1307).</li>
 <li>How NATS learns a Topic's new user without a restart (#2071, #600).</li>
-<li>The rooms reef's Mandate carries the bound on rooms per installation (<code>maxRooms</code>, 20 by default): its value on the kept cluster is the owner's (#1491).</li>
+<li>The rooms Reef's Mandate carries the bound on rooms per installation (<code>maxRooms</code>, 20 by default): its value on the kept cluster is the owner's (#1491).</li>
 </ul>
-<p><em>Extended 2026-11-22 with the flow as a person lives it (#2067); raw data in <code>#pontos/raw/2026-11-22/</code>. Rewritten 2026-11-21 from the owner's evaluation of the messaging reef (#2067, #2069); raw data in <code>#pontos/raw/2026-11-21/</code>. First written 2026-11-18 (#1893); raw data in <code>#pontos/raw/2026-11-18/</code>.</em></p>
+<p><em>Extended 2026-11-22 with the flow as a person lives it (#2067); raw data in <code>#pontos/raw/2026-11-22/</code>. Rewritten 2026-11-21 from the owner's evaluation of the messaging Reef (#2067, #2069); raw data in <code>#pontos/raw/2026-11-21/</code>. First written 2026-11-18 (#1893); raw data in <code>#pontos/raw/2026-11-18/</code>.</em></p>
 
 
 

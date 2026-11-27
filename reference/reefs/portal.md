@@ -1,11 +1,11 @@
-# The portal reef
+# The portal Reef
 
 Nereus in the browser: a PWA that signs a person in and shows who they are.
 
 ## Commands
 
-- [`nereus reef apply portal`](../../specs/cli/reefs/portal.html#reef-apply) The portal reef, with no kinds
-- [`nereus nereid apply nereus-portal`](../../specs/cli/reefs/portal.html#nereid-apply) The nereus-portal Nereid requires the authentication reef
+- [`nereus reef apply portal`](../../specs/cli/reefs/portal.html#reef-apply) The portal Reef, with no kinds
+- [`nereus nereid apply nereus-portal`](../../specs/cli/reefs/portal.html#nereid-apply) The nereus-portal Nereid requires the authentication Reef
 - [`nereus mandate apply nereus-portal`](../../specs/cli/reefs/portal.html#mandate-apply) The publicUrl writes the HTTPRoute
 - [`curl https://portal.example.com/healthz`](../../specs/cli/reefs/portal.html#open) The PWA, its config, and the API behind the person's token
 
@@ -13,7 +13,7 @@ Nereus in the browser: a PWA that signs a person in and shows who they are.
 
 ### reef-apply
 
-The authentication reef and a Nereid of it come first.
+The authentication Reef and a Nereid of it come first.
 
 ```bash
 nereus reef apply portal

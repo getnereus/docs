@@ -7266,10 +7266,10 @@
 
 
 <h1 id="say-what-nereus-has">Say what Nereus has<a class="headerlink" href="#say-what-nereus-has" title="Permanent link">&para;</a></h1>
-<p>Register what a repository says it runs and publishes, Workloads and Packages, from its files in <code>catalog/</code>, and check that it holds together: the files are the truth, the catalog reef holds a copy.</p>
+<p>Register what a repository says it runs and publishes, Workloads and Packages, from its files in <code>catalog/</code>, and check that it holds together: the files are the truth, the catalog Reef holds a copy.</p>
 <h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">&para;</a></h2>
 <ul>
-<li>A cluster from <a href="../../../start/init/">Prepare the cluster</a> with <code>--profile internal-developer-platform</code>: it brings the catalog reef with its Nereid <code>catalog</code>, which writes each entry's status and changes nothing an entry names.</li>
+<li>A cluster from <a href="../../../start/init/">Prepare the cluster</a> with <code>--profile internal-developer-platform</code>: it brings the catalog Reef with its Nereid <code>catalog</code>, which writes each entry's status and changes nothing an entry names.</li>
 <li>The <a href="../../access/tenancy/">tenancy tree</a> the entries name as owners.</li>
 <li>A checkout with a <code>catalog/</code> folder, such as Nereus's own.</li>
 </ul>
@@ -7327,7 +7327,7 @@ spec:
 ! catalog/packages/nereus: not found on pypi
 0 contradictions, 3 gaps
 </code></pre></div>
-<p><code>make catalog-check</code> runs it on the repository's files before a pull request, with a cluster that has the tenancy reef.</p>
+<p><code>make catalog-check</code> runs it on the repository's files before a pull request, with a cluster that has the tenancy Reef.</p>
 <h2 id="check-it-worked">Check it worked<a class="headerlink" href="#check-it-worked" title="Permanent link">&para;</a></h2>
 <p><a href="../../../specs/cli/reefs/catalog.html#workload-list"><code>nereus catalog list</code></a> shows each Workload with what the catalog Nereid found, <code>-</code> until its first pass.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>catalog<span class="w"> </span>list
@@ -7345,7 +7345,7 @@ triton    Project/triton   service     agents, people  DeploymentNotFound
 </ul>
 <h2 id="learn-more">Learn more<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../../../reference/reefs/catalog/">The catalog reef</a>: Workloads, Packages, their types, every status and command.</li>
+<li><a href="../../../reference/reefs/catalog/">The catalog Reef</a>: Workloads, Packages, their types, every status and command.</li>
 <li><a href="../../../adr/0016-catalog-reef/">ADR 0016</a>: the files in the repository are the truth, the cluster holds a copy.</li>
 </ul>
 

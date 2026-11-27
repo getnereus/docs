@@ -1,4 +1,4 @@
-# The usage reef
+# The usage Reef
 
 Every command that reports a coding agent's quota window and shows where it is heading.
 

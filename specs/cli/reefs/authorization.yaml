@@ -1,10 +1,10 @@
 deck:
   name: authorization
-  title: "The authorization reef"
+  title: "The authorization Reef"
   subtitle: "Every command of the first slice: Users, teams, roles and bindings, and who may do what"
   accent: "who may do what"
   pt:
-    title: "O reef authorization"
+    title: "O Reef authorization"
     subtitle: "Todos os comandos da primeira fatia: Users, times, papéis e bindings, e quem pode fazer o quê"
     accent: "quem pode fazer o quê"
 
@@ -50,23 +50,23 @@ references:
     author: "The OpenFGA Authors, a CNCF project"
     url: "https://openfga.dev/"
     about: "An open source authorization engine based on relationships, inspired by Google's Zanzibar: a model of types and relations, tuples that say who relates to what, and a check that answers yes or no."
-    forUs: "The Nereid of this reef: it keeps the tuples the roles, bindings and teams turn into, and answers every check the Nereus API asks."
+    forUs: "The Nereid of this Reef: it keeps the tuples the roles, bindings and teams turn into, and answers every check the Nereus API asks."
     pt:
       title: "OpenFGA"
       author: "Os autores do OpenFGA, um projeto da CNCF"
       about: "Um motor de autorização de código aberto baseado em relações, inspirado no Zanzibar do Google: um modelo de tipos e relações, tuplas que dizem quem se relaciona com o quê, e uma verificação que responde sim ou não."
-      forUs: "A Nereid deste reef: guarda as tuplas em que os papéis, bindings e times se transformam, e responde a toda verificação que a Nereus API pergunta."
+      forUs: "A Nereid deste Reef: guarda as tuplas em que os papéis, bindings e times se transformam, e responde a toda verificação que a Nereus API pergunta."
   - name: kubernetes-rbac
     title: "Using RBAC Authorization"
     author: "The Kubernetes Authors"
     url: "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"
     about: "Kubernetes' role-based access control: a Role lists rules (API groups, resources, verbs) and a RoleBinding grants it to subjects."
-    forUs: "The shape of a role's rule here, in the CLI's own words: reef, kinds, verbs."
+    forUs: "The shape of a role's rule here, in the CLI's own words: Reef, kinds, verbs."
     pt:
       title: "Usando a autorização RBAC"
       author: "Os autores do Kubernetes"
       about: "O controle de acesso baseado em papéis do Kubernetes: um Role lista regras (grupos de API, recursos, verbos) e um RoleBinding o concede a sujeitos."
-      forUs: "A forma da regra de um papel aqui, nas palavras do próprio CLI: reef, kinds, verbos."
+      forUs: "A forma da regra de um papel aqui, nas palavras do próprio CLI: Reef, kinds, verbos."
   - name: thinking-in-platforms
     title: "Thinking in Platforms"
     author: "Kaspar von Grünberg and Luca Galante"
@@ -84,19 +84,19 @@ slides:
   - name: cover
     act: opening
     cover: true
-    message: "The authorization reef"
+    message: "The authorization Reef"
     notes: |-
-      **The commands of the first slice of authorization, built** (#897, Refine the authorization reef; journey #1644). The deck was the contract the slice was built from, and its outputs are what the final scene printed; only `member delete` with a `Position` stays planned (#1307).
+      **The commands of the first slice of authorization, built** (#897, Refine the authorization Reef; journey #1644). The deck was the contract the slice was built from, and its outputs are what the final scene printed; only `member delete` with a `Position` stays planned (#1307).
 
-      **The story crosses three homes.** A User belongs to core (ADR 0006, the person is a User of core), a team and its members to the `teams` reef (#1307, The teams reef), a role and a binding to this reef. The team commands live in the teams deck (docs/specs/cli/reefs/teams.html), built with #1646 (the teams reef); the User commands move to the core deck when they are built, and are here so the story reads in one place.
+      **The story crosses three homes.** A User belongs to core (ADR 0006, the person is a User of core), a team and its members to the `teams` Reef (#1307, The teams Reef), a role and a binding to this Reef. The team commands live in the teams deck (docs/specs/cli/reefs/teams.html), built with #1646 (the teams Reef); the User commands move to the core deck when they are built, and are here so the story reads in one place.
 
       **The model was decided in #1306** (How teams, roles and Users relate), on the tenancy tree of ADR 0015 (tenancy: Organization and Project), with the commands of ADR 0013 (command conventions).
     pt:
-      message: "O reef authorization"
+      message: "O Reef authorization"
       notes: |-
-        **Os comandos da primeira fatia de autorização, prontos** (#897, Refine the authorization reef; jornada #1644). O deck foi o contrato a partir do qual a fatia foi construída, e as suas saídas são o que a cena final imprimiu; só o `member delete` com uma `Position` continua planejado (#1307).
+        **Os comandos da primeira fatia de autorização, prontos** (#897, Refine the authorization Reef; jornada #1644). O deck foi o contrato a partir do qual a fatia foi construída, e as suas saídas são o que a cena final imprimiu; só o `member delete` com uma `Position` continua planejado (#1307).
 
-        **A história atravessa três casas.** Um User pertence ao core (ADR 0006, a pessoa é um User do core), um time e os seus membros ao reef `teams` (#1307, The teams reef), um papel e um binding a este reef. Os comandos de time ficam no deck teams (docs/specs/cli/reefs/teams.html), construído com a #1646 (o reef teams); os comandos de User vão para o deck do core quando forem construídos, e estão aqui para a história ser lida em um só lugar.
+        **A história atravessa três casas.** Um User pertence ao core (ADR 0006, a pessoa é um User do core), um time e os seus membros ao Reef `teams` (#1307, The teams Reef), um papel e um binding a este Reef. Os comandos de time ficam no deck teams (docs/specs/cli/reefs/teams.html), construído com a #1646 (o Reef teams); os comandos de User vão para o deck do core quando forem construídos, e estão aqui para a história ser lida em um só lugar.
 
         **O modelo foi decidido na #1306** (How teams, roles and Users relate), sobre a árvore de tenancy do ADR 0015 (tenancy: Organization e Project), com os comandos do ADR 0013 (convenções de comando).
 
@@ -115,7 +115,7 @@ slides:
 
       **There is no second list of groups to keep in sync.** A binding gives a role to a team, to one position of a team or, as an exception, to a single User. An identity provider's groups are an output, never the source.
 
-      **A position is a name on the member in this slice** (`tech-lead`, `architect`). The `Position` kind with its skills and places comes with #1307 (The teams reef), and the same name then points to it.
+      **A position is a name on the member in this slice** (`tech-lead`, `architect`). The `Position` kind with its skills and places comes with #1307 (The teams Reef), and the same name then points to it.
     pt:
       topic: "conceitos"
       message: "Três conceitos, uma só lista de membros"
@@ -130,7 +130,7 @@ slides:
 
         **Não existe uma segunda lista de grupos para manter em sincronia.** Um binding dá um papel a um time, a uma posição de um time ou, como exceção, a um único User. Os grupos de um provedor de identidade são uma saída, nunca a fonte.
 
-        **Uma posição é um nome no membro nesta fatia** (`tech-lead`, `architect`). O kind `Position`, com as suas skills e vagas, vem com a #1307 (The teams reef), e o mesmo nome passa a apontar para ele.
+        **Uma posição é um nome no membro nesta fatia** (`tech-lead`, `architect`). O kind `Position`, com as suas skills e vagas, vem com a #1307 (The teams Reef), e o mesmo nome passa a apontar para ele.
 
   - name: order
     act: opening
@@ -168,11 +168,11 @@ slides:
     topic: "reef apply"
     status: built
     issue: 897
-    message: "The {reef:authorization} reef brings roles and bindings"
+    message: "The {reef:authorization} Reef brings roles and bindings"
     accent: "roles and bindings"
     terminal:
       steps:
-        - comment: "The kinds of the reef"
+        - comment: "The kinds of the Reef"
           run: "nereus reef apply authorization"
           output: |-
             ✓ core/reefs/authorization created (authorization.getnereus.dev/v1alpha1: bindings, roles)
@@ -183,15 +183,15 @@ slides:
     notes: |-
       **Two kinds, `Role` and `Binding`, and neither names OpenFGA** (#1306, How teams, roles and Users relate): the API never names a Nereid, so another tool can answer the same question later.
 
-      **Until a Nereid answers for this reef, nothing changes:** every write stays with the `nereus-admins` group, as today. Permissions start when authorization is installed.
+      **Until a Nereid answers for this Reef, nothing changes:** every write stays with the `nereus-admins` group, as today. Permissions start when authorization is installed.
     pt:
       topic: "reef apply"
-      message: "O reef {reef:authorization} traz papéis e bindings"
+      message: "O Reef {reef:authorization} traz papéis e bindings"
       accent: "papéis e bindings"
       notes: |-
         **Dois kinds, `Role` e `Binding`, e nenhum cita o OpenFGA** (#1306, How teams, roles and Users relate): a API nunca cita uma Nereid, então outra ferramenta pode responder à mesma pergunta depois.
 
-        **Até uma Nereid responder por este reef, nada muda:** toda escrita continua com o grupo `nereus-admins`, como hoje. As permissões começam quando a autorização é instalada.
+        **Até uma Nereid responder por este Reef, nada muda:** toda escrita continua com o grupo `nereus-admins`, como hoje. As permissões começam quando a autorização é instalada.
 
   - name: nereid-apply
     act: setup
@@ -211,7 +211,7 @@ slides:
     dependsOn: [reef-apply]
     refs: [openfga]
     notes: |-
-      **The Nereid installs OpenFGA from its official Helm chart**, through the release reef, with its data in a Postgres database asked through the `Database` kind: the same path the keycloak Nereid takes.
+      **The Nereid installs OpenFGA from its official Helm chart**, through the release Reef, with its data in a Postgres database asked through the `Database` kind: the same path the keycloak Nereid takes.
 
       **The objects of Nereus are the source of truth.** Users, teams, members, roles and bindings are written as tuples by the Nereid, which reconciles them; losing OpenFGA's data loses nothing, the Nereid writes it again.
 
@@ -221,7 +221,7 @@ slides:
       message: "{nereid:openfga} responde quem pode fazer o quê"
       accent: "quem pode fazer o quê"
       notes: |-
-        **A Nereid instala o OpenFGA a partir do seu chart Helm oficial**, pelo reef release, com os dados em um banco Postgres pedido pelo kind `Database`: o mesmo caminho que a Nereid keycloak segue.
+        **A Nereid instala o OpenFGA a partir do seu chart Helm oficial**, pelo Reef release, com os dados em um banco Postgres pedido pelo kind `Database`: o mesmo caminho que a Nereid keycloak segue.
 
         **Os objetos do Nereus são a fonte da verdade.** Users, times, membros, papéis e bindings são escritos como tuplas pela Nereid, que os reconcilia; perder os dados do OpenFGA não perde nada, a Nereid os escreve de novo.
 
@@ -316,7 +316,7 @@ slides:
             viewer         *:*:list,get             -
     dependsOn: [nereid-apply]
     notes: |-
-      **`administrator` is the only built-in role**, applied with the reef (`nereus reef apply authorization`), with every verb on every kind of every reef, present and future (#1306, How teams, roles and Users relate).
+      **`administrator` is the only built-in role**, applied with the Reef (`nereus reef apply authorization`), with every verb on every kind of every Reef, present and future (#1306, How teams, roles and Users relate).
 
       **`viewer`, `developer`, `requester` and `team-lead` are examples in `reefs/authorization/samples/`,** applied with `nereus authorization role apply --path`, each a YAML file to edit or to copy: a viewer reads everything, a developer also writes builds, deliveries and releases, a team lead also creates environments and manages the team's members. A requester reads everything and only asks for environments (`request`), which a Gate holds.
     pt:
@@ -324,7 +324,7 @@ slides:
       message: "Um papel embutido, quatro exemplos para editar"
       accent: "quatro exemplos"
       notes: |-
-        **`administrator` é o único papel embutido**, aplicado com o reef (`nereus reef apply authorization`), com todo verbo em todo kind de todo reef, presente e futuro (#1306, How teams, roles and Users relate).
+        **`administrator` é o único papel embutido**, aplicado com o Reef (`nereus reef apply authorization`), com todo verbo em todo kind de todo Reef, presente e futuro (#1306, How teams, roles and Users relate).
 
         **`viewer`, `developer`, `requester` e `team-lead` são exemplos em `reefs/authorization/samples/`,** aplicados com `nereus authorization role apply --path`, cada um um arquivo YAML para editar ou copiar: um viewer lê tudo, um developer também escreve builds, deliveries e releases, um team lead também cria ambientes e gerencia os membros do time, um requester lê tudo e só pede ambientes (`request`), que um Gate segura.
 
@@ -333,8 +333,8 @@ slides:
     topic: "role get"
     status: built
     issue: 897
-    message: "A role is a list of rules: reef, kinds, verbs"
-    accent: "reef, kinds, verbs"
+    message: "A role is a list of rules: Reef, kinds, verbs"
+    accent: "Reef, kinds, verbs"
     terminal:
       steps:
         - comment: "What a team lead may do"
@@ -351,15 +351,15 @@ slides:
     dependsOn: [role-list]
     refs: [kubernetes-rbac]
     notes: |-
-      **A rule reads `<reef>:<kinds>:<verbs>`**, in the words the CLI already uses (ADR 0013, command conventions), as a Kubernetes Role lists API groups, resources and verbs. A `*` covers every reef, kind or verb, including the ones installed later.
+      **A rule reads `<reef>:<kinds>:<verbs>`**, in the words the CLI already uses (ADR 0013, command conventions), as a Kubernetes Role lists API groups, resources and verbs. A `*` covers every Reef, kind or verb, including the ones installed later.
 
       **The last two rules are what sets the team lead apart from a developer:** creating and deleting environments, and managing the members of the team.
     pt:
       topic: "role get"
-      message: "Um papel é uma lista de regras: reef, kinds, verbos"
-      accent: "reef, kinds, verbos"
+      message: "Um papel é uma lista de regras: Reef, kinds, verbos"
+      accent: "Reef, kinds, verbos"
       notes: |-
-        **Uma regra se lê `<reef>:<kinds>:<verbos>`**, nas palavras que o CLI já usa (ADR 0013, convenções de comando), como um Role do Kubernetes lista grupos de API, recursos e verbos. Um `*` cobre todo reef, kind ou verbo, inclusive os instalados depois.
+        **Uma regra se lê `<reef>:<kinds>:<verbos>`**, nas palavras que o CLI já usa (ADR 0013, convenções de comando), como um Role do Kubernetes lista grupos de API, recursos e verbos. Um `*` cobre todo Reef, kind ou verbo, inclusive os instalados depois.
 
         **As duas regras que separam o team lead de um developer:** criar e apagar ambientes, e gerenciar os membros do time.
 
@@ -590,13 +590,13 @@ slides:
             yes: authorization/bindings/payments-developers gives developer to team/payments at project/payments
     dependsOn: [can-i-no]
     notes: |-
-      **`nereus can-i` is `nereus authorization can-i`,** as `nereus whoami` is the authentication reef's. A shortcut never bypasses a permission: the answer comes from the Nereus API.
+      **`nereus can-i` is `nereus authorization can-i`,** as `nereus whoami` is the authentication Reef's. A shortcut never bypasses a permission: the answer comes from the Nereus API.
     pt:
       topic: "can-i"
       message: "O atalho faz a mesma pergunta"
       accent: "a mesma pergunta"
       notes: |-
-        **`nereus can-i` é `nereus authorization can-i`,** como `nereus whoami` é do reef authentication. Um atalho nunca contorna uma permissão: a resposta vem da Nereus API.
+        **`nereus can-i` é `nereus authorization can-i`,** como `nereus whoami` é do Reef authentication. Um atalho nunca contorna uma permissão: a resposta vem da Nereus API.
 
   - name: can-i-drive
     act: asking
@@ -624,17 +624,17 @@ slides:
               nereus authorization binding list
     dependsOn: [can-i-shortcut]
     notes: |-
-      **`drive` is a verb of the authorization reef** (#1726): every drive of a Session (its step, its end, the projector's QR code, its questions and rating, the speaker's deck, questions, feedback and export) asks it on the Session's own node, under its owner. The Session's speakers hold it; a role may grant it too, as `administrator` does.
+      **`drive` is a verb of the authorization Reef** (#1726): every drive of a Session (its step, its end, the projector's QR code, its questions and rating, the speaker's deck, questions, feedback and export) asks it on the Session's own node, under its owner. The Session's speakers hold it; a role may grant it too, as `administrator` does.
 
-      **The follow route stays public:** the audience needs only the Session's code. With the authorization reef down, every drive is refused, as any other request (#1644).
+      **The follow route stays public:** the audience needs only the Session's code. With the authorization Reef down, every drive is refused, as any other request (#1644).
     pt:
       topic: "can-i drive"
       message: "Apresentar é um direito: os speakers de uma Session a conduzem"
       accent: "a conduzem"
       notes: |-
-        **`drive` é um verbo do reef authorization** (#1726): toda condução de uma Session (o passo, o fim, o QR code no projetor, as perguntas e a avaliação, o deck do speaker, as perguntas, o feedback e o export) o pergunta no nó da própria Session, sob o seu dono. Os speakers da Session o têm; um papel também pode concedê-lo, como `administrator`.
+        **`drive` é um verbo do Reef authorization** (#1726): toda condução de uma Session (o passo, o fim, o QR code no projetor, as perguntas e a avaliação, o deck do speaker, as perguntas, o feedback e o export) o pergunta no nó da própria Session, sob o seu dono. Os speakers da Session o têm; um papel também pode concedê-lo, como `administrator`.
 
-        **A rota de follow continua pública:** a plateia precisa só do código da Session. Com o reef authorization fora do ar, toda condução é recusada, como qualquer outra requisição (#1644).
+        **A rota de follow continua pública:** a plateia precisa só do código da Session. Com o Reef authorization fora do ar, toda condução é recusada, como qualquer outra requisição (#1644).
 
   - name: can-i-assist
     act: asking
@@ -667,17 +667,17 @@ slides:
               nereus authorization binding list
     dependsOn: [can-i-drive]
     notes: |-
-      **`assist` is the staff's verb** (#1727): the Session names its staff once, a team of the teams reef (`session create --staff stage-2-staff`), and the team's members follow its pace, thermometer and questions from the phone. They never drive through being staff.
+      **`assist` is the staff's verb** (#1727): the Session names its staff once, a team of the teams Reef (`session create --staff stage-2-staff`), and the team's members follow its pace, thermometer and questions from the phone. They never drive through being staff.
 
-      **Whoever may drive may assist,** asked in the Nereus API and never in the model's condition, so it reaches no other reef. A team that does not exist is refused at create; one deleted later gives nobody the right.
+      **Whoever may drive may assist,** asked in the Nereus API and never in the model's condition, so it reaches no other Reef. A team that does not exist is refused at create; one deleted later gives nobody the right.
     pt:
       topic: "can-i assist"
       message: "O staff acompanha uma Session, e nunca a conduz"
       accent: "nunca a conduz"
       notes: |-
-        **`assist` é o verbo do staff** (#1727): a Session nomeia o seu staff uma vez, um time do reef teams (`session create --staff stage-2-staff`), e os membros do time acompanham o ritmo, o termômetro e as perguntas pelo celular. Ser staff nunca dá o direito de conduzir.
+        **`assist` é o verbo do staff** (#1727): a Session nomeia o seu staff uma vez, um time do Reef teams (`session create --staff stage-2-staff`), e os membros do time acompanham o ritmo, o termômetro e as perguntas pelo celular. Ser staff nunca dá o direito de conduzir.
 
-        **Quem pode conduzir pode acompanhar,** o que é perguntado na Nereus API e nunca na condição do modelo, então não chega a nenhum outro reef. Um time que não existe é recusado no create; um apagado depois não dá o direito a ninguém.
+        **Quem pode conduzir pode acompanhar,** o que é perguntado na Nereus API e nunca na condição do modelo, então não chega a nenhum outro Reef. Um time que não existe é recusado no create; um apagado depois não dá o direito a ninguém.
 
   - name: enforce-denied
     act: enforcement
@@ -729,13 +729,13 @@ slides:
               nereus environment get staging --watch
     dependsOn: [enforce-denied]
     notes: |-
-      **The same command, another person, another answer.** Nothing in the environment reef changed: the question is asked at the door.
+      **The same command, another person, another answer.** Nothing in the environment Reef changed: the question is asked at the door.
     pt:
       topic: "environment create"
       message: "O ambiente da Ana é criado"
       accent: "criado"
       notes: |-
-        **O mesmo comando, outra pessoa, outra resposta.** Nada mudou no reef environment: a pergunta é feita na porta.
+        **O mesmo comando, outra pessoa, outra resposta.** Nada mudou no Reef environment: a pergunta é feita na porta.
 
   - name: leave-team
     act: enforcement
@@ -833,9 +833,9 @@ slides:
     notes: |-
       **A hard gate refuses, a soft gate holds** (ADR 0031): without a right to the verb the answer is a 403, as today; a person who may only `request` it creates the object, and it waits for an approver.
 
-      **A Gate belongs to a node of the tenancy tree,** as a Binding does, and holds for that node and the nodes under it. It names a reef, its kinds and the verbs (`create` only, for now); the approvers, once #2220 serves them, are the subjects a Binding takes (until then whoever may `create` the kind at the node approves). A `request` with no Gate to match is refused, since nobody would decide it.
+      **A Gate belongs to a node of the tenancy tree,** as a Binding does, and holds for that node and the nodes under it. It names a Reef, its kinds and the verbs (`create` only, for now); the approvers, once #2220 serves them, are the subjects a Binding takes (until then whoever may `create` the kind at the node approves). A `request` with no Gate to match is refused, since nobody would decide it.
 
-      **A new kind gets approvals by a Gate alone:** no reef writes its own flow.
+      **A new kind gets approvals by a Gate alone:** no Reef writes its own flow.
     pt:
       topic: "gate create"
       message: "Um Gate diz quais pedidos esperam, e por quem"
@@ -843,9 +843,9 @@ slides:
       notes: |-
         **Um hard gate recusa, um soft gate segura** (ADR 0031): sem o direito ao verbo a resposta é um 403, como hoje; quem só pode fazer `request` cria o objeto, e ele espera por um aprovador.
 
-        **Um Gate pertence a um nó da árvore de tenancy,** como um Binding, e vale para esse nó e os nós abaixo dele. Ele nomeia um reef, os seus kinds e os verbos (só `create`, por enquanto); os aprovadores, quando a #2220 os servir, são os sujeitos que um Binding aceita (até lá, aprova quem pode `create` o kind no nó). Um `request` sem Gate que o cubra é recusado, já que ninguém o decidiria.
+        **Um Gate pertence a um nó da árvore de tenancy,** como um Binding, e vale para esse nó e os nós abaixo dele. Ele nomeia um Reef, os seus kinds e os verbos (só `create`, por enquanto); os aprovadores, quando a #2220 os servir, são os sujeitos que um Binding aceita (até lá, aprova quem pode `create` o kind no nó). Um `request` sem Gate que o cubra é recusado, já que ninguém o decidiria.
 
-        **Um kind novo ganha aprovações só com um Gate:** nenhum reef escreve o seu próprio fluxo.
+        **Um kind novo ganha aprovações só com um Gate:** nenhum Reef escreve o seu próprio fluxo.
 
   - name: create-held
     act: gates
@@ -965,7 +965,7 @@ slides:
     notes: |-
       **The object stays, marked `Rejected`:** the gate Nereid writes `phase: Rejected`, `Ready=False`, reason `Rejected`, and the phase stays until `delete` (ADR 0026). The hold is never lifted, so nothing is provisioned. An expired request ends the same way, with the reason `Expired`.
 
-      **The requester is told** through the messaging reef, with the reason the approver gave.
+      **The requester is told** through the messaging Reef, with the reason the approver gave.
     pt:
       topic: "approval reject"
       message: "Rejeitar guarda o histórico, e não provisiona nada"
@@ -973,7 +973,7 @@ slides:
       notes: |-
         **O objeto fica, marcado `Rejected`:** a Nereid do gate escreve `phase: Rejected`, `Ready=False`, motivo `Rejected`, e a fase fica até o `delete` (ADR 0026). O hold nunca é retirado, então nada é provisionado. Um pedido expirado termina igual, com o motivo `Expired`.
 
-        **Quem pediu é avisado** pelo reef de mensagens, com o motivo que o aprovador deu.
+        **Quem pediu é avisado** pelo Reef de mensagens, com o motivo que o aprovador deu.
 
   - name: can-i-may-ask
     act: gates
@@ -1018,7 +1018,7 @@ slides:
     notes: |-
       **Each one fits what this slice builds, with no change to it.** A User already holds a list of identities (ADR 0006, the person is a User of core). A member has a kind, a person today and an agent later, acting for a person by token exchange. A team sits on a node of the tenancy tree, where a quota attaches.
 
-      **Projecting bindings into Kubernetes RBAC is the next layer:** control held in more than one place, so a person with a kubeconfig is refused there too. The `Position` kind comes with #1307 (The teams reef), and the groups of an identity provider are an output of the teams (#1306, How teams, roles and Users relate).
+      **Projecting bindings into Kubernetes RBAC is the next layer:** control held in more than one place, so a person with a kubeconfig is refused there too. The `Position` kind comes with #1307 (The teams Reef), and the groups of an identity provider are an output of the teams (#1306, How teams, roles and Users relate).
     pt:
       topic: "depois"
       message: "Fora desta fatia, cada um com o seu próximo passo"
@@ -1033,4 +1033,4 @@ slides:
       notes: |-
         **Cada um cabe no que esta fatia constrói, sem mudá-la.** Um User já guarda uma lista de identidades (ADR 0006, a pessoa é um User do core). Um membro tem um kind, uma pessoa hoje e um agente depois, agindo por uma pessoa por token exchange. Um time fica em um nó da árvore de tenancy, onde uma cota se prende.
 
-        **Projetar os bindings no RBAC do Kubernetes é a próxima camada:** o controle mantido em mais de um lugar, então uma pessoa com um kubeconfig também é recusada lá. O kind `Position` vem com a #1307 (The teams reef), e os grupos de um provedor de identidade são uma saída dos times (#1306, How teams, roles and Users relate).
+        **Projetar os bindings no RBAC do Kubernetes é a próxima camada:** o controle mantido em mais de um lugar, então uma pessoa com um kubeconfig também é recusada lá. O kind `Position` vem com a #1307 (The teams Reef), e os grupos de um provedor de identidade são uma saída dos times (#1306, How teams, roles and Users relate).

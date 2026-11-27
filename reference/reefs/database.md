@@ -1,11 +1,11 @@
-# The database reef
+# The database Reef
 
-Every command of the database reef: a PostgreSQL per Database, owned by a node of the tenancy tree.
+Every command of the database Reef: a PostgreSQL per Database, owned by a node of the tenancy tree.
 
 ## Commands
 
-- [`nereus reef apply database`](../../specs/cli/reefs/database.html#reef-apply) The database reef: one kind, Database
-- [`nereus nereid apply cloudnative-pg`](../../specs/cli/reefs/database.html#nereid-apply) The cloudnative-pg Nereid makes the reef's default Mandate
+- [`nereus reef apply database`](../../specs/cli/reefs/database.html#reef-apply) The database Reef: one kind, Database
+- [`nereus nereid apply cloudnative-pg`](../../specs/cli/reefs/database.html#nereid-apply) The cloudnative-pg Nereid makes the Reef's default Mandate
 - [`nereus database create keycloak`](../../specs/cli/reefs/database.html#create) A Database names its owner in the tenancy tree
 - [`nereus database get keycloak`](../../specs/cli/reefs/database.html#get) Ready, with its connection in a Secret
 - [`nereus database create orders`](../../specs/cli/reefs/database.html#refused) An owner missing from the tree is refused
@@ -15,7 +15,7 @@ Every command of the database reef: a PostgreSQL per Database, owned by a node o
 
 ### reef-apply
 
-The release reef with flux comes first: the Nereid releases the operator through it.
+The release Reef with flux comes first: the Nereid releases the operator through it.
 
 ```bash
 nereus reef apply database

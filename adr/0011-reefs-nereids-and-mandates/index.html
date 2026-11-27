@@ -7181,18 +7181,18 @@
 <h1 id="0011-reefs-nereids-and-mandates-managed-with-top-level-commands">0011. Reefs, Nereids and Mandates, managed with top-level commands<a class="headerlink" href="#0011-reefs-nereids-and-mandates-managed-with-top-level-commands" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
 <p class="admonition-title">In short</p>
-<p>Reefs, Nereids and Mandates are managed with top-level commands, with <code>--reef</code> and <code>--nereid</code> as the flags everywhere; a Mandate binds one reef to one Nereid. Status: Proposed (2026-10-17, rewritten 2026-10-25).</p>
+<p>Reefs, Nereids and Mandates are managed with top-level commands, with <code>--reef</code> and <code>--nereid</code> as the flags everywhere; a Mandate binds one Reef to one Nereid. Status: Proposed (2026-10-17, rewritten 2026-10-25).</p>
 </div>
 <p><strong>Status:</strong> Proposed (2026-10-17, rewritten 2026-10-25)</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
 <p>The model's words changed twice. The first ADRs said Concept and Controller; the Lean Inception of #79 changed them to Interface and Implementation, managed under a <code>platform system</code> group, with an Implementation installed into an Interface and one active Instance per Interface. The owner's voice sessions of 2026-10-25 reviewed the CLI command by command on the MVP's journey (secrets first, then authentication with two identity brokers side by side) and found:</p>
 <ul>
-<li>A capability and whoever fulfils it are different things: a reef can exist with no Nereid, and one controller can look after several reefs, as in Kubernetes. Nesting the Nereid under the reef is wrong.</li>
+<li>A capability and whoever fulfils it are different things: a Reef can exist with no Nereid, and one controller can look after several Reefs, as in Kubernetes. Nesting the Nereid under the Reef is wrong.</li>
 <li>A Tool's credentials repeated in every Class or Instance are wrong: they belong to the controller's installation, as a StorageClass's provisioner holds them.</li>
 <li>A secret travelling in plain text inside the platform can be captured in logs, even over HTTPS.</li>
 </ul>
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
-<p><strong>Words.</strong> A <strong>reef</strong> is the contract of a capability, an API group (ADR 0009); a <strong>Nereid</strong> fulfils one or more reefs; a <strong>Mandate</strong> binds one reef to one Nereid (ADR 0002). <strong>Controller</strong> stays the mechanism, in ADRs and code: each Nereid runs as a Kubernetes controller that reconciles and writes <code>status</code> (ADR 0005). Instance, Tool and Vendor keep their meaning from ADR 0002.</p>
+<p><strong>Words.</strong> A <strong>Reef</strong> is the contract of a capability, an API group (ADR 0009); a <strong>Nereid</strong> fulfils one or more Reefs; a <strong>Mandate</strong> binds one Reef to one Nereid (ADR 0002). <strong>Controller</strong> stays the mechanism, in ADRs and code: each Nereid runs as a Kubernetes controller that reconciles and writes <code>status</code> (ADR 0005). Instance, Tool and Vendor keep their meaning from ADR 0002.</p>
 <p><strong>Commands that change the platform are top-level nouns</strong>, with <code>--reef</code> and <code>--nereid</code> as the flags everywhere:</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>reef<span class="w"> </span>list
 nereus<span class="w"> </span>reef<span class="w"> </span>apply<span class="w"> </span>authentication<span class="w"> </span>--from-file<span class="w"> </span>./reefs/authentication/
@@ -7212,10 +7212,10 @@ nereus<span class="w"> </span>mandate<span class="w"> </span>create<span class="
 nereus<span class="w"> </span>status
 </code></pre></div>
 <ul>
-<li><strong>Nereid names are global</strong> to the platform and free: the Tool's name or a name from the myth, suggested by <code>nereus nereid suggest</code>. <code>--reef</code> repeats when one Nereid looks after several reefs.</li>
+<li><strong>Nereid names are global</strong> to the platform and free: the Tool's name or a name from the myth, suggested by <code>nereus nereid suggest</code>. <code>--reef</code> repeats when one Nereid looks after several Reefs.</li>
 <li><strong><code>--image</code> names an image</strong> other than the one the CLI pins for that name.</li>
-<li><strong><code>nereus status</code> shows the mechanism</strong>: one row per reef and Nereid pair, columns <code>REEF</code>, <code>NEREID</code>, <code>VERSION</code>, <code>STATUS</code>, <code>AGE</code>.</li>
-<li><strong><code>nereus nereid list</code> shows the Nereids</strong>: one row per Nereid, columns <code>NEREID</code>, <code>REEFS</code>, <code>IMAGE</code>, <code>STATUS</code>, <code>AGE</code>; <code>nereus nereid get &lt;nereid&gt;</code> adds the image's title, description and digest. <code>--param</code> is the only flag for parameters (no <code>--set</code>), and <code>--reef</code> the only flag naming a reef (no <code>--implements</code>).</li>
+<li><strong><code>nereus status</code> shows the mechanism</strong>: one row per Reef and Nereid pair, columns <code>REEF</code>, <code>NEREID</code>, <code>VERSION</code>, <code>STATUS</code>, <code>AGE</code>.</li>
+<li><strong><code>nereus nereid list</code> shows the Nereids</strong>: one row per Nereid, columns <code>NEREID</code>, <code>REEFS</code>, <code>IMAGE</code>, <code>STATUS</code>, <code>AGE</code>; <code>nereus nereid get &lt;nereid&gt;</code> adds the image's title, description and digest. <code>--param</code> is the only flag for parameters (no <code>--set</code>), and <code>--reef</code> the only flag naming a Reef (no <code>--implements</code>).</li>
 </ul>
 <div class="language-text highlight"><pre><span></span><code>$ nereus status
 REEF            NEREID           VERSION  STATUS  AGE
@@ -7230,14 +7230,14 @@ azure-key-vault  secrets         ghcr.io/getnereus/nereus/secrets-azure-key-vaul
 keycloak         authentication  ghcr.io/getnereus/nereus/authentication-keycloak-controller:0.1.0   Ready   3m
 sao              authentication  ghcr.io/getnereus/nereus/authentication-auth0-controller:0.1.0      Ready   3m
 </code></pre></div>
-<p><strong>The kinds and their fields</strong>, in <code>core.getnereus.dev/v1alpha1</code> (ADR 0009): <code>Reef.spec</code> holds the contract (API group, version, commands); <code>Nereid.spec.reefs</code> (a list), <code>Nereid.spec.image</code> and <code>Nereid.spec.params</code> (authentication and default target parameters); <code>Mandate.spec.reef</code>, <code>Mandate.spec.nereid</code>, <code>Mandate.spec.params</code> (overrides) and <code>Mandate.spec.default</code>. A reef's own objects key their entries by reef (<code>reef:</code> in a <code>Cloud</code> access entry). Today's names (<code>spec.interface</code>, <code>interface:</code>) are current code, to be renamed.</p>
+<p><strong>The kinds and their fields</strong>, in <code>core.getnereus.dev/v1alpha1</code> (ADR 0009): <code>Reef.spec</code> holds the contract (API group, version, commands); <code>Nereid.spec.reefs</code> (a list), <code>Nereid.spec.image</code> and <code>Nereid.spec.params</code> (authentication and default target parameters); <code>Mandate.spec.reef</code>, <code>Mandate.spec.nereid</code>, <code>Mandate.spec.params</code> (overrides) and <code>Mandate.spec.default</code>. A Reef's own objects key their entries by Reef (<code>reef:</code> in a <code>Cloud</code> access entry). Today's names (<code>spec.interface</code>, <code>interface:</code>) are current code, to be renamed.</p>
 <p><strong>Where parameters live.</strong></p>
 <ul>
 <li><strong>The Nereid owns its authentication and its default target parameters</strong>, set once at <code>nereid apply</code> (<code>authentication=workload-identity</code>, a default <code>vaultUrl</code>). A Nereid may serve several targets (several vaults). The first secrets Nereid, its default Mandate <code>vault</code> and the Mandate's RSA key are made by <code>nereus init</code> (ADR 0003), never by the person.</li>
 <li><strong>The Mandate may override the target parameters</strong> with <code>--param</code> and adds the parameters of its own choice (<code>identityProvider</code>, <code>credentials=secret:&lt;name&gt;</code>); the common case needs only <code>--reef</code> and <code>--nereid</code>.</li>
-<li><strong>An Instance's fields are generic:</strong> fields the reef defines, common to its Nereids. A Nereid ignores what it does not use and says so in <code>status</code>. What one Nereid needs and the others lack becomes a new common field of the reef, never a Nereid-specific kind.</li>
+<li><strong>An Instance's fields are generic:</strong> fields the Reef defines, common to its Nereids. A Nereid ignores what it does not use and says so in <code>status</code>. What one Nereid needs and the others lack becomes a new common field of the Reef, never a Nereid-specific kind.</li>
 </ul>
-<p><strong>A reef's contract may require capabilities of every Nereid.</strong> The <code>secrets</code> reef requires client-side encryption: every secrets Nereid publishes a public key for each Mandate naming it and decrypts inside its own boundary, and the CLI encrypts each secret before sending it, with envelope encryption (an AES-256-GCM data key encrypts the value; the Mandate's RSA-OAEP-256 public key wraps the data key). The key belongs to the Mandate, not to the reef or the Nereid: a Mandate picks the target vault, and a Nereid may serve several vaults through its params. <code>nereus secrets apply</code> encrypts with the key of the Mandate it targets, the reef's default one unless a Mandate is named. The CLI stays provider-agnostic; only the Nereid differs:</p>
+<p><strong>A Reef's contract may require capabilities of every Nereid.</strong> The <code>secrets</code> Reef requires client-side encryption: every secrets Nereid publishes a public key for each Mandate naming it and decrypts inside its own boundary, and the CLI encrypts each secret before sending it, with envelope encryption (an AES-256-GCM data key encrypts the value; the Mandate's RSA-OAEP-256 public key wraps the data key). The key belongs to the Mandate, not to the Reef or the Nereid: a Mandate picks the target vault, and a Nereid may serve several vaults through its params. <code>nereus secrets apply</code> encrypts with the key of the Mandate it targets, the Reef's default one unless a Mandate is named. The CLI stays provider-agnostic; only the Nereid differs:</p>
 <table>
 <thead>
 <tr>
@@ -7270,14 +7270,14 @@ secret/google-sso stored by nereid azure-key-vault (2 keys, values hidden)
 <ul>
 <li><strong>The Lean Inception (Paulo Caroli)</strong> (<a href="https://martinfowler.com/articles/lean-inception/">martinfowler.com</a>): the workshop of #79 that first exercised the model on the MVP's journey.</li>
 <li><strong>Kubernetes storage classes</strong> (<a href="https://kubernetes.io/docs/concepts/storage/storage-classes/">StorageClass</a>): the provisioner holds the credentials and the class selects the target with parameters; the Nereid and the Mandate split them the same way.</li>
-<li><strong>Sealed Secrets (Bitnami)</strong> (<a href="https://github.com/bitnami-labs/sealed-secrets">github.com/bitnami-labs/sealed-secrets</a>): the controller holds the private key, and <code>kubeseal</code> encrypts on the client with its public certificate; the secrets reef's contract takes the same shape, and the fallback Nereid the same storage of the key.</li>
+<li><strong>Sealed Secrets (Bitnami)</strong> (<a href="https://github.com/bitnami-labs/sealed-secrets">github.com/bitnami-labs/sealed-secrets</a>): the controller holds the private key, and <code>kubeseal</code> encrypts on the client with its public certificate; the secrets Reef's contract takes the same shape, and the fallback Nereid the same storage of the key.</li>
 <li><strong>OpenBao's Transit secrets engine</strong> (<a href="https://openbao.org/docs/secrets/transit/">openbao.org</a>, <a href="https://openbao.org/docs/api/secret/transit/">API</a>): encryption as a service, with RSA keys (<code>rsa-2048</code>, <code>rsa-3072</code>, <code>rsa-4096</code>), keys not exportable by default and a <code>decrypt</code> endpoint; the local secrets Nereid decrypts through it.</li>
 </ul>
 <h2 id="consequences">Consequences<a class="headerlink" href="#consequences" title="Permanent link">&para;</a></h2>
 <ul>
-<li>ADR 0002's words changed for people: reef, Nereid, Mandate. The legacy <code>platform system interface ...</code>, <code>platform system install ...</code> and <code>platform system interface use ...</code> map to <code>nereus reef ...</code>, <code>nereus nereid apply ...</code> and <code>nereus mandate create ... --default</code> (<code>docs/agent/cli.md</code>).</li>
+<li>ADR 0002's words changed for people: Reef, Nereid, Mandate. The legacy <code>platform system interface ...</code>, <code>platform system install ...</code> and <code>platform system interface use ...</code> map to <code>nereus reef ...</code>, <code>nereus nereid apply ...</code> and <code>nereus mandate create ... --default</code> (<code>docs/agent/cli.md</code>).</li>
 <li>No secret value crosses the platform in plain text: the API, the logs and the cluster see only the envelope, until the Nereid writes it to its vault.</li>
-<li>The reef's schema must be designed for every Nereid it expects, at the risk of a lowest common denominator; new common fields are the way out.</li>
+<li>The Reef's schema must be designed for every Nereid it expects, at the risk of a lowest common denominator; new common fields are the way out.</li>
 <li>The code still names Interface and Implementation; renaming it is a change of its own.</li>
 </ul>
 <h2 id="open-questions">Open questions<a class="headerlink" href="#open-questions" title="Permanent link">&para;</a></h2>

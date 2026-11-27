@@ -7251,10 +7251,10 @@
 
 <h1 id="inception">Inception<a class="headerlink" href="#inception" title="Permanent link">&para;</a></h1>
 <p>How Nereus started: a <a href="https://martinfowler.com/articles/lean-inception/">Lean Inception</a> (Paulo Caroli's method) run with an agent as facilitator, which fixed the vision, the goals and the sequence of the MVP.</p>
-<p>The words are the model's: <a href="../../concepts/model/">reef, Nereid and Mandate</a>. The work that followed is on the <a href="../roadmap/">roadmap</a> and in <a href="../../reference/what-is-built/">What is built</a>.</p>
+<p>The words are the model's: <a href="../../concepts/model/">Reef, Nereid and Mandate</a>. The work that followed is on the <a href="../roadmap/">roadmap</a> and in <a href="../../reference/what-is-built/">What is built</a>.</p>
 <h2 id="product-vision">Product vision<a class="headerlink" href="#product-vision" title="Permanent link">&para;</a></h2>
 <p>For platform teams whose IDP is a fixed set of tools glued by hand, where swapping one means rewriting the platform, Nereus is a composable platform API and CLI built out of Nereids added at runtime.</p>
-<p>Unlike Humanitec (commercial, with its own resource model) and Kratix (each Promise bundles contract and implementation), Nereus separates the contract, the reef, from what implements it, the Nereid, and swaps one for another without changing the API.</p>
+<p>Unlike Humanitec (commercial, with its own resource model) and Kratix (each Promise bundles contract and implementation), Nereus separates the contract, the Reef, from what implements it, the Nereid, and swaps one for another without changing the API.</p>
 <h2 id="is-is-not">Is, is not<a class="headerlink" href="#is-is-not" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -7358,9 +7358,9 @@
 <ol>
 <li>Already there: the CLI, an Azure CLI login and a Key Vault holding the Google OAuth client.</li>
 <li>Bring up the undercloud: <code>nereus init --target azure</code> creates a local k3d cluster and the installation's identity.</li>
-<li>Connect to Azure: the <code>cloud</code> reef and its Nereid <code>azure</code>.</li>
-<li>Secrets: the <code>secrets</code> reef and the Key Vault Nereid, which adopts the vault with no copy.</li>
-<li>Authentication: the <code>authentication</code> reef and the Keycloak Nereid, with Google keys read from <code>secrets</code>.</li>
+<li>Connect to Azure: the <code>cloud</code> Reef and its Nereid <code>azure</code>.</li>
+<li>Secrets: the <code>secrets</code> Reef and the Key Vault Nereid, which adopts the vault with no copy.</li>
+<li>Authentication: the <code>authentication</code> Reef and the Keycloak Nereid, with Google keys read from <code>secrets</code>.</li>
 <li>Auth0 alongside, then <code>nereus mandate create</code> makes it the default: the same commands, the same API.</li>
 <li>Show it: record the session or run it live.</li>
 </ol>
@@ -7368,7 +7368,7 @@
 <p>Names from OpenStack TripleO, behaviour from Cluster API. See <a href="../../concepts/undercloud-overcloud/">Undercloud and overcloud</a>.</p>
 <ul>
 <li><strong>Undercloud:</strong> a local k3d that bootstraps a cloud; it publishes its OIDC issuer so Azure can verify service-account tokens, and the signing key never leaves the cluster.</li>
-<li><strong>Identities:</strong> one managed identity per reef and per installation, trusted through a federated credential; no client secret or certificate is kept.</li>
+<li><strong>Identities:</strong> one managed identity per Reef and per installation, trusted through a federated credential; no client secret or certificate is kept.</li>
 <li><strong>Overcloud:</strong> AKS, created by running Stacks; after the pivot it takes over its own lifecycle and the k3d is deleted.</li>
 <li><strong>First wave:</strong> stays on k3d and proves the handshake with Azure; AKS and the pivot come second.</li>
 </ul>

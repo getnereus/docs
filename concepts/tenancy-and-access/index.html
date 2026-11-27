@@ -7186,7 +7186,7 @@
 <h1 id="tenancy-and-access">Tenancy and access<a class="headerlink" href="#tenancy-and-access" title="Permanent link">&para;</a></h1>
 <p>Tenancy says whose each thing is, a tree of Organizations and nested Projects; access says who may do what on a node of that tree, through roles bound to teams.</p>
 <h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h2>
-<p>The tree is two kinds of the tenancy reef, applied with <a href="../../specs/cli/reefs/tenancy.html#apply"><code>nereus tenancy apply</code></a>:</p>
+<p>The tree is two kinds of the tenancy Reef, applied with <a href="../../specs/cli/reefs/tenancy.html#apply"><code>nereus tenancy apply</code></a>:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tenancy.getnereus.dev/v1alpha1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Organization</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -7210,10 +7210,10 @@
 <p><em>A binding gives a role to a team on one node; the API asks before it acts.</em></p>
 <h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Tenancy is a reef, <code>tenancy.getnereus.dev</code>, whose kinds come from each instance: every kind is a node with an optional <code>spec.parent</code>, and one kind, the boundary, isolates people and billing (here <code>Organization</code>).</li>
+<li>Tenancy is a Reef, <code>tenancy.getnereus.dev</code>, whose kinds come from each instance: every kind is a node with an optional <code>spec.parent</code>, and one kind, the boundary, isolates people and billing (here <code>Organization</code>).</li>
 <li>Whatever belongs somewhere names <code>owner: {kind, name}</code> in the tree: a Workload, an Environment, a team.</li>
-<li>The <code>authorization</code> reef holds access: a <code>Role</code> is a list of rules, <code>&lt;reef&gt;:&lt;kinds&gt;:&lt;verbs&gt;</code>, and a <code>Binding</code> gives it to a team, a position in a team or, as the exception, one User, on one node; access flows down the tree.</li>
-<li>The <code>teams</code> reef keeps one list of members: joining a team grants its access, leaving removes it. A person is one core <code>User</code> whatever the login, and a login with no User has no permission.</li>
+<li>The <code>authorization</code> Reef holds access: a <code>Role</code> is a list of rules, <code>&lt;reef&gt;:&lt;kinds&gt;:&lt;verbs&gt;</code>, and a <code>Binding</code> gives it to a team, a position in a team or, as the exception, one User, on one node; access flows down the tree.</li>
+<li>The <code>teams</code> Reef keeps one list of members: joining a team grants its access, leaving removes it. A person is one core <code>User</code> whatever the login, and a login with no User has no permission.</li>
 <li>The Nereus API asks before it acts; <a href="../../specs/cli/reefs/authorization.html#can-i-yes"><code>nereus can-i</code></a> asks the same question and names the binding that grants it.</li>
 </ul>
 <h2 id="not-this">Not this<a class="headerlink" href="#not-this" title="Permanent link">&para;</a></h2>

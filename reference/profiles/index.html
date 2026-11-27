@@ -4018,7 +4018,7 @@
   <a href="#the-secrets-reefs-key" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The secrets reef's key
+        The secrets Reef's key
       
     </span>
   </a>
@@ -7211,7 +7211,7 @@
   <a href="#the-secrets-reefs-key" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The secrets reef's key
+        The secrets Reef's key
       
     </span>
   </a>
@@ -7301,29 +7301,29 @@
 </code></pre></div>
 <p><a href="../../specs/cli/core.html#profile-list"><code>nereus profile list</code></a> lists the four; <code>core</code> is the default. Profiles are built in; <code>profile create</code> is not built yet.</p>
 <h2 id="core">core<a class="headerlink" href="#core" title="Permanent link">&para;</a></h2>
-<p>No <code>--profile</code>, or <code>--profile core</code>, installs core alone with the tenancy reef (<a href="../../adr/0015-tenancy/">ADR 0015</a>, <a href="https://github.com/getnereus/nereus/issues/646">#646</a>): no other reef, no Nereid.</p>
+<p>No <code>--profile</code>, or <code>--profile core</code>, installs core alone with the tenancy Reef (<a href="../../adr/0015-tenancy/">ADR 0015</a>, <a href="https://github.com/getnereus/nereus/issues/646">#646</a>): no other Reef, no Nereid.</p>
 <h2 id="reference">reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h2>
-<p><code>--profile reference</code> (<a href="https://github.com/getnereus/nereus/issues/1421">#1421</a>) installs the reference Nereid of each reef that has one, such as <code>reference-secrets</code> (<a href="https://github.com/getnereus/nereus/issues/486">#486</a>), in place of the tools: the reefs' kinds answer end to end and no tool image is pulled. <code>make scene-core</code> runs it.</p>
-<p>The authorization reef's, <code>reference-authorization</code>, is the gate Nereid of <a href="../../adr/0031-gates-and-approvals/">ADR 0031</a> there: a held object stays <code>Pending</code> until its Approval is decided (<a href="https://github.com/getnereus/nereus/issues/2213">#2213</a>).</p>
+<p><code>--profile reference</code> (<a href="https://github.com/getnereus/nereus/issues/1421">#1421</a>) installs the reference Nereid of each Reef that has one, such as <code>reference-secrets</code> (<a href="https://github.com/getnereus/nereus/issues/486">#486</a>), in place of the tools: the Reefs' kinds answer end to end and no tool image is pulled. <code>make scene-core</code> runs it.</p>
+<p>The authorization Reef's, <code>reference-authorization</code>, is the gate Nereid of <a href="../../adr/0031-gates-and-approvals/">ADR 0031</a> there: a held object stays <code>Pending</code> until its Approval is decided (<a href="https://github.com/getnereus/nereus/issues/2213">#2213</a>).</p>
 <h2 id="internal-developer-platform">internal-developer-platform<a class="headerlink" href="#internal-developer-platform" title="Permanent link">&para;</a></h2>
-<p>Each Nereid comes after the Nereids of the reefs it requires. With this profile the instance offers sign-in, so <code>nereus status</code>, <code>reef</code> and <code>nereid</code> read through the Nereus API with your token.</p>
+<p>Each Nereid comes after the Nereids of the Reefs it requires. With this profile the instance offers sign-in, so <code>nereus status</code>, <code>reef</code> and <code>nereid</code> read through the Nereus API with your token.</p>
 <ul>
 <li><strong>Secrets:</strong> Nereid <code>openbao</code>, Mandate <code>default</code> and the vault <code>default</code> (<a href="../../guides/reefs/secrets/">Keep a secret</a>).</li>
 <li><strong>Release:</strong> Nereid <code>flux</code> and Mandate <code>flux</code> (<a href="../../guides/reefs/release/">Release a chart</a>).</li>
 <li><strong>Database:</strong> Nereid <code>cloudnative-pg</code>, which installs CloudNativePG through a Release, and Mandate <code>cloudnative-pg</code>.</li>
 <li><strong>Authentication:</strong> Nereid <code>keycloak</code>, its Database <code>keycloak</code> and Mandate <code>keycloak</code> (<a href="../../guides/access/authentication/">Turn on authentication</a>).</li>
-<li><strong>The entrance:</strong> the Gateway API CRDs, Istio through the release reef and the Gateway <code>istio-system/ingress</code> (<a href="https://github.com/getnereus/nereus/issues/951">#951</a>).</li>
+<li><strong>The entrance:</strong> the Gateway API CRDs, Istio through the release Reef and the Gateway <code>istio-system/ingress</code> (<a href="https://github.com/getnereus/nereus/issues/951">#951</a>).</li>
 <li><strong>Portal:</strong> Nereid and Mandate <code>nereus-portal</code>, after the entrance (<a href="https://github.com/getnereus/nereus/issues/896">#896</a>).</li>
 <li><strong>Metrics:</strong> Nereid and Mandate <code>victoriametrics</code> (<a href="../../guides/reefs/metrics/">Collect metrics</a>).</li>
 <li><strong>Environment:</strong> Nereid and Mandate <code>vcluster</code> (<a href="https://github.com/getnereus/nereus/issues/827">#827</a>).</li>
 <li><strong>Catalog and delivery:</strong> Nereids <code>catalog</code> and <code>kubernetes</code> (<a href="../../guides/reefs/golden-path/">Follow the golden path</a>).</li>
-<li><strong>Teams and authorization:</strong> the <code>teams</code> reef and Nereid <code>openfga</code> (<a href="../../guides/access/authorization/">Say who may do what</a>).</li>
+<li><strong>Teams and authorization:</strong> the <code>teams</code> Reef and Nereid <code>openfga</code> (<a href="../../guides/access/authorization/">Say who may do what</a>).</li>
 <li><strong>Registry:</strong> Nereid <code>zot</code> (<a href="../../guides/reefs/registry/">Run a registry</a>).</li>
 <li><strong>Messaging:</strong> Nereid <code>nats</code> and Mandate <code>messaging-nats</code> (<a href="../../guides/reefs/messaging/">Send messages</a>).</li>
 <li><strong>Build and scm:</strong> Nereids <code>buildkit</code> and <code>forgejo</code>.</li>
-<li><strong>Usage and presentations:</strong> Nereid <code>reference-usage</code> (the usage reef's reference Nereid, until it has a real one) and Nereid <code>leagore</code>, so the portal shows the Usage and Presentations tabs (<a href="https://github.com/getnereus/nereus/issues/2018">#2018</a>).</li>
+<li><strong>Usage and presentations:</strong> Nereid <code>reference-usage</code> (the usage Reef's reference Nereid, until it has a real one) and Nereid <code>leagore</code>, so the portal shows the Usage and Presentations tabs (<a href="https://github.com/getnereus/nereus/issues/2018">#2018</a>).</li>
 </ul>
-<h2 id="the-secrets-reefs-key">The secrets reef's key<a class="headerlink" href="#the-secrets-reefs-key" title="Permanent link">&para;</a></h2>
+<h2 id="the-secrets-reefs-key">The secrets Reef's key<a class="headerlink" href="#the-secrets-reefs-key" title="Permanent link">&para;</a></h2>
 <p>OpenBao runs next to the Nereid <code>openbao</code>, which creates a non-exportable <code>rsa-4096</code> key and writes its public key in the Mandate's status; thetis checks it, and <code>init</code> prints its fingerprint.</p>
 <p>The key lives on the volume <code>openbao-data</code> and OpenBao unseals itself, so a restarted Pod keeps it; only a lost volume makes a new key. The token and the unseal key are generated once, in Secrets, and never printed.</p>
 <h2 id="the-addresses-on-k3d">The addresses on k3d<a class="headerlink" href="#the-addresses-on-k3d" title="Permanent link">&para;</a></h2>
@@ -7338,12 +7338,12 @@ content-length: 0
 </code></pre></div>
 <h2 id="buildkit-and-forgejo">buildkit and forgejo<a class="headerlink" href="#buildkit-and-forgejo" title="Permanent link">&para;</a></h2>
 <p>The profile installs <code>buildkit</code> in portable mode, Pod Security privileged, so it builds on any cluster. Where a sandbox runtime is installed, apply it in sandbox mode with <code>nereus nereid apply buildkit --set BUILD_RUNTIME_CLASS=gvisor</code> (<a href="https://github.com/getnereus/nereus/issues/1231">#1231</a>).</p>
-<p><code>forgejo</code> mirrors a repository through the scm reef's default Mandate <code>forgejo</code> (<a href="../../guides/reefs/scm-mirror/">Mirror a repository</a>). Forgejo copies from github.com alone until <code>nereus nereid apply forgejo --set MIRROR_ALLOWED_DOMAINS=git.example.com</code> names other hosts.</p>
+<p><code>forgejo</code> mirrors a repository through the scm Reef's default Mandate <code>forgejo</code> (<a href="../../guides/reefs/scm-mirror/">Mirror a repository</a>). Forgejo copies from github.com alone until <code>nereus nereid apply forgejo --set MIRROR_ALLOWED_DOMAINS=git.example.com</code> names other hosts.</p>
 <h2 id="apply-a-profile-later">Apply a profile later<a class="headerlink" href="#apply-a-profile-later" title="Permanent link">&para;</a></h2>
 <p>A profile also layers on core after <code>init</code> (<a href="https://github.com/getnereus/nereus/issues/425">#425</a>): <a href="../../specs/cli/core.html#profile-apply"><code>nereus profile apply internal-developer-platform</code></a> runs the same steps thetis runs, from the laptop, one line each, <code>created</code> the first time and <code>unchanged</code> after.</p>
 <p><code>--without buildkit</code> leaves a Nereid out; on a cluster the charts installed, the Profile's <code>spec.exclude</code> does the same. <code>--dry-run</code> lists the steps and changes nothing. On a cluster <code>init</code> has not prepared, it stops and points to <code>nereus init</code>.</p>
 <h2 id="describe-a-profile">Describe a profile<a class="headerlink" href="#describe-a-profile" title="Permanent link">&para;</a></h2>
-<p><a href="../../specs/cli/core.html#profile-describe"><code>nereus profile describe internal-developer-platform</code></a> shows its ingress and each Nereid with its reef, Mandate and who requires it, in order.</p>
+<p><a href="../../specs/cli/core.html#profile-describe"><code>nereus profile describe internal-developer-platform</code></a> shows its ingress and each Nereid with its Reef, Mandate and who requires it, in order.</p>
 <p>The order comes from each Nereid's image label <code>core.getnereus.dev/requires</code> (<a href="https://github.com/getnereus/nereus/issues/1368">#1368</a>). With no registry answering, <code>describe</code> prints the order from the offline list <code>cli/src/nereus/requires.yaml</code>, and its last line says so.</p>
 <h2 id="the-proof">The proof<a class="headerlink" href="#the-proof" title="Permanent link">&para;</a></h2>
 <p><code>make scene-idp</code> proves the profile (<a href="https://github.com/getnereus/nereus/issues/1261">#1261</a>): on a throwaway k3d cluster, every Nereid <code>Ready</code>, the portal answering, an app built by <code>buildkit</code> and deployed answering, and nothing left behind. It runs only on the owner's word (<a href="https://github.com/getnereus/nereus/issues/1420">#1420</a>).</p>

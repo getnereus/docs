@@ -5947,7 +5947,7 @@
   <a href="#task-4-1646-the-teams-reef" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Task 4 (#1646): the teams reef
+        Task 4 (#1646): the teams Reef
       
     </span>
   </a>
@@ -5958,7 +5958,7 @@
   <a href="#task-5-1647-the-authorization-reefs-kinds" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Task 5 (#1647): the authorization reef's kinds
+        Task 5 (#1647): the authorization Reef's kinds
       
     </span>
   </a>
@@ -7411,7 +7411,7 @@
   <a href="#task-4-1646-the-teams-reef" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Task 4 (#1646): the teams reef
+        Task 4 (#1646): the teams Reef
       
     </span>
   </a>
@@ -7422,7 +7422,7 @@
   <a href="#task-5-1647-the-authorization-reefs-kinds" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Task 5 (#1647): the authorization reef's kinds
+        Task 5 (#1647): the authorization Reef's kinds
       
     </span>
   </a>
@@ -7566,7 +7566,7 @@
 
 <h1 id="0011-the-first-slice-of-teams-and-authorization">0011. The first slice of teams and authorization<a class="headerlink" href="#0011-the-first-slice-of-teams-and-authorization" title="Permanent link">&para;</a></h1>
 <p><strong>Status:</strong> Proposed (2026-11-15)</p>
-<p>From #897 (Refine the authorization reef: an openfga Nereid answers who may do what), refined with the owner on 2026-11-15. The journey is #1644 (the first slice of teams and authorization); each task below is one of its sub-issues.</p>
+<p>From #897 (Refine the authorization Reef: an openfga Nereid answers who may do what), refined with the owner on 2026-11-15. The journey is #1644 (the first slice of teams and authorization); each task below is one of its sub-issues.</p>
 <p>This file is the plan an agent carries out end to end, without asking design questions. Read it whole before the first task. When this file and the repository disagree, the repository wins: record the difference in the progress log and go on.</p>
 <h2 id="the-answer">The answer<a class="headerlink" href="#the-answer" title="Permanent link">&para;</a></h2>
 <p>Users and teams are registered. A role is bound to a team, or to a position in it, on a node of the tenancy tree. The Nereus API asks before every read and write. A member with a privileged position may do what the other members may not.</p>
@@ -7584,10 +7584,10 @@
 <h2 id="decisions">Decisions<a class="headerlink" href="#decisions" title="Permanent link">&para;</a></h2>
 <p>Each taken with the owner on 2026-11-15 unless another date is given.</p>
 <ol>
-<li><strong>Team, not Group</strong> (#1306, owner 2026-11-10): <code>Team</code> and <code>Member</code> live in the <code>teams</code> reef, <code>Role</code> and <code>Binding</code> in the <code>authorization</code> reef, <code>User</code> in core. Reason: access derives from team membership, so there is no second list of groups to keep in sync; an identity provider's groups are an output, never the source.</li>
+<li><strong>Team, not Group</strong> (#1306, owner 2026-11-10): <code>Team</code> and <code>Member</code> live in the <code>teams</code> Reef, <code>Role</code> and <code>Binding</code> in the <code>authorization</code> Reef, <code>User</code> in core. Reason: access derives from team membership, so there is no second list of groups to keep in sync; an identity provider's groups are an output, never the source.</li>
 <li><strong>A person is one <code>User</code> of Nereus with several identities</strong> (ADR 0006: the person is a <code>User</code> of core, not a <code>sub</code>). The subject of every check is <code>user:&lt;User name&gt;</code>, never an identity provider's <code>sub</code> or an e-mail. Reason: the owner's Google, Microsoft and other accounts must give the same access.</li>
 <li><strong>A token whose identity is linked to no <code>User</code> has no permission.</strong> Reason: having a login is not having permission (#1306).</li>
-<li><strong>The first identity is linked by the token's verified e-mail; a second identity is out of this slice.</strong> An administrator creates the User with its e-mail; the first sign-in of a token with <code>email_verified: true</code> and that e-mail links <code>{issuer, sub}</code>. Reason: ADR 0006 asks for an e-mail code to link a new <code>sub</code>, which needs a notification reef that does not exist. This is a stand-in: it trusts the <code>email_verified</code> claim of the instance's own issuer, also when that issuer brokered another identity provider. ADR 0006 also says the platform generates the User's id; in this slice the id is the object's name. Task 2 records both as stand-ins and amends ADR 0006.</li>
+<li><strong>The first identity is linked by the token's verified e-mail; a second identity is out of this slice.</strong> An administrator creates the User with its e-mail; the first sign-in of a token with <code>email_verified: true</code> and that e-mail links <code>{issuer, sub}</code>. Reason: ADR 0006 asks for an e-mail code to link a new <code>sub</code>, which needs a notification Reef that does not exist. This is a stand-in: it trusts the <code>email_verified</code> claim of the instance's own issuer, also when that issuer brokered another identity provider. ADR 0006 also says the platform generates the User's id; in this slice the id is the object's name. Task 2 records both as stand-ins and amends ADR 0006.</li>
 <li><strong>A binding names a team, a position in a team, or (the exception) one User.</strong> The position is a free name on the <code>Member</code> in this slice. Reason: when the person in the position changes, the access follows without touching a binding; #1307's <code>Position</code> kind (skills, level, places) takes the same name later, and the binding and the tuples do not change.</li>
 <li><strong>Teams do not nest.</strong> Reason: the tenancy tree (Organization, Project, nested Projects) already gives the hierarchy, and access flows down it.</li>
 <li><strong>Managing members is a rule like any other</strong> (<code>teams:members:create,delete</code>), carried by a role. Reason: #1306, "who may create a role or a binding is itself a rule".</li>
@@ -7595,12 +7595,12 @@
 <li><strong>The objects are the source of truth; the <code>openfga</code> Nereid writes the tuples.</strong> Reason: declarative and auditable; deleting OpenFGA loses nothing.</li>
 <li><strong>One fixed OpenFGA model, versioned with the Nereid and tested with <code>fga model test</code>.</strong> A new role becomes tuples, never a new model. Reason: deterministic first.</li>
 <li><strong>One OpenFGA type, <code>node</code>, serves every tenancy kind.</strong> This differs from ADR 0015's sketch ("one OpenFGA type per tenancy kind"): the tenancy kinds come from each instance, and a fixed model cannot name them. Task 2 records it in the ADR.</li>
-<li><strong>OpenFGA runs from its official Helm chart through the release reef, with Postgres through the <code>Database</code> kind</strong>, as the <code>keycloak</code> Nereid does. Reason: open source first, and nothing new to invent.</li>
+<li><strong>OpenFGA runs from its official Helm chart through the release Reef, with Postgres through the <code>Database</code> kind</strong>, as the <code>keycloak</code> Nereid does. Reason: open source first, and nothing new to invent.</li>
 <li><strong>The slice refuses Environments and the tenancy tree too.</strong> <code>nereus environment</code> and <code>nereus tenancy</code> reach the platform through the Nereus API since #1638 and #1639 (both under #1320, the CLI never knows the cluster).</li>
 <li><strong>OpenFGA down: every read and write is refused</strong>, except <code>whoami</code>, <code>status</code> and <code>doctor</code>. Reason: fail closed; an outage must never become a way to read.</li>
-<li><strong><code>nereus-admins</code> is the emergency exit.</strong> A token in that Keycloak group passes when the normal check does not, and <code>nereus doctor</code> warns when the exit was used. Before the <code>authorization</code> reef has a default Mandate, today's rule holds unchanged (only <code>nereus-admins</code>). Reason: the exit exists already and does not depend on OpenFGA; #1306's root User with MFA replaces it later.</li>
+<li><strong><code>nereus-admins</code> is the emergency exit.</strong> A token in that Keycloak group passes when the normal check does not, and <code>nereus doctor</code> warns when the exit was used. Before the <code>authorization</code> Reef has a default Mandate, today's rule holds unchanged (only <code>nereus-admins</code>). Reason: the exit exists already and does not depend on OpenFGA; #1306's root User with MFA replaces it later.</li>
 <li><strong>Agents as subjects are out of this slice.</strong> <code>Member.spec.kind</code> takes only <code>person</code> now; <code>agent</code> joins later.</li>
-<li><strong>Roles:</strong> <code>administrator</code> is built in (every verb on every kind of every reef, present and future; never changed or deleted). <code>viewer</code>, <code>developer</code> and <code>team-lead</code> are editable examples.</li>
+<li><strong>Roles:</strong> <code>administrator</code> is built in (every verb on every kind of every Reef, present and future; never changed or deleted). <code>viewer</code>, <code>developer</code> and <code>team-lead</code> are editable examples.</li>
 <li><strong>Commands use singular kinds</strong> (<code>nereus authorization role create</code>), as ADR 0013 (command conventions) and the built decks do; #1306's sketch used plurals. <code>--owner</code> takes <code>&lt;kind&gt;/&lt;name&gt;</code> in lowercase, as <code>nereus environment</code> does.</li>
 <li><strong><code>can-i</code> is a new verb</strong>, under <code>nereus authorization can-i</code>, with the shortcut <code>nereus can-i</code>. With no <code>--user</code> it answers for the caller; asking about another User is itself a permission. Task 2 amends ADR 0013.</li>
 <li><strong>The pillar "No single control point" joins <code>docs/vision.md</code></strong> in this slice (owner, 2026-11-15, from <em>Thinking in Platforms</em>, Kaspar von Grünberg and Luca Galante, 2026).</li>
@@ -7685,15 +7685,15 @@
 <span class="w">    </span>--role<span class="w"> </span>administrator<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--user<span class="w"> </span>ana
 </code></pre></div>
-<p>A rule is <code>&lt;reef&gt;:&lt;kinds&gt;:&lt;verbs&gt;</code>, each part a comma list or <code>*</code>. The reef is the name the CLI uses (<code>environment</code>, <code>core</code>); the kinds are the plurals of the routes (<code>environments</code>); the verbs are ADR 0013's (<code>create</code>, <code>apply</code>, <code>list</code>, <code>get</code>, <code>delete</code>, <code>deploy</code>, <code>render</code>, <code>logs</code>, <code>publish</code>) plus <code>can-i</code>.</p>
+<p>A rule is <code>&lt;reef&gt;:&lt;kinds&gt;:&lt;verbs&gt;</code>, each part a comma list or <code>*</code>. The Reef is the name the CLI uses (<code>environment</code>, <code>core</code>); the kinds are the plurals of the routes (<code>environments</code>); the verbs are ADR 0013's (<code>create</code>, <code>apply</code>, <code>list</code>, <code>get</code>, <code>delete</code>, <code>deploy</code>, <code>render</code>, <code>logs</code>, <code>publish</code>) plus <code>can-i</code>.</p>
 <h2 id="the-kinds">The kinds<a class="headerlink" href="#the-kinds" title="Permanent link">&para;</a></h2>
 <p>The fields a builder may not change; the rest (status, printer columns, validation details) is the builder's.</p>
 <p><strong><code>User</code></strong>, <code>core.getnereus.dev/v1alpha1</code>, cluster scoped. <code>spec.email</code> (required), <code>spec.displayName</code> (optional). The linked identities are a list of <code>{issuer, sub}</code>, written only by the Nereus API; follow ADR 0006 (its example near "The person is a <code>User</code> of core") and ADR 0005 (one writer per field) for where the list sits. The object's name is the User's id in this slice.</p>
-<p><strong><code>Team</code></strong>, <code>teams.getnereus.dev/v1alpha1</code>, cluster scoped, the reef's default kind. <code>spec.owner: {kind, name}</code> (required, a node of the tenancy tree), <code>spec.description</code>.</p>
+<p><strong><code>Team</code></strong>, <code>teams.getnereus.dev/v1alpha1</code>, cluster scoped, the Reef's default kind. <code>spec.owner: {kind, name}</code> (required, a node of the tenancy tree), <code>spec.description</code>.</p>
 <p><strong><code>Member</code></strong>, <code>teams.getnereus.dev/v1alpha1</code>, cluster scoped. <code>spec.team</code> (required), <code>spec.user</code> (a User's name; the CLI defaults it to the member's name), <code>spec.kind</code> (<code>person</code>, the only value now), <code>spec.position</code> (optional, a free name, lowercase). A member is unique in its team; the builder chooses how the object's name carries both (the path printed is <code>teams/teams/&lt;team&gt;/members/&lt;name&gt;</code>).</p>
-<p><strong><code>Role</code></strong>, <code>authorization.getnereus.dev/v1alpha1</code>, cluster scoped, the reef's default kind. <code>spec.rules: [{reef, kinds: [], verbs: []}]</code>, <code>spec.owner: {kind, name}</code> (optional: with none the role serves the whole instance). A built-in role carries an annotation and refuses <code>apply</code> and <code>delete</code>.</p>
+<p><strong><code>Role</code></strong>, <code>authorization.getnereus.dev/v1alpha1</code>, cluster scoped, the Reef's default kind. <code>spec.rules: [{reef, kinds: [], verbs: []}]</code>, <code>spec.owner: {kind, name}</code> (optional: with none the role serves the whole instance). A built-in role carries an annotation and refuses <code>apply</code> and <code>delete</code>.</p>
 <p><strong><code>Binding</code></strong>, <code>authorization.getnereus.dev/v1alpha1</code>, cluster scoped. <code>spec.role</code> (required), exactly one subject: <code>spec.team</code> with an optional <code>spec.position</code>, or <code>spec.user</code>; <code>spec.owner: {kind, name}</code> (optional: with none the binding holds on the whole instance). A binding refuses a role, team or User that does not exist, and a role whose <code>owner</code> is neither its own node nor an ancestor of it.</p>
-<p>Neither reef has a Nereid of its own for the objects (the API keeps them, as with tenancy); the <code>authorization</code> reef's Nereid, <code>openfga</code>, only answers the question. Neither <code>Role</code> nor <code>Binding</code> names OpenFGA.</p>
+<p>Neither Reef has a Nereid of its own for the objects (the API keeps them, as with tenancy); the <code>authorization</code> Reef's Nereid, <code>openfga</code>, only answers the question. Neither <code>Role</code> nor <code>Binding</code> names OpenFGA.</p>
 <h2 id="the-model">The model<a class="headerlink" href="#the-model" title="Permanent link">&para;</a></h2>
 <p><code>controllers/openfga/model.fga</code>, as it is here. It passes <code>fga model test</code> (9 of 9 checks) with the store file below.</p>
 <div class="language-text highlight"><pre><span></span><code>model
@@ -7772,7 +7772,7 @@ condition rule_matches(reef: string, kind: string, verb: string, rule_reef: stri
 </tr>
 </tbody>
 </table>
-<p>A role's rules expand to one triple per reef, kind and verb (<code>environment:environments:create,delete</code> is two triples). The grant's id comes from the binding's name and the triple, never from an index, so the same objects always give the same tuples. A node's id is its kind in lowercase, a slash and its name.</p>
+<p>A role's rules expand to one triple per Reef, kind and verb (<code>environment:environments:create,delete</code> is two triples). The grant's id comes from the binding's name and the triple, never from an index, so the same objects always give the same tuples. A node's id is its kind in lowercase, a slash and its name.</p>
 <p>The store file of the tests, <code>controllers/openfga/model.fga.yaml</code> (the builder may add cases, never remove one):</p>
 <div class="language-yaml highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nereus authorization</span>
 <span class="nt">model_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./model.fga</span>
@@ -7825,13 +7825,13 @@ condition rule_matches(reef: string, kind: string, verb: string, rule_reef: stri
 <span class="w">  </span>--tests<span class="w"> </span>/w/model.fga.yaml
 </code></pre></div>
 <h2 id="how-the-nereus-api-decides">How the Nereus API decides<a class="headerlink" href="#how-the-nereus-api-decides" title="Permanent link">&para;</a></h2>
-<p>One function, in a new <code>api/authorization.py</code>. <code>admitted()</code> (<code>api/server.py</code>) cannot hold it: it sees only the request and the verifier, before the body is read, and knows neither the route's reef and kinds nor the stored object. So the route wrappers (<code>service_route</code>, <code>streamed_route</code>, <code>cluster_route</code>, <code>object_route</code>) gain a declaration per registration: the reef, the kinds (plural) and a function that gives the owner of the object the request names (from the body on a <code>PUT</code>, from the stored object on a <code>GET</code> or <code>DELETE</code>). The wrapper asks before <code>act</code> runs, and filters the <code>items</code> of a list after it. Every registration in every <code>api/*_routes.py</code> gets its declaration; a route with none refuses to register, so a new route cannot forget it. <code>/v2</code> (<code>api/registry_proxy.py</code>, the registry), <code>/v1/screens</code> and <code>/v1/ideas/notes</code> are checked on the instance, as <code>registry</code>, <code>screens</code> and <code>ideas</code> with the kinds their paths name.</p>
+<p>One function, in a new <code>api/authorization.py</code>. <code>admitted()</code> (<code>api/server.py</code>) cannot hold it: it sees only the request and the verifier, before the body is read, and knows neither the route's Reef and kinds nor the stored object. So the route wrappers (<code>service_route</code>, <code>streamed_route</code>, <code>cluster_route</code>, <code>object_route</code>) gain a declaration per registration: the Reef, the kinds (plural) and a function that gives the owner of the object the request names (from the body on a <code>PUT</code>, from the stored object on a <code>GET</code> or <code>DELETE</code>). The wrapper asks before <code>act</code> runs, and filters the <code>items</code> of a list after it. Every registration in every <code>api/*_routes.py</code> gets its declaration; a route with none refuses to register, so a new route cannot forget it. <code>/v2</code> (<code>api/registry_proxy.py</code>, the registry), <code>/v1/screens</code> and <code>/v1/ideas/notes</code> are checked on the instance, as <code>registry</code>, <code>screens</code> and <code>ideas</code> with the kinds their paths name.</p>
 <p>In order:</p>
 <ol>
 <li><strong>Open routes</strong> (<code>/healthz</code>, <code>/v1/me</code>, <code>/v1/status</code>, <code>/v1/doctor</code>, <code>/.well-known/nereus-configuration</code>) are never asked.</li>
-<li><strong>No default Mandate of the <code>authorization</code> reef:</strong> today's rule, unchanged (<code>nereus-admins</code> only). The slice changes nothing on an instance that has not installed the reef.</li>
+<li><strong>No default Mandate of the <code>authorization</code> Reef:</strong> today's rule, unchanged (<code>nereus-admins</code> only). The slice changes nothing on an instance that has not installed the Reef.</li>
 <li><strong>The User:</strong> the token's <code>{issuer, sub}</code> is looked up in the Users' identities; with none, a User whose <code>spec.email</code> equals the token's e-mail, only when the token says <code>email_verified: true</code>, gets the identity linked now (<code>api/auth.py</code> does not read <code>email_verified</code> today, and <code>Principal</code> has no issuer: add both, the issuer from the verifier).</li>
-<li><strong>The check:</strong> the Nereus API asks the reef's default Mandate's Nereid, never OpenFGA by name. It finds the service the way <code>api/ideas_notes.py</code> finds doris (<code>mandate_of()</code>, which names the <code>ideas</code> reef today and takes the reef as an argument from now on, picks the reef's default Mandate; <code>address()</code> builds the service's address from its <code>spec.nereid</code>). The contract is <code>POST /v1/check</code> with <code>{user, verb, reef, kinds, node}</code> (<code>kinds</code> is the plural, as <code>environments</code>; <code>node</code> is <code>{kind, name}</code> with the Kind as the objects write it, as <code>Project</code>, or <code>null</code> for the instance; <code>spec.owner</code> and a tenancy node's <code>spec.parent</code> carry the Kind the same way, and only the Nereid lowercases it for a <code>node:</code> id), answering <code>{allowed, bindings}</code> (the names of the bindings that grant it, for <code>can-i</code>'s "yes"). A timeout of two seconds, a refused connection or any answer but 200 counts as "down".</li>
+<li><strong>The check:</strong> the Nereus API asks the Reef's default Mandate's Nereid, never OpenFGA by name. It finds the service the way <code>api/ideas_notes.py</code> finds doris (<code>mandate_of()</code>, which names the <code>ideas</code> Reef today and takes the Reef as an argument from now on, picks the Reef's default Mandate; <code>address()</code> builds the service's address from its <code>spec.nereid</code>). The contract is <code>POST /v1/check</code> with <code>{user, verb, reef, kinds, node}</code> (<code>kinds</code> is the plural, as <code>environments</code>; <code>node</code> is <code>{kind, name}</code> with the Kind as the objects write it, as <code>Project</code>, or <code>null</code> for the instance; <code>spec.owner</code> and a tenancy node's <code>spec.parent</code> carry the Kind the same way, and only the Nereid lowercases it for a <code>node:</code> id), answering <code>{allowed, bindings}</code> (the names of the bindings that grant it, for <code>can-i</code>'s "yes"). A timeout of two seconds, a refused connection or any answer but 200 counts as "down".</li>
 <li><strong>Allowed:</strong> go on, and log the person as today (<code>who(principal)</code>).</li>
 <li><strong>Not allowed, no User, or down, and the token is in <code>nereus-admins</code>:</strong> go on through the emergency exit, log it, and count it for <code>nereus doctor</code>. An administrator who has their own User and a binding to <code>administrator</code> never uses the exit; task 11 creates both first.</li>
 <li><strong>Otherwise refuse:</strong> 403 when the answer was no or the token has no User, 503 when the Nereid is down, each with ADR 0012's fields (<code>cause</code>, <code>fix</code>), so the CLI prints the next steps.</li>
@@ -7899,28 +7899,28 @@ condition rule_matches(reef: string, kind: string, verb: string, rule_reef: stri
 <li><strong>Done when:</strong> a User is created, listed and deleted through the API; a token whose e-mail is not verified links nothing; a second User with the same e-mail is refused.</li>
 <li><strong>Proves it:</strong> the unit tests of <code>api/</code> and <code>cli/tests/</code> for the routes, the commands and the lookup. The end-to-end proof is task 11's scene: the reference profile of <code>make scene-core</code> has no sign-in, so the API takes no write there.</li>
 </ul>
-<h3 id="task-4-1646-the-teams-reef">Task 4 (#1646): the <code>teams</code> reef<a class="headerlink" href="#task-4-1646-the-teams-reef" title="Permanent link">&para;</a></h3>
+<h3 id="task-4-1646-the-teams-reef">Task 4 (#1646): the <code>teams</code> Reef<a class="headerlink" href="#task-4-1646-the-teams-reef" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Touches:</strong> a new <code>reefs/teams/</code> (the CRDs, an admission policy, <code>samples/</code>), the symlink <code>cli/src/nereus/interfaces/teams</code>, <code>cli/src/nereus/cli.py</code> (where a reef's group is registered), a new <code>api/teams_routes.py</code>, <code>cli/src/nereus/teams_service.py</code>, <code>cli/src/nereus/commands/teams.py</code>, the API's RBAC and its pin, the reference profile, a new <code>test/scene-core-teams</code>, a new deck <code>docs/specs/cli/reefs/teams.yaml</code> (the team slides move there from the authorization deck, <code>status: built</code>), <code>docs/specs/cli/index.yaml</code>.</li>
-<li><strong>Copy from:</strong> the commit <code>2597436a</code> (the usage reef, 43 files: route module, command, deck, samples, scene, <code>test_boundaries</code>, <code>test_profiles</code>), and <code>reefs/tenancy/admission.yaml</code> for the admission policy.</li>
+<li><strong>Touches:</strong> a new <code>reefs/teams/</code> (the CRDs, an admission policy, <code>samples/</code>), the symlink <code>cli/src/nereus/interfaces/teams</code>, <code>cli/src/nereus/cli.py</code> (where a Reef's group is registered), a new <code>api/teams_routes.py</code>, <code>cli/src/nereus/teams_service.py</code>, <code>cli/src/nereus/commands/teams.py</code>, the API's RBAC and its pin, the reference profile, a new <code>test/scene-core-teams</code>, a new deck <code>docs/specs/cli/reefs/teams.yaml</code> (the team slides move there from the authorization deck, <code>status: built</code>), <code>docs/specs/cli/index.yaml</code>.</li>
+<li><strong>Copy from:</strong> the commit <code>2597436a</code> (the usage Reef, 43 files: route module, command, deck, samples, scene, <code>test_boundaries</code>, <code>test_profiles</code>), and <code>reefs/tenancy/admission.yaml</code> for the admission policy.</li>
 <li><strong>Depends on:</strong> nothing to start (a <code>Member</code> names a User by name; the check that the User exists joins when task 3 is on <code>main</code>).</li>
 <li><strong>Does:</strong> <code>Team</code> and <code>Member</code> as in "The kinds"; the routes <code>/v1/teams/teams[/{name}]</code> and <code>/v1/teams/members[/{name}]</code>; the commands; refusals: a team whose owner does not exist, a member of a team that does not exist, a team deleted while it has members or a binding names it.</li>
 <li><strong>Done when:</strong> the deck's team commands print what their slides show.</li>
 <li><strong>Proves it:</strong> the unit tests (each command both ways, as <code>cli/tests/test_mandate_through_api.py</code>), and <code>make scene-core</code> with the new <code>scene-core-teams</code>, which applies the objects with <code>kubectl</code> as <code>scene-core-usage</code> does (the reference profile has no sign-in, so the API takes no write there): the CRDs install, the admission policy refuses a team with no owner, the objects are stored. The commands end to end are task 11's.</li>
 </ul>
-<h3 id="task-5-1647-the-authorization-reefs-kinds">Task 5 (#1647): the <code>authorization</code> reef's kinds<a class="headerlink" href="#task-5-1647-the-authorization-reefs-kinds" title="Permanent link">&para;</a></h3>
+<h3 id="task-5-1647-the-authorization-reefs-kinds">Task 5 (#1647): the <code>authorization</code> Reef's kinds<a class="headerlink" href="#task-5-1647-the-authorization-reefs-kinds" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Touches:</strong> a new <code>reefs/authorization/</code> (the CRDs, the built-in <code>administrator</code>, an admission policy, <code>samples/</code> with <code>viewer</code>, <code>developer</code> and <code>team-lead</code>), the symlink under <code>cli/src/nereus/interfaces/</code>, <code>cli/src/nereus/cli.py</code>, a new <code>api/authorization_routes.py</code>, <code>cli/src/nereus/authorization_service.py</code>, <code>cli/src/nereus/commands/authorization.py</code>, the API's RBAC and its pin, a new <code>test/scene-core-authorization</code>, the deck <code>docs/specs/cli/reefs/authorization.yaml</code> (role and binding slides to <code>built</code>).</li>
 <li><strong>Copy from:</strong> the same as task 4.</li>
 <li><strong>Depends on:</strong> nothing to start (a binding's check that its team exists joins when task 4 is on <code>main</code>). Tasks 3, 4 and 5 touch the same registration lines (<code>cli.py</code>, the API's RBAC, <code>create_app</code> in <code>api/server.py</code>): the second and third to merge rebase and keep both sides.</li>
-<li><strong>Does:</strong> <code>Role</code> and <code>Binding</code> as in "The kinds"; the routes <code>/v1/authorization/roles[/{name}]</code> and <code>/v1/authorization/bindings[/{name}]</code>; the commands with <code>--rule</code>; <code>administrator</code> applied with the reef and refused on <code>apply</code> and <code>delete</code>; a role refused on delete while a binding names it. The example roles: <code>viewer</code> is <code>*:*:list,get</code>; <code>developer</code> is <code>viewer</code> plus <code>create,apply,delete</code> on the kinds of build, delivery and release; <code>team-lead</code> is <code>developer</code> plus <code>environment:environments:create,delete</code> and <code>teams:members:create,delete</code>. A profile cannot apply sample objects today, so the samples are applied by <code>nereus authorization role apply --path</code> and the reef's <code>Next steps:</code> says so.</li>
+<li><strong>Does:</strong> <code>Role</code> and <code>Binding</code> as in "The kinds"; the routes <code>/v1/authorization/roles[/{name}]</code> and <code>/v1/authorization/bindings[/{name}]</code>; the commands with <code>--rule</code>; <code>administrator</code> applied with the Reef and refused on <code>apply</code> and <code>delete</code>; a role refused on delete while a binding names it. The example roles: <code>viewer</code> is <code>*:*:list,get</code>; <code>developer</code> is <code>viewer</code> plus <code>create,apply,delete</code> on the kinds of build, delivery and release; <code>team-lead</code> is <code>developer</code> plus <code>environment:environments:create,delete</code> and <code>teams:members:create,delete</code>. A profile cannot apply sample objects today, so the samples are applied by <code>nereus authorization role apply --path</code> and the Reef's <code>Next steps:</code> says so.</li>
 <li><strong>Done when:</strong> the deck's role and binding commands print what their slides show.</li>
 <li><strong>Proves it:</strong> the unit tests, and <code>make scene-core</code> with <code>scene-core-authorization</code>, driven with <code>kubectl</code> as in task 4.</li>
 </ul>
 <h3 id="task-6-1648-the-openfga-nereid">Task 6 (#1648): the <code>openfga</code> Nereid<a class="headerlink" href="#task-6-1648-the-openfga-nereid" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Touches:</strong> a new <code>controllers/openfga/</code> made with <code>scripts/nereid/new</code> (<code>docs/guides/build/new-nereid.md</code>), <code>Makefile</code> (<code>NEREIDS</code>, a target <code>authorization-model-test</code>), <code>cli/src/nereus/local_nereids.py</code> (<code>TOOLS</code>, its RBAC), <code>cli/tests/test_boundaries.py</code> (<code>BY_INIT</code>), the README's table of Nereids.</li>
-<li><strong>Copy from:</strong> <code>controllers/keycloak/</code> (<code>keycloak.py</code>: <code>release_objects</code> and <code>ensure_release</code> for the chart through the release reef, <code>database_object</code> and <code>ensure_database</code> for Postgres, the connection read from the Secret <code>&lt;name&gt;-database</code>; <code>server.py</code>: the loop and <code>ready()</code>), and doris for a Nereid that serves HTTP to the Nereus API.</li>
+<li><strong>Copy from:</strong> <code>controllers/keycloak/</code> (<code>keycloak.py</code>: <code>release_objects</code> and <code>ensure_release</code> for the chart through the release Reef, <code>database_object</code> and <code>ensure_database</code> for Postgres, the connection read from the Secret <code>&lt;name&gt;-database</code>; <code>server.py</code>: the loop and <code>ready()</code>), and doris for a Nereid that serves HTTP to the Nereus API.</li>
 <li><strong>Depends on:</strong> the fields of "The kinds" only; it is built against fixtures, beside tasks 3, 4 and 5.</li>
 <li><strong>Does:</strong> installs OpenFGA (the chart <code>openfga/openfga</code>, its version pinned, the Postgres of the <code>Database</code> kind, migrations as the chart runs them); creates the store and writes <code>model.fga</code> when its content changed, keeping the store and model ids in its status; each pass reads the tenancy nodes, Teams, Members, Roles and Bindings, computes the tuples of "The model", reads the store's tuples and writes only the difference; serves <code>POST /v1/check</code> (the contract of "How the Nereus API decides") and <code>/healthz</code>; reports Ready only when OpenFGA answers and the tuples are in step.</li>
 <li><strong>Done when:</strong> the objects of the model's store file, as fixture objects, give exactly the store file's tuples, and the nine answers of its tests through <code>POST /v1/check</code> against an OpenFGA the test starts in Docker (<code>openfga/openfga run</code>, in memory; skipped where Docker is absent, so <code>make checks</code> stays as it is). The proof on a cluster, with flux and cloudnative-pg, is task 11's scene.</li>
@@ -7931,8 +7931,8 @@ condition rule_matches(reef: string, kind: string, verb: string, rule_reef: stri
 <li><strong>Touches:</strong> a new <code>api/authorization.py</code>, <code>api/server.py</code> (<code>admitted()</code>, <code>service_route</code>, <code>cluster_route</code>, <code>object_route</code>, <code>streamed_route</code>), <code>api/registry_proxy.py</code> (its own group check), every registration in every <code>api/*_routes.py</code> (its declaration), <code>cli/src/nereus/commands/doctor.py</code> (a <code>WARN</code> state, which does not exist today, and the check of the emergency exit).</li>
 <li><strong>Depends on:</strong> tasks 3, 4, 5 and 6 on <code>main</code>, and #1638 and #1639.</li>
 <li><strong>Does:</strong> "How the Nereus API decides", whole. The refusal's text is the deck's. <code>nereus doctor</code> gains <code>WARN</code> and one line: how many times the emergency exit was used since the API started. A <code>WARN</code> never fails <code>doctor</code>: its exit code stays 0.</li>
-<li><strong>Done when</strong> (in the unit tests, with a fake check service; end to end in task 11): with the reef installed, a User with the <code>developer</code> role at a Project lists there and is refused a create; a User with no binding is refused everything but the open routes; with the Nereid stopped, everyone but <code>nereus-admins</code> gets 503 and the same message every time; with no Mandate of the reef, every existing test passes unchanged.</li>
-<li><strong>Proves it:</strong> the unit tests of <code>api/authorization.py</code> with a fake check service (allowed, refused, down, no User, admin through the exit, no Mandate, the list filter with two owners, a registration with no declaration refused), and <code>make scene-core</code> unchanged (no Mandate of the reef there).</li>
+<li><strong>Done when</strong> (in the unit tests, with a fake check service; end to end in task 11): with the Reef installed, a User with the <code>developer</code> role at a Project lists there and is refused a create; a User with no binding is refused everything but the open routes; with the Nereid stopped, everyone but <code>nereus-admins</code> gets 503 and the same message every time; with no Mandate of the Reef, every existing test passes unchanged.</li>
+<li><strong>Proves it:</strong> the unit tests of <code>api/authorization.py</code> with a fake check service (allowed, refused, down, no User, admin through the exit, no Mandate, the list filter with two owners, a registration with no declaration refused), and <code>make scene-core</code> unchanged (no Mandate of the Reef there).</li>
 </ul>
 <h3 id="task-8-1650-can-i">Task 8 (#1650): <code>can-i</code><a class="headerlink" href="#task-8-1650-can-i" title="Permanent link">&para;</a></h3>
 <ul>
@@ -7952,17 +7952,17 @@ condition rule_matches(reef: string, kind: string, verb: string, rule_reef: stri
 </ul>
 <h3 id="task-10-1655-the-profile-the-walkthrough-and-the-docs">Task 10 (#1655): the profile, the walkthrough and the docs<a class="headerlink" href="#task-10-1655-the-profile-the-walkthrough-and-the-docs" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Touches:</strong> <code>cli/src/nereus/charts/nereus/profiles/internal-developer-platform.yaml</code> (the <code>teams</code> reef, the <code>authorization</code> reef with <code>{name: openfga}</code> and its default Mandate), ADR 0014's note that these "do not exist yet", a new <code>docs/guides/access/authorization.md</code>, <code>docs/features.md</code> (the rows that waited for #897, and the stand-ins table), <code>mkdocs.yml</code>, the decks' remaining statuses.</li>
+<li><strong>Touches:</strong> <code>cli/src/nereus/charts/nereus/profiles/internal-developer-platform.yaml</code> (the <code>teams</code> Reef, the <code>authorization</code> Reef with <code>{name: openfga}</code> and its default Mandate), ADR 0014's note that these "do not exist yet", a new <code>docs/guides/access/authorization.md</code>, <code>docs/features.md</code> (the rows that waited for #897, and the stand-ins table), <code>mkdocs.yml</code>, the decks' remaining statuses.</li>
 <li><strong>Depends on:</strong> tasks 4, 5, 6 and 7.</li>
-<li><strong>Does:</strong> the profile installs the two reefs and the Nereid; the walkthrough is the deck's story with real output; <code>docs/features.md</code> says what is built.</li>
-<li><strong>Done when:</strong> the profile lists the two reefs, the Nereid and the default Mandate, and its tests pass; a fresh instance of the profile ending with the <code>authorization</code> reef Ready is seen in task 11.</li>
+<li><strong>Does:</strong> the profile installs the two Reefs and the Nereid; the walkthrough is the deck's story with real output; <code>docs/features.md</code> says what is built.</li>
+<li><strong>Done when:</strong> the profile lists the two Reefs, the Nereid and the default Mandate, and its tests pass; a fresh instance of the profile ending with the <code>authorization</code> Reef Ready is seen in task 11.</li>
 <li><strong>Proves it:</strong> the profile's unit tests (<code>cli/tests/test_profiles.py</code>), the docs build, and task 11's <code>make scene</code>. <code>make scene-idp</code> is not delegated to this journey: leave it, named in the PR, for the owner's word.</li>
 </ul>
 <h3 id="task-11-1652-the-final-scene-and-the-slice-on-k3d-nereus">Task 11 (#1652): the final scene, and the slice on <code>k3d-nereus</code><a class="headerlink" href="#task-11-1652-the-final-scene-and-the-slice-on-k3d-nereus" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Touches:</strong> <code>test/scene</code> (a new step file it sources), a helper that creates two local people in the scene's Keycloak through its admin API (the Secret <code>keycloak-admin</code>), with a verified e-mail at <code>example.com</code>, and signs each in with <code>test/oidc-flow</code>.</li>
 <li><strong>Depends on:</strong> every task above.</li>
-<li><strong>Does:</strong> the scene below, on the throwaway cluster of <code>make scene</code>; then <code>scripts/registry/release publish</code>, <code>scripts/deploy/live --allow-kept-cluster</code>, the two reefs and the Nereid applied on <code>k3d-nereus</code>, and the proof of decision 22 there. On both clusters the first step is the administrator's own access: the signed-in administrator creates their own User (the e-mail <code>nereus whoami</code> shows) and a binding of <code>administrator</code> to it, through the emergency exit, once.</li>
+<li><strong>Does:</strong> the scene below, on the throwaway cluster of <code>make scene</code>; then <code>scripts/registry/release publish</code>, <code>scripts/deploy/live --allow-kept-cluster</code>, the two Reefs and the Nereid applied on <code>k3d-nereus</code>, and the proof of decision 22 there. On both clusters the first step is the administrator's own access: the signed-in administrator creates their own User (the e-mail <code>nereus whoami</code> shows) and a binding of <code>administrator</code> to it, through the emergency exit, once.</li>
 <li><strong>Done when:</strong> the scene passes, and on <code>k3d-nereus</code> <code>nereus doctor</code> ends with exit code 0 (a <code>WARN</code> of the emergency exit is expected after the first step) and <code>nereus authorization can-i ... --user bruno</code> answers <code>no</code> while <code>--user ana</code> answers <code>yes</code>.</li>
 <li><strong>Proves it:</strong> <code>make scene</code>, and the commands' output on <code>k3d-nereus</code> pasted in #1644.</li>
 </ul>
@@ -8015,7 +8015,7 @@ condition rule_matches(reef: string, kind: string, verb: string, rule_reef: stri
 </tbody>
 </table>
 <p>A release and a deploy to <code>k3d-nereus</code> happen at milestones 1, 2 and 3, never between.</p>
-<p><strong>Quota-safe order.</strong> Every task merges alone and leaves <code>main</code> green and usable: tasks 3 to 6 add kinds and a Nereid nothing uses yet; task 7 changes nothing while the reef has no Mandate; the profile gains the reef only in task 10. When the quota ends, a new session resumes from the state, never from memory: <code>gh issue view 1644</code> (the sub-issues open and closed, and the comments), the progress log below, <code>gh pr list</code>, <code>git worktree list</code>. A task with a worktree and no merged PR is resumed in that worktree.</p>
+<p><strong>Quota-safe order.</strong> Every task merges alone and leaves <code>main</code> green and usable: tasks 3 to 6 add kinds and a Nereid nothing uses yet; task 7 changes nothing while the Reef has no Mandate; the profile gains the Reef only in task 10. When the quota ends, a new session resumes from the state, never from memory: <code>gh issue view 1644</code> (the sub-issues open and closed, and the comments), the progress log below, <code>gh pr list</code>, <code>git worktree list</code>. A task with a worktree and no merged PR is resumed in that worktree.</p>
 <p><strong>The rules every subagent gets</strong> (the same block in every brief, plus its task's section):</p>
 <ul>
 <li>Read <code>CLAUDE.md</code>, <code>docs/agent/rules.md</code> and <code>docs/agent/worktrees.md</code> first. Work only in the task's worktree (<code>scripts/worktree/new &lt;type&gt; &lt;issue&gt;-&lt;slug&gt;</code>); the main clone is read and pulled only.</li>
@@ -8037,10 +8037,10 @@ condition rule_matches(reef: string, kind: string, verb: string, rule_reef: stri
 <h2 id="out-of-scope">Out of scope<a class="headerlink" href="#out-of-scope" title="Permanent link">&para;</a></h2>
 <p>Each with the better solution it leads to.</p>
 <ul>
-<li><strong>A second identity on the same User:</strong> ADR 0006's e-mail code through a notification reef; <code>nereus user identity</code> commands.</li>
+<li><strong>A second identity on the same User:</strong> ADR 0006's e-mail code through a notification Reef; <code>nereus user identity</code> commands.</li>
 <li><strong>The instance's root User</strong> (#1306): created by <code>nereus init</code>, MFA required, its sign-ins audited; it replaces the <code>nereus-admins</code> emergency exit.</li>
 <li><strong>Agents as subjects:</strong> <code>Member.spec.kind: agent</code>, a token by OAuth 2.0 Token Exchange (RFC 8693) with the <code>act</code> claim, and a permission that is the intersection of the person's and the agent's scope; the audit trail records both.</li>
-<li><strong>Quotas:</strong> Kubernetes <code>ResourceQuota</code> object counts first, then a <code>quota</code> reef (Quota, Budget) on the same tenancy nodes; a <code>Team</code> is already a place a quota can attach.</li>
+<li><strong>Quotas:</strong> Kubernetes <code>ResourceQuota</code> object counts first, then a <code>quota</code> Reef (Quota, Budget) on the same tenancy nodes; a <code>Team</code> is already a place a quota can attach.</li>
 <li><strong>Bindings projected into Kubernetes RBAC:</strong> the layer below the Nereus API of the pillar "No single control point" (ADR 0015: "the API projects them into the namespaces where a Project runs"), so <code>kubectl</code> is refused too.</li>
 <li><strong>The <code>Position</code> kind</strong> (#1307): skills, level and places; the position's name on a <code>Member</code> becomes a reference to it.</li>
 <li><strong>Groups mirrored to or from an identity provider:</strong> a Nereid writes Keycloak groups from the teams (#1306: an output, never the source).</li>
@@ -8093,19 +8093,19 @@ condition rule_matches(reef: string, kind: string, verb: string, rule_reef: stri
 <tr>
 <td>2026-11-15</td>
 <td>2 (#1654)</td>
-<td>ADR 0027 (teams, roles and Users), <code>Proposed</code>; ADR 0006, 0013 and 0015 amended; #1306 told the commands are singular (PR #1664). <code>administrator</code> comes with the <code>authorization</code> reef, not with <code>nereus init</code> as #1306 said</td>
+<td>ADR 0027 (teams, roles and Users), <code>Proposed</code>; ADR 0006, 0013 and 0015 amended; #1306 told the commands are singular (PR #1664). <code>administrator</code> comes with the <code>authorization</code> Reef, not with <code>nereus init</code> as #1306 said</td>
 <td>alimede</td>
 </tr>
 <tr>
 <td>2026-11-15</td>
 <td>4 (#1646)</td>
-<td>The <code>teams</code> reef: <code>Team</code>, <code>Member</code> (its User must exist), <code>/v1/teams/...</code>, <code>nereus teams</code>, the deck <code>teams.yaml</code>, <code>scene-core-teams</code> (passed). No profile can install a reef with no Nereid: the scene applies it with <code>nereus reef apply teams</code></td>
+<td>The <code>teams</code> Reef: <code>Team</code>, <code>Member</code> (its User must exist), <code>/v1/teams/...</code>, <code>nereus teams</code>, the deck <code>teams.yaml</code>, <code>scene-core-teams</code> (passed). No profile can install a Reef with no Nereid: the scene applies it with <code>nereus reef apply teams</code></td>
 <td>alimede</td>
 </tr>
 <tr>
 <td>2026-11-15</td>
 <td>5 (#1647)</td>
-<td>The <code>authorization</code> reef's kinds: <code>Role</code>, <code>Binding</code> (its role, team or User must exist; the role's owner reaches the binding's node, on create and on apply), the built-in <code>administrator</code> applied with the reef (not by <code>nereus init</code>), the examples <code>viewer</code>, <code>developer</code>, <code>team-lead</code>, <code>nereus authorization role\|binding</code>, <code>scene-core-authorization</code> (passed). A security review: only the reef marks a role built in (<code>built-in-name</code> policy). A User is not deleted while a binding names it</td>
+<td>The <code>authorization</code> Reef's kinds: <code>Role</code>, <code>Binding</code> (its role, team or User must exist; the role's owner reaches the binding's node, on create and on apply), the built-in <code>administrator</code> applied with the Reef (not by <code>nereus init</code>), the examples <code>viewer</code>, <code>developer</code>, <code>team-lead</code>, <code>nereus authorization role\|binding</code>, <code>scene-core-authorization</code> (passed). A security review: only the Reef marks a role built in (<code>built-in-name</code> policy). A User is not deleted while a binding names it</td>
 <td>alimede</td>
 </tr>
 <tr>
@@ -8117,7 +8117,7 @@ condition rule_matches(reef: string, kind: string, verb: string, rule_reef: stri
 <tr>
 <td>2026-11-15</td>
 <td>6 (#1648)</td>
-<td>The <code>openfga</code> Nereid: chart 0.4.1 through the release reef, Postgres through <code>Database</code>, the store and model written, the tuples computed from the objects and only the difference written, <code>POST /v1/check</code>; <code>make authorization-model-test</code> (9 of 9); the fixtures guarded against the real CRDs. Repository over plan: grant ids are <code>grant:&lt;binding&gt;/&lt;reef&gt;.&lt;kind&gt;.&lt;verb&gt;</code> with <code>*</code> written <code>_</code> (OpenFGA refuses <code>:</code> and <code>*</code> there); the store and model ids live in the Mandate's status (<code>authorization</code>); migrations run in an init container; <code>nereid apply openfga</code> does not make the default Mandate (<code>--default</code> is its next step, the switch of decision 15)</td>
+<td>The <code>openfga</code> Nereid: chart 0.4.1 through the release Reef, Postgres through <code>Database</code>, the store and model written, the tuples computed from the objects and only the difference written, <code>POST /v1/check</code>; <code>make authorization-model-test</code> (9 of 9); the fixtures guarded against the real CRDs. Repository over plan: grant ids are <code>grant:&lt;binding&gt;/&lt;reef&gt;.&lt;kind&gt;.&lt;verb&gt;</code> with <code>*</code> written <code>_</code> (OpenFGA refuses <code>:</code> and <code>*</code> there); the store and model ids live in the Mandate's status (<code>authorization</code>); migrations run in an init container; <code>nereid apply openfga</code> does not make the default Mandate (<code>--default</code> is its next step, the switch of decision 15)</td>
 <td>alimede</td>
 </tr>
 <tr>
@@ -8135,13 +8135,13 @@ condition rule_matches(reef: string, kind: string, verb: string, rule_reef: stri
 <tr>
 <td>2026-11-16</td>
 <td>7 (#1649)</td>
-<td>The Nereus API asks the <code>authorization</code> reef's default Mandate's Nereid before acting: <code>api/authorization.py</code>, a declaration on every route (an undeclared one refuses to register), the emergency exit counted, <code>nereus doctor</code>'s <code>WARN</code>. A security review found two defects before the PR, both fixed with tests: a PUT's verb now comes from the field its action reads (a query <code>create</code> was gated as a create on the parent while overwriting a node), and a stored owner that cannot be read fails closed (only a 404 means none). Left out: the deck's doctor line for openfga not answering</td>
+<td>The Nereus API asks the <code>authorization</code> Reef's default Mandate's Nereid before acting: <code>api/authorization.py</code>, a declaration on every route (an undeclared one refuses to register), the emergency exit counted, <code>nereus doctor</code>'s <code>WARN</code>. A security review found two defects before the PR, both fixed with tests: a PUT's verb now comes from the field its action reads (a query <code>create</code> was gated as a create on the parent while overwriting a node), and a stored owner that cannot be read fails closed (only a 404 means none). Left out: the deck's doctor line for openfga not answering</td>
 <td>alimede</td>
 </tr>
 <tr>
 <td>2026-11-16</td>
 <td>10 (#1655)</td>
-<td>The <code>internal-developer-platform</code> profile installs <code>teams</code> and <code>authorization</code> with <code>openfga</code> and its default Mandate <code>openfga</code>; a reef no Nereid serves gets a lane of its own, which <code>openfga</code> waits for (<code>READS</code> in <code>profiles.py</code>); the walkthrough <code>docs/guides/access/authorization.md</code> carries the deck's output until task 11 replaces it; <code>docs/features.md</code> and ADR 0014's note updated. The deck's <code>nereid-apply</code> and <code>fail-closed</code> slides stay <code>planned</code>: what tasks 6 and 7 print differs from them, and task 11's real output settles them. <code>make scene-idp</code> not run (the owner's word)</td>
+<td>The <code>internal-developer-platform</code> profile installs <code>teams</code> and <code>authorization</code> with <code>openfga</code> and its default Mandate <code>openfga</code>; a Reef no Nereid serves gets a lane of its own, which <code>openfga</code> waits for (<code>READS</code> in <code>profiles.py</code>); the walkthrough <code>docs/guides/access/authorization.md</code> carries the deck's output until task 11 replaces it; <code>docs/features.md</code> and ADR 0014's note updated. The deck's <code>nereid-apply</code> and <code>fail-closed</code> slides stay <code>planned</code>: what tasks 6 and 7 print differs from them, and task 11's real output settles them. <code>make scene-idp</code> not run (the owner's word)</td>
 <td>alimede</td>
 </tr>
 <tr>
@@ -8159,13 +8159,13 @@ condition rule_matches(reef: string, kind: string, verb: string, rule_reef: stri
 <tr>
 <td>2026-11-16</td>
 <td>8 (#1650)</td>
-<td><code>nereus authorization can-i</code> and the shortcut <code>nereus can-i</code>, through <code>POST /v1/authorization/can-i</code> (one <code>yes:</code> line per granting binding, exit code 1 for no). A check that cannot run is a refusal, never a no: 409 <code>NoDefaultMandate</code> with no default Mandate of the reef, 503 when the Nereid is down. A security review: a question about yourself never tells whether a node exists (a missing node answers a plain no), and with <code>--user</code> nothing is looked up before the <code>authorization:can-i:get</code> gate passes. Left out: <code>--team</code></td>
+<td><code>nereus authorization can-i</code> and the shortcut <code>nereus can-i</code>, through <code>POST /v1/authorization/can-i</code> (one <code>yes:</code> line per granting binding, exit code 1 for no). A check that cannot run is a refusal, never a no: 409 <code>NoDefaultMandate</code> with no default Mandate of the Reef, 503 when the Nereid is down. A security review: a question about yourself never tells whether a node exists (a missing node answers a plain no), and with <code>--user</code> nothing is looked up before the <code>authorization:can-i:get</code> gate passes. Left out: <code>--team</code></td>
 <td>alimede</td>
 </tr>
 <tr>
 <td>2026-11-16</td>
 <td>milestone 2</td>
-<td>The slice is whole on <code>main</code>: the API asks, <code>can-i</code>, positions guarded, the profile installs both reefs</td>
+<td>The slice is whole on <code>main</code>: the API asks, <code>can-i</code>, positions guarded, the profile installs both Reefs</td>
 <td>alimede</td>
 </tr>
 <tr>
@@ -8177,7 +8177,7 @@ condition rule_matches(reef: string, kind: string, verb: string, rule_reef: stri
 <tr>
 <td>2026-11-16</td>
 <td>11 (#1652)</td>
-<td>The final scene of teams and authorization (<code>test/scene-authorization</code>, steps 1 to 10 of the plan) and the walkthrough's real output. It caught four defects, each one local fix with a test, none for Fable: the chart's pods carried <code>app.kubernetes.io/name=openfga</code>, which the Nereid's own Service and NetworkPolicy select (<code>nameOverride</code>); a profile applied the <code>authorization</code> reef without its built-in <code>administrator</code> (<code>authorization_service.built_ins</code> on both paths); <code>nereus database delete</code> waited for a name its owner created again (<code>wait_gone</code> compares the uid); and <code>nereus-mcp</code> moves the issuer, so the scene signs in again. The API now logs why it refused a token. Task 10 had left the scene's counts at 13 Nereids</td>
+<td>The final scene of teams and authorization (<code>test/scene-authorization</code>, steps 1 to 10 of the plan) and the walkthrough's real output. It caught four defects, each one local fix with a test, none for Fable: the chart's pods carried <code>app.kubernetes.io/name=openfga</code>, which the Nereid's own Service and NetworkPolicy select (<code>nameOverride</code>); a profile applied the <code>authorization</code> Reef without its built-in <code>administrator</code> (<code>authorization_service.built_ins</code> on both paths); <code>nereus database delete</code> waited for a name its owner created again (<code>wait_gone</code> compares the uid); and <code>nereus-mcp</code> moves the issuer, so the scene signs in again. The API now logs why it refused a token. Task 10 had left the scene's counts at 13 Nereids</td>
 <td>alimede</td>
 </tr>
 <tr>

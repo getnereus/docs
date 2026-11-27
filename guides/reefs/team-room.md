@@ -32,7 +32,7 @@ nereus login https://nereus.example.com
 
 ### 3. Work in a clone of the repository
 
-Without a room named, the room is the name of the folder's git `origin`: a clone of `nereus.git` is in the room `nereus`. A room is a Room of the rooms reef; Triton serves only the Rooms that exist, and a refusal lists them. A team member makes another with `nereus rooms create` ([Create a room for your team](rooms.md)).
+Without a room named, the room is the name of the folder's git `origin`: a clone of `nereus.git` is in the room `nereus`. A room is a Room of the rooms Reef; Triton serves only the Rooms that exist, and a refusal lists them. A team member makes another with `nereus rooms create` ([Create a room for your team](rooms.md)).
 
 ```bash
 git clone https://github.com/getnereus/nereus.git
@@ -85,5 +85,5 @@ nereus rooms follow \
 
 ## Learn more
 
-- [The rooms reef](../../reference/reefs/rooms.md): rooms, peers, room sessions and the conversation, every command.
+- [The rooms Reef](../../reference/reefs/rooms.md): rooms, peers, room sessions and the conversation, every command.
 - [Triton](https://github.com/getnereus/nereus/tree/main/controllers/triton): the room, the peer messages and their limits.

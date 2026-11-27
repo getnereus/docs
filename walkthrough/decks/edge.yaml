@@ -1,11 +1,11 @@
 deck:
   name: walkthrough-edge
   title: "Publish at a hostname"
-  subtitle: "A reef's endpoint at a fixed address on your own domain, while Nereus runs behind a tunnel"
+  subtitle: "A Reef's endpoint at a fixed address on your own domain, while Nereus runs behind a tunnel"
   accent: "a fixed address"
   pt:
     title: "Publicar num hostname"
-    subtitle: "O endpoint de um reef num endereço fixo no seu próprio domínio, enquanto o Nereus roda atrás de um túnel"
+    subtitle: "O endpoint de um Reef num endereço fixo no seu próprio domínio, enquanto o Nereus roda atrás de um túnel"
     accent: "um endereço fixo"
 
 acts:
@@ -34,13 +34,13 @@ slides:
     notes: |-
       **You end with Triton answering at `https://triton.getnereus.dev`**, while Nereus runs on your machine behind a tunnel. For whoever runs Nereus and wants an agent or a person outside the machine to reach it.
 
-      **Status: planned**, #470 (the edge reef publishes a reef's endpoint at a hostname) and #475 (a godaddy Nereid that changes a domain at its registrar). Every step links to its command in the CLI reference.
+      **Status: planned**, #470 (the edge Reef publishes a Reef's endpoint at a hostname) and #475 (a godaddy Nereid that changes a domain at its registrar). Every step links to its command in the CLI reference.
     pt:
       message: "Publicar num hostname"
       notes: |-
         **Você termina com a porta do Tritão respondendo em `https://triton.getnereus.dev`**, enquanto o Nereus roda na sua máquina atrás de um túnel. Para quem roda o Nereus e quer que um agente ou uma pessoa fora da máquina o alcance.
 
-        **Status: planejado**, #470 (o reef edge publica o endpoint de um reef num hostname) e #475 (uma Nereid godaddy que muda um domínio na registradora). Cada passo aponta para o seu comando na referência do CLI.
+        **Status: planejado**, #470 (o Reef edge publica o endpoint de um Reef num hostname) e #475 (uma Nereid godaddy que muda um domínio na registradora). Cada passo aponta para o seu comando na referência do CLI.
 
   - name: prerequisites
     act: before
@@ -63,20 +63,20 @@ slides:
   - name: setup
     act: steps
     topic: "the pieces"
-    message: "First the reef, then the Nereids that look after it"
-    accent: "First the reef"
+    message: "First the Reef, then the Nereids that look after it"
+    accent: "First the Reef"
     screen:
-      - "**1 · Apply the {reef:edge} reef:** its kinds come first, with no tool behind them · [`nereus reef apply edge`](../../specs/cli/reefs/edge.html#apply-reef) · planned #470"
+      - "**1 · Apply the {reef:edge} Reef:** its kinds come first, with no tool behind them · [`nereus reef apply edge`](../../specs/cli/reefs/edge.html#apply-reef) · planned #470"
       - "**2 · Apply {nereid:cloudflare} and its Mandate:** it runs the zone and the tunnel · [`nereus nereid apply cloudflare`](../../specs/cli/reefs/edge.html#apply-cloudflare) · planned #470"
       - "**3 · Apply {nereid:godaddy} and its Mandate:** it talks to the registrar · [`nereus nereid apply godaddy`](../../specs/cli/reefs/edge.html#apply-godaddy) · built #475"
     notes: |-
       **Each link opens the command's slide in the CLI reference**, with its options and what it prints. Another Nereid can take the place of cloudflare or godaddy by swapping the Mandate.
     pt:
       topic: "as peças"
-      message: "Primeiro o reef, depois as Nereids que cuidam dele"
-      accent: "Primeiro o reef"
+      message: "Primeiro o Reef, depois as Nereids que cuidam dele"
+      accent: "Primeiro o Reef"
       screen:
-        - "**1 · Aplicar o reef {reef:edge}:** os seus kinds vêm primeiro, sem ferramenta por trás · [`nereus reef apply edge`](../../specs/cli/reefs/edge.html#apply-reef) · planejado #470"
+        - "**1 · Aplicar o Reef {reef:edge}:** os seus kinds vêm primeiro, sem ferramenta por trás · [`nereus reef apply edge`](../../specs/cli/reefs/edge.html#apply-reef) · planejado #470"
         - "**2 · Aplicar {nereid:cloudflare} e o seu Mandate:** cuida da zona e do túnel · [`nereus nereid apply cloudflare`](../../specs/cli/reefs/edge.html#apply-cloudflare) · planejado #470"
         - "**3 · Aplicar {nereid:godaddy} e o seu Mandate:** fala com a registradora · [`nereus nereid apply godaddy`](../../specs/cli/reefs/edge.html#apply-godaddy) · pronto #475"
       notes: |-
@@ -107,22 +107,22 @@ slides:
   - name: publish
     act: steps
     topic: "the route"
-    message: "A reef's endpoint gets a name, never where it runs"
+    message: "A Reef's endpoint gets a name, never where it runs"
     accent: "never where it runs"
     screen:
-      - "**7 · See what the reefs can publish:** an endpoint by its reef and name, none published by default · [`nereus edge endpoint list`](../../specs/cli/reefs/edge.html#endpoint-list) · #1951"
+      - "**7 · See what the Reefs can publish:** an endpoint by its Reef and name, none published by default · [`nereus edge endpoint list`](../../specs/cli/reefs/edge.html#endpoint-list) · #1951"
       - "**8 · Grant it, then publish it at a hostname:** `--publish mcp` on Triton's Nereid, then the route opens the tunnel to it · [`nereus edge route create`](../../specs/cli/reefs/edge.html#route-create) · #1951"
     notes: |-
-      **The route names `rooms/mcp`**, an endpoint the rooms reef publishes, never a cluster, a namespace, a Service or a port (owner, 2026-10-29).
+      **The route names `rooms/mcp`**, an endpoint the rooms Reef publishes, never a cluster, a namespace, a Service or a port (owner, 2026-10-29).
     pt:
       topic: "a rota"
-      message: "O endpoint de um reef ganha um nome, nunca onde roda"
+      message: "O endpoint de um Reef ganha um nome, nunca onde roda"
       accent: "nunca onde roda"
       screen:
-        - "**7 · Ver o que os reefs podem publicar:** um endpoint pelo seu reef e nome, nenhum publicado por padrão · [`nereus edge endpoint list`](../../specs/cli/reefs/edge.html#endpoint-list) · #1951"
+        - "**7 · Ver o que os Reefs podem publicar:** um endpoint pelo seu Reef e nome, nenhum publicado por padrão · [`nereus edge endpoint list`](../../specs/cli/reefs/edge.html#endpoint-list) · #1951"
         - "**8 · Autorizar e publicar num hostname:** `--publish mcp` na Nereid do Triton, depois a rota abre o túnel até ele · [`nereus edge route create`](../../specs/cli/reefs/edge.html#route-create) · #1951"
       notes: |-
-        **A rota nomeia `rooms/mcp`**, um endpoint que o reef rooms publica, nunca um cluster, um namespace, um Service ou uma porta (o dono, 2026-10-29).
+        **A rota nomeia `rooms/mcp`**, um endpoint que o Reef rooms publica, nunca um cluster, um namespace, um Service ou uma porta (o dono, 2026-10-29).
 
   - name: check
     act: check
@@ -150,7 +150,7 @@ slides:
       - "**Next:** bring the agents to Triton (the Triton roadmap)"
       - "**[All the goals](index.html):** the other walkthroughs"
     notes: |-
-      **Learn more:** #470 (the edge reef publishes a reef's endpoint at a hostname), #475 (a godaddy Nereid that changes a domain at its registrar), ADR 0005 (Nereids publish endpoints and commands in status).
+      **Learn more:** #470 (the edge Reef publishes a Reef's endpoint at a hostname), #475 (a godaddy Nereid that changes a domain at its registrar), ADR 0005 (Nereids publish endpoints and commands in status).
     pt:
       message: "Daqui em diante, os agentes alcançam o Tritão de fora da máquina"
       accent: "de fora da máquina"
@@ -158,4 +158,4 @@ slides:
         - "**Depois:** trazer os agentes para o servidor MCP do Tritão (o roadmap do Tritão)"
         - "**[Todos os objetivos](index.html):** os outros walkthroughs"
       notes: |-
-        **Para saber mais:** #470 (o reef edge publica o endpoint de um reef num hostname), #475 (uma Nereid godaddy que muda um domínio na registradora), ADR 0005 (as Nereids publicam endpoints e comandos no status).
+        **Para saber mais:** #470 (o Reef edge publica o endpoint de um Reef num hostname), #475 (uma Nereid godaddy que muda um domínio na registradora), ADR 0005 (as Nereids publicam endpoints e comandos no status).

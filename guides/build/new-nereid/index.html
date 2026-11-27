@@ -7292,7 +7292,7 @@
 <h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">&para;</a></h2>
 <ul>
 <li>A checkout of Nereus, with <code>uv</code> on the <code>PATH</code>: the template runs through <a href="https://copier.readthedocs.io/">Copier</a>, pinned and run by <code>uvx</code>, so there is nothing else to install.</li>
-<li>The reef the Nereid looks after, and the Tool it drives: here the <code>edge</code> reef and Caddy.</li>
+<li>The Reef the Nereid looks after, and the Tool it drives: here the <code>edge</code> Reef and Caddy.</li>
 </ul>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
 <h3 id="1-render-the-skeleton">1. Render the skeleton<a class="headerlink" href="#1-render-the-skeleton" title="Permanent link">&para;</a></h3>
@@ -7312,9 +7312,9 @@ Next steps:
   make nereids
   nereus nereid apply caddy --reef edge --image localhost:5111/caddy-controller:0.1.0
 </code></pre></div>
-<p>By default it serves the kind <code>&lt;reef&gt;s</code>; <code>--kinds hostnames,certificates</code> names the reef's kinds it serves instead.</p>
+<p>By default it serves the kind <code>&lt;reef&gt;s</code>; <code>--kinds hostnames,certificates</code> names the Reef's kinds it serves instead.</p>
 <h3 id="2-write-the-tools-work">2. Write the Tool's work<a class="headerlink" href="#2-write-the-tools-work" title="Permanent link">&para;</a></h3>
-<p>The Tool's work goes in <code>reconcile()</code> of <code>server.py</code>. The generated <code>README.md</code> lists what every Nereid must do: serve every verb of every kind of its reef, with the status its contract declares.</p>
+<p>The Tool's work goes in <code>reconcile()</code> of <code>server.py</code>. The generated <code>README.md</code> lists what every Nereid must do: serve every verb of every kind of its Reef, with the status its contract declares.</p>
 <h3 id="3-wire-it-into-the-build">3. Wire it into the build<a class="headerlink" href="#3-wire-it-into-the-build" title="Permanent link">&para;</a></h3>
 <p>Add <code>caddy</code> to <code>NEREIDS</code> in the <code>Makefile</code>, and its tests and lint to <code>make test</code> and <code>make lint</code>, as the skeleton's next steps say.</p>
 <h3 id="4-take-a-later-change-of-the-template">4. Take a later change of the template<a class="headerlink" href="#4-take-a-later-change-of-the-template" title="Permanent link">&para;</a></h3>
@@ -7337,9 +7337,9 @@ Next steps:
 <p><code>make nereid-check</code> fails on a Nereid that compares statuses without <code>lastTransitionTime</code> (the mark of a status built with <code>now</code>) and does not import <code>nereid.operations</code>; <code>scripts/nereid/ready-allowlist</code> names the ones not adopted yet, a list that only shrinks.</p>
 <h2 id="next">Next<a class="headerlink" href="#next" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../image/">Build a Nereid's image</a>, with the labels that name its reef, and apply it.</li>
-<li><a href="../requires/">Require a reef</a> when the Nereid needs another reef's work.</li>
-<li><a href="../conformance/">Pass the conformance tests</a>: every verb of every kind of its reef.</li>
+<li><a href="../image/">Build a Nereid's image</a>, with the labels that name its Reef, and apply it.</li>
+<li><a href="../requires/">Require a Reef</a> when the Nereid needs another Reef's work.</li>
+<li><a href="../conformance/">Pass the conformance tests</a>: every verb of every kind of its Reef.</li>
 </ul>
 <h2 id="learn-more">Learn more<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <ul>

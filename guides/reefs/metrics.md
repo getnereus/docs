@@ -4,7 +4,7 @@ See how each Nereid is doing, its passes, failures and how long a pass takes, in
 
 ## Before you start
 
-- A cluster from [Prepare the cluster](../../start/init.md) with `--profile internal-developer-platform`: it brings the metrics reef with the Nereid `victoriametrics`, which scrapes every Nereid in `nereus-system` and each node's CPU and memory per container.
+- A cluster from [Prepare the cluster](../../start/init.md) with `--profile internal-developer-platform`: it brings the metrics Reef with the Nereid `victoriametrics`, which scrapes every Nereid in `nereus-system` and each node's CPU and memory per container.
 - `kubectl` reaching that cluster. The query API has no credentials yet, so only the scraper, the Nereus API and a port-forward reach it.
 
 ## Steps
@@ -61,5 +61,5 @@ curl --get \
 
 ## Learn more
 
-- [Inside the metrics reef](../../reference/metrics-reef.md): what the Nereid installs, what it scrapes and who reaches it.
-- [Runtime and profiles](../../concepts/runtime-and-profiles.md): why another Nereid of the metrics reef would publish the same `status.query.url`.
+- [Inside the metrics Reef](../../reference/metrics-reef.md): what the Nereid installs, what it scrapes and who reaches it.
+- [Runtime and profiles](../../concepts/runtime-and-profiles.md): why another Nereid of the metrics Reef would publish the same `status.query.url`.

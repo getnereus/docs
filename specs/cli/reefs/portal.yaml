@@ -1,10 +1,10 @@
 deck:
   name: portal
-  title: "The portal reef"
+  title: "The portal Reef"
   subtitle: "Nereus in the browser: a PWA that signs a person in and shows who they are"
   accent: "in the browser"
   pt:
-    title: "O reef portal"
+    title: "O Reef portal"
     subtitle: "O Nereus no navegador: um PWA que faz o login de uma pessoa e mostra quem ela é"
     accent: "no navegador"
 
@@ -25,23 +25,23 @@ slides:
   - name: cover
     act: opening
     cover: true
-    message: "The portal reef"
+    message: "The portal Reef"
     notes: |-
-      **The portal reef has no kinds** (spec 0008, #732): its Nereid, `nereus-portal`, serves the PWA and publishes it with a Gateway API `HTTPRoute`, set by its own Mandate's `publicUrl`. The login is the authentication reef's (ADR 0006, the contract every authentication Nereid writes): the issuer comes from its default Mandate's `status.oidc.issuer`, and the client `nereus-portal` is the one the keycloak Nereid registers (#731).
+      **The portal Reef has no kinds** (spec 0008, #732): its Nereid, `nereus-portal`, serves the PWA and publishes it with a Gateway API `HTTPRoute`, set by its own Mandate's `publicUrl`. The login is the authentication Reef's (ADR 0006, the contract every authentication Nereid writes): the issuer comes from its default Mandate's `status.oidc.issuer`, and the client `nereus-portal` is the one the keycloak Nereid registers (#731).
     pt:
-      message: "O reef portal"
+      message: "O Reef portal"
       notes: |-
-        **O reef portal não tem kinds** (spec 0008, #732): a sua Nereid, `nereus-portal`, serve o PWA e o publica com um `HTTPRoute` do Gateway API, definido pelo `publicUrl` do seu próprio Mandate. O login é o do reef authentication (ADR 0006, o contrato que toda Nereid de autenticação escreve): o issuer vem do `status.oidc.issuer` do seu Mandate padrão, e o client `nereus-portal` é o que a Nereid keycloak registra (#731).
+        **O Reef portal não tem kinds** (spec 0008, #732): a sua Nereid, `nereus-portal`, serve o PWA e o publica com um `HTTPRoute` do Gateway API, definido pelo `publicUrl` do seu próprio Mandate. O login é o do Reef authentication (ADR 0006, o contrato que toda Nereid de autenticação escreve): o issuer vem do `status.oidc.issuer` do seu Mandate padrão, e o client `nereus-portal` é o que a Nereid keycloak registra (#731).
 
   - name: reef-apply
     act: setup
     topic: "reef apply"
     status: built
-    message: "The {reef:portal} reef, with no kinds"
+    message: "The {reef:portal} Reef, with no kinds"
     accent: "no kinds"
     terminal:
       steps:
-        - comment: "The authentication reef and a Nereid of it come first"
+        - comment: "The authentication Reef and a Nereid of it come first"
           run: "nereus reef apply portal"
           output: |-
             ✓ core/reefs/portal created (portal.getnereus.dev/v1alpha1)
@@ -51,19 +51,19 @@ slides:
               nereus portal --help
               nereus nereid apply <nereid> --reef portal
     notes: |-
-      **No contract is pinned:** a reef with no kinds needs none, so `reef apply` makes it from its name alone.
+      **No contract is pinned:** a Reef with no kinds needs none, so `reef apply` makes it from its name alone.
     pt:
       topic: "reef apply"
-      message: "O reef {reef:portal}, sem kinds"
+      message: "O Reef {reef:portal}, sem kinds"
       accent: "sem kinds"
       notes: |-
-        **Nenhum contrato é fixado:** um reef sem kinds não precisa de um, então o `reef apply` o cria só pelo nome.
+        **Nenhum contrato é fixado:** um Reef sem kinds não precisa de um, então o `reef apply` o cria só pelo nome.
 
   - name: nereid-apply
     act: setup
     topic: "nereid apply"
     status: built
-    message: "The nereus-portal Nereid requires the authentication reef"
+    message: "The nereus-portal Nereid requires the authentication Reef"
     accent: "requires"
     terminal:
       steps:
@@ -78,13 +78,13 @@ slides:
 
               nereus mandate apply nereus-portal --reef portal --nereid nereus-portal --param publicUrl=https://portal.example.com
     notes: |-
-      **`nereid apply` makes its Mandate too**, with no `publicUrl` yet, so `NoPublicUrl` until the next command. **Its image declares `requires: authentication`**, so `nereid apply` refuses it while the authentication reef has no Nereid. The CLI gives it a Role on one `HTTPRoute`, `nereus-portal` in `nereus-system`, and the Service's second port, `portal`.
+      **`nereid apply` makes its Mandate too**, with no `publicUrl` yet, so `NoPublicUrl` until the next command. **Its image declares `requires: authentication`**, so `nereid apply` refuses it while the authentication Reef has no Nereid. The CLI gives it a Role on one `HTTPRoute`, `nereus-portal` in `nereus-system`, and the Service's second port, `portal`.
     pt:
       topic: "nereid apply"
-      message: "A Nereid nereus-portal requer o reef authentication"
+      message: "A Nereid nereus-portal requer o Reef authentication"
       accent: "requer"
       notes: |-
-        **O `nereid apply` cria o seu Mandate também**, ainda sem `publicUrl`, então `NoPublicUrl` até o próximo comando. **A sua imagem declara `requires: authentication`**, então o `nereid apply` a recusa enquanto o reef authentication não tem Nereid. O CLI lhe dá uma Role sobre um `HTTPRoute`, `nereus-portal` em `nereus-system`, e a segunda porta do Service, `portal`.
+        **O `nereid apply` cria o seu Mandate também**, ainda sem `publicUrl`, então `NoPublicUrl` até o próximo comando. **A sua imagem declara `requires: authentication`**, então o `nereid apply` a recusa enquanto o Reef authentication não tem Nereid. O CLI lhe dá uma Role sobre um `HTTPRoute`, `nereus-portal` em `nereus-system`, e a segunda porta do Service, `portal`.
 
   - name: mandate-apply
     act: setup
@@ -111,7 +111,7 @@ slides:
     notes: |-
       **The Nereid owns the route**, deleted with it, and deletes it when the Mandate loses its `publicUrl`. The Mandate is `Ready` with the reason `Serving`, else `NoPublicUrl`, `InvalidParameter` or `NoIssuer`.
 
-      **On the kept cluster, the named tunnel sends `portal.getnereus.dev` to the ingress gateway**; its DNS record is made once by hand, a stand-in for the edge reef (#470).
+      **On the kept cluster, the named tunnel sends `portal.getnereus.dev` to the ingress gateway**; its DNS record is made once by hand, a stand-in for the edge Reef (#470).
     pt:
       topic: "mandate apply"
       message: "O publicUrl escreve o HTTPRoute"
@@ -119,7 +119,7 @@ slides:
       notes: |-
         **A Nereid é dona da rota**, apagada junto com ela, e a apaga quando o Mandate perde o `publicUrl`. O Mandate fica `Ready` com o motivo `Serving`, senão `NoPublicUrl`, `InvalidParameter` ou `NoIssuer`.
 
-        **No cluster mantido, o túnel nomeado manda `portal.getnereus.dev` para o gateway de ingress**; o seu registro DNS é feito uma vez à mão, um stand-in do reef edge (#470).
+        **No cluster mantido, o túnel nomeado manda `portal.getnereus.dev` para o gateway de ingress**; o seu registro DNS é feito uma vez à mão, um stand-in do Reef edge (#470).
 
   - name: open
     act: use

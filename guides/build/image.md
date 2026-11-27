@@ -1,18 +1,18 @@
 # Build a Nereid's image
 
-Build a Nereid's image whose labels name its reef, push it to the local registry and apply it: the CLI reads the labels before anything runs in the cluster.
+Build a Nereid's image whose labels name its Reef, push it to the local registry and apply it: the CLI reads the labels before anything runs in the cluster.
 
 ## Before you start
 
 - A cluster from [Prepare the cluster](../../start/init.md): `nereus init` creates the local registry `localhost:5111`.
-- The reef applied, here `release`: [Apply your first reef](../../start/first-reef.md).
+- The Reef applied, here `release`: [Apply your first Reef](../../start/first-reef.md).
 - Docker, to build and push. The example is the reference Nereid of `controllers/reference`, whose commands only simulate output.
 
 ## Steps
 
-### 1. Declare the reef in labels
+### 1. Declare the Reef in labels
 
-The `Dockerfile` names the reef the Nereid looks after, the reefs it requires, its name and its version:
+The `Dockerfile` names the Reef the Nereid looks after, the Reefs it requires, its name and its version:
 
 ```dockerfile
 LABEL ${API_GROUP}/reef=${REEF} \
@@ -37,7 +37,7 @@ LABEL ${API_GROUP}/reef=${REEF} \
 
 ### 2. Build and push
 
-`make reference` builds the image for the `release` reef and pushes it; a Nereid from the template builds with `make nereids`.
+`make reference` builds the image for the `release` Reef and pushes it; a Nereid from the template builds with `make nereids`.
 
 ```bash
 make reference
@@ -93,7 +93,7 @@ nereus nereid apply reference-release \
 
 ## Check it worked
 
-[`nereus nereid list`](../../specs/cli/core.html#nereid-list) shows the Nereid `Ready` on its reef:
+[`nereus nereid list`](../../specs/cli/core.html#nereid-list) shows the Nereid `Ready` on its Reef:
 
 ```bash
 nereus nereid list
@@ -105,11 +105,11 @@ reference-release  release  localhost:5111/reference-release-controller:0.1.0   
 openbao            secrets  localhost:5111/openbao-controller:0.1.0               Ready   1m
 ```
 
-The commands it published are under its reef: `nereus release --help`.
+The commands it published are under its Reef: `nereus release --help`.
 
 ## Clean up
 
-[`nereus nereid delete`](../../specs/cli/core.html#nereid-delete) removes it; its reef stays.
+[`nereus nereid delete`](../../specs/cli/core.html#nereid-delete) removes it; its Reef stays.
 
 ```bash
 nereus nereid delete reference-release
@@ -121,7 +121,7 @@ nereus nereid delete reference-release
 
 ## Next
 
-- [Require a reef](requires.md): a label that makes one Nereid depend on another reef.
+- [Require a Reef](requires.md): a label that makes one Nereid depend on another Reef.
 - [Pass the conformance tests](conformance.md).
 
 ## Learn more

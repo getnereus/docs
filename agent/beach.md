@@ -1,6 +1,6 @@
 # Beach
 
-Glaucus (Glauco in Portuguese) is the messenger between the owner's voice session and the local agent (Claude Code): in the myth, the fisherman who became a sea god, next to Nereus and the Nereids. The channel is temporary: it ends when the first Nereid (the interlocutor, exposed as a remote MCP connector) runs on a Nereus instance. Conceptually, an order is a message of a future `messaging` reef; the Drive folder is its first, rudimentary implementation.
+Glaucus (Glauco in Portuguese) is the messenger between the owner's voice session and the local agent (Claude Code): in the myth, the fisherman who became a sea god, next to Nereus and the Nereids. The channel is temporary: it ends when the first Nereid (the interlocutor, exposed as a remote MCP connector) runs on a Nereus instance. Conceptually, an order is a message of a future `messaging` Reef; the Drive folder is its first, rudimentary implementation.
 
 ## Layout
 

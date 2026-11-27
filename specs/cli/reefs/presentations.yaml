@@ -1,10 +1,10 @@
 deck:
   name: presentations
-  title: "The presentations reef"
+  title: "The presentations Reef"
   subtitle: "The first slice: a deck kept by the platform, and a Session a phone drives and a room follows"
   accent: "a Session a phone drives"
   pt:
-    title: "O reef presentations"
+    title: "O Reef presentations"
     subtitle: "A primeira fatia: um deck guardado pela plataforma, e uma Session que um celular conduz e uma sala acompanha"
     accent: "uma Session que um celular conduz"
 
@@ -25,24 +25,24 @@ slides:
   - name: cover
     act: opening
     cover: true
-    message: "The presentations reef"
+    message: "The presentations Reef"
     notes: |-
-      **The presentations reef** (ADR 0028, spec 0012, #1694, part of #1688): two kinds, `Presentation` (what is shown) and `Session` (each time it is shown). The API writes the objects and calls the reef's Nereid, `leagore` (#1695), which keeps the deck and the Session's live state.
+      **The presentations Reef** (ADR 0028, spec 0012, #1694, part of #1688): two kinds, `Presentation` (what is shown) and `Session` (each time it is shown). The API writes the objects and calls the Reef's Nereid, `leagore` (#1695), which keeps the deck and the Session's live state.
     pt:
-      message: "O reef presentations"
+      message: "O Reef presentations"
       notes: |-
-        **O reef presentations** (ADR 0028, spec 0012, #1694, parte do #1688): dois kinds, `Presentation` (o que é mostrado) e `Session` (cada vez que é mostrado). A API escreve os objetos e chama a Nereid do reef, `leagore` (#1695), que guarda o deck e o estado ao vivo da Session.
+        **O Reef presentations** (ADR 0028, spec 0012, #1694, parte do #1688): dois kinds, `Presentation` (o que é mostrado) e `Session` (cada vez que é mostrado). A API escreve os objetos e chama a Nereid do Reef, `leagore` (#1695), que guarda o deck e o estado ao vivo da Session.
 
   - name: reef-apply
     act: setup
     topic: "reef apply"
     status: built
     issue: 1694
-    message: "The {reef:presentations} reef brings decks and sessions"
+    message: "The {reef:presentations} Reef brings decks and sessions"
     accent: "decks and sessions"
     terminal:
       steps:
-        - comment: "The kinds of the reef; its Nereid, leagore, comes in #1695"
+        - comment: "The kinds of the Reef; its Nereid, leagore, comes in #1695"
           run: "nereus reef apply presentations"
           output: |-
             ✓ core/reefs/presentations created (presentations.getnereus.dev/v1alpha1: presentations, sessions)
@@ -53,15 +53,15 @@ slides:
     notes: |-
       **`Presentation` is the default kind**, so `nereus presentations create` is `nereus presentations presentation create` (ADR 0013, command conventions).
 
-      **With no Mandate for the reef**, a create answers the API's error and names `nereus mandate list` as the check; nothing is left behind.
+      **With no Mandate for the Reef**, a create answers the API's error and names `nereus mandate list` as the check; nothing is left behind.
     pt:
       topic: "reef apply"
-      message: "O reef {reef:presentations} traz decks e sessões"
+      message: "O Reef {reef:presentations} traz decks e sessões"
       accent: "decks e sessões"
       notes: |-
         **`Presentation` é o kind padrão**, então `nereus presentations create` é `nereus presentations presentation create` (ADR 0013, convenções de comando).
 
-        **Sem Mandate para o reef**, um create responde o erro da API e nomeia `nereus mandate list` como a verificação; nada fica para trás.
+        **Sem Mandate para o Reef**, um create responde o erro da API e nomeia `nereus mandate list` como a verificação; nada fica para trás.
 
   - name: schema
     act: setup

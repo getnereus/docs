@@ -1,4 +1,4 @@
-# The build reef
+# The build Reef
 
 Every command that builds an image from a Workload's source inside the cluster.
 

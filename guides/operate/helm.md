@@ -71,7 +71,7 @@ DESCRIPTION: Install complete
 
 The profile is the file `profiles/<profile>.yaml` of the chart; a name with no file fails before anything is installed, listing the profiles there are.
 
-The metrics reef scrapes every 30s; `--set metrics.scrapeInterval=15s` changes it, whole seconds from 10s to 60s, before thetis creates the metrics reef's Mandate ([#2199](https://github.com/getnereus/nereus/issues/2199)). Any other value fails the chart.
+The metrics Reef scrapes every 30s; `--set metrics.scrapeInterval=15s` changes it, whole seconds from 10s to 60s, before thetis creates the metrics Reef's Mandate ([#2199](https://github.com/getnereus/nereus/issues/2199)). Any other value fails the chart.
 
 ### 4. Remove the CA key
 
@@ -79,7 +79,7 @@ The key now lives in the Secret, kept on uninstall, and in Helm's release histor
 
 ### 5. Wait for the profile
 
-thetis installs each reef, Nereid and Mandate in the order of what each requires; the Profile is Ready when the last one is, in about 8 minutes.
+thetis installs each Reef, Nereid and Mandate in the order of what each requires; the Profile is Ready when the last one is, in about 8 minutes.
 
 ```bash
 kubectl get profiles.core.getnereus.dev nereus --watch
@@ -100,7 +100,7 @@ nereus login --use-device-code
 
 ## Check it worked
 
-[`nereus reef list`](../../specs/cli/core.html#reef-list) shows the same reefs `nereus init --profile internal-developer-platform` gives; `nereus nereid list` shows each Nereid Ready, from `ghcr.io/getnereus/nereus`.
+[`nereus reef list`](../../specs/cli/core.html#reef-list) shows the same Reefs `nereus init --profile internal-developer-platform` gives; `nereus nereid list` shows each Nereid Ready, from `ghcr.io/getnereus/nereus`.
 
 ```bash
 nereus reef list

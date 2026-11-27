@@ -1,11 +1,11 @@
 deck:
   name: tenancy
-  title: "The tenancy reef"
-  subtitle: "Every command of the tenancy reef: whose a thing is, as a tree of Organizations and Projects"
+  title: "The tenancy Reef"
+  subtitle: "Every command of the tenancy Reef: whose a thing is, as a tree of Organizations and Projects"
   accent: "whose a thing is"
   pt:
-    title: "O reef tenancy"
-    subtitle: "Todos os comandos do reef tenancy: de quem é cada coisa, numa árvore de Organizations e Projects"
+    title: "O Reef tenancy"
+    subtitle: "Todos os comandos do Reef tenancy: de quem é cada coisa, numa árvore de Organizations e Projects"
     accent: "de quem é cada coisa"
 
 acts:
@@ -29,15 +29,15 @@ slides:
   - name: cover
     act: opening
     cover: true
-    message: "The tenancy reef"
+    message: "The tenancy Reef"
     notes: |-
-      **The source of truth for the commands of the tenancy reef** (#477, #569 (the tenancy reef in the CLI reference)). Every command here is an idea: none is built yet. The reef comes from ADR 0015 (tenancy: a tenancy reef whose kinds come from each instance, with one fixed shape), and #573 builds it.
+      **The source of truth for the commands of the tenancy Reef** (#477, #569 (the tenancy Reef in the CLI reference)). Every command here is an idea: none is built yet. The Reef comes from ADR 0015 (tenancy: a tenancy Reef whose kinds come from each instance, with one fixed shape), and #573 builds it.
 
       **Nereus is born multi-tenant** (#21, Organization and nested Projects): an Organization is the boundary of people, permissions and isolation, a Project sits under an Organization or under another Project, and whatever needs to say whose a thing is points to that tree.
     pt:
-      message: "O reef tenancy"
+      message: "O Reef tenancy"
       notes: |-
-        **A fonte da verdade dos comandos do reef tenancy** (#477, #569 (o reef tenancy na referência do CLI)). Todo comando aqui é uma ideia: nenhum está pronto ainda. O reef vem do ADR 0015 (tenancy: um reef tenancy cujos kinds vêm de cada instância, com uma forma fixa), e o #573 o constrói.
+        **A fonte da verdade dos comandos do Reef tenancy** (#477, #569 (o Reef tenancy na referência do CLI)). Todo comando aqui é uma ideia: nenhum está pronto ainda. O Reef vem do ADR 0015 (tenancy: um Reef tenancy cujos kinds vêm de cada instância, com uma forma fixa), e o #573 o constrói.
 
         **O Nereus nasce multi-tenant** (#21, Organization e Projects aninhados): uma Organization é a fronteira de pessoas, permissões e isolamento, um Project fica sob uma Organization ou sob outro Project, e tudo o que precisa dizer de quem é uma coisa aponta para essa árvore.
 
@@ -69,7 +69,7 @@ slides:
     act: setup
     topic: "reef apply"
     status: built
-    message: "The {reef:tenancy} reef, with the kinds of this instance"
+    message: "The {reef:tenancy} Reef, with the kinds of this instance"
     accent: "of this instance"
     terminal:
       steps:
@@ -83,48 +83,48 @@ slides:
 
               nereus tenancy organization create <organization>
     notes: |-
-      **The output lists the kinds the reef created, in the plural, after its group** (owner, 2026-10-30, ADR 0015), a line every reef's `nereus reef apply` grows: here they are this instance's, read from the CRDs in `reefs/tenancy/`, so another instance would read `departments, squads`.
+      **The output lists the kinds the Reef created, in the plural, after its group** (owner, 2026-10-30, ADR 0015), a line every Reef's `nereus reef apply` grows: here they are this instance's, read from the CRDs in `reefs/tenancy/`, so another instance would read `departments, squads`.
 
       **No Nereid and no Mandate follow:** the API keeps the tree itself in the first version. A tenancy Nereid comes when the tree is synced with another system (OpenFGA tuples, Keycloak groups).
 
-      **`nereus tenancy` appears once the reef is applied** (#647): the CLI builds the group from its commands cache, which `reef apply` refreshes, so a cluster without the reef has no `tenancy` command, and every profile's `nereus init` applies it.
+      **`nereus tenancy` appears once the Reef is applied** (#647): the CLI builds the group from its commands cache, which `reef apply` refreshes, so a cluster without the Reef has no `tenancy` command, and every profile's `nereus init` applies it.
     pt:
       topic: "reef apply"
-      message: "O reef {reef:tenancy}, com os kinds desta instância"
+      message: "O Reef {reef:tenancy}, com os kinds desta instância"
       accent: "desta instância"
       notes: |-
-        **A saída lista os kinds que o reef criou, no plural, depois do seu grupo** (owner, 2026-10-30, ADR 0015), uma linha que o `nereus reef apply` de todo reef ganha: aqui eles são os desta instância, lidos dos CRDs em `reefs/tenancy/`, então outra instância leria `departments, squads`.
+        **A saída lista os kinds que o Reef criou, no plural, depois do seu grupo** (owner, 2026-10-30, ADR 0015), uma linha que o `nereus reef apply` de todo Reef ganha: aqui eles são os desta instância, lidos dos CRDs em `reefs/tenancy/`, então outra instância leria `departments, squads`.
 
         **Nenhuma Nereid e nenhum Mandate vêm depois:** a API guarda a própria árvore na primeira versão. Uma Nereid de tenancy vem quando a árvore for sincronizada com outro sistema (tuplas do OpenFGA, grupos do Keycloak).
 
-        **O `nereus tenancy` aparece quando o reef é aplicado** (#647): o CLI constrói o grupo a partir do seu cache de comandos, que o `reef apply` atualiza, então um cluster sem o reef não tem comando `tenancy`, e o `nereus init` de todo perfil o aplica.
+        **O `nereus tenancy` aparece quando o Reef é aplicado** (#647): o CLI constrói o grupo a partir do seu cache de comandos, que o `reef apply` atualiza, então um cluster sem o Reef não tem comando `tenancy`, e o `nereus init` de todo perfil o aplica.
 
   - name: status
     act: setup
     topic: "status"
     status: built
-    message: "No Nereid by design: the {reef:tenancy} reef is Ready with none"
+    message: "No Nereid by design: the {reef:tenancy} Reef is Ready with none"
     accent: "Ready with none"
     terminal:
       steps:
-        - comment: "Right after a plain init: core, and the tenancy reef every profile applies"
+        - comment: "Right after a plain init: core, and the tenancy Reef every profile applies"
           run: "nereus status"
           output: |-
             REEF     NEREID      VERSION  STATUS  AGE
             core     nereus-api  0.1.0    Ready   2m
             tenancy  -           -        Ready   2m
     notes: |-
-      **A reef that needs no Nereid reads `Ready`, not `Waiting`** (#651): every CRD in `reefs/tenancy/` carries the annotation `core.getnereus.dev/nereid: "none"`, so `nereus status` knows the API keeps the reef's objects, as it keeps core's (ADR 0015). A reef that waits for a Nereid it has not got yet still reads `Waiting`.
+      **A Reef that needs no Nereid reads `Ready`, not `Waiting`** (#651): every CRD in `reefs/tenancy/` carries the annotation `core.getnereus.dev/nereid: "none"`, so `nereus status` knows the API keeps the Reef's objects, as it keeps core's (ADR 0015). A Reef that waits for a Nereid it has not got yet still reads `Waiting`.
 
-      **`nereus status --output json` says why** in the row's `reason`: "The tenancy reef needs no Nereid: the API keeps its objects." The annotation goes on every CRD of a reef or on none; a reef with some CRDs annotated and others not is refused by `nereus reef apply`.
+      **`nereus status --output json` says why** in the row's `reason`: "The tenancy Reef needs no Nereid: the API keeps its objects." The annotation goes on every CRD of a Reef or on none; a Reef with some CRDs annotated and others not is refused by `nereus reef apply`.
     pt:
       topic: "status"
-      message: "Nenhuma Nereid por design: o reef {reef:tenancy} fica Ready sem nenhuma"
+      message: "Nenhuma Nereid por design: o Reef {reef:tenancy} fica Ready sem nenhuma"
       accent: "Ready sem nenhuma"
       notes: |-
-        **Um reef que não precisa de Nereid aparece `Ready`, não `Waiting`** (#651): todo CRD em `reefs/tenancy/` leva a annotation `core.getnereus.dev/nereid: "none"`, então o `nereus status` sabe que a API guarda os objetos do reef, como guarda os do core (ADR 0015). Um reef que espera uma Nereid que ainda não tem continua `Waiting`.
+        **Um Reef que não precisa de Nereid aparece `Ready`, não `Waiting`** (#651): todo CRD em `reefs/tenancy/` leva a annotation `core.getnereus.dev/nereid: "none"`, então o `nereus status` sabe que a API guarda os objetos do Reef, como guarda os do core (ADR 0015). Um Reef que espera uma Nereid que ainda não tem continua `Waiting`.
 
-        **O `nereus status --output json` diz por quê** no `reason` da linha: "The tenancy reef needs no Nereid: the API keeps its objects." A annotation vai em todo CRD de um reef ou em nenhum; um reef com alguns CRDs anotados e outros não é recusado pelo `nereus reef apply`.
+        **O `nereus status --output json` diz por quê** no `reason` da linha: "The tenancy Reef needs no Nereid: the API keeps its objects." A annotation vai em todo CRD de um Reef ou em nenhum; um Reef com alguns CRDs anotados e outros não é recusado pelo `nereus reef apply`.
 
   - name: organization-create
     act: tree
@@ -144,17 +144,17 @@ slides:
               nereus tenancy organization list
     dependsOn: [reef-apply]
     notes: |-
-      **`nereus init` already wrote Nereus's own tree** (#647): its step `tenancy tree` applies `tenancy/` right after the reef, so a fresh cluster starts with the Organization `getnereus` and its Projects ([apply](#apply)). `organization create` adds another one, here `example`.
+      **`nereus init` already wrote Nereus's own tree** (#647): its step `tenancy tree` applies `tenancy/` right after the Reef, so a fresh cluster starts with the Organization `getnereus` and its Projects ([apply](#apply)). `organization create` adds another one, here `example`.
 
-      **The command is built from the reef's schema** (ADR 0013, command conventions): `nereus tenancy <kind> <verb> <name>`, kinds singular, each kind with `create`, `list`, `get` and `delete`, built from the cluster's CRDs (a flag per string field of `spec`, such as `--repository`), `apply` for the whole group, and `--dry-run` on every command that changes something: its lines end in `(dry run)`.
+      **The command is built from the Reef's schema** (ADR 0013, command conventions): `nereus tenancy <kind> <verb> <name>`, kinds singular, each kind with `create`, `list`, `get` and `delete`, built from the cluster's CRDs (a flag per string field of `spec`, such as `--repository`), `apply` for the whole group, and `--dry-run` on every command that changes something: its lines end in `(dry run)`.
     pt:
       topic: "organization create"
       message: "Outra fronteira: uma Organization, a raiz da sua árvore"
       accent: "a raiz da sua árvore"
       notes: |-
-        **O `nereus init` já escreveu a própria árvore do Nereus** (#647): o seu passo `tenancy tree` aplica `tenancy/` logo depois do reef, então um cluster novo começa com a Organization `getnereus` e os seus Projects ([apply](#apply)). O `organization create` adiciona outra, aqui `example`.
+        **O `nereus init` já escreveu a própria árvore do Nereus** (#647): o seu passo `tenancy tree` aplica `tenancy/` logo depois do Reef, então um cluster novo começa com a Organization `getnereus` e os seus Projects ([apply](#apply)). O `organization create` adiciona outra, aqui `example`.
 
-        **O comando é construído a partir do schema do reef** (ADR 0013, convenções de comando): `nereus tenancy <kind> <verb> <name>`, kinds no singular, cada kind com `create`, `list`, `get` e `delete`, construídos a partir dos CRDs do cluster (uma flag por campo string do `spec`, como `--repository`), `apply` para o grupo inteiro, e `--dry-run` em todo comando que muda algo: as suas linhas terminam em `(dry run)`.
+        **O comando é construído a partir do schema do Reef** (ADR 0013, convenções de comando): `nereus tenancy <kind> <verb> <name>`, kinds no singular, cada kind com `create`, `list`, `get` e `delete`, construídos a partir dos CRDs do cluster (uma flag por campo string do `spec`, como `--repository`), `apply` para o grupo inteiro, e `--dry-run` em todo comando que muda algo: as suas linhas terminam em `(dry run)`.
 
   - name: project-create
     act: tree
@@ -215,7 +215,7 @@ slides:
     notes: |-
       **Nested Projects take the place of Backstage's Domain and subdomain**, and a leaf Project plays the part of its System, so there is no `System` kind (owner, 2026-10-29, #21).
 
-      **The CLI checks that the parent exists** (#647), since the API cannot: the admission policy refuses a node that is its own parent and a parent of a kind outside the reef (#646), and a climb stops after 32 levels, so a loop never hangs it.
+      **The CLI checks that the parent exists** (#647), since the API cannot: the admission policy refuses a node that is its own parent and a parent of a kind outside the Reef (#646), and a climb stops after 32 levels, so a loop never hangs it.
     pt:
       topic: "project create"
       message: "Um Project sob outro Project"
@@ -223,7 +223,7 @@ slides:
       notes: |-
         **Projects aninhados tomam o lugar do Domain e do subdomain do Backstage**, e um Project folha faz o papel do seu System, então não há kind `System` (owner, 2026-10-29, #21).
 
-        **O CLI confere que o parent existe** (#647), já que a API não consegue: a admission policy recusa um nó que é o próprio parent e um parent de um kind fora do reef (#646), e uma subida para depois de 32 níveis, então um ciclo nunca a trava.
+        **O CLI confere que o parent existe** (#647), já que a API não consegue: a admission policy recusa um nó que é o próprio parent e um parent de um kind fora do Reef (#646), e uma subida para depois de 32 níveis, então um ciclo nunca a trava.
 
   - name: project-list
     act: tree
@@ -388,7 +388,7 @@ slides:
       - "**The field:** `owner: {kind, name}`, a kind of the tenancy group, never an apiVersion and never a namespace"
       - "**Who names it:** the catalog's Workloads and Packages, an Environment, a resource Instance, a Mandate's `match`"
     notes: |-
-      **One reference for every reef** (ADR 0015): it replaces the `spec.project` of the first proposal, and a new reef that needs to say whose a thing is reuses it without learning a kind name. On the command line it is `--organization <name>` or `--project <name>` (the ORGANIZATION and PROJECT columns of every list; `--owner <kind>/<name>` still works, hidden), as `nereus environment create a --project nereus` already takes ([the environment reef](environment.html#create)).
+      **One reference for every Reef** (ADR 0015): it replaces the `spec.project` of the first proposal, and a new Reef that needs to say whose a thing is reuses it without learning a kind name. On the command line it is `--organization <name>` or `--project <name>` (the ORGANIZATION and PROJECT columns of every list; `--owner <kind>/<name>` still works, hidden), as `nereus environment create a --project nereus` already takes ([the environment Reef](environment.html#create)).
     pt:
       topic: "owner"
       message: "Tudo o que aponta para a árvore nomeia o seu owner por kind e nome"
@@ -397,7 +397,7 @@ slides:
         - "**O campo:** `owner: {kind, name}`, um kind do grupo tenancy, nunca uma apiVersion e nunca um namespace"
         - "**Quem o nomeia:** os Workloads e Packages do catálogo, um Environment, uma Instance de recurso, o `match` de um Mandate"
       notes: |-
-        **Uma referência para todo reef** (ADR 0015): ela substitui o `spec.project` da primeira proposta, e um reef novo que precisa dizer de quem é uma coisa a reusa sem aprender um nome de kind. Na linha de comando ela é `--organization <name>` ou `--project <name>` (as colunas ORGANIZATION e PROJECT de toda lista; `--owner <kind>/<name>` ainda funciona, oculto), como o `nereus environment create a --project nereus` já aceita ([o reef environment](environment.html#create)).
+        **Uma referência para todo Reef** (ADR 0015): ela substitui o `spec.project` da primeira proposta, e um Reef novo que precisa dizer de quem é uma coisa a reusa sem aprender um nome de kind. Na linha de comando ela é `--organization <name>` ou `--project <name>` (as colunas ORGANIZATION e PROJECT de toda lista; `--owner <kind>/<name>` ainda funciona, oculto), como o `nereus environment create a --project nereus` já aceita ([o Reef environment](environment.html#create)).
 
   - name: config-owner
     act: owner
@@ -421,7 +421,7 @@ slides:
     notes: |-
       **The flag wins over the config, and the output line names the owner used** (owner's ask, 2026-10-30, ADR 0016), as `kubectl config set-context --current --namespace` and `gcloud config set project` do.
 
-      **It came with #902 (the catalog reef's kinds and commands), where `--owner` is first needed**, and is a core command: its reference is [`nereus config set`](../core.html#config-set) in the core deck (#482), next to the rest of `nereus config`; it is shown here for the tenancy it uses, and the catalog reef's deck (#570) links to this slide.
+      **It came with #902 (the catalog Reef's kinds and commands), where `--owner` is first needed**, and is a core command: its reference is [`nereus config set`](../core.html#config-set) in the core deck (#482), next to the rest of `nereus config`; it is shown here for the tenancy it uses, and the catalog Reef's deck (#570) links to this slide.
     pt:
       topic: "config set owner"
       message: "O owner atual na config do CLI, para o --owner ser opcional"
@@ -429,4 +429,4 @@ slides:
       notes: |-
         **A flag ganha da config, e a linha de saída nomeia o owner usado** (pedido do owner, 2026-10-30, ADR 0016), como o `kubectl config set-context --current --namespace` e o `gcloud config set project` fazem.
 
-        **Ele chegou com o #902 (os kinds e os comandos do reef catalog), onde o `--owner` é preciso pela primeira vez**, e é um comando do core: a sua referência é o [`nereus config set`](../core.html#config-set) no deck do core (#482), ao lado do resto do `nereus config`; ele aparece aqui pela tenancy que usa, e o deck do reef catalog (#570) aponta para este slide.
+        **Ele chegou com o #902 (os kinds e os comandos do Reef catalog), onde o `--owner` é preciso pela primeira vez**, e é um comando do core: a sua referência é o [`nereus config set`](../core.html#config-set) no deck do core (#482), ao lado do resto do `nereus config`; ele aparece aqui pela tenancy que usa, e o deck do Reef catalog (#570) aponta para este slide.

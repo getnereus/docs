@@ -1,11 +1,11 @@
 deck:
   name: edge
-  title: "The edge reef"
-  subtitle: "Every command of the edge reef: domains, zones and routes, in the order a person types them"
+  title: "The edge Reef"
+  subtitle: "Every command of the edge Reef: domains, zones and routes, in the order a person types them"
   accent: "in the order a person types them"
   pt:
-    title: "O reef edge"
-    subtitle: "Todos os comandos do reef edge: domínios, zonas e rotas, na ordem em que uma pessoa os digita"
+    title: "O Reef edge"
+    subtitle: "Todos os comandos do Reef edge: domínios, zonas e rotas, na ordem em que uma pessoa os digita"
     accent: "na ordem em que uma pessoa os digita"
 
 acts:
@@ -26,35 +26,35 @@ acts:
     pt: {title: "Domínio", question: "Para onde a registradora manda o domínio?"}
   - name: route
     title: "Route"
-    question: "How does a reef's endpoint get a name?"
-    pt: {title: "Rota", question: "Como o endpoint de um reef ganha um nome?"}
+    question: "How does a Reef's endpoint get a name?"
+    pt: {title: "Rota", question: "Como o endpoint de um Reef ganha um nome?"}
 
 slides:
   - name: cover
     act: opening
     cover: true
-    message: "The edge reef"
+    message: "The edge Reef"
     notes: |-
-      **The source of truth for the commands of the edge reef.** Every command, built or only imagined, is here first; the tag after each label says whether it is built, planned (with the issue that builds it) or an idea.
+      **The source of truth for the commands of the edge Reef.** Every command, built or only imagined, is here first; the tag after each label says whether it is built, planned (with the issue that builds it) or an idea.
 
-      The reef is refined in #470 (the edge reef publishes a reef's endpoint at a hostname); its domains in #475 (a godaddy Nereid that changes a domain at its registrar).
+      The Reef is refined in #470 (the edge Reef publishes a Reef's endpoint at a hostname); its domains in #475 (a godaddy Nereid that changes a domain at its registrar).
     pt:
-      message: "O reef edge"
+      message: "O Reef edge"
       notes: |-
-        **A fonte da verdade dos comandos do reef edge.** Todo comando, pronto ou só imaginado, está aqui primeiro; a etiqueta depois de cada rótulo diz se ele está pronto, planejado (com a issue que o constrói) ou se é uma ideia.
+        **A fonte da verdade dos comandos do Reef edge.** Todo comando, pronto ou só imaginado, está aqui primeiro; a etiqueta depois de cada rótulo diz se ele está pronto, planejado (com a issue que o constrói) ou se é uma ideia.
 
-        O reef é refinado no #470 (o reef edge publica o endpoint de um reef num hostname); os seus domínios no #475 (uma Nereid godaddy que muda um domínio na registradora).
+        O Reef é refinado no #470 (o Reef edge publica o endpoint de um Reef num hostname); os seus domínios no #475 (uma Nereid godaddy que muda um domínio na registradora).
 
   - name: apply-reef
     act: setup
-    topic: "reef"
+    topic: "Reef"
     status: built
     issue: 1949
-    message: "One command applies the {reef:edge} reef, with its kinds Route, Zone and Domain"
+    message: "One command applies the {reef:edge} Reef, with its kinds Route, Zone and Domain"
     accent: "One command"
     terminal:
       steps:
-        - comment: "Apply the edge reef"
+        - comment: "Apply the edge Reef"
           run: "nereus reef apply edge"
           output: |-
             ✓ core/reefs/edge 0.1.0 created
@@ -64,13 +64,13 @@ slides:
               nereus edge --help
               nereus nereid apply <nereid> --reef edge
     notes: |-
-      **The reef comes first, with no tool behind it.** Its kinds are `Route` (a hostname that reaches the platform, #1949), `Zone` (who answers for the domain's names, #1960) and `Domain` (where the registrar sends the domain, #475); `Record` (a CNAME or an A entry) comes later.
+      **The Reef comes first, with no tool behind it.** Its kinds are `Route` (a hostname that reaches the platform, #1949), `Zone` (who answers for the domain's names, #1960) and `Domain` (where the registrar sends the domain, #475); `Record` (a CNAME or an A entry) comes later.
     pt:
-      topic: "reef"
-      message: "Um comando aplica o reef {reef:edge}, com os seus kinds Route, Zone e Domain"
+      topic: "Reef"
+      message: "Um comando aplica o Reef {reef:edge}, com os seus kinds Route, Zone e Domain"
       accent: "Um comando"
       notes: |-
-        **O reef vem primeiro, sem ferramenta por trás.** Os seus kinds são `Route` (um hostname que chega à plataforma, #1949), `Zone` (quem responde pelos nomes do domínio, #1960) e `Domain` (para onde a registradora manda o domínio, #475); `Record` (uma entrada CNAME ou A) vem depois.
+        **O Reef vem primeiro, sem ferramenta por trás.** Os seus kinds são `Route` (um hostname que chega à plataforma, #1949), `Zone` (quem responde pelos nomes do domínio, #1960) e `Domain` (para onde a registradora manda o domínio, #475); `Record` (uma entrada CNAME ou A) vem depois.
 
   - name: apply-cloudflare
     act: setup
@@ -81,7 +81,7 @@ slides:
     accent: "the tunnel"
     terminal:
       steps:
-        - comment: "Apply the cloudflare Nereid to the edge reef"
+        - comment: "Apply the cloudflare Nereid to the edge Reef"
           run: "nereus nereid apply cloudflare"
           options: ["--reef edge"]
           output: |-
@@ -91,20 +91,20 @@ slides:
 
               nereus mandate create cloudflare --reef edge --nereid cloudflare --param tunnel=<tunnel> --param credentialsSecret=edge/<secret> --default
               nereus edge route create <name> --hostname <hostname>
-        - comment: "Its Mandate: the named tunnel and its credentials, a secret of the secrets reef"
+        - comment: "Its Mandate: the named tunnel and its credentials, a secret of the secrets Reef"
           run: "nereus mandate create cloudflare"
           options: ["--reef edge", "--nereid cloudflare", "--param tunnel=nereus", "--param credentialsSecret=edge/cloudflare-tunnel", "--default"]
           output: |-
             ✓ core/mandates/cloudflare created (reef: edge, nereid: cloudflare, default)
     dependsOn: [apply-reef]
     notes: |-
-      **The Nereid runs cloudflared for the Mandate's named tunnel** (#1949), its credentials bound from the secrets reef, so the cluster needs no `kubectl apply` and no open terminal. With the Mandate's `apiTokenSecret`, it also makes each Route's CNAME through Cloudflare's API (#1950) and the zone (#1960); with it and no `credentialsSecret`, it gets the tunnel itself, adopting the one of that name or creating it, its credentials sealed into the vault `edge` as `edge/cloudflared-<mandate>` (#1961). It binds secrets of the vault `edge` alone, which `nereid apply` makes and its admission policy holds it to (#1967): a secret of another vault is `SecretOutsideVault`. An `azure-dns` Nereid may take its place later, by swapping the Mandate; the commands stay the same.
+      **The Nereid runs cloudflared for the Mandate's named tunnel** (#1949), its credentials bound from the secrets Reef, so the cluster needs no `kubectl apply` and no open terminal. With the Mandate's `apiTokenSecret`, it also makes each Route's CNAME through Cloudflare's API (#1950) and the zone (#1960); with it and no `credentialsSecret`, it gets the tunnel itself, adopting the one of that name or creating it, its credentials sealed into the vault `edge` as `edge/cloudflared-<mandate>` (#1961). It binds secrets of the vault `edge` alone, which `nereid apply` makes and its admission policy holds it to (#1967): a secret of another vault is `SecretOutsideVault`. An `azure-dns` Nereid may take its place later, by swapping the Mandate; the commands stay the same.
     pt:
       topic: "túnel"
       message: "A Nereid {nereid:cloudflare} roda o túnel que o seu Mandate nomeia"
       accent: "o túnel"
       notes: |-
-        **A Nereid roda o cloudflared do túnel nomeado do Mandate** (#1949), com as credenciais vindas do reef secrets, então o cluster não precisa de `kubectl apply` nem de terminal aberto. Com o `apiTokenSecret` do Mandate, ela também faz o CNAME de cada Route pela API da Cloudflare (#1950) e a zona (#1960); com ele e sem `credentialsSecret`, ela obtém o próprio túnel, adotando o de mesmo nome ou criando-o, com as credenciais seladas no vault `edge` como `edge/cloudflared-<mandate>` (#1961). Ela vincula só secrets do vault `edge`, que o `nereid apply` cria e a sua admission policy impõe (#1967): um secret de outro vault é `SecretOutsideVault`. Uma Nereid `azure-dns` pode tomar o seu lugar depois, trocando o Mandate; os comandos continuam os mesmos.
+        **A Nereid roda o cloudflared do túnel nomeado do Mandate** (#1949), com as credenciais vindas do Reef secrets, então o cluster não precisa de `kubectl apply` nem de terminal aberto. Com o `apiTokenSecret` do Mandate, ela também faz o CNAME de cada Route pela API da Cloudflare (#1950) e a zona (#1960); com ele e sem `credentialsSecret`, ela obtém o próprio túnel, adotando o de mesmo nome ou criando-o, com as credenciais seladas no vault `edge` como `edge/cloudflared-<mandate>` (#1961). Ela vincula só secrets do vault `edge`, que o `nereid apply` cria e a sua admission policy impõe (#1967): um secret de outro vault é `SecretOutsideVault`. Uma Nereid `azure-dns` pode tomar o seu lugar depois, trocando o Mandate; os comandos continuam os mesmos.
 
   - name: apply-godaddy
     act: setup
@@ -115,7 +115,7 @@ slides:
     accent: "registrar"
     terminal:
       steps:
-        - comment: "Apply the godaddy Nereid to the edge reef"
+        - comment: "Apply the godaddy Nereid to the edge Reef"
           run: "nereus nereid apply godaddy"
           options: ["--reef edge"]
           output: |-
@@ -132,7 +132,7 @@ slides:
           output: |-
             ✓ secrets/vaults/edge/secrets/godaddy created (key SHA256:GQ8TrJ9h6ZrNYHItBycWK+tXkURjowfJWcjEyabRIKI)
             Stored encrypted; a Kubernetes Secret is made only when a binding asks for it (#532).
-        - comment: "Bind it to the reef, with that secret"
+        - comment: "Bind it to the Reef, with that secret"
           run: "nereus mandate create godaddy"
           options: ["--reef edge", "--nereid godaddy", "--param credentialsSecret=edge/godaddy"]
           output: |-
@@ -141,7 +141,7 @@ slides:
     notes: |-
       **The API never names the registrar** (ADR 0002): a `Domain` says which nameservers it delegates to, and the Mandate picks `godaddy`. Another registrar's Nereid takes its place by swapping the Mandate.
 
-      **The key and secret live in the vault `edge`**, bound into the Nereid's own namespace; its admission policy refuses another vault (#1967). The Mandate is not the reef's default: cloudflare's stays, and a new `Domain` goes to the Mandate whose Nereid serves Domains.
+      **The key and secret live in the vault `edge`**, bound into the Nereid's own namespace; its admission policy refuses another vault (#1967). The Mandate is not the Reef's default: cloudflare's stays, and a new `Domain` goes to the Mandate whose Nereid serves Domains.
     pt:
       topic: "registradora"
       message: "A Nereid {nereid:godaddy} fala com a registradora, pelo seu Mandate"
@@ -149,7 +149,7 @@ slides:
       notes: |-
         **A API nunca nomeia a registradora** (ADR 0002): um `Domain` diz para quais nameservers delega, e o Mandate escolhe `godaddy`. A Nereid de outra registradora toma o seu lugar trocando o Mandate.
 
-        **A chave e o segredo ficam no vault `edge`**, vinculados ao namespace da própria Nereid; a sua admission policy recusa outro vault (#1967). O Mandate não é o padrão do reef: o da cloudflare continua, e um novo `Domain` vai para o Mandate cuja Nereid serve Domains.
+        **A chave e o segredo ficam no vault `edge`**, vinculados ao namespace da própria Nereid; a sua admission policy recusa outro vault (#1967). O Mandate não é o padrão do Reef: o da cloudflare continua, e um novo `Domain` vai para o Mandate cuja Nereid serve Domains.
 
   - name: zone-create
     act: zone
@@ -341,13 +341,13 @@ slides:
             triton   triton.getnereus.dev   -         cloudflare  True    https://triton.getnereus.dev
     dependsOn: [apply-cloudflare]
     notes: |-
-      **The first slice** (#1949): a hostname goes to the instance's entrance, where the reefs' own routes pick the backend; it names no cluster, Service or port. With the Mandate's API token, the Nereid makes its CNAME and deletes it with the Route (#1950); without one, the record is made by hand. A reef's endpoint is named with `--endpoint` (#1951).
+      **The first slice** (#1949): a hostname goes to the instance's entrance, where the Reefs' own routes pick the backend; it names no cluster, Service or port. With the Mandate's API token, the Nereid makes its CNAME and deletes it with the Route (#1950); without one, the record is made by hand. A Reef's endpoint is named with `--endpoint` (#1951).
     pt:
       topic: "hostname"
       message: "Uma rota faz um hostname chegar à plataforma"
       accent: "chegar à plataforma"
       notes: |-
-        **A primeira fatia** (#1949): um hostname vai para a entrada da instância, onde as rotas dos próprios reefs escolhem o backend; não nomeia cluster, Service nem porta. Com o token de API do Mandate, a Nereid faz o seu CNAME e o apaga junto com a Route (#1950); sem ele, o registro é feito à mão. O endpoint de um reef é nomeado com `--endpoint` (#1951).
+        **A primeira fatia** (#1949): um hostname vai para a entrada da instância, onde as rotas dos próprios Reefs escolhem o backend; não nomeia cluster, Service nem porta. Com o token de API do Mandate, a Nereid faz o seu CNAME e o apaga junto com a Route (#1950); sem ele, o registro é feito à mão. O endpoint de um Reef é nomeado com `--endpoint` (#1951).
 
   - name: endpoint-list
     act: route
@@ -373,20 +373,20 @@ slides:
             ✓ core/nereids/triton configured (publishes: mcp)
     dependsOn: [route-hostname]
     notes: |-
-      **An endpoint is something a Nereid publishes in its `status`** (ADR 0005, Nereids publish endpoints and commands in status), named `<reef>/<endpoint>` by its Nereid's first reef: never a cluster, a namespace, a Service or a port (the owner, 2026-10-29). It is published only when the Nereid marks it publishable (an admin surface is not) and its `spec.publish` grants it, written by `nereus nereid apply --publish` (#1951); `--publish ""` takes the grant away. An entry the Nereid CRD would refuse is dropped, never shown (ADR 0004).
+      **An endpoint is something a Nereid publishes in its `status`** (ADR 0005, Nereids publish endpoints and commands in status), named `<reef>/<endpoint>` by its Nereid's first Reef: never a cluster, a namespace, a Service or a port (the owner, 2026-10-29). It is published only when the Nereid marks it publishable (an admin surface is not) and its `spec.publish` grants it, written by `nereus nereid apply --publish` (#1951); `--publish ""` takes the grant away. An entry the Nereid CRD would refuse is dropped, never shown (ADR 0004).
     pt:
       topic: "endpoints"
       message: "As Nereids dizem o que servem, nunca onde rodam"
       accent: "nunca onde rodam"
       notes: |-
-        **Um endpoint é algo que uma Nereid publica no seu `status`** (ADR 0005, as Nereids publicam endpoints e comandos no status), com o nome `<reef>/<endpoint>` pelo primeiro reef da sua Nereid: nunca um cluster, um namespace, um Service ou uma porta (o dono, 2026-10-29). Ele só é publicado quando a Nereid o marca como publicável (uma superfície de admin não é) e o seu `spec.publish` o concede, escrito por `nereus nereid apply --publish` (#1951); `--publish ""` retira a concessão. Uma entrada que o CRD da Nereid recusaria é descartada, nunca mostrada (ADR 0004).
+        **Um endpoint é algo que uma Nereid publica no seu `status`** (ADR 0005, as Nereids publicam endpoints e comandos no status), com o nome `<reef>/<endpoint>` pelo primeiro Reef da sua Nereid: nunca um cluster, um namespace, um Service ou uma porta (o dono, 2026-10-29). Ele só é publicado quando a Nereid o marca como publicável (uma superfície de admin não é) e o seu `spec.publish` o concede, escrito por `nereus nereid apply --publish` (#1951); `--publish ""` retira a concessão. Uma entrada que o CRD da Nereid recusaria é descartada, nunca mostrada (ADR 0004).
 
   - name: route-create
     act: route
     topic: "create"
     status: built
     issue: 1951
-    message: "A route publishes a reef's endpoint at a fixed address"
+    message: "A route publishes a Reef's endpoint at a fixed address"
     accent: "a fixed address"
     terminal:
       steps:
@@ -409,7 +409,7 @@ slides:
       **Triton is the first use** (the Triton roadmap, step 1). The cloudflare Nereid carries the hostname only when the endpoint is publishable, granted by its Nereid's `spec.publish` and served on that hostname; otherwise the Route's Ready says why: `NoEndpoint`, `NotPublishable`, `NotPublished`, `NotServed` or `Ambiguous` (#1951). The endpoint is fixed once created, as the Mandate.
     pt:
       topic: "create"
-      message: "Uma rota publica o endpoint de um reef num endereço fixo"
+      message: "Uma rota publica o endpoint de um Reef num endereço fixo"
       accent: "num endereço fixo"
       notes: |-
         **O servidor MCP do Tritão é o primeiro uso** (o roadmap do Tritão, passo 1). A Nereid cloudflare só leva o hostname quando o endpoint é publicável, concedido pelo `spec.publish` da sua Nereid e servido naquele hostname; senão o Ready da Route diz o porquê: `NoEndpoint`, `NotPublishable`, `NotPublished`, `NotServed` ou `Ambiguous` (#1951). O endpoint fica fixo depois de criado, como o Mandate.
@@ -443,13 +443,13 @@ slides:
             Nothing changed (--dry-run).
     dependsOn: [route-create]
     notes: |-
-      **`apply --from-file` takes a file or a folder of Routes and Zones** (ADR 0013, apply takes files), the way the conformance check creates a reef's objects (#2006). Every object goes through a dry run before any is written, so a bad one changes nothing; an object already as written says `unchanged`, without the mark. `nereus edge route create <name> --hostname <hostname> --dry-run --output yaml` writes one to start from.
+      **`apply --from-file` takes a file or a folder of Routes and Zones** (ADR 0013, apply takes files), the way the conformance check creates a Reef's objects (#2006). Every object goes through a dry run before any is written, so a bad one changes nothing; an object already as written says `unchanged`, without the mark. `nereus edge route create <name> --hostname <hostname> --dry-run --output yaml` writes one to start from.
     pt:
       topic: "apply"
       message: "Um arquivo aplica todas as Routes e Zones, cada uma conferida antes de qualquer gravação"
       accent: "conferida antes de qualquer gravação"
       notes: |-
-        **`apply --from-file` recebe um arquivo ou uma pasta de Routes e Zones** (ADR 0013, apply recebe arquivos), do jeito que o conformance check cria os objetos de um reef (#2006). Todo objeto passa por um dry run antes de qualquer gravação, então um objeto ruim não muda nada; um objeto que já está como escrito diz `unchanged`, sem a marca. `nereus edge route create <nome> --hostname <hostname> --dry-run --output yaml` escreve um para começar.
+        **`apply --from-file` recebe um arquivo ou uma pasta de Routes e Zones** (ADR 0013, apply recebe arquivos), do jeito que o conformance check cria os objetos de um Reef (#2006). Todo objeto passa por um dry run antes de qualquer gravação, então um objeto ruim não muda nada; um objeto que já está como escrito diz `unchanged`, sem a marca. `nereus edge route create <nome> --hostname <hostname> --dry-run --output yaml` escreve um para começar.
 
   - name: route-delete
     act: route

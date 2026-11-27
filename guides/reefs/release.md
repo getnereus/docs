@@ -4,7 +4,7 @@ Release a Helm chart into a namespace, with its values and its secrets, through 
 
 ## Before you start
 
-- A cluster from [Prepare the cluster](../../start/init.md) with `--profile internal-developer-platform`: it brings the release reef with the Nereid `flux` as its default, and the secrets reef.
+- A cluster from [Prepare the cluster](../../start/init.md) with `--profile internal-developer-platform`: it brings the release Reef with the Nereid `flux` as its default, and the secrets Reef.
 - A secret `google-oauth` from [Keep a secret](secrets.md), in a vault that allows the target's namespace.
 - A file `keycloak-values.yaml` with the chart's values.
 
@@ -53,7 +53,7 @@ Next steps:
 
 ### 3. Say where it goes
 
-A [`Target`](../../specs/cli/reefs/release.html#target-create) is a namespace, made when missing. `--environment` picks an environment of the environment reef; without it, the target is in the cluster Nereus runs in.
+A [`Target`](../../specs/cli/reefs/release.html#target-create) is a namespace, made when missing. `--environment` picks an environment of the environment Reef; without it, the target is in the cluster Nereus runs in.
 
 ```bash
 nereus release target create dev-identity \
@@ -122,5 +122,5 @@ A release that fails shows `Failed` once Flux stops retrying; a refused namespac
 
 ## Learn more
 
-- [The release reef](../../reference/reefs/release.md): repositories, sources, targets and releases, every command.
-- [Runtime and profiles](../../concepts/runtime-and-profiles.md): why the Mandate, not the reef, picks Flux.
+- [The release Reef](../../reference/reefs/release.md): repositories, sources, targets and releases, every command.
+- [Runtime and profiles](../../concepts/runtime-and-profiles.md): why the Mandate, not the Reef, picks Flux.

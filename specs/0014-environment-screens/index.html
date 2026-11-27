@@ -7271,7 +7271,7 @@
 </code></pre></div>
 <ul>
 <li>The same layout as a Nereid's detail (spec 0013): the range as a segmented button (5m, 1h default, 24h, 7d), the four RED signals, then the pods (CPU and memory against request and limit, restarts in 24h, one line per pod with its node, age, restarts and the last restart's reason).</li>
-<li><strong>RED comes from the edge</strong>, the requests the edge reef routes to the Workload: rate, the 5xx ratio and p95. Saturation is the Workload's CPU of its limit. A Workload with no route at the edge (a worker, a cache) shows its Saturation and its pods, and the Requests card says why it has no traffic numbers.</li>
+<li><strong>RED comes from the edge</strong>, the requests the edge Reef routes to the Workload: rate, the 5xx ratio and p95. Saturation is the Workload's CPU of its limit. A Workload with no route at the edge (a worker, a cache) shows its Saturation and its pods, and the Requests card says why it has no traffic numbers.</li>
 <li>When the Environment itself is under pressure, a line under the Workload's reason says so, so the developer sees the cause without going back.</li>
 </ul>
 <h3 id="the-search-on-the-row-of-the-chips">The search, on the row of the chips<a class="headerlink" href="#the-search-on-the-row-of-the-chips" title="Permanent link">&para;</a></h3>
@@ -7285,7 +7285,7 @@ left, empty       (All)(Attention)(Ready)        [🔍] [▦]
 <ul>
 <li><strong>Where:</strong> an outlined round icon button with a magnifier on the row of the filter chips, before the view toggle, on the Environments, on one Environment's Workloads and on the Nereids' home.</li>
 <li><strong>Opening:</strong> a tap expands it into a filled field across the row (the chips hide while it is open), with the keyboard up and the cursor in it; the expansion is animated, and instant under <code>prefers-reduced-motion</code>.</li>
-<li><strong>Filtering:</strong> in real time on every keystroke, case-insensitive, a substring of the name: the Environment's name; the Workload's name; the reef's or the Nereid's name on the Nereids' home. The match is underlined in the row. The filter chips still apply (both together), and the sections keep their counts.</li>
+<li><strong>Filtering:</strong> in real time on every keystroke, case-insensitive, a substring of the name: the Environment's name; the Workload's name; the Reef's or the Nereid's name on the Nereids' home. The match is underlined in the row. The filter chips still apply (both together), and the sections keep their counts.</li>
 <li><strong>The line under the row</strong> says how many match out of how many and repeats the text, with a "Clear" button. With nothing matching, the list says so and offers "Clear the search".</li>
 <li><strong>Leaving:</strong> the field contracts back to the magnifier when one leaves it empty (tap elsewhere, Enter, the keyboard's search key). With text in it, it stays open, so what filters the list is never hidden; ✕ clears and keeps the cursor in it; Escape clears and contracts.</li>
 <li><strong>Kept:</strong> the text lives in the screen's state only; leaving the screen or switching tabs clears it. It is not written to the URL nor to <code>localStorage</code>.</li>
@@ -7293,14 +7293,14 @@ left, empty       (All)(Attention)(Ready)        [🔍] [▦]
 <h2 id="where-the-data-comes-from">Where the data comes from<a class="headerlink" href="#where-the-data-comes-from" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Through the Nereus API only</strong> (ADR 0018, the API is the one door): the portal never reaches VictoriaMetrics or a cluster. New read routes for an Environment's health, its Workloads with their signals, and one Workload's series over a range, following the API's conventions and spec 0013's detail route.</li>
-<li><strong>An Environment's Workloads are what Nereus delivered there:</strong> each Release with a Target whose <code>environmentRef</code> names the Environment (ADR 0026, the release reef finds its target in the Environment's <code>status</code>), named as the release reef names it. The list comes from the platform's own records, so it exists before any metric; a pod Nereus did not deliver does not appear.</li>
-<li><strong>Pods, never read from the Kubernetes API</strong> (the owner's decision in spec 0013): CPU, memory, limits, restarts and OOM kills from cAdvisor, which the metrics reef already scrapes on every kubelet; requests, ready over desired, pending pods and the last restart's reason from kube-state-metrics.</li>
+<li><strong>An Environment's Workloads are what Nereus delivered there:</strong> each Release with a Target whose <code>environmentRef</code> names the Environment (ADR 0026, the release Reef finds its target in the Environment's <code>status</code>), named as the release Reef names it. The list comes from the platform's own records, so it exists before any metric; a pod Nereus did not deliver does not appear.</li>
+<li><strong>Pods, never read from the Kubernetes API</strong> (the owner's decision in spec 0013): CPU, memory, limits, restarts and OOM kills from cAdvisor, which the metrics Reef already scrapes on every kubelet; requests, ready over desired, pending pods and the last restart's reason from kube-state-metrics.</li>
 <li><strong>kube-state-metrics reads more namespaces, still without a ClusterRole.</strong> Today it reads only <code>nereus-system</code> (#2177, through a namespace-scoped Role, <code>controllers/victoriametrics/victoriametrics.py</code>). Each Environment's namespace is added the same way: one namespace-scoped Role per namespace, pods, deployments and resource quotas only, no Secrets or ConfigMaps; the series allow-list grows only by the ones these screens read (<code>kube_pod_status_phase</code>, <code>kube_resourcequota</code>, the pods' requests).</li>
-<li><strong>Which namespace:</strong> the Nereid that made the Environment writes it in <code>status.kubernetes.namespace</code> (a new field, one writer per field, ADR 0005): the vcluster's host namespace, where the vcluster syncer runs its pods, so the host's cAdvisor and kube-state-metrics see them; for the kept cluster <code>nereus</code>, the namespaces the release reef delivers into. An Environment in a remote cluster has no metrics yet: its cards say so in one line.</li>
-<li><strong>A Workload's pods are told by a label the release reef stamps</strong> (through the delivering Nereid's post-render), never by guessing from names; pods delivered before it get the label at the next reconcile, and until then the Workload's cards say "no data yet". The join runs over the range, as spec 0013's join of cAdvisor to a Nereid does.</li>
-<li><strong>The Environment's health without reading nodes through a ClusterRole:</strong> nodes ready are the kubelets the metrics reef scrapes and answer (<code>up</code> of the kubelet scrape); capacity is cAdvisor's <code>machine_cpu_cores</code> and <code>machine_memory_bytes</code>, or the namespace's ResourceQuota when it has one (<code>kube_resourcequota</code>); requested is the sum of the namespace's pods' requests; pending pods from <code>kube_pod_status_phase</code>. For a vcluster the nodes are the host's.</li>
+<li><strong>Which namespace:</strong> the Nereid that made the Environment writes it in <code>status.kubernetes.namespace</code> (a new field, one writer per field, ADR 0005): the vcluster's host namespace, where the vcluster syncer runs its pods, so the host's cAdvisor and kube-state-metrics see them; for the kept cluster <code>nereus</code>, the namespaces the release Reef delivers into. An Environment in a remote cluster has no metrics yet: its cards say so in one line.</li>
+<li><strong>A Workload's pods are told by a label the release Reef stamps</strong> (through the delivering Nereid's post-render), never by guessing from names; pods delivered before it get the label at the next reconcile, and until then the Workload's cards say "no data yet". The join runs over the range, as spec 0013's join of cAdvisor to a Nereid does.</li>
+<li><strong>The Environment's health without reading nodes through a ClusterRole:</strong> nodes ready are the kubelets the metrics Reef scrapes and answer (<code>up</code> of the kubelet scrape); capacity is cAdvisor's <code>machine_cpu_cores</code> and <code>machine_memory_bytes</code>, or the namespace's ResourceQuota when it has one (<code>kube_resourcequota</code>); requested is the sum of the namespace's pods' requests; pending pods from <code>kube_pod_status_phase</code>. For a vcluster the nodes are the host's.</li>
 <li><strong>The Kubernetes version and the upgrade:</strong> the Nereid that made the Environment writes the version it runs in <code>status.kubernetes.version</code>; whether a newer one exists and until when the current one is supported comes from a table versioned in the repository (from endoflife.date's data, updated by PR), so the API needs no egress. Slice 5 may ship the version alone first.</li>
-<li><strong>RED at the edge, blocked today:</strong> the edge reef's Routes name no backend (<code>reefs/edge/routes.yaml</code>), and the metrics reef scrapes no gateway. Slice 6 waits for #470 (the edge reef) to tell which routes reach a Workload, and for the gateway's metrics in the metrics reef; until then a Workload's list row and its Requests card say "no route at the edge".</li>
+<li><strong>RED at the edge, blocked today:</strong> the edge Reef's Routes name no backend (<code>reefs/edge/routes.yaml</code>), and the metrics Reef scrapes no gateway. Slice 6 waits for #470 (the edge Reef) to tell which routes reach a Workload, and for the gateway's metrics in the metrics Reef; until then a Workload's list row and its Requests card say "no route at the edge".</li>
 <li><strong>Who sees which series:</strong> every new route answers only for the Environments the person may read (ADR 0015), and its queries are scoped to that Environment's namespace; spec 0013's "no scoping by person" holds only for the instance's own Nereids.</li>
 </ul>
 <h2 id="constraints">Constraints<a class="headerlink" href="#constraints" title="Permanent link">&para;</a></h2>
@@ -7309,7 +7309,7 @@ left, empty       (All)(Attention)(Ready)        [🔍] [▦]
 <li>Nothing live at the top centre: the live mark and the time of the last update sit in the bottom bar.</li>
 <li>One request per signal for all Workloads of an Environment at once (<code>by (workload)</code>), never one per row, as #744 does for the Nereids.</li>
 <li>The search is client-side over what the screen already loaded: no request per keystroke.</li>
-<li>Missing values are per field: a card says in one line what is missing (no metrics reef, no route at the edge, kube-state-metrics not Ready) instead of a zero.</li>
+<li>Missing values are per field: a card says in one line what is missing (no metrics Reef, no route at the edge, kube-state-metrics not Ready) instead of a zero.</li>
 </ul>
 <h2 id="calls-made-while-writing-the-sessions-accepted-by-the-owner-on-2026-11-26">Calls made while writing (the session's, accepted by the owner on 2026-11-26)<a class="headerlink" href="#calls-made-while-writing-the-sessions-accepted-by-the-owner-on-2026-11-26" title="Permanent link">&para;</a></h2>
 <ul>
@@ -7325,7 +7325,7 @@ left, empty       (All)(Attention)(Ready)        [🔍] [▦]
 <ol>
 <li><strong>The search on the Nereids' home:</strong> the magnifier, the field, the filter, the line, the empty state, and the single view toggle; portal only.</li>
 <li><strong>The Environments' destination and one Environment's screen, without metrics:</strong> the list, the Environment's screen with its Workloads' states and reasons, the search; the Nereus API routes return the Environments a person sees and their Workloads.</li>
-<li><strong>A Workload's pods:</strong> kube-state-metrics in the Environments' namespaces, the release reef's label, the Workload's detail with CPU, memory, restarts and pods, and the list's sparkline from CPU.</li>
+<li><strong>A Workload's pods:</strong> kube-state-metrics in the Environments' namespaces, the release Reef's label, the Workload's detail with CPU, memory, restarts and pods, and the list's sparkline from CPU.</li>
 <li><strong>The Environment's health card:</strong> nodes, pending pods, requested of capacity.</li>
 <li><strong>The Kubernetes version and the upgrade available.</strong></li>
 <li><strong>RED at the edge</strong> for the Workloads with a route, after #470 maps routes to Workloads and the gateway is scraped.</li>
@@ -7341,7 +7341,7 @@ left, empty       (All)(Attention)(Ready)        [🔍] [▦]
 <ul>
 <li>The exact MetricsQL queries and the step per range.</li>
 <li>The routes' paths and payloads, following the API's conventions.</li>
-<li>The label the release reef stamps on a Workload's pods, and how a vcluster's synced pods keep it.</li>
+<li>The label the release Reef stamps on a Workload's pods, and how a vcluster's synced pods keep it.</li>
 <li>The desktop layout (spec 0013's list-detail split from 1280 px is the model).</li>
 </ul>
 

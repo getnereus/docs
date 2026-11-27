@@ -1,10 +1,10 @@
 deck:
   name: build
-  title: "The build reef"
+  title: "The build Reef"
   subtitle: "Every command that builds an image from a Workload's source inside the cluster"
   accent: "inside the cluster"
   pt:
-    title: "O reef build"
+    title: "O Reef build"
     subtitle: "Todos os comandos que constroem uma imagem a partir do código de um Workload dentro do cluster"
     accent: "dentro do cluster"
 
@@ -26,13 +26,13 @@ slides:
   - name: cover
     act: opening
     cover: true
-    message: "The build reef"
+    message: "The build Reef"
     notes: |-
-      **The source of truth for the commands of the build reef** (#848, spec 0009: the build reef's security design). #1067 builds its first slice: the verbs of `Build`, the buildkit Nereid, and the namespace `builds` (made by `nereid apply`) with its NetworkPolicies; #914 adds the `Trigger` (spec 0010), which builds a Workload on each new commit of its Mirror. The group is `build.getnereus.dev/v1alpha1`, cluster-scoped.
+      **The source of truth for the commands of the build Reef** (#848, spec 0009: the build Reef's security design). #1067 builds its first slice: the verbs of `Build`, the buildkit Nereid, and the namespace `builds` (made by `nereid apply`) with its NetworkPolicies; #914 adds the `Trigger` (spec 0010), which builds a Workload on each new commit of its Mirror. The group is `build.getnereus.dev/v1alpha1`, cluster-scoped.
     pt:
-      message: "O reef build"
+      message: "O Reef build"
       notes: |-
-        **A fonte da verdade dos comandos do reef build** (#848, spec 0009: o desenho de segurança do reef build). A #1067 constrói a primeira fatia: os verbos do `Build`, o Nereid buildkit e o namespace `builds` (criado pelo `nereid apply`) com as suas NetworkPolicies; a #914 acrescenta o `Trigger` (spec 0010), que constrói um Workload a cada commit novo do seu Mirror. O grupo é `build.getnereus.dev/v1alpha1`, com escopo de cluster.
+        **A fonte da verdade dos comandos do Reef build** (#848, spec 0009: o desenho de segurança do Reef build). A #1067 constrói a primeira fatia: os verbos do `Build`, o Nereid buildkit e o namespace `builds` (criado pelo `nereid apply`) com as suas NetworkPolicies; a #914 acrescenta o `Trigger` (spec 0010), que constrói um Workload a cada commit novo do seu Mirror. O grupo é `build.getnereus.dev/v1alpha1`, com escopo de cluster.
 
   - name: kinds
     act: opening
@@ -44,7 +44,7 @@ slides:
       - "**Its name is the tag:** the image goes to the Repository named after the Workload"
       - "**One writer per field:** the person writes `spec`, the Nereid writes `status`"
     notes: |-
-      **`workload` and `commit` never change:** another commit is another Build; `apply --from-file` (#1545, the reefs' default apply) changes only a Build's `owner` and `mandate`, and refuses the rest. With no `commit`, the Nereid takes the Workload's `status.source.commit` once and keeps it in `status.commit`. **The digest is the registry's answer, never what the Job wrote** (spec 0009).
+      **`workload` and `commit` never change:** another commit is another Build; `apply --from-file` (#1545, the Reefs' default apply) changes only a Build's `owner` and `mandate`, and refuses the rest. With no `commit`, the Nereid takes the Workload's `status.source.commit` once and keeps it in `status.commit`. **The digest is the registry's answer, never what the Job wrote** (spec 0009).
     pt:
       topic: "o kind"
       message: "Um Build é uma imagem, de um commit, nunca alterado"
@@ -54,7 +54,7 @@ slides:
         - "**O nome é a tag:** a imagem vai para o Repository com o nome do Workload"
         - "**Um escritor por campo:** a pessoa escreve o `spec`, o Nereid escreve o `status`"
       notes: |-
-        **`workload` e `commit` nunca mudam:** outro commit é outro Build; o `apply --from-file` (#1545, o apply padrão dos reefs) muda só o `owner` e o `mandate` de um Build, e recusa o resto. Sem `commit`, o Nereid pega o `status.source.commit` do Workload uma vez e o guarda em `status.commit`. **O digest é a resposta do registry, nunca o que o Job escreveu** (spec 0009).
+        **`workload` e `commit` nunca mudam:** outro commit é outro Build; o `apply --from-file` (#1545, o apply padrão dos Reefs) muda só o `owner` e o `mandate` de um Build, e recusa o resto. Sem `commit`, o Nereid pega o `status.source.commit` do Workload uma vez e o guarda em `status.commit`. **O digest é a resposta do registry, nunca o que o Job escreveu** (spec 0009).
 
   - name: build-create
     act: build
@@ -75,13 +75,13 @@ slides:
 
               nereus build get hello-1
     notes: |-
-      **`nereus nereid apply buildkit` makes the namespace `builds`, and the Nereid its NetworkPolicies before the first Job** (spec 0009): no traffic but DNS, the registry, and the egress proxy `builds-egress`, which lets a `RUN` reach only the main package hosts and those the build reef's default Mandate adds with `egressHosts` (#1142). `--commit` takes a full commit (40 hexadecimal digits). A Build that exists is refused: a Build never changes. **Two modes (#1120):** with no `BUILD_RUNTIME_CLASS`, portable mode builds only the operators' Builds, and a team's ends `SandboxRequired`; `nereus nereid apply buildkit --set BUILD_RUNTIME_CLASS=gvisor` runs every build in that RuntimeClass, with `builds` at `baseline`, once a probe Pod there reports a kernel that is not its node's. **The build pool (#1121):** `--set BUILD_NODE_POOL=builds` puts every Pod of `builds` on the nodes labelled and tainted `build.getnereus.dev/pool=builds`, and no other Pod may tolerate that taint.
+      **`nereus nereid apply buildkit` makes the namespace `builds`, and the Nereid its NetworkPolicies before the first Job** (spec 0009): no traffic but DNS, the registry, and the egress proxy `builds-egress`, which lets a `RUN` reach only the main package hosts and those the build Reef's default Mandate adds with `egressHosts` (#1142). `--commit` takes a full commit (40 hexadecimal digits). A Build that exists is refused: a Build never changes. **Two modes (#1120):** with no `BUILD_RUNTIME_CLASS`, portable mode builds only the operators' Builds, and a team's ends `SandboxRequired`; `nereus nereid apply buildkit --set BUILD_RUNTIME_CLASS=gvisor` runs every build in that RuntimeClass, with `builds` at `baseline`, once a probe Pod there reports a kernel that is not its node's. **The build pool (#1121):** `--set BUILD_NODE_POOL=builds` puts every Pod of `builds` on the nodes labelled and tainted `build.getnereus.dev/pool=builds`, and no other Pod may tolerate that taint.
     pt:
       topic: "build create"
       message: "O create constrói um Workload no commit que o Nereid leu"
       accent: "o commit que o Nereid leu"
       notes: |-
-        **O `nereus nereid apply buildkit` cria o namespace `builds`, e o Nereid as suas NetworkPolicies antes do primeiro Job** (spec 0009): nenhum tráfego além de DNS, o registry, e o proxy de saída `builds-egress`, que deixa um `RUN` alcançar só os principais hosts de pacotes e os que o Mandate padrão do build reef adiciona com `egressHosts` (#1142). O `--commit` aceita um commit completo (40 dígitos hexadecimais). Um Build que já existe é recusado: um Build nunca muda. **Dois modos (#1120):** sem `BUILD_RUNTIME_CLASS`, o modo portável só constrói os Builds dos operadores, e o de um time termina `SandboxRequired`; `nereus nereid apply buildkit --set BUILD_RUNTIME_CLASS=gvisor` roda todo build nessa RuntimeClass, com `builds` em `baseline`, assim que um Pod de sonda ali reporta um kernel que não é o do seu nó. **O pool de builds (#1121):** `--set BUILD_NODE_POOL=builds` põe todo Pod de `builds` nos nós com o label e o taint `build.getnereus.dev/pool=builds`, e nenhum outro Pod pode tolerar esse taint.
+        **O `nereus nereid apply buildkit` cria o namespace `builds`, e o Nereid as suas NetworkPolicies antes do primeiro Job** (spec 0009): nenhum tráfego além de DNS, o registry, e o proxy de saída `builds-egress`, que deixa um `RUN` alcançar só os principais hosts de pacotes e os que o Mandate padrão do build Reef adiciona com `egressHosts` (#1142). O `--commit` aceita um commit completo (40 dígitos hexadecimais). Um Build que já existe é recusado: um Build nunca muda. **Dois modos (#1120):** sem `BUILD_RUNTIME_CLASS`, o modo portável só constrói os Builds dos operadores, e o de um time termina `SandboxRequired`; `nereus nereid apply buildkit --set BUILD_RUNTIME_CLASS=gvisor` roda todo build nessa RuntimeClass, com `builds` em `baseline`, assim que um Pod de sonda ali reporta um kernel que não é o do seu nó. **O pool de builds (#1121):** `--set BUILD_NODE_POOL=builds` põe todo Pod de `builds` nos nós com o label e o taint `build.getnereus.dev/pool=builds`, e nenhum outro Pod pode tolerar esse taint.
 
   - name: build-get
     act: build
@@ -165,7 +165,7 @@ slides:
       message: "Um repositório privado é buscado com um token só daquele build"
       accent: "só daquele build"
       notes: |-
-        **O Nereid buildkit nunca guarda a chave do App.** Quando o `allow` de um Mandate do reef authentication cobre `builds` e o repositório do Workload, ele pede um `Token` com o nome do Build (ADR 0006); o Nereid github o emite em `token-<build>`, que só o Pod do fetch monta. O Token some quando o fetch termina. Sem Mandate que o cubra, o fetch é anônimo; um Token recusado deixa o Build `Pending` com a linha a acrescentar.
+        **O Nereid buildkit nunca guarda a chave do App.** Quando o `allow` de um Mandate do Reef authentication cobre `builds` e o repositório do Workload, ele pede um `Token` com o nome do Build (ADR 0006); o Nereid github o emite em `token-<build>`, que só o Pod do fetch monta. O Token some quando o fetch termina. Sem Mandate que o cubra, o fetch é anônimo; um Token recusado deixa o Build `Pending` com a linha a acrescentar.
 
   - name: build-delete
     act: build
@@ -214,13 +214,13 @@ slides:
               nereus build trigger get triton
     dependsOn: [build-create]
     notes: |-
-      **A `Trigger` of the build reef names a Workload; its Nereid follows the scm reef's Mirror of that Workload's repository** (spec 0010) and, whenever the Mirror's `status.commit` changes, creates the Build `<trigger>-<first 7 digits of the commit>`, labelled `build.getnereus.dev/trigger`. **One Build at a time:** while the last one is `Pending` or `Running`, a new commit waits (`Building`), so a burst of pushes builds the last one. Each Nereid writes only its own reef's objects: the forgejo Nereid keeps the Mirror's commit, the buildkit Nereid creates the Builds. `--owner` gives every Build that owner, checked as for `nereus build create`, so the gates of spec 0009 hold; `--mandate` names a build Mandate.
+      **A `Trigger` of the build Reef names a Workload; its Nereid follows the scm Reef's Mirror of that Workload's repository** (spec 0010) and, whenever the Mirror's `status.commit` changes, creates the Build `<trigger>-<first 7 digits of the commit>`, labelled `build.getnereus.dev/trigger`. **One Build at a time:** while the last one is `Pending` or `Running`, a new commit waits (`Building`), so a burst of pushes builds the last one. Each Nereid writes only its own Reef's objects: the forgejo Nereid keeps the Mirror's commit, the buildkit Nereid creates the Builds. `--owner` gives every Build that owner, checked as for `nereus build create`, so the gates of spec 0009 hold; `--mandate` names a build Mandate.
     pt:
       topic: "build trigger create"
       message: "O trigger create constrói um Workload a cada commit novo do seu Mirror"
       accent: "cada commit novo"
       notes: |-
-        **Um `Trigger` do reef build nomeia um Workload; o seu Nereid segue o Mirror do reef scm do repositório desse Workload** (spec 0010) e, sempre que o `status.commit` do Mirror muda, cria o Build `<trigger>-<7 primeiros dígitos do commit>`, com o label `build.getnereus.dev/trigger`. **Um Build por vez:** enquanto o último está `Pending` ou `Running`, um commit novo espera (`Building`), então uma rajada de pushes constrói o último. Cada Nereid escreve só os objetos do seu reef: o Nereid forgejo mantém o commit do Mirror, o Nereid buildkit cria os Builds. O `--owner` dá esse dono a todo Build, verificado como no `nereus build create`, então os portões da spec 0009 valem; o `--mandate` nomeia um Mandate do build.
+        **Um `Trigger` do Reef build nomeia um Workload; o seu Nereid segue o Mirror do Reef scm do repositório desse Workload** (spec 0010) e, sempre que o `status.commit` do Mirror muda, cria o Build `<trigger>-<7 primeiros dígitos do commit>`, com o label `build.getnereus.dev/trigger`. **Um Build por vez:** enquanto o último está `Pending` ou `Running`, um commit novo espera (`Building`), então uma rajada de pushes constrói o último. Cada Nereid escreve só os objetos do seu Reef: o Nereid forgejo mantém o commit do Mirror, o Nereid buildkit cria os Builds. O `--owner` dá esse dono a todo Build, verificado como no `nereus build create`, então os portões da spec 0009 valem; o `--mandate` nomeia um Mandate do build.
 
   - name: trigger-list
     act: trigger
@@ -316,7 +316,7 @@ slides:
       - "**[crane](https://github.com/google/go-containerregistry/tree/main/cmd/crane):** the push, with no shell"
       - "**[Flux image automation](https://fluxcd.io/flux/components/image/):** a controller that follows a source and acts on a new revision, the Trigger's shape"
     notes: |-
-      **The full reasoning is in spec 0009** (the build reef's security design) **and spec 0010** (the Trigger: a new commit on a Mirror builds a Workload).
+      **The full reasoning is in spec 0009** (the build Reef's security design) **and spec 0010** (the Trigger: a new commit on a Mirror builds a Workload).
     pt:
       topic: "referências"
       message: "De onde vieram as ideias"
@@ -326,4 +326,4 @@ slides:
         - "**[crane](https://github.com/google/go-containerregistry/tree/main/cmd/crane):** o push, sem shell"
         - "**[Flux image automation](https://fluxcd.io/flux/components/image/):** um controller que segue uma fonte e age numa revisão nova, a forma do Trigger"
       notes: |-
-        **O raciocínio completo está na spec 0009** (o desenho de segurança do reef build) **e na spec 0010** (o Trigger: um commit novo num Mirror constrói um Workload).
+        **O raciocínio completo está na spec 0009** (o desenho de segurança do Reef build) **e na spec 0010** (o Trigger: um commit novo num Mirror constrói um Workload).

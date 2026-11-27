@@ -1,19 +1,19 @@
-# 0028. The presentations reef: Nereus keeps the deck, a Session is each time it is given
+# 0028. The presentations Reef: Nereus keeps the deck, a Session is each time it is given
 
 !!! note "In short"
-    The `presentations` reef keeps the deck as a `Presentation` and each time it is given as a `Session`. Status: Accepted (2026-11-16).
+    The `presentations` Reef keeps the deck as a `Presentation` and each time it is given as a `Session`. Status: Accepted (2026-11-16).
 
 **Status:** Accepted (2026-11-16)
 
 ## Context
 
-Decks live in the repository today: an outline in YAML (`docs/presentations/*.yaml`) rendered by `docs/presentations/render-outline` into one self-contained HTML file. Presenting from a phone while a projector and the room follow, with questions and feedback later, needs a home on the platform. #218 (refine the presentations reef) and its children held only recommendations; on 2026-10-19 the owner decided there that the deck's source lives in Git.
+Decks live in the repository today: an outline in YAML (`docs/presentations/*.yaml`) rendered by `docs/presentations/render-outline` into one self-contained HTML file. Presenting from a phone while a projector and the room follow, with questions and feedback later, needs a home on the platform. #218 (refine the presentations Reef) and its children held only recommendations; on 2026-10-19 the owner decided there that the deck's source lives in Git.
 
 The review of 2026-11-16 (the deck `docs/presentations/presentations-reef.yaml`, PR #1685) took the decisions below and split the work into six journeys under #1687; the first, #1688 (J1, drive and follow), is the walking skeleton. Three measurements came first: #1689 (Server-Sent Events through the Nereus API), #1690 (the renderer under the portal's Content Security Policy) and #1691 (the database).
 
 ## Decision
 
-**The reef is `presentations.getnereus.dev/v1alpha1`, with two kinds.**
+**The Reef is `presentations.getnereus.dev/v1alpha1`, with two kinds.**
 
 | Kind | What it answers | What it holds |
 |---|---|---|
@@ -26,7 +26,7 @@ The review of 2026-11-16 (the deck `docs/presentations/presentations-reef.yaml`,
 
 **One package per revision, never changed afterwards.** The import takes the YAML and everything it points to: its assets, the files it cites from outside its folder and the shared references, each copy with its origin (path and commit), listed in a `package.json` manifest at the root with their hashes and the `outlineVersion`. The package is a deterministic tar whose sha256 is the revision; a Session points to the revision it showed. OCI comes later, only to share a package.
 
-**One database for the revisions and the live state: PostgreSQL through the `Database` kind** (#1691). The reef asks the database reef for one `Database` (`engine: postgres`) per installation; the Nereid of its Mandate (`cloudnative-pg` today, a managed PostgreSQL later) makes it, and the reef's Nereid, `leagore`, reads the connection from the Service Binding Secret. The API holds no database connection: it writes `spec` and calls the Nereid, found through the reef's Mandate, over HTTP inside the cluster, as the ideas reef reads its notes from doris; the store and its driver stay behind the Nereid, so the API never names a tool.
+**One database for the revisions and the live state: PostgreSQL through the `Database` kind** (#1691). The Reef asks the database Reef for one `Database` (`engine: postgres`) per installation; the Nereid of its Mandate (`cloudnative-pg` today, a managed PostgreSQL later) makes it, and the Reef's Nereid, `leagore`, reads the connection from the Service Binding Secret. The API holds no database connection: it writes `spec` and calls the Nereid, found through the Reef's Mandate, over HTTP inside the cluster, as the ideas Reef reads its notes from doris; the store and its driver stay behind the Nereid, so the API never names a tool.
 
 - **Revisions:** a table keyed by digest, behind a small put and get; a put of an existing digest changes nothing, and the API refuses a package over 1 MB.
 - **Live state:** a Session's row holds the step and a sequence; a step change is one statement, issued by `leagore`, that updates the row and calls `pg_notify`, so the state and its event commit together.
@@ -39,7 +39,7 @@ The review of 2026-11-16 (the deck `docs/presentations/presentations-reef.yaml`,
 - the API sends a heartbeat every 15 s, a fixed server setting, as a named event `hb` rather than a comment, since `EventSource` hides comments from the page, and a `retry:` delay; the page reopens the stream after about 35 s with no event, since neither TCP nor `EventSource` notices a dead network;
 - the stream's route has no request timeout, and each follower has a bounded queue, dropped when full, so a slow follower never holds the others back;
 - the API raises its open-files limit at start, and a cap of followers per pod answers `503`: with the container's 1024, one pod failed every route at about 1000 followers;
-- driving is a plain `POST` that needs a token with the presentations reef in J1 and the right to present from J6 (#1725); following needs no token, only the Session's short code, and is read-only.
+- driving is a plain `POST` that needs a token with the presentations Reef in J1 and the right to present from J6 (#1725); following needs no token, only the Session's short code, and is read-only.
 
 WebSocket was not chosen: it would also pass the entrance, but a follower only receives, and the API has no WebSocket library.
 
@@ -47,7 +47,7 @@ WebSocket was not chosen: it would also pass the entrance, but a follower only r
 
 **The audience is anonymous; sign-up is a choice, later.** A follower is a random id per device, with no login. Signing up (linking the device to a User, e-mails optional, deletion at any time) comes after the six journeys.
 
-**The reef's Nereid is `leagore`**, the Nereid who gathers the people: Nereus's own code, so it takes a sea name, as `doris`, `thetis` and `triton` do. It is born with a new field, `nameOrigin`, that explains its name and is shown by the CLI and the portal; the field for every Nereid is its own issue. The name joins the reserved list, so no agent session gets it.
+**The Reef's Nereid is `leagore`**, the Nereid who gathers the people: Nereus's own code, so it takes a sea name, as `doris`, `thetis` and `triton` do. It is born with a new field, `nameOrigin`, that explains its name and is shown by the CLI and the portal; the field for every Nereid is its own issue. The name joins the reserved list, so no agent session gets it.
 
 ```text
 $ nereus presentations presentation create storytelling \
@@ -63,7 +63,7 @@ $ nereus presentations session create platform-day \
 
 The import is `create --from` and the check is `create --dry-run`, the verbs of ADR 0013 (commands), so no new verb is needed.
 
-**Stand-ins, J1 only:** one YAML stored as a blob, with no package (J2, #1699); only the talk time, with no rehearsal (J3, #1707); any token with the presentations reef drives (J6, #1725; retired by #1726, presenting a right of the authorization reef); one API replica.
+**Stand-ins, J1 only:** one YAML stored as a blob, with no package (J2, #1699); only the talk time, with no rehearsal (J3, #1707); any token with the presentations Reef drives (J6, #1725; retired by #1726, presenting a right of the authorization Reef); one API replica.
 
 ## Prior art
 
@@ -77,7 +77,7 @@ The import is `create --from` and the check is `create --dry-run`, the verbs of 
 
 - A speaker needs no repository: any tool writes a deck against the schema, and Nereus keeps its history by digest.
 - The Nereus API gains its first long-lived stream: an open-files limit raised at start, a cap of followers per pod, and memory per follower (about 30 KB in the API and 55 KB in the gateway, #1689) to size for.
-- The presentations reef depends on the database reef: an installation without a `Database` Mandate cannot run it.
+- The presentations Reef depends on the database Reef: an installation without a `Database` Mandate cannot run it.
 - `leagore` is on the drive and follow path: while it is down, the steps stop and the followers wait; the API reopens its stream to `leagore` and sends each follower the current state.
 - The renderer gains a split output for the portal while the offline export stays one file.
 - `cloudnative-pg` configures no backup today, so a Session's live state and the revisions are not backed up until it does: a separate issue, outside J1.
@@ -89,4 +89,4 @@ The import is `create --from` and the check is `create --dry-run`, the verbs of 
 - The credential for a follower when following stops being public (sign-up, rights): `EventSource` sends no `Authorization` header, so a cookie or a short-lived query token, decided with that journey.
 - The name of the audience's identifier when sign-up comes, and how deletion keeps the statistics anonymized.
 
-*Origin: the owner's decisions of 2026-11-16 in the review of the presentations reef (the deck `docs/presentations/presentations-reef.yaml`, PR #1685, journeys #1687 and #1688), replacing the decision of 2026-10-19 on #218; the figures of the spikes #1689, #1690 and #1691 of the same day. Raw data in Drive `#pontos/raw/2026-11-16/`.*
+*Origin: the owner's decisions of 2026-11-16 in the review of the presentations Reef (the deck `docs/presentations/presentations-reef.yaml`, PR #1685, journeys #1687 and #1688), replacing the decision of 2026-10-19 on #218; the figures of the spikes #1689, #1690 and #1691 of the same day. Raw data in Drive `#pontos/raw/2026-11-16/`.*

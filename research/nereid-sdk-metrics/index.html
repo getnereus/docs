@@ -6206,7 +6206,7 @@
   <a href="#2-the-metrics-reef-and-the-victoriametrics-nereid" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. The metrics reef and the VictoriaMetrics Nereid
+        2. The metrics Reef and the VictoriaMetrics Nereid
       
     </span>
   </a>
@@ -7223,7 +7223,7 @@
   <a href="#2-the-metrics-reef-and-the-victoriametrics-nereid" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. The metrics reef and the VictoriaMetrics Nereid
+        2. The metrics Reef and the VictoriaMetrics Nereid
       
     </span>
   </a>
@@ -7352,14 +7352,14 @@
 <li><strong>Metrics already exist, under Nereus names:</strong> six <code>nereus_nereid_*</code> series on every Nereid's <code>GET /metrics</code>, through OpenTelemetry's Prometheus exporter. 19 Nereids pin <code>nereid-sdk==0.2.0</code>; all 21 with a loop use <code>telemetry</code>/<code>passes</code>.</li>
 <li><strong>Scraping already works:</strong> the <code>victoriametrics</code> Nereid's <code>VMPodScrape nereids</code> picks every pod labelled <code>core.&lt;domain&gt;/metrics: "true"</code> in <code>nereus-system</code>, which the CLI sets on every Nereid it deploys. A new Nereid is discovered with zero effort.</li>
 <li><strong>The gap is the names:</strong> none of the controller-runtime / client-go workqueue names exist, so community dashboards do not work. Several workqueue metrics have no honest meaning in a queue-less, one-worker loop and must be mapped with care.</li>
-<li><strong>The portal view is already designed:</strong> #744 (each Nereid's golden signals, with sparklines on the phone), on top of #740 (home screen, one row per reef and Nereid) and #746 (baselines). No reef has an icon today.</li>
+<li><strong>The portal view is already designed:</strong> #744 (each Nereid's golden signals, with sparklines on the phone), on top of #740 (home screen, one row per Reef and Nereid) and #746 (baselines). No Reef has an icon today.</li>
 </ul>
 <h2 id="decisions-owner-2026-11-17">Decisions (owner, 2026-11-17)<a class="headerlink" href="#decisions-owner-2026-11-17" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>SDK design accepted:</strong> <code>nereid-sdk</code> 0.3.0 emits the controller-runtime and workqueue names alongside <code>nereus_nereid_*</code>, both kept.</li>
 <li><strong>#744 is adjusted,</strong> not replaced: its queries move to the standard names.</li>
 <li><strong>Reef icon:</strong> an <code>icon</code> field on the Nereid's <code>GET /</code> contract (an amendment to ADR 0022), naming an icon of an open-source set vendored in the portal, <code>honeycomb.svg</code> when missing.</li>
-<li><strong>Dashboards:</strong> only the portal for now; a Grafana Nereid in the metrics reef stays an idea for later.</li>
+<li><strong>Dashboards:</strong> only the portal for now; a Grafana Nereid in the metrics Reef stays an idea for later.</li>
 </ul>
 <h2 id="1-the-sdk">1. The SDK<a class="headerlink" href="#1-the-sdk" title="Permanent link">&para;</a></h2>
 <p>Location: <code>lib/nereid/src/nereid/</code> — <code>telemetry.py</code>, <code>passes.py</code>, <code>logs.py</code>, <code>screens.py</code>, <code>addresses.py</code>.</p>
@@ -7443,8 +7443,8 @@
 </tr>
 </tbody>
 </table>
-<h2 id="2-the-metrics-reef-and-the-victoriametrics-nereid">2. The metrics reef and the VictoriaMetrics Nereid<a class="headerlink" href="#2-the-metrics-reef-and-the-victoriametrics-nereid" title="Permanent link">&para;</a></h2>
-<p><code>controllers/victoriametrics/</code> (reef <code>metrics</code>), objects in <code>nereus-system</code>:</p>
+<h2 id="2-the-metrics-reef-and-the-victoriametrics-nereid">2. The metrics Reef and the VictoriaMetrics Nereid<a class="headerlink" href="#2-the-metrics-reef-and-the-victoriametrics-nereid" title="Permanent link">&para;</a></h2>
+<p><code>controllers/victoriametrics/</code> (Reef <code>metrics</code>), objects in <code>nereus-system</code>:</p>
 <ul>
 <li>VMSingle <code>nereus</code> (14 d retention), VMAgent <code>nereus</code> with <code>selectAllByDefault: false</code> (only its own scrape objects).</li>
 <li><strong>VMPodScrape <code>nereids</code>:</strong> selector <code>core.&lt;domain&gt;/metrics: "true"</code>, namespace <code>nereus-system</code> only, port <code>http</code>, path <code>/metrics</code>, label <code>nereid</code> from the pod's <code>app.kubernetes.io/name</code>, <code>honorLabels: false</code> (a series cannot fake its <code>nereid</code>). Built in <code>cli/src/nereus/local_nereids.py:426</code>; the label is put on every Nereid pod in <code>cli/src/nereus/cluster.py:2683</code> (<code>METRICS_LABEL</code>).</li>
@@ -7558,9 +7558,9 @@
 <p>The <code>nereus_nereid_*</code> set stays (it carries what the standard lacks: <code>reason</code>, <code>period</code>, <code>last_success</code>, <code>ready</code>). Emit both sets in 0.3.0. Then either keep both (cardinality is tiny: ~20 Nereids × ~15 series) or drop the two duplicated ones (<code>reconcile_total</code>, <code>reconcile_duration_seconds</code>) after #744's queries move to the standard names. Recommendation: keep both; drop nothing until the portal is on the standard names.</p>
 <p>Rejected alternative: VMRule recording rules that rename <code>nereus_*</code> to <code>controller_runtime_*</code> in the store. Deterministic and no SDK change, but cannot produce <code>active_workers</code>, <code>unfinished_work_seconds</code> or <code>process_*</code>, and dashboards querying a raw <code>/metrics</code> would not see them.</p>
 <h3 id="dashboards">Dashboards<a class="headerlink" href="#dashboards" title="Permanent link">&para;</a></h3>
-<p>The Kubebuilder Grafana plugin (<code>grafana/v1-alpha</code>) generates <code>controller-runtime-metrics.json</code> and <code>controller-resources-metrics.json</code> that query these names (and <code>process_*</code>, <code>job</code>). Nereus ships no Grafana; VictoriaMetrics' vmui can import Grafana-style queries but not the dashboards. Worth a follow-up decision: a Grafana Nereid in the metrics reef, or only the portal view below.</p>
+<p>The Kubebuilder Grafana plugin (<code>grafana/v1-alpha</code>) generates <code>controller-runtime-metrics.json</code> and <code>controller-resources-metrics.json</code> that query these names (and <code>process_*</code>, <code>job</code>). Nereus ships no Grafana; VictoriaMetrics' vmui can import Grafana-style queries but not the dashboards. Worth a follow-up decision: a Grafana Nereid in the metrics Reef, or only the portal view below.</p>
 <h2 id="5-portal-view-red-per-nereid">5. Portal view (RED per Nereid)<a class="headerlink" href="#5-portal-view-red-per-nereid" title="Permanent link">&para;</a></h2>
-<p>Already specified by <strong>#744</strong> (each Nereid's golden signals from the metrics reef, with sparklines on the phone), on the rows of <strong>#740</strong> (portal home screen, one row per reef and Nereid) and <strong>#746</strong> (baseline thresholds, then 7-day baselines). #744 defines <code>signals</code> on each <code>GET /v1/status</code> row: <code>rate</code>, <code>errorRatio</code>, <code>p95Seconds</code>, <code>saturation</code>, CPU and memory, with 1 h series for sparklines, one query per signal for all Nereids (<code>by (nereid)</code>).</p>
+<p>Already specified by <strong>#744</strong> (each Nereid's golden signals from the metrics Reef, with sparklines on the phone), on the rows of <strong>#740</strong> (portal home screen, one row per Reef and Nereid) and <strong>#746</strong> (baseline thresholds, then 7-day baselines). #744 defines <code>signals</code> on each <code>GET /v1/status</code> row: <code>rate</code>, <code>errorRatio</code>, <code>p95Seconds</code>, <code>saturation</code>, CPU and memory, with 1 h series for sparklines, one query per signal for all Nereids (<code>by (nereid)</code>).</p>
 <p>Proposed adjustments to #744, not a new issue:</p>
 <ul>
 <li><strong>R</strong>ate: <code>sum by (nereid) (rate(controller_runtime_reconcile_total[5m]))</code>.</li>
@@ -7569,7 +7569,7 @@
 <li>Keep saturation (mean pass time over period) and add <code>workqueue_longest_running_processor_seconds</code> as the "stuck" flag.</li>
 <li>Layout: one compact row per Nereid (icon, name, state chip, R · E% · p95, one sparkline) on the phone; a table with all sparklines on desktop.</li>
 </ul>
-<p><strong>Reef icons:</strong> no reef has one. Only ADR 0022 screens carry an <code>icon</code> name (validated by <code>/^[a-z0-9-]{1,40}$/</code> in <code>static/screens.js</code>, used today only by <code>leagore</code>), and the portal only sets it as <code>data-icon</code> with no icon set behind it. Proposal: an <code>icon</code> field on the Nereid's <code>GET /</code> contract (ADR 0022's <code>contractVersion: 1</code> allows new fields), merged into its status like the screens, from one shared, open-source icon set vendored in the portal (e.g. Lucide, ISC); fallback <code>honeycomb.svg</code>.</p>
+<p><strong>Reef icons:</strong> no Reef has one. Only ADR 0022 screens carry an <code>icon</code> name (validated by <code>/^[a-z0-9-]{1,40}$/</code> in <code>static/screens.js</code>, used today only by <code>leagore</code>), and the portal only sets it as <code>data-icon</code> with no icon set behind it. Proposal: an <code>icon</code> field on the Nereid's <code>GET /</code> contract (ADR 0022's <code>contractVersion: 1</code> allows new fields), merged into its status like the screens, from one shared, open-source icon set vendored in the portal (e.g. Lucide, ISC); fallback <code>honeycomb.svg</code>.</p>
 <h2 id="gaps">Gaps<a class="headerlink" href="#gaps" title="Permanent link">&para;</a></h2>
 <ol>
 <li>No controller-runtime / workqueue names or labels: community dashboards do not work.</li>
@@ -7580,7 +7580,7 @@
 <li>
 <h1 id="744s-queries-use-the-nereus-names-no-portal-signals-implemented-yet">744's queries use the Nereus names; no portal signals implemented yet.<a class="headerlink" href="#744s-queries-use-the-nereus-names-no-portal-signals-implemented-yet" title="Permanent link">&para;</a></h1>
 </li>
-<li>No reef icon anywhere; no icon set in the portal.</li>
+<li>No Reef icon anywhere; no icon set in the portal.</li>
 </ol>
 <h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ol>
@@ -7588,7 +7588,7 @@
 <li><code>nereid-sdk</code> 0.3.0: emit the standard set alongside <code>nereus_nereid_*</code>, <code>ProcessCollector</code>, tests in <code>tests/test_telemetry.py</code> pinning the exposition; bump the 19 pins.</li>
 <li>Check <code>make scene-metrics</code> (<code>test/scene-metrics</code>) sees the new series through the VMPodScrape.</li>
 <li>Update #744's queries to the standard names; then deliver #739/#740/#744.</li>
-<li>ADR 0022 amendment: the reef <code>icon</code> field and the portal's icon set (decided).</li>
+<li>ADR 0022 amendment: the Reef <code>icon</code> field and the portal's icon set (decided).</li>
 <li>Later: move <code>Kube</code> into the SDK and add <code>rest_client_requests_total</code>; a Grafana Nereid only if the portal falls short.</li>
 </ol>
 

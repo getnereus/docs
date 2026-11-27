@@ -71,17 +71,17 @@
 
 **What Nereus already does the same way**
 
-- **"Your platform, your way"** is Nereus: Kratix is a framework to build platforms, and so is Nereus; an Internal Developer Platform is one profile, ADR 0014 (a profile is a YAML file that installs a set of reefs).
-- **Golden bricks are the reefs:** each capability is an API group installed at runtime, ADR 0010 (reefs at runtime); a profile assembles the path from them.
-- **A managed service instead of a puppy:** a resource reef, ADR 0017 (resource reefs), keeps the tool behind the API; `database` with the Nereid `cloudnative-pg` writes the connection Secret in `status.binding` and stays the owner of Day 2.
-- **The marketplace's contribution model** is the Nereid contract with a Mandate, ADR 0011 (reefs, Nereids and Mandates): a specialist writes a Nereid and binds it to a reef, without touching the core.
-- **Three tiers, interfaces as doors:** everything comes from the Nereus API, ADR 0018; the portal gets a screen per reef, ADR 0022 (a reef's screen is a Web Component its Nereid serves); MCP is a door of the API, ADR 0029 (each reef declares its MCP tools, served at `/mcp`).
+- **"Your platform, your way"** is Nereus: Kratix is a framework to build platforms, and so is Nereus; an Internal Developer Platform is one profile, ADR 0014 (a profile is a YAML file that installs a set of Reefs).
+- **Golden bricks are the Reefs:** each capability is an API group installed at runtime, ADR 0010 (Reefs at runtime); a profile assembles the path from them.
+- **A managed service instead of a puppy:** a resource Reef, ADR 0017 (resource Reefs), keeps the tool behind the API; `database` with the Nereid `cloudnative-pg` writes the connection Secret in `status.binding` and stays the owner of Day 2.
+- **The marketplace's contribution model** is the Nereid contract with a Mandate, ADR 0011 (Reefs, Nereids and Mandates): a specialist writes a Nereid and binds it to a Reef, without touching the core.
+- **Three tiers, interfaces as doors:** everything comes from the Nereus API, ADR 0018; the portal gets a screen per Reef, ADR 0022 (a Reef's screen is a Web Component its Nereid serves); MCP is a door of the API, ADR 0029 (each Reef declares its MCP tools, served at `/mcp`).
 - **Agents as one more kind of consumer:** Triton, ADR 0030 (the messaging Nereid for agents), and the project's own work with agent sessions inside boundaries (journeys, guards).
-- **Owner and audience:** the catalog records each Workload's `owner` and `audience`, ADR 0016 (the reef that says what Nereus has).
+- **Owner and audience:** the catalog records each Workload's `owner` and `audience`, ADR 0016 (the Reef that says what Nereus has).
 
 **Gaps the episode points at**
 
-- #2033 (reef maturity at runtime: an alpha reef is offered only to its audience), a sub-issue of #28 (how every feature is born: alpha, beta, stable).
+- #2033 (Reef maturity at runtime: an alpha Reef is offered only to its audience), a sub-issue of #28 (how every feature is born: alpha, beta, stable).
 - #2034 (profile guarantees: a profile states the expectations it meets as runnable checks, for those who leave the golden path).
 - #2035 (fleet rollout and drift: one Mandate change reaches every Instance in waves, and an Instance changed by hand is reported).
 - #2036 (the platform's two business metrics: time to get a resource, and time for a change to reach every Instance).

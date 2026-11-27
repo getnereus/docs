@@ -1,6 +1,6 @@
 # ✗ nereid reference-release is Unavailable
 
-A command of a reef stops at once, sends nothing and exits non-zero, because its Nereid has no pod serving.
+A command of a Reef stops at once, sends nothing and exits non-zero, because its Nereid has no pod serving.
 
 ## You see
 

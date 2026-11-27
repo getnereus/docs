@@ -1,7 +1,7 @@
-# 0015. Tenancy: a tenancy reef whose kinds come from each instance, with one fixed shape
+# 0015. Tenancy: a tenancy Reef whose kinds come from each instance, with one fixed shape
 
 !!! note "In short"
-    Tenancy is a reef whose kinds come from each instance, with one fixed shape: every kind is a tree node with an optional parent, and one kind is the boundary. Status: Proposed (2026-10-30, rewritten 2026-11-12, amended 2026-11-15).
+    Tenancy is a Reef whose kinds come from each instance, with one fixed shape: every kind is a tree node with an optional parent, and one kind is the boundary. Status: Proposed (2026-10-30, rewritten 2026-11-12, amended 2026-11-15).
 
 **Status:** Proposed (2026-10-30, rewritten 2026-11-12, amended 2026-11-15)
 
@@ -9,19 +9,19 @@
 
 Nereus is born multi-tenant (#21, Organization and nested Projects): the tenancy model is part of the product, not something added later. On 2026-10-29 the owner settled its levels: an **Organization** is the top level of separation, the boundary of people, permissions and isolation; a **Project** always sits under an Organization, and a Project may sit under another Project. Nested Projects take the place of Backstage's Domain and subdomain, and a leaf Project plays the part of Backstage's System, so there is no `System` kind.
 
-The catalog reef (#559, the catalog reef: Workload, Package and their types) and the resource reefs (#560, the resource reefs and how a Mandate picks their Nereid) both need to say whose a thing is, and that question could not be answered until two others were: whether a Project is a Kubernetes namespace, and where the tenancy kinds live.
+The catalog Reef (#559, the catalog Reef: Workload, Package and their types) and the resource Reefs (#560, the resource Reefs and how a Mandate picks their Nereid) both need to say whose a thing is, and that question could not be answered until two others were: whether a Project is a Kubernetes namespace, and where the tenancy kinds live.
 
 **A namespace does not fit.** A namespace exists once per cluster and does not nest. A Project nests (`nereus` holds `triton`), and the same Project runs in several environments: the Triton of `nereus` (the kept k3d cluster) and the Triton of a `pr-<n>` vcluster are one Project in two namespaces, on two clusters. Hierarchical namespaces would give the nesting but not the second cluster, and the project that provided them is archived.
 
-**The kinds differ from one instance to another.** This instance of Nereus is organised as Organizations and Projects. A company with its own structure (departments and squads, say) may run its own instance of Nereus with its own tenancy kinds; what the platform must not do is force one vocabulary on every company, nor let the catalog break when the vocabulary changes. A reef is a contract, an API group with its kinds (ADR 0002, ADR 0010), and ADR 0011 says an Instance's fields are common to every Nereid of the reef. If the kinds were free, the catalog would have to reference any kind (`{apiVersion, kind, name}`), and `catalog check` would no longer know what a parent or a boundary is: the fixed thing has to be the shape of a kind, not its name.
+**The kinds differ from one instance to another.** This instance of Nereus is organised as Organizations and Projects. A company with its own structure (departments and squads, say) may run its own instance of Nereus with its own tenancy kinds; what the platform must not do is force one vocabulary on every company, nor let the catalog break when the vocabulary changes. A Reef is a contract, an API group with its kinds (ADR 0002, ADR 0010), and ADR 0011 says an Instance's fields are common to every Nereid of the Reef. If the kinds were free, the catalog would have to reference any kind (`{apiVersion, kind, name}`), and `catalog check` would no longer know what a parent or a boundary is: the fixed thing has to be the shape of a kind, not its name.
 
 ## Decision
 
-**Tenancy is a reef, `tenancy.getnereus.dev/v1alpha1`, and its kinds come from each instance.** The group is fixed; its CRDs are applied from the instance's `reefs/tenancy/` as any reef is (ADR 0010). This instance applies `Organization` and `Project`; another instance may apply its own kinds, and its catalog still works, because the contract is the shape of every kind of the group, not the kind names:
+**Tenancy is a Reef, `tenancy.getnereus.dev/v1alpha1`, and its kinds come from each instance.** The group is fixed; its CRDs are applied from the instance's `reefs/tenancy/` as any Reef is (ADR 0010). This instance applies `Organization` and `Project`; another instance may apply its own kinds, and its catalog still works, because the contract is the shape of every kind of the group, not the kind names:
 
 - **Every kind of the group is a node** with an optional `spec.parent: {kind, name}`; a node with no parent is a root. The kind of a parent is one of the group's own kinds.
-- **One CRD of the group carries the annotation `tenancy.getnereus.dev/boundary: "true"`:** the kind that isolates (people, billing, isolation), as `core.getnereus.dev/default-kind` marks a reef's default kind (ADR 0013, command conventions). Here it is `Organization`.
-- **Whatever points to the tree names `owner: {kind, name}` inside the group,** never an apiVersion: the catalog's Workloads and Packages, an Environment of the environment reef, a Mandate's `match`. The field replaces the `spec.project` of the first proposal.
+- **One CRD of the group carries the annotation `tenancy.getnereus.dev/boundary: "true"`:** the kind that isolates (people, billing, isolation), as `core.getnereus.dev/default-kind` marks a Reef's default kind (ADR 0013, command conventions). Here it is `Organization`.
+- **Whatever points to the tree names `owner: {kind, name}` inside the group,** never an apiVersion: the catalog's Workloads and Packages, an Environment of the environment Reef, a Mandate's `match`. The field replaces the `spec.project` of the first proposal.
 - **`catalog check` climbs `spec.parent` to the root** without knowing the kinds: it resolves every `owner`, refuses a cycle or a parent that does not exist, and finds the boundary by the annotation.
 
 On this instance:
@@ -76,7 +76,7 @@ spec:
   owner: {kind: Squad, name: payments}
 ```
 
-**The commands** follow ADR 0013: `nereus tenancy <kind> <verb> <name>`, built from the reef's schema, as the release reef's are; the output names the object by its full path, parents before children; `nereus reef apply` lists the kinds the reef created (owner, 2026-10-30).
+**The commands** follow ADR 0013: `nereus tenancy <kind> <verb> <name>`, built from the Reef's schema, as the release Reef's are; the output names the object by its full path, parents before children; `nereus reef apply` lists the kinds the Reef created (owner, 2026-10-30).
 
 ```text
 # Apply the tenancy reef of this instance
@@ -103,9 +103,9 @@ Next steps:
   nereus catalog apply --from-file catalog/
 ```
 
-**A Project is not a namespace.** A Project is an object of the platform, cluster-scoped, with its parent in `spec`; the namespace is only where a Project runs, one per environment (`triton` on `nereus`, the kept k3d cluster, `triton` again on the `pr-<n>` vcluster). The API projects who may act on a Project into the namespaces where it runs; it has to stand in front of the reefs in any case (ADR 0010, open question on the Platform API).
+**A Project is not a namespace.** A Project is an object of the platform, cluster-scoped, with its parent in `spec`; the namespace is only where a Project runs, one per environment (`triton` on `nereus`, the kept k3d cluster, `triton` again on the `pr-<n>` vcluster). The API projects who may act on a Project into the namespaces where it runs; it has to stand in front of the Reefs in any case (ADR 0010, open question on the Platform API).
 
-**The permissions are relations, in the authorization reef.** The tenancy reef holds the tree; who may do what on it is the authorization reef's job, with its `openfga` Nereid (ADR 0027), permission flowing down the tree and never up. **One OpenFGA type, `node`, serves every tenancy kind** (owner, 2026-11-15, spec 0011, decision 11): the kinds come from each instance, and the model is fixed, versioned with the Nereid, so it cannot name them. A node's id is its kind in lowercase, a slash and its name (`node:project/triton`), and its `parent` is another node or, for a root, the one `instance`. A new tenancy kind on another instance changes no model, only tuples.
+**The permissions are relations, in the authorization Reef.** The tenancy Reef holds the tree; who may do what on it is the authorization Reef's job, with its `openfga` Nereid (ADR 0027), permission flowing down the tree and never up. **One OpenFGA type, `node`, serves every tenancy kind** (owner, 2026-11-15, spec 0011, decision 11): the kinds come from each instance, and the model is fixed, versioned with the Nereid, so it cannot name them. A node's id is its kind in lowercase, a slash and its name (`node:project/triton`), and its `parent` is another node or, for a root, the one `instance`. A new tenancy kind on another instance changes no model, only tuples.
 
 ```text
 type node
@@ -117,7 +117,7 @@ type node
 
 The first sketch of this ADR had one OpenFGA type per tenancy kind, with an instance writing its own model over its own kinds; it was dropped because a model fixed with the Nereid could not follow each instance's kinds.
 
-**The boundary kind carries `domains` and `requireMandate`** (owner, 2026-11-10, #1311). Both are optional fields of the kind annotated `boundary`, whatever its name; here, `Organization`. The authentication reef reads them (ADR 0006): a login by e-mail finds the Organization by the address's domain, and the Organization's Mandate by `match` (ADR 0017).
+**The boundary kind carries `domains` and `requireMandate`** (owner, 2026-11-10, #1311). Both are optional fields of the kind annotated `boundary`, whatever its name; here, `Organization`. The authentication Reef reads them (ADR 0006): a login by e-mail finds the Organization by the address's domain, and the Organization's Mandate by `match` (ADR 0017).
 
 ```yaml
 apiVersion: tenancy.getnereus.dev/v1alpha1
@@ -133,9 +133,9 @@ spec:
 - **`requireMandate: true`:** an e-mail of the verified domains enters only with a token of the Mandate that matches the Organization. The API refuses the field while no authentication Mandate matches the Organization, so nobody is locked out.
 - **A team is a `match` on Projects.** The tenancy has Organization and Project, no Team kind: a Mandate for "one or more teams" matches their Projects, until the tenancy gets teams.
 
-**The first version has no tenancy Nereid:** the API keeps the tree, as it keeps the `core` kinds. A Nereid comes when the tree is synced from or to another system (Keycloak groups, a human-resources system); OpenFGA's tuples are written from the tree by the authorization reef's `openfga` Nereid (ADR 0027). That work is what makes tenancy a reef rather than two more kinds in `core`: `core` is the mechanism (Reef, Nereid, Mandate) and never has a Nereid.
+**The first version has no tenancy Nereid:** the API keeps the tree, as it keeps the `core` kinds. A Nereid comes when the tree is synced from or to another system (Keycloak groups, a human-resources system); OpenFGA's tuples are written from the tree by the authorization Reef's `openfga` Nereid (ADR 0027). That work is what makes tenancy a Reef rather than two more kinds in `core`: `core` is the mechanism (Reef, Nereid, Mandate) and never has a Nereid.
 
-**Sharing across Projects or Organizations goes by publishing or by access, never by a permission climbing the tree.** A Project runs its own copy from a published `Package` (a chart in an OCI registry, installed through the release reef, as Keycloak is today), or talks to the running thing through its `audience` (Triton, for agents and people of any Project); the registry decides who pulls.
+**Sharing across Projects or Organizations goes by publishing or by access, never by a permission climbing the tree.** A Project runs its own copy from a published `Package` (a chart in an OCI registry, installed through the release Reef, as Keycloak is today), or talks to the running thing through its `audience` (Triton, for agents and people of any Project); the registry decides who pulls.
 
 ## Prior art
 
@@ -151,21 +151,21 @@ spec:
 ## Consequences
 
 - `spec.project` becomes `owner: {kind, name}` in everything that points to the tree: the catalog's Workloads and Packages (#559), an Environment, a resource Instance and a Mandate's `match` (#560). The CLI gets a current owner in its config so `--owner` is optional when several things are created for the same Project (owner's ask, #559).
-- A new reef that needs to say whose a thing is reuses the field and the climb to the root; none of them learns a kind name.
+- A new Reef that needs to say whose a thing is reuses the field and the climb to the root; none of them learns a kind name.
 - Each instance owns its `reefs/tenancy/`; the kinds of this instance (`Organization`, `Project`) are the reference ones, shipped with `nereus init`, and the first entries are Nereus itself: Organization `getnereus`, Project `nereus`, and `core`, `nereids`, `triton` and `docs` under it.
-- Permissions are not free from Kubernetes RBAC: the API projects them into the namespaces where a Project runs, and the authorization reef holds the relations.
-- The output of `nereus reef apply` grows a list of the kinds it created, for every reef.
+- Permissions are not free from Kubernetes RBAC: the API projects them into the namespaces where a Project runs, and the authorization Reef holds the relations.
+- The output of `nereus reef apply` grows a list of the kinds it created, for every Reef.
 - The boundary kind's shape grows two optional fields, `domains` and `requireMandate`; #1314 (the API accepts several issuers) builds `requireMandate`, and #1315 (identifier-first login) builds `domains` and their verification, deciding the TXT record's name and the `status` fields.
 
 ## Open questions
 
 - **A depth limit:** a limit (four levels, for example) until a case asks for more, as #21 (Organization and nested Projects) suggested; not decided.
 - **How permissions are projected** from a Project into the namespaces where it runs, per environment, and what the API does when a Project runs on a cluster it does not own.
-- **The tenancy Nereid:** when the tree is synced with Keycloak groups or a human-resources system, which side is the source, and what `status` it writes on each node. OpenFGA's tuples are settled (ADR 0027): the tree is the source, and the authorization reef's `openfga` Nereid reads it, so tenancy still needs no Nereid of its own for them.
+- **The tenancy Nereid:** when the tree is synced with Keycloak groups or a human-resources system, which side is the source, and what `status` it writes on each node. OpenFGA's tuples are settled (ADR 0027): the tree is the source, and the authorization Reef's `openfga` Nereid reads it, so tenancy still needs no Nereid of its own for them.
 - **The Organization of `nereus init`:** where the first Organization and Project come from on a fresh cluster (#21's "what the first slice becomes").
 - **Two Organizations that claim one domain.** Recommendation for #1315: the first to verify it holds it, and the second is refused.
 
-*Origin: the owner's decisions of 2026-10-29 (the levels, #21) and 2026-10-30 (a Project is not a namespace; a tenancy reef with kinds per instance and one fixed shape), in a design session with a second opinion and research by subagents; raw data in Drive `#pontos/beach/opinions/2026-10-30/` (the session brief, the proposal as YAML, the opinions and research) and `#pontos/raw/2026-10-30/`.*
+*Origin: the owner's decisions of 2026-10-29 (the levels, #21) and 2026-10-30 (a Project is not a namespace; a tenancy Reef with kinds per instance and one fixed shape), in a design session with a second opinion and research by subagents; raw data in Drive `#pontos/beach/opinions/2026-10-30/` (the session brief, the proposal as YAML, the opinions and research) and `#pontos/raw/2026-10-30/`.*
 
 *Rewritten 2026-11-12 from the owner's decisions of 2026-11-10 (#1311: an Organization's `domains` and `requireMandate`, teams as a `match` on Projects) and of 2026-11-12 (a domain is verified by a DNS TXT record); raw data in Drive `#pontos/raw/2026-11-10/` and `#pontos/raw/2026-11-12/`.*
 

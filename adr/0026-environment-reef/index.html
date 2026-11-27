@@ -7156,17 +7156,17 @@
   
 
 
-<h1 id="0026-the-environment-reef-an-environment-is-only-the-request-and-the-kept-cluster-is-nereus">0026. The environment reef: an Environment is only the request, and the kept cluster is nereus<a class="headerlink" href="#0026-the-environment-reef-an-environment-is-only-the-request-and-the-kept-cluster-is-nereus" title="Permanent link">&para;</a></h1>
+<h1 id="0026-the-environment-reef-an-environment-is-only-the-request-and-the-kept-cluster-is-nereus">0026. The environment Reef: an Environment is only the request, and the kept cluster is nereus<a class="headerlink" href="#0026-the-environment-reef-an-environment-is-only-the-request-and-the-kept-cluster-is-nereus" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
 <p class="admonition-title">In short</p>
-<p>The <code>environment</code> reef has one kind, <code>Environment</code>, which is only the request; the cluster kept for it is <code>nereus</code>. Status: Proposed (2026-11-14).</p>
+<p>The <code>environment</code> Reef has one kind, <code>Environment</code>, which is only the request; the cluster kept for it is <code>nereus</code>. Status: Proposed (2026-11-14).</p>
 </div>
 <p><strong>Status:</strong> Proposed (2026-11-14)</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
-<p>The <code>Environment</code> kind and the <code>vcluster</code> Nereid exist (#620), installed by the <code>internal-developer-platform</code> profile (#827), and a release <code>Target</code> with an <code>environmentRef</code> delivers into that Environment's cluster through the <code>flux</code> Nereid (#828). No ADR records the reef: what a person writes, what a Nereid writes, and how the release reef finds where to deliver. ADR 0010 (reefs at runtime) says only that the environment "knows the cluster and its credentials".</p>
-<p>The kept k3d cluster, <code>k3d-nereus</code>, runs Triton and serves as production, but no Nereid knows it: #556 (two local k3d clusters at most) calls it production, and #159 and #160 (the always-on environment deployed from main) call it <code>live</code>. ADR 0017 (resource reefs) is Accepted and settles how a request picks its Mandate; this reef is its first user with two Nereids. #568 asked for the refinement, in the design session of 2026-10-30 on the catalog (#559), the tenancy (#21) and the resource reefs (#560).</p>
+<p>The <code>Environment</code> kind and the <code>vcluster</code> Nereid exist (#620), installed by the <code>internal-developer-platform</code> profile (#827), and a release <code>Target</code> with an <code>environmentRef</code> delivers into that Environment's cluster through the <code>flux</code> Nereid (#828). No ADR records the Reef: what a person writes, what a Nereid writes, and how the release Reef finds where to deliver. ADR 0010 (Reefs at runtime) says only that the environment "knows the cluster and its credentials".</p>
+<p>The kept k3d cluster, <code>k3d-nereus</code>, runs Triton and serves as production, but no Nereid knows it: #556 (two local k3d clusters at most) calls it production, and #159 and #160 (the always-on environment deployed from main) call it <code>live</code>. ADR 0017 (resource Reefs) is Accepted and settles how a request picks its Mandate; this Reef is its first user with two Nereids. #568 asked for the refinement, in the design session of 2026-10-30 on the catalog (#559), the tenancy (#21) and the resource Reefs (#560).</p>
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
-<p><strong>An <code>Environment</code> is only the request.</strong> The reef is <code>environment.getnereus.dev/v1alpha1</code>, with one cluster-scoped kind, <code>Environment</code>. One writer per field (ADR 0005):</p>
+<p><strong>An <code>Environment</code> is only the request.</strong> The Reef is <code>environment.getnereus.dev/v1alpha1</code>, with one cluster-scoped kind, <code>Environment</code>. One writer per field (ADR 0005):</p>
 <table>
 <thead>
 <tr>
@@ -7214,17 +7214,17 @@
 <tr>
 <td><code>status.kubernetes.namespaces</code></td>
 <td>the Nereid</td>
-<td>where its Workloads' pods run in the cluster that hosts them, so the metrics reef reads them there: a vcluster's host namespace; for <code>nereus</code>, the namespaces of the Targets that deliver into it (amended by the owner, 2026-11-26, #2305)</td>
+<td>where its Workloads' pods run in the cluster that hosts them, so the metrics Reef reads them there: a vcluster's host namespace; for <code>nereus</code>, the namespaces of the Targets that deliver into it (amended by the owner, 2026-11-26, #2305)</td>
 </tr>
 </tbody>
 </table>
-<p><code>spec</code> names no technology (ADR 0002, the model): the person never names a cluster type, a provider or a Tool. A kept cluster, a vcluster, Cloud Run, Azure Container Apps or AWS Fargate are each a Nereid behind a Mandate, and each writes what it made in <code>status</code>. Credentials are never inline: <code>secretRef</code> points at a Kubernetes Secret today, and the secrets reef (#529) takes the kubeconfig over when it exists, without changing the field.</p>
-<p><strong>The Mandate is the one named, else the reef's default</strong> (ADR 0017's order, steps 3 and 4: no <code>match</code> key fits an environment's request today). The <code>vcluster</code> Nereid's Mandate is the reef's default, so every environment a person asks for, a PR's included, is a vcluster unless it names another Mandate. The kept cluster is the only environment that names one: <code>nereus init</code> creates it with <code>--mandate local</code>. <code>match</code> gets no <code>expires</code> key: ADR 0017 compares values, and "has an expiry" is a presence test (owner, 2026-11-14). Each Nereid acts only on the Environments whose Mandate names it, so the <code>vcluster</code> and <code>k3d</code> Nereids share the reef without touching each other's objects, as the <code>vcluster</code> Nereid already does.</p>
+<p><code>spec</code> names no technology (ADR 0002, the model): the person never names a cluster type, a provider or a Tool. A kept cluster, a vcluster, Cloud Run, Azure Container Apps or AWS Fargate are each a Nereid behind a Mandate, and each writes what it made in <code>status</code>. Credentials are never inline: <code>secretRef</code> points at a Kubernetes Secret today, and the secrets Reef (#529) takes the kubeconfig over when it exists, without changing the field.</p>
+<p><strong>The Mandate is the one named, else the Reef's default</strong> (ADR 0017's order, steps 3 and 4: no <code>match</code> key fits an environment's request today). The <code>vcluster</code> Nereid's Mandate is the Reef's default, so every environment a person asks for, a PR's included, is a vcluster unless it names another Mandate. The kept cluster is the only environment that names one: <code>nereus init</code> creates it with <code>--mandate local</code>. <code>match</code> gets no <code>expires</code> key: ADR 0017 compares values, and "has an expiry" is a presence test (owner, 2026-11-14). Each Nereid acts only on the Environments whose Mandate names it, so the <code>vcluster</code> and <code>k3d</code> Nereids share the Reef without touching each other's objects, as the <code>vcluster</code> Nereid already does.</p>
 <p><strong>The kept k3d cluster is the Environment <code>nereus</code></strong>, the name of the k3d cluster itself (owner, 2026-11-23, #2150). The name is a disposable label like any other environment's, never <code>prod</code>: migrating data, restoring a backup, or swapping the cluster under a Workload changes the environment, not the Workload, all through the platform. It replaces <code>production</code> in #556 and <code>live</code> in #159 and #160 with one name.</p>
-<p><strong>A <code>k3d</code> Nereid registers <code>nereus</code> (a stand-in).</strong> It runs in the <code>local-nereids</code> image and knows only the cluster it runs in: it adopts that cluster for an Environment whose Mandate names it, writes <code>status.kubernetes</code>, refuses to make a second one, and never deletes the cluster; deleting <code>nereus</code> removes only the record. Only a Nereid writes its reef's <code>status</code> (ADR 0002), so <code>nereus init</code> asks for <code>nereus</code> like a person would and does not write its <code>status</code>, and the release reef reads <code>nereus</code> like any other environment (owner, 2026-11-14). It retires when a real environment Nereid makes clusters. #575 (the reef's first slice) builds it.</p>
+<p><strong>A <code>k3d</code> Nereid registers <code>nereus</code> (a stand-in).</strong> It runs in the <code>local-nereids</code> image and knows only the cluster it runs in: it adopts that cluster for an Environment whose Mandate names it, writes <code>status.kubernetes</code>, refuses to make a second one, and never deletes the cluster; deleting <code>nereus</code> removes only the record. Only a Nereid writes its Reef's <code>status</code> (ADR 0002), so <code>nereus init</code> asks for <code>nereus</code> like a person would and does not write its <code>status</code>, and the release Reef reads <code>nereus</code> like any other environment (owner, 2026-11-14). It retires when a real environment Nereid makes clusters. #575 (the Reef's first slice) builds it.</p>
 <p><strong>At <code>expires</code>, the Nereid that made the environment removes it</strong>, writes <code>Expired</code> in <code>status.phase</code>, and leaves the <code>Environment</code> until <code>nereus environment delete</code>, so the history stays visible. The <code>vcluster</code> Nereid already does it; <code>nereus</code> takes no <code>expires</code>.</p>
-<p><strong>The release reef finds its target in the Environment's <code>status</code>.</strong> A release Mandate's <code>match</code> on <code>environment</code> (ADR 0017) picks the Nereid that knows how to deliver there: <code>flux</code> for a Kubernetes environment, another Nereid for Cloud Run, with the same <code>nereus release create</code>. A <code>Target</code> with no <code>environmentRef</code> keeps meaning the cluster Nereus runs in, which is <code>nereus</code> on k3d; whether a <code>Target</code> may name a cluster directly stays ADR 0010's open question.</p>
-<p><strong>Hostnames per environment belong to the edge reef.</strong> Internal hostnames <code>&lt;workload&gt;.&lt;environment&gt;.getnereus.dev</code> (<code>triton.nereus.getnereus.dev</code>) behind the public <code>&lt;workload&gt;.getnereus.dev</code> are #470's (the edge reef), not this reef's.</p>
+<p><strong>The release Reef finds its target in the Environment's <code>status</code>.</strong> A release Mandate's <code>match</code> on <code>environment</code> (ADR 0017) picks the Nereid that knows how to deliver there: <code>flux</code> for a Kubernetes environment, another Nereid for Cloud Run, with the same <code>nereus release create</code>. A <code>Target</code> with no <code>environmentRef</code> keeps meaning the cluster Nereus runs in, which is <code>nereus</code> on k3d; whether a <code>Target</code> may name a cluster directly stays ADR 0010's open question.</p>
+<p><strong>Hostnames per environment belong to the edge Reef.</strong> Internal hostnames <code>&lt;workload&gt;.&lt;environment&gt;.getnereus.dev</code> (<code>triton.nereus.getnereus.dev</code>) behind the public <code>&lt;workload&gt;.getnereus.dev</code> are #470's (the edge Reef), not this Reef's.</p>
 <div class="language-text highlight"><pre><span></span><code># The admin, once (nereus init does it on k3d)
 $ nereus mandate create vcluster \
     --reef environment \
@@ -7260,8 +7260,8 @@ $ nereus release create triton \
     --target nereus
 ✓ release/releases/triton created (mandate: flux)
 </code></pre></div>
-<p><code>nereus environment create</code> is <code>nereus environment environment create</code> (ADR 0013: a kind named after its reef takes the reef's verbs). The deck is <code>docs/specs/cli/reefs/environment.yaml</code>.</p>
-<p><strong>Stand-ins:</strong> the <code>k3d</code> Nereid, which knows only its own cluster, until a Nereid makes clusters; the kubeconfig in a Kubernetes Secret until the secrets reef (#529) holds it; <code>owner</code> has nothing behind it until the authorization reef (#897).</p>
+<p><code>nereus environment create</code> is <code>nereus environment environment create</code> (ADR 0013: a kind named after its Reef takes the Reef's verbs). The deck is <code>docs/specs/cli/reefs/environment.yaml</code>.</p>
+<p><strong>Stand-ins:</strong> the <code>k3d</code> Nereid, which knows only its own cluster, until a Nereid makes clusters; the kubeconfig in a Kubernetes Secret until the secrets Reef (#529) holds it; <code>owner</code> has nothing behind it until the authorization Reef (#897).</p>
 <h2 id="prior-art">Prior art<a class="headerlink" href="#prior-art" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Crossplane's claims and compositions: the person's claim names no provider; the composition the admin chose makes it and writes back its connection details, here the Mandate and the Nereid's <code>status</code>.</li>
@@ -7271,9 +7271,9 @@ $ nereus release create triton \
 </ul>
 <h2 id="consequences">Consequences<a class="headerlink" href="#consequences" title="Permanent link">&para;</a></h2>
 <ul>
-<li>One shape for every environment, whatever makes it: the release reef, the delivery reef (ADR 0020) and the catalog read <code>status</code>, never a technology.</li>
+<li>One shape for every environment, whatever makes it: the release Reef, the delivery Reef (ADR 0020) and the catalog read <code>status</code>, never a technology.</li>
 <li><code>nereus init</code> gets one more step: the <code>local</code> Mandate and the Environment <code>nereus</code>, through the <code>k3d</code> Nereid (#575).</li>
-<li>The reef has two Nereids at once, which ADR 0017 allows; neither acts on the other's Environments.</li>
+<li>The Reef has two Nereids at once, which ADR 0017 allows; neither acts on the other's Environments.</li>
 <li>
 <h1 id="159-160-and-556-use-the-one-name-nereus">159, #160 and #556 use the one name <code>nereus</code>.<a class="headerlink" href="#159-160-and-556-use-the-one-name-nereus" title="Permanent link">&para;</a></h1>
 </li>
@@ -7285,7 +7285,7 @@ $ nereus release create triton \
 <li>What <code>status</code> a non-Kubernetes environment publishes (Cloud Run, Fargate): decided with its first Nereid.</li>
 <li>Whether <code>region</code> takes part in <code>match</code> (ADR 0017 lists only <code>engine</code>, <code>environment</code> and <code>owner</code>).</li>
 </ul>
-<p><em>Origin: the owner's decisions of 2026-10-30 in the design session on the catalog, tenancy and resource reefs (#568), and of 2026-11-14 on its visual summary (the default Mandate and the stand-in for nereus). Raw data in Drive <code>dump-mental-prompts/opinions/2026-10-30/</code> and <code>#pontos/raw/2026-11-14/</code>.</em></p>
+<p><em>Origin: the owner's decisions of 2026-10-30 in the design session on the catalog, tenancy and resource Reefs (#568), and of 2026-11-14 on its visual summary (the default Mandate and the stand-in for nereus). Raw data in Drive <code>dump-mental-prompts/opinions/2026-10-30/</code> and <code>#pontos/raw/2026-11-14/</code>.</em></p>
 
 
 

@@ -1,15 +1,15 @@
 # Publish at a hostname
 
-Publish a reef's endpoint, here Triton, at a hostname of your own domain, while Nereus runs on your machine behind a Cloudflare tunnel.
+Publish a Reef's endpoint, here Triton, at a hostname of your own domain, while Nereus runs on your machine behind a Cloudflare tunnel.
 
 ## Before you start
 
-- A cluster from [Prepare the cluster](../../start/init.md) with the secrets reef: the Nereid `cloudflare` requires it, and makes the vault `edge`.
+- A cluster from [Prepare the cluster](../../start/init.md) with the secrets Reef: the Nereid `cloudflare` requires it, and makes the vault `edge`.
 - A domain, a Cloudflare account on the free plan, and a named tunnel's credentials from `cloudflared tunnel create nereus`, in `~/.cloudflared/<UUID>.json`.
 
 ## Steps
 
-### 1. Apply the edge reef
+### 1. Apply the edge Reef
 
 [`nereus reef apply edge`](../../specs/cli/reefs/edge.html#apply-reef) adds the kinds `Zone`, `Domain` and `Route`.
 
@@ -84,7 +84,7 @@ nereus edge route create triton --hostname triton.getnereus.dev
 ✓ edge/routes/triton created, Ready: https://triton.getnereus.dev
 ```
 
-A route may also name the endpoint a reef publishes, never a cluster, a namespace, a Service or a port (#1951). [`nereus edge endpoint list`](../../specs/cli/reefs/edge.html#endpoint-list) shows every endpoint the Nereids publish, with the hostnames each one serves; none is published by default. The Nereid's own apply grants one, then the route names it:
+A route may also name the endpoint a Reef publishes, never a cluster, a namespace, a Service or a port (#1951). [`nereus edge endpoint list`](../../specs/cli/reefs/edge.html#endpoint-list) shows every endpoint the Nereids publish, with the hostnames each one serves; none is published by default. The Nereid's own apply grants one, then the route names it:
 
 ```bash
 nereus edge endpoint list

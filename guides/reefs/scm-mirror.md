@@ -4,12 +4,12 @@ Copy a public Git repository into the cluster, where the `forgejo` Nereid keeps 
 
 ## Before you start
 
-- The release reef with the flux Nereid, and the secrets reef with the openbao Nereid and the vault `default`: Forgejo comes from its upstream chart through the release reef, and its admin is sealed into the vault.
-- The profile `internal-developer-platform` brings the scm reef and the forgejo Nereid already: then go to step 2.
+- The release Reef with the flux Nereid, and the secrets Reef with the openbao Nereid and the vault `default`: Forgejo comes from its upstream chart through the release Reef, and its admin is sealed into the vault.
+- The profile `internal-developer-platform` brings the scm Reef and the forgejo Nereid already: then go to step 2.
 
 ## Steps
 
-### 1. Apply the scm reef and the forgejo Nereid
+### 1. Apply the scm Reef and the forgejo Nereid
 
 ```bash
 nereus reef apply scm
@@ -19,7 +19,7 @@ nereus reef apply scm
 ✓ core/reefs/scm created (scm.getnereus.dev/v1alpha1: connections)
 ```
 
-[`nereus nereid apply`](../../specs/cli/reefs/scm.html#mirror-apply) installs the Nereid. It makes its own Mandate `forgejo`, asks the release reef for Forgejo (SQLite on a volume, no Ingress) and makes Forgejo's admin.
+[`nereus nereid apply`](../../specs/cli/reefs/scm.html#mirror-apply) installs the Nereid. It makes its own Mandate `forgejo`, asks the release Reef for Forgejo (SQLite on a volume, no Ingress) and makes Forgejo's admin.
 
 ```bash
 nereus nereid apply forgejo \
@@ -39,7 +39,7 @@ Forgejo copies from `github.com` only. The Nereid's setting `MIRROR_ALLOWED_DOMA
 
 ### 2. Mirror a repository
 
-[`nereus scm mirror create`](../../specs/cli/reefs/scm.html#mirror-create) copies the repository at `--from`, pulled again every `--interval`. It goes through `--mandate`, else the reef's default Mandate; a Mandate whose Nereid serves no mirrors, such as `github-scm`, is refused.
+[`nereus scm mirror create`](../../specs/cli/reefs/scm.html#mirror-create) copies the repository at `--from`, pulled again every `--interval`. It goes through `--mandate`, else the Reef's default Mandate; a Mandate whose Nereid serves no mirrors, such as `github-scm`, is refused.
 
 ```bash
 nereus scm mirror create nereus \
@@ -115,4 +115,4 @@ nereus scm mirror delete nereus
 
 ## Learn more
 
-- [The scm reef](../../reference/reefs/scm.md): Connections and Mirrors, every command.
+- [The scm Reef](../../reference/reefs/scm.md): Connections and Mirrors, every command.

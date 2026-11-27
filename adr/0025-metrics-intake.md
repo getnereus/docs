@@ -11,18 +11,18 @@ The owner asked on 2026-11-14 for one official way for the platform to receive m
 
 What exists today:
 
-- **The metrics reef only scrapes.** Its victoriametrics Nereid runs a VMAgent and a VMSingle in `nereus-system`; nothing outside the cluster can write a sample. #783 closes the push endpoint VMAgent opens by default, since any pod could forge series the portal shows as a Nereid's signals (#744); #784 puts vmauth in front of VictoriaMetrics and keeps its import and delete unrouted.
+- **The metrics Reef only scrapes.** Its victoriametrics Nereid runs a VMAgent and a VMSingle in `nereus-system`; nothing outside the cluster can write a sample. #783 closes the push endpoint VMAgent opens by default, since any pod could forge series the portal shows as a Nereid's signals (#744); #784 puts vmauth in front of VictoriaMetrics and keeps its import and delete unrouted.
 - **The Nereus API is the one door** (ADR 0018), and it has no metrics route.
 - **Authentication knows people and the platform's own identity outwards** (ADR 0006: OIDC logins for a `User`, Mandates for a GitHub App), but no machine that signs in to the platform on its own: a systemd unit on a laptop cannot run `nereus login` in a browser.
 - **Nereus assumes no vendor:** the store, the registry and the git host are configured, so nothing in this channel may depend on VictoriaMetrics, Keycloak or GitHub.
 
 ## Decision
 
-**Metrics enter the platform only through the Nereus API, and the CLI is the official client.** A script, a pipeline, a cron job and an agent all send through `nereus metrics send`, or call the same route the CLI calls; nothing writes to the store directly. The route belongs to the metrics reef's API group, `metrics.getnereus.dev/v1alpha1` (ADR 0009); no separate intake reef.
+**Metrics enter the platform only through the Nereus API, and the CLI is the official client.** A script, a pipeline, a cron job and an agent all send through `nereus metrics send`, or call the same route the CLI calls; nothing writes to the store directly. The route belongs to the metrics Reef's API group, `metrics.getnereus.dev/v1alpha1` (ADR 0009); no separate intake Reef.
 
 ### A source is declared before it sends
 
-A `MetricSource` is the metrics reef's first kind. It names the metric names a source may write, who may send as it, and how late it may be:
+A `MetricSource` is the metrics Reef's first kind. It names the metric names a source may write, who may send as it, and how late it may be:
 
 ```bash
 nereus metrics source create journeys \
@@ -62,8 +62,8 @@ nereus metrics send journeys --heartbeat
 - **The audit log** keeps one line per request: when, the principal, the source, the samples accepted and refused.
 - **The accepted window:** a timestamp no older than the source's `--max-age` (default 7 days, so a laptop off for a long weekend still drains its spool) and no later than 5 minutes ahead (a clock ahead is always an error).
 - **Limits, checked before parsing:** request body 1 MiB, after decompression too; line length; 1000 samples per request; 1000 series per source; 60 requests per minute per source. Each is a default the `MetricSource` may override. A refused sample is named in the answer with its reason; the rest of the batch is accepted.
-- **The metrics Nereid writes, the API does not.** The API validates and stamps, then hands the batch to the metrics reef's Nereid, over the cluster network and with a credential of its own (a NetworkPolicy alone is the weakness #784 corrects). Only the Nereid writes to its store; another store (Mimir, a cloud's managed Prometheus) is another Nereid of the same reef, with the route and the CLI unchanged.
-- **MCP:** the Nereus API's `/mcp` exposes `metrics_send`, a tool the reef declares (ADR 0029), which calls the same route as the person. The portal escapes every label value it shows.
+- **The metrics Nereid writes, the API does not.** The API validates and stamps, then hands the batch to the metrics Reef's Nereid, over the cluster network and with a credential of its own (a NetworkPolicy alone is the weakness #784 corrects). Only the Nereid writes to its store; another store (Mimir, a cloud's managed Prometheus) is another Nereid of the same Reef, with the route and the CLI unchanged.
+- **MCP:** the Nereus API's `/mcp` exposes `metrics_send`, a tool the Reef declares (ADR 0029), which calls the same route as the person. The portal escapes every label value it shows.
 
 ### OpenTelemetry: OTLP on the same route
 
@@ -178,7 +178,7 @@ A walking skeleton, the first data before the riskiest part (owner, 2026-11-14):
 ## Consequences
 
 - The decision metrics of the journeys work become the first source; a later move of the decisions from GitHub to the Nereus API changes their script, not the channel.
-- The Nereus API gains the metrics route, the machine sign-in and an audit log; the metrics reef gains its first kind, and `contracts.REEFS_WITHOUT_KINDS` loses `metrics`.
+- The Nereus API gains the metrics route, the machine sign-in and an audit log; the metrics Reef gains its first kind, and `contracts.REEFS_WITHOUT_KINDS` loses `metrics`.
 - The metrics Nereid gains a write endpoint reachable only from the API, with a credential.
 - Core gains `Machine`, and ADR 0006 points here for machines.
 - OWASP A01 (broken access control: a source writes only its prefix, a machine only its sources), A03 (injection: label values escaped where shown), A04 (insecure design: limits before parsing), A07 (identification and authentication failures: no shared secret, single-use assertions, short tokens) and A09 (logging failures: the audit log) are the categories this touches.

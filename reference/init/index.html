@@ -7285,7 +7285,7 @@
 </ul>
 <p>The kinds are templates, so every <code>helm upgrade</code> updates them; each is kept on <code>helm uninstall nereus-reefs</code>, with every object stored in it. <a href="../../guides/operate/helm/">Install with Helm</a> installs the same charts without <code>init</code>.</p>
 <h2 id="core">Core<a class="headerlink" href="#core" title="Permanent link">&para;</a></h2>
-<p>The two charts also hold the profile core (<a href="https://github.com/getnereus/nereus/issues/1052">#1052</a>): the tenancy reef's kinds and admission policy, the <code>Reef</code> tenancy and Nereus's own tree, the Organization <code>getnereus</code> with its Project <code>nereus</code> and four Projects under it.</p>
+<p>The two charts also hold the profile core (<a href="https://github.com/getnereus/nereus/issues/1052">#1052</a>): the tenancy Reef's kinds and admission policy, the <code>Reef</code> tenancy and Nereus's own tree, the Organization <code>getnereus</code> with its Project <code>nereus</code> and four Projects under it.</p>
 <p>All of it is kept on <code>helm uninstall</code>, since a person's own Projects hang from the tree (<a href="../../guides/access/tenancy/">Know whose each thing is</a>). On core alone, <a href="../../specs/cli/core.html#status"><code>nereus status</code></a> lists <code>core</code> and <code>tenancy</code>, both <code>Ready</code>.</p>
 <h2 id="the-values-file">The values file<a class="headerlink" href="#the-values-file" title="Permanent link">&para;</a></h2>
 <p><code>init</code> writes the values it passes to the chart <code>nereus</code> to <code>~/.config/nereus/values.yaml</code>, with the two <code>helm</code> commands that make the same install by hand in its header. <code>--dry-run</code> prints them and changes nothing.</p>
@@ -7317,9 +7317,9 @@ ingress:
 ✓ public key                0.0s  the profile is HelmRelease nereus's
 </code></pre></div>
 <h2 id="the-profile">The profile<a class="headerlink" href="#the-profile" title="Permanent link">&para;</a></h2>
-<p><code>init</code> runs no step of the profile itself. The value <code>profile</code> makes the chart run <a href="https://github.com/getnereus/nereus/tree/main/controllers/thetis">thetis</a>, the installer Nereid, which installs the profile's reefs, Nereids and Mandates in order (<a href="../profiles/">The profiles</a>).</p>
+<p><code>init</code> runs no step of the profile itself. The value <code>profile</code> makes the chart run <a href="https://github.com/getnereus/nereus/tree/main/controllers/thetis">thetis</a>, the installer Nereid, which installs the profile's Reefs, Nereids and Mandates in order (<a href="../profiles/">The profiles</a>).</p>
 <p>The step <code>ready</code> waits until each Nereid is Ready and prints how many and the slowest; each Nereid's time goes to the SLO report as a step of its own (<code>ready keycloak</code>).</p>
-<p>The step <code>public key</code> prints the fingerprint of the secrets reef's key.</p>
+<p>The step <code>public key</code> prints the fingerprint of the secrets Reef's key.</p>
 <h2 id="the-time">The time<a class="headerlink" href="#the-time" title="Permanent link">&para;</a></h2>
 <p>Each step prints its time, and the total ends the run, even on failure (<code>✗</code>, then the error). On a terminal the lines are drawn live; elsewhere (CI, a script, a redirect, <code>NO_COLOR</code>) they print as each step ends (<a href="https://github.com/getnereus/nereus/issues/379">#379</a>).</p>
 <p>The total is measured against the target's SLO (<a href="../../specs/0004-init-time-slo/">spec 0004</a>): green under 50%, yellow from 50%, orange from 75%, red past 100%. Missing it never stops <code>init</code>; <code>--check-slo</code> fails above it plus 10% (<a href="../../guides/operate/slo/">Meet the time SLO</a>).</p>

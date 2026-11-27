@@ -6,7 +6,7 @@ From the owner's session of 2026-11-23, part of journey #1816 (the Nereids' metr
 
 ## Intent
 
-The portal's home (#740, the status: one row per reef and Nereid) answers "is anything out of the expected?" well, but each row says little next to what the platform knows. The owner wants:
+The portal's home (#740, the status: one row per Reef and Nereid) answers "is anything out of the expected?" well, but each row says little next to what the platform knows. The owner wants:
 
 - the home to show more Nereids at once, and more about each, without losing the "problems first" reading;
 - a tap on a Nereid to open its own screen, with its metrics live, to understand how it is doing now.
@@ -19,7 +19,7 @@ The screens follow Material Design 3, as the portal does since #1838.
 - **The filter chips** (All, Attention, Ready) apply to both views. They carry no counts: the summary card already says them, and the row fits 340 px only without them.
 - **The detail screen** shows the four RED signals live, and the Nereid's pods: CPU and memory over time, pods ready over desired, restarts, requests and limits, the last restart's reason, and each pod.
 - **Pod data comes from the observability side, never from the Nereus API reading pods.** In the owner's words, reading pods would make the API do what belongs to observability. A second opinion (Fable) agreed: in Nereus the object is the Nereid (ADR 0002), the pod is an operation detail.
-- **kube-state-metrics enters the metrics reef, in a later slice,** limited to pods and deployments (no Secrets). Approved by the owner, after the cAdvisor slice.
+- **kube-state-metrics enters the metrics Reef, in a later slice,** limited to pods and deployments (no Secrets). Approved by the owner, after the cAdvisor slice.
 - **Out:** the domain events and the audit trail of the "observable and auditable Nereids" idea (`#pontos/raw/2026-11-19/0236-voice-idea-journey-observable-auditable-nereids.md`); no journey covers it yet, and it is not this one.
 
 ## Approaches considered
@@ -33,7 +33,7 @@ The screens follow Material Design 3, as the portal does since #1838.
 **Where the pods' data comes from.**
 
 - *A. The Nereus API reads the pods from the Kubernetes API:* no new component, current values only; gives the API new pod-read RBAC (a pod's spec exposes `env`) and a Nereid-to-pod mapping, and `lastState` vanishes when a pod is replaced. Refused by the owner.
-- *B. kube-state-metrics in the metrics reef, everything through MetricsQL:* one more component and a ClusterRole, history for the restart counter, the community's dashboards; the last terminated reason is only a gauge that also vanishes with its pod.
+- *B. kube-state-metrics in the metrics Reef, everything through MetricsQL:* one more component and a ClusterRole, history for the restart counter, the community's dashboards; the last terminated reason is only a gauge that also vanishes with its pod.
 - *C. cAdvisor first, then a minimal kube-state-metrics:* chosen. VictoriaMetrics already scrapes each kubelet's `/metrics/cadvisor` (`kubelet-cadvisor` in `controllers/victoriametrics/victoriametrics.py`), which already gives CPU, memory, the limits (`container_spec_memory_limit_bytes`, `container_spec_cpu_quota`), restarts with history (`changes(container_start_time_seconds)`) and OOM kills (`container_oom_events_total`). kube-state-metrics adds only the requests, ready over desired and the non-OOM restart reasons.
 
 ## The screens
@@ -69,7 +69,7 @@ The prototype is the reference for the look; the words below are the rules.
 - Problems first in both views: the list keeps today's "Needs attention" and "All good" sections; the grid puts the attention cards first, outlined in their state's colour (red Degraded, amber Progressing).
 - A rate below 0.1 passes/s reads per minute (`4.8/min`), else per second; the error ratio turns red above zero; p95 in ms below one second.
 - The sparkline is the rate of the last hour, coloured by the row's state.
-- Without the metrics reef (`signals: null`, #744), the rows keep today's form and one line says "no metrics: install the metrics reef"; the toggle and the chips stay.
+- Without the metrics Reef (`signals: null`, #744), the rows keep today's form and one line says "no metrics: install the metrics Reef"; the toggle and the chips stay.
 
 ### Detail
 
@@ -99,7 +99,7 @@ The prototype is the reference for the look; the words below are the rules.
 - The range is an M3 segmented button: 5m, 1h (default), 24h, 7d.
 - Pods: CPU and memory as numbers and charts; a meter of each against its limit, with a mark at the request; restarts in 24h; the queue depth; one line per pod with its node, age, restarts and the last restart's reason.
 - While the screen is visible, it refreshes on its own; the "Live" mark and the time of the last update sit in the bottom bar, never at the top centre (`docs/agent/decks.md`, screens on a phone).
-- With a value missing (no metrics reef, no kube-state-metrics yet), its card says what is missing in one line instead of a zero.
+- With a value missing (no metrics Reef, no kube-state-metrics yet), its card says what is missing in one line instead of a zero.
 
 ## The slices
 
@@ -107,12 +107,12 @@ Each slice is one sub-issue of #1816, shipped and shown before the next.
 
 1. **The home's signals, in both views** (#744, adjusted): the `signals` field of each row of `GET /v1/status` (its contract in #744), the list's RED line and sparkline, the grid view, the chips and the toggle. RED from `nereus_nereid_*` today; the queries move to `controller_runtime_*` when #1814 lands.
 2. **The detail screen, RED plus cAdvisor** (#2176): a new route of the Nereus API for one Nereid's series over a range, the screen, the pods' CPU, memory, limits, restarts and OOM kills from cAdvisor. Done when, in the scene, a Nereid given a low memory limit is OOM-killed and the screen shows the restart and the OOM.
-3. **kube-state-metrics in the metrics reef** (#2177, done): only `--resources=pods,deployments`, scraped by the VMAgent; the screen gains the requests, ready over desired and the last restart's reason.
-4. **A recommended request** (#2205): the Vertical Pod Autoscaler's recommender, released by the metrics reef, recommends a CPU and a memory request for each Nereid, never applied (`updateMode: "Off"`); `GET /v1/status/{reef}/{nereid}` adds `pods.cpu.recommendedCores` and `pods.memory.recommendedBytes`, and the detail shows "recommended" between the request and the limit, or that it takes about 24 h of metrics while there is none. The recommender keeps its history in the VPA's checkpoints (`--storage=checkpoint`, owner, 2026-11-25): a recommendation takes about 24 h after it starts and survives its restarts.
+3. **kube-state-metrics in the metrics Reef** (#2177, done): only `--resources=pods,deployments`, scraped by the VMAgent; the screen gains the requests, ready over desired and the last restart's reason.
+4. **A recommended request** (#2205): the Vertical Pod Autoscaler's recommender, released by the metrics Reef, recommends a CPU and a memory request for each Nereid, never applied (`updateMode: "Off"`); `GET /v1/status/{reef}/{nereid}` adds `pods.cpu.recommendedCores` and `pods.memory.recommendedBytes`, and the detail shows "recommended" between the request and the limit, or that it takes about 24 h of metrics while there is none. The recommender keeps its history in the VPA's checkpoints (`--storage=checkpoint`, owner, 2026-11-25): a recommendation takes about 24 h after it starts and survives its restarts.
 
-Slice 3's decisions (owner, 2026-11-24): the victoriametrics Nereid releases the upstream chart `kube-state-metrics` 9.1.0 (v2.20.0, pinned by digest) through the release reef, as it releases the operator, into the operator's namespace `metrics-system` (a second Target naming it: each Release installs with `createNamespace`). It reads only `nereus-system`, through a namespace-scoped Role there (`rbac.useClusterRole: false`: no ClusterRole, no Secrets, no ConfigMaps), and exposes only the five series the detail route reads (`metricAllowlist`). Its VMPodScrape keeps the series' own labels (`honorLabels: true`), so a pod series' `namespace` and `pod` join the Nereid's pods as cAdvisor's do. The restarts (per pod now, and their increase over 24h) and the last reason come from kube-state-metrics, cAdvisor's count and OOM kills only where it has no series; ready over desired is the Nereid's Deployment's, named after it. The Mandate's Ready and `query.url` depend on VictoriaMetrics alone: a kube-state-metrics Release that is not Ready is only logged, and its fields are null in the detail. The admission policy that pins a Nereid's objects now holds several objects of one kind (the operator's and kube-state-metrics's Release) with one rule.
+Slice 3's decisions (owner, 2026-11-24): the victoriametrics Nereid releases the upstream chart `kube-state-metrics` 9.1.0 (v2.20.0, pinned by digest) through the release Reef, as it releases the operator, into the operator's namespace `metrics-system` (a second Target naming it: each Release installs with `createNamespace`). It reads only `nereus-system`, through a namespace-scoped Role there (`rbac.useClusterRole: false`: no ClusterRole, no Secrets, no ConfigMaps), and exposes only the five series the detail route reads (`metricAllowlist`). Its VMPodScrape keeps the series' own labels (`honorLabels: true`), so a pod series' `namespace` and `pod` join the Nereid's pods as cAdvisor's do. The restarts (per pod now, and their increase over 24h) and the last reason come from kube-state-metrics, cAdvisor's count and OOM kills only where it has no series; ready over desired is the Nereid's Deployment's, named after it. The Mandate's Ready and `query.url` depend on VictoriaMetrics alone: a kube-state-metrics Release that is not Ready is only logged, and its fields are null in the detail. The admission policy that pins a Nereid's objects now holds several objects of one kind (the operator's and kube-state-metrics's Release) with one rule.
 
-The reefs' icons on the rows and cards are #1773's (each reef has its own icon); until then every row keeps the default icon. The desktop's richer charts are #1815's. Its slice 1 is built: from 1280 px the detail's six cards (the four RED signals, CPU and memory) draw Apache ECharts line charts with axes, a tooltip and an animated change of range, in a grid of three columns; ECharts 6.1.0's official simple build is vendored in the portal and loaded only on a desktop, as a script of the portal's own origin (the CSP is unchanged); below 1280 px, or when it fails to load, the cards keep the SVG charts. The desktop home is its slice 2.
+The Reefs' icons on the rows and cards are #1773's (each Reef has its own icon); until then every row keeps the default icon. The desktop's richer charts are #1815's. Its slice 1 is built: from 1280 px the detail's six cards (the four RED signals, CPU and memory) draw Apache ECharts line charts with axes, a tooltip and an animated change of range, in a grid of three columns; ECharts 6.1.0's official simple build is vendored in the portal and loaded only on a desktop, as a script of the portal's own origin (the CSP is unchanged); below 1280 px, or when it fails to load, the cards keep the SVG charts. The desktop home is its slice 2.
 
 Slice 2 of #1815 is built: from 1280 px the home is a list-detail split, the Nereids' list on the left (420 px, the selected row marked) and slice 1's detail on the right; a row swaps the right pane without leaving the home, and the URL still names the chosen Nereid (`#/nereids/<reef>/<nereid>/<range>`), so back, forward and a shared link open the split with it selected; with none chosen the pane shows the first Nereid needing attention, else the first row, which the URL does not name; below 1280 px the home and the detail's whole screen are as before.
 
@@ -130,10 +130,10 @@ From the builder check of this file; the owner may overturn any of them.
 
 - **The join holds over the whole range:** a Nereid's pods are replaced (a rollout, an OOM kill), so the join of cAdvisor to the Nereid runs inside the range query (`group_left` on `namespace, pod` against the Nereid's own scrape series over the same range), never as an instant lookup that would drop the older pods. The VMPodScrape keeps `namespace` and `pod` on every series it scrapes.
 - **What slice 2 shows per pod with cAdvisor only:** the node from the kubelet's series, the age from `container_start_time_seconds`, restarts from its changes, and as the last reason only `OOMKilled` (from `container_oom_events_total`); any other reason waits for slice 3. The queue depth needs `workqueue_depth`, so its card says what is missing until #1814 lands.
-- **A Nereid is named by its reef and its Nereid,** as the rows of `GET /v1/status` are; the detail route takes both. A row with no Nereid (a reef with only kinds) shows in both views with its state and no numbers, and opens no detail.
+- **A Nereid is named by its Reef and its Nereid,** as the rows of `GET /v1/status` are; the detail route takes both. A row with no Nereid (a Reef with only kinds) shows in both views with its state and no numbers, and opens no detail.
 - **No scoping by person:** the status of the instance's Nereids is the instance's, the same for everyone who may read `GET /v1/status` today; the queries take no tenant label.
 - **7d fits:** the VMSingle keeps 14 days.
-- **Missing values are per field:** when the metrics Mandate answers but one query fails, only that field is `null` and its card says so; `signals: null` stays for "no metrics reef or it does not answer".
+- **Missing values are per field:** when the metrics Mandate answers but one query fails, only that field is `null` and its card says so; `signals: null` stays for "no metrics Reef or it does not answer".
 
 ## Not in this design
 
@@ -146,5 +146,5 @@ From the builder check of this file; the owner may overturn any of them.
 
 - The exact MetricsQL queries and the step per range (🟠 in #1816's envelope: reported in a batch).
 - The detail route's path and payload, following the API's conventions.
-- The refresh interval of the detail screen, no faster than the metrics reef's scrape interval, 30s, set as the VMAgent's `scrapeInterval` (`controllers/victoriametrics`) from one value, the chart's `metrics.scrapeInterval` written into the metrics reef's default Mandate as the param `scrapeInterval`, and read by the API from that Mandate's `status.query.scrapeInterval` (default 30s) (#2187, #2199).
+- The refresh interval of the detail screen, no faster than the metrics Reef's scrape interval, 30s, set as the VMAgent's `scrapeInterval` (`controllers/victoriametrics`) from one value, the chart's `metrics.scrapeInterval` written into the metrics Reef's default Mandate as the param `scrapeInterval`, and read by the API from that Mandate's `status.query.scrapeInterval` (default 30s) (#2187, #2199).
 - The M3 tokens of the new components (segmented button, cards, meters), from the portal's `app.css`.

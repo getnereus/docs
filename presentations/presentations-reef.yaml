@@ -1,10 +1,10 @@
 deck:
   name: presentations-reef
-  title: "The presentations reef"
+  title: "The presentations Reef"
   subtitle: "The journey to present from the phone"
   accent: "from the phone"
   pt:
-    title: "O reef presentations"
+    title: "O Reef presentations"
     subtitle: "A jornada para apresentar pelo celular"
     accent: "pelo celular"
 
@@ -48,10 +48,10 @@ references:
     author: "The Claper project"
     url: "https://github.com/ClaperCo/Claper"
     about: "An open-source tool for live questions, polls and reactions during a talk, self-hosted."
-    forUs: "Evaluated in step E0, open source first: how it would fit as a Nereid of a separate **survey** reef, without bending Nereus's architecture."
+    forUs: "Evaluated in step E0, open source first: how it would fit as a Nereid of a separate **survey** Reef, without bending Nereus's architecture."
     pt:
       about: "Uma ferramenta open-source de perguntas, enquetes e reações ao vivo durante uma palestra, auto-hospedada."
-      forUs: "Avaliado na etapa E0, open source primeiro: como encaixaria como Nereid de um reef **survey** à parte, sem ferir a arquitetura do Nereus."
+      forUs: "Avaliado na etapa E0, open source primeiro: como encaixaria como Nereid de um Reef **survey** à parte, sem ferir a arquitetura do Nereus."
   - name: json-schema
     title: "JSON Schema"
     author: "The JSON Schema project"
@@ -148,7 +148,7 @@ slides:
       - "**Audience:** follows by QR code, anonymous, on its own phone"
       - "**Staff:** sees the pace and the questions waiting for the end"
     notes: |-
-      **One goal, four screens.** The {reef:presentations} reef is ready when a speaker imports a deck, starts a session and drives it from the phone, while the projector, the audience and the staff follow.
+      **One goal, four screens.** The {reef:presentations} Reef is ready when a speaker imports a deck, starts a session and drives it from the phone, while the projector, the audience and the staff follow.
 
       **Phone first:** every screen is designed for a phone, then checked on a computer.
     pt:
@@ -161,7 +161,7 @@ slides:
         - "**Plateia:** segue pelo QR code, anônima, no próprio celular"
         - "**Staff:** vê o ritmo e as perguntas que esperam o fim"
       notes: |-
-        **Uma meta, quatro telas.** O reef {reef:presentations} está pronto quando alguém importa um deck, inicia uma sessão e a conduz pelo celular, enquanto o projetor, a plateia e o staff acompanham.
+        **Uma meta, quatro telas.** O Reef {reef:presentations} está pronto quando alguém importa um deck, inicia uma sessão e a conduz pelo celular, enquanto o projetor, a plateia e o staff acompanham.
 
         **Celular primeiro:** cada tela é desenhada para o celular, depois conferida no computador.
 
@@ -174,9 +174,9 @@ slides:
       - "**Issues:** #218 and its children, recommendations only"
       - "**The owner's order:** present with a QR code, then questions at the end, then live"
     notes: |-
-      **The raw material was thin.** Only four voice notes carry weight; the main one is the note of 2026-11-01 about a presentation reef with its own Nereid.
+      **The raw material was thin.** Only four voice notes carry weight; the main one is the note of 2026-11-01 about a presentation Reef with its own Nereid.
 
-      **The issues held recommendations, never decisions** on the reef itself: #218 (refine the presentations reef) and its children #1194, #221, #305, #1196, #1197, #1195, #1199, #1201, #1202.
+      **The issues held recommendations, never decisions** on the Reef itself: #218 (refine the presentations Reef) and its children #1194, #221, #305, #1196, #1197, #1195, #1199, #1201, #1202.
 
       **The owner's own order:** build and present with a public link and a QR code, then questions at the end, then live questions, a word cloud and answers published as posts.
     pt:
@@ -187,9 +187,9 @@ slides:
         - "**Issues:** a #218 e as filhas, só recomendações"
         - "**A ordem do dono:** apresentar com QR code, depois perguntas no fim, depois ao vivo"
       notes: |-
-        **O material bruto era pouco.** Só quatro notas de voz têm peso; a principal é a nota de 2026-11-01 sobre um reef de apresentação com a sua própria Nereid.
+        **O material bruto era pouco.** Só quatro notas de voz têm peso; a principal é a nota de 2026-11-01 sobre um Reef de apresentação com a sua própria Nereid.
 
-        **As issues tinham recomendações, nunca decisões** sobre o reef em si: #218 (refinar o reef presentations) e as filhas #1194, #221, #305, #1196, #1197, #1195, #1199, #1201, #1202.
+        **As issues tinham recomendações, nunca decisões** sobre o Reef em si: #218 (refinar o Reef presentations) e as filhas #1194, #221, #305, #1196, #1197, #1195, #1199, #1201, #1202.
 
         **A ordem do próprio dono:** montar e apresentar com link público e QR code, depois perguntas no fim, depois perguntas ao vivo, nuvem de palavras e respostas publicadas em posts.
 
@@ -209,7 +209,7 @@ slides:
 
       **Event and Workshop come after the slice:** the event's name and venue live on the Session until then.
 
-      **Recorded in ADR 0028 (the presentations reef),** Accepted on 2026-11-16, after the owner tried J1.
+      **Recorded in ADR 0028 (the presentations Reef),** Accepted on 2026-11-16, after the owner tried J1.
     pt:
       topic: "Os kinds"
       message: "Dois kinds: o deck, e cada vez que ele é apresentado"
@@ -224,7 +224,7 @@ slides:
 
         **Event e Workshop vêm depois da fatia:** o nome e o local do evento ficam na Session até lá.
 
-        **Registrado no ADR 0028 (o reef presentations),** Accepted em 2026-11-16, depois que o dono testou a J1.
+        **Registrado no ADR 0028 (o Reef presentations),** Accepted em 2026-11-16, depois que o dono testou a J1.
 
   - name: source
     act: decisions
@@ -374,22 +374,22 @@ slides:
     accent: "an expiry"
     screen:
       - "**First slice:** a public link, with an optional expiry"
-      - "**Next:** specific Users, through the authorization reef"
+      - "**Next:** specific Users, through the authorization Reef"
     notes: |-
       **Sharing works like sharing a file.** The speaker makes a public link that anyone opens, with an expiry when wanted; a link from one deck to another is such a link.
 
-      **Specific Users come right after the slice,** as bindings of the {reef:authorization} reef.
+      **Specific Users come right after the slice,** as bindings of the {reef:authorization} Reef.
     pt:
       topic: "Compartilhar"
       message: "Um link público para o deck, com expiração"
       accent: "expiração"
       screen:
         - "**Primeira fatia:** um link público, com expiração opcional"
-        - "**Depois:** Users específicos, pelo reef de autorização"
+        - "**Depois:** Users específicos, pelo Reef de autorização"
       notes: |-
         **Compartilhar funciona como compartilhar um arquivo.** Quem apresenta gera um link público que qualquer pessoa abre, com expiração quando quiser; um link de um deck para outro é um link desses.
 
-        **Users específicos vêm logo depois da fatia,** como bindings do reef {reef:authorization}.
+        **Users específicos vêm logo depois da fatia,** como bindings do Reef {reef:authorization}.
 
   - name: session
     act: decisions
@@ -405,7 +405,7 @@ slides:
     notes: |-
       **Large events are tight on time and share the stage.** The Session records the event, the room or stage, the speakers and the time for the talk and for the questions.
 
-      **Only one speaker drives at a time.** The staff are Users the speaker names, with the staff role through the {reef:authorization} reef.
+      **Only one speaker drives at a time.** The staff are Users the speaker names, with the staff role through the {reef:authorization} Reef.
     pt:
       topic: "A Session"
       message: "Uma Session sabe onde, quando e com quem"
@@ -419,7 +419,7 @@ slides:
       notes: |-
         **Eventos grandes têm pouco tempo e dividem o palco.** A Session registra o evento, a sala ou o palco, os palestrantes e o tempo da apresentação e das perguntas.
 
-        **Só um palestrante conduz por vez.** O staff são Users que quem apresenta nomeia, com o papel de staff pelo reef {reef:authorization}.
+        **Só um palestrante conduz por vez.** O staff são Users que quem apresenta nomeia, com o papel de staff pelo Reef {reef:authorization}.
 
   - name: time
     act: decisions
@@ -459,7 +459,7 @@ slides:
       - "**nameOrigin:** a new field that explains every Nereid's name"
       - "**Reserved:** never given to an agent session"
     notes: |-
-      **One Nereid for the reef, Nereus's own code,** so it takes a sea name, as {nereid:doris}, {nereid:thetis} and {nereid:triton} do.
+      **One Nereid for the Reef, Nereus's own code,** so it takes a sea name, as {nereid:doris}, {nereid:thetis} and {nereid:triton} do.
 
       **The name explains itself in a new field, nameOrigin,** shown by the CLI and the portal. The field for every Nereid is its own issue; {nereid:leagore} is born with it. The name joins the reserved list, so no agent session gets it.
     pt:
@@ -471,7 +471,7 @@ slides:
         - "**nameOrigin:** um campo novo que explica o nome de cada Nereid"
         - "**Reservado:** nunca dado a uma sessão de agente"
       notes: |-
-        **Uma Nereid para o reef, código do próprio Nereus,** então leva um nome do mar, como {nereid:doris}, {nereid:thetis} e {nereid:triton}.
+        **Uma Nereid para o Reef, código do próprio Nereus,** então leva um nome do mar, como {nereid:doris}, {nereid:thetis} e {nereid:triton}.
 
         **O nome se explica num campo novo, nameOrigin,** mostrado pela CLI e pelo portal. O campo em todas as Nereids é uma issue à parte; a {nereid:leagore} já nasce com ele. O nome entra na lista de reservados, então nenhuma sessão de agente o recebe.
 
@@ -597,7 +597,7 @@ slides:
             ✓ presentations/sessions/platform-day created (revision sha256:3f9c2a71)
               follow: https://nereus.example.com/p/K7Q4
     notes: |-
-      **A contract, not built yet.** The staff is a team of the {reef:teams} reef, so no e-mail reaches a command, a log or the object; the same team serves every session of the event. The event, the room, the start and the speakers (by User name) take options of their own, left out here to fit the screen.
+      **A contract, not built yet.** The staff is a team of the {reef:teams} Reef, so no e-mail reaches a command, a log or the object; the same team serves every session of the event. The event, the room, the start and the speakers (by User name) take options of their own, left out here to fit the screen.
 
       **The follow link is public, with a short code;** the drive link needs the right to present.
     pt:
@@ -624,7 +624,7 @@ slides:
               ✓ presentations/sessions/platform-day created (revision sha256:3f9c2a71)
                 follow: https://nereus.example.com/p/K7Q4
       notes: |-
-        **Um contrato, ainda não construído.** O staff é um time do reef {reef:teams}, então nenhum e-mail chega a um comando, a um log ou ao objeto; o mesmo time serve a todas as sessões do evento. O evento, a sala, o início e os palestrantes (pelo nome do User) têm opções próprias, deixadas de fora para caber na tela.
+        **Um contrato, ainda não construído.** O staff é um time do Reef {reef:teams}, então nenhum e-mail chega a um comando, a um log ou ao objeto; o mesmo time serve a todas as sessões do evento. O evento, a sala, o início e os palestrantes (pelo nome do User) têm opções próprias, deixadas de fora para caber na tela.
 
         **O link de seguir é público, com código curto;** o de conduzir exige o direito de apresentar.
 
@@ -713,7 +713,7 @@ slides:
     screen:
       - "**First:** two spikes, SSE through the Nereus API and the renderer under the CSP"
       - "**Takes:** the ADR, minimal kinds, {nereid:leagore}, a short code, the follow page"
-      - "**Crude:** one YAML as a blob, only the talk time, any token of the reef drives"
+      - "**Crude:** one YAML as a blob, only the talk time, any token of the Reef drives"
       - "**Done when:** a phone drives, another phone and a full-screen browser follow"
     notes: |-
       **The skeleton proves the risky part first:** real time from a phone on a mobile network. It goes through the kind, the CLI, the Nereid, the database, SSE through the API, a route with no token, the portal under its policy and a public page.
@@ -728,7 +728,7 @@ slides:
       screen:
         - "**Primeiro:** dois spikes, SSE pela Nereus API e o renderizador sob o CSP"
         - "**Leva:** o ADR, kinds mínimos, {nereid:leagore}, um código curto, a página de seguir"
-        - "**Rústico:** um YAML como blob, só o tempo da palestra, qualquer token do reef conduz"
+        - "**Rústico:** um YAML como blob, só o tempo da palestra, qualquer token do Reef conduz"
         - "**Pronto quando:** um celular conduz, outro celular e um navegador em tela cheia seguem"
       notes: |-
         **O esqueleto prova primeiro a parte arriscada:** tempo real a partir de um celular numa rede móvel. Ele passa pelo kind, a CLI, a Nereid, o banco, SSE pela API, uma rota sem token, o portal sob a sua política e uma página pública.
@@ -779,7 +779,7 @@ slides:
     notes: |-
       **The owner's own order:** present first, then questions at the end, then live. J4 is done when a question asked on a phone reaches the speaker's; the export for agents comes here, once there is something to export.
 
-      **J5 opens with Claper,** where its answer changes something: if it fits, it becomes the Nereid of a separate survey reef. J5 is done when a question opens on the phones, its time runs and the result shows.
+      **J5 opens with Claper,** where its answer changes something: if it fits, it becomes the Nereid of a separate survey Reef. J5 is done when a question opens on the phones, its time runs and the result shows.
     pt:
       topic: "J4 e J5"
       message: "Primeiro a sala fala no fim, depois ao vivo"
@@ -790,7 +790,7 @@ slides:
       notes: |-
         **A ordem do próprio dono:** apresentar primeiro, depois perguntas no fim, depois ao vivo. A J4 fica pronta quando uma pergunta feita num celular chega ao de quem apresenta; o export para agentes entra aqui, quando já há o que exportar.
 
-        **A J5 abre com o Claper,** onde a resposta muda algo: se servir, vira a Nereid de um reef survey à parte. A J5 fica pronta quando uma pergunta abre nos celulares, o tempo corre e o resultado aparece.
+        **A J5 abre com o Claper,** onde a resposta muda algo: se servir, vira a Nereid de um Reef survey à parte. A J5 fica pronta quando uma pergunta abre nos celulares, o tempo corre e o resultado aparece.
 
   - name: j6
     act: slice
@@ -798,7 +798,7 @@ slides:
     message: "J6 adds the staff and the rights, then the final scene"
     accent: "the final scene"
     screen:
-      - "**Rights:** presenting and the staff role through the authorization reef"
+      - "**Rights:** presenting and the staff role through the authorization Reef"
       - "**Staff:** the pace, the thermometer and the queue of questions, from the phone"
       - "**Close:** the profile, the walkthrough, a scene with four browsers"
     notes: |-
@@ -810,7 +810,7 @@ slides:
       message: "A J6 traz o staff e os direitos, e a cena final"
       accent: "a cena final"
       screen:
-        - "**Direitos:** apresentar e o papel de staff pelo reef de autorização"
+        - "**Direitos:** apresentar e o papel de staff pelo Reef de autorização"
         - "**Staff:** o ritmo, o termômetro e a fila de perguntas, pelo celular"
         - "**Fechamento:** o profile, o walkthrough, uma cena com quatro navegadores"
       notes: |-
@@ -945,7 +945,7 @@ slides:
     screen:
       - "**Authoring:** Nereus builds and edits the deck with an agent (#219)"
       - "**Git:** an optional sync with a repository"
-      - "**Sharing:** OCI, signed by the signature reef"
+      - "**Sharing:** OCI, signed by the signature Reef"
       - "**Live:** a word cloud, voted and moderated questions (#305, #1197)"
       - "**Transcription:** the speaker's audio, live (#1195)"
       - "**Workshops:** steps, progress and prerequisites (#1199, #1201)"
@@ -961,7 +961,7 @@ slides:
       screen:
         - "**Autoria:** o Nereus monta e edita o deck com um agente (#219)"
         - "**Git:** uma sincronização opcional com um repositório"
-        - "**Compartilhar:** OCI, assinado pelo reef de assinatura"
+        - "**Compartilhar:** OCI, assinado pelo Reef de assinatura"
         - "**Ao vivo:** nuvem de palavras, perguntas votadas e moderadas (#305, #1197)"
         - "**Transcrição:** o áudio de quem apresenta, ao vivo (#1195)"
         - "**Workshops:** passos, progresso e pré-requisitos (#1199, #1201)"
@@ -974,26 +974,26 @@ slides:
 
   - name: new-reefs
     act: after
-    topic: "New reefs"
-    message: "Three reefs may be born from this journey"
-    accent: "Three reefs"
+    topic: "New Reefs"
+    message: "Three Reefs may be born from this journey"
+    accent: "Three Reefs"
     screen:
       - "**Signature (name to decide):** signs and verifies any artifact, cosign the first Nereid"
       - "**references:** sources cited by name, shared between decks"
       - "**survey:** questions and polls, if Claper fits in E0"
     notes: |-
-      **Each is a concept, never a tool.** The signature reef gathers what #670, #671, #672, #673, #1355 and #239 ask case by case; its name (signing, signature or another) is decided in its own refinement.
+      **Each is a concept, never a tool.** The signature Reef gathers what #670, #671, #672, #673, #1355 and #239 ask case by case; its name (signing, signature or another) is decided in its own refinement.
 
       **They are refinements of their own,** outside this journey.
     pt:
       topic: "Reefs novos"
-      message: "Três reefs podem nascer desta jornada"
-      accent: "Três reefs"
+      message: "Três Reefs podem nascer desta jornada"
+      accent: "Três Reefs"
       screen:
         - "**Assinatura (nome a decidir):** assina e verifica qualquer artefato, cosign a primeira Nereid"
         - "**references:** fontes citadas pelo nome, compartilhadas entre decks"
         - "**survey:** perguntas e enquetes, se o Claper encaixar na E0"
       notes: |-
-        **Cada um é um conceito, nunca uma ferramenta.** O reef de assinatura junta o que #670, #671, #672, #673, #1355 e #239 pedem caso a caso; o nome (signing, signature ou outro) é decidido no seu próprio refinamento.
+        **Cada um é um conceito, nunca uma ferramenta.** O Reef de assinatura junta o que #670, #671, #672, #673, #1355 e #239 pedem caso a caso; o nome (signing, signature ou outro) é decidido no seu próprio refinamento.
 
         **São refinamentos próprios,** fora desta jornada.

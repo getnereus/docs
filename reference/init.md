@@ -20,7 +20,7 @@ The kinds are templates, so every `helm upgrade` updates them; each is kept on `
 
 ## Core
 
-The two charts also hold the profile core ([#1052](https://github.com/getnereus/nereus/issues/1052)): the tenancy reef's kinds and admission policy, the `Reef` tenancy and Nereus's own tree, the Organization `getnereus` with its Project `nereus` and four Projects under it.
+The two charts also hold the profile core ([#1052](https://github.com/getnereus/nereus/issues/1052)): the tenancy Reef's kinds and admission policy, the `Reef` tenancy and Nereus's own tree, the Organization `getnereus` with its Project `nereus` and four Projects under it.
 
 All of it is kept on `helm uninstall`, since a person's own Projects hang from the tree ([Know whose each thing is](../guides/access/tenancy.md)). On core alone, [`nereus status`](../specs/cli/core.html#status) lists `core` and `tenancy`, both `Ready`.
 
@@ -67,11 +67,11 @@ Once Flux `HelmRelease`s in `nereus-system` hold the releases `nereus-reefs` and
 
 ## The profile
 
-`init` runs no step of the profile itself. The value `profile` makes the chart run [thetis](https://github.com/getnereus/nereus/tree/main/controllers/thetis), the installer Nereid, which installs the profile's reefs, Nereids and Mandates in order ([The profiles](profiles.md)).
+`init` runs no step of the profile itself. The value `profile` makes the chart run [thetis](https://github.com/getnereus/nereus/tree/main/controllers/thetis), the installer Nereid, which installs the profile's Reefs, Nereids and Mandates in order ([The profiles](profiles.md)).
 
 The step `ready` waits until each Nereid is Ready and prints how many and the slowest; each Nereid's time goes to the SLO report as a step of its own (`ready keycloak`).
 
-The step `public key` prints the fingerprint of the secrets reef's key.
+The step `public key` prints the fingerprint of the secrets Reef's key.
 
 ## The time
 

@@ -1,10 +1,10 @@
 deck:
   name: catalog
-  title: "The catalog reef"
+  title: "The catalog Reef"
   subtitle: "Every command that says what Nereus has: what runs, what is published, and whether it holds together"
   accent: "what Nereus has"
   pt:
-    title: "O reef catalog"
+    title: "O Reef catalog"
     subtitle: "Todos os comandos que dizem o que o Nereus tem: o que roda, o que é publicado e se tudo se sustenta"
     accent: "o que o Nereus tem"
 
@@ -40,17 +40,17 @@ slides:
   - name: cover
     act: opening
     cover: true
-    message: "The catalog reef"
+    message: "The catalog Reef"
     notes: |-
-      **The source of truth for the commands of the catalog reef** (#477, ADR 0016). The kinds and the commands are built, with real output (#902, the catalog reef's kinds and commands); `check` runs in the local checks (#903, `catalog check` and `make catalog-check`); and the `catalog` Nereid writes `status` (#904, the catalog Nereid writes status).
+      **The source of truth for the commands of the catalog Reef** (#477, ADR 0016). The kinds and the commands are built, with real output (#902, the catalog Reef's kinds and commands); `check` runs in the local checks (#903, `catalog check` and `make catalog-check`); and the `catalog` Nereid writes `status` (#904, the catalog Nereid writes status).
 
-      **The commands follow ADR 0013:** `nereus catalog <kind> <verb> <name>`, kinds singular, `workload` the reef's default kind, `--dry-run` everywhere, and output lines that name the object by its full path with the owner and the type in a parenthesis.
+      **The commands follow ADR 0013:** `nereus catalog <kind> <verb> <name>`, kinds singular, `workload` the Reef's default kind, `--dry-run` everywhere, and output lines that name the object by its full path with the owner and the type in a parenthesis.
     pt:
-      message: "O reef catalog"
+      message: "O Reef catalog"
       notes: |-
-        **A fonte da verdade dos comandos do reef catalog** (#477, ADR 0016). Os kinds e os comandos estão prontos, com a saída real (#902, os kinds e os comandos do reef catalog); o `check` roda nos checks locais (#903, `catalog check` e `make catalog-check`); e o Nereid `catalog` escreve o `status` (#904, o Nereid catalog escreve o status).
+        **A fonte da verdade dos comandos do Reef catalog** (#477, ADR 0016). Os kinds e os comandos estão prontos, com a saída real (#902, os kinds e os comandos do Reef catalog); o `check` roda nos checks locais (#903, `catalog check` e `make catalog-check`); e o Nereid `catalog` escreve o `status` (#904, o Nereid catalog escreve o status).
 
-        **Os comandos seguem o ADR 0013:** `nereus catalog <kind> <verbo> <nome>`, kinds no singular, `workload` o kind padrão do reef, `--dry-run` em todo lugar, e linhas de saída que nomeiam o objeto pelo caminho completo, com o owner e o type entre parênteses.
+        **Os comandos seguem o ADR 0013:** `nereus catalog <kind> <verbo> <nome>`, kinds no singular, `workload` o kind padrão do Reef, `--dry-run` em todo lugar, e linhas de saída que nomeiam o objeto pelo caminho completo, com o owner e o type entre parênteses.
 
   - name: kinds
     act: opening
@@ -197,13 +197,13 @@ slides:
           options: ["--output yaml"]
     dependsOn: [workload-apply]
     notes: |-
-      **`workload` is the default kind,** so `nereus catalog list` is `nereus catalog workload list`. `STATUS` is the `Ready` the `catalog` Nereid writes (#904), `-` while no Nereid has answered. A `DELIVERIES` column, read from the delivery reef and never written, comes with #845 (the delivery reef); what was deployed, one row per Workload and Environment pair, is [`delivery list`](delivery.html#delivery-list), and `nereus workload list` is [its own slide](delivery.html#workload-list).
+      **`workload` is the default kind,** so `nereus catalog list` is `nereus catalog workload list`. `STATUS` is the `Ready` the `catalog` Nereid writes (#904), `-` while no Nereid has answered. A `DELIVERIES` column, read from the delivery Reef and never written, comes with #845 (the delivery Reef); what was deployed, one row per Workload and Environment pair, is [`delivery list`](delivery.html#delivery-list), and `nereus workload list` is [its own slide](delivery.html#workload-list).
     pt:
       topic: "workload list"
       message: "O list busca por tipo"
       accent: "busca por tipo"
       notes: |-
-        **`workload` é o kind padrão,** então `nereus catalog list` é `nereus catalog workload list`. O `STATUS` é o `Ready` que o Nereid `catalog` escreve (#904), `-` enquanto nenhum Nereid respondeu. Uma coluna `DELIVERIES`, lida do reef delivery e nunca escrita, chega com o #845 (o reef delivery); o que foi implantado, uma linha por par Workload e Environment, é o [`delivery list`](delivery.html#delivery-list), e o `nereus workload list` tem [o slide dele](delivery.html#workload-list).
+        **`workload` é o kind padrão,** então `nereus catalog list` é `nereus catalog workload list`. O `STATUS` é o `Ready` que o Nereid `catalog` escreve (#904), `-` enquanto nenhum Nereid respondeu. Uma coluna `DELIVERIES`, lida do Reef delivery e nunca escrita, chega com o #845 (o Reef delivery); o que foi implantado, uma linha por par Workload e Environment, é o [`delivery list`](delivery.html#delivery-list), e o `nereus workload list` tem [o slide dele](delivery.html#workload-list).
 
   - name: workload-delete
     act: workload
@@ -309,7 +309,7 @@ slides:
             module   git, oci          Ready
             reef     git, oci          Ready
     notes: |-
-      **Types are files in `catalog/workload-types/` and `catalog/package-types/`:** a new kind of software is a new file, never a change to the reef or an ADR, as a StorageClass is a name plus the parameters its provisioner takes. Both kinds take `create`, `get` and `delete` like any other, and the group's `apply` takes their files; a type in use is not deleted, and the refusal names who uses it.
+      **Types are files in `catalog/workload-types/` and `catalog/package-types/`:** a new kind of software is a new file, never a change to the Reef or an ADR, as a StorageClass is a name plus the parameters its provisioner takes. Both kinds take `create`, `get` and `delete` like any other, and the group's `apply` takes their files; a type in use is not deleted, and the refusal names who uses it.
 
       **Only `runs` and `trigger` come from a type;** `audience` never does, since "who is this for?" is the one question no type can answer. `list` is alphabetical, like every list.
     pt:
@@ -317,7 +317,7 @@ slides:
       message: "Um tipo é um nome mais respostas"
       accent: "mais respostas"
       notes: |-
-        **Tipos são arquivos em `catalog/workload-types/` e `catalog/package-types/`:** um tipo novo de software é um arquivo novo, nunca uma mudança no reef ou um ADR, como uma StorageClass é um nome mais os parâmetros que seu provisioner aceita. Os dois kinds aceitam `create`, `get` e `delete` como qualquer outro, e o `apply` do grupo aceita os arquivos deles; um tipo em uso não é apagado, e a recusa nomeia quem o usa.
+        **Tipos são arquivos em `catalog/workload-types/` e `catalog/package-types/`:** um tipo novo de software é um arquivo novo, nunca uma mudança no Reef ou um ADR, como uma StorageClass é um nome mais os parâmetros que seu provisioner aceita. Os dois kinds aceitam `create`, `get` e `delete` como qualquer outro, e o `apply` do grupo aceita os arquivos deles; um tipo em uso não é apagado, e a recusa nomeia quem o usa.
 
         **Só `runs` e `trigger` vêm de um tipo;** `audience` nunca vem, pois "para quem é isto?" é a única pergunta que nenhum tipo responde. O `list` é alfabético, como todo list.
 
@@ -340,11 +340,11 @@ slides:
             ! catalog/workloads/triton: uses nats, no messaging reef (#576)
             ! catalog/packages/nereus: not found on pypi
             0 contradictions, 3 gaps
-        - comment: "The repository's files, in the local checks before a PR; the cluster needs only the tenancy reef"
+        - comment: "The repository's files, in the local checks before a PR; the cluster needs only the tenancy Reef"
           run: "make catalog-check"
     dependsOn: [workload-apply]
     notes: |-
-      **`check` is deterministic:** it joins each entry to the tenancy tree, the types, the registries and the reefs that fulfil it. With no flag it reads the entries in the cluster, so an owner orphaned by deleting its Project shows; `--from-file catalog/` reads the files, with a cluster that has the tenancy reef. A gap is where the catalog tells the truth and the platform cannot fulfil it yet; it prints `!` with its issue and the command passes, and it disappears once the cluster serves the reef. Only `pypi` is looked up: a lookup with no answer prints `pypi lookup did not run`, never a pass.
+      **`check` is deterministic:** it joins each entry to the tenancy tree, the types, the registries and the Reefs that fulfil it. With no flag it reads the entries in the cluster, so an owner orphaned by deleting its Project shows; `--from-file catalog/` reads the files, with a cluster that has the tenancy Reef. A gap is where the catalog tells the truth and the platform cannot fulfil it yet; it prints `!` with its issue and the command passes, and it disappears once the cluster serves the Reef. Only `pypi` is looked up: a lookup with no answer prints `pypi lookup did not run`, never a pass.
 
       **`make catalog-check` joins the local checks before a PR** that touches `catalog/`, `reefs/catalog/` or the tenancy, since CI is off. With no cluster it fails and says so.
     pt:
@@ -352,7 +352,7 @@ slides:
       message: "Contradição falha, lacuna só aponta"
       accent: "lacuna só aponta"
       notes: |-
-        **O `check` é determinístico:** ele junta cada entrada à árvore tenancy, aos tipos, aos registries e aos reefs que a cumprem. Sem flag, lê as entradas no cluster, então um owner órfão por ter o seu Project apagado aparece; `--from-file catalog/` lê os arquivos, com um cluster que tem o reef tenancy. Uma lacuna é onde o catálogo diz a verdade e a plataforma ainda não consegue cumprir; ela imprime `!` com a sua issue, o comando passa, e ela some quando o cluster serve o reef. Só o `pypi` é consultado: uma consulta sem resposta imprime `pypi lookup did not run`, nunca um sucesso.
+        **O `check` é determinístico:** ele junta cada entrada à árvore tenancy, aos tipos, aos registries e aos Reefs que a cumprem. Sem flag, lê as entradas no cluster, então um owner órfão por ter o seu Project apagado aparece; `--from-file catalog/` lê os arquivos, com um cluster que tem o Reef tenancy. Uma lacuna é onde o catálogo diz a verdade e a plataforma ainda não consegue cumprir; ela imprime `!` com a sua issue, o comando passa, e ela some quando o cluster serve o Reef. Só o `pypi` é consultado: uma consulta sem resposta imprime `pypi lookup did not run`, nunca um sucesso.
 
         **O `make catalog-check` entra nos checks locais antes de um PR** que toca em `catalog/`, `reefs/catalog/` ou na tenancy, já que a CI está desligada. Sem cluster, ele falha e diz o motivo.
 
@@ -397,7 +397,7 @@ slides:
       - "**[nereus template render](delivery.html#template-render):** the shortcut of `nereus catalog template render`, with Copier; `create` makes the `Template` object and `apply` takes only files"
       - "**[nereus catalog apply](#workload-apply):** registers what the rendered files say, and leaves what exists `unchanged`"
     notes: |-
-      **`Template` is a kind of the catalog** (ADR 0016), so its commands are the catalog's; the slide that shows `render` with its output lives in [the delivery deck](delivery.html#template-render) and is not repeated here. Creating the repository stays with #279 (the repository reef).
+      **`Template` is a kind of the catalog** (ADR 0016), so its commands are the catalog's; the slide that shows `render` with its output lives in [the delivery deck](delivery.html#template-render) and is not repeated here. Creating the repository stays with #279 (the repository Reef).
     pt:
       topic: "template"
       message: "O template escreve, o apply registra"
@@ -406,7 +406,7 @@ slides:
         - "**[nereus template render](delivery.html#template-render):** o atalho de `nereus catalog template render`, com o Copier; `create` faz o objeto `Template` e `apply` aceita só arquivos"
         - "**[nereus catalog apply](#workload-apply):** registra o que os arquivos escritos dizem, e deixa o que existe como `unchanged`"
       notes: |-
-        **`Template` é um kind do catálogo** (ADR 0016), então os comandos dele são os do catálogo; o slide que mostra o `render` com a sua saída vive no [deck delivery](delivery.html#template-render) e não é repetido aqui. Criar o repositório fica com o #279 (o reef repository).
+        **`Template` é um kind do catálogo** (ADR 0016), então os comandos dele são os do catálogo; o slide que mostra o `render` com a sua saída vive no [deck delivery](delivery.html#template-render) e não é repetido aqui. Criar o repositório fica com o #279 (o Reef repository).
 
   - name: credits
     act: references

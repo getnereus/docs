@@ -1,10 +1,10 @@
 deck:
   name: usage
-  title: "The usage reef"
+  title: "The usage Reef"
   subtitle: "Every command that reports a coding agent's quota window and shows where it is heading"
   accent: "where it is heading"
   pt:
-    title: "O reef usage"
+    title: "O Reef usage"
     subtitle: "Todos os comandos que informam a janela de cota de um agente de código e mostram para onde ela vai"
     accent: "para onde ela vai"
 
@@ -20,13 +20,13 @@ slides:
   - name: cover
     act: opening
     cover: true
-    message: "The usage reef"
+    message: "The usage Reef"
     notes: |-
-      **The source of truth for the commands of the usage reef** (#1586, the usage reef: a coding agent's quota as a reef). #1590 builds its first slice: the kind `UsageWindow`, the Nereus API's routes `/v1/usage/windows`, `nereus usage report | get | list | delete | apply`, the reference Nereid `reference-usage` and the Usage screen's header. The group is `usage.getnereus.dev/v1alpha1`, cluster-scoped. The figures are the owner's `claude-usage-forecast` and `claude-usage-plan`, ported to `usage_rules` so the API, the CLI and the screen compute them from one code.
+      **The source of truth for the commands of the usage Reef** (#1586, the usage Reef: a coding agent's quota as a Reef). #1590 builds its first slice: the kind `UsageWindow`, the Nereus API's routes `/v1/usage/windows`, `nereus usage report | get | list | delete | apply`, the reference Nereid `reference-usage` and the Usage screen's header. The group is `usage.getnereus.dev/v1alpha1`, cluster-scoped. The figures are the owner's `claude-usage-forecast` and `claude-usage-plan`, ported to `usage_rules` so the API, the CLI and the screen compute them from one code.
     pt:
-      message: "O reef usage"
+      message: "O Reef usage"
       notes: |-
-        **A fonte da verdade dos comandos do reef usage** (#1586, o reef usage: a cota de um agente de código como um reef). A #1590 constrói a primeira fatia: o kind `UsageWindow`, as rotas `/v1/usage/windows` da Nereus API, `nereus usage report | get | list | delete | apply`, o Nereid de referência `reference-usage` e o cabeçalho da tela Usage. O grupo é `usage.getnereus.dev/v1alpha1`, com escopo de cluster. Os números são os do `claude-usage-forecast` e do `claude-usage-plan` do dono, portados para o `usage_rules`, para a API, a CLI e a tela calcularem a partir do mesmo código.
+        **A fonte da verdade dos comandos do Reef usage** (#1586, o Reef usage: a cota de um agente de código como um Reef). A #1590 constrói a primeira fatia: o kind `UsageWindow`, as rotas `/v1/usage/windows` da Nereus API, `nereus usage report | get | list | delete | apply`, o Nereid de referência `reference-usage` e o cabeçalho da tela Usage. O grupo é `usage.getnereus.dev/v1alpha1`, com escopo de cluster. Os números são os do `claude-usage-forecast` e do `claude-usage-plan` do dono, portados para o `usage_rules`, para a API, a CLI e a tela calcularem a partir do mesmo código.
 
   - name: kinds
     act: opening

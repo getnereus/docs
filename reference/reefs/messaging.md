@@ -1,10 +1,10 @@
-# The messaging reef
+# The messaging Reef
 
-Every command of the messaging reef: topics and queues, the engine under the rooms reef.
+Every command of the messaging Reef: topics and queues, the engine under the rooms Reef.
 
 ## Commands
 
-- [`nereus reef apply messaging`](../../specs/cli/reefs/messaging.html#apply-reef) One command applies the messaging reef and its kinds
+- [`nereus reef apply messaging`](../../specs/cli/reefs/messaging.html#apply-reef) One command applies the messaging Reef and its kinds
 - [`nereus nereid apply nats`](../../specs/cli/reefs/messaging.html#apply-nats) [planned #1597] The nats Nereid looks after topics and queues
 - [`nereus messaging topic create orders`](../../specs/cli/reefs/messaging.html#topic-create) A topic carries each message to everyone who listens
 - [`nereus messaging topic get orders`](../../specs/cli/reefs/messaging.html#topic-get) One topic shows where to reach it, and delete removes it
@@ -17,7 +17,7 @@ Every command of the messaging reef: topics and queues, the engine under the roo
 
 ### apply-reef
 
-Apply the messaging reef.
+Apply the messaging Reef.
 
 ```bash
 nereus reef apply messaging
@@ -34,7 +34,7 @@ Next steps:
 
 ### apply-nats
 
-Apply the nats Nereid to the messaging reef.
+Apply the nats Nereid to the messaging Reef.
 
 ```bash
 nereus nereid apply nats \

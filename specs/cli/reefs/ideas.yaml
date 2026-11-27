@@ -1,10 +1,10 @@
 deck:
   name: ideas
-  title: "The ideas reef"
+  title: "The ideas Reef"
   subtitle: "The owner's classified notes, served inside the cluster for Tide"
   accent: "classified notes"
   pt:
-    title: "O reef ideas"
+    title: "O Reef ideas"
     subtitle: "As notas classificadas do dono, servidas dentro do cluster para o Tide"
     accent: "notas classificadas"
 
@@ -21,23 +21,23 @@ slides:
   - name: cover
     act: opening
     cover: true
-    message: "The ideas reef"
+    message: "The ideas Reef"
     notes: |-
-      **The ideas reef has no kinds** (#1106, part of #1102), like the portal reef: its Nereid, `doris`, reads the folder its Mandate's `source` names with the generator of #1104, keeps the notes in memory and reloads them every five minutes. The notes are the owner's private data: they never enter the repository.
+      **The ideas Reef has no kinds** (#1106, part of #1102), like the portal Reef: its Nereid, `doris`, reads the folder its Mandate's `source` names with the generator of #1104, keeps the notes in memory and reloads them every five minutes. The notes are the owner's private data: they never enter the repository.
     pt:
-      message: "O reef ideas"
+      message: "O Reef ideas"
       notes: |-
-        **O reef ideas não tem kinds** (#1106, parte do #1102), como o reef portal: a sua Nereid, `doris`, lê a pasta que o `source` do seu Mandate nomeia com o gerador do #1104, guarda as notas em memória e as recarrega a cada cinco minutos. As notas são dados privados do dono: nunca entram no repositório.
+        **O Reef ideas não tem kinds** (#1106, parte do #1102), como o Reef portal: a sua Nereid, `doris`, lê a pasta que o `source` do seu Mandate nomeia com o gerador do #1104, guarda as notas em memória e as recarrega a cada cinco minutos. As notas são dados privados do dono: nunca entram no repositório.
 
   - name: reef-apply
     act: setup
     topic: "reef apply"
     status: built
-    message: "The {reef:ideas} reef, with no kinds"
+    message: "The {reef:ideas} Reef, with no kinds"
     accent: "no kinds"
     terminal:
       steps:
-        - comment: "No contract to pin: a reef with no kinds is made from its name"
+        - comment: "No contract to pin: a Reef with no kinds is made from its name"
           run: "nereus reef apply ideas"
           output: |-
             ✓ core/reefs/ideas created (ideas.getnereus.dev/v1alpha1)
@@ -47,13 +47,13 @@ slides:
               nereus ideas --help
               nereus nereid apply <nereid> --reef ideas
     notes: |-
-      **The CLI pins it as a reef with no kinds by design** (`contracts.REEFS_WITHOUT_KINDS`), so its Nereid is Ready with no kinds to serve.
+      **The CLI pins it as a Reef with no kinds by design** (`contracts.REEFS_WITHOUT_KINDS`), so its Nereid is Ready with no kinds to serve.
     pt:
       topic: "reef apply"
-      message: "O reef {reef:ideas}, sem kinds"
+      message: "O Reef {reef:ideas}, sem kinds"
       accent: "sem kinds"
       notes: |-
-        **O CLI o fixa como um reef sem kinds por design** (`contracts.REEFS_WITHOUT_KINDS`), então a sua Nereid fica Ready sem kinds para servir.
+        **O CLI o fixa como um Reef sem kinds por design** (`contracts.REEFS_WITHOUT_KINDS`), então a sua Nereid fica Ready sem kinds para servir.
 
   - name: nereid-apply
     act: setup

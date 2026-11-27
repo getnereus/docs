@@ -7270,7 +7270,7 @@
 <p><strong>Status:</strong> Proposed (2026-11-11)</p>
 <p>From #914 (a push starts a build), with the owner's decisions of 2026-11-11 recorded on the issue.</p>
 <h2 id="the-answer">The answer<a class="headerlink" href="#the-answer" title="Permanent link">&para;</a></h2>
-<p>A <code>Trigger</code> of the build reef names a Workload (here <code>triton</code>, the Workload of <code>catalog/workloads/triton.yaml</code>, whose source is this repository). Its Nereid follows the scm reef's Mirror of that Workload's repository and, whenever the Mirror's <code>status.commit</code> changes, creates a Build of that commit. Each Nereid writes only its own reef's objects: the forgejo Nereid keeps the Mirror's commit, the buildkit Nereid creates the Builds.</p>
+<p>A <code>Trigger</code> of the build Reef names a Workload (here <code>triton</code>, the Workload of <code>catalog/workloads/triton.yaml</code>, whose source is this repository). Its Nereid follows the scm Reef's Mirror of that Workload's repository and, whenever the Mirror's <code>status.commit</code> changes, creates a Build of that commit. Each Nereid writes only its own Reef's objects: the forgejo Nereid keeps the Mirror's commit, the buildkit Nereid creates the Builds.</p>
 <div class="language-console highlight"><pre><span></span><code><span class="gp">$ </span>nereus<span class="w"> </span>scm<span class="w"> </span>mirror<span class="w"> </span>create<span class="w"> </span>nereus<span class="w"> </span>--from<span class="w"> </span>https://github.com/getnereus/nereus
 <span class="go">✓ scm/mirrors/nereus created (mandate forgejo)</span>
 
@@ -7293,9 +7293,9 @@
 </code></pre></div>
 <h2 id="decided-owner-2026-11-11">Decided (owner, 2026-11-11)<a class="headerlink" href="#decided-owner-2026-11-11" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>The build reef turns a commit into a Build</strong>, not the scm reef's webhook receiver: no Nereid writes another reef's objects.</li>
+<li><strong>The build Reef turns a commit into a Build</strong>, not the scm Reef's webhook receiver: no Nereid writes another Reef's objects.</li>
 <li><strong>Webhook or watching is the Mirror's choice.</strong> The forgejo Nereid already reads each Mirror's head on every pass (15 s), which is the watching mode; Forgejo's webhook, which shortens that by at most one pass, is a later slice (<code>nereus scm mirror create --webhook</code>). The build side is the same for both.</li>
-<li><strong>The opt-in is a kind of the build reef, <code>Trigger</code></strong>, not a field of the Workload: the catalog reef stays as it is, and deleting the Trigger stops it.</li>
+<li><strong>The opt-in is a kind of the build Reef, <code>Trigger</code></strong>, not a field of the Workload: the catalog Reef stays as it is, and deleting the Trigger stops it.</li>
 <li><strong>A new Trigger builds the commit the Mirror holds now</strong>, without waiting for the next one: its list shows a result at once.</li>
 <li><strong>A burst of pushes builds the last commit only:</strong> while a Build of the Trigger is not over (no phase yet, <code>Pending</code> or <code>Running</code>), nothing new starts, which bounds the builds, as spec 0009 asks.</li>
 <li><strong>Deleting a Trigger keeps its Builds:</strong> a Build is an image in the registry; the Trigger only automates them.</li>
@@ -7303,9 +7303,9 @@
 <h2 id="the-trigger-kind">The <code>Trigger</code> kind<a class="headerlink" href="#the-trigger-kind" title="Permanent link">&para;</a></h2>
 <p>Cluster-scoped, as a Build, a Workload and a Mirror are (<code>reefs/build/triggers.yaml</code>).</p>
 <ul>
-<li><code>spec.workload</code> (required, never changes): the Workload of the catalog reef it builds.</li>
+<li><code>spec.workload</code> (required, never changes): the Workload of the catalog Reef it builds.</li>
 <li><code>spec.owner</code> (an Organization or a Project): the owner of every Build it creates; absent, the Builds have none, as a Build created by hand.</li>
-<li><code>spec.mandate</code>: a build Mandate, so the Nereid that serves it and builds; absent, the reef's default.</li>
+<li><code>spec.mandate</code>: a build Mandate, so the Nereid that serves it and builds; absent, the Reef's default.</li>
 <li><code>status</code>: <code>nereid</code>, <code>mirror</code> (the Mirror it follows), <code>branch</code>, <code>commit</code> (the last commit it saw on the Mirror), <code>lastBuild</code> (the Build it created last) and the <code>Ready</code> condition.</li>
 </ul>
 <h2 id="what-the-nereid-does-on-each-pass">What the Nereid does on each pass<a class="headerlink" href="#what-the-nereid-does-on-each-pass" title="Permanent link">&para;</a></h2>
@@ -7321,7 +7321,7 @@
 <li>A Build with no phase yet counts as not over, as <code>Pending</code> does (step 4).</li>
 <li><code>status.commit</code> is the Mirror's commit the Trigger saw on its last pass, built or not yet.</li>
 <li>The cut name loses a trailing hyphen before <code>-&lt;commit&gt;</code>, so it never holds <code>--</code>.</li>
-<li>The Build carries the Trigger's <code>spec.mandate</code> only when it names one; with none, the Build names none either and gets the reef's default, as a Build created by hand.</li>
+<li>The Build carries the Trigger's <code>spec.mandate</code> only when it names one; with none, the Build names none either and gets the Reef's default, as a Build created by hand.</li>
 </ul>
 <p>A new Trigger builds the commit the Mirror holds when it is created. A Build it created is never deleted by it: deleting the Trigger leaves its Builds.</p>
 <h2 id="security-owasp">Security (OWASP)<a class="headerlink" href="#security-owasp" title="Permanent link">&para;</a></h2>

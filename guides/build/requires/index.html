@@ -2644,7 +2644,7 @@
   <a href="#1-create-the-reef" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Create the reef
+        1. Create the Reef
       
     </span>
   </a>
@@ -2655,7 +2655,7 @@
   <a href="#2-apply-the-nereid-that-requires-a-reef" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Apply the Nereid that requires a reef
+        2. Apply the Nereid that requires a Reef
       
     </span>
   </a>
@@ -7178,7 +7178,7 @@
   <a href="#1-create-the-reef" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Create the reef
+        1. Create the Reef
       
     </span>
   </a>
@@ -7189,7 +7189,7 @@
   <a href="#2-apply-the-nereid-that-requires-a-reef" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Apply the Nereid that requires a reef
+        2. Apply the Nereid that requires a Reef
       
     </span>
   </a>
@@ -7265,26 +7265,26 @@
   
 
 
-<h1 id="require-a-reef">Require a reef<a class="headerlink" href="#require-a-reef" title="Permanent link">&para;</a></h1>
-<p>Make a Nereid require another reef through a label of its image: the CLI refuses to apply it until that reef has a Nereid, and refuses to delete that reef's last Nereid while it is needed.</p>
-<p>A Nereid requires reefs, never Nereids (<a href="../../../specs/0003-nereid-conformance/">spec 0003</a>): any Nereid of the reef will do.</p>
+<h1 id="require-a-reef">Require a Reef<a class="headerlink" href="#require-a-reef" title="Permanent link">&para;</a></h1>
+<p>Make a Nereid require another Reef through a label of its image: the CLI refuses to apply it until that Reef has a Nereid, and refuses to delete that Reef's last Nereid while it is needed.</p>
+<p>A Nereid requires Reefs, never Nereids (<a href="../../../specs/0003-nereid-conformance/">spec 0003</a>): any Nereid of the Reef will do.</p>
 <h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">&para;</a></h2>
 <ul>
-<li>The <code>release</code> reef with its Nereid <code>reference-release</code>, from <a href="../image/">Build a Nereid's image</a>.</li>
-<li>An image whose label <code>core.getnereus.dev/requires</code> lists the reefs it needs, comma-separated. Build the reference Nereid as a Nereid of a <code>docs</code> reef that requires <code>release</code>: <code>docker build --build-arg API_GROUP=core.getnereus.dev --build-arg REEF=docs --build-arg REQUIRES=release --tag localhost:5111/reference-docs-controller:0.1.0 controllers/reference</code>, then <code>docker push</code> it.</li>
+<li>The <code>release</code> Reef with its Nereid <code>reference-release</code>, from <a href="../image/">Build a Nereid's image</a>.</li>
+<li>An image whose label <code>core.getnereus.dev/requires</code> lists the Reefs it needs, comma-separated. Build the reference Nereid as a Nereid of a <code>docs</code> Reef that requires <code>release</code>: <code>docker build --build-arg API_GROUP=core.getnereus.dev --build-arg REEF=docs --build-arg REQUIRES=release --tag localhost:5111/reference-docs-controller:0.1.0 controllers/reference</code>, then <code>docker push</code> it.</li>
 </ul>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
-<h3 id="1-create-the-reef">1. Create the reef<a class="headerlink" href="#1-create-the-reef" title="Permanent link">&para;</a></h3>
-<p><a href="../../../specs/cli/core.html#reef-create"><code>nereus reef create</code></a> adds the <code>docs</code> reef the new Nereid looks after.</p>
+<h3 id="1-create-the-reef">1. Create the Reef<a class="headerlink" href="#1-create-the-reef" title="Permanent link">&para;</a></h3>
+<p><a href="../../../specs/cli/core.html#reef-create"><code>nereus reef create</code></a> adds the <code>docs</code> Reef the new Nereid looks after.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>reef<span class="w"> </span>create<span class="w"> </span>docs
 </code></pre></div>
-<h3 id="2-apply-the-nereid-that-requires-a-reef">2. Apply the Nereid that requires a reef<a class="headerlink" href="#2-apply-the-nereid-that-requires-a-reef" title="Permanent link">&para;</a></h3>
+<h3 id="2-apply-the-nereid-that-requires-a-reef">2. Apply the Nereid that requires a Reef<a class="headerlink" href="#2-apply-the-nereid-that-requires-a-reef" title="Permanent link">&para;</a></h3>
 <p><a href="../../../specs/cli/core.html#nereid-apply"><code>nereus nereid apply</code></a> reads <code>requires</code> from the image's labels and records it in the Nereid's <code>spec.requires</code>.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>nereid<span class="w"> </span>apply<span class="w"> </span>reference-docs<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--reef<span class="w"> </span>docs<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--image<span class="w"> </span>localhost:5111/reference-docs-controller:0.1.0
 </code></pre></div>
-<p><code>release</code> has a Nereid, so the apply goes ahead. Without one, it is refused before anything runs, with <code>reference-docs requires reefs with no Nereid: release.</code> and the command that applies one. When the required reef's Nereid is there but not <code>Ready</code>, the apply warns and goes ahead.</p>
+<p><code>release</code> has a Nereid, so the apply goes ahead. Without one, it is refused before anything runs, with <code>reference-docs requires reefs with no Nereid: release.</code> and the command that applies one. When the required Reef's Nereid is there but not <code>Ready</code>, the apply warns and goes ahead.</p>
 <h2 id="check-it-worked">Check it worked<a class="headerlink" href="#check-it-worked" title="Permanent link">&para;</a></h2>
 <p><a href="../../../specs/cli/core.html#nereid-list"><code>nereus nereid list</code></a> shows both Nereids <code>Ready</code>: <code>reference-docs</code> on <code>docs</code>, <code>reference-release</code> on <code>release</code>.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>nereid<span class="w"> </span>list
@@ -7296,7 +7296,7 @@
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>✗ reference-release is the last Nereid of reef release, which added Nereids require: reference-docs.
   Remove them first, or go ahead with: nereus nereid delete reference-release --force
 </code></pre></div>
-<p>Delete <code>reference-docs</code> first, then the <code>docs</code> reef with <a href="../../../specs/cli/core.html#reef-delete"><code>nereus reef delete</code></a>; <code>reference-release</code> stays:</p>
+<p>Delete <code>reference-docs</code> first, then the <code>docs</code> Reef with <a href="../../../specs/cli/core.html#reef-delete"><code>nereus reef delete</code></a>; <code>reference-release</code> stays:</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>nereid<span class="w"> </span>delete<span class="w"> </span>reference-docs
 </code></pre></div>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>reef<span class="w"> </span>delete<span class="w"> </span>docs
@@ -7304,7 +7304,7 @@
 <h2 id="next">Next<a class="headerlink" href="#next" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../conformance/">Pass the conformance tests</a>.</li>
-<li><a href="../../troubleshoot/nereid-stops/">When the Nereid stops</a>: what a required reef's Nereid does to its commands.</li>
+<li><a href="../../troubleshoot/nereid-stops/">When the Nereid stops</a>: what a required Reef's Nereid does to its commands.</li>
 </ul>
 <h2 id="learn-more">Learn more<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <ul>

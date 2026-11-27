@@ -17,7 +17,7 @@ It prints the settings table, then one line per step with its time: the prerequi
 ## What you get
 
 - A k3d cluster `nereus`, its local registry on `localhost:5111`, and your kube context pointing at it.
-- Core: the kinds of the [model](../concepts/model.md), the [Nereus API](../concepts/nereus-api.md) and the tenancy reef; no Nereid yet.
+- Core: the kinds of the [model](../concepts/model.md), the [Nereus API](../concepts/nereus-api.md) and the tenancy Reef; no Nereid yet.
 - The installation's identity: its name and a random id, which the first `init` also writes into the settings file, so a cluster recreated from it is the same installation.
 - `~/.config/nereus/values.yaml`: the values `init` passed to Helm, to run the same install by hand.
 - The total time, measured against the SLO: 8 minutes on k3d.

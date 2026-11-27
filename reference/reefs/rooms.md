@@ -1,10 +1,10 @@
-# The rooms reef
+# The rooms Reef
 
-Every command of the rooms reef: rooms, peers and the agents' sessions, on a Topic of the messaging reef.
+Every command of the rooms Reef: rooms, peers and the agents' sessions, on a Topic of the messaging Reef.
 
 ## Commands
 
-- [`nereus reef apply rooms`](../../specs/cli/reefs/rooms.html#apply-reef) One command applies the rooms reef and its kinds
+- [`nereus reef apply rooms`](../../specs/cli/reefs/rooms.html#apply-reef) One command applies the rooms Reef and its kinds
 - [`nereus nereid apply triton`](../../specs/cli/reefs/rooms.html#apply-triton) The triton Nereid looks after rooms and peers
 - [`nereus rooms create ops`](../../specs/cli/reefs/rooms.html#room-create) A room is created by name, and its Topic comes with it
 - [`nereus rooms list`](../../specs/cli/reefs/rooms.html#room-list) One room shows whose it is and the peers in it
@@ -25,7 +25,7 @@ Every command of the rooms reef: rooms, peers and the agents' sessions, on a Top
 
 ### apply-reef
 
-Apply the rooms reef.
+Apply the rooms Reef.
 
 ```bash
 nereus reef apply rooms
@@ -42,7 +42,7 @@ Next steps:
 
 ### apply-triton
 
-Apply the triton Nereid to the rooms reef.
+Apply the triton Nereid to the rooms Reef.
 
 ```bash
 nereus nereid apply triton \
@@ -77,7 +77,7 @@ Next steps:
 
 ### room-list
 
-The rooms of the reef.
+The rooms of the Reef.
 
 ```bash
 nereus rooms list
@@ -132,7 +132,7 @@ Next steps:
 
 ### peer-list
 
-The peers of the reef.
+The peers of the Reef.
 
 ```bash
 nereus rooms peer list

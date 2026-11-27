@@ -7178,17 +7178,17 @@
   
 
 
-<h1 id="0020-the-delivery-reef-a-delivery-takes-a-workload-to-an-environment">0020. The delivery reef: a Delivery takes a Workload to an Environment<a class="headerlink" href="#0020-the-delivery-reef-a-delivery-takes-a-workload-to-an-environment" title="Permanent link">&para;</a></h1>
+<h1 id="0020-the-delivery-reef-a-delivery-takes-a-workload-to-an-environment">0020. The delivery Reef: a Delivery takes a Workload to an Environment<a class="headerlink" href="#0020-the-delivery-reef-a-delivery-takes-a-workload-to-an-environment" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
 <p class="admonition-title">In short</p>
-<p>A <code>delivery</code> reef with one kind, <code>Delivery</code>, takes a Workload to an Environment; the Nereid, never the client, resolves an image tag to a digest. Status: Proposed (2026-11-03).</p>
+<p>A <code>delivery</code> Reef with one kind, <code>Delivery</code>, takes a Workload to an Environment; the Nereid, never the client, resolves an image tag to a digest. Status: Proposed (2026-11-03).</p>
 </div>
 <p><strong>Status:</strong> Proposed (2026-11-03)</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
 <p><code>make scene-golden-path</code> (PR #836) took a developer's image to a namespace with today's commands and listed what hurts: nothing says what runs (gap 8), changing a tag takes three steps (gap 9), and a re-pushed tag is not pulled (gap 10). #835 (the delivery model of the internal-developer-platform profile) refined the path from that list, and the owner settled it on 2026-11-02.</p>
-<p>The catalog (ADR 0016) says what exists, the release reef (ADR 0010) runs a chart in a Target, the environment reef says where. Nothing joins them: one Workload runs in several Environments, and a developer should not write a <code>Repository</code>, a <code>Source</code>, a <code>Target</code> and a <code>Release</code> to run an image.</p>
+<p>The catalog (ADR 0016) says what exists, the release Reef (ADR 0010) runs a chart in a Target, the environment Reef says where. Nothing joins them: one Workload runs in several Environments, and a developer should not write a <code>Repository</code>, a <code>Source</code>, a <code>Target</code> and a <code>Release</code> to run an image.</p>
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
-<p><strong>A <code>delivery</code> reef, <code>delivery.getnereus.dev/v1alpha1</code>, with one kind, <code>Delivery</code>, its default kind: one per Workload and Environment pair, cluster-scoped.</strong> The pair lives in <code>spec</code>. <code>status</code> says what runs.</p>
+<p><strong>A <code>delivery</code> Reef, <code>delivery.getnereus.dev/v1alpha1</code>, with one kind, <code>Delivery</code>, its default kind: one per Workload and Environment pair, cluster-scoped.</strong> The pair lives in <code>spec</code>. <code>status</code> says what runs.</p>
 <div class="language-yaml highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">delivery.getnereus.dev/v1alpha1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Delivery</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -7215,7 +7215,7 @@
 <li><strong>A digest stays as it is:</strong> an image given as <code>hello@sha256:...</code> is not resolved. The <code>Release</code> always carries the digest, so <code>imagePullPolicy: IfNotPresent</code> is no longer a trap.</li>
 <li><strong>What this costs:</strong> <code>--dry-run</code> shows the tag, not the digest, and a tag that does not exist fails after <code>deploy</code> printed <code>created</code> or <code>configured</code>, with the reason in <code>status</code>. <code>--wait</code> brings that reason to the terminal.</li>
 </ul>
-<p><strong>The Nereid writes the release reef's objects.</strong> It writes a <code>Release</code> with the curated chart <code>app-template</code>, or the chart the Workload names in <code>spec.chart</code> (ADR 0016), and the <code>Source</code> and the <code>Target</code> that <code>Release</code> needs, so a developer configures nothing of the release reef. The namespace is the Delivery's name. The <code>keycloak</code> and <code>vcluster</code> Nereids already write their own <code>Release</code>. The <code>flux</code> Nereid still does the installing, with #828 (a Release reaches its Target's Environment) taking it into the Environment.</p>
+<p><strong>The Nereid writes the release Reef's objects.</strong> It writes a <code>Release</code> with the curated chart <code>app-template</code>, or the chart the Workload names in <code>spec.chart</code> (ADR 0016), and the <code>Source</code> and the <code>Target</code> that <code>Release</code> needs, so a developer configures nothing of the release Reef. The namespace is the Delivery's name. The <code>keycloak</code> and <code>vcluster</code> Nereids already write their own <code>Release</code>. The <code>flux</code> Nereid still does the installing, with #828 (a Release reaches its Target's Environment) taking it into the Environment.</p>
 <p><strong>The port comes from the image's <code>ExposedPorts</code>, overridden in the Workload,</strong> with a clear error when both lack it. Secrets, databases and health checks go in the Workload; Score waits.</p>
 <p><strong>One Nereid per platform it delivers to, with no new noun.</strong> The kind <code>Target</code> and <code>init --target</code> already use the other word. The first Nereid is <code>kubernetes</code>: it delivers to a Kubernetes Environment through <code>Release</code>. A destination that is not Kubernetes is another Nereid, behind another Mandate, with the same <code>nereus workload deploy</code> and no <code>Release</code>.</p>
 <p><strong>A Delivery's name is generated once and never changes:</strong> <code>&lt;workload&gt;-&lt;environment&gt;</code>. When that name belongs to another pair (<code>hello</code> in <code>dev-x</code> and <code>hello-dev</code> in <code>x</code>), it takes a short suffix from the hash of the pair (<code>hello-dev-x-3f9a</code>); the same hash shortens a name that is too long. The limit is 53 characters, a Helm release's, since the Release takes the Delivery's name; the CRD checks it with CEL.</p>
@@ -7284,14 +7284,14 @@
 <li>One command takes an image to an Environment and one row says what runs: gaps 8, 9 and 10 of PR #836 close with #845.</li>
 <li>The catalog stays a reader (ADR 0016): <code>nereus workload list</code> only counts Deliveries, and the running image lives in the Delivery's <code>status</code>.</li>
 <li>A <code>Delivery</code> applied from a file with a tag resolves once, and applying the same file again prints <code>unchanged</code>. Moving to a re-pushed tag takes <code>nereus workload deploy</code> or a new <code>spec.requestedAt</code>.</li>
-<li><strong>Security (OWASP A10, server-side request forgery):</strong> the Nereid contacts a registry a person named, with the platform's credential; #845 validates the reference and sends that credential only to the registry it belongs to. Authorization is by <code>owner</code> for now, then the authorization reef.</li>
+<li><strong>Security (OWASP A10, server-side request forgery):</strong> the Nereid contacts a registry a person named, with the platform's credential; #845 validates the reference and sends that credential only to the registry it belongs to. Authorization is by <code>owner</code> for now, then the authorization Reef.</li>
 </ul>
 <h2 id="open-questions">Open questions<a class="headerlink" href="#open-questions" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Rollback:</strong> <code>status.previousDigest</code> is the only record; no command uses it yet.</li>
 <li><strong>History of a Delivery:</strong> whether more than one previous digest is kept, and where.</li>
 <li><strong>Update channels:</strong> an idea, not designed.</li>
-<li><strong>Which registries a Delivery may name:</strong> a list per Organization or Project is a candidate for when the authorization reef exists.</li>
+<li><strong>Which registries a Delivery may name:</strong> a list per Organization or Project is a candidate for when the authorization Reef exists.</li>
 </ul>
 <p><em>Origin: the owner's decisions of 2026-11-02 in the review of #835 (the delivery model of the internal-developer-platform profile), and of 2026-11-03 in the design of #843 (this ADR): <code>nereus delivery list</code> apart from <code>nereus workload list</code>, the Nereid <code>kubernetes</code> and what it writes, and the Nereid resolving the digest. Raw data in Drive <code>#pontos/raw/2026-11-02/</code> and <code>#pontos/raw/2026-11-03/</code>.</em></p>
 

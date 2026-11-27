@@ -7266,15 +7266,15 @@
 
 
 <h1 id="pass-the-conformance-tests">Pass the conformance tests<a class="headerlink" href="#pass-the-conformance-tests" title="Permanent link">&para;</a></h1>
-<p>Prove that a Nereid serves every verb of every kind of its reef, with the status its contract declares, before anyone else relies on it.</p>
+<p>Prove that a Nereid serves every verb of every kind of its Reef, with the status its contract declares, before anyone else relies on it.</p>
 <h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">&para;</a></h2>
 <ul>
 <li>A throwaway k3d cluster, never the kept cluster <code>k3d-nereus</code>: the check creates and deletes objects, and refuses any other context.</li>
-<li>The Nereid applied and <code>Ready</code> (<a href="../image/">Build a Nereid's image</a>), and named by the reef's default Mandate.</li>
+<li>The Nereid applied and <code>Ready</code> (<a href="../image/">Build a Nereid's image</a>), and named by the Reef's default Mandate.</li>
 </ul>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
 <h3 id="1-ship-a-sample-per-kind">1. Ship a sample per kind<a class="headerlink" href="#1-ship-a-sample-per-kind" title="Permanent link">&para;</a></h3>
-<p>Each kind of the reef has a sample in its contract, <code>cli/src/nereus/interfaces/&lt;reef&gt;/samples/&lt;kind&gt;.yaml</code>: the objects the kind needs first, the object as created, then the same object with a change to its spec. The <code>release</code> reef ships <code>release.yaml</code>, <code>repository.yaml</code>, <code>source.yaml</code> and <code>target.yaml</code>.</p>
+<p>Each kind of the Reef has a sample in its contract, <code>cli/src/nereus/interfaces/&lt;reef&gt;/samples/&lt;kind&gt;.yaml</code>: the objects the kind needs first, the object as created, then the same object with a change to its spec. The <code>release</code> Reef ships <code>release.yaml</code>, <code>repository.yaml</code>, <code>source.yaml</code> and <code>target.yaml</code>.</p>
 <h3 id="2-write-the-status-the-contract-declares">2. Write the status the contract declares<a class="headerlink" href="#2-write-the-status-the-contract-declares" title="Permanent link">&para;</a></h3>
 <p>Every object the Nereid answers gets a <code>Ready</code> condition whose reason the contract declares, <code>status.observedGeneration</code>, and the finalizer <code>&lt;reef&gt;.getnereus.dev/cleanup</code>, removed only once what it made is gone. A kind the Nereid does nothing with still answers, with the reason <code>NotApplicable</code>.</p>
 <h3 id="3-run-the-check">3. Run the check<a class="headerlink" href="#3-run-the-check" title="Permanent link">&para;</a></h3>
@@ -7290,7 +7290,7 @@
 <h2 id="next">Next<a class="headerlink" href="#next" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../troubleshoot/see-what-happened/">See what happened</a> when a step of the check fails.</li>
-<li><a href="../requires/">Require a reef</a>.</li>
+<li><a href="../requires/">Require a Reef</a>.</li>
 </ul>
 <h2 id="learn-more">Learn more<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <ul>

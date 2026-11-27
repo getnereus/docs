@@ -7227,10 +7227,10 @@
   
 
 
-<h1 id="inside-the-metrics-reef">Inside the metrics reef<a class="headerlink" href="#inside-the-metrics-reef" title="Permanent link">&para;</a></h1>
-<p>What the Nereid <code>victoriametrics</code> of the metrics reef installs to keep the platform's metrics in <a href="https://docs.victoriametrics.com/">VictoriaMetrics</a> (Apache-2.0) (<a href="https://github.com/getnereus/nereus/issues/742">#742</a>). The queries are in <a href="../../guides/reefs/metrics/">Collect metrics</a>.</p>
+<h1 id="inside-the-metrics-reef">Inside the metrics Reef<a class="headerlink" href="#inside-the-metrics-reef" title="Permanent link">&para;</a></h1>
+<p>What the Nereid <code>victoriametrics</code> of the metrics Reef installs to keep the platform's metrics in <a href="https://docs.victoriametrics.com/">VictoriaMetrics</a> (Apache-2.0) (<a href="https://github.com/getnereus/nereus/issues/742">#742</a>). The queries are in <a href="../../guides/reefs/metrics/">Collect metrics</a>.</p>
 <h2 id="the-operator">The operator<a class="headerlink" href="#the-operator" title="Permanent link">&para;</a></h2>
-<p>The Nereid asks the release reef for the <a href="https://docs.victoriametrics.com/operator/">VictoriaMetrics operator</a> (chart <code>victoria-metrics-operator</code> 0.68.1, operator v0.75.0, pinned by digest), released by the flux Mandate into the namespace <code>metrics-system</code>.</p>
+<p>The Nereid asks the release Reef for the <a href="https://docs.victoriametrics.com/operator/">VictoriaMetrics operator</a> (chart <code>victoria-metrics-operator</code> 0.68.1, operator v0.75.0, pinned by digest), released by the flux Mandate into the namespace <code>metrics-system</code>.</p>
 <p>The operator turns a few Kubernetes kinds into running VictoriaMetrics components, as CloudNativePG turns a <code>Cluster</code> into PostgreSQL.</p>
 <h2 id="vmsingle">VMSingle<a class="headerlink" href="#vmsingle" title="Permanent link">&para;</a></h2>
 <p>One VictoriaMetrics server, <code>vmsingle-nereus</code> in <code>nereus-system</code>: it stores the samples on a 2Gi volume for 14 days and answers the Prometheus query API on port 8428. It also serves vmui, the web UI, at <code>/vmui</code>.</p>
@@ -7244,7 +7244,7 @@
 <p>The VMPodScrape <code>nereids</code> selects every pod labelled <code>core.getnereus.dev/metrics: "true"</code> in <code>nereus-system</code>, on its port <code>http</code> and path <code>/metrics</code>. Each Nereid built on nereid-sdk carries that label (<a href="https://github.com/getnereus/nereus/issues/741">#741</a>), so no Nereid is ever named.</p>
 <p>The label <code>nereid</code> of each series comes from the pod's <code>app.kubernetes.io/name</code>, never from what the pod serves, so no pod can pose as a Nereid.</p>
 <p>The VMNodeScrape <code>kubelet-cadvisor</code> reads each node's kubelet at <code>/metrics/cadvisor</code>: CPU and memory per container. A target that fails shows as down, and nothing else stops.</p>
-<p>The VMPodScrape <code>kube-state-metrics</code> reads <a href="https://github.com/kubernetes/kube-state-metrics">kube-state-metrics</a> (<a href="https://github.com/getnereus/nereus/issues/2177">#2177</a>), which the Nereid also asks the release reef for: chart 9.1.0, v2.20.0 pinned by digest, in <code>metrics-system</code>. The Nereid does not wait for it: it logs a Release not Ready.</p>
+<p>The VMPodScrape <code>kube-state-metrics</code> reads <a href="https://github.com/kubernetes/kube-state-metrics">kube-state-metrics</a> (<a href="https://github.com/getnereus/nereus/issues/2177">#2177</a>), which the Nereid also asks the release Reef for: chart 9.1.0, v2.20.0 pinned by digest, in <code>metrics-system</code>. The Nereid does not wait for it: it logs a Release not Ready.</p>
 <p>It reads only the pods, Deployments and VerticalPodAutoscalers of <code>nereus-system</code>, through a Role there, and no Secret. It exposes six series, among them the requests, the ready replicas and each VPA's recommendation.</p>
 <p>Its one ClusterRole lists and watches the CustomResourceDefinitions, cluster-scoped: its Custom Resource State needs them to find the VPA's kind.</p>
 <p>The Nereid also releases the <a href="https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler">Vertical Pod Autoscaler</a>'s recommender (<a href="https://github.com/getnereus/nereus/issues/2205">#2205</a>): chart 0.17.0, VPA 1.8.1 pinned by digest, in <code>metrics-system</code>, with no updater and no webhook.</p>
@@ -7252,13 +7252,13 @@
 <p>The recommender keeps the history in the VPA's checkpoints in <code>nereus-system</code>: a recommendation takes about 24 h after it starts and survives its restarts.</p>
 <p>Its series keep their own <code>namespace</code> and <code>pod</code> (<code>honorLabels: true</code>): those of the pods they describe.</p>
 <h2 id="the-contract">The contract<a class="headerlink" href="#the-contract" title="Permanent link">&para;</a></h2>
-<p>The Mandate <code>victoriametrics</code> publishes <code>status.query.url</code>, the in-cluster address of the query API, <code>status.query.scrapeInterval</code> (<code>30s</code>) and its Ready condition; <code>nereus mandate get victoriametrics</code> shows them. It names no backend: another Nereid of the metrics reef would publish the same fields.</p>
+<p>The Mandate <code>victoriametrics</code> publishes <code>status.query.url</code>, the in-cluster address of the query API, <code>status.query.scrapeInterval</code> (<code>30s</code>) and its Ready condition; <code>nereus mandate get victoriametrics</code> shows them. It names no backend: another Nereid of the metrics Reef would publish the same fields.</p>
 <p>The Nereus API keeps the status signals one scrape interval and steps the detail's 5m and 1h ranges by it.</p>
 <h2 id="who-reaches-it">Who reaches it<a class="headerlink" href="#who-reaches-it" title="Permanent link">&para;</a></h2>
 <p>The query API has no credentials yet. A NetworkPolicy, applied by <code>nereus nereid apply</code>, lets only the VMAgent and the Nereus API reach port 8428; a port-forward is not subject to it.</p>
 <p>Deleting series takes a random key nobody is given (<code>-deleteAuthKey</code>, from the Secret <code>victoriametrics-delete-key</code>). An admission policy holds every object the Nereid writes to its name and its whole spec.</p>
 <h2 id="the-proof">The proof<a class="headerlink" href="#the-proof" title="Permanent link">&para;</a></h2>
-<p><code>make scene-metrics</code> installs the reef on a throwaway cluster and runs the three queries of <a href="../../guides/reefs/metrics/">Collect metrics</a>, expecting one series per Nereid.</p>
+<p><code>make scene-metrics</code> installs the Reef on a throwaway cluster and runs the three queries of <a href="../../guides/reefs/metrics/">Collect metrics</a>, expecting one series per Nereid.</p>
 
 
 

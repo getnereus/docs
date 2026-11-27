@@ -364,7 +364,7 @@ slides:
       built.environment:
         title: "{reef:environment} · {nereid:vcluster} · {mandate: vcluster}"
         tip: "Makes each Environment a vcluster"
-        body: "Each Environment is a vcluster in the current cluster, through a Release of its chart in the release reef. [The commands](../specs/cli/reefs/environment.html)"
+        body: "Each Environment is a vcluster in the current cluster, through a Release of its chart in the release Reef. [The commands](../specs/cli/reefs/environment.html)"
       built.database:
         title: "{reef:database} · {nereid:cloudnative-pg} · {mandate:cloudnative-pg}"
         tip: "Makes each Database through CloudNativePG"
@@ -372,7 +372,7 @@ slides:
       built.metrics:
         title: "{reef:metrics} · {nereid:victoriametrics} · {mandate:victoriametrics}"
         tip: "Keeps 14 days of every Nereid's metrics"
-        body: "Releases the VictoriaMetrics operator through the release reef, keeps 14 days of every Nereid's metrics and the kubelets' cAdvisor, and publishes the address of the Prometheus query API."
+        body: "Releases the VictoriaMetrics operator through the release Reef, keeps 14 days of every Nereid's metrics and the kubelets' cAdvisor, and publishes the address of the Prometheus query API."
       built.secrets:
         title: "{reef:secrets} · {nereid:openbao} · {mandate:default}"
         tip: "Keeps secrets the CLI encrypted on the client"
@@ -388,11 +388,11 @@ slides:
       built.scm:
         title: "{reef:scm} · {nereid:forgejo} · {mandate:forgejo}"
         tip: "The source in the cluster: a repository mirrored into Forgejo"
-        body: "`nereus scm mirror create <name> --from https://github.com/<owner>/<repository>` copies a public repository into a Forgejo the Nereid runs in the cluster, pulled on an interval, with no App; the profile installs it, `forgejo` the reef's default (#1255, #1327). [The commands](../specs/cli/reefs/scm.html)"
+        body: "`nereus scm mirror create <name> --from https://github.com/<owner>/<repository>` copies a public repository into a Forgejo the Nereid runs in the cluster, pulled on an interval, with no App; the profile installs it, `forgejo` the Reef's default (#1255, #1327). [The commands](../specs/cli/reefs/scm.html)"
       built.delivery:
         title: "{reef:delivery} · {nereid:kubernetes} · {mandate:kubernetes}"
         tip: "Takes a Workload to an Environment"
-        body: "`nereus workload deploy --image`, or `--build`, takes a Workload to an Environment. The Nereid resolves a tag to a digest, never the client, and writes the objects of the release reef (ADR 0020). [The commands](../specs/cli/reefs/delivery.html)"
+        body: "`nereus workload deploy --image`, or `--build`, takes a Workload to an Environment. The Nereid resolves a tag to a digest, never the client, and writes the objects of the release Reef (ADR 0020). [The commands](../specs/cli/reefs/delivery.html)"
       built.registry:
         title: "{reef:registry} · {nereid:zot} · {mandate:zot}"
         tip: "An image registry inside the cluster"
@@ -404,7 +404,7 @@ slides:
       todo.edge:
         title: "{reef:edge} · {nereid:cloudflare} · proposed"
         tip: "Proposed: publishes an endpoint at a hostname"
-        body: "Not built. Domains, zones and routes: a `cloudflare` Nereid would publish a reef's endpoint at a hostname (#577). [The commands](../specs/cli/reefs/edge.html)"
+        body: "Not built. Domains, zones and routes: a `cloudflare` Nereid would publish a Reef's endpoint at a hostname (#577). [The commands](../specs/cli/reefs/edge.html)"
       todo.authorization:
         title: "{reef:authorization} · {nereid:openfga} · proposed"
         tip: "Proposed, still open: who may do what"
@@ -421,7 +421,7 @@ slides:
 
       **The solid cards:** `tenancy` has no Nereid, since the API keeps its objects; `catalog` is built, and the profile installs its Nereid; the other eight are what `nereus init --profile internal-developer-platform` installs today, `registry` and `delivery` among them.
 
-      **The dashed cards:** not in the profile yet. `build` with `buildkit` runs today with `nereus nereid apply buildkit --reef build`, and joins the profile once #1069 (the build reef's containment is proved) closes; `edge` is #577 (the edge reef with a cloudflare Nereid); each number links to its place on the board. `authorization` with `openfga` is #897 (refine the authorization reef) and `policy` with `kyverno` is #898 (refine the policy reef), both named by ADR 0014 (profiles).
+      **The dashed cards:** not in the profile yet. `build` with `buildkit` runs today with `nereus nereid apply buildkit --reef build`, and joins the profile once #1069 (the build Reef's containment is proved) closes; `edge` is #577 (the edge Reef with a cloudflare Nereid); each number links to its place on the board. `authorization` with `openfga` is #897 (refine the authorization Reef) and `policy` with `kyverno` is #898 (refine the policy Reef), both named by ADR 0014 (profiles).
 
       **The clients:** the Portal has its Nereid, `nereus-portal`, which the profile installs behind the cluster's entrance: on a k3d cluster it answers at `http://localhost:<ingress port>`, and another address goes in its Mandate (#896, the profile installs the nereus-portal Nereid).
 
@@ -442,7 +442,7 @@ slides:
         built.environment:
           title: "{reef:environment} · {nereid:vcluster} · {mandate: vcluster}"
           tip: "Faz de cada Environment um vcluster"
-          body: "Cada Environment é um vcluster no cluster atual, por meio de um Release do seu chart no reef release. [Os comandos](../specs/cli/reefs/environment.html)"
+          body: "Cada Environment é um vcluster no cluster atual, por meio de um Release do seu chart no Reef release. [Os comandos](../specs/cli/reefs/environment.html)"
         built.database:
           title: "{reef:database} · {nereid:cloudnative-pg} · {mandate:cloudnative-pg}"
           tip: "Cria cada Database com o CloudNativePG"
@@ -450,7 +450,7 @@ slides:
         built.metrics:
           title: "{reef:metrics} · {nereid:victoriametrics} · {mandate:victoriametrics}"
           tip: "Guarda 14 dias de métricas de cada Nereid"
-          body: "Faz o release do operador VictoriaMetrics pelo reef release, guarda 14 dias de métricas de cada Nereid e o cAdvisor dos kubelets, e publica o endereço da API de consulta do Prometheus."
+          body: "Faz o release do operador VictoriaMetrics pelo Reef release, guarda 14 dias de métricas de cada Nereid e o cAdvisor dos kubelets, e publica o endereço da API de consulta do Prometheus."
         built.secrets:
           title: "{reef:secrets} · {nereid:openbao} · {mandate:default}"
           tip: "Guarda secrets que a CLI cifrou no cliente"
@@ -466,11 +466,11 @@ slides:
         built.scm:
           title: "{reef:scm} · {nereid:forgejo} · {mandate:forgejo}"
           tip: "O código no cluster: um repositório espelhado no Forgejo"
-          body: "`nereus scm mirror create <name> --from https://github.com/<owner>/<repository>` copia um repositório público para um Forgejo que o Nereid roda no cluster, atualizado num intervalo, sem App; o profile o instala, com `forgejo` como o padrão do reef (#1255, #1327). [Os comandos](../specs/cli/reefs/scm.html)"
+          body: "`nereus scm mirror create <name> --from https://github.com/<owner>/<repository>` copia um repositório público para um Forgejo que o Nereid roda no cluster, atualizado num intervalo, sem App; o profile o instala, com `forgejo` como o padrão do Reef (#1255, #1327). [Os comandos](../specs/cli/reefs/scm.html)"
         built.delivery:
           title: "{reef:delivery} · {nereid:kubernetes} · {mandate:kubernetes}"
           tip: "Leva um Workload a um Environment"
-          body: "`nereus workload deploy --image`, ou `--build`, leva um Workload a um Environment. O Nereid resolve a tag para um digest, nunca o cliente, e escreve os objetos do reef release (ADR 0020). [Os comandos](../specs/cli/reefs/delivery.html)"
+          body: "`nereus workload deploy --image`, ou `--build`, leva um Workload a um Environment. O Nereid resolve a tag para um digest, nunca o cliente, e escreve os objetos do Reef release (ADR 0020). [Os comandos](../specs/cli/reefs/delivery.html)"
         built.registry:
           title: "{reef:registry} · {nereid:zot} · {mandate:zot}"
           tip: "Um registry de imagens dentro do cluster"
@@ -482,7 +482,7 @@ slides:
         todo.edge:
           title: "{reef:edge} · {nereid:cloudflare} · proposta"
           tip: "Proposta: publica um endpoint num hostname"
-          body: "Não construído. Domínios, zonas e rotas: um Nereid `cloudflare` publicaria o endpoint de um reef num hostname (#577). [Os comandos](../specs/cli/reefs/edge.html)"
+          body: "Não construído. Domínios, zonas e rotas: um Nereid `cloudflare` publicaria o endpoint de um Reef num hostname (#577). [Os comandos](../specs/cli/reefs/edge.html)"
         todo.authorization:
           title: "{reef:authorization} · {nereid:openfga} · proposta"
           tip: "Proposta, ainda em aberto: quem pode fazer o quê"
@@ -498,7 +498,7 @@ slides:
 
         **Os cartões sólidos:** o `tenancy` não tem Nereid, pois a API guarda os seus objetos; o `catalog` está construído, e o profile instala o seu Nereid; os outros oito são o que `nereus init --profile internal-developer-platform` instala hoje, entre eles `registry` e `delivery`.
 
-        **Os cartões tracejados:** ainda fora do profile. `build` com `buildkit` já roda com `nereus nereid apply buildkit --reef build`, e entra no profile quando o #1069 (a contenção do reef build é provada) fechar; `edge` é o #577 (o reef edge com um Nereid cloudflare); cada número leva ao seu lugar no board. `authorization` com `openfga` é o #897 (refinar o reef authorization) e `policy` com `kyverno` é o #898 (refinar o reef policy), ambos citados no ADR 0014 (profiles).
+        **Os cartões tracejados:** ainda fora do profile. `build` com `buildkit` já roda com `nereus nereid apply buildkit --reef build`, e entra no profile quando o #1069 (a contenção do Reef build é provada) fechar; `edge` é o #577 (o Reef edge com um Nereid cloudflare); cada número leva ao seu lugar no board. `authorization` com `openfga` é o #897 (refinar o Reef authorization) e `policy` com `kyverno` é o #898 (refinar o Reef policy), ambos citados no ADR 0014 (profiles).
 
         **Os clientes:** o Portal tem o seu Nereid, `nereus-portal`, que o profile instala atrás da entrada do cluster: num cluster k3d ele responde em `http://localhost:<porta do ingress>`, e outro endereço vai no seu Mandate (#896, o profile instala o Nereid nereus-portal).
 

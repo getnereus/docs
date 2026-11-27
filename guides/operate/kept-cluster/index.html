@@ -7360,7 +7360,7 @@
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>login<span class="w"> </span>--initial-admin
 </code></pre></div>
 <h3 id="4-bring-up-the-tunnel-and-trust-it-at-the-ingress-gateway">4. Bring up the tunnel and trust it at the ingress gateway<a class="headerlink" href="#4-bring-up-the-tunnel-and-trust-it-at-the-ingress-gateway" title="Permanent link">&para;</a></h3>
-<p>Apply the edge reef and its Nereid <code>cloudflare</code> (<a href="../edge/">Publish at a hostname</a>), keep the credentials file as <code>edge/cloudflare-tunnel</code> and an API token (DNS Edit on the zone, Tunnel Read) as <code>edge/cloudflare-token</code>, then create the Mandate with <code>--param tunnel=nereus --param credentialsSecret=edge/cloudflare-tunnel --param apiTokenSecret=edge/cloudflare-token --default</code>. Create the routes at once.</p>
+<p>Apply the edge Reef and its Nereid <code>cloudflare</code> (<a href="../edge/">Publish at a hostname</a>), keep the credentials file as <code>edge/cloudflare-tunnel</code> and an API token (DNS Edit on the zone, Tunnel Read) as <code>edge/cloudflare-token</code>, then create the Mandate with <code>--param tunnel=nereus --param credentialsSecret=edge/cloudflare-tunnel --param apiTokenSecret=edge/cloudflare-token --default</code>. Create the routes at once.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>edge<span class="w"> </span>route<span class="w"> </span>create<span class="w"> </span>triton<span class="w"> </span>--hostname<span class="w"> </span>triton.getnereus.dev
 </code></pre></div>
 <p>Repeat for <code>auth</code>, <code>portal</code> and <code>api</code>; the Nereid makes each CNAME. The chart's API route answers only at <code>localhost</code>; this one adds <code>portal</code> and <code>api</code>:</p>
@@ -7385,9 +7385,9 @@
 <p><code>googleTeam</code> is Triton's team; each person then runs <code>nereus login https://api.getnereus.dev</code>.</p>
 <h3 id="6-set-the-portals-address-and-bring-up-triton">6. Set the portal's address and bring up Triton<a class="headerlink" href="#6-set-the-portals-address-and-bring-up-triton" title="Permanent link">&para;</a></h3>
 <p><a href="../../../specs/cli/core.html#mandate-apply"><code>nereus mandate apply</code></a> <code>nereus-portal</code> with <code>--param publicUrl=https://portal.getnereus.dev</code>.</p>
-<p>Then the Mandate <code>messaging-nats</code> is the messaging reef's default with no match (<code>--default</code>, no <code>--match</code>), so it holds the Rooms' Topics, which name no engine (ADR 0030).</p>
+<p>Then the Mandate <code>messaging-nats</code> is the messaging Reef's default with no match (<code>--default</code>, no <code>--match</code>), so it holds the Rooms' Topics, which name no engine (ADR 0030).</p>
 <p>A cluster that had <code>--param agents=true</code> there keeps the old streams of the account <code>AGENTS</code> on the claim, unread, and the Secret <code>nats-triton</code> of <code>nereus-system</code>: drop the parameter, run <code>nereus nereid apply nats --reef messaging</code> again, and delete the Secret by hand.</p>
-<p>The rooms reef needs no parameter and no NATS account of its own (#2078). Triton's issuer is the public realm of step 5, given with <code>--set</code> (#2157); without it Triton stops with <code>--issuer is required</code>.</p>
+<p>The rooms Reef needs no parameter and no NATS account of its own (#2078). Triton's issuer is the public realm of step 5, given with <code>--set</code> (#2157); without it Triton stops with <code>--issuer is required</code>.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>reef<span class="w"> </span>apply<span class="w"> </span>rooms
 nereus<span class="w"> </span>nereid<span class="w"> </span>apply<span class="w"> </span>triton<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--reef<span class="w"> </span>rooms<span class="w"> </span><span class="se">\</span>
@@ -7409,7 +7409,7 @@ yes: authorization/bindings/owner-admin gives administrator to user/owner at the
 </code></pre></div>
 <p>From then on your calls take the normal check, and the doctor's count of emergency-exit passes stops growing; its warning goes when the API restarts. You stay in <code>nereus-admins</code>, so the exit is still there for an emergency.</p>
 <h2 id="check-it-worked">Check it worked<a class="headerlink" href="#check-it-worked" title="Permanent link">&para;</a></h2>
-<p><a href="../../../specs/cli/core.html#status"><code>nereus status</code></a> shows every reef Ready; <code>curl</code> on <code>https://triton.getnereus.dev/healthz</code>, <code>https://portal.getnereus.dev/</code> and <code>https://api.getnereus.dev/.well-known/nereus-configuration</code> answers 200, and the realm <code>master</code> answers 404 from outside.</p>
+<p><a href="../../../specs/cli/core.html#status"><code>nereus status</code></a> shows every Reef Ready; <code>curl</code> on <code>https://triton.getnereus.dev/healthz</code>, <code>https://portal.getnereus.dev/</code> and <code>https://api.getnereus.dev/.well-known/nereus-configuration</code> answers 200, and the realm <code>master</code> answers 404 from outside.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>status
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>REEF            NEREID           VERSION  STATUS  AGE

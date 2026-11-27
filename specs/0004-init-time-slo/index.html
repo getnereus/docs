@@ -7305,7 +7305,7 @@ nereus<span class="w"> </span>init<span class="w"> </span>--yes<span class="w"> 
 <td><code>spec.targets.cloud</code></td>
 <td>duration</td>
 <td><code>20m</code> (<code>CLOUD</code>)</td>
-<td>The time objective on a cloud (Azure first), from <code>init</code>'s start until the overcloud is up and has taken over after the pivot. Keyed by the <code>cloud</code> reef, never by a Nereid's name (#313). Recorded, not enforced, until #92 and #61.</td>
+<td>The time objective on a cloud (Azure first), from <code>init</code>'s start until the overcloud is up and has taken over after the pivot. Keyed by the <code>cloud</code> Reef, never by a Nereid's name (#313). Recorded, not enforced, until #92 and #61.</td>
 </tr>
 <tr>
 <td><code>spec.bands.yellow</code></td>
@@ -7344,7 +7344,7 @@ nereus<span class="w"> </span>init<span class="w"> </span>--yes<span class="w"> 
 <p><strong>The first <code>init</code>.</strong> The cluster, and so the object, does not exist when <code>init</code> starts. <code>init</code> starts with the defaults, and reads the object in its <code>kinds and namespace</code> step, once the kinds are applied in the cluster it is preparing; from that step on, the bands and the check use what it read. On a cluster created by that same run, there is no object yet, so the defaults hold for the whole run; on a cluster reused, the object read in the last step decides the total and the check. <code>init</code> never writes the object, and the settings file of <code>init</code> (<code>settings.py</code>) does not carry these values: one place for each value, the cluster, with the defaults in code.</p>
 <p><strong>After the pivot (#61).</strong> The object moves to the overcloud with the rest of the platform's objects, and the CLI reads it there.</p>
 <h2 id="the-command">The command<a class="headerlink" href="#the-command" title="Permanent link">&para;</a></h2>
-<p><code>nereus config</code> is a new group for the platform's own settings kept in the cluster; <code>system</code> stays for reefs and Nereids (ADR 0011). <code>nereus config slo</code>:</p>
+<p><code>nereus config</code> is a new group for the platform's own settings kept in the cluster; <code>system</code> stays for Reefs and Nereids (ADR 0011). <code>nereus config slo</code>:</p>
 <ul>
 <li><code>show</code>: the six values, each with its source.</li>
 <li><code>set --local &lt;duration&gt; --cloud &lt;duration&gt; --yellow &lt;percent&gt; --orange &lt;percent&gt; --red &lt;percent&gt; --tolerance &lt;percent&gt;</code>: writes the options given, keeps the fields already set, and prints the values as <code>show</code> does. At least one option.</li>

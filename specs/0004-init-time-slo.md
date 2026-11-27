@@ -31,7 +31,7 @@ One `ServiceLevelObjective` object (short name `slo`), named `default`, in the n
 | Field | Type | Default (constant in `cli/src/nereus/slo.py`) | Meaning |
 |---|---|---|---|
 | `spec.targets.local` | duration | `8m` (`LOCAL`) | The time objective of `init` on the local target (k3d), from the start of its steps to the end of the last one. |
-| `spec.targets.cloud` | duration | `20m` (`CLOUD`) | The time objective on a cloud (Azure first), from `init`'s start until the overcloud is up and has taken over after the pivot. Keyed by the `cloud` reef, never by a Nereid's name (#313). Recorded, not enforced, until #92 and #61. |
+| `spec.targets.cloud` | duration | `20m` (`CLOUD`) | The time objective on a cloud (Azure first), from `init`'s start until the overcloud is up and has taken over after the pivot. Keyed by the `cloud` Reef, never by a Nereid's name (#313). Recorded, not enforced, until #92 and #61. |
 | `spec.bands.yellow` | percent | `50` (`YELLOW`) | From this share of the time objective, the clock is yellow. |
 | `spec.bands.orange` | percent | `75` (`ORANGE`) | From this share, orange, and the slowest step so far is shown. |
 | `spec.bands.red` | percent | `100` (`RED`) | Above this share, red: the objective is missed, and `init` still finishes. |
@@ -52,7 +52,7 @@ Each value, on its own: **the object's field, else the default in code.** `nereu
 
 ## The command
 
-`nereus config` is a new group for the platform's own settings kept in the cluster; `system` stays for reefs and Nereids (ADR 0011). `nereus config slo`:
+`nereus config` is a new group for the platform's own settings kept in the cluster; `system` stays for Reefs and Nereids (ADR 0011). `nereus config slo`:
 
 - `show`: the six values, each with its source.
 - `set --local <duration> --cloud <duration> --yellow <percent> --orange <percent> --red <percent> --tolerance <percent>`: writes the options given, keeps the fields already set, and prints the values as `show` does. At least one option.

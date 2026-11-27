@@ -1,6 +1,6 @@
-# 0012. The presentations reef, first slice: drive and follow (J1)
+# 0012. The presentations Reef, first slice: drive and follow (J1)
 
-The walking skeleton of the presentations reef (ADR 0028, journey #1688): a phone drives a Session's step, another phone and a projector follow it. Crude on purpose: one deck as a blob (a package since #1701), only the talk time, any token with the reef drives (until #1726 made presenting a right of the authorization reef), one API replica.
+The walking skeleton of the presentations Reef (ADR 0028, journey #1688): a phone drives a Session's step, another phone and a projector follow it. Crude on purpose: one deck as a blob (a package since #1701), only the talk time, any token with the Reef drives (until #1726 made presenting a right of the authorization Reef), one API replica.
 
 ## The commands
 
@@ -36,7 +36,7 @@ $ nereus presentations session get warm-room --output agent > warm-room.yaml
   pace: slide intro 0 slow 1 fast; slide demo 2 slow 14 fast (peak 14:21)
 ```
 
-`presentation` is the reef's default kind (`nereus presentations create` is the same as `nereus presentations presentation create`). Each kind has `create`, `get`, `list` and `delete`, with `--dry-run` and `--examples` (ADR 0013).
+`presentation` is the Reef's default kind (`nereus presentations create` is the same as `nereus presentations presentation create`). Each kind has `create`, `get`, `list` and `delete`, with `--dry-run` and `--examples` (ADR 0013).
 
 ## Who does what
 
@@ -53,7 +53,7 @@ phone / projector / follower
   PostgreSQL, a Database of the database reef (engine postgres)
 ```
 
-- **The API holds no database connection** (🟠 decision of #1688, settled with a Fable review): it writes `spec`, and calls the Nereid for everything else. The rule "The API never names a Nereid" keeps the store and its driver behind the Nereid, as the ideas reef does with doris (`api/ideas_notes.py`).
+- **The API holds no database connection** (🟠 decision of #1688, settled with a Fable review): it writes `spec`, and calls the Nereid for everything else. The rule "The API never names a Nereid" keeps the store and its driver behind the Nereid, as the ideas Reef does with doris (`api/ideas_notes.py`).
 - **The Nereid writes `status`** (ADR 0005) and holds the one `LISTEN` connection; each API replica holds one internal stream to it and fans out to its own followers.
 - **The short code is given synchronously** by the Nereid inside the create request, so `session create` prints the follow link at once; its reconciler gives the same code to a Session created any other way.
 
@@ -71,7 +71,7 @@ phone / projector / follower
 
 ## The Nereid's HTTP contract
 
-On the controller port of the Nereid's Service, inside the cluster only. JSON in and out, except the deck. `leagore` serves it over one store interface with two stores: memory (unit tests and `make scene-core`, which installs no real tool) and PostgreSQL (`make scene-presentations` and `k3d-nereus`); one contract test suite runs against both. No reference Nereid: leagore is Nereus's own code, as doris is for the ideas reef (🟠 decision of #1688).
+On the controller port of the Nereid's Service, inside the cluster only. JSON in and out, except the deck. `leagore` serves it over one store interface with two stores: memory (unit tests and `make scene-core`, which installs no real tool) and PostgreSQL (`make scene-presentations` and `k3d-nereus`); one contract test suite runs against both. No reference Nereid: leagore is Nereus's own code, as doris is for the ideas Reef (🟠 decision of #1688).
 
 | Method and path | Body | Answer |
 |---|---|---|
@@ -127,24 +127,24 @@ The state of a Session:
 
 | Route | Token | What it does |
 |---|---|---|
-| `POST /v1/presentations/presentations` | the reef | creates the Presentation, then puts the deck in its Nereid; `{"name", "package" | "folder" | "deck", "description"?, "source"?}`: `package` is the tar in base64 (1 MB counted on the tar), `folder` the files of a folder picked in the portal (#1705), `{"deck": its YAML's path, "files": {path: base64}}`, 4 MB at most, which the API packs as the CLI does, refusing a name that leaves the folder, `deck` the YAML as text from a CLI before #1701, which becomes a package of that YAML alone. `?dryRun=true` has the Nereid check the package (`POST /presentations/{name}/checks`) and writes nothing: `200` with `steps` and `warnings`, or `400 Invalid` with `errors`, every reason. A deck the Nereid refuses at create is the same `400`, and the object is deleted again |
-| `GET /v1/presentations/presentations[/{name}]`, `DELETE …/{name}` | the reef | list, get, delete |
-| `GET /v1/presentations/presentations/{name}/deck` | the reef, asked as an apply (the notes are in it) | the offline export (#1703): `nereus presentations presentation get <name> --output html` writes it as `<name>.html`; served as an attachment, sandboxed, with the follow page's headers |
-| `POST /v1/presentations/presentations/{name}/link`, `DELETE …` | the reef, an apply | the public link (#1704): `{"expires": "30d"}` (hours, days or weeks from now, `h`/`d`/`w`, at most 9999) or no body for one that never expires; answers `{name, link, path: "/d/<link>", expires}`; `409 AlreadyExists` when the Presentation has one; `?dryRun=true` writes nothing |
-| `GET /v1/presentations/presentations/{name}/link`, `GET /v1/presentations/links` | the reef | get (`404` with the fix `link create`), list |
+| `POST /v1/presentations/presentations` | the Reef | creates the Presentation, then puts the deck in its Nereid; `{"name", "package" | "folder" | "deck", "description"?, "source"?}`: `package` is the tar in base64 (1 MB counted on the tar), `folder` the files of a folder picked in the portal (#1705), `{"deck": its YAML's path, "files": {path: base64}}`, 4 MB at most, which the API packs as the CLI does, refusing a name that leaves the folder, `deck` the YAML as text from a CLI before #1701, which becomes a package of that YAML alone. `?dryRun=true` has the Nereid check the package (`POST /presentations/{name}/checks`) and writes nothing: `200` with `steps` and `warnings`, or `400 Invalid` with `errors`, every reason. A deck the Nereid refuses at create is the same `400`, and the object is deleted again |
+| `GET /v1/presentations/presentations[/{name}]`, `DELETE …/{name}` | the Reef | list, get, delete |
+| `GET /v1/presentations/presentations/{name}/deck` | the Reef, asked as an apply (the notes are in it) | the offline export (#1703): `nereus presentations presentation get <name> --output html` writes it as `<name>.html`; served as an attachment, sandboxed, with the follow page's headers |
+| `POST /v1/presentations/presentations/{name}/link`, `DELETE …` | the Reef, an apply | the public link (#1704): `{"expires": "30d"}` (hours, days or weeks from now, `h`/`d`/`w`, at most 9999) or no body for one that never expires; answers `{name, link, path: "/d/<link>", expires}`; `409 AlreadyExists` when the Presentation has one; `?dryRun=true` writes nothing |
+| `GET /v1/presentations/presentations/{name}/link`, `GET /v1/presentations/links` | the Reef | get (`404` with the fix `link create`), list |
 | `GET /v1/presentations/links/{link}/deck` | none | the shared deck: the page leagore renders for a follower, with the follow page's sandboxed headers; `410 Expired` once expired, `404 not found` for any other link; limited per client as the follow routes |
-| `POST /v1/presentations/sessions` | the reef | creates the Session, then `PUT /sessions/{name}` on the Nereid; answers the state and `follow: /p/<code>` |
-| `GET /v1/presentations/sessions[/{name}]`, `DELETE …/{name}` | the reef | list, get (with the live step, the followers, the `slides` of every step, #1759, and the last rehearsal's `pace`, #1711), delete |
-| `POST /v1/presentations/sessions/{name}/step` | the reef | drives: `{"step": n}`, answers the new state; `400` outside the slides, `404` unknown (#1696), `409 Refused` once ended (#1710) |
-| `POST /v1/presentations/sessions/{name}/end` | the reef | the speaker's End (#1710): answers the state with `ended` |
-| `POST /v1/presentations/sessions/{name}/sharing` | the reef | drives: `{"on": bool}`, the drive screen's "Show on the projector" in its Share sheet (#1859); answers the state with `sharing`, which the followers get, so the projector shows the follow QR code on any slide; `400 Invalid` anything but a boolean |
-| `POST /v1/presentations/sessions/{name}/thermometer` | the reef | drives: `{"on": bool}`, the switch Pace thermometer in the drive screen's Share sheet (#1723), or `session create --thermometer` from the start; answers the state with `thermometer` and `gauge`; `400 Invalid` anything but a boolean |
-| `GET /v1/presentations/sessions/{name}/thermometer` | the reef | drives: the gauge `{on, slow, fast}` (#1723), never cached; the drive screen reads it every 1.5 s while the thermometer is on and shows Too slow and Too fast with their counts; the projector shows nothing |
-| `POST /v1/presentations/sessions/{name}/open` | the reef | drives: `{"part": "questions" \| "rating"}`, the Questions sheet's "Open questions" and the last step's "Ask the room to rate" (#1876); answers the state, which the followers get; `400 Invalid` another part, `409 Refused` the questions once ended |
-| `POST /v1/presentations/sessions/{name}/polls/{poll}/open`, `POST /v1/presentations/sessions/{name}/polls/{poll}/close`, `GET /v1/presentations/sessions/{name}/polls` | the reef | drives: the drive screen's "Open question" on a poll slide (#1722), never by itself, its "Close question" and "Reopen question" (#1917), and the speaker's view of the polls with the texts; `404 NotFound` a poll the deck has not, `409 Refused` an open poll opened again, a poll not open closed, or an ended Session |
-| `GET /v1/presentations/sessions/{name}/questions` | the reef | drives: the audience's questions in arrival order, each device by its six-character label only (#1716); the drive screen reads it every 5 s into its Questions sheet |
-| `GET /v1/presentations/sessions/{name}/feedback` | the reef | drives: the audience's feedback once the rating opened or the Session ended (#1717, #1876), `{count, average, comments}`, the average to one decimal (`null` with no answer), no device; the drive screen shows it in its Questions sheet and `nereus presentations session get` under the Session |
-| `GET /v1/presentations/sessions/{name}/export` | the reef | drives (the notes are in it): the Session for an agent (#1718), `{session: {name, presentation, revision, rehearsal, talkSeconds, questionsSeconds, started, ended}, slides: [{name, title, text, notes, seconds?, questions: [{text, at}]}], questionsWithoutSlide?, feedback, pace}`, `pace` the thermometer's taps by slide, `[{slide, slow, fast, peak}]` with `peak` the last tap of the slide's busiest minute (`null` with no tap), and the session's `thermometer` (#1723), only the contract's fields of the Nereid's answer, so no device id nor label; `nereus presentations session get <name> --output agent` prints it as YAML |
+| `POST /v1/presentations/sessions` | the Reef | creates the Session, then `PUT /sessions/{name}` on the Nereid; answers the state and `follow: /p/<code>` |
+| `GET /v1/presentations/sessions[/{name}]`, `DELETE …/{name}` | the Reef | list, get (with the live step, the followers, the `slides` of every step, #1759, and the last rehearsal's `pace`, #1711), delete |
+| `POST /v1/presentations/sessions/{name}/step` | the Reef | drives: `{"step": n}`, answers the new state; `400` outside the slides, `404` unknown (#1696), `409 Refused` once ended (#1710) |
+| `POST /v1/presentations/sessions/{name}/end` | the Reef | the speaker's End (#1710): answers the state with `ended` |
+| `POST /v1/presentations/sessions/{name}/sharing` | the Reef | drives: `{"on": bool}`, the drive screen's "Show on the projector" in its Share sheet (#1859); answers the state with `sharing`, which the followers get, so the projector shows the follow QR code on any slide; `400 Invalid` anything but a boolean |
+| `POST /v1/presentations/sessions/{name}/thermometer` | the Reef | drives: `{"on": bool}`, the switch Pace thermometer in the drive screen's Share sheet (#1723), or `session create --thermometer` from the start; answers the state with `thermometer` and `gauge`; `400 Invalid` anything but a boolean |
+| `GET /v1/presentations/sessions/{name}/thermometer` | the Reef | drives: the gauge `{on, slow, fast}` (#1723), never cached; the drive screen reads it every 1.5 s while the thermometer is on and shows Too slow and Too fast with their counts; the projector shows nothing |
+| `POST /v1/presentations/sessions/{name}/open` | the Reef | drives: `{"part": "questions" \| "rating"}`, the Questions sheet's "Open questions" and the last step's "Ask the room to rate" (#1876); answers the state, which the followers get; `400 Invalid` another part, `409 Refused` the questions once ended |
+| `POST /v1/presentations/sessions/{name}/polls/{poll}/open`, `POST /v1/presentations/sessions/{name}/polls/{poll}/close`, `GET /v1/presentations/sessions/{name}/polls` | the Reef | drives: the drive screen's "Open question" on a poll slide (#1722), never by itself, its "Close question" and "Reopen question" (#1917), and the speaker's view of the polls with the texts; `404 NotFound` a poll the deck has not, `409 Refused` an open poll opened again, a poll not open closed, or an ended Session |
+| `GET /v1/presentations/sessions/{name}/questions` | the Reef | drives: the audience's questions in arrival order, each device by its six-character label only (#1716); the drive screen reads it every 5 s into its Questions sheet |
+| `GET /v1/presentations/sessions/{name}/feedback` | the Reef | drives: the audience's feedback once the rating opened or the Session ended (#1717, #1876), `{count, average, comments}`, the average to one decimal (`null` with no answer), no device; the drive screen shows it in its Questions sheet and `nereus presentations session get` under the Session |
+| `GET /v1/presentations/sessions/{name}/export` | the Reef | drives (the notes are in it): the Session for an agent (#1718), `{session: {name, presentation, revision, rehearsal, talkSeconds, questionsSeconds, started, ended}, slides: [{name, title, text, notes, seconds?, questions: [{text, at}]}], questionsWithoutSlide?, feedback, pace}`, `pace` the thermometer's taps by slide, `[{slide, slow, fast, peak}]` with `peak` the last tap of the slide's busiest minute (`null` with no tap), and the session's `thermometer` (#1723), only the contract's fields of the Nereid's answer, so no device id nor label; `nereus presentations session get <name> --output agent` prints it as YAML |
 | `GET /v1/presentations/follow/{code}` | none | the SSE stream by short code (#1696): `state` first, then `step` events, `id` the sequence; `retry: 2000` first, an `event: hb` every 15 s with no event (a named event, since `EventSource` hides comments from the page's watchdog), `Last-Event-ID` replays from the last 64 events or sends `state`; the payload is only `code`, `step`, `steps`, `sequence`, `slide`; rate limited per client (`429` with `Retry-After`, also for unknown codes), a cap of followers per process (`503`, `NEREUS_PRESENTATIONS_FOLLOWERS_CAP`, default 2000); `404 not found` for an unknown code; each device's anonymous id (#1714: a random UUID the follow page keeps in `localStorage`, no login) comes in the `nereus_device` cookie, set on `/v1/presentations/follow/` only and never in the URL, and the followers are counted by distinct device; a log holds at most its six-character prefix |
 | `POST /v1/presentations/follow/{code}/questions` | none | a follower's question (#1716), shown by the follow page at the questions' turn only, from `questions_open` until the end (#1876): `{"device", "text"}`, the text trimmed; `400 Invalid` empty or over 280 characters or a malformed device id, `413` a body over 4 KB, `404` an unknown code, `409 Refused` before the questions open or once ended; rate limited per client, then per device (`429` with `Retry-After`); a log holds the code and the device's six-character label, never the text |
 | `POST /v1/presentations/follow/{code}/feedback` | none | a follower's rating once the speaker asked the room to rate or the Session has ended (#1717, #1876), shown by the follow page from then on: `{"device", "rating", "comment"}`; `201 created`, then `200 configured` when the device answers again (its answer replaced); `400 Invalid`, `413`, `404` as a question; `409 Refused` before either; rate limited per client, then per device, in buckets apart from the questions'; a log holds the code and the device's six-character label, never the comment |
@@ -168,14 +168,14 @@ leagore's `uiPort` serves nothing but `ui/`: its Service has a second port and i
 
 ## Security
 
-- **A01 Broken Access Control:** every write needs a token with the reef, and driving a Session the right `drive` of the authorization reef, held by its speakers (#1726); the follow route is read-only and answers only the state of one Session, by its code; an unknown code says only "not found".
+- **A01 Broken Access Control:** every write needs a token with the Reef, and driving a Session the right `drive` of the authorization Reef, held by its speakers (#1726); the follow route is read-only and answers only the state of one Session, by its code; an unknown code says only "not found".
 - **A04 Insecure Design:** the Nereid's Service admits only the API's pods; the code space (31⁴, about 923 thousand) is enumerable, so the follow route is rate limited per client and reveals no deck.
 - **A05 Security Misconfiguration:** the portal keeps its CSP with no exception (#1693).
 - **No personal data:** a follower is anonymous; logs carry the Session's name and code only.
 
 ## Stand-ins
 
-- Any token with the reef drives (J6, #1725): retired by #1726, where only a Session's speakers, or a binding that gives `drive` on `presentations/sessions`, drive it.
+- Any token with the Reef drives (J6, #1725): retired by #1726, where only a Session's speakers, or a binding that gives `drive` on `presentations/sessions`, drive it.
 - One API replica.
 - leagore's memory store, for unit tests and scene-core only.
 - Until #1695, the API's tests stand a fake Nereid in for leagore.

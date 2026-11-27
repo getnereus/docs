@@ -1,10 +1,10 @@
 # Connect a GitHub App
 
-Connect a GitHub App as a Mandate of the authentication reef's Nereid `github`: its status proves where the App is installed and what it may do, and consumers ask it for one-hour tokens, never for its key.
+Connect a GitHub App as a Mandate of the authentication Reef's Nereid `github`: its status proves where the App is installed and what it may do, and consumers ask it for one-hour tokens, never for its key.
 
 ## Before you start
 
-- A cluster with the secrets reef and its vault `default`, from [Keep a secret](../reefs/secrets.md).
+- A cluster with the secrets Reef and its vault `default`, from [Keep a secret](../reefs/secrets.md).
 - An App you already have: its id, and its private key (a `.pem` file). With no App yet, [`nereus authentication app-register`](../../specs/cli/reefs/authentication.html#app-register) creates one in the browser, and only the Nereid ever holds its key; skip to step 4.
 - [Reef, Nereid and Mandate](../../concepts/model.md): the App is a Mandate, its id and key its params.
 
@@ -127,5 +127,5 @@ Next steps:
 
 ## Learn more
 
-- [The authentication reef](../../reference/reefs/authentication.md): `app-register`, tokens and every command.
+- [The authentication Reef](../../reference/reefs/authentication.md): `app-register`, tokens and every command.
 - [ADR 0006](../../adr/0006-authentication-reef.md): the platform's identity towards an outside system is a Mandate.
