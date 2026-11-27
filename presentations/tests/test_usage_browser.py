@@ -89,10 +89,10 @@ def usage_page():
     if browser is None:
       pytest.skip("no headless browser: run `uvx playwright install chromium-headless-shell` or install Chrome")
 
-    def opened(window, width=340, lang="pt-BR", scheme="dark"):
+    def opened(window, width=340, lang="pt-BR", scheme="dark", timezone_id=None):
       server = serve(window)
       servers.append(server)
-      page = browser.new_context(viewport={"width": width, "height": 900}, color_scheme=scheme).new_page()
+      page = browser.new_context(viewport={"width": width, "height": 900}, color_scheme=scheme, timezone_id=timezone_id).new_page()
       page.goto(f"http://127.0.0.1:{server.server_port}/?lang={lang}")
       page.wait_for_function("document.querySelector('nereus-usage')?.shadowRoot?.querySelector('.hero .ruler')")
       return page
@@ -134,3 +134,23 @@ def test_a_long_day_off_reason_stays_inside_the_card(usage_page):
   assert boxes["hero"]["right"] <= 340 - 16 + 0.5, boxes["hero"]  # the card keeps the page's 16 px margin
   assert all(each["right"] <= boxes["hero"]["right"] - 8 for each in boxes["facts"]), boxes
   assert page.evaluate("document.documentElement.scrollWidth") <= 340
+
+
+def resets_and_notice(page):
+  return page.evaluate("""() => {
+    const root = document.querySelector('nereus-usage').shadowRoot;
+    return { label: root.querySelector('.hero .label').textContent, notice: root.querySelector('.hero .zone')?.textContent ?? null };
+  }""")
+
+
+def test_a_window_with_no_zone_shows_the_times_in_the_browsers_zone_and_says_the_days_are_cut_in_utc(usage_page):
+  window = {key: value for key, value in week().items() if key != "timeZone"}
+  shown = resets_and_notice(usage_page(window, lang="en", timezone_id="America/Sao_Paulo"))
+  assert "Mon 01:00" in shown["label"], shown
+  assert shown["notice"] == "Days cut in UTC · set the installation's time zone", shown
+
+
+def test_a_window_with_a_zone_shows_the_same_times_and_no_notice(usage_page):
+  shown = resets_and_notice(usage_page(week(), lang="en", timezone_id="America/Sao_Paulo"))
+  assert "Mon 01:00" in shown["label"], shown
+  assert shown["notice"] is None, shown
