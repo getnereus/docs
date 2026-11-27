@@ -2,850 +2,850 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.getnereus.dev/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/references/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/thinking-in-platforms/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/vision/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0001-record-architecture-decisions/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0002-conceptual-model/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0003-init-and-nereids-at-runtime/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0004-reefs-extend-the-cli/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0005-one-writer-per-field/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0006-authentication-reef/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0007-public-by-design/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0008-cli-in-python/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0009-api-group/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0010-reefs-at-runtime/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0011-reefs-nereids-and-mandates/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0012-error-messages/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0013-command-conventions/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0014-profiles/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0015-tenancy/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0016-catalog-reef/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0017-resource-reefs/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0018-nereus-api/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0019-messaging-reef/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0020-delivery-reef/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0021-registry-reef/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0022-reef-screens-in-the-portal/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0023-external-registry-push-credential/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0024-scm-reef/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0025-metrics-intake/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0026-environment-reef/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0027-teams-roles-and-users/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0028-presentations-reef/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0029-mcp-tools/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0030-triton-rooms-nereid/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/adr/0031-gates-and-approvals/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/adr/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/ai-and-teams/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/api-groups/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/beach/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/cli/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/decks/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/docs/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/how-we-work/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/issues/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/journeys/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/layout/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/owner/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/peers/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/publish/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/queue/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/raw-data/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/rules/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/session-prompt/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/status-bar/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/tokens/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/agent/worktrees/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/concepts/model/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/concepts/nereus-api/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/concepts/runtime-and-profiles/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/concepts/tenancy-and-access/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/concepts/undercloud-overcloud/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/concepts/what-is-nereus/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/access/authentication/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/access/authorization/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/access/github-app/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/access/grant-access/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/access/tenancy/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/build/cli-checkout/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/build/conformance/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/build/image/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/build/new-nereid/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/build/requires/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/operate/cli-update/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/operate/cloud/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/operate/cluster/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/operate/deploy-live/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/operate/edge/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/operate/helm/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/operate/kept-cluster-update/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/operate/kept-cluster/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/operate/slo/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/operate/undercloud/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/reefs/catalog/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/reefs/golden-path/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/reefs/mcp/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/reefs/messaging/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/reefs/metrics/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/reefs/registry/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/reefs/release/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/reefs/rooms/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/reefs/scm-connection/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/reefs/scm-mirror/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/reefs/secret-binding/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/reefs/secrets/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/reefs/team-room/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/reefs/usage/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/troubleshoot/issuer-not-public/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/troubleshoot/name-taken/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/troubleshoot/nereid-stops/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/troubleshoot/request-refused/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/guides/troubleshoot/see-what-happened/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/how-i-use-ia/148-raw-decision-doris-is-a-nereid/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/how-i-use-ia/20261026-1924-watcher-flags-unassigned-orders/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/how-i-use-ia/pt/148-raw-decision-doris-is-a-nereid/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/how-i-use-ia/pt/20261026-1924-watcher-flags-unassigned-orders/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/adoption-metrics/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/agent-evals/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/agents-md/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/backstage-catalog/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/base-deck/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/configure8-portal-vs-platform/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/data-ownership/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/dora-ai-report/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/dora-metrics/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/dora-roi-ai/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/empathy-gap/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/fitness-functions/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/formae-cli/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/golden-signals/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/internal-products/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/internaldeveloperplatform-org/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/mcp-platform-interface/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/mercadolibre-fury/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/platform-as-a-product/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/platform-illusion/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/poc/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/port-portal-guide/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/sandbox-routing/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/score/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/sso-dex/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/state-of-ai-in-platform-engineering/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/idp/references/stone-caravela/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/implementation-comparator/hipotese/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/implementation-comparator/hypothesis/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/references/agile/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/references/ai-delivery/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/references/change-approval/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/references/failures/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/references/gds/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/references/gov-br/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/references/measuring-failure/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/presentations/references/software-crisis/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/project/decisions/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/project/decks/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/project/inception/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/project/research/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/project/roadmap/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/project/specs/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/project/stand-ins/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/checks/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/glossary/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/init/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/installation/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/metrics-reef/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/profiles/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs-and-nereids/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/settings/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/what-is-built/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/authentication/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/authorization/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/build/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/catalog/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/database/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/delivery/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/edge/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/environment/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/ideas/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/messaging/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/notifications/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/portal/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/presentations/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/registry/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/release/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/rooms/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/scm/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/secrets/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/teams/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/tenancy/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/reference/reefs/usage/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/research/board-tools/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/research/infrastructure-governance-agentic-era/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/research/kagent/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/research/kamaji/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/research/nereid-sdk-metrics/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/research/platform-in-an-era-of-ai-agents/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/research/platform-orchestrators/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/research/production-checklist/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/specs/0001-first-slice/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/specs/0002-reef-at-runtime/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/specs/0003-nereid-conformance/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/specs/0004-init-time-slo/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/specs/0005-cloud-reef/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/specs/0006-installation-identity/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/specs/0007-invitation/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/specs/0008-portal-first-slice/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/specs/0009-build-security/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/specs/0010-build-trigger/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/specs/0011-authorization-first-slice/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/specs/0012-presentations-first-slice/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/specs/0013-nereids-screens/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/specs/0014-environment-screens/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/specs/0015-usage-m3/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/specs/0015-usage-m3/plan/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/start/clean-up/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/start/first-reef/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/start/init/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/start/install/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/start/look-around/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/start/run/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
     <url>
          <loc>https://docs.getnereus.dev/start/settings/</loc>
-         <lastmod>2026-11-26</lastmod>
+         <lastmod>2026-11-27</lastmod>
     </url>
 </urlset>

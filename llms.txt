@@ -103,7 +103,7 @@
 
 ## Optional
 
-- [Vision](https://docs.getnereus.dev/vision.md): The Nereus API in front of five planes, with the IDE, the CLI, a portal and agents as its clients
+- [Vision](https://docs.getnereus.dev/vision.md): Every client, one door; each box in a plane is a candidate reef.
 - [Thinking in platforms](https://docs.getnereus.dev/thinking-in-platforms.md): What Nereus takes from Kaspar von Grünberg and Luca Galante's book: a platform is the operating model of knowledge work,
 - [Roadmap](https://docs.getnereus.dev/project/roadmap.md): Where Nereus is going: what is next, the idea radar and the ideas being refined
 - [Inception](https://docs.getnereus.dev/project/inception.md): How Nereus started: the vision, the goals and the MVP sequence of the Lean Inception

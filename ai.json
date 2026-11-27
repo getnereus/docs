@@ -831,7 +831,7 @@
       "title": "Thinking in platforms"
     },
     "vision/": {
-      "goal": "The Nereus API in front of five planes, with the IDE, the CLI, a portal and agents as its clients",
+      "goal": "Every client, one door; each box in a plane is a candidate reef.",
       "md": "vision.md",
       "title": "Vision"
     }
