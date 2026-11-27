@@ -3,10 +3,10 @@
   "command": "make --no-print-directory shellcheck",
   "result": "pass",
   "exit": 0,
-  "seconds": 19,
+  "seconds": 18,
   "passed": 0,
   "failed": 0,
   "failure": null,
-  "commit": "2c01629b",
-  "started": "2026-11-27T13:52:52Z"
+  "commit": "15599e90",
+  "started": "2026-11-27T14:31:05Z"
 }
