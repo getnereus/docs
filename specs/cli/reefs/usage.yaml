@@ -125,14 +125,14 @@ slides:
             WINDOW  USED  RESETS           FORECAST  PACE  TODAY  READ
             weekly  91%   Mon 16/11 01:00  111%      slow  ≤92%   Sat 19:06
 
-            DAY        SHARE  TOTAL
-            Mon 09/11  ~+18%  ~18%
-            Tue 10/11  ~+18%  ~36%
-            Wed 11/11  ~+19%  ~55%
-            Thu 12/11  ~+18%  ~73%
-            Fri 13/11  +18%   91%
-            Sat 14/11  +0%    91%    today
-            Sun 15/11  +8%    100%   plan
+            DAY        SHARE  TOTAL  IDEAL  PROJECTED  GAP
+            Mon 09/11  ~+18%  ~18%   14%               +4
+            Tue 10/11  ~+18%  ~36%   28%               +8
+            Wed 11/11  ~+19%  ~55%   42%               +13
+            Thu 12/11  ~+18%  ~73%   57%               +16
+            Fri 13/11  +18%   91%    71%               +20
+            Sat 14/11  +0%    91%    82%    94%        +9   today
+            Sun 15/11  +8%    100%   100%   111%       +11  plan
     dependsOn: [usage-report]
     notes: |-
       **A lower share wins only on the person's word** (`replace: true` in the API's body): every session's status line reports its own reading, and an idle one can report an older, lower share, so without `--replace` the higher share stays. One rule, `usage_rules.taken`, for the API and the local cache. **The stale guard:** for an hour after a replace (`REPLACE_GUARD_SECONDS`), a reading above the replaced share but not above the peak it replaced (98% here, kept as `spec.replacedPeak` with `spec.replacedAt`) is a stale session's and prints `kept`; a reading above that peak always wins. A replace skips the report's limits and goes to the API at once; offline it stays in the cache and fails, so the person reports it again. **The days' starts stay:** today's start moves down to the replaced share when it is lower, so today's share is never negative; the days before keep theirs. Without `--replace`, the only way out was `nereus usage delete weekly`, which lost the days' starts.
@@ -218,14 +218,14 @@ slides:
             WINDOW  USED  RESETS           FORECAST  PACE    TODAY  READ
             weekly  75%   Mon 16/11 01:00  91%       steady  ≤75%   Sat 19:06
 
-            DAY        SHARE  TOTAL
-            Mon 09/11  +10%   10%
-            Tue 10/11  ~+11%  ~21%
-            Wed 11/11  +10%   31%
-            Thu 12/11  +10%   41%
-            Fri 13/11  +19%   60%
-            Sat 14/11  +15%   75%    today
-            Sun 15/11  +25%   100%   plan
+            DAY        SHARE  TOTAL  IDEAL  PROJECTED  GAP
+            Mon 09/11  +10%   10%    14%               -4
+            Tue 10/11  ~+11%  ~21%   28%               -7
+            Wed 11/11  +10%   31%    42%               -11
+            Thu 12/11  +10%   41%    57%               -16
+            Fri 13/11  +19%   60%    71%               -11
+            Sat 14/11  +15%   75%    82%    78%        -7   today
+            Sun 15/11  +25%   100%   100%   91%        -9   plan
     dependsOn: [usage-report]
     notes: |-
       **The week day by day (#1591):** the reference Nereid keeps each day's start, the lowest share seen that day, cut in the Mandate's time zone and cleared when the window resets; a day's total is the share at its end, and a day with no reading of its own is interpolated, marked `~`. Today's goal stays fixed from today's start. **`--output json` prints the window as the API answers it**, with the plan for the days left: one row per day, its share and the total to reach by its end, the last one landing on 100%. A window that reset shows `reset` in FORECAST and PACE.
@@ -289,14 +289,14 @@ slides:
             WINDOW  USED  RESETS           FORECAST  PACE   TODAY  READ
             weekly  75%   Mon 16/11 01:00  75%       final  off    Sat 19:06
 
-            DAY        SHARE  TOTAL
-            Mon 09/11  +10%   10%
-            Tue 10/11  ~+11%  ~21%   off: Sick
-            Wed 11/11  +10%   31%
-            Thu 12/11  +10%   41%
-            Fri 13/11  +19%   60%
-            Sat 14/11  +15%   75%    today off: Weekend
-            Sun 15/11  +0%    75%    plan off: Weekend
+            DAY        SHARE  TOTAL  IDEAL  PROJECTED  GAP
+            Mon 09/11  +10%   10%    24%               -14
+            Tue 10/11  ~+11%  ~21%   24%               -3   off: Sick
+            Wed 11/11  +10%   31%    49%               -18
+            Thu 12/11  +10%   41%    75%               -34
+            Fri 13/11  +19%   60%    100%              -40
+            Sat 14/11  +15%   75%    100%   75%        -25  today off: Weekend
+            Sun 15/11  +0%    75%    100%   75%        -25  plan off: Weekend
     dependsOn: [usage-dayoff]
     notes: |-
       **The `WorkWeek`, one per person and account, holds the weekdays not worked and the dates worked anyway** (`--worked 2026-11-28`, a Saturday worked once). A `DayOff` wins over a date worked, which wins over the weekdays (usage_rules.days_off_between). **The figures count only worked time** (#2106): the forecast is `used × worked window / worked time gone`, `final` once no worked time is left; the plan gives a day off a share of 0, so the worked days take its part; use on a day off still counts. `get` marks a day off `off: <reason>` and TODAY says `off`. Offline, the cache keeps the days off the API last answered.

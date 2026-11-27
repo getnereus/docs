@@ -99,14 +99,14 @@ nereus usage get weekly
 WINDOW  USED  RESETS           FORECAST  PACE    TODAY  READ
 weekly  75%   Mon 16/11 01:00  91%       steady  ≤75%   Sat 19:06
 
-DAY        SHARE  TOTAL
-Mon 09/11  +10%   10%
-Tue 10/11  ~+11%  ~21%
-Wed 11/11  +10%   31%
-Thu 12/11  +10%   41%
-Fri 13/11  +19%   60%
-Sat 14/11  +15%   75%    today
-Sun 15/11  +25%   100%   plan
+DAY        SHARE  TOTAL  IDEAL  PROJECTED  GAP
+Mon 09/11  +10%   10%    14%               -4
+Tue 10/11  ~+11%  ~21%   28%               -7
+Wed 11/11  +10%   31%    42%               -11
+Thu 12/11  +10%   41%    57%               -16
+Fri 13/11  +19%   60%    71%               -11
+Sat 14/11  +15%   75%    82%    78%        -7   today
+Sun 15/11  +25%   100%   100%   91%        -9   plan
 ```
 
 ### usage-dayoff

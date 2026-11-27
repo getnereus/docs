@@ -7310,19 +7310,20 @@ Next steps:
 </code></pre></div>
 <h3 id="2-read-where-it-is-heading">2. Read where it is heading<a class="headerlink" href="#2-read-where-it-is-heading" title="Permanent link">&para;</a></h3>
 <p><a href="../../../specs/cli/reefs/usage.html#usage-get"><code>nereus usage get</code></a> shows the forecast at the reset and its pace (<code>push</code> below 70%, <code>steady</code> up to 99%, <code>slow</code> above), today's goal, and the week: the days gone (<code>~</code> when estimated), today and the plan for the days left.</p>
+<p>Each day has its ideal (the even path to 100% at the day's end), its projection at the forecast's rate, and the gap in points: the total less the ideal, the projection for the days ahead.</p>
 <div class="language-bash highlight"><pre><span></span><code>nereus<span class="w"> </span>usage<span class="w"> </span>get<span class="w"> </span>weekly
 </code></pre></div>
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>WINDOW  USED  RESETS           FORECAST  PACE    TODAY  READ
 weekly  75%   Mon 16/11 01:00  91%       steady  ≤75%   Sat 19:06
 
-DAY        SHARE  TOTAL
-Mon 09/11  +10%   10%
-Tue 10/11  ~+11%  ~21%
-Wed 11/11  +10%   31%
-Thu 12/11  +10%   41%
-Fri 13/11  +19%   60%
-Sat 14/11  +15%   75%    today
-Sun 15/11  +25%   100%   plan
+DAY        SHARE  TOTAL  IDEAL  PROJECTED  GAP
+Mon 09/11  +10%   10%    14%               -4
+Tue 10/11  ~+11%  ~21%   28%               -7
+Wed 11/11  +10%   31%    42%               -11
+Thu 12/11  +10%   41%    57%               -16
+Fri 13/11  +19%   60%    71%               -11
+Sat 14/11  +15%   75%    82%    78%        -7   today
+Sun 15/11  +25%   100%   100%   91%        -9   plan
 </code></pre></div>
 <h3 id="3-cut-the-days-where-you-live">3. Cut the days where you live<a class="headerlink" href="#3-cut-the-days-where-you-live" title="Permanent link">&para;</a></h3>
 <p>The days and the times are cut in the time zone of the Reef's Mandate. <a href="../../../specs/cli/core.html#init-profile"><code>nereus init</code></a> sets it on install: the <code>spec.timeZone</code> of the <code>Installation</code> in <code>~/.config/nereus/init.yaml</code> when you set one, else the machine's (<code>TZ</code>, then <code>/etc/localtime</code>, then <code>timedatectl</code>), which it writes back to the file.</p>
@@ -7360,14 +7361,14 @@ Next steps:
 <div class="language-text output highlight"><span class="filename">output</span><pre><span></span><code>WINDOW  USED  RESETS           FORECAST  PACE  TODAY  READ
 weekly  91%   Mon 16/11 01:00  111%      slow  ≤92%   Sat 19:06
 
-DAY        SHARE  TOTAL
-Mon 09/11  ~+18%  ~18%
-Tue 10/11  ~+18%  ~36%
-Wed 11/11  ~+19%  ~55%
-Thu 12/11  ~+18%  ~73%
-Fri 13/11  +18%   91%
-Sat 14/11  +0%    91%    today
-Sun 15/11  +8%    100%   plan
+DAY        SHARE  TOTAL  IDEAL  PROJECTED  GAP
+Mon 09/11  ~+18%  ~18%   14%               +4
+Tue 10/11  ~+18%  ~36%   28%               +8
+Wed 11/11  ~+19%  ~55%   42%               +13
+Thu 12/11  ~+18%  ~73%   57%               +16
+Fri 13/11  +18%   91%    71%               +20
+Sat 14/11  +0%    91%    82%    94%        +9   today
+Sun 15/11  +8%    100%   100%   111%       +11  plan
 </code></pre></div>
 <h2 id="next">Next<a class="headerlink" href="#next" title="Permanent link">&para;</a></h2>
 <ul>
