@@ -1,12 +1,12 @@
 {
   "name": "test",
   "command": "make --no-print-directory test",
-  "result": "fail",
-  "exit": 2,
-  "seconds": 438,
-  "passed": 6040,
-  "failed": 2,
+  "result": "pass",
+  "exit": 0,
+  "seconds": 771,
+  "passed": 11478,
+  "failed": 0,
   "failure": null,
-  "commit": "524149fa+",
-  "started": "2026-11-27T13:15:45Z"
+  "commit": "2c01629b",
+  "started": "2026-11-27T13:34:26Z"
 }
