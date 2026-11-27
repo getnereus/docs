@@ -24,6 +24,7 @@ The kept k3d cluster, `k3d-nereus`, runs Triton and serves as production, but no
 | `status.nereid`, `status.mandate`, `status.phase` | the Nereid | who made it, through which Mandate, and its state |
 | `status.expiresAt` | the Nereid | `creationTimestamp` plus `spec.expires` |
 | `status.kubernetes.context`, `status.kubernetes.secretRef` | the Nereid | how to reach a Kubernetes environment: a context name and a reference to the Secret holding its kubeconfig |
+| `status.kubernetes.namespaces` | the Nereid | where its Workloads' pods run in the cluster that hosts them, so the metrics reef reads them there: a vcluster's host namespace; for `nereus`, the namespaces of the Targets that deliver into it (amended by the owner, 2026-11-26, #2305) |
 
 `spec` names no technology (ADR 0002, the model): the person never names a cluster type, a provider or a Tool. A kept cluster, a vcluster, Cloud Run, Azure Container Apps or AWS Fargate are each a Nereid behind a Mandate, and each writes what it made in `status`. Credentials are never inline: `secretRef` points at a Kubernetes Secret today, and the secrets reef (#529) takes the kubeconfig over when it exists, without changing the field.
 
