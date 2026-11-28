@@ -150,6 +150,7 @@ A machine signs in on its own, with no browser and no shared secret, and the sam
 - **A machine can do only what it is bound to:** sending as the sources that name it in `--machine`. It reads nothing and creates nothing else, until another ADR grants more.
 - **Revoking is one command,** `nereus machine delete owner-laptop`, and a new key is `nereus machine rotate owner-laptop`; a token already given stays valid until it expires, in minutes.
 - **Pipelines, later:** a private key in a pipeline's secret store is a shared secret in practice; a `Machine` that trusts the pipeline's own OIDC issuer and subject (federation, no stored key) is the next step, outside this ADR.
+- **The exchange and the roles:** [Machines assume a role](0032-machines-assume-a-role.md) gives the token exchange, the machine as a subject of a `Binding` and the first role, `usage-reporter`; the usage report is the first machine, ahead of the metrics.
 
 ### The order of the work
 

@@ -4454,6 +4454,8 @@
       
         
       
+        
+      
     
     
     
@@ -5583,6 +5585,34 @@
     
   
     Gates and approvals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0032-machines-assume-a-role/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Machines assume a role
   
 
     
@@ -7598,6 +7628,7 @@ nereus<span class="w"> </span>metrics<span class="w"> </span>send<span class="w"
 <li><strong>A machine can do only what it is bound to:</strong> sending as the sources that name it in <code>--machine</code>. It reads nothing and creates nothing else, until another ADR grants more.</li>
 <li><strong>Revoking is one command,</strong> <code>nereus machine delete owner-laptop</code>, and a new key is <code>nereus machine rotate owner-laptop</code>; a token already given stays valid until it expires, in minutes.</li>
 <li><strong>Pipelines, later:</strong> a private key in a pipeline's secret store is a shared secret in practice; a <code>Machine</code> that trusts the pipeline's own OIDC issuer and subject (federation, no stored key) is the next step, outside this ADR.</li>
+<li><strong>The exchange and the roles:</strong> <a href="../0032-machines-assume-a-role/">Machines assume a role</a> gives the token exchange, the machine as a subject of a <code>Binding</code> and the first role, <code>usage-reporter</code>; the usage report is the first machine, ahead of the metrics.</li>
 </ul>
 <h3 id="the-order-of-the-work">The order of the work<a class="headerlink" href="#the-order-of-the-work" title="Permanent link">&para;</a></h3>
 <p>A walking skeleton, the first data before the riskiest part (owner, 2026-11-14):</p>

@@ -141,6 +141,7 @@
 - [MCP tools](https://docs.getnereus.dev/adr/0029-mcp-tools.md): Status: Accepted
 - [Triton, the rooms Nereid](https://docs.getnereus.dev/adr/0030-triton-rooms-nereid.md): Status: Accepted
 - [Gates and approvals](https://docs.getnereus.dev/adr/0031-gates-and-approvals.md): Status: Accepted (2026-11-24, by the owner)
+- [Machines assume a role](https://docs.getnereus.dev/adr/0032-machines-assume-a-role.md): Status: Accepted (2026-11-28)
 - [Specs](https://docs.getnereus.dev/project/specs.md): Find the spec that settles a slice or a design, with its status
 - [First slice](https://docs.getnereus.dev/specs/0001-first-slice.md): Status: Done (2026-10-17)
 - [Reef at runtime](https://docs.getnereus.dev/specs/0002-reef-at-runtime.md): Status: Done (2026-10-17)

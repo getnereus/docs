@@ -160,6 +160,11 @@
       "md": "adr/0031-gates-and-approvals.md",
       "title": "Gates and approvals"
     },
+    "adr/0032-machines-assume-a-role/": {
+      "goal": "Status: Accepted (2026-11-28)",
+      "md": "adr/0032-machines-assume-a-role.md",
+      "title": "Machines assume a role"
+    },
     "agent/": {
       "goal": "One page per topic, read on demand.",
       "md": "agent/index.md",
