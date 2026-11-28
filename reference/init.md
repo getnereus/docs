@@ -82,3 +82,7 @@ The total is measured against the target's SLO ([spec 0004](../specs/0004-init-t
 ## Run it again
 
 [`nereus init --yes`](../specs/cli/core.html#init) again reuses the registry and the cluster, upgrades both releases with the same values (revision 2), keeps the installation's identity, and finds every Nereid Ready at once, in seconds and `0% green`.
+
+## The audit journal
+
+Every `init` writes its entries to the installation's audit journal on this machine and prints its path: init started, each Reef and Nereid installed, init ended ([The audit journal](audit-journal.md)).

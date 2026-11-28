@@ -165,7 +165,7 @@ nereus config set check_interval 24h
 | `-f` | `--file`, `--follow`, `--from-file` |
 | `-F` | `--force` |
 | `-g` | `--generate-file` |
-| `-i` | `--image` |
+| `-i` | `--image`, `--installation` |
 | `-j` | `--project` |
 | `-k` | `--kind` |
 | `-l` | `--local` |

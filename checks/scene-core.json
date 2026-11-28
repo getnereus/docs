@@ -1,12 +1,12 @@
 {
   "name": "scene-core",
-  "command": "make --no-print-directory scene-core",
+  "command": "test/scene-core",
   "result": "pass",
   "exit": 0,
-  "seconds": 1527,
+  "seconds": 1542,
   "passed": 337,
   "failed": 0,
   "failure": null,
-  "commit": "540b0359+",
-  "started": "2026-11-27T23:08:06Z"
+  "commit": "70e926ab",
+  "started": "2026-11-28T09:41:26Z"
 }

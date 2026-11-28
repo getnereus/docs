@@ -16,7 +16,7 @@
         <link rel="prev" href="../installation/">
       
       
-        <link rel="next" href="../profiles/">
+        <link rel="next" href="../audit-journal/">
       
       
         
@@ -2893,6 +2893,8 @@
       
         
       
+        
+      
     
     
     
@@ -4034,10 +4036,56 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#the-audit-journal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The audit journal
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../audit-journal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The audit journal
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
     </li>
   
 
@@ -7251,6 +7299,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#the-audit-journal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The audit journal
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -7325,6 +7384,8 @@ ingress:
 <p>The total is measured against the target's SLO (<a href="../../specs/0004-init-time-slo/">spec 0004</a>): green under 50%, yellow from 50%, orange from 75%, red past 100%. Missing it never stops <code>init</code>; <code>--check-slo</code> fails above it plus 10% (<a href="../../guides/operate/slo/">Meet the time SLO</a>).</p>
 <h2 id="run-it-again">Run it again<a class="headerlink" href="#run-it-again" title="Permanent link">&para;</a></h2>
 <p><a href="../../specs/cli/core.html#init"><code>nereus init --yes</code></a> again reuses the registry and the cluster, upgrades both releases with the same values (revision 2), keeps the installation's identity, and finds every Nereid Ready at once, in seconds and <code>0% green</code>.</p>
+<h2 id="the-audit-journal">The audit journal<a class="headerlink" href="#the-audit-journal" title="Permanent link">&para;</a></h2>
+<p>Every <code>init</code> writes its entries to the installation's audit journal on this machine and prints its path: init started, each Reef and Nereid installed, init ended (<a href="../audit-journal/">The audit journal</a>).</p>
 
 
 
@@ -7380,13 +7441,13 @@ ingress:
         
         
           
-          <a href="../profiles/" class="md-footer__link md-footer__link--next" aria-label="Next: The profiles">
+          <a href="../audit-journal/" class="md-footer__link md-footer__link--next" aria-label="Next: The audit journal">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                The profiles
+                The audit journal
               </div>
             </div>
             <div class="md-footer__button md-icon">

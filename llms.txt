@@ -94,6 +94,7 @@
 - [The settings file](https://docs.getnereus.dev/reference/settings.md): Every key of the settings file ~/.config/nereus/init.yaml
 - [The installation](https://docs.getnereus.dev/reference/installation.md): The installation's name, id and alias, and the rules that keep them
 - [What init does](https://docs.getnereus.dev/reference/init.md): What nereus init does, step by step, and what it leaves behind
+- [The audit journal](https://docs.getnereus.dev/reference/audit-journal.md): Find, read and verify the audit journal init starts on the machine that runs it
 - [The profiles](https://docs.getnereus.dev/reference/profiles.md): The built-in profiles, what each installs, and how to apply one on a running installation
 - [Reefs and Nereids](https://docs.getnereus.dev/reference/reefs-and-nereids.md): How the CLI applies, lists and deletes a Reef and a Nereid, and the objects behind them
 - [Inside the metrics reef](https://docs.getnereus.dev/reference/metrics-reef.md): What the metrics Reef's Nereid victoriametrics installs, what it scrapes and who reaches it

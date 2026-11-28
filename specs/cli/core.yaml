@@ -48,6 +48,10 @@ acts:
     title: "MCP"
     question: "Which tools does claude.ai get?"
     pt: {title: "MCP", question: "Quais ferramentas o claude.ai recebe?"}
+  - name: audit
+    title: "Audit"
+    question: "What happened since init?"
+    pt: {title: "Audit", question: "O que aconteceu desde o init?"}
 
 slides:
   - name: cover
@@ -1433,3 +1437,70 @@ slides:
       accent: "em grupos"
       notes: |-
         **Local, não o `/mcp` da instância** (#2101, ADR 0030): o `add` registra este CLI no escopo de usuário do Claude Code como o servidor `nereus-local` (`claude mcp add`, uma vez; `nereus` segue sendo o `/mcp` da instância), e os hooks que rodam `nereus rooms pull`. Cada sessão guarda seus grupos em `~/.local/state/nereus/sessions/<pid do claude>.json`; o servidor, iniciado pelo mesmo Claude Code, observa o arquivo e manda `notifications/tools/list_changed`, então as ferramentas vêm e vão com a sessão aberta. Com `rooms` desligado, nenhuma ferramenta, nenhum heartbeat e nenhuma chamada ao Triton; ligado, ele é a ponte para o Triton: só as ferramentas de peer, o token da pessoa, o agente nomeado em `Nereus-Agent`. Para tirar o servidor: `claude mcp remove nereus-local`.
+
+  - name: audit-list
+    act: audit
+    topic: "audit list"
+    status: built
+    message: "The installation's history from init on, one entry per step"
+    accent: "from init on"
+    terminal:
+      steps:
+        - comment: "The entries of the last init's journal, oldest first"
+          run: "nereus audit list"
+          output: |-
+            SEQUENCE  TIME                  TYPE                                     ACTOR           OUTCOME
+            1         2026-11-28T09:06:36Z  dev.getnereus.core.installation.init.v1  local:f5198a52  started
+            2         2026-11-28T09:06:36Z  dev.getnereus.core.reef.installed.v1     local:f5198a52  succeeded
+            3         2026-11-28T09:06:36Z  dev.getnereus.core.reef.installed.v1     local:f5198a52  succeeded
+            4         2026-11-28T09:06:36Z  dev.getnereus.core.installation.init.v1  local:f5198a52  succeeded
+
+            Next steps:
+
+              nereus audit verify
+    notes: |-
+      **The journal init starts on the machine that runs it** (#2385, journey #2173): `~/.local/state/nereus/installations/<id>/audit/journal.jsonl`, one CloudEvent 1.0 per line, chained by `previoushash`. `--since 1d12h` keeps the last day and a half (days, hours, minutes); `--output json` prints the lines as they are written; `--installation <id>` reads another installation's journal. The audit Reef (#2386) moves it behind the Nereus API.
+
+      **The output is from an offline run**: a journal written as init writes it, under a throwaway home.
+    pt:
+      topic: "audit list"
+      message: "O histórico da instalação desde o init, uma entrada por passo"
+      accent: "desde o init"
+      notes: |-
+        **O journal que o init começa na máquina que o roda** (#2385, jornada #2173): `~/.local/state/nereus/installations/<id>/audit/journal.jsonl`, um CloudEvent 1.0 por linha, encadeados por `previoushash`. `--since 1d12h` mantém o último dia e meio (dias, horas, minutos); `--output json` imprime as linhas como foram escritas; `--installation <id>` lê o journal de outra instalação. O Reef audit (#2386) o leva para trás da Nereus API.
+
+        **A saída é de uma execução offline**: um journal escrito como o init o escreve, num home descartável.
+
+  - name: audit-verify
+    act: audit
+    topic: "audit verify"
+    status: built
+    message: "The hash chain checked, and the first entry changed named"
+    accent: "the first entry changed"
+    terminal:
+      steps:
+        - comment: "An untouched journal"
+          run: "nereus audit verify"
+          output: |-
+            ✓ Verified 4 entries of ~/.local/state/nereus/installations/0b5a3f2e-8c1d-4e7f-9a2b-3c4d5e6f7a8b/audit/journal.jsonl: the chain is whole, its head is sha256:ea72889cd7ff.
+
+            Next steps:
+
+              nereus audit list
+        - comment: "After a byte of entry 2 changed"
+          run: "nereus audit verify"
+          output: |-
+            ✗ Entry 2 does not match the hash entry 3 carries: the journal was changed after it was written; check: nereus audit list --installation 0b5a3f2e-8c1d-4e7f-9a2b-3c4d5e6f7a8b --output json
+    dependsOn: [audit-list]
+    notes: |-
+      **Each entry carries the SHA-256 of the line before** (#2385), the first one a genesis value of 64 zeros: a line changed, removed or swapped is named (`Entry 2 is missing`, `Entry 2 is out of place`). It does not stop whoever owns the machine from rewriting the whole file: that is the audit Reef's Nereids, WORM and signed checkpoints (#2173).
+
+      **The output is from an offline run**, the second after one byte of entry 2 changed by hand.
+    pt:
+      topic: "audit verify"
+      message: "A cadeia de hashes verificada, e a primeira entrada alterada nomeada"
+      accent: "a primeira entrada alterada"
+      notes: |-
+        **Cada entrada carrega o SHA-256 da linha anterior** (#2385), a primeira um valor gênese de 64 zeros: uma linha alterada, removida ou trocada é nomeada (`Entry 2 is missing`, `Entry 2 is out of place`). Isso não impede quem é dono da máquina de reescrever o arquivo inteiro: isso é dos Nereids do Reef audit, WORM e checkpoints assinados (#2173).
+
+        **A saída é de uma execução offline**, a segunda depois de um byte da entrada 2 alterado à mão.

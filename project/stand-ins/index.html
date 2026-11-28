@@ -2891,6 +2891,8 @@
       
         
       
+        
+      
     
     
     
@@ -3865,6 +3867,41 @@
     
   
     What init does
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--built"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/audit-journal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The audit journal
   
 
     
@@ -7311,6 +7348,10 @@
 <tr>
 <td>The reference Nereid of the notifications Reef delivers nothing: each delivery is <code>Skipped</code> (<a href="https://github.com/getnereus/nereus/issues/2147">#2147</a>)</td>
 <td>The webpush Nereid, which sends Web Push to each Subscription (<a href="https://github.com/getnereus/nereus/issues/2148">#2148</a>)</td>
+</tr>
+<tr>
+<td>The audit journal is a file on the machine that runs <code>nereus init</code>, written by the CLI, and <code>nereus audit list</code> and <code>verify</code> read that file, not the Nereus API (<a href="https://github.com/getnereus/nereus/issues/2385">#2385</a>)</td>
+<td>The <code>audit</code> Reef, whose Nereid takes the journal over and serves it through the Nereus API (<a href="https://github.com/getnereus/nereus/issues/2386">#2386</a>)</td>
 </tr>
 </tbody>
 </table>

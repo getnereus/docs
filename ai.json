@@ -530,6 +530,11 @@
       "md": "project/stand-ins.md",
       "title": "Stand-ins"
     },
+    "reference/audit-journal/": {
+      "goal": "Find, read and verify the audit journal init starts on the machine that runs it",
+      "md": "reference/audit-journal.md",
+      "title": "The audit journal"
+    },
     "reference/checks/": {
       "goal": "Every check make checks runs, and where its last result is kept",
       "md": "reference/checks.md",
